@@ -78,4 +78,5 @@ The following runnable sample demonstrates how to persists row selection in a gr
         var grid = $("#grid").data("kendoGrid");
         grid.dataSource.prev();
       }
+    </script>
 ```
