@@ -50,6 +50,9 @@ The selected files will be uploaded immediately by default. You can change this 
 The selected files will be uploaded in separate requests, if this is supported by the browser.
 You can change this behavior by setting batch to true.
 
+The batch mode applies to multiple files, which are selected at the same time.
+Files selected one after the other will be uploaded in separate requests.
+
 #### Example
 
     <input type="file" name="files" id="photos" />
