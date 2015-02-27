@@ -103,6 +103,8 @@ By default, postponing is disabled.
 
 ## Positioning and stacking
 
+### Popup messages
+
 By default, the **Notification** widget creates popups, which overlay the other page content. If no position settings are defined,
 the first popup will be displayed near the bottom-right corner of the browser viewport and subsequent popups will stack upwards.
 Positioning and stacking can be controlled independently. If no stacking setting is defined, the popups will stack upwards or downwards, depending on the positioning settings
@@ -146,9 +148,12 @@ In this way every **Notification** instance can recognize and manage its own cur
 
 > Using several **Notification** widget instances, which display notifications at the same place on the page is not recommended, because the notifications from the multiple instances will overlap.
 
+### Static messages
+
 The **Notification** widget can also display "static" notifications, which do not overlay other elements, but instead take part in the so-called *normal flow* of the page content.
-In this case positioning settings do not make sense and are ignored. Stacking can be downwards (by default) or upwards.
-Static notifications are displayed, if a target container is specified. One widget instance can display either popup or static notifications, not both at the same time.
+In this case positioning settings do not make sense and are ignored. When static notifications are used, the stacking direction can only be set to `down` (default) or `up`,
+depending on whether new messages should appear after or before existing ones. Static notifications are displayed, if a target container is specified.
+One widget instance can display either popup or static notifications, not both at the same time.
 
 ### Example - enable static notifications
 
