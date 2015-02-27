@@ -6,7 +6,7 @@ description: How to configure all animations in Menu UI widget, enable and disab
 
 # kendo.ui.Menu
 
-Represents the Kendo UI Menu widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Menu widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 
