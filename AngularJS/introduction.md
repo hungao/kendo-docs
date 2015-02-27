@@ -459,4 +459,20 @@ Sometimes you might need a reference to the widgets in order to call methods on 
 </script>
 ```
 
+(Introduced in Q1 2015) if you use the tag directive variant, set the `k-scope-field` to achieve the same:
+
+#### Get the widget instance in the controller (with tag directive)
+
+```html
+<div ng-app="app" ng-controller="MyCtrl">
+  <kendo-date-picker k-scope-field="datePicker" k-on-change="onChange()">
+</div>
+<script>
+  angular.module("app", [ "kendo.directives" ]).controller("MyCtrl", function($scope) {
+    $scope.onChange = function() {
+     alert($scope.datePicker.value());
+    };
+  });
+</script>
+```
 {% endraw %}
