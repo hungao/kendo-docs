@@ -5,18 +5,37 @@ description: Define CSS classes of Kendo UI Widgets to change their appearance. 
 ---
 
 # Appearance and Styling
+
+Kendo UI widgets arrive with a number of predefined themes:
+
+![Kendo UI DataViz Themes](/web/web-themes.png)
+
+
+Setting a Kendo UI **Web** theme (i.e. excluding Mobile and DataViz) requires the inclusion of two stylesheets to your project:
+
+* **kendo.common.css** - This common (base) stylesheet applies styles related to element positioning and widget dimensions. It is a mandatory stylesheet for the widgets to look correct and function properly.
+
+* **kendo.[theme].css** - This stylesheet applies theme-specific styles like color palette, background gradients and patterns, etc.
+
+#### Example:
+    <html>
+    <head>
+        <link rel="stylesheet" href="[file path]/kendo.common.min.css" />
+        <link rel="stylesheet" href="[file path]/kendo.default.min.css" />
+    </head>
+
+> Be sure to include the common CSS file before the theme CSS file. In some cases, the theme CSS file may override base styles as it uses selectors with the same specificity.
+
 The appearance of the **Kendo UI** widgets depends entirely on styles defined by the applied CSS classes.
 No inline styles are used, except for some very specific cases in which these styles must be set with Javascript, depending on the browser or configuration.
 
-## Common and theme StyleSheets
-The Kendo UI **Web** widgets (i.e. excluding Mobile and DataViz) require two stylesheets: **kendo.common.css** and **kendo.[theme].css**.
-The common (base) stylesheet applies styles related to positioning and size, but which are not related to the color scheme and are always required for the widget to
-look correct and function properly. The theme stylesheet applies theme-specific styles like colors and backgrounds.
+Some themes require a different "common" stylesheet that applies different dimensions. There are three "common" styleshees shipped with Kendo UI:
 
-Some themes require a different "common" stylesheet that applies different dimensions, for example **kendo.common-bootstrap.css** and **kendo.common-material.css**. These common stylesheets should be used
-**instead of** kendo.common.css and only with their respective theme (e.g. kendo.bootstrap.css or kendo.material.css).
+* **kendo.common.css** - The default base stylesheet.
 
-> Be sure to include the common CSS file before the theme CSS file. In some cases, the theme CSS file may override base styles as it uses selectors with the same specificity.
+* **kendo.common-bootstrap.css** - The base stylesheet for the Bootstrap theme. Use this file instead of kendo.common.css and only with kendo.bootstrap.css theme file to achieve Bootstrap like widget dimensions.
+
+* **kendo.common-material.css** - The base stylesheet for the Material and MaterialBlack themes. Use this file instead of kendo.common.css and only with kendo.material.css or kendo.materialblack.css theme files.
 
 ## Primitives
 
