@@ -11,7 +11,9 @@ The example below demonstrates how create dynamic plot bands for Kendo UI Chart.
 #### Example:
 
 ```html
-    <div id="chart"></div>
+   <div id="chart"></div>
+   <button>Change plot band</button>
+
     <script>
       $("#chart").kendoChart({
         categoryAxis: {
@@ -23,33 +25,31 @@ The example below demonstrates how create dynamic plot bands for Kendo UI Chart.
             color: "red"
           }]
         }
-      });         
+      });
 
-      function togglePlotBand(element, date, color) {
-        var plotBands = element.data("plotBands");
-        if (!plotBands) {
-          plotBands = {};
-          element.data("plotBands", plotBands);
-        }
-
-        var band = plotBands[date];
-        if (band) {
-          
-        }
-        plotBands.push({
-          from: pFrom, to: pTo,
-          color: pColor, opacity: opac
-        })
-
-        var chart = domElm.data("kendoChart");
-        var axisNames = ["valueAxis", "xAxis"];
+      function showPlotBand(element, band) {
+        var plotBands = [ band ];
+        var axisNames = ["valueAxis", "xAxis", "categoryAxis"];
         var options = {};
 
         for (var i = 0; i < axisNames.length; i++) {
           options[axisNames[i]] = { plotBands: plotBands };
         }
-        
+
+        var chart = $(element).data("kendoChart");
         chart.setOptions(options);
       }
+
+      $("button").click(function(){
+        // shows a random plot band
+        var start = new Date(2014, 0, 1 + Math.floor(Math.random() * 30));
+        var end = new Date(start.getTime() + 1000 * 3600 * 24); // 24 hours after start
+
+        showPlotBand("#chart", {
+            from: start,
+            to: end,
+            color: "green"
+        });
+      });
     </script>
 ```
