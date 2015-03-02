@@ -214,6 +214,54 @@ $(function(){
         var snippet = $(this).next().text();
         dojoApi.post(snippet);
     });
+
+    var pdfTemplate = kendo.template($("#pdf-page-template").html());
+    $("#page-pdf-link").on("click", function(){
+        var title, subtitle;
+        kendo.drawing.drawDOM("#page-article article", {
+            paperSize : "A4",
+            margin    : { top: "3cm", left: "2cm", right: "2cm", bottom: "3cm" },
+            template  : function(args) {
+                var h1 = $("h1:first", args.element).text().replace(/^\s+|\s+$/g, "");
+                if (h1) {
+                    title = h1;
+                    subtitle = "";
+                }
+                var h2 = $("h2:first", args.element).text().replace(/^\s+|\s+$/g, "");
+                if (h2) {
+                    subtitle = h2;
+                }
+                return pdfTemplate({
+                    pageNum    : args.pageNum,
+                    totalPages : args.totalPages,
+                    title      : title,
+                    subtitle   : subtitle
+                }).replace(/^\s+/, "");
+            }
+        }).then(function(group){
+            var filename = $("h1:first").text();
+            if (!filename) {
+                filename = "KendoDocs";
+            }
+            filename += ".pdf";
+            kendo.drawing.pdf.saveAs(group, filename);
+        });
+    });
 });
 
+kendo.pdf.defineFont({
+    "DejaVu Sans"             : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans.ttf",
+    "DejaVu Sans|Bold"        : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Bold.ttf",
+    "DejaVu Sans|Bold|Italic" : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-BoldOblique.ttf",
+    "DejaVu Sans|Italic"      : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf",
 
+    "DejaVu Serif"             : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSerif.ttf",
+    "DejaVu Serif|Bold"        : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSerif-Bold.ttf",
+    "DejaVu Serif|Bold|Italic" : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSerif-BoldItalic.ttf",
+    "DejaVu Serif|Italic"      : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSerif-Italic.ttf",
+
+    "DejaVu Mono"             : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSansMono.ttf",
+    "DejaVu Mono|Bold"        : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSansMono-Bold.ttf",
+    "DejaVu Mono|Bold|Italic" : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSansMono-BoldOblique.ttf",
+    "DejaVu Mono|Italic"      : "http://cdn.kendostatic.com/2014.3.1314/styles/fonts/DejaVu/DejaVuSansMono-Oblique.ttf"
+});

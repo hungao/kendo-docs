@@ -10,7 +10,22 @@
         {% stylesheet styles %}
         {% stylesheet theme %}
         <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="http://cdn.kendostatic.com/2014.3.1411/js/kendo.web.min.js"></script>
+        <!-- <script src="http://cdn.kendostatic.com/2014.3.1411/js/kendo.web.min.js"></script> -->
+        <script src="http://cdn.kendostatic.com/2014.3.1411/js/pako_deflate.min.js"></script>
+        <script src="http://kendo.local/playground/loader.js"></script>
+        <script>
+          requireSync([
+            "http://kendo.local/src/kendo.all.js"
+          ]);
+        </script>
+
+        <script id="pdf-page-template" type="x/kendo-template">
+          <div class="pdf-page-template">
+            <div class="pdf-header"><div style="float: right">#: subtitle #</div>#: title #</div>
+            <div class="pdf-footer">Page #: pageNum # of #: totalPages #</div>
+          </div>
+        </script>
+
         {% javascript prettify %}
         {% javascript app %}
         {% if page.editableExample == "true" %}
@@ -44,4 +59,3 @@
         {{ content }}
     </body>
 </html>
-
