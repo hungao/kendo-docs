@@ -885,6 +885,93 @@ populated at the time the template function is called, if the Grid uses remote b
             dataSource: [ { color: "#ff0000", size: 30 }, { color: "#000000", size: 33 }] });
     </script>
 
+### columns.filterable.dataSource `Object`
+
+The dataSource configuration for the items that will be used when [columns.filterable.multi](#configuration-columns.filterable.multi) is enabled.
+
+#### Example - provide custom DataSource for the checkbox filtering.
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoGrid({
+      columns: [ {
+        field: "country",
+        filterable: {
+        multi:true,
+          dataSource: [{country: "BG"},{country: "GRM"}, {country: "USA"}]
+        }
+      } ],
+    filterable: true,
+      dataSource: [ { country: "BG" }, { country: "USA" } ]
+    });
+    </script>
+
+### columns.filterable.checkAll `Boolean` *(default: true)*
+
+Controls whether to show or not the checkAll checkbox before the other checkboxes when using checkbox filtering.
+
+#### Example - provide custom DataSource for the FilterMultiCheck filtering.
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoGrid({
+      columns: [ {
+        field: "country",
+        filterable: {
+        multi:true,
+        checkAll: false
+        }
+      } ],
+    filterable: true,
+      dataSource: [ { country: "BG" }, { country: "USA" } ]
+    });
+    </script>
+
+### columns.filterable.itemTemplate `Function`
+
+Allows customization on the logic that renderes the checkboxes when using checkbox filtering.
+
+#### Example - provide custom DataSource for the FilterMultiCheck filtering.
+     <div id="grid"></div>
+    <script>
+        $("#grid").kendoGrid({
+            columns: [ {
+                field: "country",
+                filterable: {
+                    multi:true,
+                    itemTemplate: function(e) {
+                        return "<span><label><span>#= data.country|| data.all #</span><input type='checkbox' name='" + e.field + "' value='#= data.country#'/></label></span>"
+                    }
+                }
+            }],
+            filterable: true,
+            dataSource: [ { country: "BG" }, { country: "USA" } ]
+        });
+    </script>
+
+### columns.filterable.messages.checkAll `String`
+
+The label used for the check-all checkbox.
+
+#### Example - provide custom DataSource for the FilterMultiCheck filtering.
+     <div id="grid"></div>
+    <script>
+      $("#grid").kendoGrid({
+        columns: [{
+            field: "country",
+            filterable: {
+                multi:true,
+                messages: {
+                    checkAll: "Do select all"
+                },
+                itemTemplate: function(e) {
+                    return "<span><label><span>#= data.country|| data.all #</span><input type='checkbox' name='" + e.field + "' value='#= data.country#'/></label></span>"
+                }
+            }
+        }],
+        filterable: true,
+        dataSource: [ { country: "BG" }, { country: "USA" } ]
+      });
+    </script>
+
 ### columns.filterable.ui `String|Function`
 
 The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.
