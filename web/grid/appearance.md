@@ -153,7 +153,9 @@ Alternatively, apply the desired height to the scrollable data area, instead of 
         {
             height: 270px;
         }
-* the virtual scrollbar is not visible. This can be resolved by executing the following script when the Grid becomes visible:
+* the virtual scrollbar is not visible. This can be resolved by executing the Grid's
+[`resize`](/using-kendo-in-responsive-web-pages#individual-widget-resizing) method when the widget becomes visible. For Kendo UI versions 2014.3.1119 (Q3 2014) and older,
+the following statement is required instead of `resize()`:
 
         $("#GridID").data("kendoGrid").dataSource.fetch();
 * frozen columns are too narrow and non-frozen columns are not visible. This can be resolved by executing the Grid's
