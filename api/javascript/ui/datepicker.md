@@ -6,7 +6,7 @@ description: Easy to follow steps guide how to quickly configure DatePicker UI w
 
 # kendo.ui.DatePicker
 
-Represents the Kendo UI DatePicker widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI DatePicker widget. Inherits from [Widget](/framework/widgets/wrapper-element).
 
 ## Configuration
 

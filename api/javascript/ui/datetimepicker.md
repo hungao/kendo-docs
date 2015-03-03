@@ -6,7 +6,7 @@ description: Learn how to configure the UI DateTimePicker widget. Use methods to
 
 # kendo.ui.DateTimePicker
 
-Represents the Kendo UI DateTimePicker widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI DateTimePicker widget. Inherits from [Widget](/framework/widgets/wrapper-element).
 
 ## Configuration
 

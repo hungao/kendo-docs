@@ -6,7 +6,7 @@ description: Code examples and tips how to configure NumericTextBox widget, use 
 
 # kendo.ui.NumericTextBox
 
-Represents the Kendo UI NumericTextBox widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI NumericTextBox widget. Inherits from [Widget](/framework/widgets/wrapper-element).
 
 ## Configuration
 

@@ -6,7 +6,7 @@ description: Learn to configure Kendo UI ComboBox widget, use the documentation 
 
 # kendo.ui.ComboBox
 
-Represents the Kendo UI ComboBox widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI ComboBox widget. Inherits from [Widget](/framework/widgets/wrapper-element).
 
 ## Configuration
 
