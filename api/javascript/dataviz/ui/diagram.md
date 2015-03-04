@@ -136,7 +136,7 @@ Defines the highlight color when the pointer is hovering over the connection.
      connectionDefaults: {
                 hover: {
                     stroke: {color: "red"}
-                },               
+                },
                 stroke: {
                     color: "#979797",
                     width: 4
@@ -492,7 +492,7 @@ Defines how the diagram behaves when the user attempts to edit shape content, cr
 
 ### editable.connectionTemplate `String|Function`
 
-Specifies the connection editor template which shows up when editing the connection via a pop-up editor much like 'editable.template' configuration of the Kendo UI Grid widget. 
+Specifies the connection editor template which shows up when editing the connection via a pop-up editor much like 'editable.template' configuration of the Kendo UI Grid widget.
 
 #### Example - setting the connectionTemplate
 
@@ -536,7 +536,7 @@ Defines the look-and-feel of the resizing handles.
 
 #### Example - styling the resizing handles
 
-The 'editable.resize' configuration below collects pretty much all of the available parameters. 
+The 'editable.resize' configuration below collects pretty much all of the available parameters.
 
     <div id="diagram"></div>
     <script>
@@ -1374,9 +1374,6 @@ The following defines a custom shape with connectors adapted to the shape's outl
         }
       });
     </script>
-
-### shapeDefaults.connectors.description `String`
-
 
 
 ### shapeDefaults.connectors.name `String`
