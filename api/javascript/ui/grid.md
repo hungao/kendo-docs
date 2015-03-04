@@ -947,31 +947,6 @@ Allows customization on the logic that renderes the checkboxes when using checkb
         });
     </script>
 
-### columns.filterable.messages.checkAll `String`
-
-The label used for the check-all checkbox.
-
-#### Example - provide custom DataSource for the FilterMultiCheck filtering.
-     <div id="grid"></div>
-    <script>
-      $("#grid").kendoGrid({
-        columns: [{
-            field: "country",
-            filterable: {
-                multi:true,
-                messages: {
-                    checkAll: "Do select all"
-                },
-                itemTemplate: function(e) {
-                    return "<span><label><span>#= data.country|| data.all #</span><input type='checkbox' name='" + e.field + "' value='#= data.country#'/></label></span>"
-                }
-            }
-        }],
-        filterable: true,
-        dataSource: [ { country: "BG" }, { country: "USA" } ]
-      });
-    </script>
-
 ### columns.filterable.ui `String|Function`
 
 The role data attribute of the widget used in the filter menu or a JavaScript function which initializes that widget.
@@ -2849,6 +2824,32 @@ The text of the value item in filter menu (available in mobile mode only).
       }
     });
     </script>
+
+### filterable.messages.checkAll `String` *(default :"Select All")*
+
+The label used for the check-all checkbox.
+
+#### Example - provide custom DataSource for the FilterMultiCheck filtering.
+     <div id="grid"></div>
+    <script>
+      $("#grid").kendoGrid({
+        columns: [{
+            field: "country",
+            filterable: {
+                multi:true,
+                messages: {
+                    checkAll: "Do select all"
+                },
+                itemTemplate: function(e) {
+                    return "<span><label><span>#= data.country|| data.all #</span><input type='checkbox' name='" + e.field + "' value='#= data.country#'/></label></span>"
+                }
+            }
+        }],
+        filterable: true,
+        dataSource: [ { country: "BG" }, { country: "USA" } ]
+      });
+    </script>
+
 
 ### filterable.operators `Object`
 
