@@ -30,9 +30,9 @@ that initialization is done within $(document).ready() statement.
 > Widget copies any styles and CSS classes from the input element to the wrapper element.
 
 ### Initialize a DropDownList using a jQuery selector
-    
+
     <input id="dropdownlist">
-    
+
     <script>
       $(document).ready(function() {
         $("#dropdownlist").kendoDropDownList({
@@ -73,10 +73,10 @@ such as
 [JSONP](http://en.wikipedia.org/wiki/JSONP).
 
 ### Binding to a remote OData service
-    
+
     <input id="dropdownlist">
-    
-    <script>    
+
+    <script>
         $(document).ready(function() {
             $("#dropdownlist").kendoDropDownList({
                 index: 0,
@@ -203,3 +203,18 @@ jQuery width() method can be used for changing the widget dimensions.
         dropdownlist.list.width(400);
       });
     </script>
+
+### Set the list dimensions (MVVM)
+
+```html
+  <input id="ddl" data-role="dropdownlist" data-bind="source: foo" />
+
+  <script>
+    var vm = {
+      foo: [ "one", "two" ]
+    }
+
+    kendo.bind(document.body, vm);
+    $("#ddl").data("kendoDropDownList").list.width(400);
+  </script>
+```
