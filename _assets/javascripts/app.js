@@ -246,6 +246,29 @@ $(function(){
                     title      : title,
                     subtitle   : subtitle
                 }).replace(/^\s+/, "");
+            },
+            beforePageBreak: function(container, callback) {
+                // drop syntax highlighting (speeds up big)
+                $("pre.prettyprinted", container).each(function(){
+                    var el = $(this);
+                    el.text(el.text());
+                });
+                (function scaleDownImages(){
+                    var unresolved = 0;
+                    $("img").each(function(){
+                        if (this.width == 0) {
+                            unresolved++;
+                        } else {
+                            this.style.maxWidth = "500px";
+                            this.width = this.width / 2;
+                        }
+                    });
+                    if (unresolved) {
+                        setTimeout(scaleDownImages, 5);
+                    } else {
+                        callback();
+                    }
+                })();
             }
         }).then(function(group){
             console.timeEnd("draw");
