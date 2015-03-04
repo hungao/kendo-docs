@@ -5318,6 +5318,30 @@ Cancels the scheduler event editing. Closes the edit form.
     scheduler.cancelEvent();
     </script>
 
+### data
+
+Gets currently expanded scheduler events.
+
+#### Example - add a new event
+    <div id="scheduler"></div>
+    <script>
+    $("#scheduler").kendoScheduler({
+        views: ["week"]
+    });
+    var scheduler = $("#scheduler").data("kendoScheduler");
+
+    scheduler.addEvent({
+        title: "Example event",
+        start: new Date(),
+        end: new Date(),
+        recurrenceRule: "FREQ=DAILY;COUNT=2"
+    });
+
+    scheduler.saveEvent();
+    //get second occurrence
+    console.log(scheduler.data()[1]);
+    </script>
+
 ### date
 
 Gets or sets the current scheduler date.
@@ -5631,6 +5655,62 @@ Saves the scheduler event which is open in the edit form and closes it.
     scheduler.addEvent({ title: "(No title)" });
     scheduler.saveEvent();
     </script>
+
+### select
+
+Gets or sets the events (or slots) which are selected.
+
+#### Parameters
+
+##### events `Array`
+
+The Uids of events which should be selected. List of the available events can be get using the [data](/api/web/scheduler#methods-select) method.
+
+##### options `Object`
+
+##### options.events `Array`
+
+The Uids of events which should be selected. List of the available events can be get using the [data](/api/web/scheduler#methods-select) method.
+
+##### options.resources `Array`
+
+The resource values (groups) in which the events or slots should be selected.
+
+##### options.start `Date`
+
+The start time from which the selection of the slots begins.
+
+##### options.end `Date`
+
+The end time in which the selection of the slots ends.
+
+##### options.isAllDay `Boolean`
+
+Allows selection of slots in day and time slots of the view (applicable in day/week/workweek views).
+
+#### Example - set the data source
+    <div id="scheduler"></div>
+    <script>
+    $("#scheduler").kendoScheduler({
+      date: new Date("2013/6/6"),
+      selectable: true,
+      dataSource: [
+        {
+          id: 1,
+          start: new Date("2013/6/6 08:00 AM"),
+          end: new Date("2013/6/6 09:00 AM"),
+          title: "Interview"
+        }
+      ]
+    });
+
+    var scheduler = $("#scheduler").data("kendoScheduler");
+
+    //find event for selection:
+    var event = scheduler.data()[0];
+    scheduler.select([event.uid]);
+    </script>
+
 
 ### setDataSource
 
