@@ -111,7 +111,7 @@ The DropTarget widget marks a DOM element as a drop target for a draggable widge
 
 ## Using the Draggable/DropTarget events
 
-The Draggable, DropTarget and DropTargetArea widgets provide various [events](/api/framework/draggable#events) that the developer may use to implement specific business requirements.
+The Draggable, DropTarget and DropTargetArea widgets provide various [events](/api/javascript/ui/draggable#events) that the developer may use to implement specific business requirements.
 
 ### Getting the dragged element corresponding dataItem
 
@@ -416,6 +416,6 @@ The DropTargetArea allows the developer to create multiple DropTarget elements l
 ### Next Steps
 
 - [Online demos](http://demos.telerik.com/kendo-ui/dragdrop/index)
-- [Draggable API reference](/api/framework/draggable)
-- [DropTarget API reference](/api/framework/droptarget)
-- [DropTargetArea API reference](/api/framework/droptargetarea)
+- [Draggable API reference](/api/javascript/ui/draggable)
+- [DropTarget API reference](/api/javascript/ui/droptarget)
+- [DropTargetArea API reference](/api/javascript/ui/droptargetarea)
