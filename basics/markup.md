@@ -63,7 +63,7 @@ More information about the SPA View may be found in the [Buliding Single Page Ap
 
     <script>
         var foo = kendo.observable({
-            dataSource: ['foo', 'bar', 'baz']);
+            dataSource: ['foo', 'bar', 'baz']
         });
 
         new kendo.mobile.Application();
