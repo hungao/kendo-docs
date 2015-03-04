@@ -40,7 +40,7 @@ More information about the SPA View may be found in the [Buliding Single Page Ap
     </div>
 
     <script>
-        kendo.bind($("#container", {
+        kendo.bind($("#container"), {
             source: ['foo', 'bar', 'baz']
         });
     </script>
