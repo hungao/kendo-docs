@@ -255,7 +255,7 @@ $(function(){
                 });
                 (function scaleDownImages(){
                     var unresolved = 0;
-                    $("img").each(function(){
+                    $("img", container).each(function(){
                         if (this.width == 0) {
                             unresolved++;
                         } else {
