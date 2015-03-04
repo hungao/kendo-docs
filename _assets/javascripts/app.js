@@ -215,9 +215,18 @@ $(function(){
         dojoApi.post(snippet);
     });
 
+    if (!window.console) {
+        window.console = {};
+    }
+    if (!console.time) {
+        console.time = function(){};
+        console.timeEnd = function(){};
+    }
+
     var pdfTemplate = kendo.template($("#pdf-page-template").html());
     $("#page-pdf-link").on("click", function(){
         var title, subtitle;
+        console.time("draw");
         kendo.drawing.drawDOM("#page-article article", {
             paperSize : "A4",
             margin    : { top: "3cm", left: "2cm", right: "2cm", bottom: "3cm" },
@@ -239,12 +248,16 @@ $(function(){
                 }).replace(/^\s+/, "");
             }
         }).then(function(group){
+            console.timeEnd("draw");
             var filename = $("h1:first").text();
             if (!filename) {
                 filename = "KendoDocs";
             }
             filename += ".pdf";
-            kendo.drawing.pdf.saveAs(group, filename);
+            console.time("pdf");
+            kendo.drawing.pdf.saveAs(group, filename, "http://kendo.local:7569/", function(){
+                console.timeEnd("pdf");
+            });
         });
     });
 });
