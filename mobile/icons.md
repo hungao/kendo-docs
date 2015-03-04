@@ -194,6 +194,7 @@ To use any image for an icon in Kendo UI Mobile, raise the specificity of the ba
         .km-root .km-pane .km-view .km-custom
         {
             background-image: url("custom.jpg");
+            -webkit-background-clip: border-box;
         }
     </style>
 
@@ -222,7 +223,7 @@ In BBOS 7.0 WebKit masks are completely broken - though they work in BBOS 6.0 an
     <div data-role="tabstrip">
         <a href="#index" data-icon="custom">Home</a>
     </div>
-> **Important:** WebKit masks are now deprecated for Android mobile application, where background: url() should be used instead. WebKit masks can still be used in iOS applications. 
+> **Important:** WebKit masks are now deprecated for Android mobile application, where background: url() should be used instead. WebKit masks can still be used in iOS applications.
 
 In Q3 2012 due to numerous issues with WebKit mask icons, they were deprecated and Kendo UI Mobile introduced font icons. This change requires the usage of additional styling
 to enable the WebKit masks as icons. Please note that the below example will disable all font icons.

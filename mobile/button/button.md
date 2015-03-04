@@ -47,15 +47,15 @@ A Button icon can be set in two ways:
 
 1. By adding an `img` element inside the Button element
 2. By setting a `data-icon` attribute to the Button element
-   
+
 ### Example - using font icons with `data-icon` attribute
 
     <a href="#search" data-role="button" data-icon="search">Search</a>
 
-Kendo UI ships with several ready to use icons. The full list of predefined icons can be seen in the [Icons](./icons) article. 
+Kendo UI ships with several ready to use icons. The full list of predefined icons can be seen in the [Icons](../icons) article.
 
 
 Additional icons may be added by defining the respective CSS class.
 If the `data-icon` attribute is set to `custom`, the button will receive `km-custom` CSS class.
 
-> **Important:** Check the [Icons](./icons) article for more information and how you can use custom icons in Kendo UI.
+> **Important:** Check the [Icons](../icons) article for more information and how you can use custom icons in Kendo UI.

@@ -42,7 +42,7 @@ A tab icon can be set in two ways:
 
 1. By adding an `img` element inside the `a` element
 2. By setting a `data-icon` attribute to the `a` element.
-   
+
 ### Example - using font icons with `data-icon` attribute
 
     <div data-role="tabstrip">
@@ -50,8 +50,8 @@ A tab icon can be set in two ways:
         <a data-icon="featured" href="#featured">Featured</a>
     </div>
 
-Kendo UI ships with several ready to use icons. The full list of predefined icons can be seen in the [Icons](./icons) article.
+Kendo UI ships with several ready to use icons. The full list of predefined icons can be seen in the [Icons](../icons) article.
 
 Additional icons may be added by defining the respective CSS tab class.
 
-> **Important:** Check the [Icons](./icons) article for more information and how you can use custom icons in Kendo UI Mobile.
+> **Important:** Check the [Icons](../icons) article for more information and how you can use custom icons in Kendo UI Mobile.
