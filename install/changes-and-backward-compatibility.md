@@ -46,6 +46,30 @@ previous_url: /changes-and-backward-compatibility
         });
     </script>
 
+* **Grid**
+
+Change in the order of extension of the filterable options in the column menu. Prior to *Q1 2015* version the following configuration does not allow the user to input a second filter criterion.
+
+    <div id="grid"></div>
+
+    <script>
+        $("#grid").kendoGrid({
+          filterable: {
+            extra: false
+          },
+          columnMenu: true,
+          columns: [
+            {
+              field: "foo",
+              filterable: {
+                extra: true
+              }
+            }
+          ],
+          dataSource: [{ foo: "some text" }]
+        });
+    </script>
+
 ## Kendo UI 2014 Q3 SP1
 
 ### Changes from 2014 Q3 (2014.3.1119)
