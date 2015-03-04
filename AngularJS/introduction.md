@@ -62,7 +62,7 @@ angular.module("app", ["kendo.directives"]).controller("MyCtrl", function($scope
 
 Notice an important detail in the example above: the strings `'Increment'` and `'Decrement'` are quoted inside the attribute values.  Without the single inside they will be interpreted as variable names and Angular-Kendo will look for `$scope.Increment` and `$scope.Decrement` variables.  Because omitting the quotes is a common error, Angular-Kendo will emit a warning in the JS console when such variables are not found.
 
-#### Set specific Kendo UI widget optons from controller in AngularJS
+#### Set specific Kendo UI widget options from controller in AngularJS
 ```html
 <div ng-app="app" ng-controller="MyCtrl">
     <input kendo-numerictextbox k-min="1" k-max="10" k-up-arrow-text="textUp" k-down-arrow-text="textDown">
