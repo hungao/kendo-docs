@@ -25,7 +25,7 @@ The example below demonstrates how to create relative content size using CSS 3 f
       <div data-role="footer">
         <div data-role="tabstrip">
           <a href="" data-icon="home">Home</a>
-          <a href="" data-icon="home">Settings</a>
+          <a href="" data-icon="settings">Settings</a>
         </div>
       </div>
     </div>
