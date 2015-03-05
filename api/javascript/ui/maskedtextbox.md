@@ -222,6 +222,30 @@ If set to `true` the widget will not allow user input. If set to `false` the wid
     maskedtextbox.readonly();
     </script>
 
+### raw
+
+Gets the unmasked value of the MaskedTextBox.
+
+#### Returns
+
+`String` The raw value of the widget.
+
+#### Example - get the raw value of the MaskedTextBox
+
+    <input id="maskedtextbox" />
+    <script>
+    $("#maskedtextbox").kendoMaskedTextBox({
+        mask: "(000)-000",
+        value: "(123)-456"
+    });
+
+    var maskedtextbox = $("#maskedtextbox").data("kendoMaskedTextBox");
+
+    var raw = maskedtextbox.raw(); //the result value will be "123456"
+
+    console.log(raw);
+    </script>
+
 ### value
 
 Gets or sets the value of the MaskedTextBox.
