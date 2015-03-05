@@ -577,6 +577,21 @@ The caption of the upload button in the file- or imageBrowser.
     });
     </script>
 
+### messages.editAreaTitle `String` *(default: "Editable area. Press F10 for toolbar.")*
+
+The title of the iframe editing area when a sandboxed editor is used. Used as a hint for screen readers.
+
+#### Example
+
+    <textarea id="editor"></textarea>
+    <script>
+    $("#editor").kendoEditor({
+      messages: {
+        editAreaTitle: "Write your comments here. Press F10 for toolbar."
+      }
+    });
+    </script>
+
 ### messages.orderBy `String` *(default: "Arrange by:")*
 
 The caption of the sorting order in the file- or imageBrowser.
