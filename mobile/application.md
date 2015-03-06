@@ -135,7 +135,7 @@ the application considers the View to be remote, and issues an AJAX request to t
 
 The View content (the first element with `data-role="view"`) is extracted from the AJAX response and appended into the Application DOM element.
 If no element with `data-role="view"` is found, the `body` contents are wrapped in a `<div data-role="view">` tag and used as a remote view.
-If no element with `data-role="view"` is found and no body element is present, the entire response is wrapped in in a `<div data-role="view">` tag and used as a remote view.
+If no element with `data-role="view"` is found and no body element is present, the entire response is wrapped in a `<div data-role="view">` tag and used as a remote view.
 
 Once the remote **View** is fetched, no additional round trips to the server occur when the **View** is displayed again.
 
