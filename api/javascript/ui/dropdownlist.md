@@ -925,7 +925,7 @@ A number representing the index of the item or function predicate which returns 
     var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
 
     dropdownlist.select(function(dataItem) {
-        return dataItem.text === "Apples";
+        return dataItem.name === "Apples";
     });
     </script>
 
