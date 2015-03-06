@@ -6,7 +6,7 @@ description: Easily disable all animations, set the parameters, used for the vis
 
 # kendo.ui.TabStrip
 
-Represents the Kendo UI TabStrip. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI TabStrip. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

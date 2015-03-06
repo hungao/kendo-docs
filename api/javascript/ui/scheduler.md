@@ -6,7 +6,7 @@ description: How to configure and control methods in Scheduler UI widget, which 
 
 # kendo.ui.Scheduler
 
-Represents the Kendo UI Scheduler widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Scheduler widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 
 ## Configuration

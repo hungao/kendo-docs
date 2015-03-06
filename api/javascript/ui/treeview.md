@@ -6,7 +6,7 @@ description: Documentation guide that helps the developer configure TreeView UI 
 
 # kendo.ui.TreeView
 
-Represents the Kendo UI TreeView. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI TreeView. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

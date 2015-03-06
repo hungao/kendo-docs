@@ -6,7 +6,7 @@ description: How to initialize a Window UI widget and configure its behaviors, c
 
 # kendo.ui.Window
 
-Represents the Kendo UI Window. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Window. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

@@ -6,7 +6,7 @@ description: Easy configuration guide for the Range Slider widget and methods to
 
 # kendo.ui.RangeSlider
 
-Represents the Kendo UI RangeSlider widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI RangeSlider widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

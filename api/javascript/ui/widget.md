@@ -4,7 +4,7 @@ title: Widget
 
 # kendo.ui.Widget
 
-Base class of all Kendo UI widgets. Inherits from [Observable](/api/framework/observable).
+Base class of all Kendo UI widgets. Inherits from [Observable](/api/javascript/observable).
 
 ## Methods
 

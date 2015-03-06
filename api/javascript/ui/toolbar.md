@@ -6,7 +6,7 @@ relatedDocs: gs-web-toolbar-overview
 
 # kendo.ui.ToolBar
 
-Represents the Kendo UI ToolBar. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI ToolBar. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

@@ -6,7 +6,7 @@ description: How to configure all animations in ContextMenu UI widget, enable an
 
 # kendo.ui.ContextMenu
 
-Represents the Kendo UI ContextMenu widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI ContextMenu widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

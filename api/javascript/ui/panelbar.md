@@ -6,7 +6,7 @@ description: Configure the PanelBar UI widget, use methods and explore the event
 
 # kendo.ui.PanelBar
 
-Represents the Kendo UI PanelBar widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI PanelBar widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

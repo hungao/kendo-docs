@@ -6,7 +6,7 @@ description: "Learn how to control your DropDown UI widget's behavior to suit yo
 
 # kendo.ui.DropDownList
 
-Represents the Kendo UI DropDownList widget. Inherits from [Widget](framework/widgets/wrapper-element).
+Represents the Kendo UI DropDownList widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

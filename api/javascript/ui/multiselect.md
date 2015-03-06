@@ -5,7 +5,7 @@ page_title: Configuration, methods and events of Kendo UI MultiSelect
 
 # kendo.ui.MultiSelect
 
-Represents the Kendo UI MultiSelect widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI MultiSelect widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

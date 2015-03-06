@@ -6,7 +6,7 @@ description: Code examples for Grid UI widget configuration. Learn how to use me
 
 # kendo.ui.Grid
 
-Represents the Kendo UI Grid widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Grid widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

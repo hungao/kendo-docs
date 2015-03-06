@@ -6,7 +6,7 @@ description: Code examples for Gantt UI widget configuration, learn how to use m
 
 # kendo.ui.Gantt
 
-Represents the Kendo UI Gantt widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Gantt widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

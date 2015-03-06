@@ -5,7 +5,7 @@ page_title: Configuration, methods and events of Kendo UI Sortable
 
 # kendo.ui.Sortable
 
-Represents the Kendo UI Sortable. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Sortable. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

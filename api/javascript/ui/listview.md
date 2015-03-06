@@ -6,7 +6,7 @@ description: Step-by-step instructions and samples for Kendo UI ListView widget 
 
 # kendo.ui.ListView
 
-Represents the Kendo UI ListView widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI ListView widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

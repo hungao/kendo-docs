@@ -6,7 +6,7 @@ description: Learn the configuration options for QRCode widget, set its options,
 
 # kendo.dataviz.ui.QRCode
 
-Represents the Kendo UI QRCode widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI QRCode widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

@@ -6,7 +6,7 @@ description: Code examples for PivotConfigurator UI widget configuration, learn 
 
 # kendo.ui.PivotConfigurator
 
-Represents the Kendo UI PivotConfigurator widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI PivotConfigurator widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

@@ -6,7 +6,7 @@ description: Help guide for proper configuration of Editor UI widget, and how to
 
 # kendo.ui.Editor
 
-Represents the Kendo UI Editor widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Editor widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

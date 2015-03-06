@@ -5,7 +5,7 @@ title: Observable
 
 # kendo.Observable
 
-Provides support for firing events. Inherits from [kendo.Class](/api/framework/class).
+Provides support for firing events. Inherits from [kendo.Class](/api/javascript/class).
 
 ## Methods
 

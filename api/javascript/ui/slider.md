@@ -6,7 +6,7 @@ description: Configuration of Slider UI control, different methods, and events, 
 
 # kendo.ui.Slider
 
-Represents the Kendo UI Slider widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Slider widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

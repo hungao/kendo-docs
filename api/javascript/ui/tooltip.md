@@ -5,7 +5,7 @@ page_title: Configuration, methods and events of Kendo UI Tooltip
 
 # kendo.ui.Tooltip
 
-Represents the Kendo UI Tooltip. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Tooltip. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

@@ -6,7 +6,7 @@ description: Find out how to successfully configure calendar UI component, how t
 
 # kendo.ui.Calendar
 
-Represents the Kendo UI Calendar widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Calendar widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

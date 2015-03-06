@@ -6,7 +6,7 @@ description: How to configure and control methods in Autocomplete UI widget, whi
 
 # kendo.ui.AutoComplete
 
-Represents the Kendo UI AutoComplete widget. Inherits from [Widget](/framework/widgets/wrapper-element).
+Represents the Kendo UI AutoComplete widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 > **Important:** The Kendo UI AutoComplete should be created from an *input* HTML element.
 

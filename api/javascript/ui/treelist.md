@@ -6,7 +6,7 @@ description: Code examples for TreeList UI widget configuration. Learn how to us
 
 # kendo.ui.TreeList
 
-Represents the Kendo UI TreeList widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI TreeList widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

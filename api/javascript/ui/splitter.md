@@ -6,7 +6,7 @@ description: Step by step guide and code examples for successful configuration o
 
 # kendo.ui.Splitter
 
-Represents the Kendo UI Splitter widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Splitter widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

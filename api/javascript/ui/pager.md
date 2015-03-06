@@ -6,7 +6,7 @@ description: 'Configuration steps for the Pager widget and methods for different
 
 # kendo.ui.Pager
 
-Represents the Kendo UI Pager widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Pager widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

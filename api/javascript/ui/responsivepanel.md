@@ -6,7 +6,7 @@ description: Configure the ResponsivePanel UI widget, use methods and explore th
 
 # kendo.ui.ResponsivePanel
 
-Represents the Kendo UI ResponsivePanel widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI ResponsivePanel widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

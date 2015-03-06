@@ -6,7 +6,7 @@ description: Code examples for PivotGrid UI widget configuration, learn how to u
 
 # kendo.ui.PivotGrid
 
-Represents the Kendo UI PivotGrid widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI PivotGrid widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

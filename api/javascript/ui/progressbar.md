@@ -6,7 +6,7 @@ description: How to configure and control Kendo UI ProgressBar widget
 
 # kendo.ui.ProgressBar
 
-Represents the Kendo UI ProgressBar widget. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI ProgressBar widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

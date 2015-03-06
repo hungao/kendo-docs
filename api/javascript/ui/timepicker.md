@@ -6,7 +6,7 @@ description: What type of animations you can use in TimePicker UI widget, find s
 
 # kendo.ui.TimePicker
 
-Represents the Kendo UI TimePicker. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI TimePicker. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

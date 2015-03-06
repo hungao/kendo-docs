@@ -6,7 +6,7 @@ description: How to configure the ability to upload files in an asynchronous man
 
 # kendo.ui.Upload
 
-Represents the Kendo UI Upload. Inherits from [Widget](/api/framework/widget).
+Represents the Kendo UI Upload. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 

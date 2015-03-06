@@ -6,7 +6,7 @@ description: Code examples and tips how to configure MaskedTextBox widget, use a
 
 # kendo.ui.MaskedTextBox
 
-Represents the Kendo UI MaskedTextBox widget. Inherits from [Widget](/framework/widgets/wrapper-element).
+Represents the Kendo UI MaskedTextBox widget. Inherits from [Widget](/api/javascript/ui/widget).
 
 ## Configuration
 
