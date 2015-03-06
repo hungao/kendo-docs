@@ -63,7 +63,7 @@ A reference to an instance of the Kendo UI Mobile Application object can be stor
 The mobile application instantiates and maintains its own routing mechanism based on the [router component](/framework/spa/router), which
 automatically matches and instantiates views when navigating.
 Unlike the [ng-route/ng-view](https://docs.angularjs.org/api/ngRoute) and the [ui-router](https://github.com/angular-ui/ui-router) implementations,
-the mobile application **does not unload** the previous view when navigating to the new one.
+the mobile application **does not unload** the previous view when navigating to the new one. Note that AngularJS routing mechanisms are **not supported**.
 
 ## AngularJS Controllers Support
 
