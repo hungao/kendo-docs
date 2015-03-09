@@ -55,7 +55,7 @@ Several interactive tutorials are available in the [Kendo UI Dojo](http://dojo.t
 ### GitHub Public Example Repositories
 
 -   [ASP.NET MVC examples](https://github.com/telerik/kendo-examples-asp-net-mvc/)
--   [ASP.NET WebForms examples](https://github.com/telerik/kendo-examples-asp.net/)
+-   [ASP.NET WebForms examples](https://github.com/telerik/kendo-examples-asp-net/)
 -   [JSP examples](https://github.com/telerik/kendo-examples-java)
 -   [Kendo Mobile Sushi](https://github.com/telerik/kendo-mobile-sushi)
 -   [PHP examples](https://github.com/telerik/kendo-examples-php)
