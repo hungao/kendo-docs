@@ -226,6 +226,24 @@ $(function(){
     var pdfTemplate = kendo.template($("#pdf-page-template").html());
     $("#page-pdf-link").on("click", function(){
         var title, subtitle;
+        var progressOverlay = $([
+            "<div class='kendo-pdf-progress-overlay'>",
+            "  <div class='kendo-pdf-progress-container'>",
+            "    <div class='kendo-pdf-progress'></div>",
+            "    <div class='kendo-pdf-controls' style='text-align: right; display: none'><button class='k-button kendo-pdf-button-cancel'>Cancel</button></div>",
+            "  </div>",
+            "</div>"
+        ].join("")).appendTo(document.body);
+        var progressBar = $(".kendo-pdf-progress", progressOverlay).kendoProgressBar({
+            animation: false
+        }).data("kendoProgressBar");
+        var canceled = false;
+        $(".kendo-pdf-button-cancel", progressOverlay).click(function(){
+            canceled = true;
+            progressBar.destroy();
+            progressOverlay.remove();
+        });
+        progressBar.progressStatus.text("Performing layout, please wait…");
         console.time("draw");
         kendo.drawing.drawDOM("#page-article article", {
             paperSize : "A4",
@@ -269,6 +287,23 @@ $(function(){
                         callback();
                     }
                 })();
+            },
+            progress: function(args) {
+                if (canceled) {
+                    args.cancel();
+                }
+                else if (args.pageNum) {
+                    if (args.pageNum == 1) {
+                        progressBar.setOptions({ min: args.pageNum, max: args.totalPages });
+                        $(".kendo-pdf-controls", progressOverlay).show();
+                    }
+                    progressBar.value(args.pageNum);
+                    progressBar.progressStatus.text("Drawing page " + args.pageNum + " of " + args.totalPages);
+                    if (args.pageNum == args.totalPages) {
+                        $(".kendo-pdf-controls", progressOverlay).hide();
+                        progressBar.progressStatus.text("Generating PDF… (a few more seconds)")
+                    }
+                }
             }
         }).then(function(group){
             console.timeEnd("draw");
@@ -279,6 +314,10 @@ $(function(){
             filename += ".pdf";
             console.time("pdf");
             kendo.drawing.pdf.saveAs(group, filename, "http://kendo.local:7569/", function(){
+                if (progressBar) {
+                    progressBar.destroy();
+                    $(".kendo-pdf-progress-overlay").remove();
+                }
                 console.timeEnd("pdf");
             });
         });
