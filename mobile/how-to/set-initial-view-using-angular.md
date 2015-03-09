@@ -1,5 +1,5 @@
 ---
-title:Setting initial view prior to initialization in AngularJS
+title: Setting initial view prior to initialization in AngularJS
 page_title: Setting initial view prior to initialization in AngularJS
 description: Setting initial view prior to initialization in AngularJS
 ---
