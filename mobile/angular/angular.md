@@ -32,32 +32,6 @@ context, The mobile views support AngularJS controllers, directives and two way 
 
 By default, the `kendo-mobile-application` directive should be set to the `body` element with the `ng-app` one.
 
-### Kendo UI Mobile Application Instance
-
-A reference to an instance of the Kendo UI Mobile Application object can be stored on the `$rootScope` by setting the value of the `kendo-mobile-application` attribute.
-
-    <body kendo-mobile-application="mobileApp" ng-app="foo">
-        <kendo-mobile-view ng-controller="mine" k-title="'My Title'" k-layout="'default'">
-            <kendo-mobile-header>
-                <kendo-mobile-nav-bar>
-                    <kendo-view-title></kendo-view-title>
-                </kendo-mobile-nav-bar>
-            </kendo-mobile-header>
-
-            {{hello}}
-        </kendo-mobile-view>
-
-        <script>
-            angular.module("foo", [ "kendo.directives" ])
-                .controller("main", ["$rootScope", "$scope", function($rootScope, $scope) {
-                    $scope.hello = "Hello World!";
-
-                    // show the application loader animation
-                    $rootScope.mobileApp.showLoading();
-                });
-        </script>
-    </body>
-
 ## Routing Integration
 
 The mobile application instantiates and maintains its own routing mechanism based on the [router component](/framework/spa/router), which
