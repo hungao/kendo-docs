@@ -20,6 +20,8 @@ The following runnable sample demonstrates how to use custom editor outside the 
     <div id="validator">
       <div id="grid"></div>
     </div>
+    
+    <script src="http://demos.telerik.com/kendo-ui/content/shared/js/products.js"></script>
     <script>
       $(document).ready(function () { 
 
