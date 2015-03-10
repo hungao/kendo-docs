@@ -7695,7 +7695,7 @@ The widget instance which fired the event.
 
 The array of data items used to create the Excel workbook. Available since version 2014.3.1205.
 
-##### e.workbook `Object`
+##### e.workbook `kendo.ooxml.Workbook`
 
 The Excel [workbook configuration object](/api/javascript/ooxml/workbook#configuration). Used to initialize a `kendo.ooxml.Workbook` class. Modifications of the workbook will reflect in the output Excel document.
 

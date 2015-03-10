@@ -5,6 +5,14 @@ page_title: Configuration and methods of kendo.ooxml.Workbook
 
 # kendo.ooxml.Workbook
 
+## Fields
+
+### sheets `Array`
+
+The sheets of the workbook. Every sheet represents a page from the final Excel file.
+
+See [sheets configuration](#configuration-sheets).
+
 ## Configuration
 
 ### creator `String` *(default: "Kendo UI")*

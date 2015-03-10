@@ -480,7 +480,7 @@ The content of the Window.
 
 #### Returns
 
-`kendo.ui.Window` If the content parameter is provided, this method will return the widget object to support chaining. Otherwise, it will return the current content of the widget.
+`Object` If the content parameter is provided, this method will return the widget object to support chaining. Otherwise, it will return the current content of the widget.
 
 #### Example - get the window content
 
