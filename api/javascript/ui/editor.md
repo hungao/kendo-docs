@@ -1828,6 +1828,21 @@ If function is assigned, the current path and image name will be provided.
     });
     </script>
 
+#### Example - thumbnailUrl as a function
+
+    <textarea id="editor"></textarea>
+    <script>
+    $("#editor").kendoEditor({
+      imageBrowser: {
+        transport: {
+          thumbnailUrl: function(path, file) {
+            return "/thumbnail?path=" + path + file;
+          }
+        }
+      }
+    });
+    </script>
+
 ### imageBrowser.transport.uploadUrl `String`
 
 The URL which will handle the upload of the new images. If not specified the Upload button will not be displayed.
