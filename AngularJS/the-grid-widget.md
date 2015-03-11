@@ -19,6 +19,18 @@ If you assign a `k-on-change` event handler, it will be evaluated in a scope con
 
 - `data` — the selected data items (array of models);
 
+> Note: `selected` is a jQuery object which references DOM elements.  As of AngularJS 1.2.24 this is disallowed in
+> template expressions “[for security reasons](https://docs.angularjs.org/error/$parse/isecdom)”.  The following will
+> *not* work with Angular 1.2.24:
+>
+>     k-on-change="myChangeHandler(selected)"
+>
+> The workaround is to pass it in an object or in an array, for example:
+>
+>     k-on-change="myChangeHandler({ selected: selected })"
+>
+> Obviously, the handler function needs to take that into account.
+
 When the grid is not in multiple selection mode, the `data` above will not be an array but a single data item, and that item is also accessible as `dataItem`.
 
 When cell selection is allowed, an additional `columns` variable will be present. It is an array containing the indexes of the columns where cells are selected.
