@@ -24,7 +24,6 @@ The following tutorial shows how to scaffold a Kendo UI Grid for ASP.NET MVC usi
     - First enter the Controller and View names.
 ![Grid options](/aspnet-mvc/helpers/grid/images/scaffolding/kendo_ui_grid1.png)
     - The **Model Class** DropDownList will contain all model types from the active project. Select the **Product** class in order to list the available products in the Grid.
-
 ![Model Class](/aspnet-mvc/helpers/grid/images/scaffolding/model_class.png)
 
     - Select the **Entity Framework Data Model** class to be used from the **Data Context Class** DropDownList. In this example it is **NorthwindEntities**.
