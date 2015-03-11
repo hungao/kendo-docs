@@ -10,6 +10,57 @@ Represents the Kendo UI Grid widget. Inherits from [Widget](/api/javascript/ui/w
 
 ## Configuration
 
+### allowCopy `Boolean|Object` *(default: false)*
+
+If set to `true` and selection of the Grid is enabled the user could copy the selection into the clipboard and paste it into Excel or other similar programs that understand TSV/CSV formats. By default allowCopy is disabled and the default format is TSV.
+Can be set to a JavaScript object which represents the allowCopy configuration.
+
+#### Example - enable allowCopy
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoGrid({
+        selectable: "multiple cell",
+        allowCopy: true,
+        columns: [
+            { field: "productName" },
+            { field: "category" }
+        ],
+        dataSource: [
+            { productName: "Tea", category: "Beverages" },
+            { productName: "Coffee", category: "Beverages" },
+            { productName: "Ham", category: "Food" },
+            { productName: "Bread", category: "Food" }
+        ]
+    });
+    </script>
+
+### allowCopy.delimeter `String|Object` *(default: "\t")*
+
+Changes the delimeter between the items on the same row. Use this option if you want to change the default TSV format to CSV - set the delimeter to comma ','.
+
+#### Example - change the clipboard format from default TSV to CSV
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoGrid({
+        selectable: "multiple cell",
+        allowCopy: {
+            delimeter: ",",
+        },
+        columns: [
+            { field: "productName" },
+            { field: "category" }
+        ],
+        dataSource: [
+            { productName: "Tea", category: "Beverages" },
+            { productName: "Coffee", category: "Beverages" },
+            { productName: "Ham", category: "Food" },
+            { productName: "Bread", category: "Food" }
+        ]
+    });
+    </script>
+
 ### altRowTemplate `String|Function`
 
 The [template](/api/framework/kendo#methods-template) which renders the alternating table rows. Be default the grid renders a table row (`<tr>`) for every data source item.
