@@ -21,13 +21,11 @@ The following tutorial shows how to scaffold a Kendo UI Grid for ASP.NET MVC usi
 ![Kendo UI Scaffolder](/aspnet-mvc/images/scaffolding/kendo_ui_scaffolder.png)
 
 4.  On the next screen you will be presented with the Model and Data Context options.
-    - First enter the Controller and View names.
+    - First enter the Controller and View names.  
 ![Grid options](/aspnet-mvc/helpers/grid/images/scaffolding/kendo_ui_grid1.png)
-    - The **Model Class** DropDownList will contain all model types from the active project. Select the **Product** class in order to list the available products in the Grid.
+    - The **Model Class** DropDownList will contain all model types from the active project. Select the **Product** class in order to list the available products in the Grid.  
 ![Model Class](/aspnet-mvc/helpers/grid/images/scaffolding/model_class.png)
-
-    - Select the **Entity Framework Data Model** class to be used from the **Data Context Class** DropDownList. In this example it is **NorthwindEntities**.
-
+    - From the **Data Context Class** DropDownList you could select the **Entity Framework Data Model** class to be used. In this example it is **NorthwindEntities**.  
 ![Data Context Class](/aspnet-mvc/helpers/grid/images/scaffolding/data_context_class.png)
 
 5. This step is optional. In some scenarios it is convenient to use view model objects instead of the entities returned by Entity Framework. If this is the case, check the **Use an existing ViewModel** checkbox. This will present you with a DropDownList similar to the first one, from which you could select the ViewModel to be used.
@@ -39,14 +37,12 @@ The following tutorial shows how to scaffold a Kendo UI Grid for ASP.NET MVC usi
 	            public string ProductName { get; set; }
 	            public short? UnitsInStock { get; set; }
 	        }
-    - Select the **ProductViewModel** class from the **ViewModel Class** DropDownList.
-
-![ViewModel Class](/aspnet-mvc/helpers/grid/images/scaffolding/view_model_class.png)
-
+    - Select the **ProductViewModel** class from the **ViewModel Class** DropDownList.  
+    ![ViewModel Class](/aspnet-mvc/helpers/grid/images/scaffolding/view_model_class.png)
 		> It is important that the names of the properties in the ViewModel are exactly the same as the corresponding ones in the Entity. Otherwise the Kendo UI Scaffolder won't be able to link them correctly.
 
-6. Click the **Grid options** item on the left.
-![Grid options](/aspnet-mvc/helpers/grid/images/scaffolding/kendo_ui_grid2.png)
+6. Click the **Grid options** item on the left.  
+![Grid options](/aspnet-mvc/helpers/grid/images/scaffolding/kendo_ui_grid2.png)  
 This screen contains the Grid functionalities that could be configured before scaffolding:
     - DataSource Type - Ajax, Server or WebApi.
     - Editable - Enable the editing, configure the edit mode (InLine, InCell or PopUp) and the operations to be included (Create, Update, Destroy).
@@ -61,7 +57,10 @@ This screen contains the Grid functionalities that could be configured before sc
     - Excel Export - Enable the Excel export functionality.
     - PDF Export - Enable the PDF export functionality.
 
-7. Click the **Events** item on the left.
-![Grid options](/aspnet-mvc/helpers/grid/images/scaffolding/kendo_ui_grid3.png)
+7. Click the **Events** item on the left.  
+![Grid options](/aspnet-mvc/helpers/grid/images/scaffolding/kendo_ui_grid3.png)  
 From this screen you could select the Grid events that you would like to attach handlers to.
-> Note that not all events are supported in server binding mode. The complete list could be found [here](/aspnet-mvc/helpers/grid/server-binding#client-side-events-and-server-binding).
+
+	> Note that not all events are supported in server binding mode. The complete list could be found [here](/aspnet-mvc/helpers/grid/server-binding#client-side-events-and-server-binding).
+
+8. When finished with the Grid configuration, click the **Add** button at the bottom. The Grid Controller and the corresponding View will be generated.
