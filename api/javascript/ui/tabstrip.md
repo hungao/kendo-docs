@@ -674,7 +674,7 @@ Inserts a newly-created tab after a specified tab.
                 text: "Item 5",
                 spriteCssClass: "imageClass3"               // Item image sprite CSS class, optional.
             }],
-            tabStrip.tabGroup.eq(0)
+            tabStrip.tabGroup.children().eq(0)
         );
     </script>
 
