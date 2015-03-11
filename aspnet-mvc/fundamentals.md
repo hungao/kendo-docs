@@ -2,7 +2,7 @@
 title: Fundamentals
 page_title: Telerik UI for ASP.NET MVC Fundamentals
 description: Kendo UI server-side wrappers, configuration, fluent interface, initialization
-position: 0
+position: -1
 ---
 # Telerik UI for ASP.NET MVC Fundamentals
 

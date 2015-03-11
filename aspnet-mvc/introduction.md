@@ -2,7 +2,7 @@
 title: Introduction
 page_title: Introduction to Telerik UI for ASP.NET MVC
 description: How to download, install Telerik UI for ASP.NET MVC and run the sample application.
-position: -1
+position: -2
 ---
 
 # Telerik UI for ASP.NET MVC
@@ -60,6 +60,7 @@ The Telerik UI for ASP.NET MVC contains the following directories.
 * **wrappers\aspnetmvc\Examples\VS2013**- ASP.NET MVC 5 sample application built with Visual Studio 2013.
 * **wrappers\aspnetmvc\EditorTemplates**- ready-to-use editor templates based on the Kendo UI widgets.
 * **wrappers\aspnetmvc\LegacyThemes** - themes ported from Telerik Extensions for ASP.NET MVC (discontinued product superseded by Telerik UI for ASP.NET MVC).
+* **wrappers\aspnetmvc\Scaffolding** - Kendo UI Scaffolder Visual Studio extension. Enables generating Kendo UI MVC wrapper widgets declarations inside Visual Studio projects. Added in Q1 2015 release.
 
 ## Sample application
 
@@ -95,6 +96,7 @@ The sample application Visual Studio solution contains the following.
 After you run the sample application you can continue with the following articles.
 
 * [Fundamentals](/aspnet-mvc/fundamentals)
+* [Scaffolding](/aspnet-mvc/scaffolding)
 * [Using Telerik UI for ASP.NET MVC in MVC 3 application](/aspnet-mvc/asp-net-mvc-3)
 * [Using Telerik UI for ASP.NET MVC in MVC 4 application](/aspnet-mvc/asp-net-mvc-4)
 * [Using Telerik UI for ASP.NET MVC in MVC 5 application](/aspnet-mvc/asp-net-mvc-5)
