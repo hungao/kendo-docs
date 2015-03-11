@@ -39,6 +39,7 @@ The following tutorial shows how to scaffold a Kendo UI Grid for ASP.NET MVC usi
 	        }
     - Select the **ProductViewModel** class from the **ViewModel Class** DropDownList.  
     ![ViewModel Class](/aspnet-mvc/helpers/grid/images/scaffolding/view_model_class.png)
+
 		> It is important that the names of the properties in the ViewModel are exactly the same as the corresponding ones in the Entity. Otherwise the Kendo UI Scaffolder won't be able to link them correctly.
 
 6. Click the **Grid options** item on the left.  
