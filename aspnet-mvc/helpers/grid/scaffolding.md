@@ -23,7 +23,7 @@ The following tutorial shows how to scaffold a Kendo UI Grid for ASP.NET MVC usi
 4.  On the next screen you will be presented with the Model and Data Context options.
     - First enter the Controller and View names.  
 ![Grid options](/aspnet-mvc/helpers/grid/images/scaffolding/kendo_ui_grid1.png)
-    - The **Model Class** DropDownList will contain all model types from the active project. Select the **Product** class in order to list the available products in the Grid.  
+    - The **Model Class** DropDownList will contain all model types from the active project. In this example we will list products in the Grid. Select the **Product** entity.  
 ![Model Class](/aspnet-mvc/helpers/grid/images/scaffolding/model_class.png)
     - From the **Data Context Class** DropDownList you could select the **Entity Framework Data Model** class to be used. In this example it is **NorthwindEntities**.  
 ![Data Context Class](/aspnet-mvc/helpers/grid/images/scaffolding/data_context_class.png)
@@ -46,15 +46,19 @@ The following tutorial shows how to scaffold a Kendo UI Grid for ASP.NET MVC usi
 ![Grid options](/aspnet-mvc/helpers/grid/images/scaffolding/kendo_ui_grid2.png)  
 This screen contains the Grid functionalities that could be configured before scaffolding:
     - DataSource Type - Ajax, Server or WebApi.
-    - Editable - Enable the editing, configure the edit mode (InLine, InCell or PopUp) and the operations to be included (Create, Update, Destroy).
-    - Filterable - Enable the filtering of the Grid and select the filter mode.
+    - Editable - Enable the editing, configure the edit mode (InLine, InCell or PopUp) and the operations to be included (Create, Update, Destroy).  
+![Editable options](/aspnet-mvc/helpers/grid/images/scaffolding/editable.png)  
+    - Filterable - Enable the filtering of the Grid and select the filter mode.  
+![Filterable options](/aspnet-mvc/helpers/grid/images/scaffolding/filterable.png)  
     - Column Menu - Enable the column menu.
     - Navigatable = Enable the keyboard navigation.
     - Pageable - Enable the paging of the Grid.
     - Reorderable - Enable the column reording.
     - Scrollable - Enable the scrolling of the Grid table.
-    - Selectable - Enable the selection and specify the selection **mode** and **type**.
-    - Sortable - Enable the sorting and specify the sorting **mode**.
+    - Selectable - Enable the selection and specify the selection **mode** and **type**.  
+![Selectable options](/aspnet-mvc/helpers/grid/images/scaffolding/selectable.png)  
+    - Sortable - Enable the sorting and specify the sorting **mode**.  
+![Sortable options](/aspnet-mvc/helpers/grid/images/scaffolding/sortable.png)  
     - Excel Export - Enable the Excel export functionality.
     - PDF Export - Enable the PDF export functionality.
 
