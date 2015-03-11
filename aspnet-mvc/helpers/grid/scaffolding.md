@@ -48,10 +48,10 @@ This screen contains the Grid functionalities that could be configured before sc
     - DataSource Type - Ajax, Server or WebApi.
     - Editable - Enable the editing, configure the edit mode (InLine, InCell or PopUp) and the operations to be included (Create, Update, Destroy).  
 ![Editable options](/aspnet-mvc/helpers/grid/images/scaffolding/editable.png)  
-    - Filterable - Enable the filtering of the Grid and select the filter mode.  
+    - Filterable - Enable the filtering of the Grid and select the filter **mode**.  
 ![Filterable options](/aspnet-mvc/helpers/grid/images/scaffolding/filterable.png)  
     - Column Menu - Enable the column menu.
-    - Navigatable = Enable the keyboard navigation.
+    - Navigatable - Enable the keyboard navigation.
     - Pageable - Enable the paging of the Grid.
     - Reorderable - Enable the column reording.
     - Scrollable - Enable the scrolling of the Grid table.
