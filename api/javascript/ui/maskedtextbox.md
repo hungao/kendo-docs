@@ -120,6 +120,23 @@ Defines an object of custom mask rules.
     });
     </script>
 
+### unmaskOnPost `Boolean`*(default: false)*
+
+Specifies whether the widget will unmask the input value on form post (available since Q1 2015).
+
+#### Example - unmask value on form post
+
+    <form>
+        <input id="maskedtextbox" />
+        <button>Post</button>
+    </form>
+    <script>
+    $("#maskedtextbox").kendoMaskedTextBox({
+        mask: "000000",
+        unmaskOnPost: true
+    });
+    </script>
+
 ### value `String`*(default: "")*
 
 Specifies the value of the MaskedTextBox widget.
