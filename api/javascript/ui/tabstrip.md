@@ -221,7 +221,7 @@ Specifies whether the TabStrip should be able to collapse completely when clicki
 
 ### contentUrls `Array`
 
-Sets an array with the URLs from which the tabs content to be loaded from. If only specific tabs should be loaded via Ajax, then you should set the URLs to the corresponding positions in the array and set the other elements to null.   
+Sets an array with the URLs from which the tabs content to be loaded from. If only specific tabs should be loaded via Ajax, then you should set the URLs to the corresponding positions in the array and set the other elements to null.
 
 #### Example - specify that the second tab should be loaded remotely
 
@@ -730,7 +730,7 @@ Inserts a newly-created tab before a specified tab.
                 text: "Item 5",
                 spriteCssClass: "imageClass3"               // Item image sprite CSS class, optional.
             }],
-            tabStrip.tabGroup.eq(0)
+            tabStrip.tabGroup.children().eq(0)
         );
     </script>
 
@@ -882,7 +882,7 @@ Sets the data source of the widget.
       var dataSource = kendo.data.DataSource.create([
         { label: "Label", content: "Content" }
       ])
-      
+
       $("#tabstrip").data("kendoTabStrip").setDataSource(dataSource);
     </script>
 
