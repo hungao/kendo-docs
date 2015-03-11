@@ -12,6 +12,7 @@ Kendo UI Grid can export its data as Excel document since the Q3 2014 (2014.3.11
 - [How To](#how-to)
     - [Export All Data](#export-all-data)
     - [Customize the Excel Document](#customize-the-excel-document)
+    - [RTL](#rtl)
     - [Column Templates](#column-templates)
     - [Column Format](#column-format)
     - [Detail Template](#detail-template)
@@ -115,6 +116,47 @@ The `workbook` event argument exposes the generated Excel workbook configuration
 To understand how Excel documents work check the [Excel Introduction](/framework/excel/introduction#create-excel-document) help topic.
 
 The [Color Alternating Rows](/web/grid/how-to/excel/alternating-rows) tutorial shows one way to customize the generated Excel document.
+
+### RTL
+
+The [excelExport](/api/javascript/ui/grid#events-excelExport) event allows reversing the cells and setting the text alignment in order to support right-to-left languages.
+
+#### Example - RTL export
+```html
+<div class="k-rtl">
+  <div id="grid" ></div>
+</div>
+<script>
+  $("#grid").kendoGrid({
+    toolbar: ["excel"],
+    excel: {
+      allPages: true
+    },
+    dataSource: {
+      type: "odata",
+      transport: {
+        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+      },
+      pageSize: 7
+    },
+    excelExport: function(e) {
+      var sheet = e.workbook.sheets[0];
+      for (var i = 0; i < sheet.rows.length; i++) {
+        sheet.rows[i].cells.reverse();
+        for (var ci = 0; ci < sheet.rows[i].cells.length; ci++) {
+          sheet.rows[i].cells[ci].hAlign = "right";
+        }
+      }
+    },
+    pageable: true,
+    columns: [
+      { width: 300, field: "ProductName", title: "Product Name" },
+      { field: "UnitsOnOrder", title: "Units On Order" },
+      { field: "UnitsInStock", title: "Units In Stock" }
+    ]
+  });
+</script>
+```
 
 ### Column Templates
 
