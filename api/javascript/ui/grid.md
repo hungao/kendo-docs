@@ -1289,6 +1289,26 @@ prevent the user from locking or unlocking this column using the user interface.
     });
     </script>
 
+### columns.minScreenWidth `Number`
+
+The width in pixels below which the column will become hidden.
+
+#### Example - lockable columns
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoGrid({
+      columns: [
+        { field: "id", width: 250, minScreenWidth: 500 }, //column will become hidden if screen size is less than 500px
+        { field: "name", width: 250 }, //column will always be visible
+        { field: "age", width: 250, minScreenWidth: 750 } //column will become hidden if screen size is less than 750px
+      ],
+      dataSource: [
+          { id: 1, name: "Jane Doe", age: 31, city: "Boston" },
+          { id: 2, name: "John Doe", age: 55, city: "New York" }
+      ]
+    });
+    </script>
+
 ### columns.sortable `Boolean|Object` *(default: true)*
 
 If set to `true` the user can click the column header and sort the grid by the column [field](#configuration-columns.field) when sorting is enabled. If set to `false` sorting will
