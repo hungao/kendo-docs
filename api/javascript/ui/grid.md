@@ -936,6 +936,27 @@ populated at the time the template function is called, if the Grid uses remote b
             dataSource: [ { color: "#ff0000", size: 30 }, { color: "#000000", size: 33 }] });
     </script>
 
+### columns.filterable.multi `Object` *(default: false)*
+
+Use this options to enable the MultiCheck filtering support for that column.
+
+> If you have enabled the columns.multi option and your Grid uses serverPaging (or ServerOperations(true) if using the MVC wrappers) you need to provide columns.filterable.dataSource. If columns.filterable.dataSource is not provided bad performance.
+
+#### Example - enable checkbox filtering support.
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoGrid({
+      columns: [ {
+        field: "country",
+        filterable: {
+            multi:true
+        }
+      } ],
+    filterable: true,
+      dataSource: [ { country: "BG" }, { country: "USA" } ]
+    });
+    </script>
+
 ### columns.filterable.dataSource `Object`
 
 The dataSource configuration for the items that will be used when [columns.filterable.multi](#configuration-columns.filterable.multi) is enabled.
@@ -947,8 +968,8 @@ The dataSource configuration for the items that will be used when [columns.filte
       columns: [ {
         field: "country",
         filterable: {
-        multi:true,
-          dataSource: [{country: "BG"},{country: "GRM"}, {country: "USA"}]
+            multi:true,
+            dataSource: [{country: "BG"},{country: "GRM"}, {country: "USA"}]
         }
       } ],
     filterable: true,
