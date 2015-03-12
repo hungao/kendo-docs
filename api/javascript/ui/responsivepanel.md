@@ -82,6 +82,33 @@ Specifies the direction from which the hidden element will open up, once the tog
         });
     </script>
 
+### toggleButton `String` *(default: ".k-rpanel-toggle")*
+
+Specifies the selector for the toggle button that will show and hide the responsive panel.
+
+#### Example
+
+    <header>
+        <button class="toggle-button"><span class="k-icon k-i-hbars"></span></button>
+        Logo
+    </header>
+
+    <nav id="navigation">
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+    </nav>
+
+    <article>
+        Content
+    </article>
+
+    <script>
+        $("#navigation").kendoResponsivePanel({
+            orientation: "top",
+            toggleButton: "toggle-button"
+        });
+    </script>
+
 ## Methods
 
 ### close
