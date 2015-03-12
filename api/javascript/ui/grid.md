@@ -936,7 +936,7 @@ populated at the time the template function is called, if the Grid uses remote b
             dataSource: [ { color: "#ff0000", size: 30 }, { color: "#000000", size: 33 }] });
     </script>
 
-### columns.filterable.multi `Object` *(default: false)*
+### columns.filterable.multi `Boolean` *(default: false)*
 
 Use this options to enable the MultiCheck filtering support for that column.
 
