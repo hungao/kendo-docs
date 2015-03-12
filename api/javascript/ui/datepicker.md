@@ -298,9 +298,9 @@ The template used for rendering cells in the "month" view, which are outside the
 ### parseFormats `Array`
 
  Specifies a list of date formats used to parse the value set with `value()` method or by direct user input. If not set the value of the format will be used.
- Note that format option is always used parsing process.
+ Note that the `format` option is always used during parsing.
 
- > Order of the provided parse formats is important and it should from stricter to less strict.
+ > The order of the provided parse formats is important and it should go from more strict to less strict.
 
 #### Example
 
