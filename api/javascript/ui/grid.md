@@ -2900,7 +2900,7 @@ The text of the value item in filter menu (available in mobile mode only).
 
 The label used for the check-all checkbox.
 
-#### Example - provide custom DataSource for the FilterMultiCheck filtering.
+#### Example - change the checkAll default message.
      <div id="grid"></div>
     <script>
       $("#grid").kendoGrid({
