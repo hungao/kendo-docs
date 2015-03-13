@@ -7358,7 +7358,11 @@ The action that caused the dataBinding event
 
 ##### e.index `Number`
 
+Available if the action is add or remove. Show the index of the added/removed element.
+
 ##### e.items `Array`
+
+The array of items that shows the elements that are going to be added/removed from the widget dataSource.
 
 
 #### Example - subscribe to the "dataBinding" event before initialization
