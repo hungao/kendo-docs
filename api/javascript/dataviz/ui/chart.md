@@ -10459,6 +10459,48 @@ By default chart series highlighting is enabled.
     });
     </script>
 
+### series.highlight.visual `Function`
+
+A function that can be used to set custom visual for the point highlight.
+
+The available argument fields are:
+
+* createVisual - a function that can be used to get the default highlight visual.
+* rect - the `kendo.geometry.Rect` that defines where the visual should be rendered.
+* visual - the visual element that should be highlighted.
+* options - the point options.
+* category - the point category.
+* dataItem - the point dataItem.
+* value - the point value.
+* series - the point series.
+* percentage - the point value represented as a percentage value. Available only for donut, pie and 100% stacked charts.
+* runningTotal - the sum of point values since the last "runningTotal" [summary point](#configuration-series.summaryField). Available for waterfall series.
+* total - the sum of all previous series values. Available for waterfall series.
+
+#### Example - use custom highlight visual
+
+    <div id="chart"></div>
+    <script>
+      $("#chart").kendoChart({
+        series: [ {
+          type: "area",
+          data: [1, 2, 3],
+          highlight: {
+            visual: function(e) {
+              var center = e.rect.center();
+              var circleGeometry = new kendo.geometry.Circle(center, 10);
+              var circle = new kendo.drawing.Circle(circleGeometry, {
+                fill: {
+                  color: "red"
+                }
+              });
+              return circle;
+            }
+          }
+        }]
+      });
+    </script>
+
 ### series.holeSize `Number`
 
 The diameter of the donut hole in pixels.
