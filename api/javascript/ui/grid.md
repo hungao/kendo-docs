@@ -7358,7 +7358,7 @@ The action that caused the dataBinding event
 
 ##### e.index `Number`
 
-Available if the action is add or remove. Show the index of the added/removed element.
+Available if the action is add or remove. Shows the index of the added/removed element.
 
 ##### e.items `Array`
 
