@@ -68,7 +68,7 @@ where more information can be found.
 
 ## Scripts or stylesheets do not load from the Kendo UI CDN
 
-Please refer to [Kendo UI CDN Fallback and Troubleshooting](/javascript-dependencies#cdn-fallback-and-troubleshooting).
+Please refer to [Kendo UI CDN Fallback and Troubleshooting](/install/cdn#cdn-fallback-and-troubleshooting).
 
 ## The widget object is undefined after loading a page through AJAX
 
