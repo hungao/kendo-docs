@@ -5428,6 +5428,33 @@ The chart legend configuration options.
     });
     </script>
 
+### legend.align `String` *(default: "center")*
+
+The legend horizontal alignment when the [legend.position](#configuration-legend.position) is "top" or "bottom" and the vertical alignment when the [legend.position](#configuration-legend.position) is "left" or "right".
+
+The supported values are:
+
+* "start" - the legend is aligned to the start.
+
+* "center" - the legend is aligned to the center.
+
+* "end" - the legend is aligned to the end.
+
+#### Example - set the chart legend alignment to start
+
+    <div id="chart"></div>
+    <script>
+    $("#chart").kendoChart({
+      legend: {
+        align: "start"
+      },
+      series: [
+        { name: "Series 1", data: [1, 2, 3] },
+        { name: "Series 2", data: [3, 4, 5] }
+      ]
+    });
+    </script>
+
 ### legend.background `String` *(default: "white")*
 
 The background color of the legend. Accepts a valid CSS color string, including hex and rgb.
@@ -5571,9 +5598,9 @@ The width of the border in pixels. By default the border width is set to zero wh
 
 ### legend.height `Number`
 
-The legend height when the [legend.position](#configuration-legend.position) is set to "custom" and the [legend.orientation](#configuration-legend.orientation) is set to "vertical".
+The legend height when the [legend.orientation](#configuration-legend.orientation) is set to "vertical".
 
-#### Example - set the chart legend height
+#### Example - set the chart legend height for custom positioned legend
 
     <div id="chart"></div>
     <script>
@@ -5581,6 +5608,23 @@ The legend height when the [legend.position](#configuration-legend.position) is 
       legend: {
         position: "custom",
         orientation: "vertical",
+        height: 50
+      },
+      series: [
+        { name: "Series 1", data: [1, 2, 3] },
+        { name: "Series 2", data: [3, 4, 5] },
+        { name: "Series 3", data: [6, 7, 8] }
+      ]
+    });
+    </script>
+
+#### Example - set the chart legend height for legend with predefined position
+
+    <div id="chart"></div>
+    <script>
+    $("#chart").kendoChart({
+      legend: {
+        position: "left",
         height: 50
       },
       series: [
@@ -6339,7 +6383,7 @@ A negative value will move the legend upwards from its current position.
 
 ### legend.orientation `String` *(default: "vertical")*
 
-The orientation of the legend items when the position [legend.position](#configuration-legend.position) is set to "custom".
+The orientation of the legend items.
 
 The supported values are:
 
@@ -6347,13 +6391,30 @@ The supported values are:
 
 * "horizontal" - the legend items are added horizontally.
 
-#### Example - set horizontal orientation to the chart legend
+#### Example - set horizontal orientation for custom positioned legend
 
     <div id="chart"></div>
     <script>
     $("#chart").kendoChart({
       legend: {
         position: "custom",
+        orientation: "horizontal"
+      },
+      series: [
+        { name: "Series 1", data: [1, 2, 3] },
+        { name: "Series 2", data: [3, 4, 5] },
+        { name: "Series 3", data: [6, 7, 8] }
+      ]
+    });
+    </script>
+
+#### Example - set horizontal orientation for legend with predefined position
+
+    <div id="chart"></div>
+    <script>
+    $("#chart").kendoChart({
+      legend: {
+        position: "left",
         orientation: "horizontal"
       },
       series: [
@@ -6510,9 +6571,9 @@ If set to `true` the chart will display the legend. By default the chart legend 
 
 ### legend.width `Number`
 
-The legend width when the [legend.position](#configuration-legend.position) is set to "custom" and the [legend.orientation](#configuration-legend.orientation) is set to "horizontal".
+The legend width when the [legend.orientation](#configuration-legend.orientation) is set to "horizontal".
 
-#### Example - set the chart legend width
+#### Example - set the chart legend width for custom positioned legend
 
     <div id="chart"></div>
     <script>
@@ -6520,6 +6581,23 @@ The legend width when the [legend.position](#configuration-legend.position) is s
       legend: {
         position: "custom",
         orientation: "horizontal",
+        width: 200
+      },
+      series: [
+        { name: "Series 1", data: [1, 2, 3] },
+        { name: "Series 2", data: [3, 4, 5] },
+        { name: "Series 3", data: [6, 7, 8] }
+      ]
+    });
+    </script>
+
+#### Example - set the chart legend width for legend with predefined position
+
+    <div id="chart"></div>
+    <script>
+    $("#chart").kendoChart({
+      legend: {
+        position: "top",
         width: 200
       },
       series: [
