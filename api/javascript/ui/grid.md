@@ -957,7 +957,7 @@ Use this options to enable the MultiCheck filtering support for that column.
     });
     </script>
 
-### columns.filterable.dataSource `Object`
+### columns.filterable.dataSource `Object|Array|kendo.data.DataSource`
 
 The dataSource configuration for the items that will be used when [columns.filterable.multi](#configuration-columns.filterable.multi) is enabled.
 
