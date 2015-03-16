@@ -2639,21 +2639,50 @@ Saves any changes made by the user.
 
 ### select
 
-Gets the currently selected items is no parameter is specified. If a parameter is specified this selects items in the diagram on the basis of the given input.
+Gets or sets the selected elements.
 
 #### Parameters
 
-##### obj `Object`
+##### elements `kendo.dataviz.diagram.Connection|kendo.dataviz.diagram.Shape|Array`
 
-* a **Boolean** value: if true then all items are selected, if false all items are deselected
-* a **rectangle**: any diagram items which overlaps with the given rectangle will be selected
-* a **string**: if "none" then all will be deselected, if "all" then all items will be selected
-* an **array**: the array of items to be selected
-* a **diagram item**: the item to be selected
+The diagram element(s) that should be selected.
 
 ##### options `Object`
 
-Only one Boolean option is currently defined; addToSelection. If set to true the newly selected items will be added to the existing selection. Otherwise a new selection set is created. The default is false.
+##### options.addToSelection `Boolean`
+
+If set to true the newly selected items will be added to the existing selection. Otherwise a new selection set is created. The default is false.
+
+#### Returns
+
+The selected diagram elements.
+
+#### Example - select a shape
+
+    <div id="diagram"></div>
+    <script>
+      $("#diagram").kendoDiagram({
+        shapes: [{
+          id: "1"
+        }]
+      });
+      var diagram = $("#diagram").getKendoDiagram();
+      diagram.select(diagram.shapes[0]);
+    </script>
+
+### selectAll
+
+Selects all shapes and connections.
+
+### selectArea
+
+Selects all diagram elements within the given rectangle.
+
+#### Parameters
+
+##### rect `kendo.dataviz.diagram.Rect`
+
+The rectangle that determines which elements should be selected.
 
 ### setConnectionsDataSource
 
