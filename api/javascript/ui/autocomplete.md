@@ -388,6 +388,86 @@ Specifies the [value binding](/framework/mvvm/bindings/value) behavior for the w
     kendo.bind($("#autocomplete"), viewModel);
     </script>
 
+### virtual `Boolean|Object`*(default: false)*
+
+Enables the virtualization feature of the widget.
+
+#### Example - AutoComplete with virtualized list
+
+    <input id="orders" style="width: 400px" />
+    <script>
+        $(document).ready(function() {
+            $("#orders").kendoAutoComplete({
+                template: "#= OrderID # | For: #= ShipName #, #= ShipCountry #",
+                dataTextField: "ShipName",
+                virtual: true,
+                height: 520,
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                OrderID: { type: "number" },
+                                Freight: { type: "number" },
+                                ShipName: { type: "string" },
+                                OrderDate: { type: "date" },
+                                ShipCity: { type: "string" }
+                            }
+                        }
+                    },
+                    pageSize: 80,
+                    serverPaging: true,
+                    serverFiltering: true
+                }
+            });
+        });
+    </script>
+
+### virtual.itemHeight `Number`*(default: null)*
+
+Specifies the height of the virtual item. If not specified the framework will automatically calculate the itemHeight based on the theme used.
+
+#### Example - AutoComplete with virtualized list
+
+    <input id="orders" style="width: 400px" />
+    <script>
+        $(document).ready(function() {
+            $("#orders").kendoAutoComplete({
+                template: "#= OrderID # | For: #= ShipName #, #= ShipCountry #",
+                dataTextField: "ShipName",
+                virtual: {
+                    itemHeight: 26
+                },
+                height: 520,
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                OrderID: { type: "number" },
+                                Freight: { type: "number" },
+                                ShipName: { type: "string" },
+                                OrderDate: { type: "date" },
+                                ShipCity: { type: "string" }
+                            }
+                        }
+                    },
+                    pageSize: 80,
+                    serverPaging: true,
+                    serverFiltering: true
+                }
+            });
+        });
+    </script>
+
+### virtual.valueMapper `Function`*(default: null)*
+
 ## Fields
 
 ### dataSource `kendo.data.DataSource`

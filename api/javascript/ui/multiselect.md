@@ -282,6 +282,14 @@ The supported filter values are `startswith`, `endswith` and `contains`.
     });
     </script>
 
+### fixedGroupTemplate `String|Function`
+
+The [template](/api/framework/kendo#methods-template) used to render the fixed header group. By default the widget displays only the value of the group.
+
+### groupTemplate `String|Function`
+
+The [template](/api/framework/kendo#methods-template) used to render the groups. By default the widget displays only the value of the group.
+
 ### height `Number`*(default: 200)*
 
 The height of the suggestion popup in pixels. The default value is 200 pixels.
@@ -547,6 +555,18 @@ Specifies the [value binding](/framework/mvvm/bindings/value) behavior for the w
 
     kendo.bind($("#multiselect"), viewModel);
     </script>
+
+### virtual `Boolean|Object`*(default: false)*
+
+Enables the virtualization feature of the widget.
+
+### virtual.itemHeight `Number`*(default: null)*
+
+Specifies the height of the virtual item. If not specified the framework will automatically calculate the itemHeight based on the theme used.
+
+### virtual.valueMapper `Function`*(default: null)*
+
+**Required!**
 
 ## Fields
 
