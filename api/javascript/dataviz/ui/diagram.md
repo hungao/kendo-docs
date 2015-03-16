@@ -2656,7 +2656,7 @@ If set to true the newly selected items will be added to the existing selection.
 
 #### Returns
 
-The selected diagram elements.
+`Array` The selected diagram elements.
 
 #### Example - select a shape
 
