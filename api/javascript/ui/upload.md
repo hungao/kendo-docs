@@ -203,6 +203,21 @@ List of files to be initially rendered in the Upload widget files list.
     </script>
 
 
+### files.extension `String`
+
+The extension of the initial file.
+
+
+### files.name `String`
+
+The name of the initial file.
+
+
+### files.size `Number`
+
+The size of the initial file.
+
+
 ### localization `Object`
 
 Sets the strings rendered by the Upload.
