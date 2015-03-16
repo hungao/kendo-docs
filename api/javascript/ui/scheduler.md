@@ -5674,15 +5674,15 @@ The Uids of events which should be selected. List of the available events can be
 
 ##### options.resources `Array`
 
-The resource values (groups) in which the events or slots should be selected.
+The resource values (groups) in which the events or slots should be selected. If no resources are defined the first event or slot that match the condition will be selected. This option is not supported in "agenda" view.
 
 ##### options.start `Date`
 
-The start time from which the selection of the slots begins.
+The start time from which the selection of the slots begins. If 'events' argument is provided the slot selection is ignored.
 
 ##### options.end `Date`
 
-The end time in which the selection of the slots ends.
+The end time in which the selection of the slots ends. If 'events' argument is provided the slot selection is ignored.
 
 ##### options.isAllDay `Boolean`
 
