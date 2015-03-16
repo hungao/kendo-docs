@@ -751,7 +751,7 @@ Opens the popup.
     });
 
     var combobox = $("#combobox").data("kendoComboBox");
-    combobox.focus();
+    combobox.open();
     </script>
 
 ### refresh
