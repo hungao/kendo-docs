@@ -377,6 +377,33 @@ Specifies whether the TabStrip should be keyboard navigatable.
         });
     </script>
 
+### tabPosition `String`*(default: "top")*
+
+Specifies the position of the widget tabs. Valid values are `"top"` (default), `"left"`, `"right"` and `"bottom"`.
+A [**fade animation**](#configuration-animation) is highly recommended with any of the non-default tab position settings.
+
+#### Example
+
+    <div id="tabstrip">
+        <ul>
+            <li>Tab 1</li>
+            <li>Tab 2</li>
+        </ul>
+        <div>Content 1</div>
+        <div>Content 2</div>
+    </div>
+
+    <script>
+        $("#tabstrip").kendoTabStrip({
+            tabPosition: "left",
+            animation: {
+               open: {
+                   effects: "fadeIn"
+               }
+           }
+        });
+    </script>
+
 ## Fields
 
 ### tabGroup `jQuery`
