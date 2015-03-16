@@ -163,7 +163,7 @@ The connection end cap stroke dash type.
 
 The connection end cap stroke width.
 
-### connectionDefaults.endCap.type *(default: "none")*
+### connectionDefaults.endCap.type `String` *(default: "none")*
 
 The connection end cap type.
 
@@ -299,7 +299,7 @@ The connection start cap stroke dash type.
 
 The connection start cap stroke width.
 
-### connectionDefaults.startCap.type *(default: "none")*
+### connectionDefaults.startCap.type `String` *(default: "none")*
 
 The connection start cap type.
 
@@ -420,7 +420,7 @@ The connection end cap stroke dash type.
 
 The connection end cap stroke width.
 
-### connections.endCap.type *(default: "none")*
+### connections.endCap.type `String` *(default: "none")*
 
 The connection end cap type.
 
@@ -581,7 +581,7 @@ The connection start cap stroke dash type.
 
 The connection start cap stroke width.
 
-### connections.startCap.type *(default: "none")*
+### connections.startCap.type `String` *(default: "none")*
 
 The connection start cap type.
 
