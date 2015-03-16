@@ -132,7 +132,7 @@ Order details represent the line items for each Order. The total amount/weight o
 to the Contract weight/amount of an Order. The Order details grid allows a user to create/edit Order details using the "PopUp" editor
 mode for a [Kendo Grid](http://demos.telerik.com/kendo-ui/web/grid/index.html). The following snippets will only cover how the Order details grid
 is created using the extensions. If you would like to read more on how the "PopUp" editor is configured for the grid, please read
-[Creating and Editing Order Details](kendo-saleshub-creating-editing-order-details).
+[Creating and Editing Order Details](kendo-saleshub-creating-and-editing-order-details).
 
     @(Html.Kendo().Grid<OrderDetailViewModel>()
         .Name("orderDetailsGrid")
@@ -261,7 +261,7 @@ value for that field is.
     .Events(events =>  events.Error("window.SalesHub.OrderDetails_Error"))
 
 We also subscribe to the Error event of the DataSource. This is so we can handle server-side validation errors when creating/editing
-order details. If you would like to read more on how this works, please read the [Creating and Editing Order Details](kendo-saleshub-creating-editing-order-details)
+order details. If you would like to read more on how this works, please read the [Creating and Editing Order Details](kendo-saleshub-creating-and-editing-order-details)
 article.
 
     .Aggregates(a => a.Add(x => x.Units).Sum())
