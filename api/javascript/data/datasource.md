@@ -4200,6 +4200,10 @@ The event handler function context (available via the `this` keyword) will be se
 
 The data source instance which fired the event.
 
+##### e.type `String`
+
+The type of the request. Set to "create", "read", "update" or "destroy".
+
 #### Example - subscribe to the "requestStart" event during initialization
     <script>
     var dataSource = new kendo.data.DataSource({
