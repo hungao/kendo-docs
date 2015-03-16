@@ -108,16 +108,69 @@ Specifies the the toolbar tools. Predefined tools are:
 ### connectionDefaults.editable.tools.name `String`
 
 The name of the tool. The built-in tools are "edit" and "delete".
+### connectionDefaults.endCap `String|Object`
 
-### connectionDefaults.endCap `String` *(default: "ArrowEnd")*
+The connection end cap configuration or type name.
 
-The start cap (arrow, head or decoration) of the connection:
+#### Example - configuring the connection end cap
+
+    <div id="diagram"></div>
+    <script>
+      var Point = kendo.dataviz.diagram.Point;
+      var diagram = $("#diagram").kendoDiagram({
+        connectionDefaults: {
+          endCap: {
+            type: "FilledCircle",
+            fill: {
+              color: "red"
+            },
+            stroke: {
+              color: "blue",
+              width: 2
+            }
+          }
+        }
+      }).getKendoDiagram();
+      diagram.connect(new Point(100,100), new Point(300,100));
+    </script>
+
+### connectionDefaults.endCap.fill `String|Object`
+
+The connection end cap fill options or color.
+
+### connectionDefaults.endCap.fill.color `String` *(default: "black")*
+
+The connection end cap fill color.
+
+### connectionDefaults.endCap.fill.opacity
+
+The connection end cap fill opacity.
+
+### connectionDefaults.endCap.stroke `String|Object`
+
+The connection end cap stroke options or color.
+
+### connectionDefaults.endCap.stroke.color `String`
+
+The connection end cap stroke color.
+
+### connectionDefaults.endCap.stroke.dashType `String`
+
+The connection end cap stroke dash type.
+
+### connectionDefaults.endCap.stroke.width `Number`
+
+The connection end cap stroke width.
+
+### connectionDefaults.endCap.type *(default: "none")*
+
+The connection end cap type.
+
+The supported values are:
 
 * "none": no cap
 * "ArrowEnd": a filled arrow
 * "FilledCircle": a filled circle
-
-Note that you can also use the "ArrowStart" for the endCap but its direction will be inversed.
 
 ### connectionDefaults.hover `Object`
 
@@ -191,9 +244,65 @@ Defines the handles stroke options.
 
 Defines the handles stroke color.
 
-### connectionDefaults.startCap `String` *(default: "FilledCircle")*
+### connectionDefaults.startCap `String|Object`
 
-The start cap (arrow, head or decoration) of the connection:
+The connection start cap configuration or type name.
+
+#### Example - configuring the connection start cap
+
+    <div id="diagram"></div>
+    <script>
+      var Point = kendo.dataviz.diagram.Point;
+      var diagram = $("#diagram").kendoDiagram({
+        connectionDefaults: {
+          startCap: {
+            type: "FilledCircle",
+            fill: {
+              color: "red"
+            },
+            stroke: {
+              color: "blue",
+              width: 2
+            }
+          }
+        }
+      }).getKendoDiagram();
+      diagram.connect(new Point(100,100), new Point(300,100));
+    </script>
+
+### connectionDefaults.startCap.fill `String|Object`
+
+The connection start cap fill options or color.
+
+### connectionDefaults.startCap.fill.color `String` *(default: "black")*
+
+The connection start cap fill color.
+
+### connectionDefaults.startCap.fill.opacity
+
+The connection start cap fill opacity.
+
+### connectionDefaults.startCap.stroke `String|Object`
+
+The connection start cap stroke options or color.
+
+### connectionDefaults.startCap.stroke.color `String`
+
+The connection start cap stroke color.
+
+### connectionDefaults.startCap.stroke.dashType `String`
+
+The connection start cap stroke dash type.
+
+### connectionDefaults.startCap.stroke.width `Number`
+
+The connection start cap stroke width.
+
+### connectionDefaults.startCap.type *(default: "none")*
+
+The connection start cap type.
+
+The supported values are:
 
 * "none": no cap
 * "ArrowStart": a filled arrow
@@ -246,9 +355,75 @@ Specifies the the toolbar tools. Predefined tools are:
 
 The name of the tool. The built-in tools are "edit" and "delete".
 
-### connections.endCap `String` *(default: "ArrowEnd")*
+### connections.endCap `String|Object`
 
-The start cap (arrow, head or decoration) of the connection:
+The connection end cap configuration or type name.
+
+#### Example - configuring the connection end cap
+
+    <div id="diagram"></div>
+    <script>
+      $("#diagram").kendoDiagram({
+        shapes: [{
+          id: "1",
+          content: {
+            text: "Monday"
+          }
+        }, {
+          id: "2",
+          x: 200,
+          content: "Tuesday"
+        }],
+        connections: [{
+          from: "1",
+          to: "2",
+          endCap: {
+            type: "FilledCircle",
+            fill: {
+              color: "red"
+            },
+            stroke: {
+              color: "blue",
+              width: 2
+            }
+          }
+        }]
+      });
+    </script>
+
+### connections.endCap.fill `String|Object`
+
+The connection end cap fill options or color.
+
+### connections.endCap.fill.color `String` *(default: "black")*
+
+The connection end cap fill color.
+
+### connections.endCap.fill.opacity
+
+The connection end cap fill opacity.
+
+### connections.endCap.stroke `String|Object`
+
+The connection end cap stroke options or color.
+
+### connections.endCap.stroke.color `String`
+
+The connection end cap stroke color.
+
+### connections.endCap.stroke.dashType `String`
+
+The connection end cap stroke dash type.
+
+### connections.endCap.stroke.width `Number`
+
+The connection end cap stroke width.
+
+### connections.endCap.type *(default: "none")*
+
+The connection end cap type.
+
+The supported values are:
 
 * "none": no cap
 * "ArrowEnd": a filled arrow
@@ -341,9 +516,75 @@ Defines the handles stroke options.
 
 Defines the handles stroke color.
 
-### connections.startCap `String` *(default: "FilledCircle")*
+### connections.startCap `String|Object`
 
-The start cap (arrow, head or decoration) of the connection:
+The connection start cap configuration or type name.
+
+#### Example - configuring the connection start cap
+
+    <div id="diagram"></div>
+    <script>
+      $("#diagram").kendoDiagram({
+        shapes: [{
+          id: "1",
+          content: {
+            text: "Monday"
+          }
+        }, {
+          id: "2",
+          x: 200,
+          content: "Tuesday"
+        }],
+        connections: [{
+          from: "1",
+          to: "2",
+          startCap: {
+            type: "FilledCircle",
+            fill: {
+              color: "red"
+            },
+            stroke: {
+              color: "blue",
+              width: 2
+            }
+          }
+        }]
+      });
+    </script>
+
+### connections.startCap.fill `String|Object`
+
+The connection start cap fill options or color.
+
+### connections.startCap.fill.color `String` *(default: "black")*
+
+The connection start cap fill color.
+
+### connections.startCap.fill.opacity
+
+The connection start cap fill opacity.
+
+### connections.startCap.stroke `String|Object`
+
+The connection start cap stroke options or color.
+
+### connections.startCap.stroke.color `String`
+
+The connection start cap stroke color.
+
+### connections.startCap.stroke.dashType `String`
+
+The connection start cap stroke dash type.
+
+### connections.startCap.stroke.width `Number`
+
+The connection start cap stroke width.
+
+### connections.startCap.type *(default: "none")*
+
+The connection start cap type.
+
+The supported values are:
 
 * "none": no cap
 * "ArrowStart": a filled arrow

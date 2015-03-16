@@ -58,23 +58,129 @@ Defines the highlight color when the pointer is hovering over the connection.
         });
     </script>
 
-### startCap `String` *(default: "FilledCircle")*
+### startCap `String|Object`
 
-The start cap (arrow, head or decoration) of the connection:
+The connection start cap configuration or type name.
+
+#### Example - configuring the connection start cap
+
+    <div id="diagram"></div>
+    <script>
+      var Point = kendo.dataviz.diagram.Point;
+      var diagram = $("#diagram").kendoDiagram({ }).getKendoDiagram();
+      var connection = diagram.connect(new Point(100,100), new Point(300,100), {
+        startCap: {
+          type: "FilledCircle",
+          fill: {
+            color: "red"
+          },
+          stroke: {
+            color: "blue",
+            width: 2
+          }
+        }
+      });
+    </script>
+
+### startCap.fill `String|Object`
+
+The connection start cap fill options or color.
+
+### startCap.fill.color `String` *(default: "black")*
+
+The connection start cap fill color.
+
+### startCap.fill.opacity
+
+The connection start cap fill opacity.
+
+### startCap.stroke `String|Object`
+
+The connection start cap stroke options or color.
+
+### startCap.stroke.color `String`
+
+The connection start cap stroke color.
+
+### startCap.stroke.dashType `String`
+
+The connection start cap stroke dash type.
+
+### startCap.stroke.width `Number`
+
+The connection start cap stroke width.
+
+### startCap.type *(default: "none")*
+
+The connection start cap type.
+
+The supported values are:
 
 * "none": no cap
 * "ArrowStart": a filled arrow
 * "FilledCircle": a filled circle
 
-### endCap `String` *(default: "ArrowEnd")*
+### endCap `String|Object`
 
-The start cap (arrow, head or decoration) of the connection:
+The connection end cap configuration or type name.
+
+#### Example - configuring the connection end cap
+
+    <div id="diagram"></div>
+    <script>
+      var Point = kendo.dataviz.diagram.Point;
+      var diagram = $("#diagram").kendoDiagram({ }).getKendoDiagram();
+      var connection = diagram.connect(new Point(100,100), new Point(300,100), {
+        endCap: {
+          type: "ArrowEnd",
+          fill: {
+            color: "red"
+          },
+          stroke: {
+            color: "blue",
+            width: 2
+          }
+        }
+      });
+    </script>
+
+### endCap.fill `String|Object`
+
+The connection end cap fill options or color.
+
+### endCap.fill.color `String` *(default: "black")*
+
+The connection end cap fill color.
+
+### endCap.fill.opacity
+
+The connection end cap fill opacity.
+
+### endCap.stroke `String|Object`
+
+The connection end cap stroke options or color.
+
+### endCap.stroke.color `String`
+
+The connection end cap stroke color.
+
+### endCap.stroke.dashType `String`
+
+The connection end cap stroke dash type.
+
+### endCap.stroke.width `Number`
+
+The connection end cap stroke width.
+
+### endCap.type *(default: "none")*
+
+The connection end cap type.
+
+The supported values are:
 
 * "none": no cap
 * "ArrowEnd": a filled arrow
 * "FilledCircle": a filled circle
-
-Note that you can also use the "ArrowStart" for the endCap but its direction will be inversed.
 
 ### points `Array`
 
