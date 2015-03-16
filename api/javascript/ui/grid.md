@@ -5239,7 +5239,10 @@ If set to `true` the user could reorder the columns by dragging their header cel
 
 ### resizable `Boolean` *(default:false)*
 
-If set to `true` the user could resize the columns by dragging the edges of their header cells. By default resizing is disabled.
+If set to `true`, users can resize columns by dragging the edges (resize handles) of their header cells. As of Kendo UI Q1 2015, users can also auto-fit a column by double-clicking
+its resize handle. In this case the column will assume the smallest possible width, which allows the column content to fit without wrapping.
+
+By default, column resizing is disabled.
 
 #### Example - enable column resizing
 
