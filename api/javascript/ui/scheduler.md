@@ -442,6 +442,41 @@ If set to `true` the user can delete events from the view by clicking the "destr
     });
     </script>
 
+### editable.editRecurringMode `String`
+
+Recurring events edit mode. The available modes are: "dialog" (default), "series" and "occurrence".
+
+#### Example - disable event deleting
+    <div id="scheduler"></div>
+    <script>
+    $("#scheduler").kendoScheduler({
+      date: new Date("2013/6/6"),
+      editable: {
+        editRecurringMode: "series"
+      },
+      views: [
+        { type: "day" }
+      ],
+      dataSource: {
+        data: [{
+         id: 1,
+         start: new Date("2013/6/5 8:00"),
+         end: new Date("2013/6/5 10:00"),
+         title: "my event",
+         recurrenceRule: "FREQ=DAILY"
+        }],
+        schema: {
+            model: {
+                id: "id",
+                fields: {
+                    id: {type: "number"}
+                }
+            }
+        }
+      }
+    });
+    </script>
+
 ### editable.move `Boolean` *(default: true)*
 
 If set to `true` the scheduler allows event moving. Dragging the event changes the start and end time.
