@@ -108,6 +108,7 @@ Specifies the the toolbar tools. Predefined tools are:
 ### connectionDefaults.editable.tools.name `String`
 
 The name of the tool. The built-in tools are "edit" and "delete".
+
 ### connectionDefaults.endCap `String|Object`
 
 The connection end cap configuration or type name.
