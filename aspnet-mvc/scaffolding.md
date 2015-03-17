@@ -37,9 +37,17 @@ This will bring up the **Kendo UI Grid** scaffolding configuration panel. Detail
 
 # Troubleshooting
 
-This is a list of common problems and their solutions while working with the **Kendo UI Scaffolder** extension.
+This list provides solutions to common problems you may encounter while working with the **Kendo UI Scaffolder** extension.
 
-### The "New Scaffolded Item..." menu is not displayed when right clicking a location.
+### The "New Scaffolded Item..." menu is not displayed when right clicking a project location.
 
 * Make sure that a compatible Visual Studio version is used and all of the listed requirements are fulfilled.
 * Check if the **Kendo UI Scaffolder** extension is listed in the **Tools | Extensions and Updates** list.
+
+### The "Data Context Class" DropDownList is empty.
+
+* Make sure that the current project contains a valid **Entity Framework Data Model**. If this is true, rebuild the solution.
+
+### I get "Invalid model configuration" error when running the scaffolder.
+
+* The most probable reason for this error is that the selected **Model Class** is not a valid entity in the current **Data Context**. Make sure that a valid entity is selected.
