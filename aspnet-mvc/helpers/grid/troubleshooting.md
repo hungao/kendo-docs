@@ -123,10 +123,6 @@ Make sure the JavaScript file for that culture is included. Check the previous i
 This will happen if the server template is set but the grid is configured for ajax binding. Set the [ClientTemplate](/aspnet-mvc/helpers/grid/configuration#clienttemplate) as well.
 This will also happen if only the client template is set but the grid is configured for server binding. Set the [Template](/aspnet-mvc/helpers/grid/configuration#template) as well.
 
-## The grid cannot bind to WebAPI controller
-
-Kendo Grid for ASP.NET MVC does not currently support WebAPI controllers. Cast your vote for in our [user voice](http://kendo.uservoice.com/forums/127393-kendo-ui-feedback/suggestions/2667632-make-kendo-datasource-compatible-with-asp-net-mvc-) forum!
-
 ## The "X" DataSource configuration option is not available
 
 Not all settings of the DataSource are exposed via the `DataSource` fluent API. For full control over the DataSource consider using the client-side version of Kendo UI Grid.
