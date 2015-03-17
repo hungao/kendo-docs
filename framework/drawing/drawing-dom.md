@@ -106,7 +106,7 @@ Example:
 
       $("#grid").kendoGrid({ dataSource: data });
 
-      kendo.drawing.drawDOM("#grid", {
+      drawing.drawDOM("#grid", {
         paperSize: "A4",
         margin: "2cm"
       }).then(function(group){
@@ -181,12 +181,12 @@ When multi-page output is requested (via `forcePageBreak`/`paperSize`) you can a
 
     <script>
       $("#grid").kendoGrid(...);
-      kendo.drawing.drawDOM("#grid", {
+      drawing.drawDOM("#grid", {
         paperSize: "A4",
         margin: "3cm",
         template: $("#page-template").html()
       }).then(function(group){
-        kendo.pdf.saveAs(group, "filename.pdf");
+        drawing.pdf.saveAs(group, "filename.pdf");
       });
     </script>
 
