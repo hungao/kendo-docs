@@ -7,16 +7,16 @@ position: 3
 
 # Virtualization
 
-Kendo UI AutoComplete, ComboBox, DropDownList and MultiSelect support UI and data virtualization which may be used to display large amount of flat or grouped items.
-The UI virtualization technique ensures that the widget creates only a fixed amount of list items which are shown in the widget's popup list.
-When the list is scrolled the widget will reuse existing containers, instead of creating new ones. 
+Kendo UI AutoComplete, ComboBox, DropDownList and MultiSelect support UI and data virtualization which is useful when displaying large data sets.
+The UI virtualization technique uses fixed amount of list items in the widget's popup list regardless of the data set size.
+When the list is scrolled, the widget will reuse the existing items to display the relevant data, instead of creating new ones.
 
-The DataSource component is responsible for data paging and pre-fetching on demand.
+The widget virtualization feature uses the DataSource paging and remote data retrieval, which means that the DataSource should have its paging configured correctly.
+The example below demonstrates the minimal widget and DataSource configuration requirements for the virtualization to work as expected.
 
-##How it works?
+##Kendo UI ComboBox with remote transport and virtualization enabled
 
-Here is an example:
-
+```html
     <input id="orders" style="width: 400px" />
     <script>
         $(document).ready(function() {
@@ -43,17 +43,6 @@ Here is an example:
                     transport: {
                         read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
                     },
-                    schema: {
-                        model: {
-                            fields: {
-                                OrderID: { type: "number" },
-                                Freight: { type: "number" },
-                                ShipName: { type: "string" },
-                                OrderDate: { type: "date" },
-                                ShipCity: { type: "string" }
-                            }
-                        }
-                    },
                     pageSize: 80,
                     serverPaging: true,
                     serverFiltering: true
@@ -73,26 +62,33 @@ Here is an example:
             return data;
         }
     </script>
+```
 
 ### itemHeight
 
 All items in the virtualized list **must** have the same height. If the developer does not specify one, the framework will automatically set `itemHeight` based on the current theme and font size.
 
+> If you don't specify an `itemHeight` configuration option, the widget will perform an **extra DataSource request**. In most cases, this is not a critical issue.
+
 ### Container height
 
-The virtualized list container **must** have a `height`. If the developer does not specify one, the list will use default `height` of the widget which is `200`.
+The virtualized list container **must** have a `height` option set (in pixels). If the developer does not specify one, the list will use the default `height` (`200px`).
 
 ### pageSize
 
-The `pageSize` should be equal to `height/itemHeight * 4`. For example if the `height` is 520 and `itemHeight` is 26 `pageSize` should be set to 80. Setting the correct page size is important for the functionality of the widget and will prevent the DataSource from making multiple requests for the same data.
+The DataSource `pageSize` configuration should be set to the virtual list `height/itemHeight * 4`. 
+For example, if the `height` is `520` and `itemHeight` is `26`, `pageSize` should be set to `80`. 
 
-> The widget will automatically control all data requests and may modify the `pageSize` if it is not correctly set by the developer in the DataSource configuration.
+> Setting the correct page size is important for the functionality of the widget and will prevent the DataSource from **making multiple requests** for the same data.
+
+> The widget controls the page size for all DataSource requests and will change the DataSource `pageSize` if it does not match the formula above. 
 
 ### valueMapper
 
-The `valueMapper` function is **mandatory** for the functionality of the virtualized widget. This function will be called every time when the widget receives a value that is not fetched from the remote server yet.
-The widget will pass selected value(s) in the `valueMapper` function and will expect from it to return the data item index.
+The `valueMapper` function is **mandatory** for the functionality of the virtualized widget. The widget calls the `valueMapper` function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the `valueMapper` function. In turn, the valueMapper implementation should return the **respective data item(s) index/indices**. 
 
+```javascript
     valueMapper: function(options) {
         $.ajax({
             url: "http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
@@ -103,3 +99,4 @@ The widget will pass selected value(s) in the `valueMapper` function and will ex
             }
         })
     }
+```
