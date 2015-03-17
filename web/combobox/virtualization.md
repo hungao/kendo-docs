@@ -64,6 +64,8 @@ The example below demonstrates the minimal widget and DataSource configuration r
     </script>
 ```
 
+## How to configure
+
 ### itemHeight
 
 All items in the virtualized list **must** have the same height. If the developer does not specify one, the framework will automatically set `itemHeight` based on the current theme and font size.
