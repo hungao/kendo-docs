@@ -13,6 +13,23 @@ previous_url: /changes-and-backward-compatibility
 
 #### Breaking changes
 
+* **DropDownList**: In order to support **grouping** and **virtualization**, we decided to move the optionLabel outside the items list and place it as a static header on top of the popup element.
+This change was required, because optionLabel element cannot be part of any displayed group. Please refer to the new rendering if you manipulate option label manually.
+
+-Old rendering:
+
+    <ul>
+        <li>Option Label</li>
+        <li>First Item</li>
+    </ul>
+
+-New rendering:
+
+    <div class="k-list-optionlabel">Option Label</div>
+    <ul>
+        <li>First Item</li>
+    </ul>
+
 * **DropDownList**: In order to match the Html `Select` behavior better and solve some issues related to MVVM `value` binding, the dropdownlist now allows to clear its value (deselect the selected item). This will introduce the following breaking changes:
 
     * Widget will **not** select the first item, when its selected index is `-1`
