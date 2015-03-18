@@ -2,7 +2,7 @@
 title: Virtualization
 page_title: Kendo UI ComboBox Virtualization
 description: This document provides information how to configure virtualization in Kendo UI ComboBox, DropDownList, AutoComplete and MultiSelect
-position: 3
+position: 4
 ---
 
 # Virtualization
@@ -78,17 +78,17 @@ The virtualized list container **must** have a `height` option set (in pixels). 
 
 ### pageSize
 
-The DataSource `pageSize` configuration should be set to the virtual list `height/itemHeight * 4`. 
-For example, if the `height` is `520` and `itemHeight` is `26`, `pageSize` should be set to `80`. 
+The DataSource `pageSize` configuration should be set to the virtual list `height/itemHeight * 4`.
+For example, if the `height` is `520` and `itemHeight` is `26`, `pageSize` should be set to `80`.
 
 > Setting the correct page size is important for the functionality of the widget and will prevent the DataSource from **making multiple requests** for the same data.
 
-> The widget controls the page size for all DataSource requests and will change the DataSource `pageSize` if it does not match the formula above. 
+> The widget controls the page size for all DataSource requests and will change the DataSource `pageSize` if it does not match the formula above.
 
 ### valueMapper
 
 The `valueMapper` function is **mandatory** for the functionality of the virtualized widget. The widget calls the `valueMapper` function when the widget receives a value, that is not fetched from the remote server yet.
-The widget will pass the selected value(s) in the `valueMapper` function. In turn, the valueMapper implementation should return the **respective data item(s) index/indices**. 
+The widget will pass the selected value(s) in the `valueMapper` function. In turn, the valueMapper implementation should return the **respective data item(s) index/indices**.
 
 ```javascript
     valueMapper: function(options) {
