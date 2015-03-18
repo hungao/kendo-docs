@@ -31600,6 +31600,53 @@ Resolves the promise with the raw SVG document without the Data URI prefix.
         });
     </script>
 
+### getAxis
+
+Returns an [axis](/api/javascript/dataviz/chart/chart_axis) with specific name.
+
+#### Parameters
+
+##### name `String`
+
+The axis name.
+
+#### Returns
+
+`kendo.dataviz.ChartAxis` The chart axis.
+
+#### Example - draw a line based on axis value
+
+    <div id="chart"></div>
+    <script>
+      $("#chart").kendoChart({
+        series: [{
+          data: [1, 2]
+        }],
+        valueAxis: {
+          name: "value"
+        },
+        categoryAxis: {
+          name: "category"
+        }
+      });
+
+      var chart = $("#chart").data("kendoChart");
+      var valueAxis = chart.getAxis("value");
+      var categoryAxis = chart.getAxis("category");
+      var valueSlot = valueAxis.slot(1.5);
+      var categoryRange = categoryAxis.range();
+      var categorySlot = categoryAxis.slot(categoryRange.min, categoryRange.max);
+
+      var path = new kendo.drawing.Path({
+        stroke: {
+          color: "red",
+          width: 3
+        }
+      }).moveTo(categorySlot.origin.x, valueSlot.origin.y)
+      .lineTo(categorySlot.bottomRight().x, valueSlot.origin.y);
+
+      chart.surface.draw(path);
+    </script>
 
 ### redraw
 
@@ -31794,6 +31841,84 @@ Returns a PNG image of the chart encoded as a [Data URL](https://developer.mozil
 
       return new Blob([ arr.buffer ], { type: type });
     }
+    </script>
+
+### toggleHighlight
+
+Toggles the highlight of the series points or a segment for pie, donut and funnel charts.
+
+#### Parameters
+
+##### show `Boolean`
+
+A boolean value that specifies if the highlight should be shown or hidden.
+
+##### options `String|Object`
+
+A string representing the series name or the category name or an object with the series and category names.
+
+##### options.series `String`
+
+The series name.
+
+##### options.category `String`
+
+The category name.
+
+#### Example - show the highlight for a series
+
+    <div id="chart"></div>
+    <script>
+      $("#chart").kendoChart({
+        series: [
+          { name: "A", data: [1, 2] },
+          { name: "B", data: [3, 4] }
+        ]
+      });
+
+      var chart = $("#chart").data("kendoChart");
+
+      chart.toggleHighlight(true, "A");
+    </script>
+
+#### Example - show the highlight for a pie segment
+
+    <div id="chart"></div>
+    <script>
+      $("#chart").kendoChart({
+        series: [{
+          type: "pie",
+          data: [{value: 1, category: "A"}, {value: 2, category: "B"}]
+        }]
+      });
+
+      var chart = $("#chart").data("kendoChart");
+
+      chart.toggleHighlight(true, "A");
+    </script>
+
+#### Example - show the highlight for a donut segment
+
+    <div id="chart"></div>
+    <script>
+      $("#chart").kendoChart({
+        series: [{
+          type: "donut",
+          name: "SeriesA",
+          data: [{value: 1, category: "A"}, {value: 2, category: "B"}]
+        }, {
+          type: "donut",
+          name: "SeriesB",
+          data: [{value: 3, category: "A"}, {value: 4, category: "B"}]
+        }]
+      });
+
+      var chart = $("#chart").data("kendoChart");
+
+      chart.toggleHighlight(true, {
+        series: "SeriesB",
+        category: "A"
+      });
     </script>
 
 ## Events
