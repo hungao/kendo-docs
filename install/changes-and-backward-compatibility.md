@@ -13,6 +13,12 @@ previous_url: /changes-and-backward-compatibility
 
 #### Breaking changes
 
+* **MultiSelect**: Change in the item selection behavior
+
+-Old: Selected items was hidden
+
+-New: Selected item is still visible. This allows to de-select item from the popup list.
+
 * **DropDownList**: In order to support **grouping** and **virtualization**, we decided to move the optionLabel outside the items list and place it as a static header on top of the popup element.
 This change was required, because optionLabel element cannot be part of any displayed group. Please refer to the new rendering if you manipulate option label manually.
 
