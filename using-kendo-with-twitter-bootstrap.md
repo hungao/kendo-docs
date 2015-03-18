@@ -124,3 +124,8 @@ This results in an incorrect padding style applied to a widget element that shou
     {
         padding: 0;
     }
+
+## Known limitations
+
+With the latest version of the Bootstrap library, a code that prevents the input in elements with `data-role=filter` has been introduced in the bootstrap.js file. This causes a problem with data input in filter menu
+input elements.
