@@ -129,29 +129,6 @@ please review the [Kendo UI Templates](/framework/templates/overview) documentat
         });
     </script>
 
-## Press to Load More / Endless Scrolling
-
-The listview widget supports displaying large amounts of data by appending additional pages of data on demand.
-Loading can happen automatically by enabling [endless scrolling](/api/mobile/listview#configuration-endlessScroll), or by displaying a button at the bottom ([ press to load more ](/api/mobile/listview#configuration-loadMore)).
-Enabling endless scrolling or press to load more options triggers the **virtual mode** of the ListView.
-
-In order for the listview virtual mode to be working as expected, the listview should be the only widget in the scrolling container. In case more widgets are needed in the view in question, the listview should be wrapped in a mobile scroller container.
-
-The virtual mode interacts and alters the behavior of the containing scroller widget (by default, the view scroller). Native scrolling (view with `use-native-scrolling=true` or scroller with `use-native=true` attributes) **is not supported**.
-
-In virtual mode, fixed amount of DOM elements is rendered, and then dynamically repositioned and updated when the user scrolls the view. In endless scrolling mode, the next page is automatically prefetched when the user scrolls past two thirds of the current set of items.
-
-> The amount of actual DOM elements used in virtual mode is equal to half of the datasource page size option.
-
-In order for the scrolling to occur smoothly, the page size should **not be too low**.
-For example, if 5 items are visible on the page, at least 15 physical DOM elements are needed, which means that the DataSource page size should be 30 or greater.
-
-> Bigger DataSource page size ensures smooth scrolling, but has adverce effects on view transition performance.
-
-Once the listview reaches the amount of items specified by the [schema.total](/api/framework/datasource#configuration-schema.total) setting of the datasource, the loadmore button/endless scrolling indicator is hidden.
-
-> Currently, certain features (**grouped mode** and **inset styling**) are **not supported** in virtual mode.
-
 ## Link Items
 
 The mobile ListView will automatically style items with a single link element inside, adding a details indicator.
