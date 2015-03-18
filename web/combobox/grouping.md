@@ -30,7 +30,7 @@ the [group documentation](http://docs.telerik.com/kendo-ui/api/javascript/data/d
                 transport: {
                     read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
                 },
-                group: { field: "Country" } //group data by 'Country' field
+                group: { field: "Country" } //group the data by 'Country' field
             }
         });
     });
@@ -46,17 +46,17 @@ widget will **automatically** display the suggestion items grouped.
 ## How to customize
 
 Widget exposes [groupTemplate](http://docs.telerik.com/kendo-ui/api/javascript/ui/combobox#configuration-groupTemplate) and
-[fixedGroupedTemplate](http://docs.telerik.com/kendo-ui/api/javascript/ui/combobox#configuration-fixedGroupTemplate) options that
+[fixedGroupedTemplate](http://docs.telerik.com/kendo-ui/api/javascript/ui/combobox#configuration-fixedGroupTemplate) templates that
 allows to configure rendering of the group titles.
 
-### groupTemplate
+### Customize the inline group title
 
-This template controls the rendering of the in-line group title displayed next to the suggestion item in the popup element. It is rendered in
-the absolute positioned, right aligned group element displayed in every first element of each new group.
+To customize the inline group title displayed next to the suggestion item in the popup element, you will need to use the [groupTemplate](http://docs.telerik.com/kendo-ui/api/javascript/ui/combobox#configuration-groupTemplate)
+option. It is rendered in the absolute positioned, right aligned group element displayed in every first element of each new group.
 
-Parameter passed to the group template is the title of the group.
+Parameter passed to the template is the group title value.
 
-#### define a custom group template
+#### Define a custom group template
 
 ```html
 <div class="demo-section k-header">
@@ -76,21 +76,21 @@ Parameter passed to the group template is the title of the group.
                 transport: {
                     read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
                 },
-                group: { field: "Country" } //group data by 'Country' field
+                group: { field: "Country" } //group the data by 'Country' field
             }
         });
     });
 </script>
 ```
 
-### fixedGroupedTemplate
+### Customize the fixed group header
 
-This template controls the rendering of the fixed group title displayed on top of the grouped list. It represents a static header that displays
-currently visible group. That means that the value is updated dynamically based on the scroll position of the grouped list.
+To customize the group title displayed in the fixed group header positioned on top of the list, you will need to use the [fixedGroupTemplate](http://docs.telerik.com/kendo-ui/api/javascript/ui/combobox#configuration-fixedGroupTemplate)
+option. It shows the group title of the current visible group. That means that the value is updated dynamically on the scroll position of the grouped list.
 
-Parameter passed to the template is the group title.
+Parameter passed to the template is the group title value.
 
-#### define a custom fixed group template
+#### Define a custom fixed group template
 
 ```html
 <div class="demo-section k-header">
@@ -110,7 +110,7 @@ Parameter passed to the template is the group title.
                 transport: {
                     read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
                 },
-                group: { field: "Country" } //group data by 'Country' field
+                group: { field: "Country" } //group the data by 'Country' field
             }
         });
     });
