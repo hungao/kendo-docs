@@ -19,7 +19,7 @@ previous_url: /changes-and-backward-compatibility
     * Widget will **not** select the first item, when selected value is not present in the data source.
 
     -Old:
-        ```html
+
         <input id="dropdownlist" />
         <script>
             var widget = $("#dropdownlist").kendoDropDownList({
@@ -28,10 +28,9 @@ previous_url: /changes-and-backward-compatibility
 
             widget.value("bar"); //this will select 'foo1'
         </script>
-        ```
 
     -New:
-        ```html
+
         <input id="dropdownlist" />
         <script>
             var widget = $("#dropdownlist").kendoDropDownList({
@@ -44,12 +43,11 @@ previous_url: /changes-and-backward-compatibility
                 widget.select(0);
             }
         </script>
-        ```
 
     * Widget will **not** select the first item, when its value is set to "" (empty string). This is applicable for Grid editing when default model value is empty string. This change, however, improves the behavior discussed [here](https://github.com/telerik/kendo-ui-core/issues/312).
 
     -Old:
-        ```html
+
         <input id="dropdownlist" />
         <script>
             var widget = $("#dropdownlist").kendoDropDownList({
@@ -58,10 +56,9 @@ previous_url: /changes-and-backward-compatibility
 
             widget.value(""); //this will select 'foo1'
         </script>
-        ```
 
     -New:
-        ```html
+
         <input id="dropdownlist" />
         <script>
             var widget = $("#dropdownlist").kendoDropDownList({
@@ -74,7 +71,6 @@ previous_url: /changes-and-backward-compatibility
                 widget.select(0);
             }
         </script>
-        ```
 
 * **AutoComplete/DropDownList/ComboBox/MultiSelect**: In order to improve widgets behavior, we decided to trigger `select` event on navigation (on UP/DOWN item selection)
 
