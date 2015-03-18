@@ -13,12 +13,13 @@ previous_url: /changes-and-backward-compatibility
 
 #### Breaking changes
 
-* **DropDownList**: In order to match better Html Select behavior and solve issues related to MVVM binding, the dropdownlist now allows to clear its value. This will introduce the following breaking changes:
+* **DropDownList**: In order to match the Html `Select` behavior better and solve some issues related to MVVM `value` binding, the dropdownlist now allows to clear its value (deselect the selected item). This will introduce the following breaking changes:
 
     * Widget will **not** select the first item, when its selected index is `-1`
     * Widget will **not** select the first item, when selected value is not present in the data source.
 
     -Old:
+        ```html
         <input id="dropdownlist" />
         <script>
             var widget = $("#dropdownlist").kendoDropDownList({
@@ -27,8 +28,10 @@ previous_url: /changes-and-backward-compatibility
 
             widget.value("bar"); //this will select 'foo1'
         </script>
+        ```
 
     -New:
+        ```html
         <input id="dropdownlist" />
         <script>
             var widget = $("#dropdownlist").kendoDropDownList({
@@ -41,10 +44,12 @@ previous_url: /changes-and-backward-compatibility
                 widget.select(0);
             }
         </script>
+        ```
 
     * Widget will **not** select the first item, when its value is set to "" (empty string). This is applicable for Grid editing when default model value is empty string. This change, however, improves the behavior discussed [here](https://github.com/telerik/kendo-ui-core/issues/312).
 
     -Old:
+        ```html
         <input id="dropdownlist" />
         <script>
             var widget = $("#dropdownlist").kendoDropDownList({
@@ -53,8 +58,10 @@ previous_url: /changes-and-backward-compatibility
 
             widget.value(""); //this will select 'foo1'
         </script>
+        ```
 
     -New:
+        ```html
         <input id="dropdownlist" />
         <script>
             var widget = $("#dropdownlist").kendoDropDownList({
@@ -67,10 +74,12 @@ previous_url: /changes-and-backward-compatibility
                 widget.select(0);
             }
         </script>
+        ```
 
 * **AutoComplete/DropDownList/ComboBox/MultiSelect**: In order to improve widgets behavior, we decided to trigger `select` event on navigation (on UP/DOWN item selection)
 
 -Old: The `select` event is raised only on ENTER or item selection with mouse/touch.
+
 -New: The `select` event will be on every UP/DOWN item selection, on ENTER and item selection with mouse/touch. Note that the event is **preventable**.
 
 * **Editor**: In order to solve a double-encoding bug in Firefox and Chrome, the editor value may be retrieved from the `defaultValue` property of the editor. This will introduce a breaking change when all of these are true:
