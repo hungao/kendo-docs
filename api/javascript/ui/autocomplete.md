@@ -205,6 +205,50 @@ all data items which begin with the current widget value are displayed in the su
     });
     </script>
 
+### fixedGroupTemplate `String|Function`
+
+The [template](/api/framework/kendo#methods-template) used to render the fixed header group. By default the widget displays only the value of the current group.
+
+    <input id="customers" style="width: 400px" />
+    <script>
+        $(document).ready(function() {
+            $("#customers").kendoAutoComplete({
+                dataTextField: "ContactName",
+                fixedGroupTemplate: "Fixed group: #:data#",
+                height: 400,
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                    },
+                    group: { field: "Country" }
+                }
+            });
+        });
+    </script>
+
+### groupTemplate `String|Function`
+
+The [template](/api/framework/kendo#methods-template) used to render the groups. By default the widget displays only the value of the group.
+
+    <input id="customers" style="width: 400px" />
+    <script>
+        $(document).ready(function() {
+            $("#customers").kendoAutoComplete({
+                dataTextField: "ContactName",
+                groupTemplate: "Group: #:data#",
+                height: 400,
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+                    },
+                    group: { field: "Country" }
+                }
+            });
+        });
+    </script>
+
 ### height `Number` *(default: 200)*
 
 The height of the suggestion popup in pixels. The default value is 200 pixels.
@@ -428,7 +472,8 @@ Enables the virtualization feature of the widget.
 
 ### virtual.itemHeight `Number`*(default: null)*
 
-Specifies the height of the virtual item. If not specified the framework will automatically calculate the itemHeight based on the theme used.
+Specifies the height of the virtual item. All items in the virtualized list **must** have the same height.
+If the developer does not specify one, the framework will automatically set `itemHeight` based on the current theme and font size.
 
 #### Example - AutoComplete with virtualized list
 
@@ -467,6 +512,55 @@ Specifies the height of the virtual item. If not specified the framework will au
     </script>
 
 ### virtual.valueMapper `Function`*(default: null)*
+
+The `valueMapper` function is **mandatory** for the functionality of the virtualized widget.
+The widget calls the `valueMapper` function when the widget receives a value, that is not fetched from the remote server yet.
+The widget will pass the selected value(s) in the `valueMapper` function. In turn, the valueMapper implementation should return the **respective data item(s) index/indices**.
+
+    <input id="orders" style="width: 400px" />
+    <script>
+        $(document).ready(function() {
+            $("#orders").kendoAutoComplete({
+                template: '<span class="order-id">#= OrderID #</span> #= ShipName #, #= ShipCountry #',
+                dataTextField: "ShipName",
+                virtual: {
+                    itemHeight: 26,
+                    valueMapper: function(options) {
+                        $.ajax({
+                            url: "http://demos.telerik.com/kendo-ui/service/Orders/ValueMapper",
+                            type: "GET",
+                            data: convertValues(options.value),
+                            success: function (data) {
+                                options.success(data);
+                            }
+                        })
+                    }
+                },
+                height: 520,
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+                    },
+                    pageSize: 80,
+                    serverPaging: true,
+                    serverFiltering: true
+                }
+            });
+        });
+
+        function convertValues(value) {
+            var data = {};
+
+            value = $.isArray(value) ? value : [value];
+
+            for (var idx = 0; idx < value.length; idx++) {
+                data["values[" + idx + "]"] = value[idx];
+            }
+
+            return data;
+        }
+    </script>
 
 ## Fields
 
