@@ -140,6 +140,10 @@ The PDF generator supports compression via the JavaScript [pako library](https:/
 
 Compression can make a big difference in the output file size when you're using custom TTF fonts or images with alpha channel (i.e. PNGs with transparency).
 
+> **Note:** besides drastically reducing the output size, Pako enables the browser to use less memory while rendering
+> the PDF.  Chrome is known to crash on generating very large PDF-s and simply including this library will mitigate the
+> problem.  It is bundled with Kendo as `pako_deflate.min.js`.
+
 
 ## Supported browsers
 

@@ -9,6 +9,44 @@ Helper functions declared in the kendo.drawing namespace.
 
 ## Methods
 
+### align
+
+Aligns drawing elements x axis position to a given rectangle.
+
+#### Parameters
+
+##### elements `Array`
+
+An array with the drawing elements that should be aligned.
+
+##### rect `kendo.geometry.Rect`
+
+The rectangle in which the elements should be aligned.
+
+##### alignment `String`
+
+Specifies how should the elements be aligned. The supported values are:
+
+* "start" - the elements will be aligned to the rectangle origin.
+* "center" - the elements will be aligned to the rectangle center.
+* "end" - the elements will be aligned to the right side of the rectangle.
+
+#### Example
+
+    <div id="surface"></div>
+    <script>
+      var draw = kendo.drawing;
+      var Rect = kendo.geometry.Rect;
+      var rect = new Rect([200, 0], [300, 100]);
+      var path = draw.Path.fromRect(new Rect([0, 0], [100, 100]));
+
+      draw.align([path], rect, "center");
+
+      var surface = draw.Surface.create($("#surface"));
+      surface.draw(path);
+      surface.draw(draw.Path.fromRect(rect));
+    </script>
+
 ### drawDOM
 Converts the given DOM element to a [Drawing API](/framework/drawing/overview) scene.
 
@@ -167,4 +205,226 @@ Resolves the promise with the raw SVG document without the Data URI prefix.
                 fileName: "frame.svg"
             });
         });
+    </script>
+
+### fit
+
+Scales uniformly an element so that it fits in a given rectangle. No scaling will be applied if the element is already small enough to fit in the rectangle.
+
+#### Parameters
+
+##### element `kendo.drawing.Element`
+
+The drawing element that should be fitted.
+
+##### rect `kendo.geometry.Rect`
+
+The rectangle in which the elements should be fitted.
+
+#### Example
+
+    <div id="surface"></div>
+    <script>
+      var draw = kendo.drawing;
+      var Rect = kendo.geometry.Rect;
+
+      var group = new draw.Group();
+      var rect = new Rect([0, 0], [200, 100]);
+      var path = draw.Path.fromRect(new Rect([0, 0], [300, 300]), {
+        fill: {
+          color: "#ff0000"
+        }
+      });
+      group.append(path, draw.Path.fromRect(rect));
+
+      draw.fit(path, rect);
+
+      var surface = draw.Surface.create($("#surface"));
+      surface.draw(group);
+    </script>
+
+### stack
+
+Stacks drawing elements horizontally.
+
+#### Parameters
+
+##### elements `Array`
+
+An array with the drawing elements that should be stacked.
+
+#### Example
+
+    <div id="surface"></div>
+    <script>
+      var draw = kendo.drawing;
+      var Rect = kendo.geometry.Rect;
+      var Path = draw.Path;
+      var pathRect = new Rect([0, 0], [100, 100]);
+
+      var pathA = Path.fromRect(pathRect);
+      var pathB = Path.fromRect(pathRect);
+			var pathC = Path.fromRect(pathRect);
+
+      draw.stack([pathA, pathB, pathC]);
+
+      var surface = draw.Surface.create($("#surface"));
+      surface.draw(new draw.Group().append(pathA, pathB, pathC));
+    </script>
+
+### vAlign
+
+Aligns drawing elements y axis position to a given rectangle.
+
+#### Parameters
+
+##### elements `Array`
+
+An array with the drawing elements that should be aligned.
+
+##### rect `kendo.geometry.Rect`
+
+The rectangle in which the elements should be aligned.
+
+##### alignment `String`
+
+Specifies how should the elements be aligned. The supported values are:
+
+* "start" - the elements will be aligned to the rectangle origin.
+* "center" - the elements will be aligned to the rectangle center.
+* "end" - the elements will be aligned to the bottom side of the rectangle.
+
+#### Example
+
+    <div id="surface" style="height: 300px;"></div>
+    <script>
+      var draw = kendo.drawing;
+      var Rect = kendo.geometry.Rect;
+      var rect = new Rect([0, 0], [100, 300]);
+      var path = draw.Path.fromRect(new Rect([0, 0], [100, 100]));
+
+      draw.vAlign([path], rect, "center");
+
+      var surface = draw.Surface.create($("#surface"));
+      surface.draw(path);
+      surface.draw(draw.Path.fromRect(rect));
+    </script>
+
+### vStack
+
+Stacks drawing elements vertically.
+
+#### Parameters
+
+##### elements `Array`
+
+An array with the drawing elements that should be stacked.
+
+#### Example
+
+    <div id="surface" style="height:300px;"></div>
+    <script>
+      var draw = kendo.drawing;
+      var Rect = kendo.geometry.Rect;
+      var Path = draw.Path;
+      var pathRect = new Rect([0, 0], [100, 100]);
+
+      var pathA = Path.fromRect(pathRect);
+      var pathB = Path.fromRect(pathRect);
+      var pathC = Path.fromRect(pathRect);
+
+      draw.vStack([pathA, pathB, pathC]);
+
+      var surface = draw.Surface.create($("#surface"));
+      surface.draw(new draw.Group().append(pathA, pathB, pathC));
+    </script>
+
+### vWrap
+
+Stacks drawing elements vertically. Multiple stacks will be used if the elements height exceeds the given rectangle height.
+
+#### Parameters
+
+##### elements `Array`
+
+An array with the drawing elements that should be wrapped.
+
+##### rect `kendo.geometry.Rect`
+
+The rectangle in which the elements should be wrapped.
+
+#### Returns
+`Array` An array with the stacks. Each stack is an `Array` holding the stack drawing elements.
+
+#### Example
+
+    <div id="surface" style="height:300px;"></div>
+    <script>
+      var draw = kendo.drawing;
+      var Rect = kendo.geometry.Rect;
+      var Path = draw.Path;
+      var rect = new Rect([0, 0], [250, 250])
+      var pathRect = new Rect([0, 0], [100, 100]);
+      var group = new draw.Group();
+      var pathA = Path.fromRect(pathRect);
+      var pathB = Path.fromRect(pathRect);
+      var pathC = Path.fromRect(pathRect);
+
+      var stacks = draw.vWrap([pathA, pathB, pathC], rect);
+      for (var idx = 0; idx < stacks.length; idx++) {
+        var stackGroup = new draw.Group();
+        stackGroup.append.apply(stackGroup, stacks[idx]);
+        group.append(stackGroup);
+      }
+      draw.stack(group.children);
+
+      group.append(Path.fromRect(rect));
+
+      var surface = draw.Surface.create($("#surface"));
+      surface.draw(group);
+    </script>
+
+### wrap
+
+Stacks drawing elements horizontally. Multiple stacks will be used if the elements width exceeds the given rectangle width.
+
+#### Parameters
+
+##### elements `Array`
+
+An array with the drawing elements that should be wrapped.
+
+##### rect `kendo.geometry.Rect`
+
+The rectangle in which the elements should be wrapped.
+
+#### Returns
+`Array` An array with the stacks. Each stack is an `Array` holding the stack drawing elements.
+
+#### Example
+
+    <div id="surface" style="height:300px;"></div>
+    <script>
+      var draw = kendo.drawing;
+      var Rect = kendo.geometry.Rect;
+      var Path = draw.Path;
+      var rect = new Rect([0, 0], [250, 250])
+      var pathRect = new Rect([0, 0], [100, 100]);
+      var group = new draw.Group();
+      var pathA = Path.fromRect(pathRect);
+      var pathB = Path.fromRect(pathRect);
+      var pathC = Path.fromRect(pathRect);
+
+      var stacks = draw.wrap([pathA, pathB, pathC], rect);
+      for (var idx = 0; idx < stacks.length; idx++) {
+        var stackGroup = new draw.Group();
+        stackGroup.append.apply(stackGroup, stacks[idx]);
+        group.append(stackGroup);
+      }
+      draw.vStack(group.children);
+
+      group.append(Path.fromRect(rect));
+
+      var surface = draw.Surface.create($("#surface"));
+      surface.draw(group);
     </script>
