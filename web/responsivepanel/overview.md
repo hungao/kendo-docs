@@ -14,6 +14,8 @@ This allows more screen estate for content for mobile users.
 
 You can specify the page width when the content will become hidden via the breakpoint configuration option, and the placement of the expandable content via the orientation configuration option.
 
+#### Collapse menu on the left on small screens
+
 ```html
   <header>
     <!-- toggle icon, .k-rpanel-toggle hides it on page width > breakpoint -->
