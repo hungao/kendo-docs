@@ -191,6 +191,48 @@ When multi-page output is requested (via `forcePageBreak`/`paperSize`) you can a
     </script>
 
 
+### Customizing the looks
+
+If you'd like the PDF output to look different than what it does in the browser, there are a few options to write CSS rules that apply only in the PDF output.
+
+#### The `.k-pdf-export` class
+
+This CSS class is applied to a DOM element just before drawing starts, and removed thereafter.  Thus, for example to put a border around all paragraphs in PDF output you can define a style like this:
+
+    <style>
+      .k-pdf-export p {
+        border: 2px solid black;
+      }
+    </style>
+
+Because drawing is essentially synchronous and there is no timeout between the moments this class is added and removed, there will be no flash in the browser when generation happens.
+
+One drawback of this approach is that you cannot add background images.  The following is likely to fail:
+
+    <style>
+      .k-pdf-export p {
+        background: url("image.jpg");
+      }
+    </style>
+
+The reason is that images are cached upfront, and this one will miss.  The next option should be used when you need to add any background images.
+
+#### The `<kendo-pdf-document>` element
+
+This only works when multi-page documents are requested (thus, only when one of `forcePageBreak` or `paperSize` is given).  To make it work if you only need a single page, you can pass some dummy value to `forcePageBreak`, e.g.: `forcePageBreak: "-"`.
+
+In such case, the DOM renderer will create a clone of the element (in order to be able to do page breaking without destroying the original content) and it will place it inside a custom `<kendo-pdf-document>` element, which is hidden from the view.  Therefore, you can apply custom styles by retricting the rules to elements under `kendo-pdf-document`.  Example:
+
+    <style>
+      kendo-pdf-document p {
+        border: 2px solid black;
+        background: url("image.jpg");
+      }
+    </style>
+
+Images are safe to add here.
+
+
 ### Known limitations
 
 - no rendering of shadow DOM
