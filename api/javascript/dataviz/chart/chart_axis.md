@@ -29,11 +29,11 @@ Returns a slot based on the specified from and to values.
 
 #### Parameters
 
-##### from
+##### from `String|Number|Date`
 
 The slot from value.
 
-##### to
+##### to `String|Number|Date` *optional*
 
 The slot to value. If a to value is not specified, then the from value will be used.
 
