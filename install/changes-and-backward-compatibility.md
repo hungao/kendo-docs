@@ -158,6 +158,30 @@ Change in the order of extension of the filterable options in the column menu. P
         });
     </script>
 
+* **Diagram**: The argument of the add and remove events now contains the Shape or Connection element and not the model because the events are triggered no matter if the diagram is bound or not. To get the model when the diagram is bound, you can use the Shape/Connection `dataItem` field.
+
+    -Old:
+
+        $("#diagram").kendoDiagram({
+          add: function(e) {
+            var model = e.shape;
+          },
+          remove: function(e) {
+            var model = e.shape;
+          }
+        });
+
+    -New:
+
+        $("#diagram").kendoDiagram({
+          add: function(e) {
+            var model = e.shape.dataItem;
+          },
+          remove: function(e) {
+            var model = e.shape.dataItem;
+          }
+        });
+
 ## Kendo UI 2014 Q3 SP1
 
 ### Changes from 2014 Q3 (2014.3.1119)
