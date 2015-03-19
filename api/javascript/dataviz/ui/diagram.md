@@ -2824,6 +2824,24 @@ Fired when the user adds new shape or connection.
 
 The event handler function context (available via the `this` keyword) will be set to the widget instance.
 
+#### Event Data
+
+##### e.connection `kendo.dataviz.diagram.Connection`
+
+The connection that will be added.
+
+##### e.shape `kendo.dataviz.diagram.Shape`
+
+The shape that will be added.
+
+##### e.preventDefault `Function`
+
+Prevents the add action. If called, the element will not be added to the diagram.
+
+##### e.sender `kendo.ui.Diagram`
+
+The widget instance which fired the event.
+
 #### Example - handling the add event
 
      $('<div id="diagram" />').kendoDiagram({
@@ -2839,21 +2857,7 @@ The event handler function context (available via the `this` keyword) will be se
              var addedShape = e.shape;
              // 'this' refers to the widget here
          }
-     })
-
-#### Event Data
-
-##### e.connection `kendo.data.Model`
-
-The connection which has been added/changed, if any.
-
-##### e.shape `kendo.data.Model`
-
-The shape which has been added/changed, if any.
-
-##### e.sender `kendo.ui.Diagram`
-
-The widget instance which fired the event.
+     });
 
 ### cancel
 
@@ -3071,17 +3075,21 @@ The widget instance which fired the event.
 
 ### remove
 
-Fired when the user delete a shape or connection.
+Fired when the user removes a shape or connection.
 
 #### Event Data
 
-##### e.connection `kendo.data.Model`
+##### e.connection `kendo.dataviz.diagram.Connection`
 
-The dataItem to which connection is bound.
+The connection that will be removed.
 
-##### e.shape `kendo.data.Model`
+##### e.shape `kendo.dataviz.diagram.Shape`
 
-The dataItem to which shape is bound.
+The shape that will be removed.
+
+##### e.preventDefault `Function`
+
+Prevents the remove action. If called, the element will not be removed to the diagram.
 
 ##### e.sender `kendo.ui.Diagram`
 
