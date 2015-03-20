@@ -1557,6 +1557,307 @@ If set to `true` the filter menu allows the user to input a second criteria.
         });
     </script>
 
+### filterable.messages `Object`
+
+The text messages displayed in the filter menu. Use it to customize or localize the filter menu messages.
+
+#### Example - customize filter menu messages
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoTreeList({
+      columns: [
+        { field: "name" },
+        { field: "age" }
+      ],
+      dataSource: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      filterable: {
+        messages: {
+          and: "and",
+          or: "or",
+          filter: "Apply filter",
+          clear: "Clear filter"
+        }
+      }
+    });
+    </script>
+
+### filterable.messages.and `String` *(default: "And")*
+
+The text of the option which represents the "and" logical operation.
+
+#### Example - set the "and" message
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoTreeList({
+      columns: [
+        { field: "name" },
+        { field: "age" }
+      ],
+      dataSource: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      filterable: {
+        messages: {
+          and: "and"
+        }
+      }
+    });
+    </script>
+
+### filterable.messages.clear `String` *(default: "Clear")*
+
+The text of the button which clears the filter.
+
+#### Example - set the "clear" message
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoTreeList({
+      columns: [
+        { field: "name" },
+        { field: "age" }
+      ],
+      dataSource: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      filterable: {
+        messages: {
+          clear: "Clear filter"
+        }
+      }
+    });
+    </script>
+
+### filterable.messages.filter `String` *(default: "Filter")*
+
+The text of the button which applies the filter.
+
+#### Example - set the "filter" message
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoTreeList({
+      columns: [
+        { field: "name" },
+        { field: "age" }
+      ],
+      dataSource: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      filterable: {
+        messages: {
+          filter: "Apply filter"
+        }
+      }
+    });
+    </script>
+
+### filterable.messages.info `String` *(default: "Show items with value that: ")*
+
+The text of the information message on the top of the filter menu.
+
+#### Example - set the "info" message
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoTreeList({
+      columns: [
+        { field: "name" },
+        { field: "age" }
+      ],
+      dataSource: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      filterable: {
+        messages: {
+          info: "Filter by: "
+        }
+      }
+    });
+    </script>
+
+### filterable.messages.isFalse `String` *(default: "is false")*
+
+The text of the radio button for `false` values. Displayed when filtering `Boolean` fields.
+
+#### Example - set the "isFalse" message
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoTreeList({
+      columns: [
+        { field: "active" }
+      ],
+      dataSource: {
+        data: [
+          { active: true },
+          { active: false }
+        ],
+        schema: {
+          model: {
+            fields: {
+              active: { type: "boolean" }
+            }
+          }
+        }
+      },
+      filterable: {
+        messages: {
+          isFalse: "False"
+        }
+      }
+    });
+    </script>
+
+### filterable.messages.isTrue `String` *(default: "is true")*
+
+The text of the radio button for `true` values. Displayed when filtering `Boolean` fields.
+
+#### Example - set the "isTrue" message
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoTreeList({
+      columns: [
+        { field: "active" }
+      ],
+      dataSource: {
+        data: [
+          { active: true },
+          { active: false }
+        ],
+        schema: {
+          model: {
+            fields: {
+              active: { type: "boolean" }
+            }
+          }
+        }
+      },
+      filterable: {
+        messages: {
+          isTrue: "True"
+        }
+      }
+    });
+    </script>
+
+### filterable.messages.or `String` *(default: "Or")*
+
+The text of the option which represents the "or" logical operation.
+
+#### Example - set the "or" message
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoTreeList({
+      columns: [
+        { field: "name" },
+        { field: "age" }
+      ],
+      dataSource: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+      ],
+      filterable: {
+        messages: {
+          or: "or"
+        }
+      }
+    });
+    </script>
+
+### filterable.messages.selectValue `String` *(default: "-Select value-")*
+
+The text of the DropDownList displayed in the filter menu for columns whose [values](#configuration-columns.values) option is set.
+
+#### Example - set the "selectValue" message
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoTreeList({
+      columns: [
+        { field: "productName" },
+        { field: "category", values: [
+            { text: "Beverages", value: 1 },
+            { text: "Food", value: 2 },
+          ]
+        }
+      ],
+      dataSource: [
+        { productName: "Tea", category: 1 },
+        { productName: "Ham", category: 2 }
+      ],
+      filterable: {
+        messages: {
+          selectValue: "Select category"
+        }
+      }
+    });
+    </script>
+
+### filterable.messages.cancel `String` *(default: "Cancel")*
+
+The text of the cancel button in the filter menu header (available in mobile mode only).
+
+#### Example - set the cancel button text
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoTreeList({
+      columns: [
+        { field: "productName" },
+        { field: "category", values: [
+            { text: "Beverages", value: 1 },
+            { text: "Food", value: 2 },
+          ]
+        }
+      ],
+      dataSource: [
+        { productName: "Tea", category: 1 },
+        { productName: "Ham", category: 2 }
+      ],
+      mobile: "phone",
+      filterable: {
+        messages: {
+          cancel: "Reject"
+        }
+      }
+    });
+    </script>
+
+### filterable.messages.operator `String` *(default: "Operator")*
+
+The text of the operator item in filter menu (available in mobile mode only).
+
+#### Example - set the text of operator item
+
+    <div id="grid"></div>
+    <script>
+    $("#grid").kendoTreeList({
+      columns: [
+        { field: "productName" },
+        { field: "category", values: [
+            { text: "Beverages", value: 1 },
+            { text: "Food", value: 2 },
+          ]
+        }
+      ],
+      dataSource: [
+        { productName: "Tea", category: 1 },
+        { productName: "Ham", category: 2 }
+      ],
+      mobile: "phone",
+      filterable: {
+        messages: {
+
+
 ### height `Number|String`
 
 The height of the treelist. Numeric values are treated as pixels.
