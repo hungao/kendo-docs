@@ -13364,6 +13364,29 @@ The supported values are:
     });
     </script>
 
+### series.visible `Boolean` *(default: true)*
+
+Sets the visible property of a chart series
+
+#### Examples - set series visible property
+    <div id="chart"></div>
+    <script>
+        var dataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+              url: "http://demos.telerik.com/kendo-ui/service/stockdata",
+              dataType: "jsonp"
+            }
+          }
+        });
+        $("#chart").kendoChart({
+            dataSource: dataSource,
+            series: [
+                { field: "Volume", visible:false }
+            ]
+        });
+    </script>
+
 ### series.visibleInLegend `Boolean` *(default: true)*
 
 A value indicating whether to show the point category name (for bubble, donut and pie series)
