@@ -10,78 +10,78 @@ description: This documentation guides you how to load data on demand in the ser
 
 #### Old
 
-	<%= Html.Telerik().TreeView()
-	     .Name("TreeView")
-	     .DataBinding(dataBinding => dataBinding
-	         .Ajax().Select("_AjaxLoading", "TreeView")
-	     )
-	 %>
+    <%= Html.Telerik().TreeView()
+         .Name("TreeView")
+         .DataBinding(dataBinding => dataBinding
+             .Ajax().Select("_AjaxLoading", "TreeView")
+         )
+     %>
 
 #### New
 
-	<%= Html.Telerik().TreeView()
-	     .Name("TreeView")
-	     .DataSource(source => {
-	           source.Read(read =>
-	           {
-	               read.Action("_AjaxLoading ", "TreeView");
-	           });
-	     })
-	 %>
+    <%= Html.Telerik().TreeView()
+         .Name("TreeView")
+         .DataSource(source => {
+               source.Read(read =>
+               {
+                   read.Action("_AjaxLoading ", "TreeView");
+               });
+         })
+     %>
 
 ### Serializing Data
 
 Data from the server should be serialized in the following JSON format:
 
-	{
-    	id: String,
-    	text: String,
-    	url: String,
-    	imageUrl: String,
-    	spriteCssClass: String,
-    	hasChildren: Boolean
-	}
+    {
+        id: String,
+        text: String,
+        url: String,
+        imageUrl: String,
+        spriteCssClass: String,
+        hasChildren: Boolean
+    }
 
 All fields are optional (skipping the text field will show the item with the text “undefined”). The text/url/imageUrl/spriteCssClass field names can be changed through the DataTextField/DataUrlField/DataImageUrlField/DataSpriteCssClassField fluent methods:
 
-	<%= Html.Kendo().TreeView()
-	     .Name("TreeView")
-	     .DataTextField("text")
-	     .DataSource(source => {
-	           source.Read(read =>
-	           {
-	               read.Action("_AjaxLoading ", "TreeView");
-	           });
-	     })
-	 %>
+    <%= Html.Kendo().TreeView()
+         .Name("TreeView")
+         .DataTextField("text")
+         .DataSource(source => {
+               source.Read(read =>
+               {
+                   read.Action("_AjaxLoading ", "TreeView");
+               });
+         })
+     %>
 
 The above code allows the items to be serialized in the following form:
 
-	{
-	    id: 2,
-	    text: "Andrew",
-	    hasChildren: true
-	}
+    {
+        id: 2,
+        text: "Andrew",
+        hasChildren: true
+    }
 
 ### Changing The Field That Posts The Item ID
 
 By default, the **id** field will be posted to the server. To change the parameter name, you can use the Data handler:
 
-	<%= Html.Kendo().TreeView()
-	    .Name("TreeView")
-	    .DataSource(dataSource => dataSource
-	        .Read(read => read
-	            .Action("Employees", "TreeView")
-	            .Data("addData")
-	        )
-	    )
-	%>
+    <%= Html.Kendo().TreeView()
+        .Name("TreeView")
+        .DataSource(dataSource => dataSource
+            .Read(read => read
+                .Action("Employees", "TreeView")
+                .Data("addData")
+            )
+        )
+    %>
 
-	<script>
-	    function addData(data) {
-	        return { employeeId: data.id };
-	    }
-	</script>
+    <script>
+        function addData(data) {
+            return { employeeId: data.id };
+        }
+    </script>
 
 ### Value Field
 
@@ -91,11 +91,28 @@ The value field is removed.  Depending on your use case, you can either:
 
 -  If the value was used to store arbitrary data, serialize it in a data-* attribute through the item HtmlAttributes, or if a DataSource is used, access the additional data through the **dataItem** client-side method.
 
+### Conditional load on demand for some nodes
+
+This behavior can be achieved using a custom transport, like shown in the how to [mix local data and remote binding article](/web/treeview/how-to/mix-local-data-and-remote-loading). Defining the local transport via the server-side wrappers can be done like this:
+
+    @(Html.Kendo().TreeView()
+        .Name("treeview")
+        .DataSource(dataSource => dataSource
+            .Custom().Transport(t => t.Read("onRead"))
+        )
+    )
+
+    <script>
+        function onRead(options) {
+            options.success(
+                // use fetched data
+            )
+        }
+    </script>
+
 ### CheckBox Support
 
-#### 2012.2.913 release
-
-This service pack introduces a simplified checkboxes configuration, along with tri-state checkboxes:
+Use the checkboxes builder to render checkboxes or enable tri-state checkboxes:
 
     @(Html.Kendo().TreeView()
         .Name("TreeView")
@@ -109,57 +126,28 @@ This service pack introduces a simplified checkboxes configuration, along with t
         )
     )
 
-#### 2012.2.710 release
+#### Conditionally showing checkboxes
 
-The checkbox support is limited to the functionality shown in the [templates demo](http://demos.telerik.com/kendo-ui/web/treeview/templates.html) (i.e. rendering only). Any data that needs to be passed to the server needs to be added in hidden fields with JavaScript, using the proper naming. The snippet below shows a possible approach for this:
+This functionality requires a custom checkbox template:
 
     @(Html.Kendo().TreeView()
         .Name("TreeView")
-        .DataTextField("text")
-        .DataSource(dataSource => dataSource
-            .Read(read => read
-                .Action("Employees", "TreeView")
+        .Checkboxes(settings => settings
+            .Template(
+                // Use conditional rendering
+                "# if ('checkable' in item && item.checkable) { #" +
+                    "<input type='checkbox' #= item.checked ? 'checked' : '' #>" +
+                "# } #"
             )
         )
-        .CheckboxTemplate("<input type='checkbox' />")
     )
 
-    <script id="itemInfoTemplate" type="text/kendo-ui-template">
-        # var name = "checkedEmployees"; /* modify this to change the argument name */ #
-        # var arrayItem = name + "[" + index + "]"; #
-        <input type="hidden" name="#= name #.Index" value="#= index #" />
-        <input type="hidden" name="#= arrayItem #.Id" value="#= item.id #" />
-        <input type="hidden" name="#= arrayItem #.Name" value="#= item.Name #" />
-    </script>
+Any conditional code executed in the client-side template. See also [how to hide checkboxes for root level](/web/treeview/how-to/hide-checkboxes-for-root-level).
 
-    <script>
-        function getNodeIndex(node) {
-            return node.parentsUntil(".k-treeview", ".k-item").map(function() {
-                return $(this).index();
-            }).toArray().reverse().join(":");
-        }
+#### Show node lines
 
-        var itemInfoTemplate = kendo.template($("#itemInfoTemplate").html());
+Node line functionality is not supported out of the box, but can be achieved via custom styling, as shown in the [show lines between nodes help topic](/web/treeview/how-to/show-node-lines).
 
-        var treeview = $("#treeview");
-
-        treeview.on("change", ":checkbox", function(e) {
-            var checkbox = $(this),
-                dataItem = treeview.data("kendoTreeView").dataItem(checkbox.closest(".k-item")),
-                index = getNodeIndex(checkbox);
-
-            checkbox.nextAll().remove();
-
-            if (checkbox.is(":checked")) {
-                checkbox.after(itemInfoTemplate({
-                    item: dataItem,
-                    index: index
-                }));
-            }
-        });
-    </script>
-
-### Per-Item CheckBoxes
 
 # Client-Side API Changes
 
