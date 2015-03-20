@@ -6307,6 +6307,10 @@ Retrieves the options that are currently enabled or disabled on the Grid, also g
 
 #### Parameters
 
+#### Returns
+
+`Object` The configuration options of the widget.
+
 #### Example - expand the first master table row
 
     <div id="grid"></div>
