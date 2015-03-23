@@ -5,6 +5,5 @@ publish: false
 
 # Kendo UI Public Documentation
 
-The Kendo UI Documentation has been move to the Kendo UI Core repository, available on the following link:
+The Kendo UI Documentation has been moved to the [Kendo UI Core repository](https://github.com/telerik/kendo-ui-core/tree/master/docs).
 
-https://github.com/telerik/kendo-ui-core/tree/master/docs
