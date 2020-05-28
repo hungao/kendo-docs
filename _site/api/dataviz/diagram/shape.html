@@ -1,0 +1,325 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/dataviz/diagram/shape.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizdiagramshape">kendo.dataviz.diagram.Shape</h1>
+
+<p>The Shape object represents a visual node in the graph or diagram.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="id-string">id <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The unique identifier for a Shape.</p>
+
+<h3 id="path-string">path <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The path option of a Shape is a description of a custom geometry. The format follows the standard SVG format (http://www.w3.org/TR/SVG/paths.html#PathData "SVG Path data.").</p>
+
+<h3 id="stroke-object">stroke <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Defines the stroke configuration.</p>
+
+<h3 id="strokecolor-string">stroke.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Defines the color of the shape"s stroke.</p>
+
+<h3 id="strokewidth-number-default-1">stroke.width <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 1)</em></h3>
+
+<p>Defines the thickness or width of the shape"s stroke.</p>
+
+<h3 id="strokedashtype-string">stroke.dashType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The dash type of the shape.</p>
+
+<p>The following dash types are supported:</p>
+
+<ul>
+  <li>"dash" - a line consisting of dashes</li>
+  <li>"dashDot" - a line consisting of a repeating pattern of dash-dot</li>
+  <li>"dot" - a line consisting of dots</li>
+  <li>"longDash" - a line consisting of a repeating pattern of long-dash</li>
+  <li>"longDashDot" - a line consisting of a repeating pattern of long-dash-dot</li>
+  <li>"longDashDotDot" - a line consisting of a repeating pattern of long-dash-dot-dot</li>
+  <li>"solid" - a solid line</li>
+</ul>
+
+<h3 id="type-string-default-rectangle">type <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "rectangle")</em></h3>
+
+<p>Specifies the type of the Shape using any of the built-in shape type.</p>
+
+<ul>
+  <li>"rectangle": this is the default option, representing a SVG Rectangle</li>
+  <li>"circle" : a SVG circle/ellipse</li>
+</ul>
+
+<h3 id="x-number-default-0">x <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 0)</em></h3>
+
+<p>Defines the x-coordinate of the shape when added to the diagram.</p>
+
+<h3 id="y-number-default-0">y <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 0)</em></h3>
+
+<p>Defines the y-coordinate of the shape when added to the diagram.</p>
+
+<h3 id="minwidth-number-default-20">minWidth <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 20)</em></h3>
+
+<p>Defines the minimum width the shape should have, i.e. it cannot be resized to a value smaller than the given one.</p>
+
+<h3 id="minheight-number-default-20">minHeight <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 20)</em></h3>
+
+<p>Defines the minimum height the shape should have, i.e. it cannot be resized to a value smaller than the given one.</p>
+
+<h3 id="width-number-default-100">width <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 100)</em></h3>
+
+<p>Defines the width of the shape when added to the diagram.</p>
+
+<h3 id="height-number-default-100">height <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 100)</em></h3>
+
+<p>Defines the height of the shape when added to the diagram.</p>
+
+<h3 id="fill-stringobject">fill <code class="language-plaintext highlighter-rouge">String|Object</code></h3>
+
+<p>Defines the fill options of the shape.</p>
+
+<h3 id="fillcolor-string">fill.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Defines the fill color of the shape.</p>
+
+<h3 id="fillopacity-number-default-1">fill.opacity <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 1)</em></h3>
+
+<p>Defines the fill opacity of the shape.</p>
+
+<h3 id="hover-object">hover <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Defines the hover configuration.</p>
+
+<h3 id="hoverfill-stringobject">hover.fill <code class="language-plaintext highlighter-rouge">String|Object</code></h3>
+
+<p>Defines the hover fill options of the shape.</p>
+
+<h3 id="hoverfillcolor-string">hover.fill.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Defines the hover fill color of the shape.</p>
+
+<h3 id="hoverfillopacity-number-default-1">hover.fill.opacity <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 1)</em></h3>
+
+<p>Defines the hover fill opacity of the shape.</p>
+
+<h3 id="connectors-array">connectors <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>Defines the connectors the shape owns.</p>
+
+<h3 id="connectorsname-string">connectors.name <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The connector name. Predefined names include:</p>
+
+<ul>
+  <li>"top" - top connector.</li>
+  <li>"right" - right connector.</li>
+  <li>"bottom" - bottom connector.</li>
+  <li>"bottomRight" - bottom right connector.</li>
+  <li>"left" - left connector.</li>
+  <li>"auto" - auto connector.</li>
+</ul>
+
+<h3 id="connectorsdescription-string">connectors.description <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The connector description.</p>
+
+<h3 id="connectorsposition-function">connectors.position <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>The function that positions the connector.</p>
+
+<h3 id="rotation-object">rotation <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The shape rotation settings.</p>
+
+<h3 id="rotationangle-number-default-0">rotation.angle <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 0)</em></h3>
+
+<p>The rotation angle.</p>
+
+<h3 id="content-object">content <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Defines the shapes content settings.</p>
+
+<h3 id="contenttext-string">content.text <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The text displayed in the shape.</p>
+
+<h3 id="contentalign-string">content.align <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The alignment of the text inside the shape.</p>
+
+<h3 id="visual-function">visual <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>A function returning a visual element to render for this shape.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="position">position</h3>
+
+<p>Get or set method returning the current global position or sets the position specified.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="point-kendodatavizdiagrampoint">point <code class="language-plaintext highlighter-rouge">kendo.dataviz.diagram.Point</code></h5>
+
+<p>Either the location to set or if no parameter given returns the current location.</p>
+
+<h3 id="clone">clone</h3>
+
+<p>Returns a clone (with a different id) of the shape.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.diagram.Shape</code> A clone of the current shape.</p>
+
+<h3 id="select">select</h3>
+
+<p>Selects or deselects the shape.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-boolean">value <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Use "true" to select the shape or "false" to deselect it.</p>
+
+<h3 id="connections">connections</h3>
+
+<p>Returns the connections attached to the shape. You can optionally specify to return only the incoming or outgoing connections.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="type-string">type <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>If not parameter specified all connections are returned, if "in" then only the incoming (i.e. towards the shape) are returned, if "out" the only the outgoing (i.e. away from the shape) are returned.</p>
+
+<h3 id="getconnector">getConnector</h3>
+
+<p>Fetches a (default or custom) Connector defined on the Shape by its name.</p>
+
+<h3 id="getposition">getPosition</h3>
+
+<p>Returns the middle positions of the sides of the bounds or the center of the shape"s bounds. This method is useful when defining custom connectors where a position function relative to the shape"s coordinate system is required.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="side-string">side <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>One of the four sides of a bound; "left", "right", "top", "bottom". If none specified the center of the shape"s bounds will be returned.</p>
+
+<h3 id="redraw">redraw</h3>
+
+<p>Renders the shape with the given options. It redefines the options and redraws the shape accordingly.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,351 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/splitter.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendosplitter">&lt;kendo:splitter&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/splitter">Splitter</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="orientation-javalangstring">orientation <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Specifies the orientation of the widget. Supported values are "horizontal" and "vertical".</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter orientation="orientation"&gt;
+&lt;/kendo:splitter&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendosplitter-panes">kendo:splitter-panes</h3>
+
+<p>Defines the panes of the splitter</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/splitter/panes">kendo:splitter-panes</a>.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter&gt;
+    &lt;kendo:splitter-panes&gt;&lt;/kendo:splitter-panes&gt;
+&lt;/kendo:splitter&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="collapse-string">collapse <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a pane of a Splitter is collapsed.</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-collapse">collapse</a> event documentation.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter collapse="handle_collapse"&gt;
+&lt;/kendo:splitter&gt;
+&lt;script&gt;
+    function handle_collapse(e) {
+        // Code to handle the collapse event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="contentload-string">contentLoad <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when the content for a pane has finished loading.</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-contentLoad">contentLoad</a> event documentation.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter contentLoad="handle_contentLoad"&gt;
+&lt;/kendo:splitter&gt;
+&lt;script&gt;
+    function handle_contentLoad(e) {
+        // Code to handle the contentLoad event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="error-string">error <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when the AJAX request that fetches a pane content has failed.</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-error">error</a> event documentation.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter error="handle_error"&gt;
+&lt;/kendo:splitter&gt;
+&lt;script&gt;
+    function handle_error(e) {
+        // Code to handle the error event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="expand-string">expand <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a pane of a Splitter is expanded.</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-expand">expand</a> event documentation.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter expand="handle_expand"&gt;
+&lt;/kendo:splitter&gt;
+&lt;script&gt;
+    function handle_expand(e) {
+        // Code to handle the expand event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="layoutchange-string">layoutChange <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>This event is now obsolete and will be removed in the future. Please use the resize event instead.Fires when the splitter layout has changed</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-layoutChange">layoutChange</a> event documentation.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter layoutChange="handle_layoutChange"&gt;
+&lt;/kendo:splitter&gt;
+&lt;script&gt;
+    function handle_layoutChange(e) {
+        // Code to handle the layoutChange event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resize-string">resize <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a pane is resized.</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-resize">resize</a> event documentation.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter resize="handle_resize"&gt;
+&lt;/kendo:splitter&gt;
+&lt;script&gt;
+    function handle_resize(e) {
+        // Code to handle the resize event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendosplitter-collapse">kendo:splitter-collapse</h3>
+
+<p>Triggered when a pane of a Splitter is collapsed.</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-collapse">collapse</a> event documentation.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter&gt;
+    &lt;kendo:splitter-collapse&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the collapse event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:splitter-collapse&gt;
+&lt;/kendo:splitter&gt;
+</code></pre></div></div>
+
+<h3 id="kendosplitter-contentload">kendo:splitter-contentLoad</h3>
+
+<p>Triggered when the content for a pane has finished loading.</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-contentLoad">contentLoad</a> event documentation.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter&gt;
+    &lt;kendo:splitter-contentLoad&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the contentLoad event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:splitter-contentLoad&gt;
+&lt;/kendo:splitter&gt;
+</code></pre></div></div>
+
+<h3 id="kendosplitter-error">kendo:splitter-error</h3>
+
+<p>Triggered when the AJAX request that fetches a pane content has failed.</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-error">error</a> event documentation.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter&gt;
+    &lt;kendo:splitter-error&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the error event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:splitter-error&gt;
+&lt;/kendo:splitter&gt;
+</code></pre></div></div>
+
+<h3 id="kendosplitter-expand">kendo:splitter-expand</h3>
+
+<p>Triggered when a pane of a Splitter is expanded.</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-expand">expand</a> event documentation.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter&gt;
+    &lt;kendo:splitter-expand&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the expand event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:splitter-expand&gt;
+&lt;/kendo:splitter&gt;
+</code></pre></div></div>
+
+<h3 id="kendosplitter-layoutchange">kendo:splitter-layoutChange</h3>
+
+<p>This event is now obsolete and will be removed in the future. Please use the resize event instead.Fires when the splitter layout has changed</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-layoutChange">layoutChange</a> event documentation.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter&gt;
+    &lt;kendo:splitter-layoutChange&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the layoutChange event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:splitter-layoutChange&gt;
+&lt;/kendo:splitter&gt;
+</code></pre></div></div>
+
+<h3 id="kendosplitter-resize">kendo:splitter-resize</h3>
+
+<p>Triggered when a pane is resized.</p>
+
+<p>For additional information check the <a href="/api/web/splitter#events-resize">resize</a> event documentation.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:splitter&gt;
+    &lt;kendo:splitter-resize&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the resize event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:splitter-resize&gt;
+&lt;/kendo:splitter&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

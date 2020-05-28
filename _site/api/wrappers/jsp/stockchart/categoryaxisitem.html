@@ -1,0 +1,466 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/stockchart/categoryaxisitem.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendostockchart-categoryaxisitem">&lt;kendo:stockChart-categoryAxisItem&gt;</h1>
+
+<p>The category axis configuration options.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxis&gt;
+    &lt;kendo:stockChart-categoryAxisItem&gt;&lt;/kendo:stockChart-categoryAxisItem&gt;
+&lt;/kendo:stockChart-categoryAxis&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="axiscrossingvalue-javalangobject">axisCrossingValue <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Category index at which the first value axis crosses this axis. (Only for object)Category indicies at which the value axes cross the category axis. (Only for array)Note: Specify an index greater than or equal to the number
+of categories to denote the far end of the axis.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem axisCrossingValue="axisCrossingValue"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="background-javalangstring">background <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The background color of the axis.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem background="background"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="baseunit-javalangstring">baseUnit <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The base time interval for the date axis. The default base unit is determined automatically from the minimum difference
+between subsequent categories.The supported values are:Setting baseUnit to "fit" will set such base unit and categoryAxis.baseUnitStep
+that the total number of categories does not exceed categoryAxis.maxDateGroups.Series data is aggregated for the specified base unit using the series.aggregate function.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem baseUnit="baseUnit"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="baseunitstep-javalangobject">baseUnitStep <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The step (interval) between categories in base units. Setting it to "auto" will set the step to such value
+that the total number of categories does not exceed categoryAxis.maxDateGroups.This option is ignored if categoryAxis.baseUnit is set to "fit".</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem baseUnitStep="baseUnitStep"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="categories-javalangobject">categories <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Array of category names.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem categories="categories"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="color-javalangstring">color <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Color to apply to all axis elements. Any valid CSS color string will work here, including hex and rgb.
+Individual color settings for line and labels take priority.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem color="color"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="field-javalangstring">field <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the category name.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem field="field"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="justified-boolean">justified <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Positions categories and series points on major ticks. This removes the empty space before and after the series.This option is ignored if either column, ohlc or candlestick series are plotted on the axis.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem justified="justified"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="max-javalangobject">max <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The last date displayed on the axis.
+By default, the minimum date is the same as the last category.
+This is often used in combination with the min and roundToBaseUnit configuration options to
+set up a fixed date range.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem max="max"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="maxdategroups-float">maxDateGroups <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Specifies the maximum number of groups (categories) to produce when
+either baseUnit is set to "fit" or baseUnitStep is set to "auto".This option is ignored in all other cases.The default value is approximately equal to [widget width, px] / 30</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem maxDateGroups="maxDateGroups"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="min-javalangobject">min <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The first date displayed on the axis.
+By default, the minimum date is the same as the first category.
+This is often used in combination with the max and roundToBaseUnit configuration options to
+set up a fixed date range.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem min="min"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="name-javalangstring">name <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The unique axis name.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem name="name"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="pane-javalangstring">pane <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The name of the pane that the axis should be rendered in.
+The axis will be rendered in the first (default) pane if not set.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem pane="pane"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="reverse-boolean">reverse <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Reverses the axis direction -
+categories are listed from right to left and from top to bottom.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem reverse="reverse"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="roundtobaseunit-boolean">roundToBaseUnit <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>By default, the first and last dates will be rounded off to the nearest base unit.
+Specifying false for this option will disable this behavior.This option is most useful in combination with explicit min and max dates.It will be ignored if either column, ohlc or candlestick series are plotted on the axis.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem roundToBaseUnit="roundToBaseUnit"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The axis type.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem type="type"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="visible-boolean">visible <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>The visibility of the axis.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem visible="visible"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="weekstartday-float">weekStartDay <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Specifies the week start day when baseUnit is set to "weeks".
+Use the kendo.days constants to specify the day by name.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem weekStartDay="weekStartDay"&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendostockchart-categoryaxisitem-autobaseunitsteps">kendo:stockChart-categoryAxisItem-autoBaseUnitSteps</h3>
+
+<p>The discrete categoryAxis.baseUnitStep values when
+either categoryAxis.baseUnit is set to "fit" or
+categoryAxis.baseUnitStep is set to "auto".</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-autobaseunitsteps">kendo:stockChart-categoryAxisItem-autoBaseUnitSteps</a>.</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-autoBaseUnitSteps&gt;&lt;/kendo:stockChart-categoryAxisItem-autoBaseUnitSteps&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-categoryaxisitem-crosshair">kendo:stockChart-categoryAxisItem-crosshair</h3>
+
+<p>The crosshair configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-crosshair">kendo:stockChart-categoryAxisItem-crosshair</a>.</p>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-crosshair&gt;&lt;/kendo:stockChart-categoryAxisItem-crosshair&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-categoryaxisitem-labels">kendo:stockChart-categoryAxisItem-labels</h3>
+
+<p>Configures the axis labels.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-labels">kendo:stockChart-categoryAxisItem-labels</a>.</p>
+
+<h4 id="example-21">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-labels&gt;&lt;/kendo:stockChart-categoryAxisItem-labels&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-categoryaxisitem-line">kendo:stockChart-categoryAxisItem-line</h3>
+
+<p>Configures the axis line. This will also effect major and minor ticks, but not gridlines.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-line">kendo:stockChart-categoryAxisItem-line</a>.</p>
+
+<h4 id="example-22">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-line&gt;&lt;/kendo:stockChart-categoryAxisItem-line&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-categoryaxisitem-majorgridlines">kendo:stockChart-categoryAxisItem-majorGridLines</h3>
+
+<p>Configures the major grid lines. These are the lines that are an extension of the major ticks through the
+body of the chart.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-majorgridlines">kendo:stockChart-categoryAxisItem-majorGridLines</a>.</p>
+
+<h4 id="example-23">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-majorGridLines&gt;&lt;/kendo:stockChart-categoryAxisItem-majorGridLines&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-categoryaxisitem-majorticks">kendo:stockChart-categoryAxisItem-majorTicks</h3>
+
+<p>The major ticks of the axis.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-majorticks">kendo:stockChart-categoryAxisItem-majorTicks</a>.</p>
+
+<h4 id="example-24">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-majorTicks&gt;&lt;/kendo:stockChart-categoryAxisItem-majorTicks&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-categoryaxisitem-minorgridlines">kendo:stockChart-categoryAxisItem-minorGridLines</h3>
+
+<p>Configures the minor grid lines.  These are the lines that are an extension of the minor ticks through
+the body of the chart.Note that minor grid lines are not visible by default, therefore none of these settings will take effect with the minor grid lines visibility being set to true.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-minorgridlines">kendo:stockChart-categoryAxisItem-minorGridLines</a>.</p>
+
+<h4 id="example-25">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-minorGridLines&gt;&lt;/kendo:stockChart-categoryAxisItem-minorGridLines&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-categoryaxisitem-minorticks">kendo:stockChart-categoryAxisItem-minorTicks</h3>
+
+<p>The minor ticks of the axis.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-minorticks">kendo:stockChart-categoryAxisItem-minorTicks</a>.</p>
+
+<h4 id="example-26">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-minorTicks&gt;&lt;/kendo:stockChart-categoryAxisItem-minorTicks&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-categoryaxisitem-notes">kendo:stockChart-categoryAxisItem-notes</h3>
+
+<p>The category axis notes configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-notes">kendo:stockChart-categoryAxisItem-notes</a>.</p>
+
+<h4 id="example-27">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-notes&gt;&lt;/kendo:stockChart-categoryAxisItem-notes&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-categoryaxisitem-plotbands">kendo:stockChart-categoryAxisItem-plotBands</h3>
+
+<p>The plot bands of the category axis.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-plotbands">kendo:stockChart-categoryAxisItem-plotBands</a>.</p>
+
+<h4 id="example-28">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-plotBands&gt;&lt;/kendo:stockChart-categoryAxisItem-plotBands&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-categoryaxisitem-select">kendo:stockChart-categoryAxisItem-select</h3>
+
+<p>The selected axis range. If configured, axis selection will be enabled.** Available only for vertical axes **The range units are:</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-select">kendo:stockChart-categoryAxisItem-select</a>.</p>
+
+<h4 id="example-29">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-select&gt;&lt;/kendo:stockChart-categoryAxisItem-select&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-categoryaxisitem-title">kendo:stockChart-categoryAxisItem-title</h3>
+
+<p>The title of the category axis.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxisitem-title">kendo:stockChart-categoryAxisItem-title</a>.</p>
+
+<h4 id="example-30">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-categoryAxisItem&gt;
+    &lt;kendo:stockChart-categoryAxisItem-title&gt;&lt;/kendo:stockChart-categoryAxisItem-title&gt;
+&lt;/kendo:stockChart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

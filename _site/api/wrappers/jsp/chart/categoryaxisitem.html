@@ -1,0 +1,470 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/chart/categoryaxisitem.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendochart-categoryaxisitem">&lt;kendo:chart-categoryAxisItem&gt;</h1>
+
+<p>The category axis configuration options.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxis&gt;
+    &lt;kendo:chart-categoryAxisItem&gt;&lt;/kendo:chart-categoryAxisItem&gt;
+&lt;/kendo:chart-categoryAxis&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="axiscrossingvalue-javalangobject">axisCrossingValue <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Category index at which the first value axis crosses this axis (when set as an object).Category indices at which the value axes cross the category axis (when set as an array).</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem axisCrossingValue="axisCrossingValue"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="background-javalangstring">background <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The background color of the axis.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem background="background"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="baseunit-javalangstring">baseUnit <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The base time interval for the date axis. The default base unit is determined automatically from the minimum difference
+between subsequent categories.The supported values are:Setting baseUnit to "fit" will set such base unit and categoryAxis.baseUnitStep
+that the total number of categories does not exceed categoryAxis.maxDateGroups.Series data is aggregated for the specified base unit using the series.aggregate function.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem baseUnit="baseUnit"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="baseunitstep-javalangobject">baseUnitStep <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The step (interval) between categories in base units. Setting it to "auto" will set the step to such value
+that the total number of categories does not exceed categoryAxis.maxDateGroups.This option is ignored if categoryAxis.baseUnit is set to "fit".</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem baseUnitStep="baseUnitStep"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="categories-javalangobject">categories <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The category names. The chart will create a category for every item of the array.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem categories="categories"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="color-javalangstring">color <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The color to apply to all axis elements. Accepts a valid CSS color string, including hex and rgb. Can be overridden by categoryAxis.labels.color and
+categoryAxis.line.color.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem color="color"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="field-javalangstring">field <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the category name. Requires the dataSource option to be set.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem field="field"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="justified-boolean">justified <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the chart will position categories and series points on major ticks. This removes the empty space before and after the series.The default value is false except for "area" and "verticalArea".</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem justified="justified"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="max-javalangobject">max <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The last date displayed on the category date axis. By default, the minimum date is the same as the last category.
+This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to
+set up a fixed date range.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem max="max"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="maxdategroups-float">maxDateGroups <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The maximum number of groups (categories) to display when
+categoryAxis.baseUnit is set to "fit" or
+categoryAxis.baseUnitStep is set to "auto".</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem maxDateGroups="maxDateGroups"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="min-javalangobject">min <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The first date displayed on the category date axis. By default, the minimum date is the same as the first category.
+This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to
+set up a fixed date range.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem min="min"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="name-javalangstring">name <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The unique axis name. Used to associate a series with a category axis using the series.categoryAxis option.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem name="name"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="pane-javalangstring">pane <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The name of the pane that the category axis should be rendered in.
+The axis will be rendered in the first (default) pane if not set.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem pane="pane"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="reverse-boolean">reverse <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the category axis direction will be reversed. By default categories are listed from left to right and from bottom to top.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem reverse="reverse"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="roundtobaseunit-boolean">roundToBaseUnit <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the chart will round the first and last date to the nearest base unit.The roundToBaseUnit option will be ignored if series.type is set to "bar", "column", "boxPlot", "ohlc", "candlestick" or "waterfall".</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem roundToBaseUnit="roundToBaseUnit"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="startangle-float">startAngle <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The angle (degrees) of the first category on the axis.Angles increase clockwise and zero is to the left. Negative values are acceptable.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem startAngle="startAngle"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The category axis type.The supported values are:</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem type="type"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="visible-boolean">visible <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the chart will display the category axis. By default the category axis is visible.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem visible="visible"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="weekstartday-float">weekStartDay <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The week start day when categoryAxis.baseUnit is set to "weeks".The supported values are:</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem weekStartDay="weekStartDay"&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendochart-categoryaxisitem-autobaseunitsteps">kendo:chart-categoryAxisItem-autoBaseUnitSteps</h3>
+
+<p>The discrete categoryAxis.baseUnitStep values when
+either categoryAxis.baseUnit is set to "fit" or
+categoryAxis.baseUnitStep is set to "auto".</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-autobaseunitsteps">kendo:chart-categoryAxisItem-autoBaseUnitSteps</a>.</p>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-autoBaseUnitSteps&gt;&lt;/kendo:chart-categoryAxisItem-autoBaseUnitSteps&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-categoryaxisitem-crosshair">kendo:chart-categoryAxisItem-crosshair</h3>
+
+<p>The crosshair configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-crosshair">kendo:chart-categoryAxisItem-crosshair</a>.</p>
+
+<h4 id="example-21">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-crosshair&gt;&lt;/kendo:chart-categoryAxisItem-crosshair&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-categoryaxisitem-labels">kendo:chart-categoryAxisItem-labels</h3>
+
+<p>The axis labels configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-labels">kendo:chart-categoryAxisItem-labels</a>.</p>
+
+<h4 id="example-22">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-labels&gt;&lt;/kendo:chart-categoryAxisItem-labels&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-categoryaxisitem-line">kendo:chart-categoryAxisItem-line</h3>
+
+<p>The configuration of the axis lines. Also affects the major and minor ticks, but not the grid lines.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-line">kendo:chart-categoryAxisItem-line</a>.</p>
+
+<h4 id="example-23">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-line&gt;&lt;/kendo:chart-categoryAxisItem-line&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-categoryaxisitem-majorgridlines">kendo:chart-categoryAxisItem-majorGridLines</h3>
+
+<p>The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the
+body of the chart.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-majorgridlines">kendo:chart-categoryAxisItem-majorGridLines</a>.</p>
+
+<h4 id="example-24">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-majorGridLines&gt;&lt;/kendo:chart-categoryAxisItem-majorGridLines&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-categoryaxisitem-majorticks">kendo:chart-categoryAxisItem-majorTicks</h3>
+
+<p>The configuration of the category axis major ticks.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-majorticks">kendo:chart-categoryAxisItem-majorTicks</a>.</p>
+
+<h4 id="example-25">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-majorTicks&gt;&lt;/kendo:chart-categoryAxisItem-majorTicks&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-categoryaxisitem-minorgridlines">kendo:chart-categoryAxisItem-minorGridLines</h3>
+
+<p>The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the
+body of the chart.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-minorgridlines">kendo:chart-categoryAxisItem-minorGridLines</a>.</p>
+
+<h4 id="example-26">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-minorGridLines&gt;&lt;/kendo:chart-categoryAxisItem-minorGridLines&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-categoryaxisitem-minorticks">kendo:chart-categoryAxisItem-minorTicks</h3>
+
+<p>The configuration of the category axis minor ticks.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-minorticks">kendo:chart-categoryAxisItem-minorTicks</a>.</p>
+
+<h4 id="example-27">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-minorTicks&gt;&lt;/kendo:chart-categoryAxisItem-minorTicks&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-categoryaxisitem-notes">kendo:chart-categoryAxisItem-notes</h3>
+
+<p>The category axis notes configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-notes">kendo:chart-categoryAxisItem-notes</a>.</p>
+
+<h4 id="example-28">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-notes&gt;&lt;/kendo:chart-categoryAxisItem-notes&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-categoryaxisitem-plotbands">kendo:chart-categoryAxisItem-plotBands</h3>
+
+<p>The plot bands of the category axis.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-plotbands">kendo:chart-categoryAxisItem-plotBands</a>.</p>
+
+<h4 id="example-29">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-plotBands&gt;&lt;/kendo:chart-categoryAxisItem-plotBands&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-categoryaxisitem-select">kendo:chart-categoryAxisItem-select</h3>
+
+<p>The selected axis range. If set, axis selection will be enabled.The range units are:</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-select">kendo:chart-categoryAxisItem-select</a>.</p>
+
+<h4 id="example-30">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-select&gt;&lt;/kendo:chart-categoryAxisItem-select&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-categoryaxisitem-title">kendo:chart-categoryAxisItem-title</h3>
+
+<p>The title configuration of the category axis.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxisitem-title">kendo:chart-categoryAxisItem-title</a>.</p>
+
+<h4 id="example-31">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-categoryAxisItem&gt;
+    &lt;kendo:chart-categoryAxisItem-title&gt;&lt;/kendo:chart-categoryAxisItem-title&gt;
+&lt;/kendo:chart-categoryAxisItem&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

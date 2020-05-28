@@ -1,0 +1,270 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/kendo-music-store/music-store-web/kendo-music-store-web-setup.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="project-setup---kendo-music-store">Project Setup - Kendo Music Store</h1>
+
+<h2 id="adding-kendo-ui-to-the-project">Adding Kendo UI to the project</h2>
+
+<p>Start by adding Kendo UI to the project. There are a lot of ways to accomplish this.
+Kendo UI can be downloaded from <a href="http://www.telerik.com/download/kendo-ui-complete">telerik.com</a>, referenced from the CDN, or fetched with NuGet.</p>
+
+<h3 id="downloading-kendo-ui">Downloading Kendo UI</h3>
+
+<p>KendoUI is divided into three parts: Web, Mobile, and DataViz.
+The preferred method of getting KendoUI is to browse to <a href="http://www.telerik.com/download/kendo-ui-complete">telerik.com</a> and download Kendo UI as a .zip file.
+Depending on whether you are using the Trial version or have purchased the full Commercial version,
+you will have a .zip file that follows one of these directory structures:</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-web/images/kendo-commecrial-zip-layout.png" alt="kendo-commecrial-zip-layout" /></p>
+
+<p>The <strong>\js</strong> and <strong>\styles</strong> folders in the root of the .zip file contain the "minified" versions of the KendoUI .js and .css files.
+If you have the commercial version of Kendo UI, you may also notice the <strong>\source</strong> folder.
+This folder also contains \js and \styles folders, but these are the full, non-minified versions of the .js and .css.
+These would typically be used for local development and debugging, but the minified versions are the ones that should be deployed in a real application.
+For that reason, we will use the minified files in the remainder of this example project.</p>
+
+<h3 id="fetching-from-the-cdn">Fetching from the CDN</h3>
+
+<p>Kendo UI Web can also be fetched from a CDN instead of downloading the files. For more information and the CDN URLs, please see: <strong><a href="http://docs.telerik.com/kendo-ui/getting-started/javascript-dependencies">Getting Started: Javascript Dependencies</a></strong></p>
+
+<h3 id="fetching-from-nuget">Fetching from NuGet</h3>
+
+<p>Kendo UI Web is also avaiable using the NuGet package manager in Visual Studio.
+Simply search for "kendo".</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-web/images/kendo-nuget.png" alt="kendo-nuget" /></p>
+
+<h3 id="more-information">More Information</h3>
+
+<p>In the Music Store project, we referenced the <strong>kendo.all.min.js</strong> file and the <strong>Default</strong> Kendo theme, because we were going to be using DataViz and a good number of the Kendo UI Widgets.
+If we were only going to be using a few select portions of Kendo, we would have taken individual JavaScript files and make a seperate bundle for them, reducing the download size for the end user.</p>
+
+<p>For more information on this topic, see: <a href="http://docs.telerik.com/kendo-ui/getting-started/introduction">Getting Started with Kendo UI</a></p>
+
+<h2 id="create-mvc-bundles">Create MVC Bundles</h2>
+
+<p>ASP.NET MVC 4 has the ability to bundle and minify JavaScript and Style Sheets.
+In the Music Store project, we are not bundling the Kendo UI .js and .css files.
+This is because we are using <strong>kendo.all.min.js</strong> which is already pre bundled and minified.</p>
+
+<p>Also, it is important to note that in <strong>Debug</strong> mode, by default the bundler will not include minified files.
+This means that if we made a bundle of the Kendo UI .css files:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundles.Add(new StyleBundle("~/Content/kendo").Include(
+    "~/Content/kendo.common.min.css",
+    "~/Content/kendo.default.min.css"));
+</code></pre></div></div>
+
+<p>These files would not be included when running in Debug mode, only in Release mode.
+You can see and modify which files the ASP.NET bundler will ignore by inspecting the <strong>bundles.IgnoreList</strong> collection at runtime. For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Clear all items from the default ignore list to allow minified CSS and JavaScript files to be included in debug mode
+bundles.IgnoreList.Clear();
+
+// Do not include intellisense files
+bundles.IgnoreList.Ignore("*.intellisense.js");
+</code></pre></div></div>
+
+<h3 id="seperating-libs-and-app-code-into-bundles">Seperating Libs and App code into bundles</h3>
+
+<p>Most sizable web applications will include a number of .js files. It is a good practice to seperate these into
+bundles for third-party libraries and your own application code.</p>
+
+<p>In the Music Store application, the only third-party library we are using (aside from Kendo) is Date.js.
+We set up a <strong>libs</strong> bundle for this third-party library, plus an <strong>app</strong> bundle for our own application code.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundles.Add(new ScriptBundle("~/bundles/libs").Include(
+    "~/Scripts/date.js"));
+
+bundles.Add(new ScriptBundle("~/bundles/app").Include(
+    "~/Scripts/App/kendo-custom-bindings.js",
+    "~/Scripts/App/kendo-cart-menu-widget.js",
+    "~/Scripts/App/config.js",
+    "~/Scripts/App/cart.js",
+    "~/Scripts/App/store.js",
+    "~/Scripts/App/shared-layout.js"));
+</code></pre></div></div>
+
+<p>And render them in <strong>_Layout.cshtml</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Scripts.Render("~/bundles/libs")
+@Scripts.Render("~/bundles/app")
+</code></pre></div></div>
+
+<h3 id="easing-debugging-with-the-commercial-version-of-kendo">Easing debugging with the commercial version of Kendo</h3>
+
+<p>While it is typically good practice to always include the minified versions of .js and .css files that you use, it makes debugging JavaScript errors more difficult.
+The commercial version of Kendo UI comes with the full non-minified source code. We can include these files instead, usin the ASP.NET bundler to bundle and minify them for production, while still keeping them un-minified for development.</p>
+
+<p>To do this, include the non-minified .js and .css files from the <strong>\source</strong> folder of the downloaded Kendo UI .zip file in your project.
+Then configure the ASP.NET bundles to include these files. For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
+    "~/Scripts/kendo.all.js"));
+
+bundles.Add(new StyleBundle("~/Content/kendo").Include(
+    "~/Content/kendo.common.css",
+    "~/Content/kendo.default.css"));
+</code></pre></div></div>
+
+<p>Then set up your <strong>web.config</strong> file to enable bundling only for <strong>Release</strong> builds of the application.
+This way, ASP.NET will server the non-minified files for Debug, and a bundled minified version for Release.
+To do this, set compilation debug to true in the <strong>Debug</strong> version of your <strong>web.config</strong> file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;system.web&gt;
+  &lt;compilation debug="true" targetFramework="4.5" /&gt;
+</code></pre></div></div>
+
+<p>The <strong>Release</strong> version of the <strong>web.config</strong> file would set debug to false:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;system.web&gt;
+  &lt;compilation debug="false" targetFramework="4.5" /&gt;
+</code></pre></div></div>
+
+<h2 id="adding-kendo-to-the-aspnet-layout-page">Adding Kendo to the ASP.NET Layout Page</h2>
+
+<p>We can now add Kendo and any other third-party libraries to the pages.
+The Music Store uses the <strong>Views\Shared_Layout.cshtml</strong> master page, so we will add Kendo here.
+We need to make sure that Kendo"s JavaScript files come after jQuery. For styling, we include
+<strong>kendo.common.min.css</strong>, plus one of the Kendo UI Themes. In this example we are using
+<strong>kendo.default.min.css</strong>, which is the Default theme.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;@ViewBag.Title - Kendo UI Music Store&lt;/title&gt;
+    &lt;link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" /&gt;
+    &lt;meta name="viewport" content="width=device-width" /&gt;
+    &lt;link href="~/Content/kendo.common.min.css" rel="stylesheet" /&gt; // &lt;-- Added Here.
+    &lt;link href="~/Content/kendo.default.min.css" rel="stylesheet" /&gt; // &lt;-- Added Here.
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+&lt;/head&gt;
+&lt;body&gt;
+    // ...
+
+    @Scripts.Render("~/bundles/jquery")
+    &lt;script src="~/Scripts/kendo.all.min.js"&gt;&lt;/script&gt; // &lt;-- Added Here.
+    @RenderSection("scripts", required: false)
+&lt;/body&gt;
+</code></pre></div></div>
+
+<p>Typical practice is to include as much JavaScript at the bottom of the <strong>&lt;body&gt;</strong> element as possible.
+In the Music Store project, we are actually including jQuery in the <strong>&lt;head&gt;</strong>.
+This will be discussed later in the tutorial, but it is because we later use some of <a href="http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/asp-net-mvc-4">UI for ASP.NET MVC</a> which insert <strong>&lt;script&gt;</strong> tags into the <strong>&lt;body&gt;</strong> of the page, and require that jQuery already be defined.</p>
+
+<h2 id="database">Database</h2>
+
+<p>The Kendo UI Music Store demo application uses a SQL Server database with sample data for artists, albums, genres, etc. In order to populate the sample database, the application uses Entity Framework Code First migrations to create the database and seed the sample data. The migrations are configured to only run in DEBUG mode. If you run in RELEASE mode, the code will assume that the database has already been created and will not try to create or seed the data.</p>
+
+<p>The connection string configured in the web.config file is set to use LocalDB and will connect to a local database file in the App_Data folder. LocalDB requires a SQL Server 2012 or later instance. To run the Kendo UI Music Store demo, please ensure that your system meets these requirements or simply change the connection string to use a SQL Server instance available on your computer.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

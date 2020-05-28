@@ -1,0 +1,775 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/Data/DataSource.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatadatasource">\Kendo\Data\DataSource</h1>
+
+<p>A PHP wrapper for Kendo UI <a href="/api/framework/datasource">DataSource</a>.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="addaggregateitem">addAggregateItem</h3>
+
+<p>Adds one or more DataSourceAggregateItem to the DataSource.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-value2--kendodatadatasourceaggregateitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceAggregateItem|array</code></h5>
+
+<h4 id="example---using-kendodatadatasourceaggregateitem">Example - using \Kendo\Data\DataSourceAggregateItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$aggregateItem = new \Kendo\Data\DataSourceAggregateItem();
+$aggregate = 'value';
+$aggregateItem-&gt;aggregate($aggregate);
+$dataSource-&gt;addAggregateItem($aggregateItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$aggregate = 'value';
+$dataSource-&gt;addAggregateItem(array('aggregate' =&gt; $aggregate));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-datasourceaggregateitem">Example - adding more than one DataSourceAggregateItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$first  = new \Kendo\Data\DataSourceAggregateItem();
+$second = new \Kendo\Data\DataSourceAggregateItem();
+$dataSource-&gt;addAggregateItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="autosync">autoSync</h3>
+<p>If set to true the data source would automatically save any changed data items by calling the sync method. By default changes are not automatically saved.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;autoSync(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="batch">batch</h3>
+<p>If set to true the data source will batch CRUD operation requests. For example updating two data items would cause one HTTP request instead of two. By default the data source
+makes a HTTP request for every CRUD operation.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;batch(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="change">change</h3>
+<p>Fired when the data source is populated from a JavaScript array or a remote service, a data item is inserted, updated or removed, the data items are paged, sorted, filtered or grouped.The event handler function context (available via the this keyword) will be set to the data source instance.
+For additional information check the <a href="/api/framework/datasource#events-change">change</a> event documentation.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;change('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onChange(e) {
+        // handle the change event.
+    }
+&lt;/script&gt;
+&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;change('onChange');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;change(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="data">data</h3>
+<p>The array of data items which the data source contains. The data source will wrap those items as kendo.data.ObservableObject or kendo.data.Model (if schema.model is set).Can be set to a string value if the schema.type option is set to "xml".</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-arraystring">$value <code class="language-plaintext highlighter-rouge">array|string</code></h5>
+
+<h4 id="example----using-array">Example  - using array</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;data(new array());
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-string">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;data('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="error">error</h3>
+<p>Fired when a request to the remote service fails.The event handler function context (available via the this keyword) will be set to the data source instance.
+For additional information check the <a href="/api/framework/datasource#events-error">error</a> event documentation.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-1">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;error('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-1">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onError(e) {
+        // handle the error event.
+    }
+&lt;/script&gt;
+&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;error('onError');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-1">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;error(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addfilteritem">addFilterItem</h3>
+
+<p>Adds one or more DataSourceFilterItem to the DataSource.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-value2--kendodatadatasourcefilteritemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceFilterItem|array</code></h5>
+
+<h4 id="example---using-kendodatadatasourcefilteritem">Example - using \Kendo\Data\DataSourceFilterItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$filterItem = new \Kendo\Data\DataSourceFilterItem();
+$field = 'value';
+$filterItem-&gt;field($field);
+$dataSource-&gt;addFilterItem($filterItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$field = 'value';
+$dataSource-&gt;addFilterItem(array('field' =&gt; $field));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-datasourcefilteritem">Example - adding more than one DataSourceFilterItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$first  = new \Kendo\Data\DataSourceFilterItem();
+$second = new \Kendo\Data\DataSourceFilterItem();
+$dataSource-&gt;addFilterItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addgroupitem">addGroupItem</h3>
+
+<p>Adds one or more DataSourceGroupItem to the DataSource.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-value2--kendodatadatasourcegroupitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceGroupItem|array</code></h5>
+
+<h4 id="example---using-kendodatadatasourcegroupitem">Example - using \Kendo\Data\DataSourceGroupItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$groupItem = new \Kendo\Data\DataSourceGroupItem();
+$dir = 'value';
+$groupItem-&gt;dir($dir);
+$dataSource-&gt;addGroupItem($groupItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dir = 'value';
+$dataSource-&gt;addGroupItem(array('dir' =&gt; $dir));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-datasourcegroupitem">Example - adding more than one DataSourceGroupItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$first  = new \Kendo\Data\DataSourceGroupItem();
+$second = new \Kendo\Data\DataSourceGroupItem();
+$dataSource-&gt;addGroupItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="page">page</h3>
+<p>The page of data which the data source will return when the view method is invoked or request from the remote service.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;page(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="pagesize">pageSize</h3>
+<p>The number of data items per page.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-float-1">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;pageSize(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="push">push</h3>
+<p>Fired when the data source receives a push notification or the pushCreate, pushUpdate or pushDestroy methods are called.
+For additional information check the <a href="/api/framework/datasource#events-push">push</a> event documentation.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-2">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-2">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;push('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-2">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onPush(e) {
+        // handle the push event.
+    }
+&lt;/script&gt;
+&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;push('onPush');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-2">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;push(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="requestend">requestEnd</h3>
+<p>Fired when a remote service request is finished.The event handler function context (available via the this keyword) will be set to the data source instance.
+For additional information check the <a href="/api/framework/datasource#events-requestEnd">requestEnd</a> event documentation.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-3">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-3">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;requestEnd('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-3">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onRequestEnd(e) {
+        // handle the requestEnd event.
+    }
+&lt;/script&gt;
+&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;requestEnd('onRequestEnd');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-3">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;requestEnd(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="requeststart">requestStart</h3>
+<p>Fired when the data source makes a remote service request.The event handler function context (available via the this keyword) will be set to the data source instance.
+For additional information check the <a href="/api/framework/datasource#events-requestStart">requestStart</a> event documentation.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-4">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-4">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;requestStart('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-4">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onRequestStart(e) {
+        // handle the requestStart event.
+    }
+&lt;/script&gt;
+&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;requestStart('onRequestStart');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-4">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;requestStart(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="schema">schema</h3>
+
+<p>The configuration used to parse the remote service response.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-kendodatadatasourceschemaarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceSchema|array</code></h5>
+
+<h4 id="example---using-kendodatadatasourceschema">Example - using <a href="/api/wrappers/php/Kendo/Data/DataSourceSchema">\Kendo\Data\DataSourceSchema</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$schema = new \Kendo\Data\DataSourceSchema();
+$type = 'value';
+$schema-&gt;type($type);
+$dataSource-&gt;schema($schema);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-3">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$type = 'value';
+$dataSource-&gt;schema(array('type' =&gt; $type));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="serveraggregates">serverAggregates</h3>
+<p>If set to true the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-boolean-2">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;serverAggregates(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="serverfiltering">serverFiltering</h3>
+<p>If set to true the data source will leave the filtering implementation to the remote service. By default the data source performs filtering client-side.By default the filter is sent to the server following jQuery"s conventions.For example the filter { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] } is sent as:Use the parameterMap option to send the filter option in a different format.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-boolean-3">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;serverFiltering(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="servergrouping">serverGrouping</h3>
+<p>If set to true the data source will leave the grouping implementation to the remote service. By default the data source performs grouping client-side.By default the group is sent to the server following jQuery"s conventions.For example the group { field: "category", dir: "desc" } is sent as:Use the parameterMap option to send the group option in a different format.</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-boolean-4">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;serverGrouping(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="serverpaging">serverPaging</h3>
+<p>If set to true the data source will leave the data item paging implementation to the remote service. By default the data source performs paging client-side.The following options are sent to the server when server paging is enabled:Use the parameterMap option to send the paging options in a different format.</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-boolean-5">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;serverPaging(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="serversorting">serverSorting</h3>
+<p>If set to true the data source will leave the data item sorting implementation to the remote service. By default the data source performs sorting client-side.By default the sort is sent to the server following jQuery"s conventions.For example the sort { field: "age", dir: "desc" } is sent as:Use the parameterMap option to send the paging options in a different format.</p>
+
+<h4 id="returns-18">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="value-boolean-6">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;serverSorting(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addsortitem">addSortItem</h3>
+
+<p>Adds one or more DataSourceSortItem to the DataSource.</p>
+
+<h4 id="returns-19">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="value-value2--kendodatadatasourcesortitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceSortItem|array</code></h5>
+
+<h4 id="example---using-kendodatadatasourcesortitem">Example - using \Kendo\Data\DataSourceSortItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$sortItem = new \Kendo\Data\DataSourceSortItem();
+$dir = 'value';
+$sortItem-&gt;dir($dir);
+$dataSource-&gt;addSortItem($sortItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-4">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dir = 'value';
+$dataSource-&gt;addSortItem(array('dir' =&gt; $dir));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-datasourcesortitem">Example - adding more than one DataSourceSortItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$first  = new \Kendo\Data\DataSourceSortItem();
+$second = new \Kendo\Data\DataSourceSortItem();
+$dataSource-&gt;addSortItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="sync">sync</h3>
+<p>Fired after the data source saves data item changes. The data source saves the data item changes when the sync method is called.The event handler function context (available via the this keyword) will be set to the data source instance.
+For additional information check the <a href="/api/framework/datasource#events-sync">sync</a> event documentation.</p>
+
+<h4 id="returns-20">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-5">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-5">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;sync('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-5">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSync(e) {
+        // handle the sync event.
+    }
+&lt;/script&gt;
+&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;sync('onSync');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-5">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;sync(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="transport">transport</h3>
+
+<p>The configuration used to load and save the data items. A data source is remote or local based on the way of it retrieves data items.Remote data sources load and save data items from and to a remote end-point (a.k.a. remote service or server). The transport option describes the remote service configuration - URL, HTTP verb, HTTP headers etc.
+The transport option can also be used to implement custom data loading and saving.Local data sources are bound to a JavaScript array via the data option.</p>
+
+<h4 id="returns-21">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="value-kendodatadatasourcetransportarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceTransport|array</code></h5>
+
+<h4 id="example---using-kendodatadatasourcetransport">Example - using <a href="/api/wrappers/php/Kendo/Data/DataSourceTransport">\Kendo\Data\DataSourceTransport</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$transport = new \Kendo\Data\DataSourceTransport();
+$create = 'value';
+$transport-&gt;create($create);
+$dataSource-&gt;transport($transport);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-5">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$create = 'value';
+$dataSource-&gt;transport(array('create' =&gt; $create));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="type">type</h3>
+<p>If set the data source will use a predefined transport and/or schema.
+The supported values are "odata" which supports the OData v.2 protocol and "signalr".</p>
+
+<h4 id="returns-22">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource</code></p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dataSource = new \Kendo\Data\DataSource('DataSource');
+$dataSource-&gt;type('value');
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

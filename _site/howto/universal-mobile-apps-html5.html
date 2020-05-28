@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HTML5 cross-platform apps and mobile frameworks | Kendo UI Mobile documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to build universal HTML5 and Javascript mobile apps with Kendo UI Mobile framework.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li class="active">How Do I?</li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/howto.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("howto/universal-mobile-apps-html5.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="universal-mobile-apps-with-html5--kendo-ui-mobile">Universal Mobile Apps with HTML5 &amp; Kendo UI Mobile</h1>
+<p>At its core, Kendo UI Mobile makes it easy create cross-platform mobile apps using HTML5 and JavaScript. And more than any other framework, Kendo UI Mobile helps your apps automatically adapt to look and feel native on different platforms, like iOS and Android. But did you know that Kendo UI Mobile can also help build apps that look and feel native on different form-factors?</p>
+
+<p><strong>“Universal” apps allow you to build and deploy a single app that automatically presents phone-specific UI on phones, and tablet-specific UI on tablets.</strong></p>
+
+<p>The concept is familiar to iOS developers, where Apple introduced universal apps to support iPhone and iPad app development, but the same can be achieved with cross-platform results using HTML, JavaScript, and Kendo UI Mobile. You build one app, with UI for phones and tablets, and deploy to iOS, Android, and Blackberry.</p>
+
+<p>Let’s examine the technique.</p>
+
+<p>##Tablet Specific UI
+When building mobile apps to reach phone and tablet users, there are two options for supporting tablets:</p>
+
+<ol>
+  <li>Deploy a single phone UI that simply scales-up on tablets</li>
+  <li>Deploy an additional tablet-optimized UI that takes advantage of larger tablet screens</li>
+</ol>
+
+<p>The first option is the easiest and least expensive because it only requires one app design. It eliminates the need to work through a second design for an app that is optimized for tablets.</p>
+
+<p>Of course, Option #1 also fails to treat tablets like a unique form factor. More than a bigger screen, tablets have unique UI conventions not found on smartphones, such as the split views common in iPad apps. Developers serious about targeting tablets should aim to deploy apps that are optimized for these unique usability requirements. Building one app with one UI is easy, but it’s not enough to properly target multiple form factors.</p>
+
+<p><strong>Universal apps simplify the deployment of two distinct app experiences, while simultaneously making it easier for developers to share common app code between phone and tablet app variants</strong> (like common data handling code). When developers take the time to design unique experiences for both form factors, universal apps help put the right experience on the right device.</p>
+
+<p>Fortunately, Kendo UI Mobile provides both tablet and phone specific UI widgets. Developers can leverage these widgets to create a perfectly tailored UI for both form factors, and then apply the following universal technique to easily deploy the results.</p>
+
+<p>##Universal Technique
+Building a universal mobile app using Kendo UI Mobile is not automatic, but it is very simple. There are 3 steps involved in the entire process:</p>
+
+<ol>
+  <li>Build phone AND tablet specific mobile app views using Kendo UI Mobile (remember this is not a one-size-fits-all experience, you need views for both form factors)</li>
+  <li>Use Kendo UI to detect and profile the device using the app (phone or tablet)</li>
+  <li>During app initialization, initialize EITHER the phone OR tablet views in your app</li>
+</ol>
+
+<p>The result allows the same deployed app to look like this on phones:</p>
+
+<p><img src="/howto/images/kendo-universal-phone.png" alt="Universal app on phone" /></p>
+
+<p>And like this on tablets:</p>
+
+<p><img src="/howto/images/kendo-universal-tablet.png" alt="Universal app on tablet" /></p>
+
+<p>In code, handling a universal app looks something like this:</p>
+
+<p>####HTML</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="tabletApp" style="display:none;"&gt;
+   &lt;!--Initial tablet mobile app views/splitview go here--&gt;
+&lt;/div&gt;
+&lt;div id="phoneApp" style="display:none;"&gt;
+   &lt;!--Initial phone mobile app views/layouts go here--&gt;
+&lt;/div&gt;​
+</code></pre></div></div>
+
+<p>####JAVASCRIPT</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(function() {
+    var app,
+    //isTablet: Must be mobile OS AND tablet
+    isTablet = kendo.support.mobileOS &amp;&amp; kendo.support.mobileOS.tablet,
+    appElement = null,
+    appLayout = null;
+ 
+    //Get the correct app HTML container based on tablet status
+    appElement = (isTablet) ? $("#tabletApp") : $("#phoneApp");
+    appLayout = (isTablet) ? null : "phoneDefault";
+ 
+    //Initialize the app with the selected container
+    app = new kendo.mobile.Application(appElement, {
+        layout: appLayout,
+        transition: 'slide'
+    });
+ 
+    //Adjust visibility of proper app container (used to prevent FOUJUI)
+    appElement.show();
+});​
+</code></pre></div></div>
+
+<p>You can try a live example <a href="http://jsfiddle.net/toddanglin/YGUeJ/5/embedded/result/">using this jsFiddle</a>. To test the behavior you can use Chrome and the built-in Developer Tools to override the browser’s User Agent. Try changing between an iPhone and iPad UserAgent to see how the app initializes differently (refresh the page to see the app reinitialize).</p>
+
+<p><em>REMINDER: Kendo UI Mobile only supports Webkit browsers today, so the previous demo will not work in IE or Firefox. Please use a mobile device or Chrome/Safari to view the demo.</em></p>
+
+<p>Conceptually, the prior code snippet is doing this:</p>
+
+<ol>
+  <li>Using the Kendo UI API, which builds a complete profile of a mobile device when an app runs, we determine if the current device is a mobile OS and a tablet.</li>
+  <li>If the device is a tablet, we grab the HTML element containing our initial tablet app view. If it’s not a tablet, we grab the container for our phone app view.</li>
+  <li>Since the tablet view uses a SplitView, we do not need a app layout element. If it’s a phone, we specify our default view layout.</li>
+  <li>Finally, we initialize the Kendo UI Mobile Application using the configured variables.</li>
+  <li>And for a little extra polish, we use some CSS to <a href="http://blogs.telerik.com/kendoui/posts/11-10-06/foujui_flash_of_uninitialized_javascript_ui">avoid FOUJUI</a> (more on this in a minute)</li>
+</ol>
+
+<p><strong>The net effect is a single app containing all of the HTML, CSS, and JavaScript for both tablet and phone users that can be “universally” packaged and deployed via the browser or in hybrid app containers (like PhoneGap).</strong></p>
+
+<p>##Universal App and FOUJUI
+When using the universal app approach, the <a href="http://blogs.telerik.com/kendoui/posts/11-10-06/foujui_flash_of_uninitialized_javascript_ui">“Flash of Uninitialized JavaScript UI”</a> (or FOUJUI) can be particularly distracting because the initial HTML page contains markup for both the tablet and mobile views. To provide a polished loading experience and avoid displaying unsightly HTML, it is important to address FOUJUI with some simple CSS and JavaScript.</p>
+
+<p>In the example linked above, this technique is used:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="tabletApp" style="display:none;"&gt;
+...
+&lt;/div&gt;
+&lt;div id="phoneApp" style="display:none;"&gt;
+...
+&lt;/div&gt;​
+</code></pre></div></div>
+
+<p>As you can see, both HTML containers for the tablet and phone views are initially hidden via CSS. As part of the loading process, the correct container is shown after the Kendo UI Mobile application has been initialized:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>appElement.show(); //Where appElement is either the phone or tablet container
+</code></pre></div></div>
+
+<p>You could make the effect even fancier with CSS3 transitions and opacity:</p>
+
+<p>####CSS</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#tabletApp, #phoneApp {
+   opacity:0;
+   -webkit-transition:opacity 2s;
+   transition:opacity 2s;
+}
+</code></pre></div></div>
+
+<p>####JAVASCRIPT</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>appElement.show();
+appElement.css(“opacity”,1);
+</code></pre></div></div>
+
+<p>Now the correct app will fade in to view (hardware accelerated by CSS), and the unused views will remain properly hidden. No flash of uninitialized HTML. No ugly plain HTML displayed to users before your app is ready to go.</p>
+
+<p>Without this technique, app loading may look like this, with unitialized HTML visible before the app loads:</p>
+
+<p><img src="/howto/images/foujui-mobile.gif" alt="FOUJUI on mobile" /></p>
+
+<p>With this technique applied, app loading is polished:</p>
+
+<p><img src="/howto/images/foujui-mobile-fixed.gif" alt="FOUJUI on mobile fixed" /></p>
+
+<p>##Responsive Design
+What about responsive design, you ask?</p>
+
+<p>Responsive design is great for creating mobile sites, but it’s not as useful for creating mobile apps. Responsive design can help you hide, show, resize, and reformat UI for screens of varying size, but it is less suited for presenting completely different modes of usability on different form factors (such as phones and tablets).</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

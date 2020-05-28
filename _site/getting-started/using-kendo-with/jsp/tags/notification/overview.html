@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Notification JSP tag for Kendo UI Notification widget | Kendo UI documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Getting started with Notification JSP tag extension in quick steps - configure Kendo UI Notification widget and operate Kendo UI Notification events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/jsp/tags/notification/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="notification">Notification</h1>
+
+<p>The Notification JSP tag is a server-side wrapper for the <a href="/api/web/notification">Kendo UI Notification</a> widget.</p>
+
+<p>It is assumed that the reader of this page is familiar with the fundamental <a href="/getting-started/widgets">Kendo UI widget concepts</a> and
+the <a href="/getting-started/using-kendo-with/jsp/introduction">Kendo UI Java wrappers</a> are setup correctly.</p>
+
+<p>The <strong>Kendo UI Notification</strong> provides a styled UI widget with arbitrary content, which can provide information to the user on various occasions.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The <strong>Notification</strong> widget can be initialized from any element, because it does not manipulate the element"s content. The element <strong>will be hidden</strong> if the widget will be used with popup notifications,
+or if static notifications will <strong>not</strong> be appended to the Notification element. In these two cases it is assumed that the element will not be needed for anything.</p>
+
+<p>On the other hand, if the <strong>Notification</strong> element will be used to contain static (non-popup) notifications, then its tag is recommended to be one, which allows nesting the elements inside the notifications" template.
+For example, inline elements (<code class="language-plaintext highlighter-rouge">span</code>, <code class="language-plaintext highlighter-rouge">a</code>, <code class="language-plaintext highlighter-rouge">em</code>, etc.) cannot contain block elements (<code class="language-plaintext highlighter-rouge">div</code>, <code class="language-plaintext highlighter-rouge">p</code>, <code class="language-plaintext highlighter-rouge">ul</code>, <code class="language-plaintext highlighter-rouge">li</code>, headings, etc.). Using a <code class="language-plaintext highlighter-rouge">div</code> element for the widget is OK.</p>
+
+<h3 id="example---initialization-and-basic-usage">Example - initialization and basic usage</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification name="notification"&gt;&lt;/kendo:notification&gt;
+
+&lt;script&gt;
+$(function(){
+    // get the widget object
+    var notificationWidget = $("#notification").data("kendoNotification");
+    
+    // display a "foo" message
+    notificationWidget.show("foo");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="notification-types">Notification Types</h2>
+
+<p>The <strong>Notification</strong> widget provides several built-in notification types: <code class="language-plaintext highlighter-rouge">"info"</code>, <code class="language-plaintext highlighter-rouge">"success"</code>, <code class="language-plaintext highlighter-rouge">"warning"</code> and <code class="language-plaintext highlighter-rouge">"error"</code>. The benefit of having different notification types is the ability to
+use different templates and looks for each type. The built-in types provide ready-to-use shorthand methods for displaying, as well as built-in templates and styling. The shorthand method names match the listed notification types.
+If no type is specified when a notification is shown, <code class="language-plaintext highlighter-rouge">"info"</code> is assumed. An unlimited amount of custom notification types and corresponding templates can be defined. For further details, see <a href="#templates">Templates</a>.</p>
+
+<h3 id="example---built-in-notification-types">Example - built-in notification types</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification name="notification"&gt;&lt;/kendo:notification&gt;
+
+&lt;script&gt;
+$(function(){
+    var notificationWidget = $("#notification").data("kendoNotification");
+    
+    // display a "foo" warning message
+    notificationWidget.show("foo", "warning");
+    // the above line is equivalent to
+    notificationWidget.warning("foo");
+    
+    // display a "bar" info message
+    notificationWidget.show("bar", "info");
+    // the above line is equivalent to
+    notificationWidget.show("bar");
+    // and also to
+    notificationWidget.info("bar");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="hiding-the-notifications">Hiding the notifications</h2>
+
+<p>By default, the notifications remain visible for 5 seconds and then disappear. Clicking anywhere on them removes them right away. If this is not intuitive enough for the users, a visible close button can be displayed.
+Hide delay is configurable in milliseconds. A zero value disables automatic hiding.</p>
+
+<p>If needed, automatic hiding by clicking anywhere on the notifications can be disabled. In this case the notifications can be dismissed only with the button, if it is present.
+In addition, the ability to hide a notification manually can be postponed. The benefit of this feature is to prevent accidental hiding of notifications, which have just appeared. By default, postponing is disabled.</p>
+
+<h3 id="example---manage-hide-settings">Example - manage hide settings</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification name="notification" autoHideAfter="7000" allowHideAfter="1000" button="true" hideOnClick="false"&gt;&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h2 id="positioning-and-stacking">Positioning and stacking</h2>
+
+<p>By default, the <strong>Notification</strong> widget creates popups, which overlay the other page content. If no position settings are defined, the first popup will be displayed near the bottom-right corner of the browser viewport
+and subsequent popups will stack upwards. Positioning and stacking can be controlled independently. If no stacking setting is defined, the popups will stack upwards or downwards, depending on the positioning settings
+(e.g. popups which display at the top of the viewport will stack downwards and vice versa). In most cases automatic stacking is good enough.
+Defining stacking explicitly is needed mostly when it should be leftward or rightward, which is a little uncommon.</p>
+
+<p>By default, popups are <em>pinned</em>, i.e. when the page is scrolled, they do not move. This is achieved by applying a <code class="language-plaintext highlighter-rouge">position:fixed</code> style to the popups. When the popups are not pinned, they use <code class="language-plaintext highlighter-rouge">position:absolute</code>.</p>
+
+<p>If the popup content will vary and stacking is likely to occur, it is a good idea to define explicit dimensions, so that the popups are aligned and look better when stacked next to one another.</p>
+
+<h3 id="example---manage-position-stacking-and-size">Example - manage position, stacking and size</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification name="notification" stacking="down" width="300" height="50"&gt;
+    &lt;kendo:notification-position pinned="false" top="30" right="30" /&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<p>There may be cases when the popup notifications appear too quickly or become too much on the screen and there is no more available space. In this case the subsequent popups will appear outside of the visible
+viewport area and will be inaccessible (if pinned). If such scenarios are likely to occur, it is recommended to consider using shorter hide delay or static notifications (see below), for better usability.</p>
+
+<p>The <strong>Notification</strong> widget can also display "static" notifications, which do not overlay other elements, but instead take part in the so-called <em>normal flow</em> of the page content. In this case
+positioning settings do not make sense and are ignored. Stacking can be downwards (by default) or upwards. Static notifications are displayed, if a target container is specified.
+One widget instance can display either popup or static notifications, not both at the same time.</p>
+
+<h3 id="example---enable-static-notifications">Example - enable static notifications</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification name="notification" appendTo="#notification" stacking="up"&gt;&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h2 id="templates">Templates</h2>
+
+<p><em>This documentation section assumes that you are familiar with <a href="/getting-started/framework/templates/overview">Kendo UI templates</a></em>.</p>
+
+<p>The <strong>Notification</strong> widget allows configuring multiple templates. Each template will be used together with its corresponding <a href="#notification-types">notification type</a> (either build-in or custom).
+If you define a custom template for a built-in notification type, you will no longer be able to use the corresponding built-in template,
+but you will still be able to use the shorthand show methods, as demonstrated below.</p>
+
+<h3 id="example---template-usage">Example - template usage</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script id="myAlertTemplate" type="text/x-kendo-template"&gt;
+    &lt;div class="myAlert"&gt;System alert generated at #= time # : #= myMessage #&lt;/div&gt;
+&lt;/script&gt;
+
+&lt;kendo:notification name="notification"&gt;
+    &lt;kendo:notification-templates&gt;
+        &lt;kendo:notification-template type="warning" template="&lt;div class='myWarning'&gt;Warning: #= myMessage #&lt;/div&gt;" /&gt;
+        &lt;kendo:notification-template type="timeAlert" template="&lt;div class='myAlert'&gt;System alert generated at #= time # : #= myMessage #&lt;/div&gt;" /&gt;
+    &lt;/kendo:notification-templates&gt;
+&lt;/kendo:notification&gt;
+
+&lt;%-- Templates can also be defined separately. The timeAlert template configuration above can be replaced with: --%&gt;
+
+&lt;kendo:notification name="notification"&gt;
+    &lt;kendo:notification-templates&gt;
+        &lt;kendo:notification-template type="timeAlert" templateId="myAlertTemplate" /&gt;
+    &lt;/kendo:notification-templates&gt;
+&lt;/kendo:notification&gt;
+
+&lt;script&gt;
+$(function(){
+    var n = $("#notification").data("kendoNotification");
+    
+    // show a warning message using the built-in shorthand method
+    n.warning({
+        myMessage: "some warning message here"
+    });
+    
+    // show a "timeAlert" message using the default show() method
+    n.show({
+        time: new Date().toLocaleTimeString(),
+        myMessage: "Server will be restarted."
+    }, "timeAlert");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>For more information on other Notification features and behavior (HTML output, RTL support, Events, etc),
+please refer to the widget"s main <a href="/getting-started/web/notification/overview">Overview</a> help page.
+The widget events and methods are described on the <a href="/api/web/notification/">Notification API</a> page.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,941 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/stockChart.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendostockchart">&lt;kendo:stockChart&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/dataviz/stockchart">StockChart</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="autobind-boolean">autoBind <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Indicates whether the chart will call read on the data source initially.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart autoBind="autoBind"&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="datefield-javalangstring">dateField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The field containing the point date.
+It is used as a default categoryField for all series.The data item field value must be either:</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart dateField="dateField"&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="renderas-javalangstring">renderAs <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the preferred rendering engine.
+If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are:</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart renderAs="renderAs"&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="seriescolors-javalangobject">seriesColors <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The default colors for the chart"s series. When all colors are used, new colors are pulled from the start again.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart seriesColors="seriesColors"&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="theme-javalangstring">theme <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets Chart theme. Available themes: default, blueOpal, black.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart theme="theme"&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="transitions-boolean">transitions <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>A value indicating if transition animations should be played.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart transitions="transitions"&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendostockchart-categoryaxis">kendo:stockChart-categoryAxis</h3>
+
+<p>The category axis configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/categoryaxis">kendo:stockChart-categoryAxis</a>.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-categoryAxis&gt;&lt;/kendo:stockChart-categoryAxis&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-chartarea">kendo:stockChart-chartArea</h3>
+
+<p>The chart area configuration options.
+This is the entire visible area of the chart.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/chartarea">kendo:stockChart-chartArea</a>.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-chartArea&gt;&lt;/kendo:stockChart-chartArea&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-legend">kendo:stockChart-legend</h3>
+
+<p>The chart legend configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/legend">kendo:stockChart-legend</a>.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-legend&gt;&lt;/kendo:stockChart-legend&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-navigator">kendo:stockChart-navigator</h3>
+
+<p>The data navigator configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/navigator">kendo:stockChart-navigator</a>.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-navigator&gt;&lt;/kendo:stockChart-navigator&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-panes">kendo:stockChart-panes</h3>
+
+<p>The chart panes configuration.Panes are used to split the chart in two or more parts. The panes are ordered from top to bottom.Each axis can be associated with a pane by setting its pane option to the name of the desired pane.
+Axis that don"t have specified pane are placed in the top (default) pane.Series are moved to the desired pane by associating them with an axis.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/panes">kendo:stockChart-panes</a>.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-panes&gt;&lt;/kendo:stockChart-panes&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-plotarea">kendo:stockChart-plotArea</h3>
+
+<p>The plot area configuration options. This is the area containing the plotted series.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/plotarea">kendo:stockChart-plotArea</a>.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-plotArea&gt;&lt;/kendo:stockChart-plotArea&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-series">kendo:stockChart-series</h3>
+
+<p>Array of series definitions.The series type is determined by the value of the type field.
+If a type value is missing, the type is assumed to be the one specified in seriesDefaults.Each series type has a different set of options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/series">kendo:stockChart-series</a>.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-series&gt;&lt;/kendo:stockChart-series&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesdefaults">kendo:stockChart-seriesDefaults</h3>
+
+<p>Default values for each series.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/seriesdefaults">kendo:stockChart-seriesDefaults</a>.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-seriesDefaults&gt;&lt;/kendo:stockChart-seriesDefaults&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-title">kendo:stockChart-title</h3>
+
+<p>The chart title configuration options or text.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/title">kendo:stockChart-title</a>.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-title&gt;&lt;/kendo:stockChart-title&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-tooltip">kendo:stockChart-tooltip</h3>
+
+<p>The data point tooltip configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/tooltip">kendo:stockChart-tooltip</a>.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-tooltip&gt;&lt;/kendo:stockChart-tooltip&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-valueaxis">kendo:stockChart-valueAxis</h3>
+
+<p>The value axis configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/valueaxis">kendo:stockChart-valueAxis</a>.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-valueAxis&gt;&lt;/kendo:stockChart-valueAxis&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="axislabelclick-string">axisLabelClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when an axis label is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-axisLabelClick">axisLabelClick</a> event documentation.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart axisLabelClick="handle_axisLabelClick"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_axisLabelClick(e) {
+        // Code to handle the axisLabelClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="legenditemclick-string">legendItemClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when an legend item is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-legendItemClick">legendItemClick</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart legendItemClick="handle_legendItemClick"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_legendItemClick(e) {
+        // Code to handle the legendItemClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="legenditemhover-string">legendItemHover <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when an legend item is hovered.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-legendItemHover">legendItemHover</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart legendItemHover="handle_legendItemHover"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_legendItemHover(e) {
+        // Code to handle the legendItemHover event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound-string">dataBound <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the chart has received data from the data source
+and is about to render it.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart dataBound="handle_dataBound"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_dataBound(e) {
+        // Code to handle the dataBound event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragstart-string">dragStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user has used the mouse or a swipe gesture to drag the chart.The drag operation can be aborted by calling e.preventDefault().</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-dragStart">dragStart</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart dragStart="handle_dragStart"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_dragStart(e) {
+        // Code to handle the dragStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="drag-string">drag <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires as long as the user is dragging the chart using the mouse or swipe gestures.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-drag">drag</a> event documentation.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart drag="handle_drag"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_drag(e) {
+        // Code to handle the drag event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragend-string">dragEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user stops dragging the chart.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-dragEnd">dragEnd</a> event documentation.</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart dragEnd="handle_dragEnd"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_dragEnd(e) {
+        // Code to handle the dragEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="noteclick-string">noteClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user clicks one of the notes.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-noteClick">noteClick</a> event documentation.</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart noteClick="handle_noteClick"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_noteClick(e) {
+        // Code to handle the noteClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="notehover-string">noteHover <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user hovers one of the notes.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-noteHover">noteHover</a> event documentation.</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart noteHover="handle_noteHover"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_noteHover(e) {
+        // Code to handle the noteHover event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="plotareaclick-string">plotAreaClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when plot area is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-plotAreaClick">plotAreaClick</a> event documentation.</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart plotAreaClick="handle_plotAreaClick"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_plotAreaClick(e) {
+        // Code to handle the plotAreaClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="seriesclick-string">seriesClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when chart series are clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-seriesClick">seriesClick</a> event documentation.</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart seriesClick="handle_seriesClick"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_seriesClick(e) {
+        // Code to handle the seriesClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="serieshover-string">seriesHover <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when chart series are hovered.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-seriesHover">seriesHover</a> event documentation.</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart seriesHover="handle_seriesHover"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_seriesHover(e) {
+        // Code to handle the seriesHover event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoomstart-string">zoomStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user has used the mousewheel to zoom the chart.The zoom operation can be aborted by calling e.preventDefault().</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-zoomStart">zoomStart</a> event documentation.</p>
+
+<h4 id="example-29">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart zoomStart="handle_zoomStart"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_zoomStart(e) {
+        // Code to handle the zoomStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoom-string">zoom <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires as long as the user is zooming the chart using the mousewheel.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-zoom">zoom</a> event documentation.</p>
+
+<h4 id="example-30">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart zoom="handle_zoom"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_zoom(e) {
+        // Code to handle the zoom event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoomend-string">zoomEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user stops zooming the chart.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-zoomEnd">zoomEnd</a> event documentation.</p>
+
+<h4 id="example-31">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart zoomEnd="handle_zoomEnd"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_zoomEnd(e) {
+        // Code to handle the zoomEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="selectstart-string">selectStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user starts modifying the axis selection.The range units are:</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-selectStart">selectStart</a> event documentation.</p>
+
+<h4 id="example-32">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart selectStart="handle_selectStart"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_selectStart(e) {
+        // Code to handle the selectStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select-string">select <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user modifies the selection.The range units are:</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-select">select</a> event documentation.</p>
+
+<h4 id="example-33">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart select="handle_select"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_select(e) {
+        // Code to handle the select event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="selectend-string">selectEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user completes modifying the selection.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-selectEnd">selectEnd</a> event documentation.</p>
+
+<h4 id="example-34">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart selectEnd="handle_selectEnd"&gt;
+&lt;/kendo:stockChart&gt;
+&lt;script&gt;
+    function handle_selectEnd(e) {
+        // Code to handle the selectEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendostockchart-axislabelclick">kendo:stockChart-axisLabelClick</h3>
+
+<p>Fires when an axis label is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-axisLabelClick">axisLabelClick</a> event documentation.</p>
+
+<h4 id="example-35">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-axisLabelClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the axisLabelClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-axisLabelClick&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-legenditemclick">kendo:stockChart-legendItemClick</h3>
+
+<p>Fires when an legend item is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-legendItemClick">legendItemClick</a> event documentation.</p>
+
+<h4 id="example-36">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-legendItemClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the legendItemClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-legendItemClick&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-legenditemhover">kendo:stockChart-legendItemHover</h3>
+
+<p>Fires when an legend item is hovered.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-legendItemHover">legendItemHover</a> event documentation.</p>
+
+<h4 id="example-37">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-legendItemHover&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the legendItemHover event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-legendItemHover&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-databound">kendo:stockChart-dataBound</h3>
+
+<p>Fires when the chart has received data from the data source
+and is about to render it.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-38">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-dataBound&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dataBound event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-dataBound&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-dragstart">kendo:stockChart-dragStart</h3>
+
+<p>Fires when the user has used the mouse or a swipe gesture to drag the chart.The drag operation can be aborted by calling e.preventDefault().</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-dragStart">dragStart</a> event documentation.</p>
+
+<h4 id="example-39">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-dragStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dragStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-dragStart&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-drag">kendo:stockChart-drag</h3>
+
+<p>Fires as long as the user is dragging the chart using the mouse or swipe gestures.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-drag">drag</a> event documentation.</p>
+
+<h4 id="example-40">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-drag&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the drag event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-drag&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-dragend">kendo:stockChart-dragEnd</h3>
+
+<p>Fires when the user stops dragging the chart.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-dragEnd">dragEnd</a> event documentation.</p>
+
+<h4 id="example-41">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-dragEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dragEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-dragEnd&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-noteclick">kendo:stockChart-noteClick</h3>
+
+<p>Fired when the user clicks one of the notes.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-noteClick">noteClick</a> event documentation.</p>
+
+<h4 id="example-42">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-noteClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the noteClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-noteClick&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-notehover">kendo:stockChart-noteHover</h3>
+
+<p>Fired when the user hovers one of the notes.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-noteHover">noteHover</a> event documentation.</p>
+
+<h4 id="example-43">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-noteHover&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the noteHover event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-noteHover&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-plotareaclick">kendo:stockChart-plotAreaClick</h3>
+
+<p>Fires when plot area is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-plotAreaClick">plotAreaClick</a> event documentation.</p>
+
+<h4 id="example-44">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-plotAreaClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the plotAreaClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-plotAreaClick&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesclick">kendo:stockChart-seriesClick</h3>
+
+<p>Fires when chart series are clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-seriesClick">seriesClick</a> event documentation.</p>
+
+<h4 id="example-45">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-seriesClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the seriesClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-seriesClick&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-serieshover">kendo:stockChart-seriesHover</h3>
+
+<p>Fires when chart series are hovered.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-seriesHover">seriesHover</a> event documentation.</p>
+
+<h4 id="example-46">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-seriesHover&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the seriesHover event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-seriesHover&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-zoomstart">kendo:stockChart-zoomStart</h3>
+
+<p>Fires when the user has used the mousewheel to zoom the chart.The zoom operation can be aborted by calling e.preventDefault().</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-zoomStart">zoomStart</a> event documentation.</p>
+
+<h4 id="example-47">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-zoomStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the zoomStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-zoomStart&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-zoom">kendo:stockChart-zoom</h3>
+
+<p>Fires as long as the user is zooming the chart using the mousewheel.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-zoom">zoom</a> event documentation.</p>
+
+<h4 id="example-48">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-zoom&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the zoom event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-zoom&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-zoomend">kendo:stockChart-zoomEnd</h3>
+
+<p>Fires when the user stops zooming the chart.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-zoomEnd">zoomEnd</a> event documentation.</p>
+
+<h4 id="example-49">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-zoomEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the zoomEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-zoomEnd&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-selectstart">kendo:stockChart-selectStart</h3>
+
+<p>Fires when the user starts modifying the axis selection.The range units are:</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-selectStart">selectStart</a> event documentation.</p>
+
+<h4 id="example-50">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-selectStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the selectStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-selectStart&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-select">kendo:stockChart-select</h3>
+
+<p>Fires when the user modifies the selection.The range units are:</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-select">select</a> event documentation.</p>
+
+<h4 id="example-51">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-select&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the select event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-select&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-selectend">kendo:stockChart-selectEnd</h3>
+
+<p>Fires when the user completes modifying the selection.</p>
+
+<p>For additional information check the <a href="/api/dataviz/stockchart#events-selectEnd">selectEnd</a> event documentation.</p>
+
+<h4 id="example-52">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart&gt;
+    &lt;kendo:stockChart-selectEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the selectEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-selectEnd&gt;
+&lt;/kendo:stockChart&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/using-kendo-with-twitter-bootstrap.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="using-kendo-with-twitter-bootstrap">Using Kendo with Twitter Bootstrap</h1>
+
+<p>Kendo UI widgets can be used seamlessly alongside <a href="http://getbootstrap.com/">Twitter Bootstrap</a>.</p>
+
+<p>To replicate the look and feel of Bootstrap in Kendo UI, take the following steps:</p>
+
+<ol>
+  <li>Use the kendo.common-bootstrap.min.css instead of kendo.common.css. This ensures that the dimensions of Kendo UI will match the ones in Bootstrap.</li>
+  <li>Use the kendo.bootstrap.min.css theme, which applies the Bootstrap colors to the Kendo UI widgets.</li>
+</ol>
+
+<p>The following example demonstrates the necessary links to these stylesheets (replace VERSION with the Kendo UI version that you want to use):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;link rel="stylesheet" href="http://cdn.kendostatic.com/VERSION/styles/kendo.common-bootstrap.min.css"&gt;
+&lt;link rel="stylesheet" href="http://cdn.kendostatic.com/VERSION/styles/kendo.bootstrap.min.css"&gt;
+</code></pre></div></div>
+
+<p>While these files will ensure that Kendo UI looks a lot like Bootstrap, it is not mandatory to use them. The default Kendo UI common.css and any other theme will style the widgets differently, but they will continue to function properly.</p>
+
+<h2 id="using-the-responsive-features-of-bootstrap">Using the responsive features of Bootstrap</h2>
+
+<p>Using the responsive features of Bootstrap does not differ from other responsive sites; refer to the help topic on <a href="./using-kendo-in-responsive-web-pages">how to use Kendo UI in responsive web pages</a>.</p>
+
+<h2 id="using-a-customized-version-of-bootstrap">Using a customized version of Bootstrap</h2>
+
+<p>If you have customized the colors of Bootstrap before using it, and need Kendo UI to match the newly chosen colors, you will need to customize Kendo UI"s bootstrap theme through the <a href="http://demos.telerik.com/kendo-ui/themebuilder/web.html">Kendo UI ThemeBuilder</a>.</p>
+
+<h2 id="nesting-kendo-ui-widgets-and-bootstrap-grid-layout">Nesting Kendo UI widgets and Bootstrap Grid layout</h2>
+
+<p>Kendo UI uses the default <code class="language-plaintext highlighter-rouge">content-box</code> box model (<code class="language-plaintext highlighter-rouge">box-sizing</code> CSS property), while Bootstrap uses the non-default <code class="language-plaintext highlighter-rouge">bordex-box</code> model and applies it to all elements on the page,
+including ones that are unrelated to Bootstrap. This breaks the layout of the Kendo UI widgets, which are placed inside a Bootstrap grid layout,
+forcing us to override the Bootstrap CSS and reapply the <code class="language-plaintext highlighter-rouge">content-box</code> box model to Kendo UI widgets. As a result, a Bootstrap grid layout placed inside a Kendo UI widget
+will not work as expected. In general, multiple level nesting of the two products is bound to break the one that is on the inside, unless an additional CSS rule is used for each new level of nesting.</p>
+
+<p>A possible easy workaround is to override the Bootstrap CSS, apply <code class="language-plaintext highlighter-rouge">content-box</code> box model to all elements on the page and use a <code class="language-plaintext highlighter-rouge">border-box</code> box model only to selected Bootstrap elements, which need it
+(these are all <code class="language-plaintext highlighter-rouge">.col-...</code> classes, <code class="language-plaintext highlighter-rouge">.row</code>, <code class="language-plaintext highlighter-rouge">.container</code> and <code class="language-plaintext highlighter-rouge">.container-fluid</code>). You can add the following CSS rules <strong>after</strong> the Bootstrap and Kendo UI stylesheets.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* reset everything to the default box model */
+ 
+*,
+:before,
+:after
+{
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+ 
+/* set a border-box model only to elements that need it */
+ 
+.container,
+.container-fluid,
+.row,
+.col-xs-1,
+.col-sm-1,
+.col-md-1,
+.col-lg-1,
+.col-xs-2,
+.col-sm-2,
+.col-md-2,
+.col-lg-2,
+.col-xs-3,
+.col-sm-3,
+.col-md-3,
+.col-lg-3,
+.col-xs-4,
+.col-sm-4,
+.col-md-4,
+.col-lg-4,
+.col-xs-5,
+.col-sm-5,
+.col-md-5,
+.col-lg-5,
+.col-xs-6,
+.col-sm-6,
+.col-md-6,
+.col-lg-6,
+.col-xs-7,
+.col-sm-7,
+.col-md-7,
+.col-lg-7,
+.col-xs-8,
+.col-sm-8,
+.col-md-8,
+.col-lg-8,
+.col-xs-9,
+.col-sm-9,
+.col-md-9,
+.col-lg-9,
+.col-xs-10,
+.col-sm-10,
+.col-md-10,
+.col-lg-10,
+.col-xs-11,
+.col-sm-11,
+.col-md-11,
+.col-lg-11,
+.col-xs-12,
+.col-sm-12,
+.col-md-12,
+.col-lg-12
+{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

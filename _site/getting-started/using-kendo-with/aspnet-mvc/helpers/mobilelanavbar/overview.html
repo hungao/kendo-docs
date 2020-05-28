@@ -1,0 +1,247 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>How to use the Kendo UI MobileNavBar HtmlHelper extension, server-side ASP.NET MVC wrapper for Kendo UI Mobile NavBar widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to initialize Kendo UI MobileNavBar for ASP.NET MVC, access an existing navbar with MobileNavBar HtmlHelper extension documentation.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/mobilelanavbar/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="mobilenavbar">MobileNavBar</h1>
+
+<p>The MobileNavBar HtmlHelper extension is a server-side wrapper for the <a href="/api/mobile/navbar">Kendo UI Mobile NavBar</a> widget. It allows you to configure the Kendo UI Mobile NavBar
+from server-side code.</p>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>The following tutorial shows how to configure Kendo UI MobileNavBar for ASP.NET MVC.</p>
+
+<ol>
+  <li>Create a new ASP.NET MVC 4 application (or Telerik UI for ASP.NET MVC application if you have installed the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction#kendo-ui-for-asp.net-mvc-visual-studio-extensions">Telerik UI for ASP.NET MVC Visual Studio Extensions</a>).
+If you decide not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions, follow the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">introduction</a> help topic in order
+to add Telerik UI for ASP.NET MVC to the application.</li>
+  <li>
+    <p>Open "HomeController.cs" and modify the <code class="language-plaintext highlighter-rouge">Index</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    return View();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>Add a Kendo UI MobileNavBar to the Index view. MobileNavBar must be initialized within MobileView or MobileLayout header
+    <ul>
+      <li>
+        <p>Index.aspx (ASPX)</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;% Html.Kendo().MobileView()
+          .Name("navbar-home")
+          .Title("Index")
+          .Header(() =&gt;
+          {
+              %&gt;
+              &lt;% Html.Kendo().MobileNavBar()
+                     .Content(navbar =&gt;
+                      {
+                          %&gt;
+                          &lt;%: Html.Kendo().MobileBackButton()
+                                  .Align(MobileButtonAlign.Left)
+                                  .Text("Back")
+                          %&gt;
+                          &lt;%: navbar.ViewTitle("") %&gt;
+                          &lt;%
+                      })
+                     .Render();
+              %&gt;
+              &lt;%
+          })
+          .Content(() =&gt;
+          {
+              %&gt;
+              View Content
+              &lt;%
+          })
+          .Render();
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Index.cshtml (Razor)</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().MobileView()
+      .Name("navbar-home")
+      .Title("Index")
+      .Header(obj =&gt;
+          Html.Kendo().MobileNavBar()
+                 .Content(navbar =&gt;
+                  @&lt;text&gt;
+                      @(Html.Kendo().MobileBackButton()
+                              .Align(MobileButtonAlign.Left)
+                              .Text("Back"))
+                      @navbar.ViewTitle("")
+                  &lt;/text&gt;)
+          )
+      .Content(@&lt;text&gt;View Content&lt;/text&gt;)
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Initialize the mobile application
+    <ul>
+      <li>
+        <p>Index.aspx (ASPX)</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().MobileApplication()
+          .ServerNavigation(true)
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Index.cshtml (Razor)</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().MobileApplication()
+      .ServerNavigation(true)
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Build and run the application</li>
+</ol>
+
+<h2 id="getting-reference-to-the-kendo-ui-mobilenavbar-widget">Getting reference to the Kendo UI MobileNavBar widget</h2>
+
+<p>To get a reference to a navbar instance use the <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a> method and the value specified via the <code class="language-plaintext highlighter-rouge">Name()</code> method.
+Then you can use you can use the JavaScript <a href="/api/mobile/navbar#methods">API</a> of the navbar.</p>
+
+<h3 id="example---get-reference-to-a-kendo-ui-mobilenavbar-instance">Example - get reference to a Kendo UI MobileNavBar instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().MobileView()
+        .Name("navbar-home")
+        .Title("Index")
+        .Header(obj =&gt;
+            Html.Kendo().MobileNavBar()
+                    .Name("MobileNavBar")
+                    .Content(navbar =&gt;
+                        @&lt;text&gt;
+                            @(Html.Kendo().MobileBackButton()
+                                    .Align(MobileButtonAlign.Left)
+                                    .Text("Back"))
+                            @navbar.ViewTitle("")
+                        &lt;/text&gt;)
+        )
+        .Content(@&lt;text&gt;View Content&lt;/text&gt;)
+    )
+&lt;script&gt;
+$(function() {
+    // Notice that the Name() of the navbar is used to get its client-side instance
+    var navbar = $("#MobileNavBar").data("kendoMobileNavBar");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

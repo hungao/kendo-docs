@@ -1,0 +1,1494 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/UI/Grid.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouigrid">\Kendo\UI\Grid</h1>
+
+<p>A PHP wrapper for Kendo UI <a href="/api/web/grid">Grid</a>.</p>
+
+<p>Inherits from <a href="/api/wrappers/php/Kendo/UI/Widget">\Kendo\UI\Widget</a>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use Grid in a PHP page instantiate a new instance, configure it via the available
+configuration <a href="#methods">methods</a> and output it by <code class="language-plaintext highlighter-rouge">echo</code>-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+<h3 id="using-kendo-grid">Using Kendo Grid</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// Create a new instance of Grid and specify its id
+$grid = new \Kendo\UI\Grid('Grid');
+
+// Configure it
+$grid-&gt;autoBind(true)
+
+// Output it
+
+echo $grid-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="altrowtemplate">altRowTemplate</h3>
+<p>The id of the template used for rendering the alternate rows in the grid.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;altRowTemplate('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="autobind">autoBind</h3>
+<p>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;autoBind(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="cancel">cancel</h3>
+<p>Fired when the user clicks the "cancel" button (in inline or popup editing mode) or closes the popup window.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;cancel('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onCancel(e) {
+        // handle the cancel event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;cancel('onCancel');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;cancel(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="change">change</h3>
+<p>Fired when the user selects a table row or cell in the grid.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-change">change</a> event documentation.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-1">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;change('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-1">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onChange(e) {
+        // handle the change event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;change('onChange');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-1">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;change(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="columnhide">columnHide</h3>
+<p>Fired when the user hides a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-columnHide">columnHide</a> event documentation.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-2">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-2">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnHide('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-2">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onColumnHide(e) {
+        // handle the columnHide event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnHide('onColumnHide');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-2">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnHide(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="columnlock">columnLock</h3>
+<p>Fired when the user lock a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-columnLock">columnLock</a> event documentation.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-3">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-3">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnLock('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-3">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onColumnLock(e) {
+        // handle the columnLock event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnLock('onColumnLock');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-3">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnLock(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="columnmenu">columnMenu</h3>
+
+<p>If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
+By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-booleankendouigridcolumnmenuarray">$value <code class="language-plaintext highlighter-rouge">boolean|\Kendo\UI\GridColumnMenu|array</code></h5>
+
+<h4 id="example----using-boolean">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnMenu(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendouigridcolumnmenu">Example - using <a href="/api/wrappers/php/Kendo/UI/GridColumnMenu">\Kendo\UI\GridColumnMenu</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$columnMenu = new \Kendo\UI\GridColumnMenu();
+$columns = true;
+$columnMenu-&gt;columns($columns);
+$grid-&gt;columnMenu($columnMenu);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$columns = true;
+$grid-&gt;columnMenu(array('columns' =&gt; $columns));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="columnmenuinit">columnMenuInit</h3>
+<p>Fired when the column menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-columnMenuInit">columnMenuInit</a> event documentation.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-4">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-4">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnMenuInit('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-4">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onColumnMenuInit(e) {
+        // handle the columnMenuInit event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnMenuInit('onColumnMenuInit');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-4">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnMenuInit(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="columnreorder">columnReorder</h3>
+<p>Fired when the user changes the order of a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-columnReorder">columnReorder</a> event documentation.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-5">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-5">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnReorder('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-5">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onColumnReorder(e) {
+        // handle the columnReorder event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnReorder('onColumnReorder');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-5">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnReorder(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="columnresize">columnResize</h3>
+<p>Fired when the user resizes a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-columnResize">columnResize</a> event documentation.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-6">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-6">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnResize('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-6">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onColumnResize(e) {
+        // handle the columnResize event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnResize('onColumnResize');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-6">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnResize(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="columnresizehandlewidth">columnResizeHandleWidth</h3>
+<p>Defines the width of the column resize handle in pixels. Apply a larger value for easier grasping.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnResizeHandleWidth(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="columnshow">columnShow</h3>
+<p>Fired when the user shows a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-columnShow">columnShow</a> event documentation.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-7">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-7">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnShow('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-7">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onColumnShow(e) {
+        // handle the columnShow event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnShow('onColumnShow');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-7">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnShow(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="columnunlock">columnUnlock</h3>
+<p>Fired when the user unlock a column.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-columnUnlock">columnUnlock</a> event documentation.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-8">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-8">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnUnlock('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-8">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onColumnUnlock(e) {
+        // handle the columnUnlock event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnUnlock('onColumnUnlock');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-8">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;columnUnlock(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addcolumn">addColumn</h3>
+
+<p>Adds one or more GridColumn to the Grid.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-value2--kendouigridcolumnarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn|array</code></h5>
+
+<h4 id="example---using-kendouigridcolumn">Example - using \Kendo\UI\GridColumn</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$column = new \Kendo\UI\GridColumn();
+$command = 'value';
+$column-&gt;command($command);
+$grid-&gt;addColumn($column);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$command = 'value';
+$grid-&gt;addColumn(array('command' =&gt; $command));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-gridcolumn">Example - adding more than one GridColumn</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$first  = new \Kendo\UI\GridColumn();
+$second = new \Kendo\UI\GridColumn();
+$grid-&gt;addColumn($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="databinding">dataBinding</h3>
+<p>Fired before the widget binds to its data source.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-dataBinding">dataBinding</a> event documentation.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-9">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-9">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;dataBinding('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-9">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDataBinding(e) {
+        // handle the dataBinding event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;dataBinding('onDataBinding');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-9">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;dataBinding(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="databound">dataBound</h3>
+<p>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-10">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-10">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;dataBound('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-10">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDataBound(e) {
+        // handle the dataBound event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;dataBound('onDataBound');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-10">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;dataBound(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="datasource">dataSource</h3>
+
+<p>Sets the data source of the dataSource.</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-kendodatadatasourcearray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource|array</code></h5>
+
+<h4 id="example---using-kendodatadatasource">Example - using <a href="/api/wrappers/php/kendo/data/datasource">\Kendo\Data\DataSource</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$dataSource = new \Kendo\Data\DataSource();
+$grid-&gt;dataSource($dataSource);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$schema = new \Kendo\Data\DataSourceSchema();
+$grid-&gt;dataSource(array('schema' =&gt; $schema));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="detailcollapse">detailCollapse</h3>
+<p>Fired when the user collapses a detail table row.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-detailCollapse">detailCollapse</a> event documentation.</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-11">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-11">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;detailCollapse('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-11">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDetailCollapse(e) {
+        // handle the detailCollapse event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;detailCollapse('onDetailCollapse');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-11">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;detailCollapse(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="detailexpand">detailExpand</h3>
+<p>Fired when the user expands a detail table row.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-detailExpand">detailExpand</a> event documentation.</p>
+
+<h4 id="returns-18">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-12">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-12">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;detailExpand('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-12">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDetailExpand(e) {
+        // handle the detailExpand event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;detailExpand('onDetailExpand');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-12">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;detailExpand(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="detailinit">detailInit</h3>
+<p>Fired when a detail table row is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-detailInit">detailInit</a> event documentation.</p>
+
+<h4 id="returns-19">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-13">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-13">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;detailInit('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-13">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDetailInit(e) {
+        // handle the detailInit event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;detailInit('onDetailInit');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-13">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;detailInit(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="detailtemplate">detailTemplate</h3>
+<p>The id of the template used for rendering the detail rows in the grid.</p>
+
+<h4 id="returns-20">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;detailTemplate('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="edit">edit</h3>
+<p>Fired when the user edits or creates a data item.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-edit">edit</a> event documentation.</p>
+
+<h4 id="returns-21">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-14">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-14">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;edit('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-14">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onEdit(e) {
+        // handle the edit event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;edit('onEdit');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-14">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;edit(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="editable">editable</h3>
+
+<p>If set to true the user would be able to edit the data to which the grid is bound to. By default editing is disabled.Can be set to a string ("inline", "incell" or "popup") to specify the editing mode. The default editing mode is "incell".Can be set to a JavaScript object which represents the editing configuration.</p>
+
+<h4 id="returns-22">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="value-booleankendouigrideditablearray">$value <code class="language-plaintext highlighter-rouge">boolean|\Kendo\UI\GridEditable|array</code></h5>
+
+<h4 id="example----using-boolean-1">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;editable(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendouigrideditable">Example - using <a href="/api/wrappers/php/Kendo/UI/GridEditable">\Kendo\UI\GridEditable</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$editable = new \Kendo\UI\GridEditable();
+$cancelDelete = 'value';
+$editable-&gt;cancelDelete($cancelDelete);
+$grid-&gt;editable($editable);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-3">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$cancelDelete = 'value';
+$grid-&gt;editable(array('cancelDelete' =&gt; $cancelDelete));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="filtermenuinit">filterMenuInit</h3>
+<p>Fired when the grid filter menu is initialized.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-filterMenuInit">filterMenuInit</a> event documentation.</p>
+
+<h4 id="returns-23">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-15">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-15">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;filterMenuInit('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-15">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onFilterMenuInit(e) {
+        // handle the filterMenuInit event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;filterMenuInit('onFilterMenuInit');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-15">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;filterMenuInit(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="filterable">filterable</h3>
+
+<p>If set to true the user can filter the data source using the grid filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.</p>
+
+<h4 id="returns-24">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-24">Parameters</h4>
+
+<h5 id="value-booleankendouigridfilterablearray">$value <code class="language-plaintext highlighter-rouge">boolean|\Kendo\UI\GridFilterable|array</code></h5>
+
+<h4 id="example----using-boolean-2">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;filterable(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendouigridfilterable">Example - using <a href="/api/wrappers/php/Kendo/UI/GridFilterable">\Kendo\UI\GridFilterable</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$filterable = new \Kendo\UI\GridFilterable();
+$extra = true;
+$filterable-&gt;extra($extra);
+$grid-&gt;filterable($filterable);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-4">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$extra = true;
+$grid-&gt;filterable(array('extra' =&gt; $extra));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="groupable">groupable</h3>
+
+<p>If set to true the user could group the grid by dragging the column header cells. By default grouping is disabled.Can be set to a JavaScript object which represents the grouping configuration.</p>
+
+<h4 id="returns-25">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-25">Parameters</h4>
+
+<h5 id="value-booleankendouigridgroupablearray">$value <code class="language-plaintext highlighter-rouge">boolean|\Kendo\UI\GridGroupable|array</code></h5>
+
+<h4 id="example----using-boolean-3">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;groupable(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendouigridgroupable">Example - using <a href="/api/wrappers/php/Kendo/UI/GridGroupable">\Kendo\UI\GridGroupable</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$groupable = new \Kendo\UI\GridGroupable();
+$messages = new \Kendo\UI\GridGroupableMessages();
+$groupable-&gt;messages($messages);
+$grid-&gt;groupable($groupable);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-5">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$messages = new \Kendo\UI\GridGroupableMessages();
+$grid-&gt;groupable(array('messages' =&gt; $messages));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="height">height</h3>
+<p>The height of the grid. Numeric values are treated as pixels.</p>
+
+<h4 id="returns-26">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-26">Parameters</h4>
+
+<h5 id="value-floatstring">$value <code class="language-plaintext highlighter-rouge">float|string</code></h5>
+
+<h4 id="example----using-float">Example  - using float</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;height(1);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-string">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;height('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="messages">messages</h3>
+
+<p>Defines the text of the command buttons that are shown within the Grid. Used primarily for localization.</p>
+
+<h4 id="returns-27">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-27">Parameters</h4>
+
+<h5 id="value-kendouigridmessagesarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\UI\GridMessages|array</code></h5>
+
+<h4 id="example---using-kendouigridmessages">Example - using <a href="/api/wrappers/php/Kendo/UI/GridMessages">\Kendo\UI\GridMessages</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$messages = new \Kendo\UI\GridMessages();
+$commands = new \Kendo\UI\GridMessagesCommands();
+$messages-&gt;commands($commands);
+$grid-&gt;messages($messages);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-6">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$commands = new \Kendo\UI\GridMessagesCommands();
+$grid-&gt;messages(array('commands' =&gt; $commands));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="mobile">mobile</h3>
+<p>If set to true and the grid is viewed on mobile browser it will use adaptive rendering.Can be set to a string phone or tablet which will force the widget to use adaptive rendering regardless of browser type.
+The grid uses same layout for both phone and tablet.</p>
+
+<h4 id="returns-28">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-28">Parameters</h4>
+
+<h5 id="value-booleanstring">$value <code class="language-plaintext highlighter-rouge">boolean|string</code></h5>
+
+<h4 id="example----using-boolean-4">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;mobile(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-string-1">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;mobile('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="navigatable">navigatable</h3>
+<p>If set to true the use could navigate the widget using the keyboard navigation. By default keyboard navigation is disabled.</p>
+
+<h4 id="returns-29">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-29">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;navigatable(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="pageable">pageable</h3>
+
+<p>If set to true the grid will display a pager. By default paging is disabled.Can be set to a JavaScript object which represents the pager configuration.</p>
+
+<h4 id="returns-30">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-30">Parameters</h4>
+
+<h5 id="value-booleankendouigridpageablearray">$value <code class="language-plaintext highlighter-rouge">boolean|\Kendo\UI\GridPageable|array</code></h5>
+
+<h4 id="example----using-boolean-5">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;pageable(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendouigridpageable">Example - using <a href="/api/wrappers/php/Kendo/UI/GridPageable">\Kendo\UI\GridPageable</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$pageable = new \Kendo\UI\GridPageable();
+$buttonCount = 1;
+$pageable-&gt;buttonCount($buttonCount);
+$grid-&gt;pageable($pageable);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-7">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$buttonCount = 1;
+$grid-&gt;pageable(array('buttonCount' =&gt; $buttonCount));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="remove">remove</h3>
+<p>Fired when the user clicks the "destroy" command button.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-remove">remove</a> event documentation.</p>
+
+<h4 id="returns-31">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-31">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-16">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-16">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;remove('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-16">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onRemove(e) {
+        // handle the remove event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;remove('onRemove');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-16">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;remove(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="reorderable">reorderable</h3>
+<p>If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.</p>
+
+<h4 id="returns-32">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-32">Parameters</h4>
+
+<h5 id="value-boolean-2">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;reorderable(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="resizable">resizable</h3>
+<p>If set to true the user could resize the columns by dragging the edges of their header cells. By default resizing is disabled.</p>
+
+<h4 id="returns-33">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-33">Parameters</h4>
+
+<h5 id="value-boolean-3">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;resizable(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="rowtemplate">rowTemplate</h3>
+<p>The id of the template used for rendering the rows in the grid.</p>
+
+<h4 id="returns-34">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-34">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;rowTemplate('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="save">save</h3>
+<p>Fired when a data item is saved.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-save">save</a> event documentation.</p>
+
+<h4 id="returns-35">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-35">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-17">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-17">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;save('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-17">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSave(e) {
+        // handle the save event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;save('onSave');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-17">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;save(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="savechanges">saveChanges</h3>
+<p>Fired when the user clicks the "save" command button.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/grid#events-saveChanges">saveChanges</a> event documentation.</p>
+
+<h4 id="returns-36">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-36">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-18">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-18">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;saveChanges('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-18">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSaveChanges(e) {
+        // handle the saveChanges event.
+    }
+&lt;/script&gt;
+&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;saveChanges('onSaveChanges');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-18">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;saveChanges(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="scrollable">scrollable</h3>
+
+<p>If set to true the grid will display a scrollbar when the total row height (or width) exceeds the grid height (or width). By default scrolling is enabled.Can be set to a JavaScript object which represents the scrolling configuration.</p>
+
+<h4 id="returns-37">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-37">Parameters</h4>
+
+<h5 id="value-booleankendouigridscrollablearray">$value <code class="language-plaintext highlighter-rouge">boolean|\Kendo\UI\GridScrollable|array</code></h5>
+
+<h4 id="example----using-boolean-6">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;scrollable(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendouigridscrollable">Example - using <a href="/api/wrappers/php/Kendo/UI/GridScrollable">\Kendo\UI\GridScrollable</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$scrollable = new \Kendo\UI\GridScrollable();
+$virtual = true;
+$scrollable-&gt;virtual($virtual);
+$grid-&gt;scrollable($scrollable);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-8">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$virtual = true;
+$grid-&gt;scrollable(array('virtual' =&gt; $virtual));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="selectable">selectable</h3>
+<p>If set to true the user would be able to select grid rows. By default selection is disabled.Can also be set to the following string values:</p>
+
+<h4 id="returns-38">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-38">Parameters</h4>
+
+<h5 id="value-booleanstring-1">$value <code class="language-plaintext highlighter-rouge">boolean|string</code></h5>
+
+<h4 id="example----using-boolean-7">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;selectable(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-string-2">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;selectable('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="sortable">sortable</h3>
+
+<p>If set to true the user could sort the grid by clicking the column header cells. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.</p>
+
+<h4 id="returns-39">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-39">Parameters</h4>
+
+<h5 id="value-booleankendouigridsortablearray">$value <code class="language-plaintext highlighter-rouge">boolean|\Kendo\UI\GridSortable|array</code></h5>
+
+<h4 id="example----using-boolean-8">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$grid-&gt;sortable(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendouigridsortable">Example - using <a href="/api/wrappers/php/Kendo/UI/GridSortable">\Kendo\UI\GridSortable</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$sortable = new \Kendo\UI\GridSortable();
+$allowUnsort = true;
+$sortable-&gt;allowUnsort($allowUnsort);
+$grid-&gt;sortable($sortable);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-9">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$allowUnsort = true;
+$grid-&gt;sortable(array('allowUnsort' =&gt; $allowUnsort));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addtoolbaritem">addToolbarItem</h3>
+
+<p>Adds one or more GridToolbarItem to the Grid.</p>
+
+<h4 id="returns-40">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Grid</code></p>
+
+<h4 id="parameters-40">Parameters</h4>
+
+<h5 id="value-value2--kendouigridtoolbaritemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\UI\GridToolbarItem|array</code></h5>
+
+<h4 id="example---using-kendouigridtoolbaritem">Example - using \Kendo\UI\GridToolbarItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$toolbarItem = new \Kendo\UI\GridToolbarItem();
+$name = 'value';
+$toolbarItem-&gt;name($name);
+$grid-&gt;addToolbarItem($toolbarItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-10">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$name = 'value';
+$grid-&gt;addToolbarItem(array('name' =&gt; $name));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-gridtoolbaritem">Example - adding more than one GridToolbarItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$grid = new \Kendo\UI\Grid('Grid');
+$first  = new \Kendo\UI\GridToolbarItem();
+$second = new \Kendo\UI\GridToolbarItem();
+$grid-&gt;addToolbarItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,578 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/stockchart/seriesitem.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendostockchart-seriesitem">&lt;kendo:stockChart-seriesItem&gt;</h1>
+
+<p>Array of series definitions.The series type is determined by the value of the type field.
+If a type value is missing, the type is assumed to be the one specified in seriesDefaults.Each series type has a different set of options.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-series&gt;
+    &lt;kendo:stockChart-seriesItem&gt;&lt;/kendo:stockChart-seriesItem&gt;
+&lt;/kendo:stockChart-series&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="aggregate-javalangstring">aggregate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The aggregate function to apply for date series.This function is used when a category (an year, month, etc.) contains two or more points.
+The function return value is displayed instead of the individual points.The supported values are:</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem aggregate="aggregate"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="axis-javalangstring">axis <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The name of the value axis to use.** Applicable to area, column, line, ohlc and candlestick series **</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem axis="axis"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="categoryfield-javalangstring">categoryField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the category name or date.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem categoryField="categoryField"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="closefield-javalangstring">closeField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the close value.** Available for candlestick and ohlc series only **</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem closeField="closeField"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="color-javalangstring">color <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The series base color. The supported values are:</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem color="color"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="colorfield-javalangstring">colorField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the point color.** Applicable for column, candlestick and ohlc series. **</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem colorField="colorField"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="currentfield-javalangstring">currentField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the current value.** Available for bullet and verticalBullet series. **</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem currentField="currentField"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="dashtype-javalangstring">dashType <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The series line dash type.** Applicable only to line series **</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem dashType="dashType"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="data-javalangobject">data <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Array of data items. The data item type can be either a:</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem data="data"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="downcolor-javalangstring">downColor <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The series color when open value is smoller then close value.** Available for candlestick series only **</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem downColor="downColor"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="downcolorfield-javalangstring">downColorField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the body color.** Available for candlestick series only **</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem downColorField="downColorField"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="field-javalangstring">field <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the series value.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem field="field"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="gap-float">gap <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The distance between category clusters.** Applicable for column, candlestick and ohlc series. **</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem gap="gap"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="highfield-javalangstring">highField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the high value.** Available for candlestick and ohlc series only **</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem highField="highField"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="line-javalangstring">line <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Line options.** Applicable to area, candlestick and ohlc series. ** Further configuration is available via <a href="#kendo-stockChart-seriesItem-line">kendo:stockChart-seriesItem-line</a>.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem line="line"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="lowfield-javalangstring">lowField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the low value.** Available for candlestick and ohlc series **</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem lowField="lowField"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="missingvalues-javalangstring">missingValues <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The behavior for handling missing values. The supported values are:</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem missingValues="missingValues"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="name-javalangstring">name <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The series name visible in the legend.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem name="name"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="negativecolor-javalangstring">negativeColor <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Color to use for bars with negative values.** Applicable only to column series. **The plot stops before the missing point and continues after it.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem negativeColor="negativeColor"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="opacity-float">opacity <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The series opacity.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem opacity="opacity"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="openfield-javalangstring">openField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the open value.** Available for candlestick and ohlc series **</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem openField="openField"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="spacing-float">spacing <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Space between points as proportion of the point width.Available for column, candlestick and ohlc series.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem spacing="spacing"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="stack-javalangobject">stack <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>A boolean value indicating if the series should be stacked.
+A string value is interpreted as series.stack.group. Further configuration is available via <a href="#kendo-stockChart-seriesItem-stack">kendo:stockChart-seriesItem-stack</a>.</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem stack="stack"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="style-javalangstring">style <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The supported values are:</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem style="style"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="targetfield-javalangstring">targetField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the target value.** Available for bullet and verticalBullet series. **</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem targetField="targetField"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The type of the series. Available types:</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem type="type"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="visibleinlegend-boolean">visibleInLegend <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>A value indicating whether to show the series name in the legend.</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem visibleInLegend="visibleInLegend"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="width-float">width <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The line width.** Applicable for area and line series. **</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem width="width"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendostockchart-seriesitem-border">kendo:stockChart-seriesItem-border</h3>
+
+<p>The border of the points.** Applicable to column, ohlc and candlestick series **</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/seriesitem-border">kendo:stockChart-seriesItem-border</a>.</p>
+
+<h4 id="example-29">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-border&gt;&lt;/kendo:stockChart-seriesItem-border&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesitem-highlight">kendo:stockChart-seriesItem-highlight</h3>
+
+<p>Configures the appearance of highlighted points.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/seriesitem-highlight">kendo:stockChart-seriesItem-highlight</a>.</p>
+
+<h4 id="example-30">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-highlight&gt;&lt;/kendo:stockChart-seriesItem-highlight&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesitem-labels">kendo:stockChart-seriesItem-labels</h3>
+
+<p>Configures the series data labels.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/seriesitem-labels">kendo:stockChart-seriesItem-labels</a>.</p>
+
+<h4 id="example-31">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-labels&gt;&lt;/kendo:stockChart-seriesItem-labels&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesitem-line">kendo:stockChart-seriesItem-line</h3>
+
+<p>Line options.** Applicable to area, candlestick and ohlc series. **</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/seriesitem-line">kendo:stockChart-seriesItem-line</a>.</p>
+
+<h4 id="example-32">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-line&gt;&lt;/kendo:stockChart-seriesItem-line&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesitem-markers">kendo:stockChart-seriesItem-markers</h3>
+
+<p>Marker options.** Applicable for area and line series. **</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/seriesitem-markers">kendo:stockChart-seriesItem-markers</a>.</p>
+
+<h4 id="example-33">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-markers&gt;&lt;/kendo:stockChart-seriesItem-markers&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesitem-notes">kendo:stockChart-seriesItem-notes</h3>
+
+<p>The series notes configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/seriesitem-notes">kendo:stockChart-seriesItem-notes</a>.</p>
+
+<h4 id="example-34">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-notes&gt;&lt;/kendo:stockChart-seriesItem-notes&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesitem-overlay">kendo:stockChart-seriesItem-overlay</h3>
+
+<p>The effects overlay.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/seriesitem-overlay">kendo:stockChart-seriesItem-overlay</a>.</p>
+
+<h4 id="example-35">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-overlay&gt;&lt;/kendo:stockChart-seriesItem-overlay&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesitem-stack">kendo:stockChart-seriesItem-stack</h3>
+
+<p>A boolean value indicating if the series should be stacked.
+A string value is interpreted as series.stack.group.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/seriesitem-stack">kendo:stockChart-seriesItem-stack</a>.</p>
+
+<h4 id="example-36">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-stack&gt;&lt;/kendo:stockChart-seriesItem-stack&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesitem-target">kendo:stockChart-seriesItem-target</h3>
+
+<p>The target of the bullet chart.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/seriesitem-target">kendo:stockChart-seriesItem-target</a>.</p>
+
+<h4 id="example-37">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-target&gt;&lt;/kendo:stockChart-seriesItem-target&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesitem-tooltip">kendo:stockChart-seriesItem-tooltip</h3>
+
+<p>The data point tooltip configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/stockchart/seriesitem-tooltip">kendo:stockChart-seriesItem-tooltip</a>.</p>
+
+<h4 id="example-38">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-tooltip&gt;&lt;/kendo:stockChart-seriesItem-tooltip&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="color-string">color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The series base color. The supported values are:</p>
+
+<h4 id="example-39">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem color="handle_color"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+&lt;script&gt;
+    function handle_color(e) {
+        // Code to handle the color event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="downcolor-string">downColor <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The series color when open value is smoller then close value.** Available for candlestick series only **</p>
+
+<h4 id="example-40">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem downColor="handle_downColor"&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+&lt;script&gt;
+    function handle_downColor(e) {
+        // Code to handle the downColor event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendostockchart-seriesitem-color">kendo:stockChart-seriesItem-color</h3>
+
+<p>The series base color. The supported values are:</p>
+
+<h4 id="example-41">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-color&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the color event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-seriesItem-color&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendostockchart-seriesitem-downcolor">kendo:stockChart-seriesItem-downColor</h3>
+
+<p>The series color when open value is smoller then close value.** Available for candlestick series only **</p>
+
+<h4 id="example-42">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:stockChart-seriesItem&gt;
+    &lt;kendo:stockChart-seriesItem-downColor&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the downColor event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:stockChart-seriesItem-downColor&gt;
+&lt;/kendo:stockChart-seriesItem&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

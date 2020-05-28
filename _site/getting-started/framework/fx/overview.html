@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/fx/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-ui-fx-overview">Kendo UI FX Overview</h1>
+
+<p>Kendo UI FX provides a rich, extensible and performance-optimized toolset for element transitions.
+Each effect utilizes CSS tranisions if possible, with a fallback to manual property value modification in older browsers. Animations can be played in reverse which is very convenient for showing and hiding certain parts of the UI.
+Kendo FX uitilizes <a href="http://api.jquery.com/category/deferred-object/">jQuery Deffered utility</a> for chaining/callbacks.</p>
+
+<p>This document provides an overview of the Kendo UI FX library. <a href="/api/framework/fx/common">Please refer to the FX API docs for complete API details.</a></p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Kendo UI Effect instances are created through the <code class="language-plaintext highlighter-rouge">kendo.fx</code> jQuery selector wrapper. A single wrapper can be used to create multiple effects.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo"&gt;
+    I will be animated
+&lt;/div&gt;
+
+&lt;script&gt;
+    var effectWrapper = kendo.fx($("#foo"));
+    var fadeOutEffect = effectWrapper.fadeOut();
+    fadeOutEffect.play();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The code above can also be compressed to a single line:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo"&gt;
+    I will be animated
+&lt;/div&gt;
+
+&lt;script&gt;
+    kendo.fx($("#foo")).fadeOut().play();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="specifying-effect-direction">Specifying Effect Direction</h2>
+
+<p>Most of the effects support several directions (check the respective effect page for details). Direction can be specified either as the first parameter in the effect constructor method, or by calling the constructor with direction shortcut.
+The following three lines will produce identical effects:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo"&gt;
+    I will be animated
+&lt;/div&gt;
+
+&lt;script&gt;
+    var fadeOut1 = kendo.fx($("#foo")).fadeOut();
+    var fadeOut2 = kendo.fx($("#foo")).fade("out");
+    var fadeOut3 = kendo.fx($("#foo")).fade().direction("out");
+
+    //Call .play() to run any of the above animations
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="composite-effects">Composite effects</h2>
+
+<p>Most of the effects can be combined, provided that they run on the same element (for running effects on different elements, use <a href="http://api.jquery.com/jQuery.when/">jQuery.when</a>).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo"&gt;
+    I will be faded out and zoomed out.
+&lt;/div&gt;
+
+&lt;script&gt;
+    var effectWrapper = kendo.fx($("#foo"));
+    var fadeOutEffect = effectWrapper.fadeOut();
+    fadeOutEffect.add(effectWrapper.zoomOut());
+    fadeOutEffect.play();
+    // Calling reverse will zoom in and fade in.
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Example working with multiple elements:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo"&gt;
+    I will fade out.
+&lt;/div&gt;
+&lt;div id="baz"&gt;
+    I will also fade out.
+&lt;/div&gt;
+
+&lt;script&gt;
+    //Use jQuery Deferred to chain multiple effects
+    var eleFoo = $("#foo"),
+        eleBaz = $("#baz");
+
+    $.when(kendo.fx(eleFoo).fadeOut().play(),
+                kendo.fx(eleBaz).fadeOut().play()).then(function(){
+            //This will be called when both animations are done
+            alert("Both elements faded!");
+        });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="available-effects">Available Effects</h2>
+
+<p>The Kendo UI FX library currently supports the following effects:</p>
+
+<ul>
+  <li><a href="/api/framework/fx/expand">Expand</a></li>
+  <li><a href="/api/framework/fx/fade">Fade</a></li>
+  <li><a href="/api/framework/fx/flip">Flip</a></li>
+  <li><a href="/api/framework/fx/pageturn">PageTurn</a></li>
+  <li><a href="/api/framework/fx/slidein">SlideIn</a></li>
+  <li><a href="/api/framework/fx/tile">Tile</a></li>
+  <li><a href="/api/framework/fx/transfer">Transfer</a></li>
+  <li><a href="/api/framework/fx/zoom">Zoom</a></li>
+  <li><a href="/api/framework/fx/replace">Replace</a></li>
+</ul>
+
+<p>When possible, effects are hardware accelerated via CSS transitions, making them ideal for desktop and mobile devices. Unlike CPU intensive JavaScript animations, animations done with CSS can provide better framerates and battery life.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

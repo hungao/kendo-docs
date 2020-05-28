@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Documentation guide for Telerik UI for PHP</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to download, install Telerik UI for PHP and run the sample application.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/php/introduction.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h2 id="what-is-telerik-ui-for-php">What is Telerik UI for PHP</h2>
+
+<p>Telerik UI for PHP is a set of PHP classes which help you configure Kendo UI widgets by using server-side code in PHP web sites.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<p>Telerik UI for PHP requires PHP 5.3+. The sample application uses <a href="http://www.php.net/manual/en/intro.pdo.php">PDO</a>
+and <a href="http://www.php.net/manual/en/ref.pdo-sqlite.php">SQLite</a>.
+Both extensions should be enabled in the PHP configuration (php.ini). The
+<a href="http://php.net/manual/en/function.phpinfo.php">phpinfo</a> function can be used to verify that PDO and the SQLite extensions are successfully installed.</p>
+
+<h2 id="downloading-and-installing-telerik-ui-for-php">Downloading and Installing Telerik UI for PHP</h2>
+
+<p>Yoiu can download Telerik UI for PHP from the <a href="http://www.telerik.com/download/pho-ui">official download page</a>. The distribution zip file
+contains the following directories:</p>
+
+<ul>
+  <li><strong>/js</strong> - minified JavaScript files.</li>
+  <li><strong>/styles</strong> - minified CSS files and background images used by the themes.</li>
+  <li><strong>/src</strong> - JavaScript and CSS source files. Not available in the trial version.</li>
+  <li><strong>/wrappers/php/lib/Kendo/</strong> - PHP files required to use Telerik UI for PHP.</li>
+  <li><strong>/wrappers/php/</strong> - sample PHP web site.</li>
+</ul>
+
+<h2 id="running-the-sample-web-site">Running the sample web site</h2>
+
+<p>You can find a sample PHP web site in the <strong>/wrappers/php/</strong> directory of the Telerik UI for PHP distribution.
+To run the web site copy this directory to your web root. Then navigate to <strong>index.php</strong>.</p>
+
+<h2 id="using-telerik-ui-for-php-in-your-php-web-site">Using Telerik UI for PHP in your PHP web site</h2>
+
+<ol>
+  <li>Copy <strong>/wrappers/php/lib/Kendo</strong> to your web site root (for example in your <strong>lib</strong> directory).</li>
+  <li>Copy the Kendo UI JavaScript and CSS files from <strong>/js</strong> and <strong>/styles</strong> to your web site root. If you prefer to use Kendo CDN skip this and the next steps
+and check the <a href="/getting-started/javascript-dependencies#cdn">JavaScript Dependencies</a> help topic.</li>
+  <li>
+    <p>Include the Kendo UI JavaScript and CSS files in your PHP page:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;link href="styles/kendo.common.min.css" rel="stylesheet" type="text/css" /&gt;
+ &lt;link href="styles/kendo.default.min.css" rel="stylesheet" type="text/css" /&gt;
+ &lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+ &lt;script src="js/kendo.web.min.js"&gt;&lt;/script&gt;
+</code></pre></div>    </div>
+
+    <blockquote>
+      <p>If you want to use Kendo UI Web and DataViz at the same time you should include <strong>kendo.all.min.js</strong> instead of <strong>kendo.web.min.js</strong> and
+<strong>kendo.dataviz.min.js</strong>. You can also create a custom JavaScript file using the
+<a href="http://www.telerik.com/download/custom-download">Custom Download Builder</a>.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Include the Kendo PHP <a href="http://php.net/manual/en/language.oop5.autoload.php">Autoload</a> file.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php require_once 'lib/Kendo/Autoload.php'; ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Use any Kendo UI PHP wrapper:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ // Instantiate a new instance of the DatePicker class and specify its 'id'
+ $datepicker = new \Kendo\UI\DatePicker('datepicker');
+
+ // Configure the datepicker using the fluent API
+ $datepicker-&gt;start('year')
+            -&gt;format('MMMM yyyy');
+
+ // Output the datepicker HTML and JavaScript by echo-ing the result of the render method
+ echo $datepicker-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="complete-source">Complete Source</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;link href="styles/kendo.common.min.css" rel="stylesheet" type="text/css" /&gt;
+        &lt;link href="styles/kendo.default.min.css" rel="stylesheet" type="text/css" /&gt;
+        &lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+        &lt;script src="js/kendo.web.min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;?php require_once 'lib/Kendo/Autoload.php'; ?&gt;
+    &lt;?php
+    // Instantiate a new instance of the DatePicker class and specify its 'id'
+    $datepicker = new \Kendo\UI\DatePicker('datepicker');
+
+    // Configure the datepicker using the fluent API
+    $datepicker-&gt;start('year')
+               -&gt;format('MMMM yyyy');
+
+    // Output the datepicker HTML and JavaScript by echo-ing the result of the render method
+    echo $datepicker-&gt;render();
+    ?&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>You can watch the videos in the <a href="http://www.youtube.com/kendouitv">Kendo UI YouTube channel</a>:</p>
+
+<ol>
+  <li><a href="http://www.youtube.com/watch?v=2Kpgp_nocEI">Getting Started With The PHP Wrappers For Kendo UI: Part 1</a></li>
+  <li><a href="http://www.youtube.com/watch?v=RQCLqA6Pu_E">Getting Started With The PHP Wrappers For Kendo UI: Part 2</a></li>
+  <li><a href="http://www.youtube.com/watch?v=zYh6cuU_leQ">Getting Started With The PHP Wrappers For Kendo UI: Part 3</a></li>
+</ol>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

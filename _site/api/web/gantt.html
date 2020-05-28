@@ -1,0 +1,3250 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Gantt</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Code examples for Gantt UI widget configuration, learn how to use methods and which events to set once the gantt UI widget detail is initialized.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/gantt.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouigantt">kendo.ui.Gantt</h1>
+
+<p>Represents the Kendo UI Gantt widget. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="autobind-boolean-default-true">autoBind <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will not bind to the data source during initialization. In this case data binding will occur when the <a href="/api/framework/datasource#events-change">change</a> event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<blockquote>
+  <p>Setting <code class="language-plaintext highlighter-rouge">autoBind</code> to <code class="language-plaintext highlighter-rouge">false</code> is useful when multiple widgets are bound to the same data source. Disabling automatic binding ensures that the shared data source doesn"t make more than one request to the remote service.</p>
+</blockquote>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  autoBind: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columns-array">columns <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>The configuration of the gantt columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+<a href="#configuration-columns.field">field</a> to which the column is bound. The gantt will create a column for every item of the array.</p>
+
+<blockquote>
+  <p>If this setting is <strong>not</strong> specified the gantt will create a single column for the task title.</p>
+</blockquote>
+
+<h4 id="example---two-columns-bound-to-the-title-and-start-fields">Example - two columns bound to the "title" and "start" fields</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ],
+  columns: ["title" , "start"]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columnsfield-string">columns.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The field to which the column is bound. The value of this field is displayed by the column during data binding.
+<strong>The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.</strong></p>
+
+<h4 id="example---three-columns-bound-to-the-title-start-and-end-fields">Example - three columns bound to the "title", "start" and "end" fields</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ],
+  columns: ["title" , "start", "end"]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columnstitle-string">columns.title <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The text that is displayed in the column header cell. If not set the <a href="#configuration-columns.field">field</a> is used.</p>
+
+<h4 id="example---set-the-title-of-a-column">Example - set the title of a column</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ],
+  columns: [ { field: "title", title: "Task Title" } ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columnsformat-string">columns.format <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a <a href="/api/framework/kendo#standard-number-formats">standard number format</a>,
+<a href="/api/framework/kendo#custom-number-formats">custom number format</a>, <a href="/api/framework/kendo#standard-date-formats">standard date format</a> or a <a href="/api/framework/kendo#custom-date-formats">custom date format</a>.</p>
+
+<blockquote>
+  <p>The <a href="/api/framework/kendo#methods-format">kendo.format</a> function is used to format the value.</p>
+</blockquote>
+
+<h4 id="example---set-format-for-the-start-and-end-column">Example - set format for the start and end column</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    },
+    {
+      id: 3,
+      orderId: 2,
+      parentId: null,
+      title: "Task3",
+      start: new Date("2014/6/17 13:00"),
+      end: new Date("2014/6/17 15:00")
+    }
+    
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ],
+  columns: [ 
+    { field: "start", title: "Start Time", format: "{0:MM/dd hh:mm}" },
+    { field: "end", title: "End Time", format: "{0:MM/dd hh:mm}" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columnswidth-stringnumber">columns.width <code class="language-plaintext highlighter-rouge">String|Number</code></h3>
+
+<p>The width of the column. Numeric values are treated as pixels.</p>
+
+<h4 id="example---set-the-column-width-as-a-string">Example - set the column width as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ],
+  columns: [ 
+    { field: "title", title: "Title", width: "200px" },
+    { field: "start", title: "Task Start Time", width: "200px" },
+    { field: "end", title: "Task End Time", width: "200px" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-the-column-width-as-a-number">Example - set the column width as a number</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ],
+  columns: [ 
+    { field: "title", title: "Title", width: 200 },
+    { field: "start", title: "Task Start Time", width: 200 },
+    { field: "end", title: "Task End Time", width: 200 }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columnseditable-boolean-default-false">columns.editable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Specifies whether this column can be edited by the user.</p>
+
+<h4 id="example---set-title-column-as-editable">Example - set "title" column as editable</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ],
+  columns: [ 
+    { field: "title", title: "Title", editable: true }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columnssortable-boolean-default-false">columns.sortable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the user could sort this column by clicking its header cells. By default sorting is disabled.</p>
+
+<h4 id="example---set-start-column-as-sortable">Example - set "start" column as sortable</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    },
+    {
+      id: 3,
+      orderId: 2,
+      parentId: null,
+      title: "Task3",
+      start: new Date("2014/6/17 13:00"),
+      end: new Date("2014/6/17 15:00")
+    }      
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ],
+  columns: [ 
+    { field: "title", title: "Title", sortable: true }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="datasource-objectarraykendodataganttdatasource">dataSource <code class="language-plaintext highlighter-rouge">Object|Array|kendo.data.GanttDataSource</code></h3>
+
+<p>The data source of the widget which contains the tasks. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing <a href="/api/framework/ganttdatasource">kendo.data.GanttDataSource</a>
+instance.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dataSource</code> option is set to a JavaScript object or array the widget will initialize a new <a href="/api/framework/ganttdatasource">kendo.data.GanttDataSource</a> instance using that value as data source configuration.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dataSource</code> option is an existing <a href="/api/framework/ganttdatasource">kendo.data.GanttDataSource</a> instance the widget will use that instance and will <strong>not</strong> initialize a new one.</p>
+
+<blockquote>
+  <p>The Kendo UI Gantt widget can be bound <em>only</em> to a <code class="language-plaintext highlighter-rouge">kendo.data.GanttDataSource</code>. An exception will be thrown if the <code class="language-plaintext highlighter-rouge">dataSource</code> option is set to a <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code> instance.</p>
+</blockquote>
+
+<h4 id="example---set-datasource-as-a-javascript-object">Example - set dataSource as a JavaScript object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: {
+    transport: {
+      read: {
+        url: "http://demos.telerik.com/kendo-ui/service/gantttasks",
+        dataType: "jsonp"
+      }
+    },
+    schema: {
+      model: {
+        id: "id",
+        fields: {
+          id: { from: "ID", type: "number" },
+          orderId: { from: "OrderID", type: "number", validation: { required: true } },
+          parentId: { from: "ParentID", type: "number", validation: { required: true } },
+          start: { from: "Start", type: "date" },
+          end: { from: "End", type: "date" },
+          title: { from: "Title", defaultValue: "", type: "string" },
+          percentComplete: { from: "PercentComplete", type: "number" },
+          summary: { from: "Summary" },
+          expanded: { from: "Expanded" }
+        }
+      }
+    }
+  },
+  editable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-datasource-as-a-javascript-array">Example - set dataSource as a JavaScript array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    },
+    {
+      id: 3,
+      orderId: 2,
+      parentId: null,
+      title: "Task3",
+      start: new Date("2014/6/17 13:00"),
+      end: new Date("2014/6/17 15:00")
+    }      
+  ],
+  editable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-datasource-as-an-existing-kendodataganttdatasource-instance">Example - set dataSource as an existing <code class="language-plaintext highlighter-rouge">kendo.data.GanttDataSource</code> instance</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;   
+var dataSource = new kendo.data.GanttDataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/gantttasks",
+      dataType: "jsonp"
+    }
+  },
+  schema: {
+    model: {
+      id: "id",
+      fields: {
+        id: { from: "ID", type: "number" },
+        orderId: { from: "OrderID", type: "number", validation: { required: true } },
+        parentId: { from: "ParentID", type: "number", validation: { required: true } },
+        start: { from: "Start", type: "date" },
+        end: { from: "End", type: "date" },
+        title: { from: "Title", defaultValue: "", type: "string" },
+        percentComplete: { from: "PercentComplete", type: "number" },
+        summary: { from: "Summary" },
+        expanded: { from: "Expanded" }
+      }
+    }
+  }
+});    
+$("#gantt").kendoGantt({
+  dataSource:dataSource,
+  editable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dependencies-objectarraykendodataganttdependencydatasource">dependencies <code class="language-plaintext highlighter-rouge">Object|Array|kendo.data.GanttDependencyDataSource</code></h3>
+
+<p>The data source of the widget which contains the dependencies. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing <a href="/api/framework/ganttdependencydatasource">kendo.data.GanttDependencyDataSource</a>
+instance.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dependencies</code> option is set to a JavaScript object or array the widget will initialize a new <a href="/api/framework/ganttdependencydatasource">kendo.data.GanttDependencyDataSource</a> instance using that value as data source configuration.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dependencies</code> option is an existing <a href="/api/framework/ganttdependencydatasource">kendo.data.GanttDependencyDataSource</a> instance the widget will use that instance and will <strong>not</strong> initialize a new one.</p>
+
+<blockquote>
+  <p>The Kendo UI Gantt dependencies can be bound <em>only</em> to a <code class="language-plaintext highlighter-rouge">kendo.data.GanttDependencyDataSource</code>. An exception will be thrown if the <code class="language-plaintext highlighter-rouge">dataSource</code> option is set to a <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code> instance.</p>
+</blockquote>
+
+<h4 id="example---set-dependencies-as-a-javascript-object">Example - set <code class="language-plaintext highlighter-rouge">dependencies</code> as a JavaScript object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: {
+    transport: {
+      read: {
+        url: "http://demos.telerik.com/kendo-ui/service/gantttasks",
+        dataType: "jsonp"
+      }
+    },
+    schema: {
+      model: {
+        id: "id",
+        fields: {
+          id: { from: "ID", type: "number" },
+          orderId: { from: "OrderID", type: "number", validation: { required: true } },
+          parentId: { from: "ParentID", type: "number", validation: { required: true } },
+          start: { from: "Start", type: "date" },
+          end: { from: "End", type: "date" },
+          title: { from: "Title", defaultValue: "", type: "string" },
+          percentComplete: { from: "PercentComplete", type: "number" },
+          summary: { from: "Summary" },
+          expanded: { from: "Expanded" }
+        }
+      }
+    }
+  },
+  dependencies: {
+    transport: {
+      read: {
+        url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies",
+        dataType: "jsonp"
+      }
+    },
+    schema: {
+      model: {
+        id: "id",
+        fields: {
+          predecessorId: { from: "PredecessorID", type: "number" },
+          successorId: { from: "SuccessorID", type: "number" },
+          type: { from: "Type", type: "number" }
+        }
+      }
+    }
+  },
+  views: [{ type: "week", selected: true }],
+  editable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-dependencies-as-a-javascript-array">Example - set <code class="language-plaintext highlighter-rouge">dependencies</code> as a JavaScript array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ],
+  editable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-dependencies-as-an-existing-kendodataganttdependencydatasource-instance">Example - set <code class="language-plaintext highlighter-rouge">dependencies</code> as an existing <code class="language-plaintext highlighter-rouge">kendo.data.GanttDependencyDataSource</code> instance</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;  
+&lt;script&gt;   
+var dataSource = new kendo.data.GanttDataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/gantttasks",
+      dataType: "jsonp"
+    }
+  },
+  schema: {
+    model: {
+      id: "id",
+      fields: {
+        id: { from: "ID", type: "number" },
+        orderId: { from: "OrderID", type: "number", validation: { required: true } },
+        parentId: { from: "ParentID", type: "number", validation: { required: true } },
+        start: { from: "Start", type: "date" },
+        end: { from: "End", type: "date" },
+        title: { from: "Title", defaultValue: "", type: "string" },
+        percentComplete: { from: "PercentComplete", type: "number" },
+        summary: { from: "Summary" },
+        expanded: { from: "Expanded" }
+      }
+    }
+  }
+});
+var dependencyDataSource = new kendo.data.GanttDependencyDataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies",
+      dataType: "jsonp"
+    }
+  },
+  schema: {
+    model: {
+      id: "id",
+      fields: {
+        predecessorId: { from: "PredecessorID", type: "number" },
+        successorId: { from: "SuccessorID", type: "number" },
+        type: { from: "Type", type: "number" }
+      }
+    }
+  }
+});
+$("#gantt").kendoGantt({
+  dataSource:dataSource,
+  dependencies: dependencyDataSource,
+  views: [{ type: "week", selected: true }],
+  editable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="editable-boolean-default-true">editable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the user won"t be able to create, modify or delete tasks and dependencies.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ],
+  editable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="navigatable-boolean-default-false">navigatable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the user could navigate the widget using the keyboard. By default keyboard navigation is disabled.</p>
+
+<blockquote>
+  <p>Even when the keyboard navigation is disabled the user could delete selected tasks or dependencies with the <code class="language-plaintext highlighter-rouge">Del</code> key.</p>
+</blockquote>
+
+<h4 id="example---enable-keyboard-navigation">Example - enable keyboard navigation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ],
+  navigatable: true
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="workdaystart-date">workDayStart <code class="language-plaintext highlighter-rouge">Date</code></h3>
+
+<p>Sets the start of the work day.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  workDayStart: new Date("2014/6/17 10:00")
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="workdayend-date">workDayEnd <code class="language-plaintext highlighter-rouge">Date</code></h3>
+
+<p>Sets the end of the work day.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  workDayEnd: new Date("2014/6/17 15:00")
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="workweekstart-number-default-1">workWeekStart <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 1)</em></h3>
+
+<p>The start of working week (index based).</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">workWeekEnd</code> option is supported when <a href="#configuration-showWorkDays">showWorkDays</a> is <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+  $("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/24 11:00")
+    }
+  ],
+  workWeekStart: 2
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="workweekend-number-default-5">workWeekEnd <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 5)</em></h3>
+
+<p>The end of working week (index based).</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">workWeekEnd</code> option is supported when <a href="#configuration-showWorkDays">showWorkDays</a> is <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+  $("#gantt").kendoGantt({
+    dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/24 11:00")
+    }
+  ],
+  workWeekEnd: 4
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="hourspan-number-default-1">hourSpan <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 1)</em></h3>
+
+<p>The span of an hour slot.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+  $("#gantt").kendoGantt({
+    dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 15:00")
+    }
+  ],
+  hourSpan: 2
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="snap-boolean-default-true">snap <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>If set to true the gantt will snap tasks to the nearest slot during dragging (resizing or moving). Set it to false to allow free moving and resizing of tasks.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+    id: 1,
+     orderId: 0,
+     parentId: null,
+    title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 11:00")
+  }],
+  snap: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="height-numberstring-default-600">height <code class="language-plaintext highlighter-rouge">Number|String</code> <em>(default: 600)</em></h3>
+
+<p>The height of the widget. Numeric values are treated as pixels.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+     id: 1,
+     orderId: 0,
+     parentId: null,
+     title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 11:00")
+  }],
+  height: 400    
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="listwidth-stringnumber-default-30">listWidth <code class="language-plaintext highlighter-rouge">String|Number</code> <em>(default: "30%")</em></h3>
+
+<p>The width of the task list. Numeric values are treated as pixels.</p>
+
+<h5 id="example-9">Example</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+     id: 1,
+     orderId: 0,
+     parentId: null,
+     title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 11:00")
+  }],
+  listWidth: 400    
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messages-object">messages <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The configuration of the gantt messages. Use this option to customize or localize the gantt messages.</p>
+
+<h3 id="messagesviews-object">messages.views <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The configuration of the gantt view messages. Use this option to customize or localize the gantt view messages.</p>
+
+<h3 id="messagesviewsday-string-default-day">messages.views.day <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Day")</em></h3>
+
+<p>The text similar to "Day" displayed as gantt "day" view title.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+     id: 1,
+     orderId: 0,
+     parentId: null,
+     title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 11:00")
+  }],
+  messages: {
+    views: {
+      day: "Day view"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesviewsweek-string-default-week">messages.views.week <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Week")</em></h3>
+
+<p>The text similar to "Week" displayed as gantt "week" view title.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+     id: 1,
+     orderId: 0,
+     parentId: null,
+     title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 11:00")
+  }],
+  messages: {
+    views: {
+      week: "Week view"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesviewsmonth-string-default-month">messages.views.month <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Month")</em></h3>
+
+<p>The text similar to "Month" displayed as gantt "month" view title.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+     id: 1,
+     orderId: 0,
+     parentId: null,
+     title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 11:00")
+  }],
+  messages: {
+    views: {
+      month: "Month view"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesactions-object">messages.actions <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The configuration of the gantt action messages. Use this option to customize or localize the gantt action messages.</p>
+
+<h3 id="messagesactionsappend-string-default-add-task">messages.actions.append <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Add Task")</em></h3>
+
+<p>The text similar to "Append" displayed as gantt "append" buttons.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+     id: 1,
+     orderId: 0,
+     parentId: null,
+     title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 11:00")
+  }],
+  messages: {
+    actions: {
+      append: "Add new Task"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesactionsaddchild-string-default-add-child">messages.actions.addChild <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Add Child")</em></h3>
+
+<p>The text similar to "Add child" displayed as gantt "add child" buttons.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+     id: 1,
+     orderId: 0,
+     parentId: null,
+     title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 11:00")
+  }],
+  messages: {
+    actions: {
+      addChild: "Add new Child"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesactionsinsertbefore-string-default-add-above">messages.actions.insertBefore <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Add Above")</em></h3>
+
+<p>The text similar to "Add above" displayed as gantt "add above" buttons.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+     id: 1,
+     orderId: 0,
+     parentId: null,
+     title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 11:00")
+  }],
+  messages: {
+    actions: {
+      insertBefore: "Add Task Above"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesactionsinsertafter-string-default-add-below">messages.actions.insertAfter <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Add Below")</em></h3>
+
+<p>The text similar to "Add below" displayed as gantt "add below" buttons.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+     id: 1,
+     orderId: 0,
+     parentId: null,
+     title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 11:00")
+  }],
+  messages: {
+    actions: {
+      insertAfter: "Add Task Below"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="selectable-boolean-default-true">selectable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the user won"t be able to select tasks in the gantt. By default selection is enabled and triggers the <a href="#events-change">change event</a>.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+     id: 1,
+     orderId: 0,
+     parentId: null,
+     title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 11:00")
+  }],
+  selectable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="showworkdays-boolean-default-true">showWorkDays <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code>, gantt views will show all days of the week. By default the views display only business days.</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+     id: 1,
+     orderId: 0,
+     parentId: null,
+     title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/23 11:00")
+  }],
+  showWorkDays: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="showworkhours-boolean-default-true">showWorkHours <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code>, the day view will show all hours of the day. By default the view displays only business hours.</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+    id: 1,
+     orderId: 0,
+     parentId: null,
+    title: "Task1",
+     start: new Date("2014/6/17 9:00"),
+     end: new Date("2014/6/17 18:00")
+  }],
+  showWorkHours: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="views-array">views <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>The views displayed by the gantt and their configuration. The array items can be either objects specifying the view configuration or strings representing the view types (assuming default configuration).
+By default the Kendo UI Gantt widget displays all three ("day", "week", and "month") views.</p>
+
+<h3 id="viewstype-string">views.type <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of the view. The built-in views are: "day", "week", and "month".</p>
+
+<h3 id="viewsselected-boolean-default-false">views.selected <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the view will be initially selected by the gantt widget. The default selected view is "day".</p>
+
+<blockquote>
+  <p>If more than one view is selected then last of them will prevail.</p>
+</blockquote>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+    id: 1,
+    orderId: 0,
+    parentId: null,
+    title: "Task1",
+    start: new Date("2014/6/17 9:00"),
+    end: new Date("2014/6/20 11:00")
+  }],
+  views: [
+    { type: "day" },
+    { type: "week", selected: true },
+    { type: "month" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="viewsslotsize-numberstring-default-100">views.slotSize <code class="language-plaintext highlighter-rouge">Number|String</code> <em>(default: 100)</em></h3>
+
+<p>The size of the time slot headers. Values are treated as pixels.</p>
+
+<h4 id="example-21">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+    id: 1,
+    orderId: 0,
+    parentId: null,
+    title: "Task1",
+    start: new Date("2014/6/17 9:00"),
+    end: new Date("2014/6/20 11:00")
+  }],
+  views: [
+    { type: "day" },
+    { type: "week", selected: true, slotSize: 130 },
+    { type: "month" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="viewstimeheadertemplate-stringfunction">views.timeHeaderTemplate <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the time slots in "day" view</p>
+
+<h4 id="example-22">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+    id: 1,
+    orderId: 0,
+    parentId: null,
+    title: "Task1",
+    start: new Date("2014/6/17 9:00"),
+    end: new Date("2014/6/17 11:00")
+  }],
+  views: [
+    { type: "day", timeHeaderTemplate: kendo.template("#=kendo.toString(start, 'T')#") },
+    { type: "week" },
+    { type: "month" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="viewsdayheadertemplate-stringfunction">views.dayHeaderTemplate <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the day slots in "day" and "week" views.</p>
+
+<h4 id="example---dayheadertemplate-set-for-day-view">Example - dayHeaderTemplate set for "day" view.</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+  $("#gantt").kendoGantt({
+  dataSource: [{
+    id: 1,
+    orderId: 0,
+    parentId: null,
+    title: "Task1",
+    start: new Date("2014/6/17 9:00"),
+    end: new Date("2014/6/17 11:00")
+  }],
+  views: [
+    { 
+      type: "day", 
+      dayHeaderTemplate: kendo.template("#=kendo.toString(start, 'D')#") 
+    },
+    { type: "week" },
+    { type: "month" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---dayheadertemplate-set-for-day-view-1">Example - dayHeaderTemplate set for "day" view.</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+  $("#gantt").kendoGantt({
+  dataSource: [{
+    id: 1,
+    orderId: 0,
+    parentId: null,
+    title: "Task1",
+    start: new Date("2014/6/17 9:00"),
+    end: new Date("2014/6/22 11:00")
+  }],
+  views: [
+    { type: "day"},
+    { type: "week", 
+      dayHeaderTemplate: kendo.template("#=kendo.toString(start, 'd')#"), 
+      selected: true 
+    },
+    { type: "month" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="viewsweekheadertemplate-stringfunction">views.weekHeaderTemplate <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the week slots in "week" and "month" views.</p>
+
+<h4 id="example---weekheadertemplate-set-for-week-view">Example - weekHeaderTemplate set for "week" view</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+    id: 1,
+    orderId: 0,
+    parentId: null,
+    title: "Task1",
+    start: new Date("2014/6/17 9:00"),
+    end: new Date("2014/6/22 11:00")
+  }],
+  views: [
+    { type: "day"},
+    { type: "week", 
+      weekHeaderTemplate: "#=kendo.toString(start, 'D')# - #=kendo.toString(kendo.date.addDays(end, -1), 'D')#", 
+      selected: true 
+    },
+    { type: "month" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---weekheadertemplate-set-for-month-view">Example - weekHeaderTemplate set for "month" view</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+    id: 1,
+    orderId: 0,
+    parentId: null,
+    title: "Task1",
+    start: new Date("2014/6/17 9:00"),
+    end: new Date("2014/7/01 11:00")
+  }],
+  views: [
+    { type: "day"},
+    { type: "week"},
+    { 
+      type: "month",         
+      weekHeaderTemplate: "#=kendo.toString(start, 'M/dd')# - #=kendo.toString(kendo.date.addDays(end, -1), 'M/dd')#", 
+      selected: true
+    }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="viewsmonthheadertemplate-stringfunction">views.monthHeaderTemplate <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the month slots in "month" views.</p>
+
+<h4 id="example-23">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+    id: 1,
+    orderId: 0,
+    parentId: null,
+    title: "Task1",
+    start: new Date("2014/6/17 9:00"),
+    end: new Date("2014/7/01 11:00")
+  }],
+  views: [
+    { type: "day"},
+    { type: "week"},
+    { 
+      type: "month",         
+      monthHeaderTemplate: "#=kendo.toString(start, 'MMMM, yyyy')#",    
+      selected: true
+    }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="datasource-kendodataganttdatasource">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.GanttDataSource</code></h3>
+
+<p>The <a href="/api/framework/ganttdatasource">data source</a> of the widget. Configured via the <a href="#configuration-dataSource">dataSource</a> option.</p>
+
+<blockquote>
+  <p>Changes of the data source will be reflected in the widget.</p>
+</blockquote>
+
+<blockquote>
+  <p>Assigning a new data source would have no effect. Use the <a href="#methods-setDataSource">setDataSource</a> method instead.</p>
+</blockquote>
+
+<h4 id="example---add-a-gantt-task-to-the-data-source">Example - add a gantt task to the data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [{
+    id: 1,
+    orderId: 0,
+    parentId: null,
+    title: "Task1",
+    start: new Date("2014/6/17 9:00"),
+    end: new Date("2014/6/17 11:00")
+  }]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.dataSource.add({ 
+  parentId: null,
+  start: new Date("2014/6/17 12:00"), 
+  end: new Date("2014/6/17 14:00"), 
+  title: "New Task"  
+});          
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---update-a-gantt-task-in-the-data-source">Example - update a gantt task in the data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+var task = gantt.dataSource.at(0);
+task.set("title", "Project start");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---update-multiple-gantt-task-fields-with-the-update-method">Example - update multiple gantt task fields with the update method</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+var task = gantt.dataSource.at(0);
+gantt.dataSource.update(task, { 
+  title: "Project start",
+  start: new Date("2014/6/17 12:00"),
+  end: new Date("2014/6/17 14:00")
+});
+&lt;/script&gt;   
+</code></pre></div></div>
+
+<h4 id="example---remove-a-gantt-task-from-the-data-source">Example - remove a gantt task from the data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+var task = gantt.dataSource.at(0);
+gantt.dataSource.remove(task);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dependencies-kendodataganttdependencydatasource">dependencies <code class="language-plaintext highlighter-rouge">kendo.data.GanttDependencyDataSource</code></h3>
+
+<p>The <a href="/api/framework/ganttdependencydatasource">dependencies data source</a> of the widget. Configured via the <a href="#configuration-dependencies">dependencies</a> option.</p>
+
+<blockquote>
+  <p>Changes of the data source will be reflected in the widget.</p>
+</blockquote>
+
+<blockquote>
+  <p>Assigning a new data source would have no effect. Use the <a href="#methods-setDependenciesDataSource">setDependenciesDataSource</a> method instead.</p>
+</blockquote>
+
+<h4 id="example---add-a-dependency-to-the-dependencies-data-source">Example - add a dependency to the dependencies data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.dependencies.add({
+  predecessorId: 1,
+  successorId: 2,
+  type: 1
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---remove-a-dependency-from-the-dependencies-data-source">Example - remove a dependency from the dependencies data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+var dependency = gantt.dependencies.at(0);
+gantt.dependencies.remove(dependency);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="clearselection">clearSelection</h3>
+
+<p>Clears the currently selected task or dependency.</p>
+
+<h4 id="example---subscribe-to-the-databinding-event-during-initialization">Example - subscribe to the "dataBinding" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+// select the first task
+gantt.select("tr:eq(0)");
+gantt.clearSelection();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dataitem">dataItem</h3>
+
+<p>Returns the data item to which the specified table row from the treelist is bound</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="row-stringelementjquery">row <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>A string, DOM element or jQuery object which represents the table row. A string is treated as a jQuery selector.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code> the task data item to which the specified table row is bound.</p>
+
+<h4 id="example---get-the-task-data-item-to-which-the-first-table-row-is-bound">Example - get the task data item to which the first table row is bound</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+var task = gantt.dataItem("tr:eq(0)");
+console.log(task.title); // displays "Task1"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+
+<p>Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p>This method does not remove the widget element from DOM.</p>
+</blockquote>
+
+<h4 id="example-24">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.destroy();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="refresh">refresh</h3>
+
+<p>Renders all tasks and dependencies using the current data items.</p>
+
+<h4 id="example---refresh-the-widget">Example - refresh the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.refresh();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="refreshdependencies">refreshDependencies</h3>
+
+<p>Renders all dependencies using the current data items.</p>
+
+<h4 id="example---refresh-the-dependencies">Example - refresh the dependencies</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.refreshDependencies();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="removedependency">removeDependency</h3>
+
+<p>Removes the specified gantt dependency.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="dependency-stringkendodataganttdependency">dependency <code class="language-plaintext highlighter-rouge">String|kendo.data.GanttDependency</code></h5>
+
+<p>The dependency which should be removed. Also accepts a string which is the <code class="language-plaintext highlighter-rouge">uid</code> of the dependency which should be removed.</p>
+
+<h4 id="example---remove-a-dependency">Example - remove a dependency</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+var dependency = gantt.dependencies.at(0);
+gantt.removeDependency(dependency);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="removetask">removeTask</h3>
+
+<p>Removes the specified gantt task.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="task-stringkendodatagantttask">task <code class="language-plaintext highlighter-rouge">String|kendo.data.GanttTask</code></h5>
+
+<p>The task which should be removed. Also accepts a string which is the <code class="language-plaintext highlighter-rouge">uid</code> of the task which should be removed.</p>
+
+<h4 id="example-25">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+var task = gantt.dataSource.at(0);
+gantt.removeTask(task);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+
+<p>Gets or sets the table row which is selected.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="row-stringelementjquery-1">row <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>A string, DOM element or jQuery object which represents the table row. A string is treated as a jQuery selector.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> the selected table row.</p>
+
+<h4 id="example---select-the-first-table-row">Example - select the first table row.</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.select("tr:first");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="setdatasource">setDataSource</h3>
+
+<p>Sets the tasks data source of the widget.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="datasource-kendodataganttdatasource-1">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.GanttDataSource</code></h5>
+
+<p>The tasks data source to which the widget should be bound.</p>
+
+<h4 id="example---set-the-tasks-data-source">Example - set the tasks data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt();
+var gantt = $("#gantt").data("kendoGantt");
+var dataSource = new kendo.data.GanttDataSource({
+  data: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+gantt.setDataSource(dataSource);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="setdependenciesdatasource">setDependenciesDataSource</h3>
+
+<p>Sets the dependencies data source of the widget.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="datasource-kendodataganttdependencydatasource">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.GanttDependencyDataSource</code></h5>
+
+<p>The dependencies data source to which the widget should be bound.</p>
+
+<h4 id="example---set-the-dependencies-data-source">Example - set the dependencies data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+var dependenciesDataSource = new kendo.data.GanttDependencyDataSource({
+  data: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ]
+});
+gantt.setDependenciesDataSource(dependenciesDataSource);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="view">view</h3>
+
+<p>Gets or sets the current gantt view.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="type-string-optional">type <code class="language-plaintext highlighter-rouge">String</code> <em>(optional)</em></h5>
+
+<p>The view type to select.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.GanttView</code> the current gantt view.</p>
+
+<h4 id="example---set-the-current-view">Example - set the current view</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.view("month");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="databinding">dataBinding</h3>
+
+<p>Fired before the widget binds to its data source.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="esender-kendouigantt">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h5 id="epreventdefault-function">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the data bind action and <code class="language-plaintext highlighter-rouge">dataBound</code> event will not fire.</p>
+
+<h4 id="example---subscribe-to-the-databinding-event-during-initialization-1">Example - subscribe to the "dataBinding" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [ 
+    { 
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  dataBinding: function(e) {
+    console.log("dataBinding");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-databinding-after-initialization">Example - subscribe to the "dataBinding" after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+function gantt_dataBinding(e) {
+  console.log("dataBinding");
+}  
+$("#gantt").kendoGantt({
+ dataSource: [ 
+    { 
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("dataBinding", gantt_dataBinding);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound">dataBound</h3>
+
+<p>Fired when the widget is bound to data from its data source.</p>
+
+<p>The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="esender-kendouigantt-1">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-databound-event-during-initialization">Example - subscribe to the "dataBound" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [ 
+    { 
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  dataBound: function(e) {
+    console.log("dataBound");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-databound-event-after-initialization">Example - subscribe to the "dataBound" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+function gantt_dataBound(e) {
+  console.log("dataBound");
+}  
+$("#gantt").kendoGantt({
+ dataSource: [ 
+    { 
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("dataBound", gantt_dataBound);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="add">add</h3>
+
+<p>Fired when a new task or a new dependency is about to be added.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="etask-kendodatagantttask">e.task <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code></h5>
+
+<p>The GanttTask instance which will be added to the DataSource.</p>
+
+<h5 id="edependency-kendodataganttdependency">e.dependency <code class="language-plaintext highlighter-rouge">kendo.data.GanttDependency</code></h5>
+
+<p>The GanttDependency instance which will be added to the DataSource.</p>
+
+<h5 id="epreventdefault-function-1">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the add action.</p>
+
+<h5 id="esender-kendouigantt-2">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<h4 id="example---subscribe-to-the-add-event-during-initialization">Example - subscribe to the "add" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [ 
+    { 
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  add: function(e) {
+    console.log("Add", e.task.title);
+  }
+});
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-add-event-after-initialization">Example - subscribe to the "add" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+function gantt_add(e) {
+  console.log("Add", e.task.title);
+}  
+$("#gantt").kendoGantt({
+  dataSource: [ 
+    { 
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("add", gantt_add);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="edit">edit</h3>
+
+<p>Fired when the user starts task edit upon double click on a cell.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="econtainer-jquery">e.container <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The jQuery object representing the wrapping cell element. That element contains the editing UI.</p>
+
+<h5 id="etask-kendodatagantttask-1">e.task <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code></h5>
+
+<p>The GanttTask which is being edited.</p>
+
+<h5 id="epreventdefault-function-2">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the edit action.</p>
+
+<h5 id="esender-kendouigantt-3">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-edit-event-during-initialization">Example - subscribe to the "edit" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [ 
+    { 
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  columns: [ { field: "title", title: "Title", editable: true } ],
+  edit: function(e) {
+    console.log("Editing task: ", e.task.title);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-edit-event-after-initialization">Example - subscribe to the "edit" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+function gantt_edit(e) {
+  console.log("Editing task: ", e.task.title)
+}  
+$("#gantt").kendoGantt({
+  dataSource: [ 
+    { 
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  columns: [ { field: "title", title: "Title", editable: true } ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("edit", gantt_edit);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="remove">remove</h3>
+
+<p>Fired when a task or a dependency is about to be removed.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-4">Event Data</h4>
+
+<h5 id="etask-kendodatagantttask-2">e.task <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code></h5>
+
+<p>The GanttTask instance which is being removed the DataSource.</p>
+
+<h5 id="edependencies-array">e.dependencies <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>An array of GanttDependency instances which are associated with the task being removed, or an array with a single dependency which is being removed.</p>
+
+<h5 id="epreventdefault-function-3">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the remove action.</p>
+
+<h5 id="esender-kendouigantt-4">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-remove-event-during-initialization">Example - subscribe to the "remove" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;  
+&lt;script&gt; 
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 11:00"),
+      end: new Date("2014/6/17 14:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 15:00"),
+      end: new Date("2014/6/17 16:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1,
+      id: 0
+    }
+  ],
+  remove: function(e) {          
+    if (e.task) {
+      console.log("Removing task:", e.task.title);
+      console.log(kendo.format("Removing {0} related dependencies", e.dependencies.length));
+    } else {            
+      console.log("Removing dependency with id:", e.dependencies[0].id);
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-remove-event-after-initialization">Example - subscribe to the "remove" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+function gantt_remove(e) {
+  if (e.task) {
+    console.log("Removing task:", e.task.title);
+    console.log(kendo.format("Removing {0} related dependencies", e.dependencies.length));
+  } else {            
+    console.log("Removing dependency with id:", e.dependencies[0].id);
+  }
+}
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 11:00"),
+      end: new Date("2014/6/17 14:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 15:00"),
+      end: new Date("2014/6/17 16:00")
+    }
+  ],
+  dependencies: [
+    {
+      predecessorId: 1,
+      successorId: 2,
+      type: 1,
+      id: 0
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("remove", gantt_remove);      
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="cancel">cancel</h3>
+
+<p>Fired when the user cancels tasks"s cell editing by pressing the "Esc" key.</p>
+
+<p>The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-5">Event Data</h4>
+
+<h5 id="econtainer-jquery-1">e.container <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The jQuery object representing the wrapping cell element. That element contains the editing UI.</p>
+
+<h5 id="etask-kendodatagantttask-3">e.task <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code></h5>
+
+<p>The GanttTask which has been edited.</p>
+
+<h5 id="epreventdefault-function-4">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the cancel action and keeps the cel in edit mode.</p>
+
+<h5 id="esender-kendouigantt-5">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-cancel-event-during-initialization">Example - subscribe to the "cancel" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  dataSource: [ 
+    { 
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 11:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  columns: [ { field: "title", title: "Title", editable: true } ],
+  cancel: function(e) {
+    console.log("Cancel editing task: ", e.task.title);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-cancel-event-after-initialization">Example - subscribe to the "cancel" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+function gantt_cancel(e) {
+  console.log("Cancel editing task: ", e.task.title)
+}  
+$("#gantt").kendoGantt({
+  dataSource: [ 
+    { 
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  columns: [ { field: "title", title: "Title", editable: true } ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("cancel", gantt_edit);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="save">save</h3>
+
+<p>Fired when a task field is updated upon user interaction.</p>
+
+<p>The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-6">Event Data</h4>
+
+<h5 id="etask-kendodatagantttask-4">e.task <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code></h5>
+
+<p>The GanttTask which has been edited.</p>
+
+<h5 id="evalue-object">e.value <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The GantTask fields being updated with new values.</p>
+
+<h5 id="epreventdefault-function-5">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the save action and prevents the task from being edited.</p>
+
+<h5 id="esender-kendouigantt-6">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-save-event-during-initialization">Example - subscribe to the "save" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  save: function(e) {
+    console.log("Save task:", e.task.title);          
+  }
+}); 
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-save-event-after-initialization">Example - subscribe to the "save" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+function gantt_save(e) {
+    console.log("Save task:", e.task.title);          
+}
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("save", gantt_save);      
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="change">change</h3>
+
+<p>Fired when the user selects a task in the gantt.</p>
+
+<p>The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-7">Event Data</h4>
+
+<h5 id="esender-kendouigantt-7">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-change-event-during-initialization">Example - subscribe to the "change" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  change: function(e) {
+    var selection = this.select();
+    var task;
+    
+    if (selection) {
+      task = this.dataItem(selection);
+      console.log(kendo.format("{0} is selected", task.title));
+    }
+  }
+}); 
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-change-event-after-initialization">Example - subscribe to the "change" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+function gantt_change(e) {
+  var selection = this.select();
+    var task;
+    
+    if (selection) {
+      task = this.dataItem(selection);
+      console.log(kendo.format("{0} is selected", task.title));
+    }
+}
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ]        
+}); 
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("change", gantt_change);  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="navigate">navigate</h3>
+
+<p>Fired when the user changes the selected view of the gantt.</p>
+
+<p>The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-8">Event Data</h4>
+
+<h5 id="eview-string">e.view <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the view which is about to be selected. The possible values are:</p>
+
+<ul>
+  <li>day</li>
+  <li>week</li>
+  <li>month</li>
+</ul>
+
+<h5 id="epreventdefault-function-6">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the action.</p>
+
+<h5 id="esender-kendouigantt-8">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-navigate-event-during-initialization">Example - subscribe to the "navigate" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      parentId: null,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 14:00")
+    }
+  ],
+  navigate: function(e) {
+    console.log(kendo.format("Navigate to {0} view", e.view.charAt(0).toUpperCase() + e.view.slice(1)));  
+  }
+});
+&lt;/script&gt; 
+</code></pre></div></div>
+
+<h4 id="example----subscribe-to-the-navigate-event-after-initialization">Example -  subscribe to the "navigate" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+  function gantt_navigate(e) {
+    console.log(kendo.format("Navigate to {0} view", e.view.charAt(0).toUpperCase() + e.view.slice(1)));
+  }
+  $("#gantt").kendoGantt({
+    dataSource: [
+      {
+        id: 1,
+        orderId: 0,
+        parentId: null,
+        title: "Task1",
+        start: new Date("2014/6/17 9:00"),
+        end: new Date("2014/6/17 11:00")
+      },
+      {
+        id: 2,
+        orderId: 1,
+        parentId: null,
+        title: "Task2",
+        start: new Date("2014/6/17 12:00"),
+        end: new Date("2014/6/17 14:00")
+      }
+    ]        
+  }); 
+  var gantt = $("#gantt").data("kendoGantt");
+  gantt.bind("navigate", gantt_navigate);  
+&lt;/script&gt; 
+</code></pre></div></div>
+
+<h3 id="movestart">moveStart</h3>
+
+<p>Fired when the user starts to drag a task.</p>
+
+<p>The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-9">Event Data</h4>
+
+<h5 id="etask-kendodatagantttask-5">e.task <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code></h5>
+
+<p>The task which is being moved.</p>
+
+<h5 id="epreventdefault-function-7">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the action.</p>
+
+<h5 id="esender-kendouigantt-9">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-movestart-event-during-initialization">Example - subscribe to the "moveStart" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  moveStart: function(e) {
+    console.log("Move start ", e.task.title);  
+  }
+});
+&lt;/script&gt; 
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-movestart-event-after-initialization">Example - subscribe to the "moveStart" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+function gantt_moveStart(e) {
+  console.log("Move start ", e.task.title);
+}
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]  
+}); 
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("moveStart", gantt_moveStart);  
+&lt;/script&gt; 
+</code></pre></div></div>
+
+<h3 id="move">move</h3>
+
+<p>Fired when the user is moving a task.</p>
+
+<p>The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-10">Event Data</h4>
+
+<h5 id="etask-kendodatagantttask-6">e.task <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code></h5>
+
+<p>The task which is being moved.</p>
+
+<h5 id="estart-date">e.start <code class="language-plaintext highlighter-rouge">Date</code></h5>
+
+<p>The current task start date.</p>
+
+<h5 id="eend-date">e.end <code class="language-plaintext highlighter-rouge">Date</code></h5>
+
+<p>The current task end date.</p>
+
+<h5 id="epreventdefault-function-8">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the action.</p>
+
+<h5 id="esender-kendouigantt-10">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-move-event-during-initialization">Example - subscribe to the "move" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  move: function(e) {
+    console.log(kendo.format("task's curren Start {0:g}", e.start));        
+    console.log(kendo.format("task's curren End {0:g}", e.end));
+  }
+}); 
+&lt;/script&gt; 
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-move-event-after-initialization">Example - subscribe to the "move" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+function gantt_move(e) {
+  console.log(kendo.format("task's curren Start {0:g}", e.start));        
+  console.log(kendo.format("task's curren End {0:g}", e.end));
+}
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]  
+}); 
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("move", gantt_move);  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="moveend">moveEnd</h3>
+
+<p>Fired when the user stops moving a task.</p>
+
+<p>The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-11">Event Data</h4>
+
+<h5 id="etask-kendodatagantttask-7">e.task <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code></h5>
+
+<p>The task which is being moved.</p>
+
+<h5 id="estart-date-1">e.start <code class="language-plaintext highlighter-rouge">Date</code></h5>
+
+<p>The new task start date.</p>
+
+<h5 id="eend-date-1">e.end <code class="language-plaintext highlighter-rouge">Date</code></h5>
+
+<p>The new task end date.</p>
+
+<h5 id="epreventdefault-function-9">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the action.</p>
+
+<h5 id="esender-kendouigantt-11">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-moveend-event-during-initialization">Example - subscribe to the "moveEnd" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  moveEnd: function(e) {
+    console.log(kendo.format("task's new Start {0:g}", e.start));    
+    console.log(kendo.format("task's new End {0:g}", e.end));
+  }
+}); 
+&lt;/script&gt; 
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-moveend-event-after-initialization">Example - subscribe to the "moveEnd" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+function moveEnd(e) {
+  console.log(kendo.format("task's new Start {0:g}", e.start));    
+  console.log(kendo.format("task's new End {0:g}", e.end));
+}
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]  
+}); 
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("moveEnd", moveEnd);  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resizestart">resizeStart</h3>
+
+<p>Fired when the user starts to resize a task.</p>
+
+<p>The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-12">Event Data</h4>
+
+<h5 id="etask-kendodatagantttask-8">e.task <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code></h5>
+
+<p>The task which is being resized.</p>
+
+<h5 id="epreventdefault-function-10">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the action.</p>
+
+<h5 id="esender-kendouigantt-12">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-resizestart-event-during-initialization">Example - subscribe to the "resizeStart" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  resizeStart: function(e) {
+    console.log("Resize start ", e.task.title);
+  }
+});   
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-resizestart-event-after-initialization">Example - subscribe to the "resizeStart" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+function resizeStart(e) {
+  console.log("Resize start ", e.task.title);
+}
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]  
+}); 
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("resizeStart", resizeStart);  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resize">resize</h3>
+
+<p>Fired when the user is resizing a task.</p>
+
+<p>The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<h5 id="etask-kendodatagantttask-9">e.task <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code></h5>
+
+<p>The task which is being moved.</p>
+
+<h5 id="estart-date-2">e.start <code class="language-plaintext highlighter-rouge">Date</code></h5>
+
+<p>The current task start date.</p>
+
+<h5 id="eend-date-2">e.end <code class="language-plaintext highlighter-rouge">Date</code></h5>
+
+<p>The current task end date.</p>
+
+<h5 id="epreventdefault-function-11">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the action.</p>
+
+<h5 id="esender-kendouigantt-13">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-resize-event-during-initialization">Example - subscribe to the "resize" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  resize: function(e) {
+    console.log(kendo.format("task's curren Start {0:g}", e.start));        
+    console.log(kendo.format("task's curren End {0:g}", e.end));
+  }
+});   
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-resize-event-after-initialization">Example - subscribe to the "resize" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+function gantt_resize(e) {
+  console.log(kendo.format("task's curren Start {0:g}", e.start));    
+  console.log(kendo.format("task's current End {0:g}", e.end));
+}
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+}); 
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("resize", gantt_resize);  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resizeend">resizeEnd</h3>
+
+<p>Fired when the user releases the mouse after resizing a task.</p>
+
+<p>The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-13">Event Data</h4>
+
+<h5 id="etask-kendodatagantttask-10">e.task <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code></h5>
+
+<p>The task which is being resized.</p>
+
+<h5 id="estart-date-3">e.start <code class="language-plaintext highlighter-rouge">Date</code></h5>
+
+<p>The new task start date.</p>
+
+<h5 id="eend-date-3">e.end <code class="language-plaintext highlighter-rouge">Date</code></h5>
+
+<p>The new task end date.</p>
+
+<h5 id="epreventdefault-function-12">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the action.</p>
+
+<h5 id="esender-kendouigantt-14">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.Gantt</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-resizeend-event-during-initialization">Example - subscribe to the "resizeEnd" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  resizeEnd: function(e) {
+    console.log(kendo.format("task's new Start {0:g}", e.start));    
+    console.log(kendo.format("task's new End {0:g}", e.end));
+  }
+}); 
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-resizeend-event-after-initialization">Example - subscribe to the "resizeEnd" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt; 
+function gantt_resizeEnd(e) {
+  console.log(kendo.format("task's new Start {0:g}", e.start));    
+  console.log(kendo.format("task's new End {0:g}", e.end));
+}
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      parentId: null,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+}); 
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("resizeEnd", gantt_resizeEnd);  
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

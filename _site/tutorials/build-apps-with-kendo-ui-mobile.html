@@ -1,0 +1,447 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Tutorial for building mobile apps with Kendo UI HTML5 Mobile framework</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="This tutorial helps you get familiar with the principles of building apps with Kendo UI Mobile framework.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/build-apps-with-kendo-ui-mobile.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="tutorial-intro-to-building-apps-with-kendo-ui-mobile">Tutorial: Intro to Building Apps With Kendo UI Mobile</h1>
+
+<p>In this tutorial, we"ll examine the basics of building apps with <a href="http://www.telerik.com/kendo-ui-mobile">Kendo UI Mobile</a>. You will learn:</p>
+
+<ul>
+  <li>What makes Kendo UI Mobile unique</li>
+  <li>How to use Kendo UI Mobile to build a basic app</li>
+  <li>How to preview an app on different mobile platforms</li>
+  <li>How to work with Kendo UI Mobile"s adaptive rendering</li>
+  <li>Next steps for putting a Kendo UI Mobile app in app stores</li>
+</ul>
+
+<p>At the conclusion of this tutorial, you should be able to build a mobile app with HTML, JavaScript, and Kendo UI Mobile that can be deployed through a mobile browser (deploying through an app requires more advanced techniques).</p>
+
+<h2 id="why-kendo-ui-mobile">Why Kendo UI Mobile</h2>
+
+<p>Kendo UI Mobile is designed to help developers build mobile app experiences using HTML and JavaScript that automatically adapt to the native look-and-feel of different mobile platforms. Developers using Kendo UI Mobile can focus on their app"s function and content and let the Kendo UI framework handle differences between platforms like iOS and Android.</p>
+
+<p><img src="/tutorials/images/km-adaptive-rending-illustration.png" alt="Illustration of Kendo UI Mobile adaptive rendering" /><br />
+<em>Fig 1: Illustration of Kendo UI Mobile adaptive rendering</em></p>
+
+<p>Where some mobile HTML frameworks focus on providing a "one size fits all" experience, Kendo UI Mobile focuses on delivering perfectly tailored experiences for different mobile platforms. <strong>Built and packaged correctly, the goal of a Kendo UI Mobile app is to be virtually indistinguishable to end-users from a native SDK app.</strong></p>
+
+<p>The advantage of building apps with HTML, JavaScript, and Kendo UI Mobile, of course, is that developers can maintain a single code base to target all major app platforms. Your team can focus on becoming masters of HTML, JavaScript, and CSS, rather than being average practioners of Objective-C, Java, .NET, UIKit, and the myriad of other developer skills need for cross-platform mobile app development.</p>
+
+<h2 id="building-blocks-of-a-kendo-ui-mobile-app">Building Blocks of a Kendo UI Mobile App</h2>
+
+<p>First of all, Kendo UI Mobile apps are built entirely with HTML, JavaScript, and CSS. Those are the only skills you will need to build a Kendo UI Mobile app that looks and feels native across mobile platforms. If you plan to work with data, you should also be familiar with <a href="http://en.wikipedia.org/wiki/JSON">JSON</a>.</p>
+
+<p>Apps do not need to be "cross compiled" in to a native SDK language. Your HTML and JavaScript code will ultimately run on mobile devices, even if you eventually use tools like <a href="http://incubator.apache.org/cordova/">Cordova</a> to package your app for an app store.</p>
+
+<p>There are a few key, "non-visual" pieces of Kendo UI Mobile used in virtually all apps:</p>
+
+<ol>
+  <li><strong><a href="http://demos.telerik.com/kendo-ui/mobile/application/index.html">Application</a></strong>:
+The shell of a Kendo UI Mobile app. Application manages all navigation, application history, loading views, rendering mobile meta tags, and other essential mobile app tasks.</li>
+  <li><strong><a href="http://demos.telerik.com/kendo-ui/mobile/layout/index.html">Layout</a></strong>: Defines the reusable portions of a mobile app, similar to a MasterPage or template. Layouts are often used improve app maintainability by defining things used across multiple views, like navigation. Layouts are not required, but encouraged.</li>
+  <li><strong><a href="http://demos.telerik.com/kendo-ui/mobile/view/index.html">Views</a></strong>: Individual pages of a mobile app. Views contain the majority of an app"s content. Every app will have one or more views.</li>
+</ol>
+
+<p>Layouts and Views are defined with HTML; the Application is simply JavaScript. There is no markup associated with an Application. Let"s create the basic structure of a Kendo UI Mobile app using these building blocks.</p>
+
+<h3 id="step-1-create-a-simple-html-page">Step 1: Create a simple HTML page</h3>
+<p>Kendo UI Mobile apps can be created using simple HTML pages. To begin, try creating a page called "index.html" with code like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;My App&lt;/title&gt;
+	&lt;!--TODO: Add CSS links--&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+	&lt;!--TODO: Add JavaScript referneces--&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>Where are the mobile meta tags? Don"t worry. The Kendo UI Mobile Application will automatically add mobile meta tags for you at runtime.</p>
+</blockquote>
+
+<h3 id="step-2-add-references-to-kendo-ui-mobile">Step 2: Add references to Kendo UI Mobile</h3>
+<p>Just as with other parts of the Kendo UI framework, adding Kendo UI Mobile to your applciation is a simple process of copying the provided JavaScript and CSS assets in to your project and then configuring the CSS and JavaScript links. When setup, your app page should look something like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;My App&lt;/title&gt;
+	
+	&lt;link href="css/kendo.mobile.all.min.css" rel="stylesheet" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+	&lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+	&lt;script src="js/kendo.all.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>This example uses the minified versions of Kendo UI"s scripts and styles that include all features, widgets, and themes. You can create customized, more compact versions of the Kendo UI resources for your apps if you choose not to use specific features or widgets. <strong>For development, the "all" minified files are the best choice.</strong></p>
+
+<p>Also note that we"ve included a reference to jQuery. jQuery is the only external dependency for Kendo UI.</p>
+
+<blockquote>
+  <p>Modern CSS and JavaScript references don"t require the <code class="language-plaintext highlighter-rouge">type</code> attribute in most cases. You can safely add references to your CSS and JavaScript assets while omitting this attribute and everything will work fine in new and old browsers. The <code class="language-plaintext highlighter-rouge">type</code> attribute is officially made optional for both <a href="http://dev.w3.org/html5/spec/the-script-element.html#attr-script-type">script</a> and <a href="http://dev.w3.org/html5/spec/the-link-element.html#attr-link-type">link</a> elements in the HTML5 spec.</p>
+</blockquote>
+
+<h3 id="step-3-define-an-app-layout">Step 3: Define an app layout</h3>
+<p>The layout is your app"s template. All content from views (that we"ll create later) will be rendered inside of the layout (or layouts- you can define as many layouts as you need). A layout can contain anything, but generally it"s where your app titlebar and navigation will live. Let"s add a layout to our app with these basic elements.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;My App&lt;/title&gt;
+	
+	&lt;link href="css/kendo.mobile.all.min.css" rel="stylesheet" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;section data-role="layout" data-id="default"&gt;
+		&lt;header data-role="header"&gt;
+			&lt;div data-role="navbar"&gt;My App&lt;/div&gt;
+		&lt;/header&gt;
+		&lt;!--View content will render here--&gt;
+		&lt;footer data-role="footer"&gt;
+			&lt;div data-role="tabstrip"&gt;
+				&lt;a href="#home"&gt;Home&lt;/a&gt;		
+			&lt;/div&gt; 
+		&lt;/footer&gt;
+	&lt;/section&gt;
+
+	&lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+	&lt;script src="js/kendo.all.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>Let"s break this update down.</p>
+
+<p>First, you see that we"ve started to use the <code class="language-plaintext highlighter-rouge">data-role</code> attribute in our HTML. This communicates to Kendo UI Mobile that the HTML should be transformed when the Appplication is initialized with JavaScript. So, in this case:</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;section data-role="layout" data-id="default"&gt;</code></p>
+
+<p>When the Application is initialized, this block of HTML will be initialized as a Kendo UI Mobile layout. The <code class="language-plaintext highlighter-rouge">data-id</code> attribute is further defined to give this layout a unique name that can be used by our views.</p>
+
+<p>Next, for completeness, we"ve introduced a couple of Kendo UI Mobile"s visual widgets: <strong>Navbar</strong> and <strong>TabStrip</strong>. We"ll talk more about these later, but for now note that they are also configured with the simple <code class="language-plaintext highlighter-rouge">data-role</code> attribute.</p>
+
+<h3 id="step-4-create-a-view">Step 4: Create a view</h3>
+<p>Now that the app"s layout is defined, we need at least one view that can be displayed when our app loads. Most apps will have many views, but we"ll start with something simple:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;My App&lt;/title&gt;
+	
+	&lt;link href="css/kendo.mobile.all.min.css" rel="stylesheet" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;div id="home" data-role="view" data-layout="default"&gt;
+	    Hello Mobile World!
+	&lt;/div&gt;
+
+	&lt;section data-role="layout" data-id="default"&gt;
+		&lt;header data-role="header"&gt;
+			&lt;div data-role="navbar"&gt;My App&lt;/div&gt;
+		&lt;/header&gt;
+		&lt;!--View content will render here--&gt;
+		&lt;footer data-role="footer"&gt;
+			&lt;div data-role="tabstrip"&gt;
+				&lt;a href="#home"&gt;Home&lt;/a&gt;		
+			&lt;/div&gt; 
+		&lt;/footer&gt;
+	&lt;/section&gt;
+
+	&lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+	&lt;script src="js/kendo.all.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>Nothing too fancy in this update. We"ve once again used the <code class="language-plaintext highlighter-rouge">data-role</code> attribute to define our view, and we"ve also used the <code class="language-plaintext highlighter-rouge">data-layout</code> attribute to tell our view which layout template to use.</p>
+
+<p>We can put anything inside of a view, including other Kendo UI Mobile widgets. For now, we"ve used some simple Hello World text.</p>
+
+<p>If you try to run the app now, you"ll see a bunch of HTML, but nothing will look right. We need to take one more step to initialize the app.</p>
+
+<h3 id="step-5-initialize-the-mobile-application">Step 5: Initialize the mobile application</h3>
+<p>So far, we"ve defined some HTML, but we have not written any JavaScript. To make our HTML come to life and start looking and feeling like a mobile app, we need one line of script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+	var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Add this script block <em>after</em> your jQuery and Kendo UI Mobile script links, but before the closing <code class="language-plaintext highlighter-rouge">body</code> tag.</p>
+
+<p>This single line of JavaScript will automatically intialize your Kendo UI Mobile app and all widgets with the <code class="language-plaintext highlighter-rouge">data-role</code> attributes. Go ahead! <a href="http://jsbin.com/egowef" title="Live example of tutorial code running on jsBin">Give it a try</a>. Load your page in a browser and see the beginnings of your HTML mobile app.</p>
+
+<p><img src="/tutorials/images/km-basic-app-1.png" alt="Basic Kendo UI Mobile app progress" /><br />
+<em>Fig 2: If everything is working correctly, your basic Kendo UI Mobile app should look like this image at this point in the tutorial.</em></p>
+
+<blockquote>
+  <p>If you have trouble seeing the app, make sure all of your script and CSS resources are loading without error (using the browser developer tools). Some browsers (like Chrome) will block the loading of external resources if you load your page using the <code class="language-plaintext highlighter-rouge">file://</code> protocol. Instead, test your pages using local web server (localhost) or a browser that does not restrict local resources, like Safari.</p>
+</blockquote>
+
+<h2 id="add-views-and-navigation">Add Views and Navigation</h2>
+<p>Now that you have a basic Kendo UI Mobile app structure setup, you can begin adding more views to your app. Multiple views can be defined in the same file, or views can be defined in separate HTML files. For larger apps, maintaining views in separate files during development is the prefered approach.</p>
+
+<p>To add a second view to your app, create a new page called "about.html" with the following content:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;About&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;div id="about" data-role="view" data-layout="default"&gt;
+	    All About My App
+	&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>This page does <strong>not</strong> redefine references to the Kendo UI Mobile script or CSS resources. This page requires minimal markup. When the Kendo UI Mobile application loads an external view (a view defined in separate file), it will look for the first <code class="language-plaintext highlighter-rouge">data-role="view"</code> in the <code class="language-plaintext highlighter-rouge">body</code> element and discard the rest of the page.</p>
+
+<p>To enable our app to navigate to this page, let"s update the <strong>TabStrip</strong> added previously to include a navigation link for our external view:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;footer data-role="footer"&gt;
+	&lt;div data-role="tabstrip"&gt;
+		&lt;a href="#home"&gt;Home&lt;/a&gt;
+		&lt;a href="about.html"&gt;About&lt;/a&gt;		
+	&lt;/div&gt; 
+&lt;/footer&gt;
+</code></pre></div></div>
+
+<p>When Kendo UI Mobile encounters a link to an external view, it will automatically load and cache the view with Ajax and provide a seamless navigation experience.</p>
+
+<blockquote>
+  <p>If you do not want a link in Kendo UI Mobile to be treated as a view, be sure to include the <code class="language-plaintext highlighter-rouge">data-rel="external"</code> attribute.</p>
+</blockquote>
+
+<p>If we did want to maintain multiple views in a single page, we would simply navigate the <code class="language-plaintext highlighter-rouge">id</code> of the view, like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;
+    &lt;span&gt;foo&lt;/span&gt;
+    &lt;footer data-role="footer"&gt;
+		&lt;div data-role="tabstrip"&gt;
+			&lt;a href="#home"&gt;Home&lt;/a&gt;
+			&lt;a href="about.html"&gt;About&lt;/a&gt;
+			&lt;a href="#foo"&gt;More&lt;/a&gt;		
+		&lt;/div&gt; 
+	&lt;/footer&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Finally, as you"ve probably noticed if you"re testing as we go, your navigation is now working, but the views all appear instantly with no animation transition. To really give your app that native mobile feeling, we can add a default transition for all views by modifying the Application initalization script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+	var app = new kendo.mobile.Application(document.body, 
+	{
+		transition:'slide'
+	});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Now your application is looking <em>and</em> feeling native!</p>
+
+<h2 id="testing-for-multiple-platforms">Testing for Multiple Platforms</h2>
+<p>By default, Kendo UI Mobile will render with an iOS look-and-feel if it does not detect another mobile platform. When you want to test the look-and-feel of your app on other platforms- and see how Kendo UI Mobile automatically adapts- you can take one of two paths:</p>
+
+<ol>
+  <li><strong>Force Platform Rendering</strong></li>
+  <li><strong>Use Browser Tools</strong></li>
+</ol>
+
+<h3 id="force-platform-rendering">Force Platform Rendering</h3>
+<p>When you initialize a Kendo UI Application, you have the option to "force" the platform rendering with a simple configuration option used in the Application constructor:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+	var app = new kendo.mobile.Application(document.body, 
+	{
+		platform:'android'
+	});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>When this code is used, you effectively disable Kendo UI Mobile"s adaptive rendering detection and manually tell Kendo UI Mobile how to render. <strong>Be sure to remove this setting before deploying your app if you want adaptive rendering to work across platforms.</strong></p>
+
+<h3 id="use-browser-tools">Use Browser Tools</h3>
+<p>Kendo UI Mobile relies on the <a href="http://en.wikipedia.org/wiki/User_agent">UserAgent string</a> to trigger different platform renderings. If a browser reports that it is a specific mobile device, Kendo UI Mobile will respond and provide the correct, device-specific rendering.</p>
+
+<p>Some desktop browsers, like Google"s Chrome, allow you to easily modify your UserAgent string, thereby allowing you to "trick" Kendo UI Mobile that your browser is different mobile devices. This helps you quickly preview your app styling for different mobile platforms without changing any code.</p>
+
+<p>To do this in Chrome, simply:</p>
+
+<ol>
+  <li>Open the Chrome Developer Tools (F12)</li>
+  <li>Click on the gear icon in the lower right corner</li>
+  <li>In the Settings window that opens, check the "Override User Agent" box</li>
+  <li>This will reveal a dropdown of pre-defined browsers and devices. Select the device you want to imitate or define your own.</li>
+  <li>To undo this effect, simply un-check the Override box</li>
+</ol>
+
+<p>Of course, nothing replaces actual testing on mobile devices. In many cases, the Kendo UI Mobile styles look <em>better</em> on devices than in desktop browsers. Be sure to test on an iPhone, Android, BlackBerry, or whatever devices you intend to support before deploying your app or when previewing app styles.</p>
+
+<h2 id="tweaking-apps-for-specific-platforms">Tweaking Apps for Specific Platforms</h2>
+<p>Kendo UI Mobile"s automatic platform adapting is a huge time saver, but sometimes developers want to customize the presentation of an app for specific platforms. When you want to take more control over the experience different devices see, you should use the <code class="language-plaintext highlighter-rouge">data-platform</code> attribute. For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="layout" data-id="foo" data-platform="ios"&gt;
+  		&lt;div data-role="header"&gt;iOS App&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div data-role="layout" data-id="foo" data-platform="android"&gt;
+  		&lt;div data-role="header"&gt;Android App&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>The use of <code class="language-plaintext highlighter-rouge">data-platform</code> in these examples will cause different headers to be displayed to iOS and Android users of the app.</p>
+
+<p><strong>The <code class="language-plaintext highlighter-rouge">data-platform</code> override is currently only available on layout elements.</strong></p>
+
+<p>You can also use custom CSS to fine-tune your apps. When Kendo UI Mobile initalizes an app, it adds a device specific CSS class to the Application root element. This allows you to create styles that specifcially target different platforms. For example, on iOS, the HTML for an initializted app might look like:</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;body class="km-ios km-vertical"&gt;</code></p>
+
+<p>Now, if we want to create styles for our app that will only be applied to iOS devices, we can create CSS rules like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.km-ios .myStyle { color: blue; }
+.km-android .myStyle { color: green; }
+</code></pre></div></div>
+
+<p>This added degree of control makes it a cinch to precisely style apps for different target platforms. You can also target styles at specific device orientations. Kendo UI Mobile will update the orientation CSS class as the device position changes.</p>
+
+<h2 id="next-steps-polish-and-preparing-for-app-stores">Next Steps: Polish and Preparing for App Stores</h2>
+<p>We"ve covered a lot of ground so far. You should now be able to:</p>
+
+<ul>
+  <li>Create a basic Kendo UI Mobile application with layouts and views</li>
+  <li>Add additional views to an app and handle navigation</li>
+  <li>Test the look and feel of your app for different platforms</li>
+  <li>Take control over styling your app for different platforms</li>
+</ul>
+
+<p>The next steps you will take in your app building journey may include things like:</p>
+
+<ul>
+  <li>Creating and configuring an icon for your app</li>
+  <li>Consuming and customizing Kendo UI Mobile widget icons</li>
+  <li>Handling view events to initalize your data and load data</li>
+  <li>Packaging your app with Cordova to access device APIs</li>
+</ul>
+
+<p>See the related docs to learn more about these advanced topics. Otherwise, have fun building awesome cross-plaform mobile apps with HTML, JavaScript, and Kendo UI Mobile!</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

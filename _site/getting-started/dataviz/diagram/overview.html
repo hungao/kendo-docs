@@ -1,0 +1,284 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of the Diagram widget in Kendo UI DataViz</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to create a diagram, add diagram elements, change properties, an overview of the widget's major features.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/dataviz/diagram/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-diagramming-overview">Kendo Diagramming Overview</h1>
+
+<h2 id="basic-setup">Basic setup</h2>
+
+<h3 id="create-a-simple-html-div-optionally-set-a-height-and-width-with-css">Create a simple HTML div (optionally set a height and width with CSS)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="diagram"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-the-kendo-ui-diagram-with-default-configuration">Initialize the Kendo UI Diagram with default configuration</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   $(document).ready(function() {
+       $("#diagram").kendoDiagram();
+   });
+</code></pre></div></div>
+
+<p>This renders an empty diagramming surface and unless you look at the resulting HTML you won"t see any changes on a visual level.</p>
+
+<p>The actual diagramming API can be accessed by calling the data() method:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> var diagram = $("#diagram").kendoDiagram().data("kendoDiagram");
+</code></pre></div></div>
+
+<h3 id="adding-shapes">Adding shapes</h3>
+
+<p>To add a rectangular shape to the diagram you simply call the addShape() method:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diagram.addShape();
+</code></pre></div></div>
+
+<p>which will render a rectangle in the upper-left corner of the diagram surface. To have a different initial position you would call the addShape() method with an additional Point parameter, for example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var Point = kendo.dataviz.diagram.Point;
+diagram.addShape(new Point(100,220));
+</code></pre></div></div>
+
+<p>Additional properties can be specified via the options parameter. For instance, you can set the background color of the shape like so.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diagram.addShape(new Point(100,220), { background: "red" });
+</code></pre></div></div>
+
+<p>A more complete overview of the options can be found in the API documentation.</p>
+
+<p>The addShape() method also accepts a Shape instance, so you can also add a new shape as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var Point = kendo.dataviz.diagram.Point;
+var shapeInstance = new kendo.diagram.Shape();
+var shape = diagram.addShape(shape);
+shape.position(new Point(100,220));
+</code></pre></div></div>
+
+<h3 id="adding-connections">Adding connections</h3>
+
+<p>Shapes can be connected using the connect() method:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var Point = kendo.dataviz.diagram.Point;
+var shape1 = diagram.addShape(new Point(100,100));
+var shape2 = diagram.addShape(new Point(300,100));
+var connection = diagram.connect(shape1, shape2);
+</code></pre></div></div>
+
+<p>which results in something like the picture below</p>
+
+<p><img src="/getting-started/dataviz/diagram/diagram-connection.png" alt="Two shapes connected." /></p>
+
+<h3 id="layout">Layout</h3>
+
+<p>Diagram layout consists in an automatic organization of a diagram on the basis how its shapes are connected (the so-called incidence structure). The layout() method is the gateway to a variety of layout algorithms. To see the effect of the layout method you can generate a random diagram and call the method like so;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diagram.randomDiagram();
+</code></pre></div></div>
+
+<p>this will give a random diagram, something like the follwing:</p>
+
+<p>and upon calling the layout method</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diagram.layout();
+</code></pre></div></div>
+
+<p>you will see a diagram similar to this:</p>
+
+<p>The default layout algorithm is the top-down tree layout. You can change this to another type (and subtype) by inserting it in the layout options;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diagram.layout({ type: "ForceDirected" });
+</code></pre></div></div>
+
+<p>which would give something like</p>
+
+<p>Other layout types and options are discussed in the API.</p>
+
+<h3 id="data-binding">Data binding</h3>
+
+<p>Make sure you have read <a href="http://docs.kendoui.com/getting-started/framework/datasource/overview" title="Kendo data binding.">the general overview of how databinding works in Kendo</a> first since it contains essential information which applies to the diagramming framework as well.</p>
+
+<p>There are various ways you can define and customize data binding and we"ll only scratch the surface in this overview. The easiest way to create a hierarchical diagram is by passing a dataSource as an option together with a Kendo template like so;
+    var diagram = $("#diagram").kendoDiagram({
+        theme: "default",
+        dataSource: [{
+          "name": "Telerik",
+          "items": [{
+            "name": "Kendo"
+          }, {
+            "name": "Icenium"
+          }]
+        }],
+        shapeDefaults: {
+          content: {
+            template: "#= item.name #"
+          }
+        }
+    }).data("kendoDiagram");
+    diagram.layout();</p>
+
+<p>which produces a tree diagram with the default rectangular shapes:</p>
+
+<p>Alternatively, you can define the data binding through the setDataSource method;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diagram.options.template = "#= item.name #";
+diagram.setDataSource([{"name": ... }]);
+</code></pre></div></div>
+
+<p>If you need more flexibility you can fully control where and how data is displayed by defining a visualTemplate option rather than the template option. This entails the creation of a function which returns a visual, usually a Group element containing other visuals bound to your data. For instance, the following snippet reproduces the same diagram but with ellipses rather than the previous rectangular shapes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var visualTemplate = function(options) {
+  var dataviz = kendo.dataviz,
+      dataItem = options.dataItem;
+
+  var g = new dataviz.diagram.Group({
+    autoSize: true
+  });
+
+  var r = new dataviz.diagram.Circle({
+    width: 100,
+    height: 60,
+    background: "LimeGreen"
+  });
+
+  g.append(r);
+
+  var fn = new dataviz.diagram.TextBlock({
+    text: dataItem.name,
+    color: "#ffffff",
+    fontSize: 16,
+    x: 30,
+    y: 30
+  });
+
+  g.append(fn);
+  return g;
+};
+
+var diagram = $("#diagram").kendoDiagram({
+  dataSource: [{
+    "name": "Telerik",
+    "items": [{
+      "name": "Kendo"
+    }, {
+      "name": "Icenium"
+    }]
+  }],
+  shapeDefaults: {
+    visual: visualTemplate
+  }
+}).data("kendoDiagram");
+diagram.layout();
+</code></pre></div></div>
+
+<p>Note that the function returning a visual has a parameter containing the data item to be displayed.
+The result of this custom data binding would look something like this:</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

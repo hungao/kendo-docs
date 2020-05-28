@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/vs-integration/new-project-wizard.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <p>#New Project Wizard</p>
+
+<p>This help topic shows how to create a new Telerik UI for ASP.NET MVC Application.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>The New Project wizard is used for creation of a new Telerik UI for ASP.NET MVC Application (Telerik</td>
+      <td>UI for ASP.NET MVC</td>
+      <td>Create New Telerik Project). The wizard consists of two steps. On the first page the user can specify some project-wide settings while on the second page he can configure the data access layer.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>##Project Settings</p>
+
+<p><img src="/getting-started/using-kendo-with/aspnet-mvc/vs-integration/images/new1.png" alt="New Project Wizard" /></p>
+
+<p>Using the options in the Telerik UI for ASP.NET MVC Project Settings page you can modify various project-wide settings:</p>
+
+<ul>
+  <li><strong>Version</strong> - Choose which version of Telerik UI for ASP.NET MVC to use</li>
+  <li><strong>Add referenced assemblies to solution</strong> - Choose whether to copy referenced assemblies to your solution folder. The assemblies will automatically get added to source control when using Microsoft Team Foundation Server.</li>
+  <li><strong>Target ASP.NET MVC Version</strong> - Choose the targeted ASP.NET MVC version</li>
+  <li><strong>View Engine</strong> - Choose between Razor and WebForms</li>
+  <li><strong>Theme</strong> – Choose the visual theme for your Telerik UI for ASP.NET MVC Application</li>
+  <li><strong>Copy Editor Templates</strong> - Copy the predefined editor templates to ~/Views/Shared/EditorTemplates</li>
+  <li><strong>Use CDN Support</strong> - Enable or disable <a href="/getting-started/javascript-dependencies#cdn">CDN</a> support.</li>
+  <li><strong>Copy Global Resources</strong> - Copy the localization files to ~/Scripts/kendo/{version}/cultures</li>
+  <li><strong>Add Test Project</strong> - Choose whether to add a test project to the solution.</li>
+</ul>
+
+<p>##Data Access Settings</p>
+
+<p><img src="/getting-started/using-kendo-with/aspnet-mvc/vs-integration/images/data_access.png" alt="Data Access Settings" /></p>
+
+<p>On the next step the New Project wizard"s Data Access page offers you initialize the creation of your data access layer using Telerik OpenAccess ORM. You are given the following options:</p>
+
+<ul>
+  <li><strong>Create OpenAccess Fluent Library Project</strong> - After you choose this option an OpenAccess ORM project will be added, enabling you to create your object mapping in a declarative way. With this Code-Only approach all the necessary persistent classes and mappings are defined manually – the project will initially contain only a sample declaration to get you started. You can find more information about the Fluent Library project type <a href="http://www.telerik.com/help/openaccess-orm/getting-started-fluent-mapping-overview.html">here</a>.</li>
+  <li><strong>Create OpenAccess Domain Model Library Project</strong> - The Domain Model is an auto-generated and editable diagram of your persistent classes. This option will start the Add Domain Model wizard after exiting Project Configuration Wizard, so that you can configure your data layer without writing a single line of code. You can create a new model and define you classes later using the tools that OpenAccess Visual Designer is offering, or retrieve the schema of an already designed database and generate classes for the selected tables and views. The different scenarios are described in the articles below:
+    <ul>
+      <li><a href="http://www.telerik.com/help/openaccess-orm/getting-started-root-getting-started-with-update-schema-tools.html">Create an empty model - Model First</a></li>
+      <li><a href="http://www.telerik.com/help/openaccess-orm/getting-started-root-generating-model-mappings-taking-database-first-approach.html">Generate the domain model from a database - Database First</a></li>
+    </ul>
+  </li>
+  <li><strong>Skip creating an OpenAccess Model Library Project</strong> - No data access project will be added.</li>
+</ul>
+
+<p>##Creation of New Kendo UI web application</p>
+
+<p>When you click "Finish", the creation of new Kendo UI web application will begin. The wizard will:</p>
+
+<ul>
+  <li>Create new ASP.NET MVC application</li>
+  <li>Copy all Kendo UI scripts, including the vsdoc script that enables the VS Intellisense feature (if CDN support is not enabled)</li>
+  <li>Copy all Kendo UI content files (if CDN support is not enabled)</li>
+  <li>Copy all Kendo UI global resources (optional)</li>
+  <li>Copy all Kendo UI editor templates (optional)</li>
+  <li>Copy the Kendo UI assembly to your solution folder (optional)</li>
+  <li>Add reference to the Kendo.Mvc assembly</li>
+  <li>Apply the pre-selected theme</li>
+  <li>Create test project (optional)</li>
+</ul>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

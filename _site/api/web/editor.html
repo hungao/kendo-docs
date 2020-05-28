@@ -1,0 +1,2715 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Editor</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Help guide for proper configuration of Editor UI widget, and how to use methods and events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/editor.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouieditor">kendo.ui.Editor</h1>
+
+<p>Represents the Kendo UI Editor widget. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="domain-string">domain <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Relaxes the same-origin policy when using the iframe-based editor.
+This is done automatically for all cases except when the policy is relaxed by document.domain = document.domain.
+In that case, this property must be used to allow the editor to function properly across browsers.
+This property has been introduced in internal builds after 2014.1.319.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+document.domain = document.domain;
+
+$("#editor").kendoEditor({
+  domain: document.domain
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="encoded-boolean-default-true">encoded <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Indicates whether the Editor should submit encoded HTML tags. By default, the submitted value is encoded.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  value: "&lt;p&gt;foo&lt;/p&gt;",
+  encoded: false
+});
+console.log($("#editor").val()); // logs "&lt;p&gt;foo&lt;/p&gt;"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messages-object">messages <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Defines the text of the labels that are shown within the editor. Used primarily for localization.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  messages: {
+    bold: "Bold",
+    italic: "Italic",
+    underline: "Underline",
+    strikethrough: "Strikethrough",
+    superscript: "Superscript",
+    subscript: "Subscript",
+    justifyCenter: "Center text",
+    justifyLeft: "Align text left",
+    justifyRight: "Align text right",
+    justifyFull: "Justify",
+    insertUnorderedList: "Insert unordered list",
+    insertOrderedList: "Insert ordered list",
+    indent: "Indent",
+    outdent: "Outdent",
+    createLink: "Insert hyperlink",
+    unlink: "Remove hyperlink",
+    insertImage: "Insert image",
+    insertFile: "Insert file",
+    insertHtml: "Insert HTML",
+    fontName: "Select font family",
+    fontNameInherit: "(inherited font)",
+    fontSize: "Select font size",
+    fontSizeInherit: "(inherited size)",
+    formatBlock: "Format",
+    formatting: "Format",
+    style: "Styles",
+    viewHtml: "View HTML",
+    emptyFolder: "Empty Folder",
+    uploadFile: "Upload",
+    orderBy: "Arrange by:",
+    orderBySize: "Size",
+    orderByName: "Name",
+    invalidFileType: "The selected file \"{0}\" is not valid. Supported file types are {1}.",
+    deleteFile: "Are you sure you want to delete \"{0}\"?",
+    overwriteFile: "A file with name \"{0}\" already exists in the current directory. Do you want to overwrite it?",
+    directoryNotFound: "A directory with this name was not found.",
+    imageWebAddress: "Web address",
+    imageAltText: "Alternate text",
+    fileWebAddress: "Web address",
+    fileTitle: "Title",
+    linkWebAddress: "Web address",
+    linkText: "Text",
+    linkToolTip: "ToolTip",
+    linkOpenInNewWindow: "Open link in new window",
+    dialogInsert: "Insert",
+    dialogUpdate: "Update",
+    dialogButtonSeparator: "or",
+    dialogCancel: "Cancel",
+    dialogCancel: "Cancel",
+    createTable: "Create table",
+    addColumnLeft: "Add column on the left",
+    addColumnRight: "Add column on the right",
+    addRowAbove: "Add row above",
+    addRowBelow: "Add row below",
+    deleteRow: "Delete row",
+    deleteColumn: "Delete column"
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="serialization-object">serialization <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Allows setting of serialization options.</p>
+
+<h3 id="serializationentities-boolean-default-true">serialization.entities <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Indicates whether the characters outside the ASCII range will be encoded as HTML entities. By default, they are encoded.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  value: "The character ä is an umlaut",
+  serialization: {
+    entities: true
+  }
+});
+console.log($("#editor").data("kendoEditor").value()); // logs "The character &amp;auml; is an umlaut"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="stylesheets-array">stylesheets <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>Allows custom stylesheets to be included within the editing area. This setting is applicable only when the <a href="/getting-started/web/editor/overview">Editor is initialized from a <code class="language-plaintext highlighter-rouge">textarea</code></a>
+and a contenteditable iframe is generated.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  stylesheets: [
+    "base.css",
+    "theme.css"
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="tools-array">tools <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>A collection of tools that are used to interact with the Editor.
+Tools may be switched on by specifying their name.
+Custom tools and tools that require configuration are defined as objects.</p>
+
+<p>The available editor commands are:</p>
+
+<ul>
+  <li>Basic text formatting
+    - <strong>bold</strong>, <strong>italic</strong>, <strong>underline</strong>, <strong>strikethrough</strong>, <strong>subscript</strong>, <strong>superscript</strong></li>
+  <li>Font and color
+    - <strong>fontName</strong>, <strong>fontSize</strong>, <strong>foreColor</strong>, <strong>backColor</strong></li>
+  <li>Alignment
+    - <strong>justifyLeft</strong>, <strong>justifyCenter</strong>, <strong>justifyRight</strong>, <strong>justifyFull</strong></li>
+  <li>Lists
+    - <strong>insertUnorderedList</strong>, <strong>insertOrderedList</strong>, <strong>indent</strong>, <strong>outdent</strong></li>
+  <li>Links, images and files
+    - <strong>createLink</strong>, <strong>unlink</strong>, <strong>insertImage</strong>, <strong>insertFile</strong></li>
+  <li>Table editing
+    - <strong>createTable</strong>, <strong>addColumnLeft</strong>, <strong>addColumnRight</strong>, <strong>addRowAbove</strong>, <strong>addRowBelow</strong>, <strong>deleteRow</strong>, <strong>deleteColumn</strong></li>
+  <li>Structural markup and styles
+    - <strong>formatting</strong></li>
+  <li>Snippets
+    - <strong>insertHtml</strong></li>
+  <li>HTML code view
+    - <strong>viewHtml</strong></li>
+</ul>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  tools: [
+    "bold", "italic", "underline"
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toolsname-string">tools.name <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>When specifying a tool as an object, a tool name is required. <strong>Please note that "undo" and "redo" are reserved tool names.</strong></p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  tools: [
+    { name: "custom" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toolstooltip-string">tools.tooltip <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The text which will be displayed when the end-user hovers the tool button with the mouse.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  tools: [
+    { name: "bold", tooltip: "Bold the selected text" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toolsexec-function">tools.exec <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>The JavaScript function which will be executed when the end-user clicks the tool button.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  tools: [
+    {
+      name: "custom",
+      exec: function(e) {
+        var editor = $(this).data("kendoEditor");
+        // ...
+      }
+    }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toolsitems-array">tools.items <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>For tools that display a list of items (fontName, fontSize, formatting), this option specifies the items in the shown list.</p>
+
+<h4 id="example---specify-custom-font-families">Example - specify custom font families</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  tools: [
+    {
+      name: "fontName",
+      items: [
+        { text: "Arial/Verdana", value: "Arial,Verdana,sans-serif" }
+      ]
+    }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toolsitemstext-string">tools.items.text <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The string that the popup item will show.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  tools: [
+    {
+      name: "fontName",
+      items: [
+        { text: "Default site font", value: "Arial,Verdana,sans-serif" },
+        { text: "Monospaced font", value: "monospace" }
+      ]
+    }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toolsitemsvalue-string">tools.items.value <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The value that will be applied by the tool when this item is selected.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  tools: [
+    {
+      name: "fontSize",
+      items: [
+        { text: "12px", value: "12px" },
+        { text: "24px", value: "24px" }
+      ]
+    }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toolsitemscontext-string">tools.items.context <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Only applicable for the formatting tool. Specifies the context in which the option will be available.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  tools: [
+    {
+      name: "formatting",
+      items: [
+        { text: "Title", value: "h1" },
+
+        // will be shown only when selection is in H1
+        { text: "Note", value: "span.note", context: "h1" }
+      ]
+    }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toolstemplate-string">tools.template <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The kendo template that will be used for rendering the given tool.</p>
+
+<h4 id="example-using-a-simple-string-template">Example using a simple string template</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  tools: [
+    {
+      name: "custom",
+      template: "&lt;button class='k-button'&gt;Save draft&lt;/button&gt;"
+    }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The code below shows how to use a template and pass variables to it. This allows template reusage or making tweaks on the fly.</p>
+
+<h4 id="example-using-a-kendo-ui-template-with-variables">Example using a Kendo UI template with variables</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script id="toolTemplate" type="text/x-kendo-template"&gt;
+    &lt;button class='k-button'&gt;#= myText #&lt;/button&gt;
+&lt;/script&gt;
+
+&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  tools: [
+    {
+      name: "custom",
+      myText: "Button Text"
+      template: $("#toolTemplate").html()
+    }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowser-object">imageBrowser <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Configuration for image browser dialog.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      read: "imagebrowser/read",
+      destroy: "imagebrowser/destroy",
+      create: "imagebrowser/createDirectory",
+      uploadUrl: "imagebrowser/upload",
+      thumbnailUrl: "imagebrowser/thumbnail"
+      imageUrl: "/content/images/{0}",
+    },
+    path: "/myInitialPath/"
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowserfiletypes-string-default-pnggifjpgjpeg">imageBrowser.fileTypes <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "</em>.png,<em>.gif,</em>.jpg,<em>.jpeg")</em></h3>
+
+<p>Defines the allowed file extensions.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    /* omitted for brevity */
+    fileTypes: "*.gif"
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowserpath-string-default-">imageBrowser.path <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "/")</em></h3>
+
+<p>Defines the initial folder to display, relative to the root.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    /* omitted for brevity */
+    path: "/uploads/"
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransport-object">imageBrowser.transport <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Specifies the settings for loading and saving data.</p>
+
+<h3 id="imagebrowsertransportread-objectstring">imageBrowser.transport.read <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>Options or URL for remote image retrieval.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The value of <code class="language-plaintext highlighter-rouge">transport.read</code> is passed to <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a>.</p>
+</blockquote>
+
+<h4 id="example---specify-a-read-url">Example - specify a read URL</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      read: "/imagebrowser/read"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportreadcontenttype-string-default-applicationx-www-form-urlencoded">imageBrowser.transport.read.contentType <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "application/x-www-form-urlencoded")</em></h3>
+
+<p>The content-type HTTP header sent to the server. Use <code class="language-plaintext highlighter-rouge">"application/json"</code> if the content is JSON.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      read: {
+        /* omitted for brevity */
+        contentType: "application/json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportreaddata-objectstringfunction">imageBrowser.transport.read.data <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h3>
+
+<p>Data to be send to the server.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---specify-data-as-object">Example - specify Data As Object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      read: {
+        data: {
+          id: 42,
+          name: "John Doe"
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-data-as-function">Example - specify Data As Function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      read: {
+        data: function() {
+          return { id: 42, name: "John Doe" };
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportreaddatatype-string">imageBrowser.transport.read.dataType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of data that you"re expecting back from the server. Commonly used values are <code class="language-plaintext highlighter-rouge">"json"</code> and <code class="language-plaintext highlighter-rouge">"jsonp"</code>.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      read: {
+        dataType: "json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportreadtype-string">imageBrowser.transport.read.type <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of request to make (<code class="language-plaintext highlighter-rouge">"POST"</code>, <code class="language-plaintext highlighter-rouge">"GET</code>", <code class="language-plaintext highlighter-rouge">"PUT"</code> or <code class="language-plaintext highlighter-rouge">"DELETE"</code>), default is "GET".
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      read: {
+        type: "POST"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportreadurl-stringfunction">imageBrowser.transport.read.url <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The remote url to call when fetching list of items.</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      read: {
+        url: "/read"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-read-url-as-function">Example - specify Read URL As Function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      read: {
+        url: function(params) {
+          // build url
+          return "/read?t=" + new Date().getTime();
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportthumbnailurl-stringfunction">imageBrowser.transport.thumbnailUrl <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The URL for retrieving the thumbnail version of the image. If not specified a default image icon will be shown.
+If function is assigned, the current path and image name will be provided.</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      thumbnailUrl: "/thumbnail"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportuploadurl-string">imageBrowser.transport.uploadUrl <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The URL which will handle the upload of the new images. If not specified the Upload button will not be displayed.</p>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      uploadUrl: "/thumbnail"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportimageurl-stringfunction">imageBrowser.transport.imageUrl <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The URL responsible for serving the original image. A file name placeholder should be specified.</p>
+
+<h4 id="example-21">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      imageUrl: "/content/images/{0}" //the placeholder will be replaced with the current virtual path and selected file name
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportdestroy-objectstring">imageBrowser.transport.destroy <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>Options or URL which will handle the file and directory deletion. If not specified the delete button will not be present.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The value of <code class="language-plaintext highlighter-rouge">transport.destroy</code> is passed to <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a>.</p>
+</blockquote>
+
+<h4 id="example-22">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      destroy: "/destroy"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportdestroycontenttype-string">imageBrowser.transport.destroy.contentType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The content-type HTTP header sent to the server. Default is <code class="language-plaintext highlighter-rouge">"application/x-www-form-urlencoded"</code>. Use <code class="language-plaintext highlighter-rouge">"application/json"</code> if the content is JSON.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-23">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      destroy: {
+        contentType: "application/json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportdestroydata-objectstringfunction">imageBrowser.transport.destroy.data <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h3>
+
+<p>Data to be send to the server.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---specify-data-as-object-1">Example - specify Data As Object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      destroy: {
+        data: {
+          id: 42,
+          name: "John Doe"
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-data-as-function-1">Example - specify Data As Function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      destroy: {
+        data: function() {
+          return {
+            id: 42,
+            name: "John Doe"
+          };
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportdestroydatatype-string">imageBrowser.transport.destroy.dataType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of data that you"re expecting back from the server. Commonly used values are <code class="language-plaintext highlighter-rouge">"json"</code> and <code class="language-plaintext highlighter-rouge">"jsonp"</code>.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-24">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      destroy: {
+        dataType: "json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportdestroytype-string">imageBrowser.transport.destroy.type <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of request to make (<code class="language-plaintext highlighter-rouge">"POST"</code>, <code class="language-plaintext highlighter-rouge">"GET</code>", <code class="language-plaintext highlighter-rouge">"PUT"</code> or <code class="language-plaintext highlighter-rouge">"DELETE"</code>), default is "GET".
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-25">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      destroy: {
+        type: "POST"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportdestroyurl-stringfunction">imageBrowser.transport.destroy.url <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The remote url to call when creating a new record.</p>
+
+<h4 id="example-26">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      destroy: {
+        url: "/destroy"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-destroy-url-as-function">Example - specify Destroy URL As Function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      destroy: {
+        url: function(params) {
+          // build url
+          return "/destroy?t=" + new Date().getTime();
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportcreate-objectstring">imageBrowser.transport.create <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>Options or URL which will handle the directory creation. If not specified that create new folder button will not be present.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The value of <code class="language-plaintext highlighter-rouge">transport.create</code> is passed to <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a>.</p>
+</blockquote>
+
+<h4 id="example-27">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      create: "/create"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportcreatecontenttype-string">imageBrowser.transport.create.contentType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The content-type HTTP header sent to the server. Default is <code class="language-plaintext highlighter-rouge">"application/x-www-form-urlencoded"</code>. Use <code class="language-plaintext highlighter-rouge">"application/json"</code> if the content is JSON.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-28">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      create: {
+        contentType: "application/json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportcreatedata-objectstringfunction">imageBrowser.transport.create.data <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h3>
+
+<p>Data to be send to the server.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---specify-data-as-object-2">Example - specify data as object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      create: {
+        data: {
+          id: 42,
+          name: "John Doe"
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-data-as-function-2">Example - specify data as function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      create: {
+        data: function() {
+          return {
+            id: 42,
+            name: "John Doe"
+          };
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportcreatedatatype-string">imageBrowser.transport.create.dataType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of data that you"re expecting back from the server. Commonly used values are <code class="language-plaintext highlighter-rouge">"json"</code> and <code class="language-plaintext highlighter-rouge">"jsonp"</code>.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-29">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      create: {
+        dataType: "json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportcreatetype-string">imageBrowser.transport.create.type <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of request to make (<code class="language-plaintext highlighter-rouge">"POST"</code>, <code class="language-plaintext highlighter-rouge">"GET</code>", <code class="language-plaintext highlighter-rouge">"PUT"</code> or <code class="language-plaintext highlighter-rouge">"DELETE"</code>), default is "GET".
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-30">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      create: {
+        type: "POST"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsertransportcreateurl-stringfunction">imageBrowser.transport.create.url <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The remote url to call when creating a new record.</p>
+
+<h4 id="example-31">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      create: {
+        url: "/create"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-create-url-as-function">Example - specify create url as function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    transport: {
+      create: {
+        url: function(params) {
+          // build url
+          return "/create?t=" + new Date().getTime();
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowserschema-object">imageBrowser.schema <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Set the object responsible for describing the image raw data format.</p>
+
+<h3 id="imagebrowserschemamodel-object">imageBrowser.schema.model <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Set the object which describes the image/directory entry fields. Note that a name, type and size fields should be set.</p>
+
+<h3 id="imagebrowserschemamodelid-string">imageBrowser.schema.model.id <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The name of the field which acts as an identifier.</p>
+
+<h3 id="imagebrowserschemamodelfields-object">imageBrowser.schema.model.fields <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<h3 id="imagebrowserschemamodelfieldsname-objectstring">imageBrowser.schema.model.fields.name <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>The field which contains the name of the image/directory</p>
+
+<h3 id="imagebrowserschemamodelfieldsnamefield-string">imageBrowser.schema.model.fields.name.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The name of the field.</p>
+
+<h3 id="imagebrowserschemamodelfieldsnameparse-function">imageBrowser.schema.model.fields.name.parse <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>Specifies the function which will parse the field value. If not set default parsers will be used.</p>
+
+<h3 id="imagebrowserschemamodelfieldstype-objectstring">imageBrowser.schema.model.fields.type <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>The field which contains the type of the entry. Either <em>f</em> for image or <em>d</em> for directory.</p>
+
+<h3 id="imagebrowserschemamodelfieldstypeparse-function">imageBrowser.schema.model.fields.type.parse <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>Specifies the function which will parse the field value. If not set default parsers will be used.</p>
+
+<h3 id="imagebrowserschemamodelfieldstypefield-string">imageBrowser.schema.model.fields.type.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The name of the field.</p>
+
+<h3 id="imagebrowserschemamodelfieldssize-objectstring">imageBrowser.schema.model.fields.size <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>The field which contains the size of image.</p>
+
+<h3 id="imagebrowserschemamodelfieldssizefield-string">imageBrowser.schema.model.fields.size.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The name of the field.</p>
+
+<h3 id="imagebrowserschemamodelfieldssizeparse-function">imageBrowser.schema.model.fields.size.parse <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>Specifies the function which will parse the field value. If not set default parsers will be used.</p>
+
+<h3 id="imagebrowsermessages-object">imageBrowser.messages <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Defines texts shown within the image browser.</p>
+
+<h3 id="imagebrowsermessagesuploadfile-string-default-upload">imageBrowser.messages.uploadFile <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Upload")</em></h3>
+
+<p>Defines text for upload button.</p>
+
+<h4 id="example-32">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    messages: {
+      uploadFile: "Upload a file"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsermessagesorderby-string-default-arrange-by">imageBrowser.messages.orderBy <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Arrange by")</em></h3>
+
+<p>Defines text for order by label.</p>
+
+<h4 id="example-33">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    messages: {
+      orderBy: "Order by"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsermessagesorderbyname-string-default-name">imageBrowser.messages.orderByName <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Name")</em></h3>
+
+<p>Defines text for Name item of order by drop down list.</p>
+
+<h4 id="example-34">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    messages: {
+      orderByName: "Filename"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsermessagesorderbysize-string-default-size">imageBrowser.messages.orderBySize <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Size")</em></h3>
+
+<p>Defines text for Size item of order by drop down list.</p>
+
+<h4 id="example-35">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    messages: {
+      orderBySize: "File size"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsermessagesdirectorynotfound-string-default-a-directory-with-this-name-was-not-found">imageBrowser.messages.directoryNotFound <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "A directory with this name was not found.")</em></h3>
+
+<p>Defines text for dialog shown when the directory not found error occurs.</p>
+
+<h4 id="example-36">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    messages: {
+      directoryNotFound: "Directory not found!"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsermessagesemptyfolder-string-default-empty-folder">imageBrowser.messages.emptyFolder <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Empty Folder")</em></h3>
+
+<p>Defines text displayed when folder does not contain items.</p>
+
+<h4 id="example-37">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    messages: {
+      emptyFolder: "Folder is empty"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsermessagesdeletefile-string-default-are-you-sure-you-want-to-delete-0">imageBrowser.messages.deleteFile <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Are you sure you want to delete {0}?")</em></h3>
+
+<p>Defines text for dialog shown when the file or directory is deleted.</p>
+
+<h4 id="example-38">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    messages: {
+      deleteFile: "Are you sure? This action cannot be undone."
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsermessagesinvalidfiletype-string-default-the-selected-file-0-is-not-valid-supported-file-types-are-1">imageBrowser.messages.invalidFileType <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "The selected file "{0}" is not valid. Supported file types are {1}.")</em></h3>
+
+<p>Defines text for dialog shown when an invalid file is set for upload.</p>
+
+<h4 id="example-39">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    messages: {
+      invalidFileType: "Supported file types are {1}. Please retry your upload."
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsermessagesoverwritefile-string-default-a-file-with-name-0-already-exists-in-the-current-directory-do-you-want-to-overwrite-it">imageBrowser.messages.overwriteFile <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "A file with name "{0}" already exists in the current directory. Do you want to overwrite it?")</em></h3>
+
+<p>Defines text for dialog shown when an already existing file is set for upload.</p>
+
+<h4 id="example-40">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    messages: {
+      overwriteFile: "Do you want to overwrite the file with name '{0}'?"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagebrowsermessagessearch-string-default-search">imageBrowser.messages.search <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Search")</em></h3>
+
+<p>Defines text for search box pleaceholder.</p>
+
+<h4 id="example-41">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  imageBrowser: {
+    messages: {
+      search: "Find"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowser-object">fileBrowser <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Configuration for file browser dialog.</p>
+
+<h4 id="example-42">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      read: "filebrowser/read",
+      destroy: "filebrowser/destroy",
+      create: "filebrowser/createDirectory",
+      uploadUrl: "filebrowser/upload",
+      fileUrl: "/content/files/{0}",
+    },
+    path: "/myInitialPath/"
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowserfiletypes-string-default-">fileBrowser.fileTypes <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "</em>.<em>")</em></h3>
+
+<p>Defines the allowed file extensions.</p>
+
+<h4 id="example-43">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    /* omitted for brevity */
+    fileTypes: "*.zip"
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowserpath-string-default-">fileBrowser.path <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "/")</em></h3>
+
+<p>Defines the initial folder to display, relative to the root.</p>
+
+<h4 id="example-44">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    /* omitted for brevity */
+    path: "/uploads/"
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransport-object">fileBrowser.transport <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Specifies the settings for loading and saving data.</p>
+
+<h3 id="filebrowsertransportread-objectstring">fileBrowser.transport.read <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>Options or URL for remote file retrieval.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The value of <code class="language-plaintext highlighter-rouge">transport.read</code> is passed to <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a>.</p>
+</blockquote>
+
+<h4 id="example---specify-a-read-url-1">Example - specify a read URL</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      read: "/filebrowser/read"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportreadcontenttype-string-default-applicationx-www-form-urlencoded">fileBrowser.transport.read.contentType <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "application/x-www-form-urlencoded")</em></h3>
+
+<p>The content-type HTTP header sent to the server. Use <code class="language-plaintext highlighter-rouge">"application/json"</code> if the content is JSON.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-45">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      read: {
+        /* omitted for brevity */
+        contentType: "application/json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportreaddata-objectstringfunction">fileBrowser.transport.read.data <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h3>
+
+<p>Data to be send to the server.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---specify-data-as-object-3">Example - specify Data As Object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      read: {
+        data: {
+          id: 42,
+          name: "John Doe"
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-data-as-function-3">Example - specify Data As Function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      read: {
+        data: function() {
+          return { id: 42, name: "John Doe" };
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportreaddatatype-string">fileBrowser.transport.read.dataType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of data that you"re expecting back from the server. Commonly used values are <code class="language-plaintext highlighter-rouge">"json"</code> and <code class="language-plaintext highlighter-rouge">"jsonp"</code>.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-46">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      read: {
+        dataType: "json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportreadtype-string">fileBrowser.transport.read.type <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of request to make (<code class="language-plaintext highlighter-rouge">"POST"</code>, <code class="language-plaintext highlighter-rouge">"GET</code>", <code class="language-plaintext highlighter-rouge">"PUT"</code> or <code class="language-plaintext highlighter-rouge">"DELETE"</code>), default is "GET".
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-47">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      read: {
+        type: "POST"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportreadurl-stringfunction">fileBrowser.transport.read.url <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The remote url to call when fetching list of items.</p>
+
+<h4 id="example-48">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      read: {
+        url: "/read"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-read-url-as-function-1">Example - specify Read URL As Function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      read: {
+        url: function(params) {
+          // build url
+          return "/read?t=" + new Date().getTime();
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportuploadurl-string">fileBrowser.transport.uploadUrl <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The URL which will handle the upload of the new files. If not specified the Upload button will not be displayed.</p>
+
+<h4 id="example-49">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      uploadUrl: "/upload"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportfileurl-stringfunction">fileBrowser.transport.fileUrl <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The URL responsible for serving the original file. A file name placeholder should be specified.</p>
+
+<h4 id="example-50">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      fileUrl: "/content/files/{0}" //the placeholder will be replaced with the current virtual path and selected file name
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportdestroy-objectstring">fileBrowser.transport.destroy <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>Options or URL which will handle the file and directory deletion. If not specified the delete button will not be present.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The value of <code class="language-plaintext highlighter-rouge">transport.destroy</code> is passed to <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a>.</p>
+</blockquote>
+
+<h4 id="example-51">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      destroy: "/destroy"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportdestroycontenttype-string">fileBrowser.transport.destroy.contentType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The content-type HTTP header sent to the server. Default is <code class="language-plaintext highlighter-rouge">"application/x-www-form-urlencoded"</code>. Use <code class="language-plaintext highlighter-rouge">"application/json"</code> if the content is JSON.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-52">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      destroy: {
+        contentType: "application/json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportdestroydata-objectstringfunction">fileBrowser.transport.destroy.data <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h3>
+
+<p>Data to be send to the server.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---specify-data-as-object-4">Example - specify Data As Object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      destroy: {
+        data: {
+          id: 42,
+          name: "John Doe"
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-data-as-function-4">Example - specify Data As Function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      destroy: {
+        data: function() {
+          return {
+            id: 42,
+            name: "John Doe"
+          };
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportdestroydatatype-string">fileBrowser.transport.destroy.dataType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of data that you"re expecting back from the server. Commonly used values are <code class="language-plaintext highlighter-rouge">"json"</code> and <code class="language-plaintext highlighter-rouge">"jsonp"</code>.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-53">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      destroy: {
+        dataType: "json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportdestroytype-string">fileBrowser.transport.destroy.type <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of request to make (<code class="language-plaintext highlighter-rouge">"POST"</code>, <code class="language-plaintext highlighter-rouge">"GET</code>", <code class="language-plaintext highlighter-rouge">"PUT"</code> or <code class="language-plaintext highlighter-rouge">"DELETE"</code>), default is "GET".
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-54">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      destroy: {
+        type: "POST"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportdestroyurl-stringfunction">fileBrowser.transport.destroy.url <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The remote url to call when creating a new record.</p>
+
+<h4 id="example-55">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      destroy: {
+        url: "/destroy"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-destroy-url-as-function-1">Example - specify Destroy URL As Function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      destroy: {
+        url: function(params) {
+          // build url
+          return "/destroy?t=" + new Date().getTime();
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportcreate-objectstring">fileBrowser.transport.create <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>Options or URL which will handle the directory creation. If not specified that create new folder button will not be present.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The value of <code class="language-plaintext highlighter-rouge">transport.create</code> is passed to <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a>.</p>
+</blockquote>
+
+<h4 id="example-56">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      create: "/create"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportcreatecontenttype-string">fileBrowser.transport.create.contentType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The content-type HTTP header sent to the server. Default is <code class="language-plaintext highlighter-rouge">"application/x-www-form-urlencoded"</code>. Use <code class="language-plaintext highlighter-rouge">"application/json"</code> if the content is JSON.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-57">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      create: {
+        contentType: "application/json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportcreatedata-objectstringfunction">fileBrowser.transport.create.data <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h3>
+
+<p>Data to be send to the server.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---specify-data-as-object-5">Example - specify data as object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      create: {
+        data: {
+          id: 42,
+          name: "John Doe"
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-data-as-function-5">Example - specify data as function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      create: {
+        data: function() {
+          return {
+            id: 42,
+            name: "John Doe"
+          };
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportcreatedatatype-string">fileBrowser.transport.create.dataType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of data that you"re expecting back from the server. Commonly used values are <code class="language-plaintext highlighter-rouge">"json"</code> and <code class="language-plaintext highlighter-rouge">"jsonp"</code>.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-58">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      create: {
+        dataType: "json"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportcreatetype-string">fileBrowser.transport.create.type <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of request to make (<code class="language-plaintext highlighter-rouge">"POST"</code>, <code class="language-plaintext highlighter-rouge">"GET</code>", <code class="language-plaintext highlighter-rouge">"PUT"</code> or <code class="language-plaintext highlighter-rouge">"DELETE"</code>), default is "GET".
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example-59">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      create: {
+        type: "POST"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsertransportcreateurl-stringfunction">fileBrowser.transport.create.url <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The remote url to call when creating a new record.</p>
+
+<h4 id="example-60">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      create: {
+        url: "/create"
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-create-url-as-function-1">Example - specify create url as function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    transport: {
+      create: {
+        url: function(params) {
+          // build url
+          return "/create?t=" + new Date().getTime();
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowserschema-object">fileBrowser.schema <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Set the object responsible for describing the file raw data format.</p>
+
+<h3 id="filebrowserschemamodel-object">fileBrowser.schema.model <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Set the object which describes the file/directory entry fields. Note that a name, type and size fields should be set.</p>
+
+<h3 id="filebrowserschemamodelid-string">fileBrowser.schema.model.id <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The name of the field which acts as an identifier.</p>
+
+<h3 id="filebrowserschemamodelfields-object">fileBrowser.schema.model.fields <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<h3 id="filebrowserschemamodelfieldsname-objectstring">fileBrowser.schema.model.fields.name <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>The field which contains the name of the file/directory</p>
+
+<h3 id="filebrowserschemamodelfieldsnamefield-string">fileBrowser.schema.model.fields.name.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The name of the field.</p>
+
+<h3 id="filebrowserschemamodelfieldsnameparse-function">fileBrowser.schema.model.fields.name.parse <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>Specifies the function which will parse the field value. If not set default parsers will be used.</p>
+
+<h3 id="filebrowserschemamodelfieldstype-objectstring">fileBrowser.schema.model.fields.type <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>The field which contains the type of the entry. Either <em>f</em> for file or <em>d</em> for directory.</p>
+
+<h3 id="filebrowserschemamodelfieldstypeparse-function">fileBrowser.schema.model.fields.type.parse <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>Specifies the function which will parse the field value. If not set default parsers will be used.</p>
+
+<h3 id="filebrowserschemamodelfieldstypefield-string">fileBrowser.schema.model.fields.type.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The name of the field.</p>
+
+<h3 id="filebrowserschemamodelfieldssize-objectstring">fileBrowser.schema.model.fields.size <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>The field which contains the size of file.</p>
+
+<h3 id="filebrowserschemamodelfieldssizefield-string">fileBrowser.schema.model.fields.size.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The name of the field.</p>
+
+<h3 id="filebrowserschemamodelfieldssizeparse-function">fileBrowser.schema.model.fields.size.parse <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>Specifies the function which will parse the field value. If not set default parsers will be used.</p>
+
+<h3 id="filebrowsermessages-object">fileBrowser.messages <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Defines texts shown within the file browser.</p>
+
+<h3 id="filebrowsermessagesuploadfile-string-default-upload">fileBrowser.messages.uploadFile <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Upload")</em></h3>
+
+<p>Defines text for upload button.</p>
+
+<h4 id="example-61">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    messages: {
+      uploadFile: "Upload a file"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsermessagesorderby-string-default-arrange-by">fileBrowser.messages.orderBy <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Arrange by")</em></h3>
+
+<p>Defines text for order by label.</p>
+
+<h4 id="example-62">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    messages: {
+      orderBy: "Order by"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsermessagesorderbyname-string-default-name">fileBrowser.messages.orderByName <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Name")</em></h3>
+
+<p>Defines text for Name item of order by drop down list.</p>
+
+<h4 id="example-63">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    messages: {
+      orderByName: "Filename"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsermessagesorderbysize-string-default-size">fileBrowser.messages.orderBySize <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Size")</em></h3>
+
+<p>Defines text for Size item of order by drop down list.</p>
+
+<h4 id="example-64">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    messages: {
+      orderBySize: "File size"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsermessagesdirectorynotfound-string-default-a-directory-with-this-name-was-not-found">fileBrowser.messages.directoryNotFound <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "A directory with this name was not found.")</em></h3>
+
+<p>Defines text for dialog shown when the directory not found error occurs.</p>
+
+<h4 id="example-65">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    messages: {
+      directoryNotFound: "Directory not found!"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsermessagesemptyfolder-string-default-empty-folder">fileBrowser.messages.emptyFolder <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Empty Folder")</em></h3>
+
+<p>Defines text displayed when folder does not contain items.</p>
+
+<h4 id="example-66">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    messages: {
+      emptyFolder: "Folder is empty"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsermessagesdeletefile-string-default-are-you-sure-you-want-to-delete-0">fileBrowser.messages.deleteFile <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Are you sure you want to delete {0}?")</em></h3>
+
+<p>Defines text for dialog shown when the file or directory is deleted.</p>
+
+<h4 id="example-67">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    messages: {
+      deleteFile: "Are you sure? This action cannot be undone."
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsermessagesinvalidfiletype-string-default-the-selected-file-0-is-not-valid-supported-file-types-are-1">fileBrowser.messages.invalidFileType <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "The selected file "{0}" is not valid. Supported file types are {1}.")</em></h3>
+
+<p>Defines text for dialog shown when an invalid file is set for upload.</p>
+
+<h4 id="example-68">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    messages: {
+      invalidFileType: "Supported file types are {1}. Please retry your upload."
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsermessagesoverwritefile-string-default-a-file-with-name-0-already-exists-in-the-current-directory-do-you-want-to-overwrite-it">fileBrowser.messages.overwriteFile <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "A file with name "{0}" already exists in the current directory. Do you want to overwrite it?")</em></h3>
+
+<p>Defines text for dialog shown when an already existing file is set for upload.</p>
+
+<h4 id="example-69">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    messages: {
+      overwriteFile: "Do you want to overwrite the file with name '{0}'?"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filebrowsermessagessearch-string-default-search">fileBrowser.messages.search <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Search")</em></h3>
+
+<p>Defines text for search box pleaceholder.</p>
+
+<h4 id="example-70">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  fileBrowser: {
+    messages: {
+      search: "Find"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="body-element">body <code class="language-plaintext highlighter-rouge">Element</code></h3>
+
+<p>The HTML element which represents the editor content area.</p>
+
+<h4 id="example-71">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.body.style.backgroundColor = "#f00";
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="createrange">createRange</h3>
+
+<p>Creates a W3C-compatible <strong>Range</strong> object.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="document-document-optional">document <code class="language-plaintext highlighter-rouge">Document</code> <em>(optional)</em></h5>
+
+<p>The document that the range is associated with. If omitted, the document of the editor editing area will be used.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Range</code> The created <strong>Range</strong> object.</p>
+
+<h4 id="example-72">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+var range = editor.createRange();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+<p>Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the Editor element from DOM.</p>
+</blockquote>
+
+<h4 id="example-73">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.destroy();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="encodedvalue">encodedValue</h3>
+
+<p>Gets the HTML encoded value of the editor.</p>
+
+<h4 id="example-74">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({ value: "&lt;p&gt;foo&lt;/p&gt;" });
+var editor = $("#editor").data("kendoEditor");
+console.log(editor.encodedValue()); // logs "&amp;lt;p&amp;gt;foo&amp;lt;/p&amp;gt;"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="exec">exec</h3>
+
+<p>Executes an editor command on the currently selected text.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="name-string">name <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the command to be executed. The available names match the list of <a href="#configuration-tools">tools</a>, plus <code class="language-plaintext highlighter-rouge">"undo"</code> and <code class="language-plaintext highlighter-rouge">"redo"</code>.</p>
+
+<h5 id="params-stringobject-optional">params <code class="language-plaintext highlighter-rouge">String|Object</code> <em>(optional)</em></h5>
+
+<p>The parameters for the executed command.</p>
+
+<h5 id="paramsvalue-object">params.value <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The arguments for commands that expect such</p>
+
+<h4 id="example-75">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({ value: "foo" });
+var editor = $("#editor").data("kendoEditor");
+editor.exec("foreColor", { value: "#f00" });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="focus">focus</h3>
+
+<p>Focuses the editable area.</p>
+
+<h4 id="example-76">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.focus();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="getrange">getRange</h3>
+
+<p>Gets a <strong>Range</strong> object form the editable area.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Range</code> A W3C-compatible <strong>Range</strong> object that represents the currently selected text in the editor area.</p>
+
+<h4 id="example-77">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+var range = editor.getRange();
+console.log(range);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="getselection">getSelection</h3>
+
+<p>Gets a W3C-compatible <strong>Selection</strong> object form the editable area.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Selection</code> a W3C-compatible <strong>Selection</strong> object form the editable area.</p>
+
+<h4 id="example-78">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+var selection = editor.getSelection();
+console.log(selection);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="paste">paste</h3>
+
+<p>Pastes HTML into the editable area. Cleans up MS Word formatting.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="html-string">html <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The HTML to be pasted.</p>
+
+<h4 id="example-79">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.paste("&lt;p&gt;New content&lt;/p&gt;");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="selectedhtml">selectedHtml</h3>
+
+<p>Serializes the currently selected text to a XHTML string.</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> The selectied text as valid XHTML.</p>
+
+<h4 id="example-80">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+var html = editor.selectedHtml();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="refresh">refresh</h3>
+
+<p>Reinitializes the editing area iframe. Should be used after moving the editor in the DOM.</p>
+
+<h4 id="example-81">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;div id="container"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.wrapper.appendTo("#container");
+editor.refresh();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="selectrange">selectRange</h3>
+
+<p>Focuses the editable area and selects the range described by the range parameter.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="range-range">range <code class="language-plaintext highlighter-rouge">Range</code></h5>
+
+<p>The <strong>Range</strong> object that describes the new selection.</p>
+
+<h4 id="example---select-all">Example - select all</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;div id="container"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+var range = editor.createRange();
+range.selectNodeContents(editor.body);
+editor.selectRange(range);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="update">update</h3>
+
+<p>Serializes the current state of the editable area to the <code class="language-plaintext highlighter-rouge">&lt;textarea&gt;</code> element.
+This method should be called after modifying the editor content through the DOM.</p>
+
+<h4 id="example-82">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+var textarea = $("#editor");
+textarea.kendoEditor({ value: "Hello, " });
+var editor = textarea.data("kendoEditor");
+editor.body.appendChild(editor.document.createTextNode("World"));
+console.log(textarea.val()); // logs "Hello, "
+editor.update();
+console.log(textarea.val()); // logs "Hello, World"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="state">state</h3>
+
+<p>Get the state of a given tool. Introduced in the 2013.2.923 internal build.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="toolname-string">toolName <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the tool that will be tested if formatted.</p>
+
+<h4 id="returns-4">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Boolean</code> The state of the tool.</p>
+
+<h4 id="example-83">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.value("&lt;em&gt;foo&lt;/em&gt;");
+var range = editor.createRange();
+range.selectNodeContents(editor.body.firstChild);
+editor.selectRange(range);
+console.log(editor.state("italic")); // logs true
+console.log(editor.state("bold")); // logs true
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value">value</h3>
+
+<p>Gets or sets the editor value.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-string">value <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The value to set.</p>
+
+<h4 id="returns-5">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> The value of the Editor as HTML string.</p>
+
+<h4 id="example-84">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.value("&lt;p&gt;New content&lt;/p&gt;");
+console.log(editor.value()); // logs "&lt;p&gt;New content&lt;/p&gt;"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="change">change</h3>
+
+<p>Fires when Editor is blurred and its content has changed.</p>
+
+<h4 id="example---subscribe-to-the-change-event-during-initialization">Example - subscribe to the "change" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  change: function() {
+    console.log(this.value());
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-change-event-after-initialization">Example - subscribe to the "change" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+function editor_change() {
+  console.log(this.value());
+}
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.bind("change", editor_change);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="execute">execute</h3>
+
+<p>Fires when an Editor command is executed.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="ename-string">e.name <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the command</p>
+
+<h5 id="ecommand-object">e.command <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The command instance</p>
+
+<h4 id="example---subscribe-to-the-execute-event-during-initialization">Example - subscribe to the "execute" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  execute: function(e) {
+    console.log("executing command", e.name, e.value);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-execute-event-after-initialization">Example - subscribe to the "execute" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+function editor_execute() {
+  console.log("executing command", e.name, e.value);
+}
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.bind("execute", editor_execute);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="keydown">keydown</h3>
+
+<p>Fires when the user depresses a keyboard key. Triggered multiple times if the user holds the key down.</p>
+
+<h4 id="example---subscribe-to-the-keydown-event-during-initialization">Example - subscribe to the "keydown" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  keydown: function(e) {
+    console.log("keydown : keyCode=",e.keyCode);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-keydown-event-after-initialization">Example - subscribe to the "keydown" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+function editor_keydown() {
+  console.log("keydown : keyCode=",e.keyCode);
+}
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.bind("keydown", editor_keydown);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="keyup">keyup</h3>
+
+<p>Fires when the user releases a keyboard key.</p>
+
+<h4 id="example---subscribe-to-the-keyup-event-during-initialization">Example - subscribe to the "keyup" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  keyup: function(e) {
+    console.log("keyup : keyCode=",e.keyCode);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-keyup-event-after-initialization">Example - subscribe to the "keyup" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+function editor_keyup() {
+  console.log("keyup : keyCode=",e.keyCode);
+}
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.bind("keyup", editor_keyup);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---show-word-count">Example - show word count</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;div id="words"&gt;&lt;/div&gt;
+&lt;script&gt;
+function wordCount(value) {
+  return $.trim(value.replace(/&lt;.*?&gt;/g, " "))
+    .replace(/['";:,.?\-!]+/g, '')
+    .match(/\S+/g).length;
+}
+
+$("#editor").kendoEditor({
+  keyup: function(e) {
+    $("#words").text(wordCount(this.value()) + " words");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="paste-1">paste</h3>
+
+<p>Fires before the content is pasted in the Editor.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="ehtml-object">e.html <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The pasted content</p>
+
+<h4 id="example---subscribe-to-the-paste-event-during-initialization">Example - subscribe to the "paste" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  paste: function(e) {
+    console.log(e.html);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-paste-event-after-initialization">Example - subscribe to the "paste" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+function editor_paste(e) {
+  console.log(e.html);
+}
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.bind("paste", editor_paste);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+
+<p>Fires when the Editor selection has changed.</p>
+
+<h4 id="example---subscribe-to-the-select-event-during-initialization">Example - subscribe to the "select" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+$("#editor").kendoEditor({
+  select: function(e) {
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-select-event-after-initialization">Example - subscribe to the "select" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+function editor_select(e) {
+}
+$("#editor").kendoEditor();
+var editor = $("#editor").data("kendoEditor");
+editor.bind("select", editor_select);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="class-fields">Class Fields</h2>
+
+<h3 id="defaulttools-array">defaultTools <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>An array of tool definitions that are used for initializing the default tools. Note: Editors that are already initialized will not be affected by changes to this array.</p>
+
+<h4 id="example---insert-paragraphts-on-shiftenter-line-breaks-on-enter">Example - insert paragraphts on Shift+Enter, line breaks on Enter</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea id="editor"&gt;&lt;/textarea&gt;
+&lt;script&gt;
+var defaultTools = kendo.ui.Editor.defaultTools;
+
+defaultTools["insertLineBreak"].options.shift = false;
+defaultTools["insertParagraph"].options.shift = true;
+
+$("#editor").kendoEditor();
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

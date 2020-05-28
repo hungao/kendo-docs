@@ -1,0 +1,383 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of data binding in Kendo UI Javascript Chart widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to handle binding to inline data, binding to a data source in Chart UI widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/dataviz/chart/data-binding.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="data-binding">Data Binding</h1>
+
+<h2 id="contents">Contents</h2>
+
+<ul>
+  <li>
+    <p><a href="#binding-to-inline-data">Binding to inline data</a></p>
+
+    <ul>
+      <li><a href="#categorical-series">Categorical series</a></li>
+      <li><a href="#scatter-series">Scatter series</a></li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="#binding-to-a-data-source">Binding to a Data Source</a></p>
+
+    <ul>
+      <li><a href="#specifying-a-data-source">Setting a Data Source</a></li>
+      <li><a href="#binding-to-local-data">Binding to local data</a></li>
+      <li><a href="#binding-to-remote-data">Binding to remote data</a></li>
+      <li><a href="#data-bound-categorical-series">Data-bound categorical series</a></li>
+      <li><a href="#data-bound-scatter-series">Data-bound scatter series</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="binding-to-inline-data">Binding to inline data</h2>
+
+<p>The chart data points can be specified as part of the series definitions. The type of the data points depends on the type of the series.</p>
+
+<h3 id="categorical-series">Categorical series</h3>
+
+<p>Categorical series such as bar, line, area, etc. expect a data point of type Number.
+The category names are populated independently in the category axis.</p>
+
+<blockquote>
+  <p>All series must contain the same number of points in order identical .</p>
+</blockquote>
+
+<h4 id="example-inline-binding-of-column-series">Example: Inline binding of column series</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+    series: [{
+        name: "Series 1",
+        type: "column",
+        data: [200, 450, 300, 125, 100]
+    }, {
+        name: "Series 2",
+        type: "column",
+        data: [210, null, 200, 100, null]
+    }],
+    categoryAxis: {
+        categories: ["Mon", "Tue", "Wed", "Thu", "Fri"]
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="scatter-series">Scatter series</h3>
+
+<p>This category includes the two-dimensional scatter and scatter line series. The data point should be an array containing two values - X and Y.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+    series: [{
+        name: "Example Series",
+        type: "scatterLine",
+        data:[[0, 0], [1, 1]]
+    }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="binding-to-a-data-source">Binding to a Data Source</h2>
+
+<p>The DataSource component can be used to bind the Chart to both local and remote data.
+It supports variety of formats, including JSON, JSONP, XML, and OData.</p>
+
+<h3 id="setting-a-data-source">Setting a Data Source</h3>
+
+<p>The Chart will accept either a DataSource instance or an object with the DataSource options.</p>
+
+<h4 id="example-set-data-source-configuration">Example: Set Data Source configuration</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+    var seriesData = [
+        { sales: 200 }, { sales: 450 },
+        { sales: 300 }, { sales: 125 }
+    ];
+
+    $("#chart").kendoChart({
+        dataSource:{
+            data: seriesData
+        },
+        series: [{
+            field: "sales"
+        }]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example-set-data-source-instance">Example: Set Data Source instance</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+    var seriesData = [
+        { sales: 200 }, { sales: 450 },
+        { sales: 300 }, { sales: 125 }
+    ];
+
+    var ds = new kendo.data.DataSource({
+         data: seriesData
+    });
+
+    $("#chart").kendoChart({
+        dataSource: ds,
+        series: [{
+            field: "sales"
+        }]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="binding-to-remote-data">Binding to remote data</h3>
+
+<p>The chart can be bound to remote data by configuring the DataSource <code class="language-plaintext highlighter-rouge">transport</code>. The transport defines how the DataSource will interact with remote data.</p>
+
+<p>In the below example, the following JSON string is returned from the "/sales" service.</p>
+
+<h4 id="example-sample-json">Example: Sample JSON</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{ "year": "2000", "sales": 200 },
+  { "year": "2001", "sales": 450 },
+  { "year": "2002", "sales": 300 },
+  { "year": "2003", "sales": 125 }]
+</code></pre></div></div>
+
+<p>We will bind the data source to this service and sort it by year.</p>
+
+<h4 id="example-remote-binding">Example: Remote binding</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+    dataSource: {
+        transport: {
+            read: {
+                url: "/sales",
+                dataType: "json"
+            }
+        },
+        sort: {
+            field: "year",
+            dir: "asc"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="data-bound-categorical-series">Data-bound categorical series</h3>
+
+<p>Categorical series such as bar, line and area are bound to a value field.
+The category names are populated independently by binding the category axis.</p>
+
+<blockquote>
+  <p>All series must contain the same number of points in order identical to the category order.</p>
+</blockquote>
+
+<h4 id="example-data-bound-categorical-series">Example: Data-bound categorical series</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+var seriesData = [{
+    year: "2000",
+    sold: 100,
+    produced: 200
+}, {
+    year: "2001",
+    sold: 250,
+    produced: 280
+}];
+
+$("#chart").kendoChart({
+    dataSource: {
+        data: seriesData
+    },
+    series: [{
+        name: "Sold",
+        field: "sold"
+    }, {
+        name: "Producted",
+        field: "produced"
+    }],
+    categoryAxis: {
+        field: "year"
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="category-binding">Category binding</h4>
+
+<p>In addition to value field(s), each series can specify a category field.</p>
+
+<p>The category values from all series will be concatenated and each point will be mapped to its category.
+Point order is not significant.</p>
+
+<p>Series points will be <a href="/api/dataviz/chart#configuration-series.aggregate">aggregated</a> to produce one value per category.</p>
+
+<h5 id="example-binding-with-categoryfield">Example: Binding with categoryField</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+var seriesData = [{
+    year: "2000",
+    sold: 100,
+    product: "A"
+}, {
+    year: "2001",
+    sold: 150,
+    product: "A"
+}, {
+    year: "2000",
+    sold: 200,
+    product: "B"
+}];
+
+$("#chart").kendoChart({
+    title: {
+        text: "Sales summary"
+    },
+    dataSource: {
+        data: seriesData
+    },
+    series: [{
+        field: "sold",
+        categoryField: "year",
+        aggregate: "sum"
+    }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="data-bound-scatter-series">Data-bound scatter series</h3>
+
+<p>Scatter series are bound to the fields specified as "xField" and "yField".</p>
+
+<h4 id="example-binding-scatter-series">Example: Binding scatter series</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+var xyData = [{
+    x: 10, y: 20,
+}, {
+    x: 100, y: 200
+} ];
+
+$("#chart").kendoChart({
+    dataSource: {
+        data: xyData
+    },
+    series: [{
+        type: "scatter",
+        xField: "x",
+        yField: "y"
+    }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

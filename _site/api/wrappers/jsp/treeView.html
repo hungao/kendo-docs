@@ -1,0 +1,614 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/treeView.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendotreeview">&lt;kendo:treeView&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/treeview">TreeView</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="animation-boolean">animation <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>A collection of visual animations used when items are expanded or collapsed through user interaction.
+Setting this option to false will disable all animations. Further configuration is available via <a href="#kendo-treeView-animation">kendo:treeView-animation</a>.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView animation="animation"&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="autobind-boolean">autoBind <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView autoBind="autoBind"&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="checkboxes-boolean">checkboxes <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If true or an object, renders checkboxes beside each node. Further configuration is available via <a href="#kendo-treeView-checkboxes">kendo:treeView-checkboxes</a>.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView checkboxes="checkboxes"&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="dataimageurlfield-javalangstring">dataImageUrlField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the field of the data item that provides the image URL of the treeview nodes.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView dataImageUrlField="dataImageUrlField"&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="dataspritecssclassfield-javalangstring">dataSpriteCssClassField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the field of the data item that provides the sprite CSS class of the nodes.
+If an array, each level uses the field that is at the same index in the array, or the last item in the array.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView dataSpriteCssClassField="dataSpriteCssClassField"&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="datatextfield-javalangobject">dataTextField <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Sets the field of the data item that provides the text content of the nodes.
+If an array, each level uses the field that is at the same index in the array, or the last item in the array.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView dataTextField="dataTextField"&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="dataurlfield-javalangstring">dataUrlField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the field of the data item that provides the link URL of the nodes.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView dataUrlField="dataUrlField"&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="draganddrop-boolean">dragAndDrop <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Disables (false) or enables (true) drag-and-drop of the nodes.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView dragAndDrop="dragAndDrop"&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="loadondemand-boolean">loadOnDemand <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Indicates whether the child datasources should be fetched lazily when parent groups get expanded.
+Setting this to false causes all child dataSources to be loaded at initialization time.
+Note: when initializing the widget from an array (rather than from a HierarchicalDataSource instance), this option defaults to false, rather than true.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView loadOnDemand="loadOnDemand"&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="template-javalangstring">template <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Template for rendering each node.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView template="template"&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendotreeview-animation">kendo:treeView-animation</h3>
+
+<p>A collection of visual animations used when items are expanded or collapsed through user interaction.
+Setting this option to false will disable all animations.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/treeview/animation">kendo:treeView-animation</a>.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-animation&gt;&lt;/kendo:treeView-animation&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-checkboxes">kendo:treeView-checkboxes</h3>
+
+<p>If true or an object, renders checkboxes beside each node.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/treeview/checkboxes">kendo:treeView-checkboxes</a>.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-checkboxes&gt;&lt;/kendo:treeView-checkboxes&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-items">kendo:treeView-items</h3>
+
+<p>Contains the items of the treeview widget</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/treeview/items">kendo:treeView-items</a>.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-items&gt;&lt;/kendo:treeView-items&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-messages">kendo:treeView-messages</h3>
+
+<p>The text messages displayed in the widget. Use it to customize or localize the messages.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/treeview/messages">kendo:treeView-messages</a>.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-messages&gt;&lt;/kendo:treeView-messages&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="collapse-string">collapse <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered before a subgroup gets collapsed.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-collapse">collapse</a> event documentation.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView collapse="handle_collapse"&gt;
+&lt;/kendo:treeView&gt;
+&lt;script&gt;
+    function handle_collapse(e) {
+        // Code to handle the collapse event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound-string">dataBound <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered after the dataSource change event has been processed (adding/removing items);</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView dataBound="handle_dataBound"&gt;
+&lt;/kendo:treeView&gt;
+&lt;script&gt;
+    function handle_dataBound(e) {
+        // Code to handle the dataBound event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="drag-string">drag <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered while a node is being dragged.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-drag">drag</a> event documentation.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView drag="handle_drag"&gt;
+&lt;/kendo:treeView&gt;
+&lt;script&gt;
+    function handle_drag(e) {
+        // Code to handle the drag event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragend-string">dragend <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered after a node has been dropped.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-dragend">dragend</a> event documentation.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView dragend="handle_dragend"&gt;
+&lt;/kendo:treeView&gt;
+&lt;script&gt;
+    function handle_dragend(e) {
+        // Code to handle the dragend event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragstart-string">dragstart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered before the dragging of a node starts.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-dragstart">dragstart</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView dragstart="handle_dragstart"&gt;
+&lt;/kendo:treeView&gt;
+&lt;script&gt;
+    function handle_dragstart(e) {
+        // Code to handle the dragstart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="drop-string">drop <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a node is being dropped.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-drop">drop</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView drop="handle_drop"&gt;
+&lt;/kendo:treeView&gt;
+&lt;script&gt;
+    function handle_drop(e) {
+        // Code to handle the drop event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="expand-string">expand <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered before a subgroup gets expanded.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-expand">expand</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView expand="handle_expand"&gt;
+&lt;/kendo:treeView&gt;
+&lt;script&gt;
+    function handle_expand(e) {
+        // Code to handle the expand event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="change-string">change <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when the selection has changed (either by the user or through the select method).</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-change">change</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView change="handle_change"&gt;
+&lt;/kendo:treeView&gt;
+&lt;script&gt;
+    function handle_change(e) {
+        // Code to handle the change event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select-string">select <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a node is being selected by the user. Cancellable.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-select">select</a> event documentation.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView select="handle_select"&gt;
+&lt;/kendo:treeView&gt;
+&lt;script&gt;
+    function handle_select(e) {
+        // Code to handle the select event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="navigate-string">navigate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when the user moves the focus on another node</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-navigate">navigate</a> event documentation.</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView navigate="handle_navigate"&gt;
+&lt;/kendo:treeView&gt;
+&lt;script&gt;
+    function handle_navigate(e) {
+        // Code to handle the navigate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendotreeview-collapse">kendo:treeView-collapse</h3>
+
+<p>Triggered before a subgroup gets collapsed.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-collapse">collapse</a> event documentation.</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-collapse&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the collapse event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:treeView-collapse&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-databound">kendo:treeView-dataBound</h3>
+
+<p>Triggered after the dataSource change event has been processed (adding/removing items);</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-dataBound&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dataBound event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:treeView-dataBound&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-drag">kendo:treeView-drag</h3>
+
+<p>Triggered while a node is being dragged.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-drag">drag</a> event documentation.</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-drag&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the drag event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:treeView-drag&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-dragend">kendo:treeView-dragend</h3>
+
+<p>Triggered after a node has been dropped.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-dragend">dragend</a> event documentation.</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-dragend&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dragend event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:treeView-dragend&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-dragstart">kendo:treeView-dragstart</h3>
+
+<p>Triggered before the dragging of a node starts.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-dragstart">dragstart</a> event documentation.</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-dragstart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dragstart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:treeView-dragstart&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-drop">kendo:treeView-drop</h3>
+
+<p>Triggered when a node is being dropped.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-drop">drop</a> event documentation.</p>
+
+<h4 id="example-29">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-drop&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the drop event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:treeView-drop&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-expand">kendo:treeView-expand</h3>
+
+<p>Triggered before a subgroup gets expanded.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-expand">expand</a> event documentation.</p>
+
+<h4 id="example-30">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-expand&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the expand event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:treeView-expand&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-change">kendo:treeView-change</h3>
+
+<p>Triggered when the selection has changed (either by the user or through the select method).</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-change">change</a> event documentation.</p>
+
+<h4 id="example-31">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-change&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the change event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:treeView-change&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-select">kendo:treeView-select</h3>
+
+<p>Triggered when a node is being selected by the user. Cancellable.</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-select">select</a> event documentation.</p>
+
+<h4 id="example-32">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-select&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the select event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:treeView-select&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+<h3 id="kendotreeview-navigate">kendo:treeView-navigate</h3>
+
+<p>Triggered when the user moves the focus on another node</p>
+
+<p>For additional information check the <a href="/api/web/treeview#events-navigate">navigate</a> event documentation.</p>
+
+<h4 id="example-33">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:treeView&gt;
+    &lt;kendo:treeView-navigate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the navigate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:treeView-navigate&gt;
+&lt;/kendo:treeView&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,1157 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Upload</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to configure the ability to upload files in an asynchronous manner in Upload UI widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/upload.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouiupload">kendo.ui.Upload</h1>
+
+<p>Represents the Kendo UI Upload. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="async-object">async <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Configures the ability to upload a file(s) in an asynchronous manner. Please refer to the
+<a href="/getting-started/web/upload/modes#asynchronous-mode">async mode help topic</a>
+for more details.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="asyncautoupload-booleandefault-true">async.autoUpload <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>The selected files will be uploaded immediately by default. You can change this behavior by setting
+autoUpload to false.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove",
+            autoUpload: false
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="asyncbatch-booleandefault-false">async.batch <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>The selected files will be uploaded in separate requests, if this is supported by the browser.
+You can change this behavior by setting batch to true.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove",
+            batch: true
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="asyncremovefield-stringdefault-filenames">async.removeField <code class="language-plaintext highlighter-rouge">String</code><em>(default: "fileNames")</em></h3>
+
+<p>The name of the form field submitted to the Remove URL.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove",
+            removeField: "customRemoveField"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="asyncremoveurl-string">async.removeUrl <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The URL of the handler responsible for removing uploaded files (if any). The handler must accept POST
+requests containing one or more "fileNames" fields specifying the files to be deleted.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="asyncremoveverb-stringdefault-post">async.removeVerb <code class="language-plaintext highlighter-rouge">String</code><em>(default: "POST")</em></h3>
+
+<p>The HTTP verb to be used by the remove action.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove",
+            removeVerb: "DELETE"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="asyncsavefield-string">async.saveField <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The name of the form field submitted to the save URL. The default value is the input name.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove",
+            saveField: "customSaveField"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="asyncsaveurl-string">async.saveUrl <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The URL of the handler that will receive the submitted files. The handler must accept POST requests
+containing one or more fields with the same name as the original input name.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="asyncwithcredentials-boolean-default-true">async.withCredentials <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Controls whether to send credentials (cookies, headers) for cross-site requests.
+This option will be ignored if the browser doesn"t support File API.</p>
+
+<h3 id="enabled-booleandefault-true">enabled <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>Enables (<strong>true</strong>) or disables (<strong>false</strong>) an <strong>Upload</strong>. A disabled
+<strong>Upload</strong> may be re-enabled via enable().</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        enabled: false
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="files-array">files <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>List of files to be initially rendered in the Upload widget files list.</p>
+
+<h4 id="each-file-object-in-the-array-should-contain-the-following-properties">Each file object in the array should contain the following properties</h4>
+
+<ul>
+  <li>name</li>
+  <li>size</li>
+  <li>extension</li>
+</ul>
+
+<blockquote>
+  <p><strong>Important:</strong> This option could be used only when the Upload widget is in <a href="/getting-started/web/upload/modes#asynchronous-mode">async mode</a>. The files will be rendered as successfully uploaded.</p>
+</blockquote>
+
+<h4 id="example---passing-an-array-of-initial-files">Example - passing an array of initial files</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="upload" /&gt;
+&lt;script&gt;
+    var files = [
+	    { name: "file1.doc", size: 525, extension: ".doc" },
+	    { name: "file2.jpg", size: 600, extension: ".jpg" },
+	    { name: "file3.xls", size: 720, extension: ".xls" },
+    ];
+
+	$("#upload").kendoUpload({
+	    async: {
+	        saveUrl: "Home/Save",
+	        removeUrl: "Home/Remove",
+	        autoUpload: true
+	    },
+	    files: files
+	});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localization-object">localization <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Sets the strings rendered by the Upload.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        localization: {
+            select: "customSelect"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localizationcancel-string">localization.cancel <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the text of the cancel button text.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        localization: {
+            cancel: "customCancel"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localizationdropfileshere-stringdefault-drop-files-here-to-upload">localization.dropFilesHere <code class="language-plaintext highlighter-rouge">String</code><em>(default: "drop files here to upload")</em></h3>
+
+<p>Sets the drop zone hint.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        localization: {
+            dropFilesHere: "customDropFilesHere"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localizationheaderstatusuploaded-string">localization.headerStatusUploaded <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the header status message for uploaded files.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        localization: {
+            headerStatusUploaded: "customHeaderStatusUploaded"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localizationheaderstatusuploading-string">localization.headerStatusUploading <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the header status message for files that are being uploaded.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        localization: {
+            headerStatusUploading: "customHeaderStatusUploading"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localizationremove-string">localization.remove <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the text of the remove button text.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        localization: {
+            remove: "customRemove"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localizationretry-string">localization.retry <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the text of the retry button text.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        localization: {
+            retry: "customRetry"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localizationselect-string">localization.select <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the "Select…" button text.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        localization: {
+            select: "customSelect"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localizationstatusfailed-string">localization.statusFailed <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the status message for failed uploads.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        localization: {
+            statusFailed: "customStatusFailed"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localizationstatusuploaded-string">localization.statusUploaded <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the status message for uploaded files.</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        localization: {
+            statusUploaded: "customStatusUploaded"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localizationstatusuploading-string">localization.statusUploading <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the status message for files that are being uploaded.</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        localization: {
+            statusUploading: "customStatusUploading"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="localizationuploadselectedfiles-string">localization.uploadSelectedFiles <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the text of the "Upload files" button.</p>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        localization: {
+            uploadSelectedFiles: "customUploadSelectedFiles"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="multiple-booleandefault-true">multiple <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>Enables (<strong>true</strong>) or disables (<strong>false</strong>) the ability to select multiple files.
+If <strong>false</strong>, users will be able to select only one file at a time. Note: This option does not
+limit the total number of uploaded files in an asynchronous configuration.</p>
+
+<h4 id="example-21">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        multiple: false
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="showfilelist-booleandefault-true">showFileList <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>Enables (<strong>true</strong>) or disables (<strong>false</strong>) the ability to display a file listing
+for uploading a file(s). Disabling a file listing may be useful you wish to customize the UI; use the
+client-side events to build your own UI.</p>
+
+<h4 id="example-22">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        showFileList: false
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="template-stringfunction">template <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+<p>The <a href="/api/framework/kendo#methods-template">template</a> used to render the files in the list</p>
+
+<h4 id="template-data-array">Template data <code class="language-plaintext highlighter-rouge">Array</code></h4>
+
+<ul>
+  <li>name - the name of the file (string of all file names separated with comma, if batch upload is used)</li>
+  <li>size - the file size in bytes / the total file size if batch upload is used (null if not available)</li>
+  <li>files - array with information about all selected files - name, size and extension</li>
+</ul>
+
+<blockquote>
+  <p><strong>Important:</strong> You should add the following markup to the template in order to render an action button for each file: <code class="language-plaintext highlighter-rouge">&lt;button type='button' class='k-upload-action'&gt;&lt;/button&gt;</code>.
+To use the default progress-bar, you should add the following markup at the beginning of the template <code class="language-plaintext highlighter-rouge">&lt;span class='k-progress'&gt;&lt;/span&gt;</code> and render the rest of the template relative to it. Please check <a href="http://demos.telerik.com/kendo-ui/web/upload/templates.html">Upload Templates</a> for a live demo.</p>
+</blockquote>
+
+<h4 id="example---specify-template-as-a-function">Example - specify template as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="upload" /&gt;
+&lt;script id="fileTemplate" type="text/x-kendo-template"&gt;
+	&lt;div&gt;
+	    &lt;p&gt;Name: #=name#&lt;/p&gt;
+	    &lt;p&gt;Size: #=size# bytes&lt;/p&gt;
+    	&lt;p&gt;Extension: #=files[0].extension#&lt;/p&gt;
+    	&lt;button type='button' class='k-upload-action' style='position: absolute; top: 0; right: 0;'&gt;&lt;/button&gt;
+	&lt;/div&gt;
+&lt;/script&gt;
+&lt;script&gt;
+	$("#upload").kendoUpload({
+	    template: kendo.template($('#fileTemplate').html())
+	});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-template-as-a-string">Example - specify template as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="upload" /&gt;
+&lt;script&gt;
+	$("#upload").kendoUpload({
+    template: "&lt;div&gt;&lt;p&gt;Name: #=name#&lt;/p&gt;" +
+              "&lt;p&gt;Size: #=size# bytes&lt;/p&gt;&lt;p&gt;Extension: #=files[0].extension#&lt;/p&gt;" +
+              "&lt;button type='button' class='k-upload-action' style='position: absolute; top: 0; right: 0;'&gt;&lt;/button&gt;" +
+              "&lt;/div&gt;"
+	});	
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="destroy">destroy</h3>
+<p>Prepares the <strong>Upload</strong> for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the Upload element from DOM.</p>
+</blockquote>
+
+<h4 id="example-23">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="upload" /&gt;
+&lt;script&gt;
+    $("#upload").kendoUpload({
+        select: function () {
+            //sample event
+        }
+    });
+
+    var upload = $("#upload").data("kendoUpload");
+
+    // detach events and prepare for safe removal
+    upload.destroy();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="disable">disable</h3>
+
+<p>Disables the upload.</p>
+
+<h4 id="example-24">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="upload" /&gt;
+&lt;script&gt;
+    $("#upload").kendoUpload();
+
+    var upload = $("#upload").data("kendoUpload");
+
+    // disables the upload
+    upload.disable();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable">enable</h3>
+
+<p>Enables the upload.</p>
+
+<h4 id="example-25">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="upload" /&gt;
+&lt;script&gt;
+    // upload is disabled when initialized
+    $("#upload").kendoUpload({
+        enabled: false
+    });
+
+    var upload = $("#upload").data("kendoUpload");
+
+    // enables the upload
+    upload.enable();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="enable-boolean-optional">enable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(optional)</em></h5>
+
+<p>The argument, which defines whether to enable/disable the upload.</p>
+
+<h3 id="toggle">toggle</h3>
+
+<p>Toggles the upload enabled state.</p>
+
+<h4 id="example-26">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="upload" /&gt;
+&lt;script&gt;
+    // upload is disabled when initialized
+    $("#upload").kendoUpload({
+        enabled: false
+    });
+
+    var upload = $("#upload").data("kendoUpload");
+
+    // toggles the upload enabled state
+    upload.toggle();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="enable-boolean">enable <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>(Optional) The new enabled state.</p>
+
+<h2 id="events">Events</h2>
+
+<h3 id="cancel">cancel</h3>
+
+<p>Fires when the upload has been cancelled while in progress.</p>
+
+<p>Note: The cancel event fires only when the upload is in
+<a href="/getting-started/web/upload/modes#asynchronous-mode">async mode</a>.</p>
+
+<h4 id="example-27">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        cancel: onCancel
+    });
+
+    function onCancel(e) {
+        // Array with information about the uploaded files
+        var files = e.files;
+
+        // Process the Cancel event
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="efiles-array">e.files <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>List of the files that were uploaded or removed . Each file has:</p>
+
+<ul>
+  <li>name</li>
+  <li>extension - the file extension
+    including the leading dot - ".jpg", ".png", etc.</li>
+  <li>size - the file size in bytes (null if not available)</li>
+</ul>
+
+<h3 id="complete">complete</h3>
+
+<p>Fires when all active uploads have completed either successfully or with errors.</p>
+
+<p>Note: The complete event fires only when the upload is in
+<a href="/getting-started/web/upload/modes#asynchronous-mode">async mode</a>.</p>
+
+<h4 id="example-28">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        complete: onComplete
+    });
+
+    function onComplete(e) {
+        // The upload is now idle
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="error">error</h3>
+
+<p>Fires when an upload / remove operation has failed.</p>
+
+<p>Note: The error event fires only when the upload is in
+<a href="/getting-started/web/upload/modes#asynchronous-mode">async mode</a>.</p>
+
+<h4 id="example-29">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        error: onError
+    });
+
+    function onError(e) {
+        // Array with information about the uploaded files
+        var files = e.files;
+
+        if (e.operation == "upload") {
+            alert("Failed to upload " + files.length + " files");
+        }
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="efiles-array-1">e.files <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>List of the files that were uploaded or removed . Each file has:</p>
+
+<ul>
+  <li>name</li>
+  <li>extension - the file extension
+    including the leading dot - ".jpg", ".png", etc.</li>
+  <li>size - the file size in bytes (null if not available)</li>
+</ul>
+
+<h5 id="eoperation-string">e.operation <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<ul>
+  <li>"upload" or "remove".</li>
+</ul>
+
+<h5 id="exmlhttprequest-object">e.XMLHttpRequest <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>This is either the original XHR used for the operation or a stub containing:</p>
+
+<ul>
+  <li>responseText</li>
+  <li>status</li>
+  <li>statusText
+Verify that this is an actual XHR before accessing any other fields.</li>
+</ul>
+
+<h3 id="progress">progress</h3>
+
+<p>Fires when upload progress data is available.</p>
+
+<p>Note: The progress event fires only when the upload is in
+<a href="/getting-started/web/upload/modes#asynchronous-mode">async mode</a>.</p>
+
+<p>Note: The progress event is not fired in IE.
+See <a href="/getting-started/web/upload/supported-browsers">Supported Browsers</a></p>
+
+<h4 id="example-30">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        progress: onProgress
+    });
+
+    function onProgress(e) {
+        // Array with information about the uploaded files
+        var files = e.files;
+
+        console.log(e.percentComplete);
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="efiles-array-2">e.files <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>List of the files that are being uploaded. Each file has:</p>
+
+<ul>
+  <li>name</li>
+  <li>extension - the file extension
+    including the leading dot - ".jpg", ".png", etc.</li>
+  <li>size - the file size in bytes (null if not available)</li>
+</ul>
+
+<h5 id="percentcomplete-number">percentComplete <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>Upload progress (0 - 100)</p>
+
+<h3 id="remove">remove</h3>
+
+<p>Fires when an uploaded file is about to be removed.
+Cancelling the event will prevent the remove.</p>
+
+<h4 id="example-31">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        remove: onRemove
+    });
+
+    function onRemove(e) {
+        // Array with information about the removed files
+        var files = e.files;
+
+        // Process the Remove event
+        // Optionally cancel the remove operation by calling
+        // e.preventDefault()
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="efiles-array-3">e.files <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>List of the files that were uploaded or removed . Each file has:</p>
+
+<ul>
+  <li>name</li>
+  <li>extension - the file extension
+    including the leading dot - ".jpg", ".png", etc.</li>
+  <li>size - the file size in bytes (null if not available)</li>
+</ul>
+
+<h5 id="data-object">data <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>Optional object that will be
+sent to the save handler in the form of key/value pairs.</p>
+
+<h3 id="select">select</h3>
+
+<p>Triggered when a file(s) is selected. Note: Cancelling this event will prevent the selection from
+occurring.</p>
+
+<h4 id="wire-up-an-event-handler-that-triggered-when-a-user-selects-a-files">Wire-up an event handler that triggered when a user selects a file(s)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        select: onSelect
+    });
+
+    function onSelect(e) {
+        $.each(e.files, function (index, value) {
+            console.log("Name: " + value.name);
+            console.log("Size: " + value.size + " bytes");
+            console.log("Extension: " + value.extension);
+        });
+    };
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-4">Event Data</h4>
+
+<h5 id="e-object">e <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>A custom event object. The event can be cancelled just like when using a standard jQuery event object via <code class="language-plaintext highlighter-rouge">e.preventDefault();</code></p>
+
+<h5 id="efiles-array-4">e.files <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>An array of the selected files. Each item of the array is an object with the following properties:</p>
+
+<ul>
+  <li>name - the name of a selected file, including its extension</li>
+  <li>extension - the file extension of a selected file, including the leading dot (i.e. ".jpg")</li>
+  <li>size - the size (in bytes) of a selected file (null, if unavailable)</li>
+  <li>rawFile - an in-memory representation of a selected file</li>
+</ul>
+
+<h3 id="success">success</h3>
+
+<p>Fires when an upload / remove operation has been completed successfully.</p>
+
+<p>Note: The success event fires only when the upload is in
+<a href="/getting-started/web/upload/modes#asynchronous-mode">async mode</a>.</p>
+
+<h4 id="example-32">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        success: onSuccess
+    });
+
+    function onSuccess(e) {
+        // Array with information about the uploaded files
+        var files = e.files;
+
+        if (e.operation == "upload") {
+            alert("Successfully uploaded " + files.length + " files");
+        }
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-5">Event Data</h4>
+
+<h5 id="efiles-array-5">e.files <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>List of the files that were uploaded or removed . Each file has:</p>
+
+<ul>
+  <li>name</li>
+  <li>extension - the file extension
+    including the leading dot - ".jpg", ".png", etc.</li>
+  <li>size - the file size in bytes (null if not available)</li>
+</ul>
+
+<h5 id="eoperation-string-1">e.operation <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>"upload" or "remove".</p>
+
+<h5 id="eresponse-string">e.response <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>the response object returned by the server.</p>
+
+<h5 id="exmlhttprequest-object-1">e.XMLHttpRequest <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>This is either the original XHR used for the operation or a stub containing:</p>
+
+<ul>
+  <li>responseText</li>
+  <li>status</li>
+  <li>statusText
+Verify that this is an actual XHR before accessing any other fields.</li>
+</ul>
+
+<h3 id="upload">upload</h3>
+
+<p>Fires when one or more files are about to be uploaded.
+Cancelling the event will prevent the upload.</p>
+
+<p>Note: The upload event fires only when the upload is in
+<a href="/getting-started/web/upload/modes#asynchronous-mode">async mode</a>.</p>
+
+<h4 id="example-33">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        upload: onUpload
+    });
+
+    function onUpload(e) {
+        // Array with information about the uploaded files
+        var files = e.files;
+
+        // Check the extension of each file and abort the upload if it is not .jpg
+        $.each(files, function () {
+            if (this.extension.toLowerCase() != ".jpg") {
+                alert("Only .jpg files can be uploaded")
+                e.preventDefault();
+            }
+        });
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example-34">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="file" name="files" id="photos" /&gt;
+&lt;script&gt;
+    $("#photos").kendoUpload({
+        async: {
+            saveUrl: "save",
+            removeUrl: "remove"
+        },
+        upload: onUpload
+    });
+
+    function onUpload(e) {
+        var xhr = e.XMLHttpRequest;
+        if (xhr) {
+            xhr.addEventListener("readystatechange", function (e) {
+                if (xhr.readyState == 1 /* OPENED */) {
+                    xhr.setRequestHeader("X-Foo", "Bar");
+                }
+            });
+        }
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-6">Event Data</h4>
+
+<h5 id="efiles-array-6">e.files <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>List of the files that will be uploaded. Each file has:</p>
+
+<ul>
+  <li>name</li>
+  <li>extension - the file extension
+    including the leading dot - ".jpg", ".png", etc.</li>
+  <li>size - the file size in bytes (null if not available)</li>
+</ul>
+
+<h5 id="data-object-1">data <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>Optional object that will be
+sent to the save handler in the form of key/value pairs.</p>
+
+<h5 id="exmlhttprequest-object-2">e.XMLHttpRequest <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>Note: Will be <em>undefined</em> if the browser does not support File API.</p>
+
+<p>The XMLHttpRequest instance that will be used to carry out the upload.
+The request will be in UNSENT state.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

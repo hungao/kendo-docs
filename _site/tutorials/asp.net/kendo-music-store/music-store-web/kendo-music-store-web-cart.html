@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/kendo-music-store/music-store-web/kendo-music-store-web-cart.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="shopping-cart-implementation---kendo-music-store">Shopping Cart Implementation - Kendo Music Store</h1>
+
+<p>The shopping cart for the Kendo Music Store is in <strong>Scripts\App\cart.js</strong>.
+All the functionality for the cart is encapsulated in a single object, created by calling the <strong>Cart()</strong> constructor.</p>
+
+<h2 id="storing-cart-data">Storing Cart Data</h2>
+
+<p>The data for the items in the cart is held in the browser"s HTML5 Local Storage.
+No data is sent back to the server when items are added or removed from the cart.</p>
+
+<p>Anywhere in the Music Store that the cart needs to be accessed, the <strong>cart.getCart()</strong> method is called.
+This returns a Kendo DataSource object that contains the cart items.
+It also listens for the <strong>change</strong> event on the DataSource and on change recalculates the total price for each item.
+Once the totals are updated, the cart data is also updated in the local storage.</p>
+
+<h2 id="benefits-of-a-shared-cart-datasource">Benefits of a Shared Cart DataSource</h2>
+
+<p>By providing a DataSource to bind against for cart data we give all parts of the application a way to be notified
+of cart data updates.
+For example, since the cart menu widget and cart checkout view are bound to the same datasource, if you navigate
+to the checkout page and remove an item from the cart the cart menu widget will immediately update.
+No extra JavaScript had to be written to accomplish this. It is notified of the DataSource change and knows to update.</p>
+
+<h2 id="tracking-the-total-price">Tracking the Total Price</h2>
+
+<p>When the <strong>getCart()</strong> function creates a DataSource to represent the cart data it adds an aggregate for the totals.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.getCart = function () {
+    if (!cartData) {
+        cartData = new kendo.data.DataSource({
+            data: _getCartJson(),
+            change: function (data) {
+                for (var i = 0; i &lt; data.items.length; i++) {
+                    var item = data.items[i];
+                    item.set("Total", item.Quantity * item.Album.Price);
+                }
+                _setCartJson();
+            },
+            aggregate: [{ field: "Total", aggregate: "sum" }]
+        });
+    }
+    return cartData;
+};
+</code></pre></div></div>
+
+<p>When any item changes the <strong>change</strong> event is triggered, which calls a function that loops over all the items
+and sets the "Total" property on the item to the Price * Quantity.</p>
+
+<p>There is also an <strong>aggregate</strong> defined on the DataSource that sums the values of the Total properties.</p>
+
+<p>A convenience function is defined on the cart that retrieves the value of the aggregate:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.getTotalPrice = function () {
+    // Return the aggregate of album totals.
+    // When there are no albums in the cart, the '.Total' aggregate does not exist.
+    var aggregates = that.getCart().aggregates();
+    return aggregates.Total ? aggregates.Total.sum : 0;
+}
+</code></pre></div></div>
+
+<p>When the set of items in the DataSource is empty, the aggregate will not be created,
+so we need to check for its existence before reading its value.
+The array of all the aggregates is retrieved by calling the <strong>.aggregates()</strong> function.
+The aggregate is then accessed by its field name, and finally its aggregate name.
+If the "Total" aggregate does not exist, we default to 0 since the cart is empty.</p>
+
+<p>This gives us a convenient way of retrieving the total price for all items in the cart from anywhere in the Music Store
+by calling the <strong>store.cart.getTotal()</strong> function.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

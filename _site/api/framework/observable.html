@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/framework/observable.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendoobservable">kendo.Observable</h1>
+
+<p>Provides support for firing events. Inherits from <a href="/api/framework/class">kendo.Class</a>.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="bind">bind</h3>
+
+<p>Attaches a handler to an event.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="eventname-string">eventName <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the event.</p>
+
+<h5 id="handler-function">handler <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>A function to execute each time the event is triggered. That function should have a single parameter which will contain any event specific data.</p>
+
+<blockquote>
+  <p>Important: The context (<code class="language-plaintext highlighter-rouge">this</code>) of the <code class="language-plaintext highlighter-rouge">handler</code> function is set to the observable object itself.</p>
+</blockquote>
+
+<h4 id="example---subscribing-to-an-event">Example - subscribing to an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var obj = new kendo.Observable();
+obj.bind("myevent", function(e) {
+    console.log(e.sender === obj); // outputs "true"
+    console.log(this === obj); // also outputs "true"
+});
+obj.trigger("myevent"); // causes the handler to be executed
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="one">one</h3>
+
+<p>Attaches a handler to an event. The handler is executed only once.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="eventname-string-1">eventName <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the event.</p>
+
+<h5 id="handler-function-1">handler <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>A function to execute each time the event is triggered. That function should have a single parameter which will contain any event specific data.</p>
+
+<blockquote>
+  <p>Important: The context (<code class="language-plaintext highlighter-rouge">this</code>) of the <code class="language-plaintext highlighter-rouge">handler</code> function is set to the observable object itself.</p>
+</blockquote>
+
+<h4 id="example---subscribing-to-an-event-1">Example - subscribing to an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var obj = new kendo.Observable();
+var numberOfCalls = 0;
+obj.one("myevent", function() {
+    numberOfCalls ++; // increment the counter every time the handler is executed
+});
+obj.trigger("myevent"); // fire the event
+obj.trigger("myevent"); // fire the event
+console.log(numberOfCalls); // outputs "1"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="trigger">trigger</h3>
+
+<p>Executes all handlers attached to the given event.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="eventname-string-2">eventName <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the event to trigger.</p>
+
+<h5 id="eventdata-object">eventData <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>Optional event data which will be passed as an argument to the event handlers.</p>
+
+<h4 id="example---trigger-an-event">Example - trigger an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var obj = new kendo.Observable();
+obj.bind("myevent", function(e) {
+    console.log(e.data); // outputs "data"
+});
+obj.trigger("myevent", { data: "data" });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="unbind">unbind</h3>
+
+<p>Remove a previously attached event handler.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="eventname-string-optional">eventName <code class="language-plaintext highlighter-rouge">String</code> <em>(optional)</em></h5>
+
+<p>The name of the event. If not specified all handlers of all events will be removed.</p>
+
+<h5 id="handler-function-optional">handler <code class="language-plaintext highlighter-rouge">Function</code> <em>(optional)</em></h5>
+
+<p>The handler which should no longer be executed. If not specified all handlers listening to that event will be removed.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var obj = new kendo.Observable();
+var numberOfCalls = 0;
+function handler(e) {
+    numberOfCalls ++;
+}
+obj.bind("myevent", handler); // subscribe to the event
+obj.trigger("myevent"); // fire the event
+obj.unbind("myevent", handler); // unsubscribe from the event
+obj.trigger("myevent"); // fire the event
+console.log(numberOfCalls); // outputs "1"
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

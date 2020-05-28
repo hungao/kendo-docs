@@ -1,0 +1,455 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Kendo UI widget fundamentals</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Initialize Kendo UI widgets, set configuration, get the client object, use event binding.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/widgets.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-ui-widget-fundamentals">Kendo UI Widget Fundamentals</h1>
+
+<p>Kendo UI is based on the <a href="http://jquery.com">jQuery</a> library. The Kendo UI widgets are exposed as jQuery plugins. The name of the jQuery plugin is formed
+by adding the "kendo" prefix to the name of the Kendo UI widget. For example the Kendo AutoComplete is exposed as "kendoAutoComplete". Kendo UI Mobile widgets
+are exposed by adding the "kendoMobile" prefix to the name of the widget e.g. "kendoMobileListView".</p>
+
+<h2 id="initializing-kendo-ui-widgets-with-jquery">Initializing Kendo UI widgets with jQuery</h2>
+
+<p>Kendo UI widgets are created from existing HTML elements. You just need to find the target element using jQuery and call the corresponding jQuery plugin.</p>
+
+<h3 id="example---initialize-a-kendo-ui-widget">Example - initialize a Kendo UI widget</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autocomplete" /&gt;
+&lt;script&gt;
+$("#autocomplete").kendoAutoComplete(["Apples", "Oranges", "Grapes"]);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">$("#autocomplete").kendoAutoComplete(["Apples", "Oranges", "Grapes"]);</code> statement does two things:</p>
+
+<ol>
+  <li>Finds the element whose <code class="language-plaintext highlighter-rouge">id</code> attribute set to <code class="language-plaintext highlighter-rouge">autocomplete</code>. The <code class="language-plaintext highlighter-rouge">#autocomplete</code> argument is an <a href="http://api.jquery.com/id-selector/">id selector</a>.</li>
+  <li>Initializes a new Kendo AutoComplete widget via the <code class="language-plaintext highlighter-rouge">kendoAutoComplete</code> jQuery plugin and passes the <code class="language-plaintext highlighter-rouge">["Apples", "Oranges", "Grapes"]</code> array as configuration.</li>
+</ol>
+
+<blockquote>
+  <p><strong>Important:</strong> A Kendo UI widget will <strong>not</strong> be created if jQuery <strong>can"t</strong> find the element specified by the selector.</p>
+</blockquote>
+
+<p>You can use any valid <a href="http://api.jquery.com/category/selectors/">jQuery selector</a> when initializing Kendo UI Widgets.</p>
+
+<blockquote>
+  <p><strong>Note:</strong> A Kendo UI widget will be initialized for every element that matches the specified jQuery selector.</p>
+</blockquote>
+
+<blockquote>
+  <p>All Kendo UI widgets, which are defined with a <strong>server wrapper</strong>, are <strong>initialized automatically</strong>. If a widget is <a href="/getting-started/widgets#duplicate-kendo-ui-widget-initialization">initialized again</a>, this will cause unexpected side effects.</p>
+</blockquote>
+
+<h2 id="configuring-kendo-ui-widgets">Configuring Kendo UI widgets</h2>
+
+<p>You can configure a Kendo UI widget by passing a configuration object as an argument of the jQuery plugin. That object is a set of key/value pairs which configure the Kendo UI widget.</p>
+
+<h3 id="example---configure-a-kendo-ui-widget">Example - configure a Kendo UI widget</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="grid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#grid").kendoGrid({
+  height: 200,
+  columns:[
+      {
+          field: "FirstName",
+          title: "First Name"
+      },
+      {
+          field: "LastName",
+          title: "Last Name"
+      }
+  ],
+  dataSource: {
+      data: [
+          {
+              FirstName: "John",
+              LastName: "Doe"
+          },
+          {
+              FirstName: "Jane",
+              LastName: "Doe"
+          }
+      ]
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>This example sets the <a href="/api/web/grid#height-numberstring">height</a>, <a href="/api/web/grid#columns-array">columns</a> and <a href="/api/web/grid#datasource-kendodatadatasource--object">dataSource</a> configuration options of the grid widget.</p>
+
+<blockquote>
+  <p>The <a href="/api/introduction">api</a> documentation lists all configuration options supported by each Kendo UI widget.</p>
+</blockquote>
+
+<h2 id="getting-reference-to-a-kendo-ui-widget">Getting reference to a Kendo UI widget</h2>
+
+<p>Kendo UI widgets are initialized with a jQuery plugin method, as shown above. Calling one of these methods will not return the Kendo UI widget instance, though. Instead, the jQuery convention of returning the selected DOM element is maintained. This allows jQuery methods to be chained on the selected element, but does not provide immediate access to the Kendo UI widget instance.</p>
+
+<p>To get a reference to a widget instance, use the <a href="http://api.jquery.com/data/">jQuery data</a> method to ask for the control by specifying the control type, prefixed with "kendo".</p>
+
+<h3 id="example---get-reference-to-a-kendo-ui-widget">Example - get reference to a Kendo UI widget</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autocomplete" /&gt;
+&lt;script&gt;
+// initialization code here...
+$("#autocomplete").kendoAutoComplete(["Apples", "Oranges", "Grapes"]);
+// ...
+// get the widget instance / object
+var autocomplete = $("#autocomplete").data("kendoAutoComplete");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">$("#autocomplete").data("kendoAutoComplete")</code> statement returns the Kendo AutoComplete widget instance.</p>
+
+<blockquote>
+  <p>Kendo UI widget instances are associated with their elements via the <a href="http://api.jquery.com/data/">jQuery data</a> method. The key passed to the jQuery data method
+is the name of the jQuery plugin itself - "kendoAutoComplete", "kendoGrid" etc.</p>
+</blockquote>
+
+<h2 id="duplicate-kendo-ui-widget-initialization">Duplicate Kendo UI widget initialization</h2>
+
+<p>Please be careful <strong>not</strong> to initialize an existing Kendo UI widget instance again. This is especially applicable to Kendo UI server wrappers (they are initialized automatically), or scenarios in which a widget is created in an event handler that can be executed multiple times. A common mistake is to recreate a widget instance when the goal is simply to obtain the instance object (see below). Duplicate initialization is unnecessary, unsupported and usually leads to unexpected side effects. If a widget instance must be recreated, it must be <a href="/getting-started/widgets#destroying-kendo-ui-widgets">destroyed</a> first.</p>
+
+<h3 id="example---incorrect-duplicate-initialization">Example - incorrect duplicate initialization</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autocomplete" /&gt;
+&lt;script&gt;
+// initialization code here...
+$("#autocomplete").kendoAutoComplete(["Apples", "Oranges", "Grapes"]);
+// ...
+// correct - instance reference is obtained:
+var autocomplete = $("#autocomplete").data("kendoAutoComplete");
+// incorrect - instance reference is obtained while creating a duplicate instance:
+var duplicate = $("#autocomplete").kendoAutoComplete().data("kendoAutoComplete");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="getting-reference-to-an-unknown-kendo-ui-widget">Getting reference to an unknown Kendo UI widget</h2>
+
+<p>In some rare occasions, you may need to check whether a given DOM element is part of a Kendo UI widget and in that case, obtain the widget instance and use its API. Here is the required procedure:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// 1. There is some DOM element, e.g. &lt;input id="myID" /&gt;
+var element = $("#myID");
+
+// 2. Is the element part of a Kendo UI widget?
+var isFromWidget = element.closest(".k-widget").length &gt; 0;
+
+// 3. Which is the element that may have a client Kendo UI widget instance attached?
+var widgetElement = element.closest("[data-" + kendo.ns + "role]");
+
+// 4. How to obtain reference to the Kendo UI widget instance from the specified element?
+var widgetObject = kendo.widgetInstance(widgetElement);
+
+// 5. What is the Kendo UI widget name?
+var widgetName = widgetObject.options.name;
+</code></pre></div></div>
+
+<p>Here is some more information about the <a href="/api/framework/kendo#methods-widgetInstance">kendo.widgetInstance method</a>.</p>
+
+<h2 id="using-the-api-of-a-kendo-ui-widget">Using the API of a Kendo UI widget</h2>
+
+<p>The Kendo UI widgets expose a set of methods which can alter or query their state.</p>
+
+<h3 id="example---use-the-api-of-a-kendo-ui-widget">Example - use the API of a Kendo UI widget</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autocomplete" /&gt;
+&lt;script&gt;
+$("#autocomplete").kendoAutoComplete(["Apples", "Oranges", "Grapes"]);
+var autocomplete = $("#autocomplete").data("kendoAutoComplete");
+autocomplete.value("Cherries");
+var value = autocomplete.value();
+alert(value); // Displays "Cherries"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>This example does the following:</p>
+
+<ol>
+  <li>Initializes a Kendo AutoComplete widget.</li>
+  <li>Gets a reference to the AutoComplete. The reference is required for invoking methods.</li>
+  <li>Sets the value of the AutoComplete by invoking the <a href="/api/web/autocomplete#value">value</a> method and passing the string <code class="language-plaintext highlighter-rouge">"Cherries"</code> as the argument.</li>
+  <li>Gets the value of the AutoComplete by invoking the <a href="/api/web/autocomplete#value">value</a> without arguments.</li>
+</ol>
+
+<blockquote>
+  <p>The <a href="/api/introduction">api</a> documentation lists all methods supported by each Kendo UI widget.</p>
+</blockquote>
+
+<h2 id="subscribing-to-the-events-of-a-kendo-ui-widget">Subscribing to the events of a Kendo UI widget</h2>
+
+<p>Kendo UI widget events are fired when their state is changed. There are two ways to handle events:</p>
+
+<ul>
+  <li>Specify the JavaScript function which will handle the event during widget initialization.</li>
+  <li>Use the <code class="language-plaintext highlighter-rouge">bind</code> method of the widget.</li>
+</ul>
+
+<h3 id="example---subscribe-to-an-event-during-initialization">Example - subscribe to an event during initialization</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autocomplete" /&gt;
+&lt;script&gt;
+function autocomplete_change() {
+    // Handle the "change" event
+}
+$("#autocomplete").kendoAutoComplete({
+    change: autocomplete_change
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>This example initializes a Kendo AutoComplete widget and configures it to invoke the <code class="language-plaintext highlighter-rouge">autocomplete_change</code> JavaScript function when the <strong>change</strong> event is fired.</p>
+
+<h3 id="example---subscribe-to-an-event-using-the-bind-method">Example - subscribe to an event using the bind method</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autocomplete" /&gt;
+&lt;script&gt;
+function autocomplete_change() {
+    // Handle the "change" event
+}
+$("#autocomplete").kendoAutoComplete();
+var autocomplete = $("#autocomplete").data("kendoAutoComplete");
+autocomplete.bind("change", autocomplete_change);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>This <code class="language-plaintext highlighter-rouge">autocomplete.bind("change", autocomplete_change)</code> statement attaches the <code class="language-plaintext highlighter-rouge">autocomplete_change</code> JavaScript function to the <strong>change</strong> event. As a result, the <code class="language-plaintext highlighter-rouge">autocomplete_change</code>
+function will be invoked when the <strong>change</strong> event is fired.</p>
+
+<blockquote>
+  <p>The <a href="/api/introduction">api</a> documentation lists all events supported by each Kendo UI widget.</p>
+</blockquote>
+
+<h3 id="event-handler">Event Handler</h3>
+
+<p>The event handler is the JavaScript function invoked when the event is fired. The argument of the event handler is a JavaScript object which contains event-specific data.</p>
+
+<p>You can get a reference to the widget which fired the event via the <strong><code class="language-plaintext highlighter-rouge">sender</code></strong> field of the event argument.
+The function context of the event handler (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) is also set to the widget instance.</p>
+
+<h4 id="example---use-the-sender-field-of-the-event-argument">Example - use the sender field of the event argument</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autocomplete" /&gt;
+&lt;script&gt;
+function autocomplete_change(e) {
+    var autocomplete = e.sender;
+    var value = autocomplete.value();
+    alert(value); // Displays the value of the AutoComplete widget
+}
+$("#autocomplete").kendoAutoComplete({
+    change: autocomplete_change
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---use-the-this-keyword">Example - use the "this" keyword</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autocomplete" /&gt;
+&lt;script&gt;
+function autocomplete_change(e) {
+    var autocomplete = this;
+    var value = autocomplete.value();
+    alert(value); // Displays the value of the AutoComplete widget
+}
+$("#autocomplete").kendoAutoComplete({
+    change: autocomplete_change
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Some events can be prevented (cancelled), so that the user action, which has triggered them, is ignored.</p>
+
+<h4 id="example---preventing-events">Example - preventing events</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="grid"&gt;&lt;/div&gt;
+&lt;script&gt;
+function onSaveChanges(e) {
+    var condition = true;
+    if (condition) {
+        e.preventDefault();
+    }
+}
+$("#grid").kendoGrid({
+    saveChanges: onSaveChanges
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="unbinding-kendo-ui-event-handlers">Unbinding Kendo UI Event Handlers</h3>
+
+<p>It is possible to detach a previously attached event handler with the <code class="language-plaintext highlighter-rouge">unbind</code> method, which all Kendo UI widgets have.</p>
+
+<h4 id="example---unbinding-event-handlers">Example - unbinding event handlers</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="grid"&gt;&lt;/div&gt;
+&lt;script&gt;
+function onChange(e) {
+    // handler body
+}
+
+$("#grid").kendoGrid({
+    change: onChange
+});
+
+$("#grid").data("kendoGrid").unbind("change", onChange);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="accessing-kendo-ui-widget-elements">Accessing Kendo UI widget elements</h2>
+
+<p>Each Kendo UI <strong>Web</strong> and <strong>DataViz</strong> widget instance keeps references to two elements - <code class="language-plaintext highlighter-rouge">element</code> and <code class="language-plaintext highlighter-rouge">wrapper</code>. Kendo UI <strong>Mobile</strong> widgets have an <code class="language-plaintext highlighter-rouge">element</code> reference only.
+<strong><code class="language-plaintext highlighter-rouge">element</code></strong> is the element from which the widget was initialized. Depending on the widget, it may be visible (e.g. AutoComplete, Calendar, DatePicker, etc.) or hidden (e.g. DropDownList, Upload).
+A reference to this element is also returned by the initialization statement. <strong><code class="language-plaintext highlighter-rouge">wrapper</code></strong> is the outermost element, which is part of the widget. Depending on the widget and exact scenario, the two references may match.
+For example, if the Grid is initialized from a <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code>, the two references match.
+If the Grid is initialized from a <code class="language-plaintext highlighter-rouge">&lt;table&gt;</code>, then <code class="language-plaintext highlighter-rouge">element</code> points to the <code class="language-plaintext highlighter-rouge">&lt;table&gt;</code>, while <code class="language-plaintext highlighter-rouge">wrapper</code> points to the wrapper <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code></p>
+<h3 id="example---using-element-and-wrapper-references">Example - using element and wrapper references</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="myWindow"&gt;...window content...&lt;/div&gt;
+&lt;script&gt;
+	var winElement1 = $("#myWindow").kendoWindow( { /*...*/ } ); // returns div#myWindow as a jQuery object
+	var winElement2 = $("#myWindow").data("kendoWindow").element; // returns div#myWindow as a jQuery object
+	
+	var winWrapper = $("#myWindow").data("kendoWindow").wrapper; // returns div.k-window as a jQuery object
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="destroying-kendo-ui-widgets">Destroying Kendo UI widgets</h2>
+
+<p>Every Kendo UI widget has a <code class="language-plaintext highlighter-rouge">destroy</code> method, which does the following:</p>
+
+<ol>
+  <li>Deletes the widget instance (client object). It is no longer accessible and all attached event handlers will stop working.</li>
+  <li>Removes autogenerated HTML content, which is <strong>outside</strong> the widget, e.g. detached popups, dropdowns, etc. The main widget HTML remains intact and if needed, it should be removed from the DOM manually.
+The Window widget is an exception, as it represents a detached popup on its own.</li>
+  <li>Destroys all child widgets.</li>
+</ol>
+
+<p>A widget can be destroyed if it is no longer needed, or if it is placed inside a container, which will be updated via an Ajax request. The latter is recommended to prevent memory leaks or other unexpected side effects.</p>
+
+<p>Kendo UI widgets are destroyed automatically when the web page is unloaded.</p>
+
+<p><strong>Creating a new widget instance from the leftovers of a destroyed widget may work in most cases, but is not recommended. Please initialize new widgets from different (e.g. newly appended) DOM elements.</strong></p>
+
+<h3 id="example---destroying-a-widget">Example - destroying a widget</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="grid"&gt;&lt;/div&gt;
+&lt;script&gt;
+	$("#grid").kendoGrid( { /*...*/ } ); // create a Grid widget
+	
+	$("#grid").data("kendoGrid").destroy(); // destroy the Grid
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>In addition to destroying a particular Kendo UI widget, the Kendo UI framework provides a <a href="/api/framework/kendo#methods-destroy"><code class="language-plaintext highlighter-rouge">kendo.destroy()</code> method</a>,
+which can destroy multiple widgets, which are placed inside a given container.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

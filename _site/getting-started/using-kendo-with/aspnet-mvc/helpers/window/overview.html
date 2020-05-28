@@ -1,0 +1,349 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Guide for Window HtmlHelper extension for Kendo UI Window widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to populate the content of Kendo UI Window for ASP.NET MVC, control all events exposed by Kendo UI Window.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/window/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="window">Window</h1>
+
+<p>The Window HtmlHelper extension is a server-side wrapper for the <a href="/api/web/window">Kendo UI Window</a> widget.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>There are two ways to populate the content of the Kendo Window for ASP.NET MVC</p>
+
+<ul>
+  <li>server - define content of the window on server.</li>
+  <li>ajax - window will get the content with ajax request</li>
+</ul>
+
+<h3 id="configure-the-kendo-window-with-a-content-defined-on-the-server">Configure the Kendo Window with a content defined on the server</h3>
+
+<p>Here is how to configure the Kendo Window:</p>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create a new action method which renders the view:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    return View();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add a window:</p>
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;% Html.Kendo().Window()
+         .Name("window") //The name of the window is mandatory. It specifies the "id" attribute of the widget.
+         .Title("About Alvar Aalto") //set the title of the window
+         .Content(() =&gt; //define the content of the window
+         {
+             %&gt;
+                 Static content of the Window
+             &lt;%
+         })
+         .Draggable() //Enable dragging of the window
+         .Resizable() //Enable resizing of the window
+         .Width(600)  //Set width of the window
+         .Render(); //render the window
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().Window()
+        .Name("window") //The name of the window is mandatory. It specifies the "id" attribute of the widget.
+        .Title("About Alvar Aalto") //set the title of the window
+        .Content(@&lt;text&gt; //define the content of the window
+                Static content of the Window
+        &lt;/text&gt;)
+        .Draggable() //Enable dragging of the window
+        .Resizable() //Enable resizing of the window
+        .Width(600)  //Set width of the window
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="configure-the-kendo-window-with-a-load-on-demand-content">Configure the Kendo Window with a load-on-demand content</h3>
+
+<p>Here is how to configure the Kendo Window:</p>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create a new action method which renders the view:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    return View();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create an action method which renders the content:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult AjaxContent()
+{
+    return View();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add a window:</p>
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;% Html.Kendo().Window()
+         .Name("window") //The name of the window is mandatory. It specifies the "id" attribute of the widget.
+         .Title("About Alvar Aalto") //set the title of the window
+         .LoadContentFrom("AjaxContent", "Window") //define the Action and Controller name
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().Window()
+        .Name("window") //The name of the window is mandatory. It specifies the "id" attribute of the widget.
+        .Title("About Alvar Aalto") //set the title of the window
+        .LoadContentFrom("AjaxContent", "Window") //define the Action and Controller name
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="accessing-an-existing-window">Accessing an Existing Window</h2>
+
+<p>You can reference an existing Window instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/window#methods">API</a> to control its behavior.</p>
+
+<h3 id="accessing-an-existing-window-instance">Accessing an existing Window instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//Put this after your Kendo Window for ASP.NET MVC declaration
+&lt;script&gt;
+$(function() {
+    // Notice that the Name() of the window is used to get its client-side instance
+    var window = $("#window").data("kendoWindow");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-kendo-ui-window-events">Handling Kendo UI Window events</h2>
+
+<p>You can subscribe to all <a href="/api/web/window#events">events</a> exposed by Kendo UI Window:</p>
+
+<h3 id="webforms---subscribe-by-handler-name">WebForms - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%: Html.Kendo().Window()
+        .Name("window")
+        .Events(e =&gt; e
+            .Open("window_open")
+        .Close("window_close")
+    )
+%&gt;
+&lt;script&gt;
+function window_open() {
+    //Handle the open event
+}
+
+function window_close() {
+    //Handle the close event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-handler-name">Razor - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Window()
+      .Name("window")
+      .Events(e =&gt; e
+            .Open("window_open")
+            .Close("window_close")
+      )
+)
+&lt;script&gt;
+function window_open() {
+    //Handle the open event
+}
+
+function window_close() {
+    //Handle the close event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-template-delegate">Razor - subscribe by template delegate</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Window()
+      .Name("window")
+      .Events(e =&gt; e
+          .Open(@&lt;text&gt;
+            function() {
+                //Handle the open event inline
+            }
+          &lt;/text&gt;)
+          .Close(@&lt;text&gt;
+            function() {
+                //Handle the close event inline
+            }
+            &lt;/text&gt;)
+      )
+)
+</code></pre></div></div>
+
+<h2 id="using-htmlbeginform-inside-a-window">Using Html.BeginForm inside a Window</h2>
+
+<p>When a complete form should be inserted inside a Window, the correct approach is to end the Window declaration with <code class="language-plaintext highlighter-rouge">.Render();</code> and wrap it in a <strong>non-rendering</strong> code block.
+This requirement does not apply if the form is defined via plain HTML tags (<code class="language-plaintext highlighter-rouge">&amp;lt;form&amp;gt;...&amp;lt;/form&amp;gt;</code>).</p>
+
+<p>See also <a href="/getting-started/web/window/overview#using-kendo-ui-window-with-a-form">Using Kendo UI Window with a form</a>.</p>
+
+<h3 id="webforms---inserting-a-complete-form-inside-the-window">WebForms - inserting a complete form inside the Window</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Window()
+    .Content(() =&gt; 
+    {
+        using (Html.BeginForm(...)) { %&gt;
+            .........
+        &lt;% }
+    })
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="razor---inserting-a-complete-form-inside-the-window">Razor - inserting a complete form inside the Window</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@{Html.Kendo().Window()
+    .Content(@&lt;text&gt;
+        @using (Html.BeginForm(...))
+        {
+           .........
+        }
+    &lt;/text&gt;)
+    .Render();
+}
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

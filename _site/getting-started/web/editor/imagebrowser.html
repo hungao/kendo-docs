@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/editor/imagebrowser.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="image-browser">Image Browser</h1>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>By default the "Insert Image" tool opens a simple dialog which allows the user to type in or paste the URL of an image and optionally specify a tooltip.</p>
+
+<p><img src="/getting-started/web/editor/editor-insert-image.png" alt="Insert Image Dialog" /></p>
+
+<p>Since the Q3 2012 release KendoUI Editor widget supports a new way of picking an image by browsing a list of predefined files and directories. Uploading new images is also supported.</p>
+
+<p><img src="/getting-started/web/editor/editor-image-browser.png" alt="Image Browser Dialog" /></p>
+
+<p>The image browser needs a server side implementation to retrieve and upload the files and directories.</p>
+
+<h2 id="configuring-the-imagebrowser">Configuring the ImageBrowser</h2>
+
+<p>The image browser tool can be configured through the <a href="/api/web/editor#configuration-imageBrowser"><code class="language-plaintext highlighter-rouge">imagebrowser</code> configuration option</a>.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   $(document).ready(function(){
+     $("#editor").kendoEditor({
+         imageBrowser: {
+            transport: {
+                read: "imagebrowser/read",
+                destroy: "imagebrowser/destroy",
+                create: "imagebrowser/createDirectory",
+                uploadUrl: "imagebrowser/upload",
+                thumbnailUrl: "imagebrowser/thumbnail"
+                imageUrl: "/content/images/{0}"
+            }
+         }
+     });
+  });
+</code></pre></div></div>
+
+<p>The default requests and responses for the create / read / destroy / upload  operations are as follows:</p>
+
+<ul>
+  <li>
+    <p><strong>create</strong> - makes a request for the creation of a directory with the following parameters:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  { "name": "New folder name", "type": "d", "path": "foo/" }
+</code></pre></div>    </div>
+
+    <p>Does not expect a response.</p>
+  </li>
+  <li>
+    <p><strong>read</strong> - sends the <code class="language-plaintext highlighter-rouge">path</code> parameter to specify the path which is browsed. Expects a file listing in the following format:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  [
+      { "name": "foo.png", "type": "f", "size": 73289 },
+      { "name": "bar.jpg", "type": "f", "size": 15289 },
+      ...
+  ]
+</code></pre></div>    </div>
+
+    <p>Where <code class="language-plaintext highlighter-rouge">name</code> is the file or directory name, <code class="language-plaintext highlighter-rouge">type</code> is either "f" for file or "d" for directory, and <code class="language-plaintext highlighter-rouge">size</code> is the file size (optional).</p>
+  </li>
+  <li>
+    <p><strong>destroy</strong> - makes a request with the following parameters</p>
+
+    <ul>
+      <li><strong>name</strong> - the file / directory to be deleted</li>
+      <li><strong>path</strong> - the directory in which the file / directory resides</li>
+      <li><strong>type</strong> - whether a file or a directory is to be deleted ("f" or "d")</li>
+      <li><strong>size</strong> - optional, the file size, as provided from the <strong>read</strong> response</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>upload</strong> - makes a request to the <code class="language-plaintext highlighter-rouge">uploadUrl</code>. The request payload consists of the uploaded file. Expects a file object in response:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  { "name": "foo.png", "type": "f", "size": 12345 }
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>All of these can be changed through the <a href="/api/web/editor#configuration-imageBrowser"><code class="language-plaintext highlighter-rouge">imagebrowser</code> configuration</a>.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

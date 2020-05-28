@@ -1,0 +1,441 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/editor.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendoeditor">&lt;kendo:editor&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/editor">Editor</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="content-javalangobject">content <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The content of the editor</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor content="content"&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="domain-javalangstring">domain <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Relaxes the same-origin policy when using the iframe-based editor.
+This is done automatically for all cases except when the policy is relaxed by document.domain = document.domain.
+In that case, this property must be used to allow the editor to function properly across browsers.
+This property has been introduced in internal builds after 2014.1.319.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor domain="domain"&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="encoded-boolean">encoded <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Indicates whether the Editor should submit encoded HTML tags. By default, the submitted value is encoded.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor encoded="encoded"&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="messages-javalangobject">messages <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Defines the text of the labels that are shown within the editor. Used primarily for localization.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor messages="messages"&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="stylesheets-javalangobject">stylesheets <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Allows custom stylesheets to be included within the editing area. This setting is applicable only when the Editor is initialized from a textarea
+and a contenteditable iframe is generated.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor stylesheets="stylesheets"&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="tag-javalangstring">tag <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The tag that will be rendered. Defaults to "textarea". Triggers the inline edit mode if different.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor tag="tag"&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendoeditor-filebrowser">kendo:editor-fileBrowser</h3>
+
+<p>Configuration for file browser dialog.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/editor/filebrowser">kendo:editor-fileBrowser</a>.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor&gt;
+    &lt;kendo:editor-fileBrowser&gt;&lt;/kendo:editor-fileBrowser&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="kendoeditor-imagebrowser">kendo:editor-imageBrowser</h3>
+
+<p>Configuration for image browser dialog.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/editor/imagebrowser">kendo:editor-imageBrowser</a>.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor&gt;
+    &lt;kendo:editor-imageBrowser&gt;&lt;/kendo:editor-imageBrowser&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="kendoeditor-serialization">kendo:editor-serialization</h3>
+
+<p>Allows setting of serialization options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/editor/serialization">kendo:editor-serialization</a>.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor&gt;
+    &lt;kendo:editor-serialization&gt;&lt;/kendo:editor-serialization&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="kendoeditor-tools">kendo:editor-tools</h3>
+
+<p>A collection of tools that are used to interact with the Editor.
+Tools may be switched on by specifying their name.
+Custom tools and tools that require configuration are defined as objects.The available editor commands are:</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/editor/tools">kendo:editor-tools</a>.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor&gt;
+    &lt;kendo:editor-tools&gt;&lt;/kendo:editor-tools&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="change-string">change <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when Editor is blurred and its content has changed.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-change">change</a> event documentation.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor change="handle_change"&gt;
+&lt;/kendo:editor&gt;
+&lt;script&gt;
+    function handle_change(e) {
+        // Code to handle the change event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="execute-string">execute <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when an Editor command is executed.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-execute">execute</a> event documentation.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor execute="handle_execute"&gt;
+&lt;/kendo:editor&gt;
+&lt;script&gt;
+    function handle_execute(e) {
+        // Code to handle the execute event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="keydown-string">keydown <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user depresses a keyboard key. Triggered multiple times if the user holds the key down.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-keydown">keydown</a> event documentation.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor keydown="handle_keydown"&gt;
+&lt;/kendo:editor&gt;
+&lt;script&gt;
+    function handle_keydown(e) {
+        // Code to handle the keydown event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="keyup-string">keyup <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user releases a keyboard key.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-keyup">keyup</a> event documentation.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor keyup="handle_keyup"&gt;
+&lt;/kendo:editor&gt;
+&lt;script&gt;
+    function handle_keyup(e) {
+        // Code to handle the keyup event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="paste-string">paste <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires before the content is pasted in the Editor.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-paste">paste</a> event documentation.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor paste="handle_paste"&gt;
+&lt;/kendo:editor&gt;
+&lt;script&gt;
+    function handle_paste(e) {
+        // Code to handle the paste event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select-string">select <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the Editor selection has changed.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-select">select</a> event documentation.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor select="handle_select"&gt;
+&lt;/kendo:editor&gt;
+&lt;script&gt;
+    function handle_select(e) {
+        // Code to handle the select event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendoeditor-change">kendo:editor-change</h3>
+
+<p>Fires when Editor is blurred and its content has changed.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-change">change</a> event documentation.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor&gt;
+    &lt;kendo:editor-change&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the change event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:editor-change&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="kendoeditor-execute">kendo:editor-execute</h3>
+
+<p>Fires when an Editor command is executed.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-execute">execute</a> event documentation.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor&gt;
+    &lt;kendo:editor-execute&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the execute event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:editor-execute&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="kendoeditor-keydown">kendo:editor-keydown</h3>
+
+<p>Fires when the user depresses a keyboard key. Triggered multiple times if the user holds the key down.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-keydown">keydown</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor&gt;
+    &lt;kendo:editor-keydown&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the keydown event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:editor-keydown&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="kendoeditor-keyup">kendo:editor-keyup</h3>
+
+<p>Fires when the user releases a keyboard key.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-keyup">keyup</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor&gt;
+    &lt;kendo:editor-keyup&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the keyup event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:editor-keyup&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="kendoeditor-paste">kendo:editor-paste</h3>
+
+<p>Fires before the content is pasted in the Editor.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-paste">paste</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor&gt;
+    &lt;kendo:editor-paste&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the paste event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:editor-paste&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+<h3 id="kendoeditor-select">kendo:editor-select</h3>
+
+<p>Fires when the Editor selection has changed.</p>
+
+<p>For additional information check the <a href="/api/web/editor#events-select">select</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor&gt;
+    &lt;kendo:editor-select&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the select event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:editor-select&gt;
+&lt;/kendo:editor&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

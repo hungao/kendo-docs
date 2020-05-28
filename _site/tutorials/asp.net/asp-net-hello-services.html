@@ -1,0 +1,924 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Tutorial for HTML5 development with ASP.NET WebAPI and RESTful services</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="In this HTML5 development tutorial you will learn how to install ASP.NET WebAPI, create service, supporting CRUD operations, and debug WebAPI Services.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/asp-net-hello-services.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="tutorial-html5-development-for-aspnet-developers-part-2-hello-services">Tutorial: HTML5 Development For ASP.NET Developers Part 2, Hello Services</h1>
+
+<p>This tutorial will cover how to create RESTful services with ASP.NET WebAPI.  You will learn…</p>
+
+<ul>
+  <li>How to install ASP.NET WebAPI</li>
+  <li>How to create a service that supports CRUD operations</li>
+  <li>How to wire up a web page to a WebAPI Service</li>
+  <li>How to debug WebAPI Services</li>
+</ul>
+
+<p>This module will cover how to create a RESTful service with <a href="http://www.asp.net/web-api">ASP.NET
+WebAPI</a>, and how to consume that service in JSON format with jQuery. There
+is also a very quick primer on the concept of REST and JSON, as well as a good
+look at using the <a href="http://msdn.microsoft.com/en-US/library/gg589512%28v=vs.85%29.aspx">IE F12 Developer Tools</a> to debug your application.</p>
+
+<p>All code used in this module can be downloaded from the course <a href="https://github.com/telerik/html5-dev-for-aspnet-devs">GitHub
+project</a>. Feel free to download the finished product, or follow along with
+the screencast or written content.</p>
+
+<h2 id="screencast">Screencast</h2>
+
+<iframe width="640" height="360" src="http://www.youtube.com/embed/6RGS1ReBuPs?rel=0" frameborder="0"></iframe>
+
+<h2 id="written-summary">Written Summary</h2>
+
+<p>In this tutorial, you will be building a sample application which displays
+data from a SQL Server table using AJAX to fetch the data from a WebAPI
+service. You will also add CRUD abilities to both the UI and the service while
+learning how to stay RESTful with your service implementation.</p>
+
+<h3 id="quick-primer-on-rest-and-json">Quick Primer On REST and JSON</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Representational_state_transfer(Representational state transfer - Wikipedia, the free encyclopedia)">REST</a> stands for Representational State Transfer. It’s a pattern for
+developing services which lets the HTTP requests describe what sort of action
+should be done, what format the data should be in and allows the server to
+indicate success or failure using HTTP codes. Using this strategy, it is easy
+to construct very predictable URL’s for web services so that consuming them
+becomes much easier. There is much more to REST than that short explanation,
+but this tutorial will try to stay as RESTful as possible.</p>
+
+<p><a href="http://www.json.org/ (JSON)">JSON</a> is an acronym that stands for JavaScript Object Notation. This is a
+way of <a href="http://en.wikipedia.org/wiki/Serialization (Serialization - Wikipedia,the free encyclopedia)">serializing</a> data and objects into a very simple and easy to
+understand string representation. This format is easily consumable not only
+buy JavaScript, but is also much easier for humans to read and debug.</p>
+
+<h3 id="create-the-sample-application">Create The Sample Application</h3>
+
+<p>Open Visual Studio. Select <strong>File</strong> / <strong>New Project</strong> and select the <strong>ASP.NET
+Web Application</strong> template. Name the application <strong>HelloServices</strong>.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-file-new-project.png" alt="File New Project" /></p>
+
+<p>Open the <strong>Default.aspx</strong> page and delete all the content.</p>
+
+<h3 id="project-structure">Project Structure</h3>
+
+<p>Before proceeding with this project, create some structure for the application
+to keep it organized. Create a folder called <strong>Data</strong> directly under the main
+project which will hold the data access layer. Create a second folder called
+**Controllers **which will hold the WebAPI service that will be created in
+this tutorial.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-data-controllers.png" alt="Data Controllers" /></p>
+
+<h3 id="create-a-data-access-layer">Create A Data Access Layer</h3>
+
+<p>For this tutorial, the <a href="http://www.microsoft.com/en-us/download/details.aspx?id=23654(Download: NorthWind and pubs Sample Databases for SQL Server 2000 - Microsoft Download Center -Download Details)">Northwind Database</a> will be used. Additionally,
+<a href="http://msdn.microsoft.com/en-us/library/bb425822.aspx (LINQ to SQL:.NET Language-Integrated Query for Relational Data)">LINQ To SQL</a> will be used as the Data Access layer given it’s simplicity
+and ease of use. If you have not already installed the <a href="http://www.microsoft.com/en-us/download/details.aspx?id=23654(Download: NorthWind and pubs Sample Databases for SQL Server 2000 - Microsoft Download Center -Download Details)"><strong>Northwind
+Database</strong></a>, you should do that before proceeding.</p>
+
+<p>Right-click the <strong>Data</strong> folder and select <strong>Add New Item</strong>. When the dialogue
+comes up, select a new <strong>LINQ To SQL Classes</strong>. Give the <strong>.dbml</strong> file the
+name <strong>NorthwindContext.dbml</strong>. Click <strong>Add</strong>. This will bring up the <strong>LINQ
+To SQL</strong> designer surface. Open the <strong>Servers Explorer</strong> window either from
+the left-hand side, or from the <strong>View</strong> menu. Expand the <strong>Northwind</strong>
+database and expand <strong>Tables</strong>. Drag the <strong>Employees</strong> table onto the design
+surface. Save the file.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-add-linq-to-sql.png" alt="Add Linq To Sql" /></p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-linq-to-sql-table-added.png" alt="Linq To Sql Table Added" /></p>
+
+<h3 id="install-nuget-packages">Install NuGet Packages</h3>
+
+<p><strong>Install WebAPI</strong></p>
+
+<p>Before the service to return the data from the database can be created, WebAPI
+must be installed from <a href="http://nuget.org/ (NuGet Gallery)">NuGet</a>.</p>
+
+<p>Right click the project and select <strong>Add Library Package Reference</strong>. When the
+dialogue comes up, click the <strong>online</strong> tab on the left-hand side and enter
+<strong>“aspnetwebapi”</strong> in the search box. Select <strong>AspNetWebApi **from the search
+result and click the **“install”</strong> button. Accept the package dependencies and
+install those as well.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-nuget-aspnetwebapi.png" alt="Nuget AspNetWebApi" /></p>
+
+<p><strong>Install jQuery</strong></p>
+
+<p>Enter <strong>“jquery”</strong> in the search box. Select the <strong>jQuery</strong> result and select
+<strong>“install”</strong>.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-install-jquery.png" alt="Install jQuery" /></p>
+
+<p>Close the <strong>Add Library Package Reference</strong> dialogue.</p>
+
+<h3 id="create-webapi-service">Create WebAPI Service</h3>
+
+<p>In order to create the WebAPI Service, an empty class is needed. Right-click
+the <strong>Controllers **folder and select **Add</strong> and then <strong>Class</strong>. Name the
+class <strong>EmployeesController.cs</strong>.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-employees-controller.png" alt="Employees Controller" /></p>
+
+<p>In order to designate the <strong>EmployeesController.cs</strong> class that was just
+added as a WebAPI controller that will respond to requests, inherit from the
+<strong>ApiController **class. If **ApiController **is not recognized for you, hover
+over the word until you get the context menu. This will give you the option to
+include **System.Web.Http</strong>. Optionally, you can achieve the same result by
+click <strong>Alt+Shift+F10</strong>, which will bring up the same context menu.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-employee-controller-class-inherit.png" alt="Employee Controller Inherits ApiController Class" /></p>
+
+<p>This class will contain methods that can be invoked from the web service that
+is being created. This service represents the <strong>Employees</strong> table in the
+<a href="http://www.microsoft.com/en-us/download/details.aspx?id=23654(Download: NorthWind and pubs Sample Databases for SQL Server 2000 - Microsoft Download Center -Download Details)">Northwind Database</a>. This is the table that will be used in this tutorial
+for data.</p>
+
+<p>A typical RESTful endpoint will respond to the following HTTP verbs:</p>
+
+<ol>
+  <li>
+    <p><strong>GET</strong> - Used when a browser is requesting data from the server</p>
+  </li>
+  <li>
+    <p><strong>PUT</strong> - Typically used when updating an item</p>
+  </li>
+  <li>
+    <p><strong>POST</strong> - Typically used when creating a new item</p>
+  </li>
+  <li>
+    <p><strong>DELETE</strong> - Used when deleting an item</p>
+  </li>
+</ol>
+
+<p>To start with, create a get method. This method will return all of the data in
+the <strong>Employees</strong> table in the Northwind Database. Name the method <strong>Get()</strong>.
+The method should return a list of <strong>Data.Employee</strong> objects. The
+<strong>Data.Employee</strong> object is created automatically for you by LINQ To SQL when
+the <strong>Employees</strong> table was added to the LINQ To SQL designer surface.</p>
+
+<p>Create an instance of the <strong>Data.NorthwindDataContext</strong> at the top of the file
+and name it <strong>_context</strong>. This is the object that will be used to query the
+database.</p>
+
+<p>Inside of the <strong>Get()</strong> method, write a simple LINQ query to retrieve all of
+the employees from the <strong>Employees</strong> table.</p>
+
+<h3 id="linq-query-to-select-all-employees">LINQ Query To Select All Employees</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public List&lt;Data.Employee&gt; Get() {
+
+    var employees = from e in _context.Employees
+                    select e;
+
+    return employees.ToList();
+
+}
+</code></pre></div></div>
+
+<p>Since WebAPI operates on convention over configuration, simply naming this
+method <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html"><strong>Get</strong></a><strong>()</strong> is enough to designate as the method that will
+respond to an HTTP <strong>GET</strong>.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-return-linq-object.png" alt="Return A LinqToSql Object" /></p>
+
+<p>You can override this convention by specifying the verb you want a method to
+respond to by decorating the method with the correct attribute (i.e.
+[<strong>HttpPut</strong>]).</p>
+
+<h3 id="setup-routing">Setup Routing</h3>
+
+<p>Before WebAPI can return return results via a URL, a route needs to be setup
+so that the application knows to map a specific route back to the
+<strong>EmployeesController.cs</strong> file in the <strong>Controllers</strong> folder.</p>
+
+<p>Open the <strong>Global.asax</strong> file. Under the <strong>Application_Start</strong> method, add the
+following code.</p>
+
+<h3 id="setup-routing-for-webapi">Setup Routing For WebAPI</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void Application_Start(object sender, EventArgs e) {
+
+    // intialize the default routing configuration
+
+    RouteTable.Routes.MapHttpRoute(
+        name: “DefaultApi”,
+        routeTemplate: “api/{controller}/{id}”,
+        defaults: new { id = System.Web.Http.RouteParameter.Optional });
+}
+</code></pre></div></div>
+
+<p>This block initializes routing for WebAPI.  This is how it knows to route
+URL’s to certain controllers.  In this case, the default route says that
+anything coming after **/api **on the root should be routed to a controller.
+It’s also passing an optional id parameter on the end of the url.  If the id
+is passed, it will be handed off to the proper method.  If nothing is passed,
+it will be ignored.</p>
+
+<p>This means that the route for the **EmployeesController **will be something
+like <a href="http://yourserver/api/employees"><strong>http://your-server/api/employees</strong></a>.</p>
+
+<h3 id="test-the-application">Test The Application</h3>
+
+<p>Press <strong>F5</strong> to build and run the application.  You will notice that the
+application throws an error that is somewhat obscure.  If you inspect the
+details of that error, it will tell you that it cannot serialize the LINQ To
+SQL object.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-serialization-error.png" alt="Serialization Error" /></p>
+
+<p>This is because .NET cannot serialize the LINQ To SQL object that is being
+returned by the <strong>Get()</strong> method in the <strong>EmployeesController.cs</strong> file. LINQ
+To SQL Objects are rather complex and contain far more information than what
+is actually needed by the UI, which is the raw data.</p>
+
+<h3 id="add-a-model">Add A Model</h3>
+
+<p>To get the raw data out of the LINQ To SQL objects and into a format that .NET
+can easily serialize, you will create a model object which will represent one
+row in the <strong>Employees</strong> table. This model will have properties that mirror
+the columns in the <strong>Employees</strong> table. For the sake of brevity, you will only
+add 3 properties to the model.</p>
+
+<p>Right-click the project in Visual Studio and select <strong>Add Folder</strong>. Name this
+folder <strong>Models</strong>. Right-click the <strong>Models</strong> folder and select <strong>Add</strong> then
+<strong>Class</strong>. Optionally, you can achieve the same effect by pressing
+<strong>Shift+Alt+C</strong>. Name this class <strong>Employee</strong>.</p>
+
+<p>In the <strong>Employee</strong> class which is now in the <strong>Models</strong> folder, add three
+properties. One for the employee id, first name, and last name.</p>
+
+<h3 id="employee-model-object">Employee Model Object</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class Employee {
+
+    public int Id { get; set; }
+
+    public string FirstName { get; set; }
+
+    public string LastName { get; set; }
+
+}
+</code></pre></div></div>
+
+<p><img src="/tutorials/asp.net/images/hello-services-employee-model.png" alt="Employee Model" /></p>
+
+<p>Open up the <strong>EmployeesController.cs</strong> file in the <strong>Controllers</strong> folder.
+Alter the <strong>Get()</strong> method to return a list of <strong>Model.Employee</strong> objects
+instead of a list of <strong>Data.Employee</strong> objects. Also alter the LINQ To SQL
+Query so that it selects a new <strong>Employee</strong> model object for each row returned
+from the database.</p>
+
+<h3 id="return-a-list-of-employee-model-objects">Return A List Of Employee Model Objects</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public List&lt;Model.Employees&gt; Get() {
+
+    // select a new model object for each row in the
+    // linq query result
+
+    var employees = from e in _context.Employees
+                    select new Models.Employee {
+                        Id = e.EmployeeID,
+                        FirstName = e.FirstName,
+                        LastName = e.LastName
+                    };
+
+    return employees.ToList();
+
+}
+</code></pre></div></div>
+
+<p><img src="/tutorials/asp.net/images/hello-services-web-get.png" alt="Web Get" /></p>
+
+<h3 id="test-the-application-1">Test The Application</h3>
+
+<p>Press <strong>F5</strong> to run the application again. Navigate to the <strong>api/employees</strong>
+URL. Notice that WebAPI returns the records from the Northwind Employees table
+in XML format.  IE will try to download the file, but other browsers such as
+Chrome will display the results.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-employees-xml.png" alt="Employees XML" /></p>
+
+<h3 id="getting-json-data-with-ajax">Getting JSON Data With AJAX</h3>
+
+<p>Now that data is being returned by the service, it is possible to use jQuery
+to call that service with <a href="http://en.wikipedia.org/wiki/Ajax_(programming">AJAX</a> and get the results in JSON format
+instead of XML. Once the data has been retrieved as JSON, it is much easier to
+work with it and create a user interface.</p>
+
+<p>For this demonstration, you will be retrieving the list of employees and
+displaying each employee in an HTML table row.</p>
+
+<h3 id="add-jquery-to-the-project">Add jQuery To The Project</h3>
+
+<p>Open the <strong>Site.Master</strong> file and drag the <strong>jquery.min</strong> file over to the
+page just below the <strong>Site.css</strong> link tag in the head of the page. At the time
+of this writing, the current version of jQuery is <strong>jquery-1.9.1.min.js</strong>.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-add-jquery-to-master-page.png" alt="Add jQuery To Master Page" /></p>
+
+<p>Open up the <strong>Default.aspx</strong> file. Create an HTML table element with the id
+<strong>“employees”</strong>.</p>
+
+<h3 id="create-an-html-table-element">Create An HTML Table Element</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;table id="employees"&gt;&lt;/table&gt;
+</code></pre></div></div>
+
+<p>Below the <strong>table</strong> element that you just created, but before the closing
+<strong>content</strong> tag, open a new script block.</p>
+
+<h3 id="open-a-new-script-block">Open A New Script Block</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;table id="employees"&gt;&lt;/table&gt;
+
+&lt;script&gt;
+
+    // jquery ajax code will go here
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Inside the <strong>script block</strong>, create a <a href="http://api.jquery.com/ready/ (.ready() – jQuery API)">jQuery Document Ready</a> function.
+This is the function that executes when the entire page has loaded, including
+all HTML, CSS and included JavaScript files.</p>
+
+<p>Inside the <strong>Document Read</strong> function, select the HTML table with the id
+<strong>employees</strong> from the <a href="http://en.wikipedia.org/wiki/Document_Object_Model (Document ObjectModel - Wikipedia, the free encyclopedia)">DOM</a> and assign it to a variable call
+<strong>$employees</strong> for later use. It is considered a good practice by some to
+prefix variables containing jQuery objects with a <strong>$</strong> so that the developer
+will know that the variable represents a jQuery wrapped object when he/she
+sees it later down in the code. The table is selected by it’s ID using the
+<a href="http://api.jquery.com/id-selector/ (ID Selector (“#id”) – jQuery API)">jQuery ID Selector</a> (<strong>“#”</strong> sign).</p>
+
+<h3 id="select-table-when-the-document-is-ready">Select Table When The Document Is Ready</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;table id="employees"&gt;&lt;/table&gt;
+
+&lt;script&gt;
+
+    // document ready function
+
+    $(function() {
+
+        // select the employees table from the page and
+        // store it in a variable for later use.
+        var $employees = $("#employees");
+
+    });
+
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="ajax">AJAX</h3>
+
+<p>The term <a href="http://en.wikipedia.org/wiki/Ajax_(programming">AJAX</a> is an acronym that stands for “Asynchronous JavaScript And
+XML”. However, it has come to take on a much broader and less specific
+meaning. AJAX generally refers to the action of making a request to the server
+in the background and receiving a result. This is different from the typical
+browser request/response communication in that it happens without any visual
+indication that anything has taken place. It is absolutely silent unless the
+UI is built to show background requests. Additionally, XML is rarely used
+anymore for AJAX operations. It is most common now to use <a href="http://www.json.org/ (JSON)">JSON</a>, which is
+an incredibly simple form of serialization that is very easy to manipulate
+with JavaScript. WebAPI has fantastic support for rendering JSON with the new
+<a href="http://msdn.microsoft.com/en-us/library/system.json%28v=vs.95%29.aspx">System.Json</a> library.</p>
+
+<p>One of the things that makes <a href="http://jquery.com/">jQuery</a> so desirable, is that it makes ajax
+very trivial for a developer to implement. To make an AJAX call to the WebAPI
+Employee service, use the jQuery <a href="http://api.jquery.com/jQuery.ajax/ (jQuery.ajax() – jQuery API)">.ajax()</a> function. This function takes
+an object that contains the parameters for configuring the AJAX request. For
+the request to the <strong>api/employees</strong> endpoint, the configuration object will
+need the <strong>url</strong>, <strong>contentType</strong>, and <strong>success</strong> options specified.</p>
+
+<ul>
+  <li>
+    <p><strong>url</strong> - this option will be specified as the string <strong>“api/employees”</strong>.
+This URL is a relative path, so there is no need to specify the full url.</p>
+  </li>
+  <li>
+    <p><strong>contentType</strong> - since it is much easier to work with JSON, the ajax
+request needs to specify that the data should be in JSON format. This is done
+by setting the HTTP Header content type to “application/json”. When using
+jQuery, this is done simply by setting <strong>contentType</strong> to “json”</p>
+  </li>
+  <li>
+    <p><strong>success</strong> - this is the function that will be called when the server
+returns a response to the ajax call. The function takes in a data parameter,
+which will hold the JSON response returned from the employees web service.</p>
+  </li>
+</ul>
+
+<h3 id="make-an-ajax-call-for-the-employees-data-in-json-format">Make An AJAX Call For The Employees Data In JSON Format</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;table id="employees"&gt;&lt;/table&gt;
+
+&lt;script&gt;
+
+    // document ready function
+    $(function() {
+
+        // select the employees table from the page and
+        // store it in a variable for later use.
+        var $employees = $("#employees");
+
+        // make an ajax call to the employees WebAPI service
+        // to retrieve a JSON response of all the employees
+        $.ajax({
+
+            // the url to the service
+            url: "api/employees",
+
+            // the format that the data should be in when
+            // it is returned
+            contentType: "json",
+
+            // the function that executes when the server
+            // responds to this ajax request successfully
+            success: function(data) {
+
+                // put the JSON response in the employees table
+
+            }
+
+        });
+
+    });
+
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>In order to put the data returned into the page, it will be necessary to
+iterate over the results returned by the server. This is done using the jQuery
+<a href="http://api.jquery.com/each/ (.each() – jQuery API)">.each()</a> function. As each item is iterated over, a new row is added to
+the <strong>employees</strong> HTML table by using the <a href="http://api.jquery.com/append/ (.append() – jQuery API)">jQuery append()</a> method. The
+table variable is used instead of selecting the table each time in the loop.
+Selecting an item once from the DOM and referencing it in a variable is better
+for performance and cuts down on code clutter.</p>
+
+<h3 id="make-an-ajax-call-for-the-employees-data-in-json-format-1">Make An AJAX Call For The Employees Data In JSON Format</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;table id="employees"&gt;&lt;/table&gt;
+
+&lt;script&gt;
+
+
+    // document ready function
+
+    $(function() {
+
+
+        // select the employees table from the page and
+        // store it in a variable for later use.
+        var $employees = $("#employees");
+
+
+        // make an ajax call to the employees WebAPI service
+        // to retrieve a JSON response of all the employees
+        $.ajax({
+
+            // the url to the service
+            url: "api/employees",
+
+            // the format that the data should be in when
+            // it is returned
+            contentType: "json",
+
+            // the function that executes when the server
+            // responds to this ajax request successfully
+            success: function(data) {
+
+
+                // iterate over the data items returned from the server
+                // the index variable is the position in the colleciton.
+                // the item variable is the item itself
+                $.each(data, function(index, item){
+
+                    // append the first and last name to the table
+                    $employees.append("&lt;tr&gt;&lt;td&gt;" + item.FirstName + "&lt;/td&gt;" +
+                                          "&lt;td&gt;" + item.LastName + "&lt;/td&gt;");
+
+                });
+
+              }
+
+        });
+
+    });
+
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="test-the-application-2">Test The Application</h3>
+
+<p>Press <strong>F5</strong> to run the application, or if your app is still running, simply
+save the file and refresh the page or point the page at the <strong>Default.aspx</strong>
+url. Since all the changes were made in JavaScript, it’s not necessary to stop
+and start the application.</p>
+
+<p>Notice that the application shows the employees in a list. Press <strong>F12</strong> to
+open the developer tools. Click on the network tab and click the <strong>“Start
+Capturing”</strong> button. Refresh the page. Notice the request that is made to
+<strong>api/employees</strong>. Double-click on the request. Notice that the <strong>Content-
+Type</strong> is set to <strong>JSON</strong>.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-f12-content-type-json.png" alt="F12 Content Type Inspection" /></p>
+
+<p>Select the <strong>Response body</strong> tab. Inspect the JSON response returned from the
+server.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-f12-response-body-json.png" alt="F12 Response Body" /></p>
+
+<h3 id="enable-deleting-of-employees">Enable Deleting Of Employees</h3>
+
+<p>Switch back to Visual Studio and the <strong>Default.aspx</strong> page. In order to add
+the ability to delete employees from the UI, its necessary to add a button out
+to the right-hand side of each row. This could be done by adding more HTML
+inside the <strong>.each()</strong> loop. However, this is already a bit messy. There is
+HTML in the JavaScript and adding to this would make it worse. Its generally
+best practice not to include HTML inside the JavaScript this way.</p>
+
+<h3 id="templating">Templating</h3>
+
+<p>In order to clean this up and make it better, its a good idea to use a concept
+called <strong>templating</strong>. This is simply the idea of having a single table row
+which is created once and then copied for each element in the dataset and
+appended to the table. There are many forms of templating and some libraries
+that make this much simpler. This will be explored in more detail in later
+modules.</p>
+
+<p>For this example, a very rudimentary form of manual templating will be
+demonstrated. The idea here is to add a block of HTML that is invisible on the
+page, but can be used to dynamically create HTML elements. Specifically for
+this example, a table row is needed. This implementation involves adding a div
+with an id of <strong>templates</strong> right after the closing <strong>script block</strong>. The
+style on this div will be set to <strong>display: none</strong>. This means that this div
+and all its content will not be displayed on the page. Inside of this div,
+create a table. Create a single table row definition with a column for first
+name, a column for the last name, and a column for the delete button that
+contains a button. These elements will have classes and not id’s since they
+will be used over and over again.</p>
+
+<h3 id="create-a-block-of-template-html">Create A Block Of Template HTML</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;table id="employees"&gt;&lt;/table&gt;
+
+&lt;script&gt;
+
+    // document ready function
+    $(function() {
+
+        // select the employees table from the page and
+        // store it in a variable for later use.
+        var $employees = $("#employees");
+
+        // make an ajax call to the employees WebAPI service
+        // to retrieve a JSON response of all the employees
+        $.ajax({
+
+            // the url to the service
+            url: "api/employees",
+
+            // the format that the data should be in when
+            // it is returned
+            contentType: "json",
+
+            // the function that executes when the server
+            // responds to this ajax request successfully
+            success: function(data) {
+
+                // iterate over the data items returned from the server
+                // the index variable is the position in the collection.
+                // the item variable is the item itself
+                $.each(data, function(index, item){
+
+                        // append the first and last name to the table
+                        $employees.append("&lt;tr&gt;&lt;td&gt;" + item.FirstName + "&lt;/td&gt;" +
+                                              "&lt;td&gt;" + item.LastName + "&lt;/td&gt;");
+
+                });
+
+            }
+
+        });
+    });
+
+ &lt;/script&gt;
+
+&lt;div id="templates" style="display: none"&gt;
+
+    &lt;table&gt;
+
+        &lt;tr class="row-template"&gt;
+            &lt;td class="firstName" style="width: 100px;"&gt;&lt;/td&gt;
+            &lt;td class="lastName" style="width: 100px;"&gt;&lt;/td&gt;
+            &lt;td&gt;
+                &lt;input type="button" value="X" class="delete" /&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+
+    &lt;/table&gt;
+
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Inside of the <strong>each()</strong> loop, select the <strong>templates</strong> div by its id. Then
+use the <a href="http://api.jquery.com/find/ (.find() – jQuery API)"><strong>jQuery .find()</strong></a> method to select the row by it’s class. This
+will find the item(s) in the children of the <strong>templates</strong> div with the
+specified selector. Once the table row is selected, call the <a href="http://api.jquery.com/clone/ (.clone() – jQuery API)"><strong>jQuery
+clone()</strong></a> method. This will create a new object of the same type that was
+just selected (a table row), and store it in the variable.</p>
+
+<p>This is called <strong>“Chaining”</strong> in jQuery. This is when methods are called on
+methods because each method returns an object, allowing the developer to
+continue to call methods on the same line. Once the row template has been
+created, find the first and last name columns and set their <a href="http://api.jquery.com/html/ (.html() – jQuery API)">.html()</a> with
+the first and last name from the returned JSON data. Then select the button by
+it’s class and add a click event.</p>
+
+<p>Inside of the click event, create another <strong>ajax()</strong> method. The URL will be
+the same as the first <strong>ajax()</strong> method with the exception that the current
+item id is appended onto the end. This creates a RESTful URL. The <strong>type
+**should be set to delete. In the **success</strong> function, simply remove the item
+from the page by calling the <a href="http://api.jquery.com/remove/ (.remove() – jQuery API)"><strong>jQuery .remove()</strong></a> function. This will
+reflect the database change in the UI.</p>
+
+<p>Lastly, right before the closing bracket for the <strong>each()</strong> loop, append the
+row to the table.</p>
+
+<h3 id="create-a-block-of-template-html-1">Create A Block Of Template HTML</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;table id="employees"&gt;&lt;/table&gt;
+
+&lt;script&gt;
+
+    // document ready function
+    $(function() {
+
+        // select the employees table from the page and
+        // store it in a variable for later use.
+        var $employees = $("#employees");
+
+        // make an ajax call to the employees WebAPI service
+        // to retrieve a JSON response of all the employees
+        $.ajax({
+
+            // the url to the service
+            url: "api/employees",
+
+            // the format that the data should be in when
+            // it is returned
+            contentType: "json",
+
+            // the function that executes when the server
+            // responds to this ajax request successfully
+            success: function(data) {
+
+                // iterate over the data items returned from the server
+                // the index variable is the position in the colleciton.
+                // the item variable is the item itself
+                $.each(data, function(index, item){
+
+                    // create a row template
+                    var $row = $("#templates").find(".row-template").clone();
+
+                    // set the first and last name column text for the row
+                    $row.find(".firstName").html(item.FirstName);
+                    $row.find(".lastName").html(item.LastName);
+
+                    // find the button and set its click event
+                    $row.find(".delete").click(function() {
+
+                    // call the delete method on the employees service
+
+                    $.ajax({
+                        // append the current employee id onto the url
+                        url: "api/employees/" + item.Id,
+
+                        // set the request type to be a DELETE
+                        type: "DELETE",
+
+                        // remove the row on a success response from the server
+                        success: function() {
+                            $row.remove();
+                        }
+                    });
+
+                    // append the row to the table
+                    $employees.append($row);
+                });
+
+            }
+        });
+
+    });
+
+&lt;/script&gt;
+
+
+&lt;div id="templates" style="display: none"&gt;
+
+    &lt;table&gt;
+
+        &lt;tr class="row-template"&gt;
+            &lt;td class="firstName" style="width: 100px;"&gt;&lt;/td&gt;
+            &lt;td class="lastName" style="width: 100px;"&gt;&lt;/td&gt;
+            &lt;td&gt;
+                &lt;input type="button" value="X" class="delete" /&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+
+    &lt;/table&gt;
+
+&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="run-the-application">Run The Application</h3>
+
+<p>Press <strong>F5</strong> to run the application. Open the Developer Tools in IE by
+pressing <strong>F12</strong>. Switch to the network tab and click <strong>Start Capturing</strong>.
+Notice that when the <strong>delete</strong> button is clicked, an AJAX request is fired to
+the server with a method of <strong>DELETE</strong>. The server is currently returning a
+404, because the <strong>DELETE</strong> method has not yet been created in the service.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-delete-not-implemented-404.png" alt="Delete Not Implemented" /></p>
+
+<h2 id="add-a-delete-method-to-the-employees-service">Add A Delete Method To The Employees Service</h2>
+
+<p>Switch back to Visual Studio and stop the application. Open up the
+<strong>EmployeesController.cs</strong> file in the <strong>Controllers **folder. Create a void
+method underneath the **Get()</strong> method called <strong>Delete()</strong> which takes in an
+<strong>id</strong> parameter of type <strong>int.</strong></p>
+
+<h3 id="create-a-delete-method">Create A Delete Method</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public void Delete(int id) {
+
+    // code to delete employee by id goes here
+
+}
+</code></pre></div></div>
+
+<p>Inside of the <strong>Delete()</strong> method, select the employee to delete by it’s id
+from the LINQ to SQL context. Delete the employee and submit the changes using
+LINQ To SQL.  The id parameter is passed along by the default routing that was
+setup in the <strong>Global.asax</strong>.  Since the method is named <strong>Delete()</strong>, it will
+respond to an HTTP <strong>DELETE</strong> verb.</p>
+
+<h3 id="delete-the-employee-with-linq-to-sql">Delete The Employee With LINQ To SQL</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public void Delete(int id) {
+
+    // select the employee from the database by its id
+    var employeeToDelete = (from e in _context.Employees
+                            where e.EmployeeID == id
+                            select e).FirstOrDefault();
+
+    // delete the employee from the context
+    _context.Employees.DeleteOnSubmit(employeeToDelete);
+
+    // submit the changes
+    _context.SubmitChanges();
+
+}
+</code></pre></div></div>
+
+<p>Add yourself as an employee in the Northwind <strong>Employees</strong> table by providing
+just your last and first name. The other employees cannot be deleted due to
+existing relationships in other tables.</p>
+
+<h3 id="run-the-application-1">Run The Application</h3>
+
+<p>Press <strong>F5</strong> to run the application. Press <strong>F12</strong> to open the Developer
+Tools. Switch to the <strong>Network</strong> tab and click <strong>Start Capturing</strong>. Click on
+the delete button next to the name you added to the database. Notice that the
+<strong>delete</strong> AJAX request happens and a <strong>200</strong> is returned from the server.
+This means that everything has happened OK and the item has been deleted from
+the database. Also notice that your name was removed from the page by jQuery.</p>
+
+<p><img src="/tutorials/asp.net/images/hello-services-finally.png" alt="Finally" /></p>
+
+<h3 id="further-reading--resources">Further Reading / Resources</h3>
+
+<p><strong>WebAPI</strong> is a maturing library and is baked into the next official release
+of MVC 4. For now, the following screencasts should help you become quite
+familiar with using WebAPI in MVC 4.</p>
+
+<p><a href="http://weblogs.asp.net/jgalloway/archive/2012/03/16/asp-net-web-api-screencast-series-with-downloadable-sample-code-part-1.aspx (ASP.NET Web API -Screencast series with downloadable sample code - Part 1 - Jon Galloway)">WebAPI With MVC 4 Screencast Series</a></p>
+
+<p>The completed application used in this project is available on the course
+<a href="https://github.com/telerik/html5-dev-for-aspnet-devs">GitHub site</a>.</p>
+
+<p>![][63]</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

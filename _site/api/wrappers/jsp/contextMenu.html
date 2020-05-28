@@ -1,0 +1,407 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/contextMenu.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendocontextmenu">&lt;kendo:contextMenu&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/contextmenu">ContextMenu</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="aligntoanchor-boolean">alignToAnchor <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Specifies that ContextMenu should be shown aligned to the target or the filter element if specified.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu alignToAnchor="alignToAnchor"&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="closeonclick-boolean">closeOnClick <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Specifies that sub menus should close after item selection (provided they won"t navigate).</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu closeOnClick="closeOnClick"&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="direction-javalangstring">direction <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Specifies ContextMenu sub menu opening direction. Can be "top", "bottom", "left", "right".
+The example below will initialize the sub menus to open to the left.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu direction="direction"&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="filter-javalangstring">filter <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Specifies ContextMenu filter selector - the ContextMenu will only be shown on items that satisfy the provided selector.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu filter="filter"&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="hoverdelay-float">hoverDelay <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Specifies the delay in ms before the sub menus are opened/closed - used to avoid accidental closure on leaving.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu hoverDelay="hoverDelay"&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="orientation-javalangstring">orientation <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Root menu orientation. Could be horizontal or vertical.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu orientation="orientation"&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="popupcollision-javalangstring">popupCollision <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Specifies how ContextMenu should adjust to screen boundaries. By default the strategy is "fit" for a sub menu with a horizontal parent or the root menu,
+meaning it will move to fit in screen boundaries in all directions, and "fit flip" for a sub menu with vertical parent, meaning it will fit vertically and flip over
+its parent horizontally. You can also switch off the screen boundary detection completely if you set the popupCollision to false.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu popupCollision="popupCollision"&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="showon-javalangstring">showOn <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Specifies the event or events on which ContextMenu should open. By default ContextMenu will show on contextmenu event on desktop and hold event on touch devices.
+Could be any pointer/mouse/touch event, also several, separated by spaces.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu showOn="showOn"&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="target-javalangobject">target <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Specifies the element on which ContextMenu should open. The default element is the document body.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu target="target"&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendocontextmenu-animation">kendo:contextMenu-animation</h3>
+
+<p>A collection of Animation objects, used to change default animations. A value of false will disable all animations in the widget.Available animations for the ContextMenu are listed below.  Each animation has a reverse options which is used for the close effect by default, but can be over-ridden
+by setting the close animation. Each animation also has a direction which can be set off the animation (i.e. slideIn:Down).</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/contextmenu/animation">kendo:contextMenu-animation</a>.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu&gt;
+    &lt;kendo:contextMenu-animation&gt;&lt;/kendo:contextMenu-animation&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="kendocontextmenu-items">kendo:contextMenu-items</h3>
+
+<p>Contains the items of the menu widget</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/contextmenu/items">kendo:contextMenu-items</a>.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu&gt;
+    &lt;kendo:contextMenu-items&gt;&lt;/kendo:contextMenu-items&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="close-string">close <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires before a sub menu or the ContextMenu gets closed. You can cancel this event to prevent closure.</p>
+
+<p>For additional information check the <a href="/api/web/contextmenu#events-close">close</a> event documentation.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu close="handle_close"&gt;
+&lt;/kendo:contextMenu&gt;
+&lt;script&gt;
+    function handle_close(e) {
+        // Code to handle the close event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open-string">open <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires before a sub menu or the ContextMenu gets opened. You can cancel this event to prevent opening the sub menu.</p>
+
+<p>For additional information check the <a href="/api/web/contextmenu#events-open">open</a> event documentation.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu open="handle_open"&gt;
+&lt;/kendo:contextMenu&gt;
+&lt;script&gt;
+    function handle_open(e) {
+        // Code to handle the open event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="activate-string">activate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when a sub menu or the ContextMenu gets opened and its animation finished.</p>
+
+<p>For additional information check the <a href="/api/web/contextmenu#events-activate">activate</a> event documentation.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu activate="handle_activate"&gt;
+&lt;/kendo:contextMenu&gt;
+&lt;script&gt;
+    function handle_activate(e) {
+        // Code to handle the activate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="deactivate-string">deactivate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when a sub menu or the ContextMenu gets closed and its animation finished.</p>
+
+<p>For additional information check the <a href="/api/web/contextmenu#events-deactivate">deactivate</a> event documentation.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu deactivate="handle_deactivate"&gt;
+&lt;/kendo:contextMenu&gt;
+&lt;script&gt;
+    function handle_deactivate(e) {
+        // Code to handle the deactivate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select-string">select <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when a menu item gets selected.</p>
+
+<p>For additional information check the <a href="/api/web/contextmenu#events-select">select</a> event documentation.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu select="handle_select"&gt;
+&lt;/kendo:contextMenu&gt;
+&lt;script&gt;
+    function handle_select(e) {
+        // Code to handle the select event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendocontextmenu-close">kendo:contextMenu-close</h3>
+
+<p>Fires before a sub menu or the ContextMenu gets closed. You can cancel this event to prevent closure.</p>
+
+<p>For additional information check the <a href="/api/web/contextmenu#events-close">close</a> event documentation.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu&gt;
+    &lt;kendo:contextMenu-close&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the close event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:contextMenu-close&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="kendocontextmenu-open">kendo:contextMenu-open</h3>
+
+<p>Fires before a sub menu or the ContextMenu gets opened. You can cancel this event to prevent opening the sub menu.</p>
+
+<p>For additional information check the <a href="/api/web/contextmenu#events-open">open</a> event documentation.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu&gt;
+    &lt;kendo:contextMenu-open&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the open event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:contextMenu-open&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="kendocontextmenu-activate">kendo:contextMenu-activate</h3>
+
+<p>Fires when a sub menu or the ContextMenu gets opened and its animation finished.</p>
+
+<p>For additional information check the <a href="/api/web/contextmenu#events-activate">activate</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu&gt;
+    &lt;kendo:contextMenu-activate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the activate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:contextMenu-activate&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="kendocontextmenu-deactivate">kendo:contextMenu-deactivate</h3>
+
+<p>Fires when a sub menu or the ContextMenu gets closed and its animation finished.</p>
+
+<p>For additional information check the <a href="/api/web/contextmenu#events-deactivate">deactivate</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu&gt;
+    &lt;kendo:contextMenu-deactivate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the deactivate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:contextMenu-deactivate&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+<h3 id="kendocontextmenu-select">kendo:contextMenu-select</h3>
+
+<p>Fires when a menu item gets selected.</p>
+
+<p>For additional information check the <a href="/api/web/contextmenu#events-select">select</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:contextMenu&gt;
+    &lt;kendo:contextMenu-select&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the select event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:contextMenu-select&gt;
+&lt;/kendo:contextMenu&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

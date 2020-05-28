@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/kendo-music-store/music-store-dashboard/building-the-store-sales-page.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="building-the-store-sales-page">Building the Store Sales page</h1>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/sales-overview.png" alt="sales-overview" /></p>
+
+<p>This page is constructed to show a collection of DataViz graphs, exposing several different views of store data. The page is domiated by a general sales graph, which can be filtered by five different dimensions, selectable by the buttons to the left of graph.</p>
+
+<p>Two smaller graphs present data grouped by genre: Sales and Searches. These views provide a way to change the type of chart shown, changing the presentation of the data based on user selection of the graph type. The data can also be changed between Weekly, Monthly and Yearly data.</p>
+
+<p>This page is contained in the following files: <strong>app/views/sales.html</strong>, <strong>app/sales-view.js</strong>, and <strong>Content/sales-view.css</strong>.</p>
+
+<h2 id="changing-chart-type-dynamically">Changing Chart Type Dynamically</h2>
+
+<p>The <strong>Sales By Genre</strong> chart allows for the chart type to be changed dynamically. The chart can be changed from, for instance, a bar graph</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/sales-by-genre-bar.png" alt="sales-by-genre-bar" /></p>
+
+<p>to a line graph</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/sales-by-genre-line.png" alt="sales-by-genre-line" /></p>
+
+<p>using the buttons down the right side.</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/sales-by-genre-bar-button-highlight.png" alt="sales-by-genre-bar-button-highlight" /></p>
+
+<p>The <strong>Sales By Genre</strong> and <strong>Searches By Genre</strong> charts are built similarly, with simple declarative markup and powerful Javascript piping. The chart is contained within it"s own <strong>&lt;div&gt;</strong>, with an accompanying <strong>&lt;span&gt;</strong> that contains the buttons for changing the chart type. The Sales By Genre chart is constructed like so:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div class="sales-by-genre-chart half-width-chart"&gt;&lt;/div&gt;
+&lt;span class="store-sales-chart-type change-genre-sales-chart-type"&gt;
+   	&lt;span class="chart-type-item chart-type-area " data-charttype="area"&gt;&lt;/span&gt;
+    &lt;span class="chart-type-item chart-type-line " data-charttype="line"&gt;&lt;/span&gt;
+    &lt;span class="chart-type-item chart-type-column  chart-type-column-selected" data-charttype="column"&gt;&lt;/span&gt;
+    &lt;span class="chart-type-item chart-type-bar " data-charttype="bar"&gt;&lt;/span&gt;
+    &lt;span class="chart-type-item chart-type-pie " data-charttype="pie"&gt;&lt;/span&gt;
+    &lt;span class="chart-type-item chart-type-stacked-bar " data-charttype="stacked-bar"&gt;&lt;/span&gt;
+&lt;/span&gt;
+</code></pre></div></div>
+
+<p>Note the <strong>change-genre-sales-chart-type</strong> class on the governing <strong>&lt;span&gt;</strong>, and the <strong>chart-type-item</strong> on the individual <strong>&lt;span&gt;</strong>s; these classes are use to register click events that lead to the chart type changing:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(".chart-type-item", ".change-genre-sales-chart-type").click(function (e) {
+    e.preventDefault();
+    changeChartType.call(this, ".sales-by-genre-chart", ".change-genre-sales-chart-type");
+});
+</code></pre></div></div>
+
+<p><strong>changeChartType</strong> is a function that performs the chart type change, taking two parameters: the class of the chart to change and the class of the governing <strong>&lt;span&gt;</strong> containing the buttons. The use of the <strong>call()</strong> invocation, along with passing <strong>this</strong> tells the function to perform as a member of the button, rather than globally.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function changeChartType(chartSelector, parentChartType) {
+
+    removeSelectedGenreSalesType(parentChartType);
+
+    var $this = $(this),
+        chartType = $this.data("charttype"),
+        chart = $(chartSelector).data("kendoChart"),
+        colors = ["#808600", "#cc5300", "#cc7100"],
+        i = 0;
+
+    $this.addClass("chart-type-" + chartType + "-selected");
+
+    for (i = 0; i &lt; chart.options.series.length; i++) {
+
+        if (chartType !== "stacked-bar") {
+            chart.options.series[i].type = chartType;
+            chart.options.series[i].stack = false;
+        } else {
+            chart.options.series[i].type = "bar";
+            chart.options.series[i].stack = true;
+        }
+
+        chart.options.series[i].color = colors[i];
+        chart.options.series[i].opacity = 1;
+        
+    }
+
+    chart.redraw();
+}
+</code></pre></div></div>
+
+<p>First, this function clears the buttons" selection state for the chart in question.</p>
+
+<p>The chart is location using jQuery and the first parameter <strong>chartSelector</strong> - this provides access to the chart"s options.</p>
+
+<p>The button that was called is marked as selected using the <strong>$this</strong> variable, provided via the <strong>call()</strong> invocation.</p>
+
+<p>The chart"s options are then changed to the selected chart type, and the chart is then commanded to redraw, showing the new chart.</p>
+
+<h2 id="changing-temporal-data-dynamically">Changing Temporal Data Dynamically</h2>
+
+<p>The <strong>Sales By Genre</strong> and <strong>Searches By Genre</strong> charts also provide a method to dynamically change the temporal data in use. For example, using the buttons on top, the <strong>Sales By Genre</strong> chart can be changed from showing Weekly data</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/sales-by-genre-bar.png" alt="sales-by-genre-bar-weekly" /></p>
+
+<p>to showing Monthly data.</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/sales-by-genre-bar-monthly.png" alt="sales-by-genre-bar-monthly" /></p>
+
+<p>As before, the two charts are constructed similarly, with declarative markup and Javascript. (And jQuery, of course!)</p>
+
+<p>The chart is defined with the buttons in the previous section, and so aren"t included here with the declaration of the tabs used as buttons for the temporal data:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div class="chart-group-tabs"&gt;
+    &lt;span class="time-sales-tab time-sales-tab-selected genre-sales-tab" data-period="weekly"&gt;Weekly&lt;/span&gt;
+    &lt;span class="time-sales-tab genre-sales-tab" data-period="monthly"&gt;Monthly&lt;/span&gt;
+    &lt;span class="time-sales-tab genre-sales-tab" data-period="yearly"&gt;Yearly&lt;/span&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>The <strong>genre-sales-tab</strong> class" click event handler is then defined in the Javascript:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(".genre-sales-tab").click(function (e) {
+
+    var $this = $(this);
+
+    if ($this.hasClass("time-sales-tab-selected")) {
+        return;
+    }
+
+    $(".time-sales-tab", "#sales-by-genre").removeClass("time-sales-tab-selected");
+
+    var period = $this.data('period');
+
+    $this.addClass("time-sales-tab-selected");
+
+    salesByGenreChartDataSource
+        .options.transport.read.url = "api/salesbygenre/" + period;
+
+    $('.sales-by-genre-chart')
+        .data('kendoChart')
+        .options.categoryAxis.labels = getLabelOptions(period);
+
+    salesByGenreChartDataSource.read();
+});
+</code></pre></div></div>
+
+<p>This function is set to only update the data if a different set of data has been selected, then updates the selection in the UI.</p>
+
+<p>It retrieves the desired time period from the <strong>data-period</strong> attribute, then adjusts the data source that provides the chart its data. This results in a different API call, and therefore new data. The data source"s <strong>read()</strong> function is then called to update the data in the chart, which makes the chart redraw, presenting the new data to the user.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

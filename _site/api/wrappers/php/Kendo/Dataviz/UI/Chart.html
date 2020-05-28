@@ -1,0 +1,1403 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/Dataviz/UI/Chart.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizuichart">\Kendo\Dataviz\UI\Chart</h1>
+
+<p>A PHP wrapper for Kendo UI <a href="/api/dataviz/chart">Chart</a>.</p>
+
+<p>Inherits from <a href="/api/wrappers/php/Kendo/UI/Widget">\Kendo\UI\Widget</a>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use Chart in a PHP page instantiate a new instance, configure it via the available
+configuration <a href="#methods">methods</a> and output it by <code class="language-plaintext highlighter-rouge">echo</code>-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+<h3 id="using-kendo-chart">Using Kendo Chart</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// Create a new instance of Chart and specify its id
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+
+// Configure it
+$chart-&gt;autoBind(true)
+
+// Output it
+
+echo $chart-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="autobind">autoBind</h3>
+<p>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;autoBind(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="axisdefaults">axisDefaults</h3>
+<p>The default options for all chart axes. Accepts the options supported by categoryAxis, valueAxis, xAxis and yAxis.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-">$value ``</h5>
+
+<h3 id="axislabelclick">axisLabelClick</h3>
+<p>Fired when the user clicks an axis label.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-axisLabelClick">axisLabelClick</a> event documentation.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;axisLabelClick('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onAxisLabelClick(e) {
+        // handle the axisLabelClick event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;axisLabelClick('onAxisLabelClick');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;axisLabelClick(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addcategoryaxisitem">addCategoryAxisItem</h3>
+
+<p>Adds one or more ChartCategoryAxisItem to the Chart.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuichartcategoryaxisitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitem">Example - using \Kendo\Dataviz\UI\ChartCategoryAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$background = 'value';
+$categoryAxisItem-&gt;background($background);
+$chart-&gt;addCategoryAxisItem($categoryAxisItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$background = 'value';
+$chart-&gt;addCategoryAxisItem(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-chartcategoryaxisitem">Example - adding more than one ChartCategoryAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$first  = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$second = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$chart-&gt;addCategoryAxisItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="chartarea">chartArea</h3>
+
+<p>The chart area configuration options. Represents the entire visible area of the chart.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartareaarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartArea|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartarea">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartArea">\Kendo\Dataviz\UI\ChartArea</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chartArea = new \Kendo\Dataviz\UI\ChartArea();
+$background = 'value';
+$chartArea-&gt;background($background);
+$chart-&gt;chartArea($chartArea);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$background = 'value';
+$chart-&gt;chartArea(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="databound">dataBound</h3>
+<p>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-1">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;dataBound('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-1">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDataBound(e) {
+        // handle the dataBound event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;dataBound('onDataBound');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-1">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;dataBound(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="datasource">dataSource</h3>
+
+<p>Sets the data source of the dataSource.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-kendodatadatasourcearray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource|array</code></h5>
+
+<h4 id="example---using-kendodatadatasource">Example - using <a href="/api/wrappers/php/kendo/data/datasource">\Kendo\Data\DataSource</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$dataSource = new \Kendo\Data\DataSource();
+$chart-&gt;dataSource($dataSource);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$schema = new \Kendo\Data\DataSourceSchema();
+$chart-&gt;dataSource(array('schema' =&gt; $schema));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="drag">drag</h3>
+<p>Fired as long as the user is dragging the chart using the mouse or swipe gestures.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-drag">drag</a> event documentation.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-2">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-2">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;drag('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-2">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDrag(e) {
+        // handle the drag event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;drag('onDrag');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-2">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;drag(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dragend">dragEnd</h3>
+<p>Fired when the user stops dragging the chart.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-dragEnd">dragEnd</a> event documentation.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-3">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-3">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;dragEnd('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-3">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDragEnd(e) {
+        // handle the dragEnd event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;dragEnd('onDragEnd');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-3">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;dragEnd(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dragstart">dragStart</h3>
+<p>Fired when the user starts dragging the chart.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-dragStart">dragStart</a> event documentation.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-4">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-4">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;dragStart('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-4">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDragStart(e) {
+        // handle the dragStart event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;dragStart('onDragStart');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-4">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;dragStart(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="legend">legend</h3>
+
+<p>The chart legend configuration options.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartlegendarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartLegend|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartlegend">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartLegend">\Kendo\Dataviz\UI\ChartLegend</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$legend = new \Kendo\Dataviz\UI\ChartLegend();
+$background = 'value';
+$legend-&gt;background($background);
+$chart-&gt;legend($legend);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-3">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$background = 'value';
+$chart-&gt;legend(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="legenditemclick">legendItemClick</h3>
+<p>Fires when an legend item is clicked.
+For additional information check the <a href="/api/dataviz/chart#events-legendItemClick">legendItemClick</a> event documentation.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-5">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-5">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;legendItemClick('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-5">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onLegendItemClick(e) {
+        // handle the legendItemClick event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;legendItemClick('onLegendItemClick');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-5">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;legendItemClick(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="legenditemhover">legendItemHover</h3>
+<p>Fires when an legend item is hovered.
+For additional information check the <a href="/api/dataviz/chart#events-legendItemHover">legendItemHover</a> event documentation.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-6">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-6">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;legendItemHover('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-6">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onLegendItemHover(e) {
+        // handle the legendItemHover event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;legendItemHover('onLegendItemHover');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-6">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;legendItemHover(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="noteclick">noteClick</h3>
+<p>Fired when the user clicks one of the notes.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-noteClick">noteClick</a> event documentation.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-7">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-7">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;noteClick('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-7">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onNoteClick(e) {
+        // handle the noteClick event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;noteClick('onNoteClick');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-7">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;noteClick(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="notehover">noteHover</h3>
+<p>Fired when the user hovers one of the notes.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-noteHover">noteHover</a> event documentation.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-8">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-8">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;noteHover('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-8">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onNoteHover(e) {
+        // handle the noteHover event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;noteHover('onNoteHover');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-8">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;noteHover(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addpane">addPane</h3>
+
+<p>Adds one or more ChartPane to the Chart.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuichartpanearray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartPane|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartpane">Example - using \Kendo\Dataviz\UI\ChartPane</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$pane = new \Kendo\Dataviz\UI\ChartPane();
+$background = 'value';
+$pane-&gt;background($background);
+$chart-&gt;addPane($pane);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-4">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$background = 'value';
+$chart-&gt;addPane(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-chartpane">Example - adding more than one ChartPane</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$first  = new \Kendo\Dataviz\UI\ChartPane();
+$second = new \Kendo\Dataviz\UI\ChartPane();
+$chart-&gt;addPane($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="plotarea">plotArea</h3>
+
+<p>The plot area configuration options. The plot area is the area which displays the series.</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartplotareaarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartPlotArea|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartplotarea">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartPlotArea">\Kendo\Dataviz\UI\ChartPlotArea</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$plotArea = new \Kendo\Dataviz\UI\ChartPlotArea();
+$background = 'value';
+$plotArea-&gt;background($background);
+$chart-&gt;plotArea($plotArea);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-5">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$background = 'value';
+$chart-&gt;plotArea(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="plotareaclick">plotAreaClick</h3>
+<p>Fired when the user clicks the plot area.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-plotAreaClick">plotAreaClick</a> event documentation.</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-9">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-9">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;plotAreaClick('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-9">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onPlotAreaClick(e) {
+        // handle the plotAreaClick event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;plotAreaClick('onPlotAreaClick');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-9">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;plotAreaClick(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="renderas">renderAs</h3>
+<p>Sets the preferred rendering engine.
+If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are:</p>
+
+<h4 id="returns-18">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;renderAs('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+<p>Fired when the user modifies the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-select">select</a> event documentation.</p>
+
+<h4 id="returns-19">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-10">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-10">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;select('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-10">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSelect(e) {
+        // handle the select event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;select('onSelect');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-10">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;select(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="selectend">selectEnd</h3>
+<p>Fired when the user completes modifying the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-selectEnd">selectEnd</a> event documentation.</p>
+
+<h4 id="returns-20">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-11">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-11">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;selectEnd('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-11">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSelectEnd(e) {
+        // handle the selectEnd event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;selectEnd('onSelectEnd');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-11">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;selectEnd(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="selectstart">selectStart</h3>
+<p>Fired when the user starts modifying the axis selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-selectStart">selectStart</a> event documentation.</p>
+
+<h4 id="returns-21">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-12">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-12">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;selectStart('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-12">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSelectStart(e) {
+        // handle the selectStart event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;selectStart('onSelectStart');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-12">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;selectStart(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addseriesitem">addSeriesItem</h3>
+
+<p>Adds one or more ChartSeriesItem to the Chart.</p>
+
+<h4 id="returns-22">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuichartseriesitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitem">Example - using \Kendo\Dataviz\UI\ChartSeriesItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$aggregate = 'value';
+$seriesItem-&gt;aggregate($aggregate);
+$chart-&gt;addSeriesItem($seriesItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-6">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$aggregate = 'value';
+$chart-&gt;addSeriesItem(array('aggregate' =&gt; $aggregate));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-chartseriesitem">Example - adding more than one ChartSeriesItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$first  = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$second = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$chart-&gt;addSeriesItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="seriesclick">seriesClick</h3>
+<p>Fired when the user clicks the chart series.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-seriesClick">seriesClick</a> event documentation.</p>
+
+<h4 id="returns-23">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-13">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-13">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;seriesClick('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-13">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSeriesClick(e) {
+        // handle the seriesClick event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;seriesClick('onSeriesClick');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-13">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;seriesClick(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="seriescolors">seriesColors</h3>
+<p>The default colors for the chart"s series. When all colors are used, new colors are pulled from the start again.</p>
+
+<h4 id="returns-24">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-24">Parameters</h4>
+
+<h5 id="value-array">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;seriesColors(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="seriesdefaults">seriesDefaults</h3>
+
+<p>The default options for all series.</p>
+
+<h4 id="returns-25">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-25">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesdefaultsarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesDefaults|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesdefaults">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesDefaults">\Kendo\Dataviz\UI\ChartSeriesDefaults</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$seriesDefaults = new \Kendo\Dataviz\UI\ChartSeriesDefaults();
+$gap = 1;
+$seriesDefaults-&gt;gap($gap);
+$chart-&gt;seriesDefaults($seriesDefaults);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-7">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$gap = 1;
+$chart-&gt;seriesDefaults(array('gap' =&gt; $gap));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="serieshover">seriesHover</h3>
+<p>Fired when the user hovers the chart series.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-seriesHover">seriesHover</a> event documentation.</p>
+
+<h4 id="returns-26">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-26">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-14">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-14">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;seriesHover('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-14">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSeriesHover(e) {
+        // handle the seriesHover event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;seriesHover('onSeriesHover');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-14">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;seriesHover(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="theme">theme</h3>
+<p>The chart theme.The supported values are:</p>
+
+<h4 id="returns-27">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-27">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;theme('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="title">title</h3>
+
+<p>The chart title configuration options or text.</p>
+
+<h4 id="returns-28">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-28">Parameters</h4>
+
+<h5 id="value-stringkendodatavizuicharttitlearray">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\Dataviz\UI\ChartTitle|array</code></h5>
+
+<h4 id="example----using-string">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;title('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatavizuicharttitle">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartTitle">\Kendo\Dataviz\UI\ChartTitle</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$title = new \Kendo\Dataviz\UI\ChartTitle();
+$align = 'value';
+$title-&gt;align($align);
+$chart-&gt;title($title);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-8">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$align = 'value';
+$chart-&gt;title(array('align' =&gt; $align));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="tooltip">tooltip</h3>
+
+<p>The chart series tooltip configuration options.</p>
+
+<h4 id="returns-29">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-29">Parameters</h4>
+
+<h5 id="value-kendodatavizuicharttooltiparray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartTooltip|array</code></h5>
+
+<h4 id="example---using-kendodatavizuicharttooltip">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartTooltip">\Kendo\Dataviz\UI\ChartTooltip</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$tooltip = new \Kendo\Dataviz\UI\ChartTooltip();
+$background = 'value';
+$tooltip-&gt;background($background);
+$chart-&gt;tooltip($tooltip);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-9">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$background = 'value';
+$chart-&gt;tooltip(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="transitions">transitions</h3>
+<p>If set to true the chart will play animations when displaying the series. By default animations are enabled.</p>
+
+<h4 id="returns-30">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-30">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;transitions(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addvalueaxisitem">addValueAxisItem</h3>
+
+<p>Adds one or more ChartValueAxisItem to the Chart.</p>
+
+<h4 id="returns-31">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-31">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuichartvalueaxisitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartValueAxisItem|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartvalueaxisitem">Example - using \Kendo\Dataviz\UI\ChartValueAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$valueAxisItem = new \Kendo\Dataviz\UI\ChartValueAxisItem();
+$background = 'value';
+$valueAxisItem-&gt;background($background);
+$chart-&gt;addValueAxisItem($valueAxisItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-10">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$background = 'value';
+$chart-&gt;addValueAxisItem(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-chartvalueaxisitem">Example - adding more than one ChartValueAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$first  = new \Kendo\Dataviz\UI\ChartValueAxisItem();
+$second = new \Kendo\Dataviz\UI\ChartValueAxisItem();
+$chart-&gt;addValueAxisItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addxaxisitem">addXAxisItem</h3>
+
+<p>Adds one or more ChartXAxisItem to the Chart.</p>
+
+<h4 id="returns-32">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-32">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuichartxaxisitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartXAxisItem|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartxaxisitem">Example - using \Kendo\Dataviz\UI\ChartXAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$xAxisItem = new \Kendo\Dataviz\UI\ChartXAxisItem();
+$background = 'value';
+$xAxisItem-&gt;background($background);
+$chart-&gt;addXAxisItem($xAxisItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-11">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$background = 'value';
+$chart-&gt;addXAxisItem(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-chartxaxisitem">Example - adding more than one ChartXAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$first  = new \Kendo\Dataviz\UI\ChartXAxisItem();
+$second = new \Kendo\Dataviz\UI\ChartXAxisItem();
+$chart-&gt;addXAxisItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addyaxisitem">addYAxisItem</h3>
+
+<p>Adds one or more ChartYAxisItem to the Chart.</p>
+
+<h4 id="returns-33">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-33">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuichartyaxisitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartYAxisItem|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartyaxisitem">Example - using \Kendo\Dataviz\UI\ChartYAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$yAxisItem = new \Kendo\Dataviz\UI\ChartYAxisItem();
+$background = 'value';
+$yAxisItem-&gt;background($background);
+$chart-&gt;addYAxisItem($yAxisItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-12">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$background = 'value';
+$chart-&gt;addYAxisItem(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-chartyaxisitem">Example - adding more than one ChartYAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$first  = new \Kendo\Dataviz\UI\ChartYAxisItem();
+$second = new \Kendo\Dataviz\UI\ChartYAxisItem();
+$chart-&gt;addYAxisItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="zoom">zoom</h3>
+<p>Fired as long as the user is zooming the chart using the mousewheel.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-zoom">zoom</a> event documentation.</p>
+
+<h4 id="returns-34">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-34">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-15">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-15">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;zoom('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-15">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onZoom(e) {
+        // handle the zoom event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;zoom('onZoom');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-15">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;zoom(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="zoomend">zoomEnd</h3>
+<p>Fired when the user stops zooming the chart.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-zoomEnd">zoomEnd</a> event documentation.</p>
+
+<h4 id="returns-35">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-35">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-16">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-16">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;zoomEnd('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-16">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onZoomEnd(e) {
+        // handle the zoomEnd event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;zoomEnd('onZoomEnd');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-16">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;zoomEnd(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="zoomstart">zoomStart</h3>
+<p>Fired when the user uses the mousewheel to zoom the chart.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/dataviz/chart#events-zoomStart">zoomStart</a> event documentation.</p>
+
+<h4 id="returns-36">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Chart</code></p>
+
+<h4 id="parameters-36">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-17">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-17">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;zoomStart('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-17">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onZoomStart(e) {
+        // handle the zoomStart event.
+    }
+&lt;/script&gt;
+&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;zoomStart('onZoomStart');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-17">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$chart = new \Kendo\Dataviz\UI\Chart('Chart');
+$chart-&gt;zoomStart(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of Kendo UI ContextMenu widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Steps that help you initialize the ContextMenu widget using JSON data object.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/menu/contextmenu.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="contextmenu-overview">ContextMenu Overview</h1>
+
+<p>The <strong>ContextMenu</strong> displays hierarchical data as a multi-level menu in a popup. It provides rich styling for unordered lists
+of items, and can be used for both navigation and executing JavaScript commands. Items can be defined and
+initialized from HTML, or the API can be used to add and remove items. Also a ContextMenu target can be specified, a filter 
+for multiple targets and an event to which the ContextMenu will listen in order to pop up.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="create-a-html-hierarchical-list-of-items">Create a HTML hierarchical list of items</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Normal Item
+        &lt;ul&gt;
+            &lt;li&gt;&lt;span class="k-sprite icon-class"&gt;&lt;/span&gt;Item with a Sprite&lt;/li&gt;
+            &lt;li&gt;&lt;img src="Icons/contacts.gif" /&gt;Item with an Icon&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href="http://www.google.com"&gt;Navigation Item&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="k-state-active"&gt;Active Item&lt;/li&gt;
+    &lt;li&gt;Template Item
+        &lt;div class="k-group k-content"&gt;
+            Test button - &lt;a class="k-button"&gt;Button&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>Initialization of a <strong>ContextMenu</strong> should occur after the DOM is fully loaded. It is recommended that
+initialization the <strong>ContextMenu</strong> occur within a handler provided to $(document).ready().</p>
+
+<h3 id="initialize-a-contextmenu-using-a-selector-within-documentready">Initialize a ContextMenu using a selector within $(document).ready()</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $(document).ready(function() {
+        $("#context-menu").kendoContextMenu();
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-the-contextmenu-using-json-data-object">Initialize the ContextMenu using JSON data object</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="context-menu"&gt;&lt;/ul&gt;
+&lt;script&gt;
+    $(document).ready(function() {
+        $("#context-menu").kendoContextMenu({
+            dataSource:
+                [{
+                    text: "Item 1",
+                    cssClass: "myClass",                         // Add custom CSS class to the item, optional, added 2012 Q3 SP1.
+                    url: "http://www.telerik.com"                // Link URL if navigation is needed, optional.
+                },
+                {
+                    text: "&lt;b&gt;Item 2&lt;/b&gt;",
+                    encoded: false,                              // Allows use of HTML for item text
+                    content: "text"                              // content within an item
+                },
+                {
+                    text: "Item 3",
+                    imageUrl: "http://www.telerik.com/test.jpg", // Item image URL, optional.
+                    items: [{                                    // Sub item collection
+                         text: "Sub Item 1"
+                    },
+                    {
+                         text: "Sub Item 2"
+                    }]
+                },
+                {
+                    text: "Item 4",
+                    spriteCssClass: "imageClass3"                // Item image sprite CSS class, optional.
+                }]
+        })
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="customizing-contextmenu-animations">Customizing ContextMenu Animations</h2>
+
+<p>By default, the <strong>ContextMenu</strong> uses a slide animation to expand and reveal sub-items as the mouse hovers. Animations can be easily
+customized using configuration properties, changing the animation style and delay. ContextMenu can be also configured to use a different
+open event than the default "contextmenu" (right click).</p>
+
+<h3 id="changing-contextmenu-animation-and-open-event">Changing ContextMenu animation and open event</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        animation: {
+            open: { effects: "fadeIn" },
+            duration: 500
+        },
+        showOn: "click"
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="dynamically-configuring-contextmenu-items">Dynamically configuring ContextMenu items</h2>
+
+<p>The <strong>ContextMenu</strong> API provides several methods for dynamically adding
+or removing Items. To add items, provide the new item as a JSON
+object along with a reference item that will be used to determine the
+placement in the hierarchy.</p>
+
+<p>A reference item is simply a target ContextMenu Item HTML element that
+already exists in the ContextMenu. Any valid jQuery selector can be used to
+obtain a reference to the target item. Removing an item only requires a reference to the target element that
+should be removed.</p>
+
+<h3 id="dynamically-add-a-new-root-contextmenu-item">Dynamically add a new root ContextMenu item</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    var contextMenu = $("#context-menu").kendoContextMenu().data("kendoContextMenu");
+    contextMenu.insertAfter(
+        { text: "New ContextMenu Item" },
+        contextMenu.element.children("li:last")
+    );
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="accessing-an-existing-contextmenu">Accessing an Existing ContextMenu</h2>
+
+<p>You can reference an existing <strong>ContextMenu</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the API to control
+its behavior.</p>
+
+<h3 id="accessing-an-existing-contextmenu-instance">Accessing an existing ContextMenu instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="context-menu" data-role="contextmenu" data-target="body"&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    kendo.bind(document.body);
+&lt;/script&gt;
+
+...
+
+&lt;script&gt;
+    var contextMenu = $("#context-menu").data("kendoContextMenu");
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

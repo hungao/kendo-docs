@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/mobile/touch.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="touch">Touch</h1>
+
+<p>The kendo Touch widget provides a cross-platform compatible API for handling user-initiated touch events, multi-touch gestures and event sequences (drag, swipe, etc.).
+On pointer enabled devices (i.e. desktops and laptops), mouse events are treated as touch events.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The mobile Application will automatically initialize a Touch widget for every element with a <code class="language-plaintext highlighter-rouge">role</code> data attribute set to <code class="language-plaintext highlighter-rouge">touch</code> present in the views/layouts" markup.
+Alternatively, it can be initialized using jQuery plugin syntax in the containing mobile View <strong>init event handler</strong>.</p>
+
+<h3 id="handle-element-touch-events">Handle element touch events</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;div data-role="touch" data-tap="onTap"&gt;
+        Tap me
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    function onTap(e) {
+        console.log(e.touch.target + " was tapped");
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-touch-widget">Initialize touch widget</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="initTouch"&gt;
+    &lt;div id="touch-surface"&gt;
+        Tap me
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    function initTouch(e) {
+        $("#touch-surface").kendoTouch({
+            tap: function(e) {
+                console.log(e.touch.target + " was tapped");
+            }
+        });
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="touch-event-info">Touch Event Info</h2>
+
+<p>Each touch event handler receives an event object as a parameter. The touch event has a <code class="language-plaintext highlighter-rouge">touch</code> property,
+which contains information about the touch event like its current coordinates, initial position,
+the DOM element, etc.</p>
+
+<p>For a full list of the properties of the Touch object, see the <a href="/api/mobile/touch/#TouchObject">Touch Object API reference</a>.</p>
+
+<p>The multitouch gestures event object parameter has a <code class="language-plaintext highlighter-rouge">touches</code> property, which is an array of two touch objects.
+In addition to that, a <code class="language-plaintext highlighter-rouge">distance</code> and <code class="language-plaintext highlighter-rouge">center</code> properties are exposed.</p>
+
+<h3 id="access-touch-event-information">Access Touch Event information</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;div data-role="touch" data-tap="onTap"&gt;
+        Tap me
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    function onTap(e) {
+        console.log("X coordinate": e.touch.x.location);
+        console.log("Y coordinate": e.touch.y.location);
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="dragging-outside-the-element-boundaries">Dragging Outside the Element Boundaries</h2>
+
+<p>If the Touch widget is instantiated with a small DOM element, the mouse/finger may leave the element boundaries while dragging.
+In this case, by default, the <code class="language-plaintext highlighter-rouge">dragend</code> event will be fired.
+The widget <code class="language-plaintext highlighter-rouge">global</code> configuration option would cause the touch widget to track the events for the entire document surface until the finger is lifted.</p>
+
+<h2 id="touch-events--sequences">Touch Events / Sequences</h2>
+
+<p>The Touch Widget exposes four touch events - <code class="language-plaintext highlighter-rouge">touchstart</code>, <code class="language-plaintext highlighter-rouge">dragstart</code>, <code class="language-plaintext highlighter-rouge">drag</code>, and <code class="language-plaintext highlighter-rouge">dragend</code>, corresponding to the four stages of the touch sequence.
+For a detailed event description and sample code, please see the <a href="/api/mobile/touch">touch widget API reference</a>.</p>
+
+<h2 id="tap-doubletap-and-hold-events">Tap, Doubletap, and Hold Events</h2>
+
+<p>In addition to the drag events, <code class="language-plaintext highlighter-rouge">tap</code>, <code class="language-plaintext highlighter-rouge">doubletap</code> and <code class="language-plaintext highlighter-rouge">hold</code> events may be fired if the user does not move his/hers finger after pressing.
+The <code class="language-plaintext highlighter-rouge">hold</code> event minimum time and the <code class="language-plaintext highlighter-rouge">doubletap</code> maximum time between two successive taps can be set through the <a href="/api/mobile/touch#configuration">touch widget configuration options</a>.</p>
+
+<h2 id="swipe-events">Swipe Events</h2>
+
+<p>If the <code class="language-plaintext highlighter-rouge">enableSwipe</code> configuration option is set to <strong>true</strong>, the Touch widget recognizes horizontal swipes and fires the <code class="language-plaintext highlighter-rouge">swipe</code> event.
+The swipe minimum distance, maximum horizontal deviation, and maximum duration can be set through the <a href="/api/mobile/touch#configuration">configuration options</a>.</p>
+
+<p><strong>Notice</strong>: if the <code class="language-plaintext highlighter-rouge">enableSwipe</code> option is set to true, the <code class="language-plaintext highlighter-rouge">dragstart</code>, <code class="language-plaintext highlighter-rouge">drag</code> and <code class="language-plaintext highlighter-rouge">dragend</code> events <strong>will not be fired</strong>.</p>
+
+<h2 id="multi-touch-gestures">Multi-touch Gestures</h2>
+
+<p>If the <code class="language-plaintext highlighter-rouge">multiTouch</code> configuration option is set to <strong>true</strong>, the Touch widget will recognize two-finger gestures,
+and fire <code class="language-plaintext highlighter-rouge">gesturestart</code>, <code class="language-plaintext highlighter-rouge">gesturechange</code> and <code class="language-plaintext highlighter-rouge">gestureend</code> events.</p>
+
+<p>For a detailed description for each event, please see the <a href="/api/mobile/touch">API Reference</a>.</p>
+
+<blockquote>
+  <p>Multi-touch gestures work only on platforms that support multitouch (iOS 4+, Android 4+). What"s more, currently, only two finger gestures are supported,
+as the majority of the currently available mobile platforms usually have system-wide actions attached to three finger gestures.</p>
+</blockquote>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

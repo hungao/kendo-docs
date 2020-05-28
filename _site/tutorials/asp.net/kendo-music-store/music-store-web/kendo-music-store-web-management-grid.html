@@ -1,0 +1,440 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/kendo-music-store/music-store-web/kendo-music-store-web-management-grid.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="creating-the-store-management-grid---kendo-music-store">Creating the Store Management Grid - Kendo Music Store</h1>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-web/images/kendo-manage-grid-screenshot.png" alt="kendo-manage-grid-screenshot" /></p>
+
+<p>When logged in to the Music Store as an administrator an additional button titled "Manage Store" is made available in the upper right corner.
+This opens the management grid which can be used to add, remove and delete albums from the store.
+This page uses the <a href="http://demos.telerik.com/kendo-ui/web/grid/index.html">Kendo Grid</a> widget.</p>
+
+<p>This code is located in <strong>Scripts/App/storemanager-index.js</strong>.</p>
+
+<blockquote>
+  <p>You can log in to the Music Store as the administrator by using the username "Owner" and the password "p@ssword123".</p>
+</blockquote>
+
+<h2 id="defining-the-data-source">Defining the Data Source.</h2>
+
+<p>Let"s first look at the data source for the grid. It has a large definition compared to the other DataSources we have used so far.
+This is largely because it is the only one to do full CRUD operations, and because we need to define the entire data model.</p>
+
+<h3 id="basic-data-source-settings">Basic Data Source Settings.</h3>
+
+<p>The basic settings for the DataSource are:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        dataSource: {
+            pageSize: 50,
+            serverPaging: true,
+        }
+</code></pre></div></div>
+
+<p><strong>pageSize</strong> simple sets the size of each page of data for the grid. In this sample, it is set to 50 records per page.
+The <strong>serverPaging: true</strong> property indicates that we will do server-side paging.
+We recommend doing paging on the server, not the client, when the server supports it to minimize the amount of data that needs to be returned to the client.</p>
+
+<h3 id="data-source-transport">Data Source Transport.</h3>
+
+<p>Next we need to define the <strong>transport</strong> for the DataSource.
+Up until now we have only read data from the server using the <strong>read</strong> transport.
+For the Create Update and Delete operations, we define:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        dataSource: {
+            // ... basic settings omitted ...
+            
+            transport: {
+                type: "odata",
+                read: {
+                    url: store.config.albumsUrl,
+                    type: "GET"
+                },
+                update: {
+                    url: function (data) {
+                        return store.config.albumsUrl + "(" + data.AlbumId + ")"
+                    },
+                    type: "PUT"
+                },
+                destroy: {
+                    url: function (data) {
+                        return store.config.albumsUrl + "(" + data.AlbumId + ")";
+                    },
+                    type: "DELETE"
+                },
+                create: {
+                    url: store.config.albumsUrl,
+                    type: "POST"
+                }
+            },
+            schema: {
+                data: store.config.wcfSchemaData,
+                total: store.config.wcfSchemaTotal,
+            }
+</code></pre></div></div>
+
+<p>Each of these sets the <strong>url</strong> and <strong>type</strong> for the action.
+In the case of <strong>destroy</strong> and <strong>update</strong> we need to include the AlbumId in the URL itself, not as a parameter.
+To do this we defined a function instead of a string to act as the URL.
+Kendo automatically calls this function and passes in the data item that is being deleted.
+This allowed us to get the AlbumID and append it to the base URL:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                    url: function (data) {
+                        return store.config.albumsUrl + "(" + data.AlbumId + ")";
+                    }
+</code></pre></div></div>
+
+<h3 id="data-source-schema">Data Source Schema.</h3>
+
+<p>Unlike the other DataSources in the Music Store that only read data, when we are going to create new records
+it is best to include the <strong>schema.model</strong> property.
+The model defines the data layout of the record so when the Kendo DataSource is asked to create a new record it knows the
+fields and data types, as well as some basic validation information.
+This data is used by the Grid widget to define what editors each column will have when the "Create" button is clicked.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            schema: {
+                data: store.config.wcfSchemaData,
+                total: store.config.wcfSchemaTotal,
+                model:{
+                    id: "AlbumId",
+                    fields: {
+                        AlbumId: { type: "number", defaultValue: 0 },
+                        GenreId: { type: "number", defaultValue: store.config.newAlbumDefaultGenre },
+                        ArtistId: { type: "number", defaultValue: store.config.newAlbumDefaultArtist },
+                        Title: {
+                            validation: {
+                                required: true
+                            }
+                        },
+                        Price: {
+                            type: "number",
+                            defaultValue: store.config.newAlbumDefaultPrice,
+                            validation: {
+                                required: true,
+                                min: 0.01,
+                                max: 100.00
+                            }
+                        },
+                        AlbumArtUrl: {
+                            validation: {
+                                required: true
+                            }
+                        }
+                    }
+                }
+            }
+</code></pre></div></div>
+
+<p>You may notice that this <strong>schema.model</strong> data basically matches the server side model in <strong>Models\Album.cs</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class Album {
+    [ScaffoldColumn(false)]
+    public int AlbumId { get; set; }
+
+    public int GenreId { get; set; }
+
+    public int ArtistId { get; set; }
+
+    [Required]
+    [StringLength(160, MinimumLength = 2)]
+    public string Title { get; set; }
+
+    [Range(0.01, 100.00)]
+    [DataType(DataType.Currency)]
+    public decimal Price { get; set; }
+
+    [DisplayName("Album Art URL")]
+    [DataType(DataType.ImageUrl)]
+    [StringLength(1024)]
+    public string AlbumArtUrl { get; set; }
+
+    public virtual Genre Genre { get; set; }
+    public virtual Artist Artist { get; set; }
+    public virtual List&lt;OrderDetail&gt; OrderDetails { get; set; }
+}
+</code></pre></div></div>
+
+<p>One of the important aspects of defining the model is setting default values using the <strong>defaultValue</strong> property.
+For this sample, if we started with a GenreId and ArtistId of 0 then those values are not valid choices since no
+genre or artist exists with those IDs. Instead, we default to a value of 1.</p>
+
+<h2 id="setting-up-the-grid">Setting up the Grid.</h2>
+
+<p>Now that the DataSource is defined, we can define the grid.
+A single HTML element is used as the placeholder for the grid:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="albumsGrid"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Then the element is turned in to a Grid widget when the page is loaded with JavaScript:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $("#albumsGrid").kendoGrid({
+        sortable: true,
+        groupable: true,
+        filterable: true,
+        pageable: true,
+        editable: "inline",
+        toolbar: ["create"],
+        dataSource: gridDataSource,
+        columns: []
+    });
+</code></pre></div></div>
+
+<p>The <strong>sortable</strong>, <strong>groupable</strong> and <strong>filterable</strong> properties indicate that sorting, grouping and filtering will all be enabled.</p>
+
+<p>The <strong>pageable</strong> property indicates that the grid will support paging. The page size was defined on the DataSource and set to 50 items per page.</p>
+
+<p><strong>editable</strong> defines the grid editing style. In this sample we are using "inline" which lets one entire row be shifted into edit mode, then saved or cancelled.
+Other edit modes (incell/inline/popup) can be seen in the <a href="http://demos.telerik.com/kendo-ui/web/grid/editing.html">Grid demos</a>.</p>
+
+<p>The <strong>toolbar</strong> property contains an array of commands to place along the top of the grid. In this sample we display a "create" button that can be used to add a new record.</p>
+
+<p><strong>dataSource</strong> is set to the data source that we defined above.</p>
+
+<p><strong>columns</strong> is an array of columns to be displayed which we will look at in more detail.</p>
+
+<h3 id="defining-the-grid-columns">Defining the Grid Columns.</h3>
+
+<p>The <strong>columns: []</strong> property of the grid configuration takes an array of objects, each of which defines a column of data.
+The album edit grid contains these columns:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        columns: [
+            { title: "Album Art", field: "AlbumArtUrl", template: '&lt;img src="#= AlbumArtUrl #" /&gt;', width: "110px", editor: albumArtEditor, filterable: false, sortable: false, groupable: false },
+            { title: "Genre", field: "GenreId", values: genres },
+            { title: "Artist", field: "ArtistId", values: artists, editor: artistEditor },
+            { field: "Title", groupable: false },
+            { field: "Price", format:"{0:c}" },
+            { command: ["edit", "destroy"], title: "&amp;nbsp;", width: "160px" }
+        ]
+</code></pre></div></div>
+
+<p>Most of the properties defined for each column are optional. The ones used here are:</p>
+
+<p><strong>title</strong> sets the text to show at the top of the column in the header. If not set, the field name is used.</p>
+
+<p><strong>field</strong> indicates the name of the property on the data object that is used for this column.</p>
+
+<p><strong>template</strong> defines a custom template for the data displayed in the column.
+We use a custom template for the Album Art column to add an image tag and show the art.</p>
+
+<p><strong>editor</strong> defines a function to be used as a custom editor, displayed when the cell enters edit mode.
+This is discussed in more details below.</p>
+
+<p><strong>filterable</strong>, <strong>sortable</strong> and <strong>groupable</strong> overrides the properties set on the grid.
+This can be used to mark individual columns as fitlerable, sortable and groupable.</p>
+
+<p><strong>format</strong> defines a custom formatter to be used to display the cell data. In this case we use "{0:c}" to format the Price column as currency.
+The format takes the same values as the <a href="http:///api/framework/kendo#format">kendo.format() function</a>.</p>
+
+<p><strong>values</strong> sets a collection of key-value pair objects that are used as a foreign key to look up cell values.
+This is discussed in more detail below.</p>
+
+<h2 id="using-a-custom-editor-for-the-artist-selection">Using a Custom Editor for the Artist Selection.</h2>
+
+<p>When an album grid row is edited, we use a custom editor for selecting an Artist.
+Instead of the normal DropDown widget we use an AutoComplete widget.
+This allows the user to start to enter an artist name and find the matching artists.</p>
+
+<p>To set a custom editor for a cell we start by defining a function that is called to create the editor.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        var artistEditor = function (container, options) {
+            $('&lt;input data-text-field="text" data-value-field="value" data-bind="value:' + options.field + '" /&gt;')
+                .appendTo(container)
+                .kendoComboBox({
+                    autoBind: false,
+                    dataSource: artists
+                });
+        };
+</code></pre></div></div>
+
+<p>When the editor function is called, the <strong>container</strong> parameter is the cell element that will hold the editor.
+We create our editor element and use jQuery <strong>.append(container)</strong> to add it to the container.</p>
+
+<p>The <strong>options</strong> parameter passed in to the editor function is the data that the cell is bound to.
+For the auto complete example we bind its value to options.field which sets the auto complete box"s
+current value to the artist set on the album, and if the artist is changed the selected artist is copied to the album.</p>
+
+<h2 id="using-the-foreign-key-feature-to-show-genre-and-artist-names">Using the Foreign Key feature to show Genre and Artist Names.</h2>
+
+<p>The Album objects returned from the server contain the GenreId and the ArtistId, not the genre and artist names.
+It would look very strange to just display these IDs in the grid, since no one will know what "Genre 1" or "Artist 27" is.
+Instead, we want to load all genre and artist names into a list of objects that can be used to map these IDs to their display names.</p>
+
+<p>In the Kendo Grid, this is called a <a href="http://demos.telerik.com/kendo-ui/web/grid/foreignkeycolumn.html">Foreign Key column</a>.</p>
+
+<p>In the Music Store, we use the jQuery <strong>$.Deferred()</strong> functionality to asynchronously load the lists of Genres and Albums from the server.
+Once they are retrieved they are mapped to lists of objects that follow the format:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    value:
+    text:
+}
+</code></pre></div></div>
+
+<p>where <strong>value</strong> is the ID of the item, and <strong>text</strong> is its display name.
+These lists need to be loaded before populating the grid, but the DataSource.read() method used to read the data is asynchronous.
+This is why deferreds were used to laod the data asynchronously and continue loading the grid when both genres and artists was finished loading.
+Once these lists are loaded, we use the <strong>column.values</strong> property to set it as the foreign key lookup for a column.
+For example the Genre column is defined as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        columns: [
+            ...
+            { title: "Genre", field: "GenreId", values: genres },
+            ...
+        ]
+</code></pre></div></div>
+
+<p>When the grid needs to display the data for a cell in the Genre column, it will get the value using the <strong>field</strong>.
+In this case lets assume we have an Album that contains <strong>GenreId: 5</strong>.
+It then takes that value and looks in the foreign key data <strong>genres</strong> and finds the item that has <strong>value: 5</strong>.
+It then takes the <strong>text</strong> value from that foreign key data and uses that for display instead of the GenreId.</p>
+
+<p>Using a Foreign Key column also changes the default editor behavior for the cell.
+Without it, the grid would put up a Numeric TextBox editor for the GenreId since it is numeric data.
+With the foreign key column, it instead uses a Dropdown box to select from the choices defined in the genres list.</p>
+
+<h2 id="album-art-upload-with-the-kendo-upload-widget">Album Art Upload (with the Kendo Upload widget)</h2>
+
+<p>We use another custom editor for the album art column.
+This one is a little more complicated than the artist name because we need to support the ability to upload new album art.
+To facilitate this we used the <a href="http://demos.telerik.com/kendo-ui/web/upload/index.html">Kendo Upload</a> widget.</p>
+
+<p>A custom editor is defined for the column by specifying <strong>editor: albumArtEditor</strong> and the editor function:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        var albumArtEditor = function (container, options) {
+            if (options.model.AlbumArtUrl) {
+                $('&lt;img src="' + options.model.AlbumArtUrl + '" /&gt;').appendTo(container);
+            }
+
+            $('&lt;input name="files" type="file" /&gt;').appendTo(container).kendoUpload({
+                multiple: false,
+                showFileList: false,
+                async: {
+                    saveUrl: store.config.imagesUrl,
+                    autoUpload: true
+                },
+                success: function (e) {
+                    container.html('&lt;img src="' + e.response + '" /&gt;');
+                    options.model.set(options.field, e.response);
+                }
+            });
+        };
+</code></pre></div></div>
+
+<p>If the album being edited already has an AlbumArtUrl set then an &lt;img&gt; tag is appended to display the current album art.</p>
+
+<p>Then a &lt;input&gt; element is appended and defined as a Kendo Upload widget.
+When this button is clicked the user will be presented with a file selection dialog where they can choose the art to upload.
+Because the <strong>async.autoUpload</strong> is set to <strong>true</strong> the image will be uploaded as soon as it is selected.
+On the server, after the file is uploaded a response is sent to the client that contains the url to the newly saved image.
+The upload widget in the editor uses the <strong>success</strong> event to read the returned URL from the server and display the image.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

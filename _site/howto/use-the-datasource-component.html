@@ -1,0 +1,280 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Using DataSource component in Kendo UI framework | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="In this how-to tutorial we provide a quick introduction of Kendo UI DataSource component and guide you how to use it in your project.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li class="active">How Do I?</li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/howto.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("howto/use-the-datasource-component.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="how-to-use-the-datasource">How-To: Use the DataSource</h1>
+
+<p>In this how-to, we"ll examine how to use the DataSource of Kendo UI.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>The DataSource plays a central role in the applications and sites built with Kendo UI. Fundamentally, it is an abstraction over local or remote data. However, it has many other responsibilities as well, including:</p>
+
+<ul>
+  <li>retrieving data from a remote endpoint;</li>
+  <li>maintaining the structure and type of the data it represents (schema);</li>
+  <li>processing serialization formats to/from a remote endpoint;</li>
+  <li>synchronizing updates (i.e. create, update, delete) to/from a remote endpoint;</li>
+  <li>maintaining an in-memory cache of data (including changes) for a batch update to a remote endpoint;</li>
+  <li>calculating and maintaining aggregates, sorting order, and page sizes;</li>
+  <li>and, providing a query mechanism via filter expressions.</li>
+</ul>
+
+<blockquote>
+  <p>To learn more about the capabilities of the DataSource, make sure to check out its <a href="/api/framework/datasource">API reference</a> or <a href="http://demos.telerik.com/kendo-ui/web/datasource/index.html">demos</a>.</p>
+</blockquote>
+
+<h2 id="creating-a-datasource-for-local-data">Creating a DataSource for Local Data</h2>
+
+<p>Creating a DataSource for local data is simple:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    var movies = [
+            { title: "Star Wars: A New Hope", year: 1977 },
+            { title: "Star Wars: The Empire Strikes Back", year: 1980 },
+            { title: "Star Wars: Return of the Jedi", year: 1983 }
+    ];
+
+    var localDataSource = new kendo.data.DataSource({ data: movies });
+</code></pre></div></div>
+
+<p>In this example, the variable, <code class="language-plaintext highlighter-rouge">localDataSource</code> is a DataSource that is initialized to represent an in-memory cache of the <code class="language-plaintext highlighter-rouge">movies</code> array. However, the data represented by the <code class="language-plaintext highlighter-rouge">movies</code> array is not loaded in the DataSource until the <code class="language-plaintext highlighter-rouge">.read()</code> method is called:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    localDataSource.read();
+</code></pre></div></div>
+
+<p>When the DataSource is bound to a widget or chart, the explicit invocation may not be necessary; their default configuration is set to automatically bind to an associated DataSource. However, this may be overriden (i.e. <code class="language-plaintext highlighter-rouge">autoBind</code>).</p>
+
+<h2 id="creating-a-datasource-for-remote-data">Creating a DataSource for Remote Data</h2>
+
+<p>The process of creating a DataSource for remote data differs in several ways from creating a DataSource for a local data:</p>
+
+<ul>
+  <li>a transport must identify the protocol(s), URL(s) of endpoints, and serialization format(s) for any/all CRUD operations;</li>
+  <li>optionally requires the use of a <code class="language-plaintext highlighter-rouge">parameterMap</code>, which marshalls request parameters to the format of a remote endpoint;</li>
+  <li>and, optionally configures the use of server operations for calculating aggregates, defining filters, and supporting features like grouping, paging, and sorting.</li>
+</ul>
+
+<p>Here"s an example of creating a DataSource for data from a remote endpoint:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    var remoteDataSource = new kendo.data.DataSource({
+        type: "odata",
+        transport: {
+            read: "http://odata.netflix.com/Catalog/Titles"
+        }
+    });
+</code></pre></div></div>
+
+<p>The variable, <code class="language-plaintext highlighter-rouge">remoteDataSource</code> is a DataSource that is initialized to represent an in-memory cache of movies titles from the Netflix catalog service, which employs the <a href="http://www.odata.org/">OData</a> protocol. It is only configured to act as a read-only source of data to any widgets to which it is bound.</p>
+
+<p>As is the case with creating a DataSource for local data, the data provided by the Netflix catalog service is not loaded until the <code class="language-plaintext highlighter-rouge">.read()</code> method is called:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    remoteDataSource.read();
+</code></pre></div></div>
+
+<p>When the DataSource is bound to a widget or chart, the explicit invocation may not be necessary; their default configuration is set to automatically bind to an associated DataSource. However, this may be overriden (i.e. <code class="language-plaintext highlighter-rouge">autoBind</code>).</p>
+
+<p>Here"s another example of creating a DataSource for data from a remote endpoint:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    var remoteDataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: "http://search.twitter.com/search.json",
+                dataType: "jsonp",
+                data: {
+                    q: function() {
+                        return $("#searchFor").val();
+                    }
+                }
+            }
+        }
+    });
+</code></pre></div></div>
+
+<p>In this example, the DataSource is initialized to represent an in-memory cache of tweets from the search service for Twitter. This endpoint employs a <a href="http://www.json.org/">JSON</a>-based endpoint contact that allows an input parameter, <code class="language-plaintext highlighter-rouge">q</code> to denote a query string for the search service. Here, its value is provides by a input element on the page.</p>
+
+<p>Operations conducted by the DataSource against this remote endpoint are done so via <a href="http://api.jquery.com/jQuery.ajax/">jQuery.ajax()</a> and therefore, subject to the same security constraints enforced by the user agent. These security constraints also apply to XHRs made across different domains. Since this is the case with example above, the <code class="language-plaintext highlighter-rouge">dataType</code> configuration property is set to use <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a>.</p>
+
+<h2 id="working-with-grouped-data">Working with Grouped Data</h2>
+
+<p>Grouping local data is mostly trivial–you can continue to use the same DataSource you are already familiar with. However, generating grouped data on the server can be difficult when you are unsure of the format DataSource is expecting.</p>
+
+<h3 id="local-grouping">Local Grouping</h3>
+
+<p>Local grouping is convenient for small datasets but, for performance reasons, should be avoided with large datasets.</p>
+
+<p>Data:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    var words = {
+        'count': 4,
+        'input': 'kendo',
+        'items': [
+            { 'w': 'kendo', 'length': 5 },
+            { 'w': 'done', 'length': 4 },
+            { 'w': 'keno', 'length': 4 },
+            { 'w': 'node', 'length': 4 }
+        ]
+    };
+</code></pre></div></div>
+
+<p>DataSource:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    var wordsDataSource = new kendo.data.DataSource({
+        data: words,
+        group: { field: 'length', dir: 'desc'}
+    });
+</code></pre></div></div>
+
+<h3 id="server-grouping">Server Grouping</h3>
+
+<p>Server grouping is an excellent option for large datasets. Be sure to set the <code class="language-plaintext highlighter-rouge">schema</code> and <code class="language-plaintext highlighter-rouge">group</code> properties as necessary. This example is with local data but the data returned by a <code class="language-plaintext highlighter-rouge">transport</code> will be evaluated the same.</p>
+
+<p>Data:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    var words = {
+        'count': 4,
+        'input': 'kendo',
+        'groups': [{
+            'field': 'length',
+            'value': '5',
+            'items': [{
+                'w': 'kendo'
+            }],
+            'hasSubgroups': false,
+            'aggregates': {}
+        },{
+            'field': 'length',
+            'value': '4',
+            'items': [
+                { 'w': 'done' },
+                { 'w': 'keno' },
+                { 'w': 'node' }
+            ],
+            'hasSubgroups': false,
+            'aggregates': {}
+        }]
+    };
+</code></pre></div></div>
+
+<p>DataSource:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    var wordsDataSource = new kendo.data.DataSource({
+        data: words,
+        schema: {
+            groups: 'groups'
+        },
+        group: {
+            field: 'length'
+        },
+        serverGrouping: true
+    });
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

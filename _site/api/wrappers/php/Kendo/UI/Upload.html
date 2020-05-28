@@ -1,0 +1,623 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/UI/Upload.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouiupload">\Kendo\UI\Upload</h1>
+
+<p>A PHP wrapper for Kendo UI <a href="/api/web/upload">Upload</a>.</p>
+
+<p>Inherits from <a href="/api/wrappers/php/Kendo/UI/Widget">\Kendo\UI\Widget</a>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use Upload in a PHP page instantiate a new instance, configure it via the available
+configuration <a href="#methods">methods</a> and output it by <code class="language-plaintext highlighter-rouge">echo</code>-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+<h3 id="using-kendo-upload">Using Kendo Upload</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// Create a new instance of Upload and specify its id
+$upload = new \Kendo\UI\Upload('Upload');
+
+// Configure it
+$upload-&gt;enabled(true)
+
+// Output it
+
+echo $upload-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="async">async</h3>
+
+<p>Configures the ability to upload a file(s) in an asynchronous manner. Please refer to the
+async mode help topic
+for more details.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-kendouiuploadasyncarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\UI\UploadAsync|array</code></h5>
+
+<h4 id="example---using-kendouiuploadasync">Example - using <a href="/api/wrappers/php/Kendo/UI/UploadAsync">\Kendo\UI\UploadAsync</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$async = new \Kendo\UI\UploadAsync();
+$autoUpload = true;
+$async-&gt;autoUpload($autoUpload);
+$upload-&gt;async($async);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$autoUpload = true;
+$upload-&gt;async(array('autoUpload' =&gt; $autoUpload));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="cancel">cancel</h3>
+<p>Fires when the upload has been cancelled while in progress.Note: The cancel event fires only when the upload is in
+async mode.
+For additional information check the <a href="/api/web/upload#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;cancel('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onCancel(e) {
+        // handle the cancel event.
+    }
+&lt;/script&gt;
+&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;cancel('onCancel');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;cancel(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="complete">complete</h3>
+<p>Fires when all active uploads have completed either successfully or with errors.Note: The complete event fires only when the upload is in
+async mode.
+For additional information check the <a href="/api/web/upload#events-complete">complete</a> event documentation.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-1">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;complete('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-1">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onComplete(e) {
+        // handle the complete event.
+    }
+&lt;/script&gt;
+&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;complete('onComplete');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-1">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;complete(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="enabled">enabled</h3>
+<p>Enables (true) or disables (false) an Upload. A disabled
+Upload may be re-enabled via enable().</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;enabled(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="error">error</h3>
+<p>Fires when an upload / remove operation has failed.Note: The error event fires only when the upload is in
+async mode.
+For additional information check the <a href="/api/web/upload#events-error">error</a> event documentation.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-2">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-2">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;error('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-2">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onError(e) {
+        // handle the error event.
+    }
+&lt;/script&gt;
+&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;error('onError');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-2">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;error(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="files">files</h3>
+<p>List of files to be initially rendered in the Upload widget files list.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-array">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;files(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="localization">localization</h3>
+
+<p>Sets the strings rendered by the Upload.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-kendouiuploadlocalizationarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\UI\UploadLocalization|array</code></h5>
+
+<h4 id="example---using-kendouiuploadlocalization">Example - using <a href="/api/wrappers/php/Kendo/UI/UploadLocalization">\Kendo\UI\UploadLocalization</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$localization = new \Kendo\UI\UploadLocalization();
+$cancel = 'value';
+$localization-&gt;cancel($cancel);
+$upload-&gt;localization($localization);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$cancel = 'value';
+$upload-&gt;localization(array('cancel' =&gt; $cancel));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="multiple">multiple</h3>
+<p>Enables (true) or disables (false) the ability to select multiple files.
+If false, users will be able to select only one file at a time. Note: This option does not
+limit the total number of uploaded files in an asynchronous configuration.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;multiple(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="progress">progress</h3>
+<p>Fires when upload progress data is available.Note: The progress event fires only when the upload is in
+async mode.Note: The progress event is not fired in IE.
+See Supported Browsers
+For additional information check the <a href="/api/web/upload#events-progress">progress</a> event documentation.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-3">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-3">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;progress('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-3">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onProgress(e) {
+        // handle the progress event.
+    }
+&lt;/script&gt;
+&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;progress('onProgress');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-3">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;progress(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="remove">remove</h3>
+<p>Fires when an uploaded file is about to be removed.
+Cancelling the event will prevent the remove.
+For additional information check the <a href="/api/web/upload#events-remove">remove</a> event documentation.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-4">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-4">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;remove('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-4">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onRemove(e) {
+        // handle the remove event.
+    }
+&lt;/script&gt;
+&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;remove('onRemove');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-4">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;remove(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+<p>Triggered when a file(s) is selected. Note: Cancelling this event will prevent the selection from
+occurring.
+For additional information check the <a href="/api/web/upload#events-select">select</a> event documentation.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-5">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-5">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;select('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-5">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSelect(e) {
+        // handle the select event.
+    }
+&lt;/script&gt;
+&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;select('onSelect');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-5">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;select(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="showfilelist">showFileList</h3>
+<p>Enables (true) or disables (false) the ability to display a file listing
+for uploading a file(s). Disabling a file listing may be useful you wish to customize the UI; use the
+client-side events to build your own UI.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-boolean-2">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;showFileList(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="success">success</h3>
+<p>Fires when an upload / remove operation has been completed successfully.Note: The success event fires only when the upload is in
+async mode.
+For additional information check the <a href="/api/web/upload#events-success">success</a> event documentation.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-6">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-6">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;success('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-6">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSuccess(e) {
+        // handle the success event.
+    }
+&lt;/script&gt;
+&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;success('onSuccess');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-6">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;success(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="template">template</h3>
+<p>The template used to render the files in the list</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-7">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example----using-string">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;template('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;template(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="upload">upload</h3>
+<p>Fires when one or more files are about to be uploaded.
+Cancelling the event will prevent the upload.Note: The upload event fires only when the upload is in
+async mode.
+For additional information check the <a href="/api/web/upload#events-upload">upload</a> event documentation.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Upload</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-8">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-7">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;upload('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-7">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onUpload(e) {
+        // handle the upload event.
+    }
+&lt;/script&gt;
+&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;upload('onUpload');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-7">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$upload = new \Kendo\UI\Upload('Upload');
+$upload-&gt;upload(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

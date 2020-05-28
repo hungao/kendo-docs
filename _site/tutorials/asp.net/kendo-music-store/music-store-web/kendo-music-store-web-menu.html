@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/kendo-music-store/music-store-web/kendo-music-store-web-menu.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="creating-the-main-menu---kendo-music-store">Creating the Main Menu - Kendo Music Store</h1>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-web/images/kendo-menu-overview.png" alt="kendo-menu-overview" /></p>
+
+<p>The main menu of the Music Store application shows off some of the functionality of the <a href="http://demos.telerik.com/kendo-ui/web/menu/index.html">Kendo Menu Widget</a>.
+The <strong>Genres</strong> item uses a pull-down menu of items to show all the genres of music in the store.
+The <strong>About</strong> item displays some static content within a panel that opens below the menu.
+The <strong>Contact</strong> item works like a hyperlink or button and navigates when clicked on, instead of displaying a sub-menu.</p>
+
+<h2 id="add-the-main-menu">Add the Main Menu</h2>
+
+<p>Let"s use the Kendo Menu control to add a navigation menu to the Music Store.
+To start, we can define the menu items as a <strong>&lt;ul&gt;</strong> with HTML and Razor:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="menu"&gt;
+    &lt;li&gt;Genres&lt;/li&gt;
+    &lt;li&gt;About&lt;/li&gt;
+    &lt;li&gt;@Html.ActionLink("Contact", "Contact", "Home")&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>Converting this to a Kendo menu is easy. We just add the JavaScript:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function () {
+    $("#menu").kendoMenu();
+});
+</code></pre></div></div>
+
+<p>This uses a jQuery selector to get our <strong>&lt;ul&gt;</strong> tag with the id "menu," then turns it into a Kendo UI menu.
+This type of kendo usage is sometimes called "explicit" widget initialization, since the element is directly targeted in JavaScript (we will see examples of implicit initialization, <strong>data-</strong> attributes, and the MVVM pattern later on, but let"s keep it simple for our first control.)</p>
+
+<h2 id="add-the-genres-pull-down-menu">Add the Genres pull-down menu</h2>
+
+<p>Next we move the Genres list into a pull-down menu.
+Any <strong>&lt;li&gt;</strong> elements that in turn contain another list <strong>&lt;ul&gt;</strong> element are treated as a pull-down item.Let"s start with an empty pull-down menu item for our Genres:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;li&gt;Genres
+    &lt;ul&gt;
+        &lt;li&gt;placeholder 1&lt;/li&gt;
+        &lt;li&gt;placeholder 2&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/li&gt;
+</code></pre></div></div>
+
+<p>This creates the pull-down item:</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-web/images/kendo-menu-pulldown-placeholder.png" alt="kendo-menu-pulldown-placeholder" /></p>
+
+<p>We can replace our "placeholder" <strong>&lt;li&gt;</strong> elements with an MVC partial that loads the list of Genres:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;li&gt;Genres
+    &lt;ul&gt;
+        @{Html.RenderAction("GenreMenu", "Store");}
+    &lt;/ul&gt;
+&lt;/li&gt;
+</code></pre></div></div>
+
+<p>This partial outputs a list of <strong>&lt;li&gt;</strong> elements that work as links to each Genre:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@model IEnumerable&lt;MvcMusicStore.Models.Genre&gt;
+
+&lt;ul&gt;
+    @foreach (var genre in Model)
+    {
+        &lt;li&gt;@Html.ActionLink(genre.Name,
+                "Browse", "Store",
+                new { Genre = genre.Name }, null)
+        &lt;/li&gt;
+    }
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h2 id="add-the-about-pull-down-menu">Add the About pull-down menu</h2>
+
+<p>Another ability of the Kendo Menu control is adding any content into a drop-down menu item.
+It does not have to be a list of selectable items, like the Genres.
+To add content to a menu item, include a <strong>&lt;ul&gt;</strong> element with a single <strong>&lt;li&gt;</strong> element.
+Within that element, use a <strong>&lt;div&gt;</strong> to specify the content.
+For example, let"s add this content for out "About" menu item:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;li&gt;About
+    &lt;ul&gt;
+        &lt;li&gt;
+            &lt;div class="k-content menu-content"&gt;
+                &lt;img src="~/Images/kendo-logo.png" /&gt;
+                &lt;p&gt;Try Kendo UI yourself in the interactive Kendo UI Dojo!&lt;/p&gt;
+                &lt;p&gt;&lt;a href="http://trykendoui.telerik.com" target="_blank"&gt;Launch Kendo UI Dojo&lt;/a&gt;&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/li&gt;
+</code></pre></div></div>
+
+<p>This creates the <strong>&lt;div&gt;</strong> content displayed in a drop-down menu item:</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-web/images/kendo-menu-pulldown-content.png" alt="kendo-menu-pulldown-content" /></p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,435 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/Dataviz/UI/LinearGaugeScale.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizuilineargaugescale">\Kendo\Dataviz\UI\LinearGaugeScale</h1>
+
+<p>A PHP class representing the scale setting of LinearGauge.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="labels">labels</h3>
+
+<p>Configures the scale labels.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-kendodatavizuilineargaugescalelabelsarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScaleLabels|array</code></h5>
+
+<h4 id="example---using-kendodatavizuilineargaugescalelabels">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/LinearGaugeScaleLabels">\Kendo\Dataviz\UI\LinearGaugeScaleLabels</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$labels = new \Kendo\Dataviz\UI\LinearGaugeScaleLabels();
+$background = 'value';
+$labels-&gt;background($background);
+$scale-&gt;labels($labels);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$background = 'value';
+$scale-&gt;labels(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="line">line</h3>
+
+<p>Configures the axis line.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-kendodatavizuilineargaugescalelinearray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScaleLine|array</code></h5>
+
+<h4 id="example---using-kendodatavizuilineargaugescaleline">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/LinearGaugeScaleLine">\Kendo\Dataviz\UI\LinearGaugeScaleLine</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$line = new \Kendo\Dataviz\UI\LinearGaugeScaleLine();
+$color = 'value';
+$line-&gt;color($color);
+$scale-&gt;line($line);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$color = 'value';
+$scale-&gt;line(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="majorticks">majorTicks</h3>
+
+<p>Configures the scale major ticks.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-kendodatavizuilineargaugescalemajorticksarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScaleMajorTicks|array</code></h5>
+
+<h4 id="example---using-kendodatavizuilineargaugescalemajorticks">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/LinearGaugeScaleMajorTicks">\Kendo\Dataviz\UI\LinearGaugeScaleMajorTicks</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$majorTicks = new \Kendo\Dataviz\UI\LinearGaugeScaleMajorTicks();
+$color = 'value';
+$majorTicks-&gt;color($color);
+$scale-&gt;majorTicks($majorTicks);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$color = 'value';
+$scale-&gt;majorTicks(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="majorunit">majorUnit</h3>
+<p>The interval between major divisions.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$scale-&gt;majorUnit(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="max">max</h3>
+<p>The maximum value of the scale.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-float-1">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$scale-&gt;max(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="min">min</h3>
+<p>The minimum value of the scale.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-float-2">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$scale-&gt;min(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="minorticks">minorTicks</h3>
+
+<p>Configures the scale minor ticks.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-kendodatavizuilineargaugescaleminorticksarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScaleMinorTicks|array</code></h5>
+
+<h4 id="example---using-kendodatavizuilineargaugescaleminorticks">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/LinearGaugeScaleMinorTicks">\Kendo\Dataviz\UI\LinearGaugeScaleMinorTicks</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$minorTicks = new \Kendo\Dataviz\UI\LinearGaugeScaleMinorTicks();
+$color = 'value';
+$minorTicks-&gt;color($color);
+$scale-&gt;minorTicks($minorTicks);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-3">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$color = 'value';
+$scale-&gt;minorTicks(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="minorunit">minorUnit</h3>
+<p>The interval between minor divisions.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-float-3">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$scale-&gt;minorUnit(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="mirror">mirror</h3>
+<p>Mirrors the scale labels and ticks.
+If the labels are normally on the left side of the scale, mirroring the scale will render them to the right.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$scale-&gt;mirror(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="rangeplaceholdercolor">rangePlaceholderColor</h3>
+<p>The default color for the ranges.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$scale-&gt;rangePlaceholderColor('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="rangesize">rangeSize</h3>
+<p>The width of the range indicators.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-float-4">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$scale-&gt;rangeSize(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addrange">addRange</h3>
+
+<p>Adds one or more LinearGaugeScaleRange to the LinearGaugeScale.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuilineargaugescalerangearray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScaleRange|array</code></h5>
+
+<h4 id="example---using-kendodatavizuilineargaugescalerange">Example - using \Kendo\Dataviz\UI\LinearGaugeScaleRange</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$range = new \Kendo\Dataviz\UI\LinearGaugeScaleRange();
+$color = 'value';
+$range-&gt;color($color);
+$scale-&gt;addRange($range);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-4">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$color = 'value';
+$scale-&gt;addRange(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-lineargaugescalerange">Example - adding more than one LinearGaugeScaleRange</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$first  = new \Kendo\Dataviz\UI\LinearGaugeScaleRange();
+$second = new \Kendo\Dataviz\UI\LinearGaugeScaleRange();
+$scale-&gt;addRange($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="reverse">reverse</h3>
+<p>Reverses the axis direction - values increase from right to left and from top to bottom.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$scale-&gt;reverse(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="vertical">vertical</h3>
+<p>The position of the gauge.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\LinearGaugeScale</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-boolean-2">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\LinearGaugeScale();
+$scale-&gt;vertical(true);
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

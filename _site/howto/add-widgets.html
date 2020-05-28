@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Add Kendo UI jQuery widgets to an app | Kendo UI Web Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to add Kendo UI Web widgets to your mobile website or web app.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li class="active">How Do I?</li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/howto.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("howto/add-widgets.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="how-to-add-widgets-with-kendo-ui-web">How-To: Add Widgets with Kendo UI Web</h1>
+
+<p>In this how-to, we"ll examine how to add widgets to an application or site with <a href="http://www.telerik.com/kendo-ui-web">Kendo UI Web</a>.</p>
+
+<p>Let"s begin by examining how to add a widget to an existing page. For this example, let"s assume the following Markup:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;My Kendo UI Application&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;My Kendo UI Application&lt;/h1&gt;
+    &lt;/header&gt;
+    &lt;!-- page content goes here --&gt;
+    &lt;div role="main"&gt;
+    &lt;/div&gt;
+    &lt;footer&gt;
+        &lt;p&gt;Kendo UI FTW!&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>The first step is to add script and stylesheet references for jQuery and Kendo UI Web:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;My Kendo UI Application&lt;/title&gt;
+
+    &lt;!-- CDN-based stylesheet references for Kendo UI Web --&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css" rel="stylesheet" /&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.rtl.min.css" rel="stylesheet" /&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.silver.min.css" rel="stylesheet" /&gt;
+
+    &lt;!-- CDN-based stylesheet references for Kendo UI DataViz --&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.dataviz.min.css" rel="stylesheet" /&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.dataviz.silver.min.css" rel="stylesheet" /&gt;
+
+    &lt;!-- CDN-based stylesheet references for Kendo UI Mobile --&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.mobile.all.min.css" rel="stylesheet" /&gt;
+
+    &lt;!-- CDN-based script reference for jQuery --&gt;
+    &lt;script src="http://code.jquery.com/jquery-1.9.1.min.js"&gt;&lt;/script&gt;
+
+    &lt;!-- CDN-based script reference for Kendo UI --&gt;
+    &lt;script src="http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;My Kendo UI Application&lt;/h1&gt;
+    &lt;/header&gt;
+    &lt;!-- page content goes here --&gt;
+    &lt;div role="main"&gt;
+    &lt;/div&gt;
+    &lt;footer&gt;
+        &lt;p&gt;Kendo UI FTW!&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>Style and script references to Kendo UI are accessible via HTTPS. However, they are hosted on Amazon CloudFront. Please refer to the <a href="/getting-started/javascript-dependencies">JavaScript Dependencies of Kendo UI</a> for more information about script requirements for Kendo UI Web, Kendo UI DataViz, and Kendo UI Mobile.</p>
+</blockquote>
+
+<p>The next step is to declare a target element for a widget. Depending on the type of widget, this can be represented by a few different elements. Widgets may configured in the following two (2) ways:</p>
+
+<ul>
+  <li>in a script block via a jQuery selector and configuration properties;</li>
+  <li>or, with data-* attributes for configuration properties and via a call to kendo.init().</li>
+</ul>
+
+<p>Here"s an example for a pair of <a href="/api/web/autocomplete">AutoComplete</a> widgets along with some sample data:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;My Kendo UI Application&lt;/title&gt;
+
+    &lt;!-- CDN-based stylesheet references for Kendo UI Web --&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css" rel="stylesheet" /&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.rtl.min.css" rel="stylesheet" /&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.silver.min.css" rel="stylesheet" /&gt;
+
+    &lt;!-- CDN-based stylesheet references for Kendo UI DataViz --&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.dataviz.min.css" rel="stylesheet" /&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.dataviz.silver.min.css" rel="stylesheet" /&gt;
+
+    &lt;!-- CDN-based stylesheet references for Kendo UI Mobile --&gt;
+    &lt;link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.mobile.all.min.css" rel="stylesheet" /&gt;
+
+    &lt;!-- CDN-based script reference for jQuery --&gt;
+    &lt;script src="http://code.jquery.com/jquery-1.9.1.min.js"&gt;&lt;/script&gt;
+
+    &lt;!-- CDN-based script reference for Kendo UI --&gt;
+    &lt;script src="http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;My Kendo UI Application&lt;/h1&gt;
+    &lt;/header&gt;
+    &lt;!-- page content goes here --&gt;
+    &lt;div role="main"&gt;
+        &lt;!-- AutoComplete widget; initialized and configured via jQuery selector --&gt;
+        &lt;p&gt;Animal: &lt;input id="animal" /&gt;&lt;/p&gt;
+        &lt;!-- AutoComplete widget; initialized and configured via data-* attributes --&gt;
+        &lt;p&gt;Country: &lt;input id="country" data-role="autocomplete" data-source="countries" /&gt;&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;footer&gt;
+        &lt;p&gt;Kendo UI FTW!&lt;/p&gt;
+    &lt;/footer&gt;
+
+    &lt;script&gt;
+        var countries = [ "Australia", "Canada", "United States of America" ];
+
+        // .ready() to initialise and configuration widget(s)
+        $(function() {
+            $("#animal").kendoAutoComplete([ "Ant", "Antilope", "Badger", "Beaver", "Bird" ]);
+            kendo.init($("#country"));
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>Here"s how the page looks in the browser:</p>
+
+<p><img src="/howto/images/autocomplete-example.png" alt="Auto complate example" /></p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,383 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of Validator UI in Kendo UI framework</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to initialize jQuery Validator UI and trigger elements' validation.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/validator/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-ui-validator-overview">Kendo UI Validator Overview</h1>
+<p>The Kendo UI Validator offers an easy way to do client-side form validation. Built around the HTML5 form validation attributes, it supports variety of built-in validation rules, but also provides a convenient way for setting custom rules handling.</p>
+
+<p>For a complete overview of the Validator"s methods and configuration options, <a href="/api/framework/validator">review the Validator API Reference</a>.</p>
+
+<h2 id="html5-form-validation">HTML5 form validation</h2>
+<p>One of the highly anticipated features in HTML5 is the arrival of new <a href="https://developer.mozilla.org/en/HTML/Forms_in_HTML#Constraint_Validation">HTML5 form validation attributes</a>. When used, these attributes set constraints on HTML inputs that will be enforced by the browser. Available constraints include:</p>
+
+<ul>
+  <li>required</li>
+  <li>pattern (regex)</li>
+  <li>min/max</li>
+  <li><a href="https://developer.mozilla.org/en/HTML/Element/input#attr-type">HTML5 data types</a> (email, url, number, etc.)</li>
+</ul>
+
+<p>To use HTML5 form validation, these attributes are added to simple HTML input elements:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="email" required&gt;
+</code></pre></div></div>
+
+<p>When a browser supports HTML5 validation, it will automatically attempt to validate the input matches the defined constraints before allow form submission. If a input element fails to meet the constraints, the browser will display a message for the user. HTML5 also provides a number of new JavaScript APIs that can be used for manual input validation handling, such as <code class="language-plaintext highlighter-rouge">checkValidity()</code>.</p>
+
+<blockquote>
+  <p>It should go without saying, but an application should <em>never</em> rely on client-side validation as the only form of input validation. Client-side validation can help improve the user experience in an application, but it does not replace the need for server-side data validation on all user input.</p>
+</blockquote>
+
+<h3 id="problem-with-html5-forms">Problem with HTML5 forms</h3>
+<p>The ideas of HTML5 forms is great, but in practice there are a few problems today:</p>
+
+<ol>
+  <li>Old browsers offer no support for HTML5 form validation</li>
+  <li>Support for HTML5 forms in <em>modern</em> browsers <a href="http://wufoo.com/html5/">is incomplete</a></li>
+  <li>Browser create validation error messages are difficult/impossible to re-style</li>
+</ol>
+
+<p>To address the realities of today"s browser landscape, applications need to augment HTML5"s form validation concepts with JavaScript. The Kendo UI Validator provides that solution.</p>
+
+<h2 id="basic-configuration-of-kendo-ui-validator">Basic Configuration of Kendo UI Validator</h2>
+<p>The Kendo UI Validator works with the standard HTML5 form validation attributes. It allows you to use the normal HTML5 constraint attributes and then automatically makes these attributes work in all browsers (IE7+) while giving you more customizability.</p>
+
+<p>To use the Validator, start by defining an HTML form that includes one or more of these new attributes.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="myform"&gt;
+    &lt;input type="text" name="firstName" required /&gt;
+    &lt;input type="text" name="lastName" required /&gt;
+    &lt;button id="save" type="button"&gt;Save&lt;/button&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Next, a Kendo UI Validator needs to be added to the page. In a JavaScript block on the page, add the following code:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Initialize the Kendo UI Validator on your "form" container
+// (NOTE: Does NOT have to be a HTML form tag)
+var validator = $("#myform").kendoValidator().data("kendoValidator");
+
+// Validate the input when the Save button is clicked
+$("#save").on("click", function() {
+    if (validator.validate()) {
+        // If the form is valid, the Validator will return true
+        save();
+    }
+});
+</code></pre></div></div>
+
+<p>With this simple configuration, the unchanged HTML5 form validation attributes will now work in old and new browsers, and an applicaiton will have complete control over the content and styling of validation error messages. When the "Save" button is clicked, if any inputs do not pass all constraints, the Kendo UI Validator will display the appropriate valdiation error message. <a href="http://demos.telerik.com/kendo-ui/web/validator/index.html">View the Kendo UI Validator live demo</a>.</p>
+
+<h2 id="default-validation-rules">Default Validation Rules</h2>
+
+<h3 id="required--element-should-have-a-value"><strong>required</strong>- element should have a value</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;input type="text" name="firstName" required /&gt;
+</code></pre></div></div>
+
+<h3 id="pattern--constrains-the-value-to-match-a-specific-regular-expression"><strong>pattern</strong>- constrains the value to match a specific regular expression</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;input type="text" name="twitter" pattern="https?://(?:www\.)?twitter\.com/.+i" /&gt;
+</code></pre></div></div>
+
+<h3 id="maxmin--constrain-the-minimum-andor-maximum-numeric-values-that-can-be-entered"><strong>max/min</strong>- constrain the minimum and/or maximum numeric values that can be entered</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;input type="number" name="age" min="1" max="42" /&gt;
+</code></pre></div></div>
+
+<h3 id="step--when-used-in-combination-with-the-min-and-max-attributes-constrains-the-granularity-of-values-that-can-be-entered"><strong>step</strong>- when used in combination with the min and max attributes, constrains the granularity of values that can be entered</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;input type="number" name="age" min="1" max="100" step="2" /&gt;
+</code></pre></div></div>
+
+<h3 id="url--constrain-the-value-to-being-a-valid-url"><strong>url</strong>- constrain the value to being a valid URL</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;input type="url" name="url" /&gt;
+</code></pre></div></div>
+
+<h3 id="email--constrain-the-value-to-being-a-valid-email"><strong>email</strong>- constrain the value to being a valid email</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;input type="email" name="email" /&gt;
+</code></pre></div></div>
+
+<h2 id="custom-validation-rules">Custom Validation Rules</h2>
+
+<p>Beside the built-in validation rules, with KendoUI Validator you can set custom rules through the <a href="/api/framework/validator#rules">rules configuration option</a>.</p>
+
+<p>Important things to note about custom validation rules and messages:</p>
+
+<ul>
+  <li>
+    <p><strong>Each custom rule will be run for each element in a form.</strong> If there are multiple inputs in the form and the validation should only apply to a specific input, the custom validation code should check the input before validating. For example:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  custom: function (input) {
+      if (input.is("[name=firstName]")) {
+          return input.val() === "Test"
+      } else {
+          return true;
+      }
+  }
+</code></pre></div>    </div>
+  </li>
+  <li>If the custom validation returns <code class="language-plaintext highlighter-rouge">true</code>, the validation will pass (and vice versa)</li>
+  <li>If there are multiple custom rules, the rules will run in order. The validation will stop at the first rule that fails and display the validation error message associated with that rule. A form will be valid only if all custom validation rules pass in addition to the standard HTML5 constraints.</li>
+  <li><strong>Any HTML5 constraints applied to a form (required, type, etc.) will be checked <em>before</em> custom rules are evaluated.</strong> Custom rules will not run until a input passes the basic HTML5 constraints.</li>
+  <li>Custom messages must match the name of the custom rule. If a custom message is not provided for a custom rule, a simple error icon will be displayed.</li>
+</ul>
+
+<blockquote>
+  <p>HTML5 also provides a way to set custom validation rules via <code class="language-plaintext highlighter-rouge">setCustomValidity()</code>, but as with other parts of HTML5, this will only work in modern browsers. To create custom rules that work in all browsers, use the Kendo UI Validator custom rule definitions.</p>
+</blockquote>
+
+<h2 id="error-messages">Error Messages</h2>
+
+<p>The KendoUI Validator provides a default messages which maps to the built-in validation rules. However, defining a custom messages as well as overriding the built-in ones is also possible.</p>
+
+<blockquote>
+  <p>Note that it is required that the input element has a name attribute set, in order error messages to work correctly.</p>
+</blockquote>
+
+<h3 id="defining-custom-messages">Defining custom messages</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form id="myform"&gt;
+    &lt;input name="username" required /&gt; &lt;br /&gt;
+    &lt;input type="email" name="userEmail" required data-message="My custom email message" /&gt; &lt;br /&gt;
+    &lt;button&gt;Validate&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+    $("#myform").kendoValidator({
+         messages: {
+             // defines a message for the 'custom' validation rule
+             custom: "Please enter valid value for my custom rule",
+
+             // overrides the built-in message for the required rule
+             required: "My custom required message",
+
+             // overrides the built-in message for the email rule
+             // with a custom function that returns the actual message
+             email: function(input) {
+                 return getMessage(input);
+             }
+         },
+         rules: {
+           custom: function(input) {
+             if (input.is("[name=username]")) {
+                 return input.val() === "Tom";
+             }
+             return true;
+           }
+         }
+    });
+
+    function getMessage(input) {
+      return input.data("message");
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Beside that build-in messages a custom messages can also be defined on a per-component basis, via the following attributes (in that order):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. `data-[rule]-msg` -- where [rule] is the failing validation rule
+2. `validationMessage`
+3. `title`
+</code></pre></div></div>
+
+<p>These attributes will be checked before applying the message from the <code class="language-plaintext highlighter-rouge">messages</code> configuration option.</p>
+
+<h4 id="setting-multiple-data-rule-msg-attributes-allows-a-field-to-have-different-messages-for-each-different-validation-rule">Setting multiple <code class="language-plaintext highlighter-rouge">data-[rule]-msg</code> attributes allows a field to have different messages for each different validation rule.</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form id="myform"&gt;
+    &lt;input type="url" required data-required-msg="You need to enter a URL" data-url-msg="This url is invalid"&gt;
+    &lt;button&gt;Validate&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+    $("#myform").kendoValidator();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="using-validationmessage-attribute-to-specify-a-custom-validation-message">Using validationMessage attribute to specify a custom validation message</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form id="myform"&gt;
+    &lt;input type="tel" pattern="\d{10}" validationMessage="Plase enter a ten digit phone number" value="123"&gt; &lt;br /&gt;
+    &lt;button&gt;Validate&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+    $("#myform").kendoValidator();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Validation messages can also be defined for custom rules.</p>
+
+<h4 id="defining-validation-messages-for-custom-rules">Defining validation messages for custom rules</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form id="myform"&gt;
+    &lt;input name="username" /&gt; &lt;br /&gt;
+    &lt;input name="town" /&gt; &lt;br /&gt;
+    &lt;button&gt;Validate&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+    $("#myform").kendoValidator({
+        rules: {
+          customRule1: function(input) {
+              if (input.is("[name=username]")) {
+                return input.val() === "Tom";
+              }
+              return true;
+          },
+          customRule2: function(input){
+              if (input.is("[name=town]")) {
+                return input.val() === "New York";
+              }
+              return true;
+          }
+        },
+        messages: {
+            customRule1: "Your UserName must be Tom",
+            customRule2: "Your town must be New York"
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="customizing-the-tooltip-position">Customizing the tooltip position</h3>
+
+<p>Ideally Kendo Validator places its tooltips besides the validated input. However, if the input is later enhanced to a ComboBox, AutoComplete or other Kendo Widget, placing the
+tooltip beside the input may cover important information or break the widget rendering. In this case, you can specify where exactly do you want the tooltip to be placed by
+adding a span with data-for attribute set to the validated input name and a class <code class="language-plaintext highlighter-rouge">.k-invalid-msg</code>.</p>
+
+<h4 id="specific-tooltip-placement-the-tooltip-will-remain-outside-of-the-autocomplete-widget-after-enhancement">Specific tooltip placement (the tooltip will remain outside of the AutoComplete widget after enhancement)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;div id="myform"&gt;
+     &lt;input type="text" id="name" name="name" required&gt;
+     &lt;span class="k-invalid-msg" data-for="name"&gt;&lt;/span&gt;
+ &lt;/div&gt;
+
+ &lt;script&gt;
+     $("#name").kendoAutoComplete({
+        dataSource: data,
+        separator: ", "
+    });
+
+     $("#myform").kendoValidator();
+ &lt;/script&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>The validation toolip element is bound to the input"s <strong>name</strong> via data-for attribute.</p>
+</blockquote>
+
+<p>The Kendo UI Validator is a powerful framework component and essential for any application that collects user input. <a href="/api/framework/validator">Review the API Docs</a> for more configuration details and options.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

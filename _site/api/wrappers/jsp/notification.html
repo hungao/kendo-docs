@@ -1,0 +1,303 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/notification.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendonotification">&lt;kendo:notification&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/notification">Notification</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="allowhideafter-float">allowHideAfter <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Indicates the period in milliseconds after which a notification can be dismissed (hidden) by the user.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification allowHideAfter="allowHideAfter"&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h3 id="animation-javalangobject">animation <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Defines custom show and hide animations via an Kendo UI Animation object. Setting the value to false disables animations.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification animation="animation"&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h3 id="appendto-javalangobject">appendTo <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Defines the element to which the notifications will be appended or prepended (depending on the stacking direction).</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification appendTo="appendTo"&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h3 id="autohideafter-float">autoHideAfter <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Indicates the period in milliseconds after which a notification disappears automatically. Setting a zero value disables this behavior.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification autoHideAfter="autoHideAfter"&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h3 id="button-boolean">button <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Determines whether the notifications will include a hide button. This setting works with the built-in templates only.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification button="button"&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h3 id="height-javalangobject">height <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Defines the notifications" height. Numbers are treated as pixels.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification height="height"&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h3 id="hideonclick-boolean">hideOnClick <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Determines whether notifications can be hidden by clicking anywhere on their content.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification hideOnClick="hideOnClick"&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h3 id="stacking-javalangstring">stacking <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Determines the direction in which multiple notification will stack (arrange) with regard to the first one. Possible values are "up", "right", "down", "left" and "default".
+The "default" setting takes into consideration the applied position settings and is evaluated to "up" or "down".</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification stacking="stacking"&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h3 id="width-javalangobject">width <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Defines the notifications" width. Numbers are treated as pixels.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification width="width"&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendonotification-position">kendo:notification-position</h3>
+
+<p>This setting applies to popup notifications only, i.e. in cases when appendTo is not set.
+It determines the position of the first notification on the screen, as well as whether the notifications will move together with the page content during scrolling.
+top takes precedence over bottom and left takes precedence over right.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/notification/position">kendo:notification-position</a>.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification&gt;
+    &lt;kendo:notification-position&gt;&lt;/kendo:notification-position&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h3 id="kendonotification-templates">kendo:notification-templates</h3>
+
+<p>Describes the HTML markup of the different notification types as Kendo UI template strings. The built-in types are "info", "success", "warning" and "error".This documentation section assumes that you are familiar with Kendo UI templates.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/notification/templates">kendo:notification-templates</a>.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification&gt;
+    &lt;kendo:notification-templates&gt;&lt;/kendo:notification-templates&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="hide-string">hide <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when a notification"s hiding animation starts.</p>
+
+<p>For additional information check the <a href="/api/web/notification#events-hide">hide</a> event documentation.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification hide="handle_hide"&gt;
+&lt;/kendo:notification&gt;
+&lt;script&gt;
+    function handle_hide(e) {
+        // Code to handle the hide event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="show-string">show <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when a notification"s showing animation starts.</p>
+
+<p>For additional information check the <a href="/api/web/notification#events-show">show</a> event documentation.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification show="handle_show"&gt;
+&lt;/kendo:notification&gt;
+&lt;script&gt;
+    function handle_show(e) {
+        // Code to handle the show event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendonotification-hide">kendo:notification-hide</h3>
+
+<p>Fires when a notification"s hiding animation starts.</p>
+
+<p>For additional information check the <a href="/api/web/notification#events-hide">hide</a> event documentation.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification&gt;
+    &lt;kendo:notification-hide&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the hide event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:notification-hide&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+<h3 id="kendonotification-show">kendo:notification-show</h3>
+
+<p>Fires when a notification"s showing animation starts.</p>
+
+<p>For additional information check the <a href="/api/web/notification#events-show">show</a> event documentation.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:notification&gt;
+    &lt;kendo:notification-show&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the show event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:notification-show&gt;
+&lt;/kendo:notification&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

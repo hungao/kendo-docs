@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/saleshub/home-page/kend-saleshub-orders-grid.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="creating-the-orders-grid---saleshub">Creating the Orders Grid - SalesHub</h1>
+
+<p><img src="/tutorials/asp.net/saleshub/home-page/images/kendo-saleshub-orders-grid-screenshot.png" alt="kendo-saleshub-orders-grid-screenshot" /></p>
+
+<p>In this section we"ll show you how the Orders grid is set up using the Kendo UI MVC Extensions.</p>
+
+<p>The Orders grid can be found in <strong>Views/Home/Index.cshtml</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Html.Kendo().Grid&lt;CustomerOrderViewModel&gt;().Name("ordersGrid")
+</code></pre></div></div>
+
+<p>The first part of the declaration tells the Kendo UI MVC extensions that we want to create a Kendo Grid that will be bound against objects of type <strong>CustomerOrderViewModel</strong> and that we want the grid
+to have an <strong>id</strong> of "ordersGrid" in the final HTML markup.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Columns(columns =&gt;
+{
+    columns.Bound(p =&gt; p.OrderNumber).Title("Order Number");
+    columns.Bound(p =&gt; p.OrderDate).Title("Order Date").Format("{0:d}");
+    columns.Bound(p =&gt; p.IsActive).Title("Status").ClientTemplate("#= IsActive ? 'Active' : 'Inactive' #");
+    columns.Bound(p =&gt; p.Weight).Title("Weight").Format("{0:n}");
+    columns.Bound(p =&gt; p.Value).Title("Value").Format("{0:c}");
+    columns.Template(model =&gt; null)
+        .ClientTemplate("&lt;a href='" + Url.RouteUrl("Default", new { controller = "Order", action = "Edit" }) + "/#= OrderId #'&gt;Edit&lt;/a&gt;");
+})
+</code></pre></div></div>
+
+<p>Here we declare what columns the grid should have. Since we specified a type to the <code class="language-plaintext highlighter-rouge">Grid()</code>
+call, we can create <strong>Bound</strong> columns based on properties that exist on that type. A bound column
+essentially means that only values for the specified property will be displayed in that column.
+For example, with <code class="language-plaintext highlighter-rouge">columns.Bound(p =&gt; p.OrderNumber)</code> creates a column which displays the <strong>Order
+Number</strong>
+for each CustomerOrderViewModel object that is bound to the grid.</p>
+
+<p>For some fields we also want to format the values a little before we display them to the user.
+That"s where the <code class="language-plaintext highlighter-rouge">Format</code> function comes in handy. The <code class="language-plaintext highlighter-rouge">Format</code> function takes a string that
+contains <a href="/api/framework/kendo#methods-format">Kendo"s formatting syntax</a>.</p>
+
+<p>The last column of the Grid works a little differently than the other columns. This is because
+we"re not actually displaying information from a property on the <strong>CustomerOrderViewModel</strong>. The
+last column contains a link which will redirect the user to a page where they can edit the order.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>columns.Template(model =&gt; null)
+        .ClientTemplate("&lt;a href='" + Url.RouteUrl("Default", new { controller = "Order", action = "Edit" }) + "/#= OrderId #'&gt;Edit&lt;/a&gt;");
+</code></pre></div></div>
+
+<p>Since the Grid will be bound client-side, we can"t specify a template for the column using the
+<code class="language-plaintext highlighter-rouge">Template</code> function. Instead we have to call the <code class="language-plaintext highlighter-rouge">ClientTemplate</code> function which allows us to
+specify a Kendo Template. In our case we generate an <code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> with an <strong>href</strong> that links to
+the edit page and contains the Id of the order to edit.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    .ToolBar(toolbar =&gt; toolbar.Template("&lt;a id='createOrderButton' class='k-button k-button-icontext k-grid-add' href='#'&gt;Create order&lt;/a&gt;"))
+</code></pre></div></div>
+
+<p>Next we supply a template for the Toolbar of the grid. This template contains an <code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> that
+is used to redirect the user to the page for creating an order. This is handled by some custom JavaScript which can be found in <strong>Scripts/home.js</strong>.
+This JavaScript will be described later in this article.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    .Filterable()
+    .Selectable(settings =&gt; settings.Mode(GridSelectionMode.Single))
+    .Pageable(builder =&gt; builder.PageSizes(new[] { 10, 20 }))
+</code></pre></div></div>
+
+<p>Here we tell the grid that columns can be filtered by the user. We also make it so that users can
+select an entire row, and we set up some page sizes that the user can select from.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    .DataSource(dataSource =&gt; dataSource
+        .Ajax()
+        .Read(builder =&gt; builder.Url("/api/CustomerOrders/GetOrdersForCustomer/").Type(HttpVerbs.Get))
+        .Model(model =&gt; model.Id("OrderId"))
+        .ServerOperation(true)
+        .PageSize(10)
+    ))
+</code></pre></div></div>
+
+<p>Finally we set up the DataSource that the grid will use. We"ll be getting our data from a remote
+service we call the <code class="language-plaintext highlighter-rouge">Ajax()</code> function. We tell it what URL to hit when it needs to read data
+from the server, then tell it that it needs to make a GET request when it queries the server.
+We also need to tell the DataSource what property on model is the Id (in this case it"s "OrderID").
+The last two function calls tell the DataSource that the server will handle filtering and that we
+only want to get 20 orders back from the server.</p>
+
+<p>Earlier we set up the "Create an Order" button in the Grids toolbar, but it doesn"t actually do
+anything. So let"s wire that up to do something useful.</p>
+
+<p>Since we"ll be redirecting the user page for creating an Order, we"ll need the URL to that page. We
+don"t want to hardcode the URL to that page in our JavaScript, since it could change later, so let"s
+inject the URL we need into a JavaScript variable using Razor. This can be found in <strong>Views/Home/Index.cshtml</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    window.SalesHub.createOrderUrl = "@Url.RouteUrl("Default", new { controller = "Order", action = "New" }, Request.Url.Scheme)";
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Now that we have the URL in a variable that we can access from our JavaScript function, we can
+set up the code which actually redirects the user to that page when the "Create order" button
+is clicked.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#createOrderButton").on("click", function() {
+    window.location.href = window.SalesHub.createOrderUrl + '/' + window.SalesHub.selectedCustomerId;
+});
+</code></pre></div></div>
+
+<p>Here we use jQuery to find the button we created earlier in the toolbar and register a click
+event handler to it. When the button is clicked we access the URL that we stored earlier and
+concatenate the id of the currently selected Customer and set the result to the window"s location.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

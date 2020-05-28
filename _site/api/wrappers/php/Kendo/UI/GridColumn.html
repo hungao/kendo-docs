@@ -1,0 +1,611 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/UI/GridColumn.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouigridcolumn">\Kendo\UI\GridColumn</h1>
+
+<p>A PHP class representing the column setting of GridColumns.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="aggregates">aggregates</h3>
+<p>The aggregate(s) which are calculated when the grid is grouped by the columns field.
+The supported aggregates are "average", "count", "max", "min" and "sum".</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-array">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;aggregates(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="attributes">attributes</h3>
+<p>HTML attributes of the table cell (&lt;td&gt;) rendered for the column.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-">$value ``</h5>
+
+<h3 id="addcommanditem">addCommandItem</h3>
+
+<p>Adds one or more GridColumnCommandItem to the GridColumn.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-value2--kendouigridcolumncommanditemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumnCommandItem|array</code></h5>
+
+<h4 id="example---using-kendouigridcolumncommanditem">Example - using \Kendo\UI\GridColumnCommandItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$commandItem = new \Kendo\UI\GridColumnCommandItem();
+$className = 'value';
+$commandItem-&gt;className($className);
+$column-&gt;addCommandItem($commandItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$className = 'value';
+$column-&gt;addCommandItem(array('className' =&gt; $className));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-gridcolumncommanditem">Example - adding more than one GridColumnCommandItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$first  = new \Kendo\UI\GridColumnCommandItem();
+$second = new \Kendo\UI\GridColumnCommandItem();
+$column-&gt;addCommandItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="editor">editor</h3>
+<p>Provides a way to specify a custom editing UI for the column. Use the container parameter to create the editing UI.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-kendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;editor(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="encoded">encoded</h3>
+<p>If set to true the column value will be HTML-encoded before it is displayed. If set to false the column value will be displayed as is. By default the column value is HTML-encoded.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;encoded(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="field">field</h3>
+<p>The field to which the column is bound. The value of this field is displayed by the column during data binding.
+The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;field('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="filterable">filterable</h3>
+
+<p>If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
+for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-booleankendouigridcolumnfilterablearray">$value <code class="language-plaintext highlighter-rouge">boolean|\Kendo\UI\GridColumnFilterable|array</code></h5>
+
+<h4 id="example----using-boolean">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;filterable(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendouigridcolumnfilterable">Example - using <a href="/api/wrappers/php/Kendo/UI/GridColumnFilterable">\Kendo\UI\GridColumnFilterable</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$filterable = new \Kendo\UI\GridColumnFilterable();
+$ui = 'value';
+$filterable-&gt;ui($ui);
+$column-&gt;filterable($filterable);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$ui = 'value';
+$column-&gt;filterable(array('ui' =&gt; $ui));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="footertemplate">footerTemplate</h3>
+<p>The template which renders the footer table cell for the column.The fields which can be used in the template are:</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example----using-string">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;footerTemplate('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;footerTemplate(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="format">format</h3>
+<p>The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format,
+custom number format, standard date format or a custom date format.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;format('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="groupfootertemplate">groupFooterTemplate</h3>
+<p>The template which renders the group footer when the grid is grouped by the column field. By default the group footer is not displayed.The fields which can be used in the template are:</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example----using-string-1">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;groupFooterTemplate('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction-1">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;groupFooterTemplate(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="groupheadertemplate">groupHeaderTemplate</h3>
+<p>The template which renders the group header when the grid is grouped by the column field. By default the name of the field
+and the current group value is displayed.The fields which can be used in the template are:</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-2">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example----using-string-2">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;groupHeaderTemplate('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction-2">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;groupHeaderTemplate(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="groupable">groupable</h3>
+<p>If set to false the column will not be groupable (requires Grid groupable property to be enabled). By default all columns are groupable</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;groupable(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="headerattributes">headerAttributes</h3>
+<p>HTML attributes of the column header. The grid renders a table header cell (&lt;th&gt;) for every column. The headerAttributes option can be used to set the HTML attributes of that th.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value--1">$value ``</h5>
+
+<h3 id="headertemplate">headerTemplate</h3>
+<p>The template which renders the column header content. By default the value of the title column option
+is displayed in the column header cell.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-3">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example----using-string-3">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;headerTemplate('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction-3">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;headerTemplate(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="hidden">hidden</h3>
+<p>If set to true the column will not be displayed in the grid. By default all columns are displayed.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-boolean-2">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;hidden(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="lockable">lockable</h3>
+<p>If set to false the column will remain in the side of the grid into which its own locked configuration placed it.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-boolean-3">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;lockable(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="locked">locked</h3>
+<p>If set to true the column will be displayed as locked in the grid. Also see Frozen Columns.</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-boolean-4">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;locked(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="menu">menu</h3>
+<p>If set to true the column will be visible in the grid column menu. By default the column menu includes all data-bound columns (ones that have their field set).</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-boolean-5">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;menu(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="sortable">sortable</h3>
+
+<p>If set to true the user can click the column header and sort the grid by the column field when sorting is enabled. If set to false sorting will
+be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.</p>
+
+<h4 id="returns-18">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="value-booleankendouigridcolumnsortablearray">$value <code class="language-plaintext highlighter-rouge">boolean|\Kendo\UI\GridColumnSortable|array</code></h5>
+
+<h4 id="example----using-boolean-1">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;sortable(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendouigridcolumnsortable">Example - using <a href="/api/wrappers/php/Kendo/UI/GridColumnSortable">\Kendo\UI\GridColumnSortable</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$sortable = new \Kendo\UI\GridColumnSortable();
+$compare = new \Kendo\JavaScriptFunction('function() { }');
+$sortable-&gt;compare($compare);
+$column-&gt;sortable($sortable);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$compare = new \Kendo\JavaScriptFunction('function() { }');
+$column-&gt;sortable(array('compare' =&gt; $compare));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="template">template</h3>
+<p>The template which renders the column content. The grid renders table rows (&lt;tr&gt;) which represent the data source items.
+Each table row consists of table cells (&lt;td&gt;) which represent the grid columns. By default the HTML-encoded value of the field is displayed in the column.</p>
+
+<h4 id="returns-19">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-4">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example----using-string-4">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;template('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction-4">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;template(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="title">title</h3>
+<p>The text that is displayed in the column header cell. If not set the field is used.</p>
+
+<h4 id="returns-20">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;title('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="values">values</h3>
+<p>An array of values that will be displayed instead of the bound value. Each item in the array must have a text and value fields.</p>
+
+<h4 id="returns-21">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="value-array-1">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;values(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="width">width</h3>
+<p>The width of the column. Numeric values are treated as pixels. For more important information, please refer to Column Widths.</p>
+
+<h4 id="returns-22">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\GridColumn</code></p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="value-stringfloat">$value <code class="language-plaintext highlighter-rouge">string|float</code></h5>
+
+<h4 id="example----using-string-5">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;width('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-float">Example  - using float</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$column = new \Kendo\UI\GridColumn();
+$column-&gt;width(1);
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

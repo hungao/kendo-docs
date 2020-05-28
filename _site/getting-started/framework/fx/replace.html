@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/fx/replace.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-ui-replace-effect">Kendo UI Replace Effect</h1>
+
+<p>The Kendo UI Replace effect (introduced in the 2014 Q1 release) provides the means to create complex animated transitions between two elements with a common container.</p>
+
+<blockquote>
+  <p>Unlike the other effects available, the replace effect relies on CSS classes to define the transition states of the two elements. The effect works only in <a href="http://caniuse.com/css-transitions">browsers which support transitions</a>.</p>
+</blockquote>
+
+<h2 id="replace-effect">Replace effect</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;style&gt;
+    #container {
+        position: relative;
+        width: 202px;
+        height: 202px;
+    }
+
+    #step1, #step2  {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border: 1px solid gray;
+        background: #e4e4e4;
+    }
+
+    /**
+     * Custom swap effect
+     */
+
+    /* the initial position of the next element */
+    .k-fx-swap.k-fx-start .k-fx-next {
+        -webkit-transform: translatex(100%);
+        -moz-transform: translatex(100%);
+        -ms-transform: translatex(100%);
+        transform: translatex(100%);
+    }
+
+    /* the initial position of the current element */
+    .k-fx-swap.k-fx-end .k-fx-current {
+        opacity: 0;
+        -webkit-transform: scale(0.9);
+        -moz-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+&lt;/style&gt;
+
+&lt;div id="container"&gt;
+    &lt;div id="step1"&gt;Questionairre – Step 1&lt;/div&gt;
+    &lt;div id="step2" style="display: none"&gt;Questionairre – Step 2&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    kendo.fx("#step1").replace("#step2", "swap").run();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="how-it-works">How it works</h2>
+
+<ul>
+  <li>
+    <p>The effect assigns several CSS classes to common container based on the effect configuration.
+For instance, if the effect is configured as <code class="language-plaintext highlighter-rouge">kendo.fx("#step1").relace("#step2", "swap").direction("up")</code>, the assigned classes will be <code class="language-plaintext highlighter-rouge">k-fx</code> (always assigned), <code class="language-plaintext highlighter-rouge">k-fx-swap</code> (the transition class), and <code class="language-plaintext highlighter-rouge">k-fx-up</code>.
+If the effect is played in reverse, an additional <code class="language-plaintext highlighter-rouge">k-fx-reverse</code> gets assigned.</p>
+  </li>
+  <li>The effect element receives <code class="language-plaintext highlighter-rouge">k-fx-next</code> CSS class.</li>
+  <li>The element which will be hidden receives <code class="language-plaintext highlighter-rouge">k-fx-current</code> CSS class.</li>
+  <li>The container gets <code class="language-plaintext highlighter-rouge">k-fx-start</code> CSS class, which then replaced by <code class="language-plaintext highlighter-rouge">k-fx-end</code>.</li>
+  <li>In <code class="language-plaintext highlighter-rouge">kendo.common.css</code> and <code class="language-plaintext highlighter-rouge">kendo.mobile.all.css</code> The <code class="language-plaintext highlighter-rouge">.k-fx .k-fx-current</code> and <code class="language-plaintext highlighter-rouge">.k-fx .k-fx-next</code> CSS selectors have their transition CSS property set to <code class="language-plaintext highlighter-rouge">all 350ms ease-out</code>.</li>
+</ul>
+
+<p>As a result, both elements transition their state from the one defined in the <code class="language-plaintext highlighter-rouge">.k-fx-swap.k.fx-start</code> to the one defined in <code class="language-plaintext highlighter-rouge">.k-fx-swap.k-fx-end</code>.</p>
+
+<h2 id="customizing-the-transition-duration">Customizing the transition duration</h2>
+
+<p>The transition duration is configured through the following CSS selectors, present in kendo.common.css</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.k-fx-end .k-fx-next,
+.k-fx-end .k-fx-current {
+    -webkit-transition:all 350ms ease-out;
+    -moz-transition:all 350ms ease-out;
+    -ms-transition:all 350ms ease-out;
+    -o-transition:all 350ms ease-out;
+    transition:all 350ms ease-out;
+}
+</code></pre></div></div>
+
+<p>You can override the default duration for the entire document using a <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity">higher specificity selector</a>, or by including the same selector after Kendo UI stylesheet references.</p>
+
+<h3 id="faster-replace-effect-transition">Faster replace effect transition</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;link href="http://cdn.kendostatic.com/{version}/styles/kendo.common.min.css" rel="stylesheet" type="text/css" /&gt;
+        &lt;style&gt;
+            .k-fx-end .k-fx-next,
+            .k-fx-end .k-fx-current {
+                -webkit-transition:all 200ms ease-out;
+                -moz-transition:all 200ms ease-out;
+                -ms-transition:all 200ms ease-out;
+                -o-transition:all 200ms ease-out;
+                transition:all 200ms ease-out;
+            }
+        &lt;/style&gt;
+
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;!-- Content here --&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>This technique may be used to customize the Kendo UI Mobile view transitions.</p>
+</blockquote>
+
+<h2 id="animating-nested-elements">Animating nested elements</h2>
+
+<p>In addition to two elements themselves, the elements" contents may perform additional transitions, too. This approach is used to implement the complex iOS transition in Kendo UI Mobile (the cross-browser definitions are omitted from the source).</p>
+
+<h3 id="multi-element-transition-definition-kendo-ui-mobile-ios-transition">Multi-element transition definition (Kendo UI Mobile iOS transition)</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.k-fx-slide.k-fx-end .k-fx-next .km-content,
+.k-fx-slide.k-fx-end .k-fx-next .km-header,
+.k-fx-slide.k-fx-end .k-fx-next .km-footer,
+.k-fx-slide.k-fx-end .k-fx-current .km-content,
+.k-fx-slide.k-fx-end .k-fx-current .km-header,
+.k-fx-slide.k-fx-end .k-fx-current .km-footer {
+  transition: all 350ms ease-out;
+}
+
+.k-fx-slide.k-fx-start .k-fx-next .km-content {
+  transform: translatex(100%);
+}
+
+.k-fx-slide.k-fx-start .k-fx-next .km-header,
+.k-fx-slide.k-fx-start .k-fx-next .km-footer {
+  opacity: 0;
+}
+
+.k-fx-slide.k-fx-end .k-fx-current .km-content {
+  transform: translatex(-100%);
+}
+
+.k-fx-slide.k-fx-end .k-fx-next .km-header,
+.k-fx-slide.k-fx-end .k-fx-next .km-footer {
+  opacity: 1;
+}
+
+/* reverse transition */
+.k-fx-slide.k-fx-reverse.k-fx-start .k-fx-current .km-content {
+  transform: translatex(0);
+}
+
+.k-fx-slide.k-fx-reverse.k-fx-end .k-fx-current .km-content {
+  transform: translatex(100%);
+}
+
+.k-fx-slide.k-fx-reverse.k-fx-start .k-fx-next .km-content {
+  transform: translatex(-100%);
+}
+
+.k-fx-slide.k-fx-reverse.k-fx-end .k-fx-next .km-content {
+  transform: translatex(0);
+}
+
+.k-fx-slide.k-fx-reverse.k-fx-start .k-fx-current .km-header,
+.k-fx-slide.k-fx-reverse.k-fx-start .k-fx-current .km-footer {
+  opacity: 1;
+}
+
+.k-fx-slide.k-fx-reverse.k-fx-end .k-fx-current .km-header,
+.k-fx-slide.k-fx-reverse.k-fx-end .k-fx-current .km-footer {
+  opacity: 0;
+}
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

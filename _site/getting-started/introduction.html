@@ -1,0 +1,412 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HTML5, jQuery-based framework | Kendo UI</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Kendo UI framework overview: UI components, rich data vizualization framework, auto-adaptive mobile widgets and all tools for building rich web apps.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/introduction.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="what-is-kendo-ui">What is Kendo UI</h1>
+
+<p>Kendo UI is an HTML5, jQuery-based framework for building modern web apps. The framework features lots of UI widgets, a rich data vizualization framework,
+an auto-adaptive Mobile framework, and all of the tools needed for HTML5 app development, such as Data Source, Templating, MVVM, Drag-and-Drop API, and more.</p>
+
+<p>Kendo UI comes in different bundles:</p>
+
+<ul>
+  <li>Kendo UI Core - free open source version of Kendo UI licensed under Apache 2.0, including web and mobile widgets and framework features.</li>
+  <li>Kendo UI Professional - includes web, dataviz and mobile widgets and framework features.</li>
+  <li>Telerik UI for ASP.NET MVC - Kendo UI Professional plus ASP.NET MVC wrappers for all available widgets.</li>
+  <li>Telerik UI for JSP - Kendo UI Professional plus JSP wrappers for the available web and dataviz widgets.</li>
+  <li>Telerik UI for PHP - Kendo UI Professional plus PHP wrappers for the available web and dataviz widgets.</li>
+</ul>
+
+<p>*See comparison between Kendo UI Professional and Kendo UI Core here: http://www.telerik.com/kendo-ui/comparison</p>
+
+<h1 id="installing-and-getting-started-with-kendo-ui">Installing and Getting Started with Kendo UI</h1>
+
+<p>You can download all Kendo UI bundles from the <a href="http://www.telerik.com/download/kendo-ui-complete">download page</a>.</p>
+
+<p>The distribution zip file contains the following:</p>
+
+<ul>
+  <li>/examples - quick start demos.</li>
+  <li>/js - minified JavaScript files.</li>
+  <li>/src - complete source code. Not available in the trial distribution.</li>
+  <li>/styles - minified CSS files and theme images.</li>
+  <li>/wrappers - server-side wrappers. Available in Telerik UI for ASP.NET MVC, JSP or PHP.</li>
+  <li>changelog.html - Kendo UI release notes.</li>
+</ul>
+
+<h2 id="using-kendo-ui">Using Kendo UI</h2>
+
+<p>To use Kendo UI in your HTML page you need to include the required JavaScript and CSS files.</p>
+
+<h3 id="kendo-ui-web">Kendo UI Web</h3>
+
+<ol>
+  <li>Download Kendo UI Professional and extract the distribution zip file to a convenient location.</li>
+  <li>Copy the <strong>/js</strong> and <strong>/styles</strong> directories of the Kendo UI Professional distribution to your web application root directory.</li>
+  <li>
+    <p>Include the Kendo UI Web JavaScript and CSS files in the <code class="language-plaintext highlighter-rouge">head</code> tag of your HTML page. <strong>Make sure the common CSS file is registered before the theme CSS file.
+Also make sure only one combined script file is registered. For more information, please refer to the <a href="/getting-started/javascript-dependencies">Javascript Dependencies page</a>.</strong></p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;!-- Common Kendo UI Web CSS --&gt;
+ &lt;link href="styles/kendo.common.min.css" rel="stylesheet" /&gt;
+ &lt;!-- Default Kendo UI Web theme CSS --&gt;
+ &lt;link href="styles/kendo.default.min.css" rel="stylesheet" /&gt;
+ &lt;!-- jQuery JavaScript --&gt;
+ &lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+ &lt;!-- Kendo UI Web combined JavaScript --&gt;
+ &lt;script src="js/kendo.web.min.js"&gt;&lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Initialize a Kendo UI Web Widget (the Kendo DatePicker in this example):</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;!-- HTML element from which the Kendo DatePicker would be initialized --&gt;
+ &lt;input id="datepicker" /&gt;
+ &lt;script&gt;
+ $(function() {
+     // Initialize the Kendo DatePicker by calling the kendoDatePicker jQuery plugin
+     $("#datepicker").kendoDatePicker();
+ });
+ &lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>Here is the complete example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Kendo UI Web&lt;/title&gt;
+        &lt;link href="styles/kendo.common.min.css" rel="stylesheet" /&gt;
+        &lt;link href="styles/kendo.default.min.css" rel="stylesheet" /&gt;
+        &lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+        &lt;script src="js/kendo.web.min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;input id="datepicker" /&gt;
+        &lt;script&gt;
+            $(function() {
+                $("#datepicker").kendoDatePicker();
+            });
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<h3 id="kendo-ui-dataviz">Kendo UI DataViz</h3>
+
+<ol>
+  <li>Download Kendo UI Professional and extract the distribution zip file to a convenient location.</li>
+  <li>Copy the <strong>/js</strong> and <strong>/styles</strong> directories of the Kendo UI Professional distribution to your web application root directory.</li>
+  <li>
+    <p>Include the Kendo UI DataViz JavaScript and CSS files in the <code class="language-plaintext highlighter-rouge">head</code> tag of your HTML page:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;!-- Kendo UI DataViz CSS --&gt;
+ &lt;link href="styles/kendo.dataviz.min.css" rel="stylesheet" /&gt;
+ &lt;!-- jQuery JavaScript --&gt;
+ &lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+ &lt;!-- Kendo UI DataViz combined JavaScript --&gt;
+ &lt;script src="js/kendo.dataviz.min.js"&gt;&lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Initialize a Kendo UI DataViz Widget (the Kendo Radial Gauge in this example):</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;!-- HTML element from which the Kendo Radial Gauge would be initialized --&gt;
+ &lt;div id="gauge"&gt;&lt;/div&gt;
+ &lt;script&gt;
+ $(function() {
+     $("#gauge").kendoRadialGauge();
+ });
+ &lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>Here is the complete example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Kendo UI DataViz&lt;/title&gt;
+        &lt;link href="styles/kendo.dataviz.min.css" rel="stylesheet" /&gt;
+        &lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+        &lt;script src="js/kendo.dataviz.min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id="gauge"&gt;&lt;/div&gt;
+        &lt;script&gt;
+        $(function() {
+            $("#gauge").kendoRadialGauge();
+        });
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<h3 id="kendo-ui-mobile">Kendo UI Mobile</h3>
+
+<ol>
+  <li>Download Kendo UI Professional and extract the distribution zip file to a convenient location.</li>
+  <li>Copy the <strong>/js</strong> and <strong>/styles</strong> directories of the Kendo UI Professional distribution to your web application root directory.</li>
+  <li>
+    <p>Include the Kendo UI Mobile JavaScript and CSS files in the <code class="language-plaintext highlighter-rouge">head</code> tag of your HTML page:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;!-- Kendo UI Mobile CSS --&gt;
+ &lt;link href="styles/kendo.mobile.all.min.css" rel="stylesheet" /&gt;
+ &lt;!-- jQuery JavaScript --&gt;
+ &lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+ &lt;!-- Kendo UI Mobile combined JavaScript --&gt;
+ &lt;script src="js/kendo.mobile.min.js"&gt;&lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Initialize a Kendo Mobile Application</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;!-- Kendo Mobile View --&gt;
+ &lt;div data-role="view" data-title="View" id="index"&gt;
+     &lt;!--Kendo Mobile Header --&gt;
+     &lt;header data-role="header"&gt;
+         &lt;!--Kendo Mobile NavBar widget --&gt;
+         &lt;div data-role="navbar"&gt;
+             &lt;span data-role="view-title"&gt;&lt;/span&gt;
+         &lt;/div&gt;
+     &lt;/header&gt;
+     &lt;!--Kendo Mobile ListView widget --&gt;
+     &lt;ul data-role="listview"&gt;
+       &lt;li&gt;Item 1&lt;/li&gt;
+       &lt;li&gt;Item 2&lt;/li&gt;
+     &lt;/ul&gt;
+     &lt;!--Kendo Mobile Footer --&gt;
+     &lt;footer data-role="footer"&gt;
+         &lt;!-- Kendo Mobile TabStrip widget --&gt;
+         &lt;div data-role="tabstrip"&gt;
+             &lt;a data-icon="home" href="#index"&gt;Home&lt;/a&gt;
+             &lt;a data-icon="settings" href="#settings"&gt;Settings&lt;/a&gt;
+         &lt;/div&gt;
+     &lt;/footer&gt;
+ &lt;/div&gt;
+ &lt;script&gt;
+ // Initialize a new Kendo Mobile Application
+ var app = new kendo.mobile.Application();
+ &lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>Here is the complete example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Kendo UI Mobile&lt;/title&gt;
+        &lt;link href="styles/kendo.mobile.all.min.css" rel="stylesheet" /&gt;
+        &lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+        &lt;script src="js/kendo.mobile.min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div data-role="view" data-title="View" id="index"&gt;
+            &lt;header data-role="header"&gt;
+                &lt;div data-role="navbar"&gt;
+                    &lt;span data-role="view-title"&gt;&lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/header&gt;
+            &lt;ul data-role="listview"&gt;
+              &lt;li&gt;Item 1&lt;/li&gt;
+              &lt;li&gt;Item 2&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;footer data-role="footer"&gt;
+                &lt;div data-role="tabstrip"&gt;
+                    &lt;a data-icon="home" href="#index"&gt;Home&lt;/a&gt;
+                    &lt;a data-icon="settings" href="#settings"&gt;Settings&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/footer&gt;
+        &lt;/div&gt;
+        &lt;script&gt;
+        var app = new kendo.mobile.Application();
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<h2 id="server-side-wrappers">Server-side wrappers</h2>
+
+<p>Kendo UI provides server-side wrappers for ASP.NET, PHP and JSP. Those are classes (ASP.NET and PHP) or XML tags (JSP)
+which allow configuring the Kendo UI widgets with server-side code.</p>
+
+<p>You can find more info about the server-side wrappers here:</p>
+
+<ul>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Get Started with Telerik UI for ASP.NET MVC</a></li>
+  <li><a href="/getting-started/using-kendo-with/jsp/introduction">Get Started with Telerik UI for JSP</a></li>
+  <li><a href="/getting-started/using-kendo-with/php/introduction">Get Started with Telerik UI for PHP</a></li>
+</ul>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<h3 id="kendo-ui-videos">Kendo UI videos</h3>
+
+<p>You can watch the videos in the <a href="http://www.youtube.com/kendouitv">Kendo UI YouTube channel</a>.</p>
+
+<h3 id="kendo-ui-dojo">Kendo UI Dojo</h3>
+
+<p>A lot of interactive tutorials are available in the <a href="http://trykendoui.telerik.com">Kendo UI Dojo</a>.</p>
+
+<h3 id="further-reading">Further reading</h3>
+
+<ol>
+  <li><a href="/getting-started/widgets">Kendo UI Widgets</a></li>
+  <li><a href="/getting-started/data-attribute-initialization">Data Attribute Initialization</a></li>
+  <li><a href="/getting-started/technical-requirements">Requirements</a></li>
+</ol>
+
+<h3 id="examples">Examples</h3>
+
+<ol>
+  <li><a href="http://demos.telerik.com/kendo-ui">Online demos</a></li>
+  <li><a href="http://www.telerik.com/support/code-library">Code library projects</a></li>
+  <li>Examples available on github
+    <ul>
+      <li><a href="https://github.com/telerik/kendo-examples-asp-net-mvc/">ASP.NET MVC examples</a></li>
+      <li><a href="https://github.com/telerik/kendo-music-store">ASP.NET MVC Kendo UI Music Store</a></li>
+      <li><a href="https://github.com/telerik/kendo-examples-asp.net/">ASP.NET WebForms examples</a></li>
+      <li><a href="https://github.com/telerik/kendo-examples-java">JSP examples</a></li>
+      <li><a href="https://github.com/telerik/kendo-mobile-sushi">Kendo Mobile Sushi</a></li>
+      <li><a href="https://github.com/telerik/kendo-examples-php">PHP examples</a></li>
+      <li><a href="https://github.com/telerik/kendo-examples-rails">Ruby on Rails examples</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="help-us-improve-kendo-ui-documentation-samples-tutorials-and-demos">Help Us Improve Kendo UI Documentation, Samples, Tutorials and Demos</h2>
+
+<p>The Kendo UI team would LOVE your help to improve our documentation. We encourage you to contribute in the way that you choose:</p>
+
+<h3 id="submit-a-new-issue-at-github">Submit a New Issue at GitHub</h3>
+
+<p><a href="https://github.com/telerik/kendo-docs/issues?state=open">Open</a> a new issue on the topic if it does not exist already.</p>
+
+<p>When creating an issue, please provide a descriptive title, be as specific as possible and link to the document in question.
+If you can provide a link to the closest anchor to the issue, that is even better.</p>
+
+<h3 id="update-the-documentation-at-github">Update the Documentation at GitHub</h3>
+
+<p>This is the most direct method. Follow <a href="https://github.com/telerik/kendo-docs/blob/master/readme.md">the contribution instructions</a>. The basic steps are that you fork our documentation and submit a pull request. That way you can contribute to exactly where you found the error and our technical writing team just needs to approve your change request. Please use only standard Markdown and follow the directions at the link. If you find an issue in the docs, or even feel like creating new content, we are happy to have your contributions!</p>
+
+<h3 id="forums">Forums</h3>
+
+<p>You can also go to the <a href="http://www.telerik.com/forums">Kendo UI Forums</a> and leave feedback.
+This method will take a bit longer to reach our documentation team, but if you like the accountability of forums and you want a fast reply from our amazing support team, leaving feedback in the Kendo UI forums guarantees that your suggestion has a support number and that weâ€™ll follow up on it.</p>
+
+<p>Thank you for contributing to the Kendo UI community!</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

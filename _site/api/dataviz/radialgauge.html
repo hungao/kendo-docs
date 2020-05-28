@@ -1,0 +1,628 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI DataViz RadialGauge</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn the configuration options for Radial Gauge widget, set the color and size of the border, use methods properly.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/dataviz/radialgauge.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizuiradialgauge">kendo.dataviz.ui.RadialGauge</h1>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="gaugearea-object">gaugeArea <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The gauge area configuration options.
+This is the entire visible area of the gauge.</p>
+
+<h3 id="gaugeareabackground-objectdefault-white">gaugeArea.background <code class="language-plaintext highlighter-rouge">Object</code><em>(default: "white")</em></h3>
+
+<p>The background of the gauge area.
+Any valid CSS color string will work here, including hex and rgb.</p>
+
+<h3 id="gaugeareaborder-object">gaugeArea.border <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The border of the gauge area.</p>
+
+<h3 id="gaugeareabordercolor-stringdefault-black">gaugeArea.border.color <code class="language-plaintext highlighter-rouge">String</code><em>(default: "black")</em></h3>
+
+<p>The color of the border. Any valid CSS color string will work here, including hex and rgb.</p>
+
+<h3 id="gaugeareaborderdashtype-stringdefault-solid">gaugeArea.border.dashType <code class="language-plaintext highlighter-rouge">String</code><em>(default: "solid")</em></h3>
+
+<p>The dash type of the border.</p>
+
+<h4 id="solid"><em>"solid"</em></h4>
+
+<p>Specifies a solid line.</p>
+
+<h4 id="dot"><em>"dot"</em></h4>
+
+<p>Specifies a line consisting of dots.</p>
+
+<h4 id="dash"><em>"dash"</em></h4>
+
+<p>Specifies a line consisting of dashes.</p>
+
+<h4 id="longdash"><em>"longDash"</em></h4>
+
+<p>Specifies a line consisting of a repeating pattern of long-dash.</p>
+
+<h4 id="dashdot"><em>"dashDot"</em></h4>
+
+<p>Specifies a line consisting of a repeating pattern of dash-dot.</p>
+
+<h4 id="longdashdot"><em>"longDashDot"</em></h4>
+
+<p>Specifies a line consisting of a repeating pattern of long-dash-dot.</p>
+
+<h4 id="longdashdotdot"><em>"longDashDotDot"</em></h4>
+
+<p>Specifies a line consisting of a repeating pattern of long-dash-dot-dot.</p>
+
+<h3 id="gaugeareaborderwidth-numberdefault-0">gaugeArea.border.width <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 0)</em></h3>
+
+<p>The width of the border.</p>
+
+<h3 id="gaugeareaheight-number">gaugeArea.height <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The height of the gauge area.  By default, the vertical gauge is 200px and
+the horizontal one is 60px.</p>
+
+<h3 id="gaugeareamargin-numberobjectdefault-5">gaugeArea.margin <code class="language-plaintext highlighter-rouge">Number|Object</code><em>(default: 5)</em></h3>
+
+<p>The margin of the gauge area.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// sets the top, right, bottom and left margin to 3px.
+margin: 3
+
+// sets the top and left margin to 1px
+// margin right and bottom are with 5px (by default)
+margin: { top: 1, left: 1 }
+</code></pre></div></div>
+
+<h3 id="gaugeareawidth-number">gaugeArea.width <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The width of the gauge area.  By default the vertical gauge is 60px
+and horizontal gauge is 200px.</p>
+
+<h3 id="pointer-object">pointer <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The pointer configuration options.</p>
+
+<h3 id="pointercap-object">pointer.cap <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The cap configuration options.</p>
+
+<h3 id="pointercapcolor-string">pointer.cap.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The color of the cap.
+Any valid CSS color string will work here, including hex and rgb.</p>
+
+<h3 id="pointercapsize-number">pointer.cap.size <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The size of the cap in percents. (from 0 to 1)</p>
+
+<h3 id="pointercolor-string">pointer.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The color of the pointer.
+Any valid CSS color string will work here, including hex and rgb.</p>
+
+<h3 id="pointervalue-number">pointer.value <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The value of the gauge.</p>
+
+<h3 id="renderas-string">renderAs <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the preferred rendering engine.
+If it is not supported by the browser, the Gauge will switch to the first available mode.</p>
+
+<p>The supported values are:</p>
+
+<ul>
+  <li>"svg" - renders the widget as inline SVG document, if available</li>
+  <li>"vml" - renders the widget as VML, if available</li>
+  <li>"canvas" - renders the widget as a Canvas element, if available.</li>
+</ul>
+
+<blockquote>
+  <p>Using Canvas rendering disables most interactive features.</p>
+</blockquote>
+
+<h3 id="example---render-as-canvas-if-supported">Example - Render as Canvas, if supported</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gauge"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#gauge").kendoRadialGauge({
+    renderAs: "canvas",
+    pointer: {
+        value: 50
+    },
+    scale: {
+        min: 0,
+        max: 100
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="scale-object">scale <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Configures the scale.</p>
+
+<h3 id="scaleendangle-numberdefault-210">scale.endAngle <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 210)</em></h3>
+
+<p>The end angle of the gauge.
+The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinat system)</p>
+
+<h3 id="scalelabels-object">scale.labels <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Configures the scale labels.</p>
+
+<h3 id="scalelabelsbackground-string">scale.labels.background <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The background color of the labels.
+Any valid CSS color string will work here, including hex and rgb</p>
+
+<h3 id="scalelabelsborder-object">scale.labels.border <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The border of the labels.</p>
+
+<h3 id="scalelabelsbordercolor-stringdefault-black">scale.labels.border.color <code class="language-plaintext highlighter-rouge">String</code><em>(default: "black")</em></h3>
+
+<p>The color of the border. Any valid CSS color string will work here, including hex and rgb.</p>
+
+<h3 id="scalelabelsborderdashtype-stringdefault-solid">scale.labels.border.dashType <code class="language-plaintext highlighter-rouge">String</code><em>(default: "solid")</em></h3>
+
+<p>The dash type of the border.</p>
+
+<h4 id="solid-1"><em>"solid"</em></h4>
+
+<p>Specifies a solid line.</p>
+
+<h4 id="dot-1"><em>"dot"</em></h4>
+
+<p>Specifies a line consisting of dots.</p>
+
+<h4 id="dash-1"><em>"dash"</em></h4>
+
+<p>Specifies a line consisting of dashes.</p>
+
+<h4 id="longdash-1"><em>"longDash"</em></h4>
+
+<p>Specifies a line consisting of a repeating pattern of long-dash.</p>
+
+<h4 id="dashdot-1"><em>"dashDot"</em></h4>
+
+<p>Specifies a line consisting of a repeating pattern of dash-dot.</p>
+
+<h4 id="longdashdot-1"><em>"longDashDot"</em></h4>
+
+<p>Specifies a line consisting of a repeating pattern of long-dash-dot.</p>
+
+<h4 id="longdashdotdot-1"><em>"longDashDotDot"</em></h4>
+
+<p>Specifies a line consisting of a repeating pattern of long-dash-dot-dot.</p>
+
+<h3 id="scalelabelsborderwidth-numberdefault-0">scale.labels.border.width <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 0)</em></h3>
+
+<p>The width of the border.</p>
+
+<h3 id="scalelabelscolor-string">scale.labels.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The text color of the labels.
+Any valid CSS color string will work here, including hex and rgb.</p>
+
+<h3 id="scalelabelsfont-stringdefault-12px-arialhelveticasans-serif">scale.labels.font <code class="language-plaintext highlighter-rouge">String</code><em>(default: "12px Arial,Helvetica,sans-serif")</em></h3>
+
+<p>The font style of the labels.</p>
+
+<h3 id="scalelabelsformat-string">scale.labels.format <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The format of the labels.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#radial-gauge").kendoRadialGauge({
+    scale: {
+       labels: {
+           // set the format to currency
+           format: "C"
+       }
+    }
+});
+</code></pre></div></div>
+
+<h3 id="scalelabelsmargin-numberobjectdefault-0">scale.labels.margin <code class="language-plaintext highlighter-rouge">Number|Object</code><em>(default: 0)</em></h3>
+
+<p>The margin of the labels.</p>
+
+<h3 id="scalelabelspadding-number--objectdefault-0">scale.labels.padding <code class="language-plaintext highlighter-rouge">Number | Object</code><em>(default: 0)</em></h3>
+
+<p>The padding of the labels.</p>
+
+<h3 id="scalelabelsposition-stringdefault-inside">scale.labels.position <code class="language-plaintext highlighter-rouge">String</code><em>(default: "inside")</em></h3>
+
+<p>The labels positions.</p>
+
+<h4 id="inside"><em>"inside"</em></h4>
+
+<p>The labels are positioned inside.</p>
+
+<h4 id="outside"><em>"outside"</em></h4>
+
+<p>The labels are positioned outside.</p>
+
+<h3 id="scalelabelstemplate-stringfunction">scale.labels.template <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The label template.
+Template variables:</p>
+
+<ul>
+  <li><strong>value</strong> - the value</li>
+</ul>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// chart initialization
+$("#radial-gauge").kendoRadialGauge({
+     scale: {
+         labels: {
+             // labels template
+             template: "#= value #%"
+         }
+     }
+});
+</code></pre></div></div>
+
+<h3 id="scalelabelsvisible-booleandefault-true">scale.labels.visible <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>The visibility of the labels.</p>
+
+<h3 id="scalemajorticks-object">scale.majorTicks <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Configures the scale major ticks.</p>
+
+<h3 id="scalemajortickscolor-string">scale.majorTicks.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The color of the major ticks.</p>
+
+<h3 id="scalemajortickssize-number">scale.majorTicks.size <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The major tick size.
+This is the length of the line in pixels that is drawn to indicate the tick on the scale.</p>
+
+<h3 id="scalemajorticksvisible-booleandefault-true">scale.majorTicks.visible <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>The visibility of the major ticks.
+Any valid CSS color string will work here, including hex and rgb.</p>
+
+<h3 id="scalemajortickswidth-numberdefault-05">scale.majorTicks.width <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 0.5)</em></h3>
+
+<p>The width of the major ticks.</p>
+
+<h3 id="scalemajorunit-number">scale.majorUnit <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The interval between major divisions.</p>
+
+<h3 id="scalemax-numberdefault-100">scale.max <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 100)</em></h3>
+
+<p>The maximum value of the scale.</p>
+
+<h3 id="scalemin-numberdefault-0">scale.min <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 0)</em></h3>
+
+<p>The minimum value of the scale.</p>
+
+<h3 id="scaleminorticks-object">scale.minorTicks <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Configures the scale minor ticks.</p>
+
+<h3 id="scaleminortickscolor-string">scale.minorTicks.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The color of the minor ticks.
+Any valid CSS color string will work here, including hex and rgb.</p>
+
+<h3 id="scaleminortickssize-number">scale.minorTicks.size <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The minor tick size.
+This is the length of the line in pixels that is drawn to indicate the tick on the scale.</p>
+
+<h3 id="scaleminorticksvisible-booleandefault-true">scale.minorTicks.visible <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>The visibility of the minor ticks.</p>
+
+<h3 id="scaleminortickswidth-numberdefault-05">scale.minorTicks.width <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 0.5)</em></h3>
+
+<p>The width of the minor ticks.</p>
+
+<h3 id="scaleminorunit-number">scale.minorUnit <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The interval between minor divisions.</p>
+
+<h3 id="scaleranges-array">scale.ranges <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>The ranges of the scale.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#radial-gauge").kendoRadialGauge({
+    scale: {
+        ranges: [{
+            from: 10,
+            to: 20,
+            color: "green"
+        }]
+    }
+ });
+</code></pre></div></div>
+
+<h3 id="scalerangesfrom-number">scale.ranges.from <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The start position of the range in scale units.</p>
+
+<h3 id="scalerangesto-number">scale.ranges.to <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The end position of the range in scale units.</p>
+
+<h3 id="scalerangesopacity-number">scale.ranges.opacity <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The opacity of the range.</p>
+
+<h3 id="scalerangescolor-string">scale.ranges.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The color of the range.
+Any valid CSS color string will work here, including hex and rgb.</p>
+
+<h3 id="scalerangeplaceholdercolor-string">scale.rangePlaceholderColor <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The default color for the ranges.</p>
+
+<h3 id="scalerangesize-number">scale.rangeSize <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The width of the range indicators.</p>
+
+<h3 id="scalerangedistance-number">scale.rangeDistance <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The distance from the range indicators to the ticks.</p>
+
+<h3 id="scalereverse-booleandefault-false">scale.reverse <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>Reverses the scale direction - values are increase anticlockwise.</p>
+
+<h3 id="scalestartangle-numberdefault--30">scale.startAngle <code class="language-plaintext highlighter-rouge">Number</code><em>(default: -30)</em></h3>
+
+<p>The start angle of the gauge.
+The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinat system)</p>
+
+<h3 id="transitions-booleandefault-true">transitions <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>A value indicating if transition animations should be played.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="destroy">destroy</h3>
+
+<p>Prepares the Gauge for safe removal from the DOM.</p>
+
+<p>Detaches event handlers and removes data entries in order to avoid memory leaks.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kendo.destroy($("#radial-gauge"));
+$("#radial-gauge").remove();
+</code></pre></div></div>
+
+<h3 id="redraw">redraw</h3>
+
+<p>Redraws the gauge.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var gauge = $("#radial-gauge").data("kendoRadialGauge");
+gauge.redraw();
+</code></pre></div></div>
+
+<h3 id="resize">resize</h3>
+
+<p>Adjusts the widget layout to match the size of the container.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gauge" style="width: 100px; height: 100px;"&gt;&lt;/div&gt;
+&lt;script&gt;
+    $("#gauge").kendoRadialGauge({
+        pointer: {
+            value: 50
+        },
+        scale: {
+            min: 0,
+            max: 100
+        }
+    });
+
+    $("#gauge")
+       .css({ width: "200px", height: "200px" })
+       .data("kendoRadialGauge").resize();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="force-boolean-optional">force <code class="language-plaintext highlighter-rouge">Boolean</code> <em>optional</em></h5>
+
+<p>Defines whether the widget should proceed with resizing even if the element dimensions have not changed.</p>
+
+<h3 id="svg">svg</h3>
+
+<p>Returns the <a href="http://www.w3.org/Graphics/SVG/">SVG</a> representation of the gauge.
+The returned string is a self-contained SVG document that can be used as is or
+converted to other formats using tools like <a href="http://inkscape.org/">Inkscape</a> and
+<a href="http://www.imagemagick.org/">ImageMagick</a>.
+Both programs provide command-line interface suitable for server-side processing.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gauge"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#gauge").kendoRadialGauge({
+    pointer: {
+        value: 50
+    },
+    scale: {
+        min: 0,
+        max: 100
+    }
+});
+var gauge = $("#gauge").data("kendoRadialGauge");
+var svg = gauge.svg();
+console.log(svg); // displays the SVG string
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imagedataurl">imageDataURL</h3>
+
+<p>Returns a PNG image of the gauge encoded as a <a href="https://developer.mozilla.org/en-US/docs/data_URIs">Data URL</a>.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> A data URL with <code class="language-plaintext highlighter-rouge">image/png</code> MIME type. Will be <code class="language-plaintext highlighter-rouge">null</code> if the browser does not support the <code class="language-plaintext highlighter-rouge">canvas</code> element.</p>
+
+<h4 id="example---show-a-snapshot-of-the-gauge">Example - show a snapshot of the gauge</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gauge"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#gauge").kendoRadialGauge({
+    pointer: {
+        value: 50
+    },
+    scale: {
+        min: 0,
+        max: 100
+    }
+});
+var gauge = $("#gauge").data("kendoRadialGauge");
+var image = gauge.imageDataURL();
+if (!window.open(image)) {
+    document.location.href = image;
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value">value</h3>
+
+<p>Change the value of the gauge.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#radial-gauge").data("kendoRadialGauge").value(20);
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

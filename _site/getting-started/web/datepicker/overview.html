@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of DatePicker UI widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Help guide for the basics of Kendo UI DatePicker widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/datepicker/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="datepicker-overview">DatePicker Overview</h1>
+
+<p>The <strong>DatePicker</strong> allows the end user to select a date from a
+calendar or by direct input. It supports custom templates for "month"
+view, configurable options for min and max date, start view and the
+depth of the navigation.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="creating-a-datepicker-from-existing-input-element">Creating a DatePicker from existing input element</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="datePicker" /&gt;
+</code></pre></div></div>
+
+<h3 id="datepicker-initialization">DatePicker initialization</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#datePicker").kendoDatePicker();
+});
+</code></pre></div></div>
+
+<p>When a <strong>DatePicker</strong> is initialized, it will be displayed at the
+location of the target HTML element.</p>
+
+<blockquote>
+  <p>Widget copies any styles and CSS classes from the input element to the wrapper element.</p>
+</blockquote>
+
+<h2 id="configuring-datepicker-behaviors">Configuring DatePicker Behaviors</h2>
+
+<p>The <strong>DatePicker</strong> provides configuration options that can be set
+during initialization. Among the properties that can be controlled:</p>
+
+<ul>
+  <li>Selected date</li>
+  <li>Minimum and/or maximum date</li>
+  <li>Define format</li>
+  <li>Start view</li>
+  <li>Navigation depth (last view to which end user can navigate)</li>
+</ul>
+
+<h3 id="create-datepicker-with-a-selected-date-and-a-defined">Create DatePicker with a selected date and a defined</h3>
+<p>minimum and maximum date</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#datePicker").kendoDatePicker({
+       value: new Date(),
+       min: new Date(1950, 0, 1),
+       max: new Date(2049, 11, 31)
+    })
+});
+</code></pre></div></div>
+
+<p>DatePicker will set the value only if the entered date is valid and
+within the defined range.</p>
+
+<h2 id="defining-a-start-view-and-navigation-depth">Defining a Start View and Navigation Depth</h2>
+
+<p>The first rendered view can be defined with "start" option.
+Navigation depth can be controlled with "depth" option. Predefined
+views are:</p>
+
+<ul>
+  <li>"month" - shows the days from the month</li>
+  <li>"year" - shows the months of the year</li>
+  <li>"decade" - shows the years from the decade</li>
+  <li>"century" - shows the decades from the century</li>
+</ul>
+
+<h3 id="create-a-datepicker-for-selecting-a-month">Create a DatePicker for selecting a month</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#datePicker").kendoDatePicker({
+    start: "year",
+    depth: "year"
+});
+</code></pre></div></div>
+
+<h2 id="accessing-an-existing-datepicker">Accessing an Existing DatePicker</h2>
+
+<p>You can reference an existing <strong>DatePicker</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the API to control
+its behavior.</p>
+
+<h3 id="accessing-an-existing-datepicker-instance">Accessing an existing DatePicker instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var datePicker = $("#datePicker").data("kendoDatePicker");
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

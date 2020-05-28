@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Use disabled binding to disable the target DOM widget or element in Kendo UI MVVM</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="If the View-Model value is changed to true or false in Kendo UI MVVM, the disabled binding disables the target DOM widget or it is enabled.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/mvvm/bindings/disabled.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="disabled-binding">Disabled binding</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">disabled</code> binding disables the target DOM element (or widget) if the View-Model value is <code class="language-plaintext highlighter-rouge">true</code>.
+If the View-Model value is <code class="language-plaintext highlighter-rouge">false</code> the target DOM element (or widget) will be enabled.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">disabled</code> binding supports only input HTML elements: <code class="language-plaintext highlighter-rouge">input</code>, <code class="language-plaintext highlighter-rouge">select</code> and <code class="language-plaintext highlighter-rouge">textarea</code>.
+When an input element is disabled the end user cannot change its value (type in text or choose a different option).</p>
+
+<h2 id="using-the-disabled-binding">Using the disabled binding</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="view"&gt;
+&lt;input type="text" data-bind="value: name, disabled: isNameDisabled" /&gt;
+&lt;button data-bind="click: disableInput"&gt;Disable&lt;/button&gt;
+
+&lt;script&gt;
+var viewModel = kendo.observable({
+    isNameDisabled: false,
+    name: "John Doe",
+    disableInput: function() {
+        this.set("isNameDisabled", false);
+    }
+});
+
+kendo.bind($("#view"), viewModel);
+&lt;/script&gt;
+ &lt;/div&gt;
+</code></pre></div></div>
+
+<p>In this example the input element will be initially enabled because the value of the <code class="language-plaintext highlighter-rouge">isNameDisabled</code> field
+is <code class="language-plaintext highlighter-rouge">false</code>. When the user presses the button the input will be disabled because the value of the <code class="language-plaintext highlighter-rouge">isNameDisabled</code>
+field is set to <code class="language-plaintext highlighter-rouge">false</code>.</p>
+
+<h2 id="non-boolean-values">Non-boolean values</h2>
+
+<p>Non-boolean values such as <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">null</code>, <code class="language-plaintext highlighter-rouge">undefined</code> and <code class="language-plaintext highlighter-rouge">""</code> are treated as <code class="language-plaintext highlighter-rouge">false</code>
+by the <code class="language-plaintext highlighter-rouge">disabled</code> binding. All other values are treated as <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

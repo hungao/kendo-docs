@@ -1,0 +1,580 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of the Kendo UI Gantt widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Quick steps to help you create a Kendo UI Gantt.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/gantt/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="gantt-overview">Gantt Overview</h1>
+
+<p>The Kendo UI Gantt widget displays a set of tasks and dependencies, which are used to visualize project planning data. The widget provides a Treelist section where the tasks can be edited, sorted and reordered in a grid-like fashion, as well as a Timeline section, where the tasks and dependencies are visualized under an adjustable time ruler, and can be resized, moved, edited and removed. It can also display the Timeline in three different views – day, week and month.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The Kendo UI Gantt widget needs two special types of Kendo UI DataSource components – the <a href="/api/framework/ganttdatasource">kendo.data.GanttDataSource</a> for loading tasks, and <a href="/api/framework/ganttdependencydatasource">kendo.data.GanttDependencyDataSource</a> for loading dependencies (although the widget can work when only tasks are loaded as well). The <code class="language-plaintext highlighter-rouge">GanttDataSource</code> contains instances of a custom Kendo UI model – <a href="/api/framework/gantttask">kendo.data.GanttTask</a>, which represents the gantt task data items, and the <code class="language-plaintext highlighter-rouge">GanttDependencyDataSource</code> contains instances of the custom <a href="/api/framework/ganttdependency">kendo.data.GanttDependency</a> model, which represents the gantt dependency data items.</p>
+
+<h2 id="binding-to-local-javascript-array">Binding to local JavaScript array</h2>
+
+<p>The easiest way to bind the gantt is to provide the tasks and dependencies as an array of JavaScript objects. Here is a minimal working example:</p>
+
+<h3 id="example---binding-to-array-of-javascript-objects">Example - binding to array of JavaScript objects</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- HTML element in which the Kendo UI Gantt will initialize --&gt;
+&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+  $("#gantt").kendoGantt({
+    dataSource: [
+      {
+        id: 1,
+        orderId: 0,
+        title: "Task1",
+        start: new Date("2014/6/17 9:00"),
+        end: new Date("2014/6/17 11:00")
+      },
+      {
+        id: 2,
+        orderId: 1,
+        title: "Task2",
+        start: new Date("2014/6/17 12:00"),
+        end: new Date("2014/6/17 13:00")
+      }
+    ],
+    dependencies: [
+      {
+        id: 1,
+        predecessorId: 1,
+        successorId: 2,
+        type: 1
+      }
+    ]
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>This example initializes a gantt widget with two tasks and one dependency between them. You can switch views, edit the tasks, create and delete new tasks and dependencies. Any changes however will be kept in-memory and will be lost when the user refreshes the page. This is why a gantt will most likely be bound to a remote service which will persist the gantt tasks and dependencies.</p>
+
+<h2 id="binding-to-remote-service">Binding to remote service</h2>
+
+<p>In most cases the Kendo UI Gantt widget would be bound to a remote service which will return, create, update or delete gantt tasks and dependencies. The Kendo UI <a href="http://demos.telerik.com/kendo-ui/web/gantt/">online demos</a> use
+a demo remote service which returns sample gantt tasks and dependencies. That service uses <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a> in order to support cross-domain requests.</p>
+
+<blockquote>
+  <p>The demo service uses JSONP in order to be accessible cross-domain. If your own service lives in the same domain as the web site you don"t need to use JSONP - you can use JSON instead. More information
+about cross-domain requests can be found <a href="/howto/use-cors-with-all-modern-browsers">here</a>.</p>
+</blockquote>
+
+<h3 id="example---binding-to-remote-service">Example - binding to remote service</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+  $("#gantt").kendoGantt({
+    dataSource: {
+      batch: true, // Enable batch updates
+      transport: {
+        read: {
+          url: "http://demos.telerik.com/kendo-ui/service/gantttasks",
+          dataType: "jsonp"
+        },
+        update: {
+          url: "http://demos.telerik.com/kendo-ui/service/gantttasks/update",
+          dataType: "jsonp"
+        },
+        create: {
+          url: "http://demos.telerik.com/kendo-ui/service/gantttasks/create",
+          dataType: "jsonp"
+        },
+        destroy: {
+          url: "http://demos.telerik.com/kendo-ui/service/gantttasks/destroy",
+          dataType: "jsonp"
+        },
+        parameterMap: function(options, operation) {
+          if (operation !== "read") {
+            return { models: kendo.stringify(options.models || [options]) };
+          }
+        }
+      },
+      schema: {
+        model: {
+          id: "id", // The "id" of the task is the "ID" field
+          fields: {
+            // Describe the gantt task fields and map them to the fields returned by the remote service
+            id: {
+              from: "ID", // The 'ID' server-side field is mapped to the 'id' client-side field
+              type: "number"
+            },
+            orderId: { from: "OrderID", type: "number", validation: { required: true } },
+            parentId: { from: "ParentID", type: "number", validation: { required: true } },
+            start: { from: "Start", type: "date" },
+            end: { from: "End", type: "date" },
+            title: { from: "Title", defaultValue: "", type: "string" },
+            percentComplete: { from: "PercentComplete", type: "number" },
+            summary: { from: "Summary" },
+            expanded: { from: "Expanded" }
+          }
+        }
+      }
+    },
+    dependencies: {
+      transport: {
+        read: {
+          url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies",
+          dataType: "jsonp"
+        },
+        update: {
+          url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies/Update",
+          dataType: "jsonp"
+        },
+        destroy: {
+          url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies/Destroy",
+          dataType: "jsonp"
+        },
+        create: {
+          url: "http://demos.telerik.com/kendo-ui/service/ganttdependencies/Create",
+          dataType: "jsonp"
+        },
+        parameterMap: function(options, operation) {
+          if (operation !== "read") {
+            return { models: kendo.stringify(options.models || [options]) };
+          }
+        }
+      },
+      schema: {
+        model: {
+          id: "id",
+          fields: {
+            id: { from: "ID", type: "number" },
+            predecessorId: { from: "PredecessorID", type: "number" },
+            successorId: { from: "SuccessorID", type: "number" },
+            type: { from: "Type", type: "number" }
+          }
+        }
+      }
+    }
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>It is important to note how the fields of the scheduler event are configured (in the <code class="language-plaintext highlighter-rouge">schema.model</code> section) and mapped to the fields returned by the remote service using the <code class="language-plaintext highlighter-rouge">from</code> option.</p>
+
+<h2 id="the-fields-of-kendodatagantttask">The fields of kendo.data.GanttTask</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code> object has the following fields:</p>
+
+<ul>
+  <li>end <code class="language-plaintext highlighter-rouge">Date</code> - the date at which the task ends.</li>
+  <li>expanded <code class="language-plaintext highlighter-rouge">Boolean</code> - if the task is expanded or not.</li>
+  <li>id <code class="language-plaintext highlighter-rouge">Number</code> - the unique identifier of the gantt task. Tasks whose <code class="language-plaintext highlighter-rouge">id</code> is not set are considered as "new".</li>
+  <li>orderId <code class="language-plaintext highlighter-rouge">Number</code> - the index of the task.</li>
+  <li>parentId <code class="language-plaintext highlighter-rouge">Number</code> - the unique identifier of the task"s parent task. Tasks whose <code class="language-plaintext highlighter-rouge">parentId</code> is not set or null are considered as "root-level".</li>
+  <li>percentComplete <code class="language-plaintext highlighter-rouge">Number</code> - the percentage of completion of the task.</li>
+  <li>start <code class="language-plaintext highlighter-rouge">Date</code> - the date at which the task  starts.</li>
+  <li>summary <code class="language-plaintext highlighter-rouge">Boolean</code> - if the task is has children or not.</li>
+  <li>title <code class="language-plaintext highlighter-rouge">String</code> - the title of the task.</li>
+</ul>
+
+<p>If your remote service stores and returns the gantt tasks in a different format use the <code class="language-plaintext highlighter-rouge">schema.model.fields</code> and <code class="language-plaintext highlighter-rouge">schema.model.id</code> options of the data source to describe them.
+The "remote service binding" example shown above shows how to map remote service fields to client-side gantt task fields:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    schema: {
+        model: {
+            id: "id", // The "id" of the task is the "id" field. Mandatory.
+            fields: {
+                // Describe the gantt task fields and map them to the fields returned by the remote service
+                id: {
+                    from: "ID", // The 'ID' server-side field is mapped to the 'id' client-side field
+                    type: "number"
+                },
+                title: {
+                    from: "Title", // The 'Title' server-side field is mapped to the 'title' client-side field
+                    type: "string"
+                },
+                start: {
+                    from: "Start", // The 'Start' server-side field is mapped to the 'start' client-side field                        
+                    type: "date",
+                },
+                end: {
+                    from: "End", // The 'End' server-side field is mapped to the 'end' client-side field
+                    type: "date"
+                },
+                orderId: { 
+                    from: "OrderID", // The 'OrderID' server-side field is mapped to the 'orderId' client-side field
+                    type: "number"
+                },
+                parentId: { 
+                    from: "ParentID", // The 'ParentID' server-side field is mapped to the 'parentId' client-side field
+                    type: "number"
+                },
+                percentComplete: { 
+                    from: "PercentComplete", // The 'PercentComplete' server-side field is mapped to the 'percentComplete' client-side field
+                    type: "number"
+                },
+                summary: { 
+                    from: "Summary", // The 'Summary' server-side field is mapped to the 'summary' client-side field
+                    type: "boolean"
+                },
+                expanded: { 
+                    from: "Expanded", // The 'Expanded' server-side field is mapped to the 'expanded' client-side field
+                    type: "boolean"
+                }
+            }
+        }
+    }
+</code></pre></div></div>
+
+<blockquote>
+  <p>All <code class="language-plaintext highlighter-rouge">kendo.data.GanttTask</code> fields must be listed when using <code class="language-plaintext highlighter-rouge">schema.model.fields</code>. The fields which represents the <code class="language-plaintext highlighter-rouge">id</code> of the event must also be set via <code class="language-plaintext highlighter-rouge">schema.model.id</code>.</p>
+</blockquote>
+
+<h2 id="the-fields-of-kendodataganttdependency">The fields of kendo.data.GanttDependency</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">kendo.data.GanttDependency</code> object has the following fields:</p>
+
+<ul>
+  <li>id <code class="language-plaintext highlighter-rouge">Number</code> - the unique identifier of the gantt dependency. Tasks whose <code class="language-plaintext highlighter-rouge">id</code> is not set are considered as "new".</li>
+  <li>predecessorId <code class="language-plaintext highlighter-rouge">Number</code> - the unique identifier of the predecessor task.</li>
+  <li>successorId <code class="language-plaintext highlighter-rouge">Number</code> - the unique identifier of the successor task.</li>
+  <li>type <code class="language-plaintext highlighter-rouge">Number</code> - the type of the dependency.</li>
+</ul>
+
+<p>If your remote service stores and returns the gantt dependencies in a different format use the <code class="language-plaintext highlighter-rouge">schema.model.fields</code> and <code class="language-plaintext highlighter-rouge">schema.model.id</code> options of the data source to describe them.
+The "remote service binding" example shown above shows how to map remote service fields to client-side gantt dependency fields:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    schema: {
+        model: {
+            id: "id", // The "id" of the dependency is the "id" field. Mandatory.
+            fields: {
+                // Describe the gantt task fields and map them to the fields returned by the remote service
+                id: {
+                    from: "ID", // The 'ID' server-side field is mapped to the 'id' client-side field
+                    type: "number"
+                },
+                predecessorId: {
+                    from: "PredecessorId", // The 'PredecessorId' server-side field is mapped to the 'predecessorId' client-side field
+                    type: "string"
+                },
+                successorId: {
+                    from: "SuccessorId", // The 'SuccessorId' server-side field is mapped to the 'successorId' client-side field                        
+                    type: "date",
+                },
+                type: {
+                    from: "Type", // The 'Type' server-side field is mapped to the 'type' client-side field
+                    type: "date"
+                }
+            }
+        }
+    }
+</code></pre></div></div>
+
+<blockquote>
+  <p>All <code class="language-plaintext highlighter-rouge">kendo.data.GanttDependency</code> fields must be listed when using <code class="language-plaintext highlighter-rouge">schema.model.fields</code>. The fields which represents the <code class="language-plaintext highlighter-rouge">id</code> of the event must also be set via <code class="language-plaintext highlighter-rouge">schema.model.id</code>.</p>
+</blockquote>
+
+<h2 id="columns">Columns</h2>
+
+<p>The columns in the treelist section of the Kendo UI Gantt can be idividually configured. The following configuration options are supported:</p>
+
+<ul>
+  <li>field - the field from the task model which will be used to populate the column</li>
+  <li>title - the header text of the column</li>
+  <li>sortable - whether the column can be sorted or not</li>
+  <li>editable - whether the column can be edited or not</li>
+  <li>width - the width of the column</li>
+  <li>format - the format in which the data in the column is represented in.</li>
+</ul>
+
+<p>To configure individual columns use the <a href="/api/web/gantt#configuration-columns">views</a> option:</p>
+
+<h3 id="example---configure-gantt-columns">Example - configure gantt columns</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;      
+$("#gantt").kendoGantt({
+  columns: [
+    { field: "id", title: "ID", sortable: true, editable: false, width: 30 },
+    { field: "title", title: "Title", sortable: true, editable: true, width: 150 },
+    { field: "start", title: "Start Time", sortable: true, editable: true, format: "{0:MM/dd/yyyy HH:mm}", width: 100 },
+    { field: "end", title: "End Time", sortable: true, editable: true, format: "{0:MM/dd/yyyy HH:mm}", width: 100 }
+  ],
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 13:00")
+    }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="views">Views</h2>
+
+<p>Kendo UI Gantt timeline can display its tasks in different "views". The following views are supported:</p>
+
+<ul>
+  <li>day - the timeline is divided into separate days and hours.</li>
+  <li>week - the timeline is divided into weeks and days.</li>
+  <li>month - the timeline is divided into months and weeks.</li>
+</ul>
+
+<p>To enable or disable individual other views or configure them use the <a href="/api/web/gantt#configuration-views">views</a> option:</p>
+
+<h3 id="example---enable-all-scheduler-views">Example - enable all scheduler views</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#gantt").kendoGantt({
+  views: [
+    "day", // a view configuration can be a string (the view type) or an object (the view configuration)
+    { type: "week", selected: true }, // the "week" view will appear as initially selected
+    "month"
+  ],
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    },
+    {
+      id: 2,
+      orderId: 1,
+      title: "Task2",
+      start: new Date("2014/6/17 12:00"),
+      end: new Date("2014/6/17 13:00")
+    }
+  ],
+  dependencies: [
+    {
+      id: 1,
+      predecessorId: 1,
+      successorId: 2,
+      type: 1
+    }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="getting-reference-to-a-kendo-ui-gantt">Getting reference to a Kendo UI Gantt</h2>
+
+<p>To get a reference to a Kendo UI Gantt instance, use the jQuery <code class="language-plaintext highlighter-rouge">data</code> and pass "kendoGantt" as argument:</p>
+
+<h3 id="example---get-reference-to-a-kendo-ui-gantt">Example - get reference to a Kendo UI Gantt</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+// Get reference to the kendo.ui.Gantt instance
+var gantt = $("#gantt").data("kendoGantt");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="using-the-api-of-kendo-ui-gantt">Using the API of Kendo UI Gantt</h2>
+
+<p>The gantt widget exposes a set of <a href="/api/web/gantt#methods">methods</a> and <a href="/api/web/gantt#fields">fields</a> which the developer can use.</p>
+
+<h3 id="example---using-the-api-of-kendo-ui-gantt">Example - using the API of Kendo UI Gantt</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+// Get reference to the kendo.ui.Gantt instance
+var gantt = $("#gantt").data("kendoGantt");
+gantt.view("week"); // Go to week view
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="subscribing-to-the-events-of-kendo-ui-gantt">Subscribing to the events of Kendo UI Gantt</h2>
+
+<p>The gantt widget supports a set of <a href="/api/web/gantt#events">events</a> which the developer can subscribe to. There are two ways to handle events:</p>
+
+<ul>
+  <li>Specify the JavaScript function which will handle the event during widget initialization.</li>
+  <li>Use the <code class="language-plaintext highlighter-rouge">bind</code> method of the widget.</li>
+</ul>
+
+<p>The event handler is the JavaScript function invoked when the event is fired. The argument of the event handler is a JavaScript object which contains event specific data.
+You can get a reference of the widget which fired the event via the <code class="language-plaintext highlighter-rouge">sender</code> field of the event argument.
+The function context of the event handler (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) is set to the instance of the widget which fired the event.</p>
+
+<h3 id="example---subscribe-to-a-gantt-event-during-initialization">Example - subscribe to a gantt event during initialization</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ],
+  navigate: function(e) {
+    console.log("navigate");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="example---subscribe-to-a-gantt-event-using-the-bind-method">Example - subscribe to a gantt event using the bind method</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="gantt"&gt;&lt;/div&gt;
+&lt;script&gt;
+function gantt_navigate(e) {
+	console.log("navigate");
+}
+$("#gantt").kendoGantt({
+  dataSource: [
+    {
+      id: 1,
+      orderId: 0,
+      title: "Task1",
+      start: new Date("2014/6/17 9:00"),
+      end: new Date("2014/6/17 11:00")
+    }
+  ]
+});
+var gantt = $("#gantt").data("kendoGantt");
+gantt.bind("navigate", gantt_navigate);
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

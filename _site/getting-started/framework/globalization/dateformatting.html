@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Date Formatting | Kendo UI Framework Globalization documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how with date formatting you can convert Date object to human readable string, supporting standard and custom date formats.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/globalization/dateformatting.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <p>#Date Formatting</p>
+
+<p>The purpose of date formatting is to convert Date object to a human readable string using culture"s specific settings. <a href="/api/framework/kendo#format">kendo.format</a> and <a href="/api/framework/kendo#tostring">kendo.toString</a> methods support standard and custom date formats:</p>
+
+<h2 id="standard-date-formats">Standard date formats</h2>
+
+<ul>
+  <li>
+    <p><em>d</em> - short date pattern ("M/d/yyyy" for en-US)</p>
+
+    <p><code class="language-plaintext highlighter-rouge">kendo.toString(new Date(2000, 10, 6), "d")</code> -&gt; 11/6/2000</p>
+  </li>
+  <li>
+    <p>"D" - long date pattern (dddd, MMMM dd, yyyy" for en-US)</p>
+
+    <p><code class="language-plaintext highlighter-rouge">kendo.toString(new Date(2000, 10, 6), "D")</code> -&gt; Monday, November 06, 2000</p>
+  </li>
+  <li>
+    <p><em>F</em> - Full date/time pattern ("dddd, MMMM dd, yyyy h:mm:ss tt" for en-US)</p>
+
+    <p>kendo.toString(new Date(2000, 10, 6), "F") -&gt; Monday, November 06, 2000 12:00:00 AM</p>
+  </li>
+  <li>
+    <p><em>g</em> - General date/time pattern (short time) ("M/d/yyyy h:mm tt" for en-US)</p>
+
+    <p><code class="language-plaintext highlighter-rouge">kendo.toString(new Date(2000, 10, 6), "g")</code> -&gt; 11/6/2000 12:00 AM</p>
+  </li>
+  <li>
+    <p><em>G</em> - General date/time pattern (long time) ("M/d/yyyy h:mm:ss tt" for en-US)</p>
+
+    <p><code class="language-plaintext highlighter-rouge">kendo.toString(new Date(2000, 10, 6), "G")</code> -&gt; 11/6/2000 12:00:00 AM</p>
+  </li>
+  <li>
+    <p><em>M/m</em> - Month/day pattern ("MMMM dd" for en-US)</p>
+
+    <p><code class="language-plaintext highlighter-rouge">kendo.toString(new Date(2000, 10, 6), "m")</code> -&gt; November 06</p>
+  </li>
+  <li>
+    <p><em>u</em> - Universal sortable date/time pattern ("yyyy"-"MM"-"dd HH":"mm":"ss"Z"" for en-US)</p>
+
+    <p><code class="language-plaintext highlighter-rouge">kendo.toString(new Date(2000, 10, 6), "u")</code> -&gt; 2000-11-06 00:00:00Z</p>
+  </li>
+  <li>
+    <p><em>Y/y</em> - Year/month pattern ("MMMM, yyyy" for en-US)</p>
+
+    <p><code class="language-plaintext highlighter-rouge">kendo.toString(new Date(2000, 10, 6), "y")</code> -&gt; November, 2000</p>
+  </li>
+</ul>
+
+<h2 id="custom-date-formats">Custom date formats</h2>
+
+<ul>
+  <li>"d" - The day of the month, from 1 through 31</li>
+  <li>"dd" - The day of the month, from 01 through 31.</li>
+  <li>"ddd" - The abbreviated name of the day of the week.</li>
+  <li>"dddd" - The full name of the day of the week.</li>
+  <li>"f" - The tenths of a second in a date and time value.</li>
+  <li>"ff" - The hundredths of a second in a date and time value.</li>
+  <li>"fff" - The milliseconds in a date and time value.</li>
+  <li>"M" - The month, from 1 through 12.</li>
+  <li>"MM" - The month, from 01 through 12.</li>
+  <li>"MMM" - The abbreviated name of the month.</li>
+  <li>"MMMM" - The full name of the month.</li>
+  <li>"h" - The hour, using a 12-hour clock from 1 to 12.</li>
+  <li>"hh" - The hour, using a 12-hour clock from 01 to 12.</li>
+  <li>"H" - The hour, using a 24-hour clock from 1 to 23.</li>
+  <li>"HH" - The hour, using a 24-hour clock from 01 to 23.</li>
+  <li>"m" - The minute, from 0 through 59.</li>
+  <li>"mm" - The minute, from 00 through 59.</li>
+  <li>"s" - The second, from 0 through 59.</li>
+  <li>"ss" - The second, from 00 through 59.</li>
+  <li>"tt" - The AM/PM designator.</li>
+  <li>"yy" - The last two characters from year value.</li>
+  <li>"yyyy" - The year full value.</li>
+</ul>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

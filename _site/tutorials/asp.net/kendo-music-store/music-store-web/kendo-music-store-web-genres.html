@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/kendo-music-store/music-store-web/kendo-music-store-web-genres.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="creating-the-genre-page---kendo-music-store">Creating the Genre Page - Kendo Music Store</h1>
+
+<p>The Genre listing will display all the albums in a selected genre.
+The albums will be limited to 20 per page, and display paging navigation at both the top and bottom.</p>
+
+<h2 id="displaying-items-in-a-listview-with-mvvm-templates-and-binding-to-a-remote-data-source">Displaying items in a ListView (with MVVM, templates, and binding to a remote data source)</h2>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-web/images/kendo-genre-screenshot.png" alt="kendo-genre-screenshot" /></p>
+
+<h3 id="create-the-html">Create the HTML</h3>
+
+<p>This view is contained in <strong>Views/Store/Browse.cshtml</strong>.</p>
+
+<p>We start with a <a href="http://demos.telerik.com/kendo-ui/web/listview/index.html">Kendo ListView</a> widget that will
+become the container for the Albums.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="listview" data-bind="source: albums" data-template="album-template"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<p>The <strong>data-role="listview"</strong> attribute tells Kendo that this element will be turned into a ListView widget.
+The <strong>data-bind="source: albums"</strong> tells the widget which property on the view model contains the data to list.
+The <strong>data-template="album-template"</strong> indicates the name of the template to use for each Album.</p>
+
+<p>Note that we are reusing the same Album template from the <a href="kendo-music-store-home-lists">Main Page</a> list views
+by using the same ASP.NET MVC partial on both pages. This is a great way to keep the Albums looking and
+behaving consistently between the two views.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Html.Partial("_AlbumListTemplatePartial")
+</code></pre></div></div>
+
+<p>Next we will add paging support for the ListView. This is done using the <strong>Pager</strong> widget.
+The Pager widget is a separate widget from the ListView, which provides us the flexibility to put the pager
+controls anywhere on the page. In this case, we are actually going to include two pagers, one above and one
+below the ListView:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="pager" data-bind="source: albums"&gt;&lt;/div&gt;
+&lt;div data-role="listview" data-bind="source: albums" data-template="album-template"&gt;&lt;/div&gt;
+&lt;div data-role="pager" data-bind="source: albums"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Both pagers have the attribute <strong>data-bind="source: albums"</strong> which is the same as the data source for the ListView.
+This means that all 3 of these widgets (both pagers and the list view) are all looking at the same Kendo DataSource.
+This is how the controls stay in sync with each other. The widgets do not communicate with each other to indicate when
+the page changes. Instead, the DataSource uses the MVVM notification system to tell the controls that the page changed.</p>
+
+<h3 id="create-the-viewmodel">Create the ViewModel</h3>
+
+<p>This code is contained in <strong>Scripts/App/store-browse.js</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var viewModel = kendo.observable({
+
+    // Load the albums for this genre from the server
+    albums: new kendo.data.DataSource({
+        ...
+    }),
+	
+	// This will hold our Genre object, once loaded.
+    genre: null,
+
+	// Handler for when an album is clicked.
+    viewAlbumDetails: function (e) {
+        store.viewAlbumDetails(e.data.AlbumId);
+    }
+});
+</code></pre></div></div>
+
+<p>Our viewModel contains 3 major pieces. The <strong>albums</strong> property is a Kendo DataSource that will read the Albums from the server.
+In the code, there is a lot of configuration information passed to the DataSource constructor that sets up
+server-side filtering and paging using OData.</p>
+
+<p>The <strong>viewAlbumDetails</strong> property contains a function that will be bound to the click on each Album.
+This is used to show the album details window.</p>
+
+<p>The <strong>genre</strong> property is a placeholder to hold the Genre object that we are going to load from the server.</p>
+
+<h3 id="load-the-selected-genre">Load the Selected Genre</h3>
+
+<p>When a Genre is selected from the main menu, the Store/Browse view is navigated to, and the selected GenreId
+is passed on the query string with the parameter <strong>?Genre=n</strong> where "n" is the number of the genre.
+This GenreId is retrieved using a JavaScript function located in the "store.js" file, and then used to
+load the record for this GenreId from the server.
+This is done with a standard jQuery AJAX call, instead of using a Kendo DataSource:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Load the Genre data from the server.
+$.ajax({
+    url: store.config.genresUrl + "/" + genreId,
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+        viewModel.set("genre", data);
+    }
+});
+</code></pre></div></div>
+
+<p>On successful response from the server, the <strong>genre</strong> property is set on the viewModel.
+This will cause the view to update and show the genre"s name.
+Note that actually happens asynchronously. The page initially displays an empty &lt;h3&gt; tag
+and when the JavaScript is run the element is bound to the viewModel.genre property.
+If the jQuery AJAX request has not finished, this will still be null. Once the AJAX request finishes
+it calls the <strong>.set()</strong> method on the viewModel to set the genre.
+This in turn notifies the &lt;h3&gt; tag that the genre property has changed, and it updates to get the loaded genre"s name.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

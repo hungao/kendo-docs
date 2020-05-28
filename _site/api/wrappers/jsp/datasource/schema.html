@@ -1,0 +1,397 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/datasource/schema.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatasource-schema">&lt;kendo:dataSource-schema&gt;</h1>
+
+<p>The configuration used to parse the remote service response.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-schema&gt;&lt;/kendo:dataSource-schema&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="aggregates-javalangstring">aggregates <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The field from the response which contains the aggregate results. Can be set to a function which is called to
+return the aggregate results from the response.The result of the function should be a JavaScript object which contains the aggregate results for every fields in the following format:For example if the data source is configured like this:The aggregate results should have the following format:</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema aggregates="aggregates"&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="data-javalangstring">data <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The field from the server response which contains the data items. Can be set to a function which is called to
+return the data items for the response.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema data="data"&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="errors-javalangstring">errors <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The field from the server response which contains server-side errors. Can be set to a function which is called to
+return the errors for response. If there are any errors the error event will be fired.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema errors="errors"&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="groups-javalangstring">groups <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The field from the server response which contains the groups. Can be set to a function which is called to
+return the groups from the response.The result should have the following format:</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema groups="groups"&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="model-javalangobject">model <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The data item (model) configuration.If set to an object the Model.define method will be used to initialize the data source model.If set to an existing kendo.data.Model instance the data source will use that instance and will not initialize a new one.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema model="model"&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="parse-javalangstring">parse <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Executed before the server response is used. Use it to preprocess or parse the server response.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema parse="parse"&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="total-javalangstring">total <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The field from the server response which contains the total number of data items. Can be set to a function which is called to
+return the total number of data items for the response.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema total="total"&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The type of the response. The supported values are "xml" and "json". By default the schema interprets the server response as JSON.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema type="type"&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="aggregates-string">aggregates <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The field from the response which contains the aggregate results. Can be set to a function which is called to
+return the aggregate results from the response.The result of the function should be a JavaScript object which contains the aggregate results for every fields in the following format:For example if the data source is configured like this:The aggregate results should have the following format:</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema aggregates="handle_aggregates"&gt;
+&lt;/kendo:dataSource-schema&gt;
+&lt;script&gt;
+    function handle_aggregates(e) {
+        // Code to handle the aggregates event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="data-string">data <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The field from the server response which contains the data items. Can be set to a function which is called to
+return the data items for the response.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema data="handle_data"&gt;
+&lt;/kendo:dataSource-schema&gt;
+&lt;script&gt;
+    function handle_data(e) {
+        // Code to handle the data event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="errors-string">errors <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The field from the server response which contains server-side errors. Can be set to a function which is called to
+return the errors for response. If there are any errors the error event will be fired.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema errors="handle_errors"&gt;
+&lt;/kendo:dataSource-schema&gt;
+&lt;script&gt;
+    function handle_errors(e) {
+        // Code to handle the errors event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="groups-string">groups <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The field from the server response which contains the groups. Can be set to a function which is called to
+return the groups from the response.The result should have the following format:</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema groups="handle_groups"&gt;
+&lt;/kendo:dataSource-schema&gt;
+&lt;script&gt;
+    function handle_groups(e) {
+        // Code to handle the groups event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="parse-string">parse <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Executed before the server response is used. Use it to preprocess or parse the server response.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema parse="handle_parse"&gt;
+&lt;/kendo:dataSource-schema&gt;
+&lt;script&gt;
+    function handle_parse(e) {
+        // Code to handle the parse event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="total-string">total <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The field from the server response which contains the total number of data items. Can be set to a function which is called to
+return the total number of data items for the response.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema total="handle_total"&gt;
+&lt;/kendo:dataSource-schema&gt;
+&lt;script&gt;
+    function handle_total(e) {
+        // Code to handle the total event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendodatasource-schema-aggregates">kendo:dataSource-schema-aggregates</h3>
+
+<p>The field from the response which contains the aggregate results. Can be set to a function which is called to
+return the aggregate results from the response.The result of the function should be a JavaScript object which contains the aggregate results for every fields in the following format:For example if the data source is configured like this:The aggregate results should have the following format:</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema&gt;
+    &lt;kendo:dataSource-schema-aggregates&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the aggregates event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-schema-aggregates&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-schema-data">kendo:dataSource-schema-data</h3>
+
+<p>The field from the server response which contains the data items. Can be set to a function which is called to
+return the data items for the response.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema&gt;
+    &lt;kendo:dataSource-schema-data&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the data event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-schema-data&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-schema-errors">kendo:dataSource-schema-errors</h3>
+
+<p>The field from the server response which contains server-side errors. Can be set to a function which is called to
+return the errors for response. If there are any errors the error event will be fired.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema&gt;
+    &lt;kendo:dataSource-schema-errors&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the errors event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-schema-errors&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-schema-groups">kendo:dataSource-schema-groups</h3>
+
+<p>The field from the server response which contains the groups. Can be set to a function which is called to
+return the groups from the response.The result should have the following format:</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema&gt;
+    &lt;kendo:dataSource-schema-groups&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the groups event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-schema-groups&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-schema-parse">kendo:dataSource-schema-parse</h3>
+
+<p>Executed before the server response is used. Use it to preprocess or parse the server response.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema&gt;
+    &lt;kendo:dataSource-schema-parse&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the parse event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-schema-parse&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-schema-total">kendo:dataSource-schema-total</h3>
+
+<p>The field from the server response which contains the total number of data items. Can be set to a function which is called to
+return the total number of data items for the response.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-schema&gt;
+    &lt;kendo:dataSource-schema-total&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the total event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-schema-total&gt;
+&lt;/kendo:dataSource-schema&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

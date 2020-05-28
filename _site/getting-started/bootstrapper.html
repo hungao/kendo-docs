@@ -1,0 +1,346 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HTML5, jQuery-based framework | Kendo UI</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Kendo UI framework overview: UI components, rich data vizualization framework, auto-adaptive mobile widgets and all tools for building rich web apps.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/bootstrapper.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="getting-started-with-the-kendo-ui-bootstrapper">Getting Started with the Kendo UI Bootstrapper</h1>
+
+<h2 id="what-is-the-kendo-ui-bootstrapper">What Is The Kendo UI Bootstrapper</h2>
+
+<p>The Kendo UI Bootstrapper is a free and open source tool designed to enhance your development workflow with Kendo UI by taking care of code linting, static analysis, minification, bundling and easy access to documentation.  It is not an IDE.  It is not intended for you to use to edit code.  It exists to augment your current IDE by taking care of many of the more advanced and manual tasks of application development that your IDE may not handle out of the box.</p>
+
+<h3 id="video-overview">Video Overview</h3>
+
+<iframe height="360" src="http://www.youtube.com/embed/MumyCDUYfQk?rel=0" frameborder="0" width="640"></iframe>
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="bootstrapper-prerequisites">Bootstrapper Prerequisites</h3>
+
+<ul>
+  <li><a href="http://nodejs.org/">NodeJS v0.10+</a></li>
+  <li><a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a></li>
+</ul>
+
+<h3 id="download">Download</h3>
+
+<h4 id="github-download">GitHub Download</h4>
+
+<p>The Kendo UI Bootstrapper requires NodeJS and Google Chrome to run.  Once you have installed both of these dependencies, you can <a href="https://github.com/kendo-labs/kendo-bootstrapper/releases">download the latest version of the Bootstrapper from the Github repository</a>.</p>
+
+<h4 id="github-clone">GitHub Clone</h4>
+
+<p>You can also install the Bootstrapper directly from GitHub by cloning the repo to a directory on your computer.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:kendo-labs/kendo-bootstrapper.git
+</code></pre></div></div>
+
+<h3 id="setup">Setup</h3>
+
+<p>The Bootstrapper depends on some NodeJS libraries that you will need to install.  Change to the directory where you unpacked or cloned the Bootstrapper, and install the necessary dependencies using Npm.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd kendo-bootstrapper
+npm install
+</code></pre></div></div>
+
+<p>Depending on your setup, you may have to install the packages as sudo <code class="language-plaintext highlighter-rouge">sudo npm install</code>.</p>
+
+<h3 id="running">Running</h3>
+
+<p>You can start the Bootstrapper from the command line by having node run the <code class="language-plaintext highlighter-rouge">start.js</code> file from the <code class="language-plaintext highlighter-rouge">bin</code> directory.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node bin/start.js
+</code></pre></div></div>
+
+<p>The Kendo UI Bootstrapper should now be up and running.  The first thing that it will want to know is where your Kendo UI source files are.  It"s going to use this distribution to scaffold new projects, as well as know which files to provide to you during a build.  You have to provide this to continue on.</p>
+
+<p><img src="/getting-started/images/bootstrapper1.jpeg" alt="Bootstrapper First Launch" /></p>
+
+<h2 id="creating-a-project">Creating A Project</h2>
+
+<p>As mentioned, the Bootstrapper is not an IDE.  This means that you continue to use your existing IDE and the Bootstrapper augments your workflow.  Let"s take a look at how that works.</p>
+
+<p>Create a new project by clicking on the <code class="language-plaintext highlighter-rouge">+</code> icon in the "Projects" sidebar menu, and call it "GettingStarted".</p>
+
+<p><img src="/getting-started/images/bootstrapper2.jpeg" alt="Create A New Project" /></p>
+
+<p>By default, the Bootstrapper puts all of your projects into a <code class="language-plaintext highlighter-rouge">PROJECTS</code> folder in the root of the Bootstrapper install location.  You also have the option to specify a <a href="http://blogs.telerik.com/kendoui/posts/13-05-08/requirejs-fundamentals">RequireJS</a> project configuration if you want.  For now, leave that box unchecked.</p>
+
+<p>The Bootstrapper will now scaffold you a simple project.  You can see the different project files in the main area of the Bootstrapper.  The files in your project are devided up into two types, <strong>Project Files</strong> and <strong>Library Files</strong>.  The <strong>Project Files</strong> are those which comprise the code that you are writing.  The <strong>Library Files</strong> are those third party libraries that you are using with your project.  Even if you don"t have the library  files included in your HTML pages, the Bootstrapper will detect them and show them here if they exist in your project.</p>
+
+<p><img src="/getting-started/images/bootstrapper3.jpeg" alt="Project Files vs Library Files" /></p>
+
+<p>You can preview the simple application that the Bootstrapper provided you with by clicking on the <code class="language-plaintext highlighter-rouge">Preview</code> button.  This will launch your application in a new Chrome window.</p>
+
+<p><img src="/getting-started/images/bootstrapper4.jpeg" alt="Preview Button" /></p>
+
+<p><img src="/getting-started/images/bootstrapper5.jpeg" alt="Application Preview" /></p>
+
+<p>The Bootstrapper will automatically refresh changes to your app in the preview window, so you"re free to keep it open as you work on your app.</p>
+
+<p>The application is simple and contains just a <a href="http://demos.telerik.com/kendo-ui/web/window/index.html">Kendo UI Window</a> widget as part of the scaffold. It"s time to start editing this application.</p>
+
+<h3 id="editing">Editing</h3>
+
+<p>You can see how the Bootstrapper makes it dead simple to fire up a brand new Kendo UI Application.  It"s not an IDE though, so now is the time to pick your favorite editor, and open the folder where the files are contained.  Sublime Text 2 will be used for demonstration purposes in this post.  You can inspect your project structure in your IDE.  Let"s first look at the <code class="language-plaintext highlighter-rouge">index.html</code> page.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+
+    &lt;title&gt;GettingStarted&lt;/title&gt;
+
+    &lt;!--KENDO_BOOTSTRAPPER:FILES--&gt;
+      &lt;!-- Do not remove this section.  Here the bootstrapper will add code
+        that loads the page assets.  The following &lt;script&gt; is only present
+        in development. --&gt;
+      &lt;script src="http://localhost:7569/@load-assets/GettingStarted/index.html"&gt;&lt;/script&gt;
+    &lt;!--/KENDO_BOOTSTRAPPER:FILES--&gt;
+
+  &lt;/head&gt;
+
+  &lt;body&gt;
+
+    &lt;div style="display: none"&gt;
+      &lt;div id="hello-world-window"&gt;
+        &lt;h2&gt;GettingStarted&lt;/h2&gt;
+        &lt;p&gt;
+          This is a Kendo UI Window widget.
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>You will notice that the Bootstrapper has reserved a section of the page in the <code class="language-plaintext highlighter-rouge">head</code>.  This is where the Bootstrapper is going to dynamically place all your CSS and JavaScript includes.  For now, take note that there is a <code class="language-plaintext highlighter-rouge">div</code> called "hello-world-window".  Open the <code class="language-plaintext highlighter-rouge">app.js</code> file in the <code class="language-plaintext highlighter-rouge">js</code> folder.  Here you will see the code that actually creates, launches the window and handles the callback when the window is dismissed.</p>
+
+<p>Go ahead and remove all the code in the <code class="language-plaintext highlighter-rouge">app.js</code> file.  Also remove everything in the body of the <code class="language-plaintext highlighter-rouge">index.html</code> page.  Now copy in this new bit of markup to <code class="language-plaintext highlighter-rouge">index.html</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="listview"&gt;&lt;/div&gt;
+&lt;script type="text/x-kendo-template" id="template"&gt;
+    &lt;img class="thumbnail" src="#: images.thumbnail.url #" alt=""&gt;
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Open up the <code class="language-plaintext highlighter-rouge">app.js</code> file and replace all the JavaScript with this snippet.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(function() {
+  $("#listview").kendoListView({
+    template: $("#template").html(),
+    datasource: {
+      transport: {
+        read: {
+           url: "https://api.instagram.com/v1/media/popular?client_id=4e0171f9fcfc4015bb6300ed91fbf719&amp;count=25",
+            dataType: "jsonp"
+        }
+      },
+      schema: {
+        data: "data"
+      }
+    }
+  })
+});
+</code></pre></div></div>
+
+<h3 id="automatic-updates">Automatic Updates</h3>
+
+<p>If you go back to your preview window now, you will see that it"s empty.  The preview window will update in realtime as you save files.  There is no need to refresh or go back to the Bootstrapper.  However, the code that you have copied and pasted from the internet is broken.  It"s very subtly broken.  The Bootstrapper includes a few tools to help you figure this out.</p>
+
+<h3 id="bootstrapper-code-tools">Bootstrapper Code Tools</h3>
+
+<p>The Bootstrapper will lint your JavaScript for you using <a href="http://blogs.telerik.com/kendoui/posts/13-07-09/protecting-your-mellow-with-javascript-linters">JSHint</a>.  If you lint the code that you just copied, you will get one error.</p>
+
+<p><img src="/getting-started/images/bootstrapper6.jpeg" alt="JSHint Button" /></p>
+
+<p><img src="/getting-started/images/bootstrapper7.jpeg" alt="JSHint Output" /></p>
+
+<p>Oops.  That"s not a deal breaker, but lets correct it.</p>
+
+<p><img src="/getting-started/images/bootstrapper9.jpeg" alt="Bootstrapper Console Output" /></p>
+
+<p>The Bootstrapper tells you the file and row where the error is.  If you dismiss the window, you will see the error in the console.</p>
+
+<p><img src="/getting-started/images/bootstrapper8.jpeg" alt="Bootstrapper Console Output" /></p>
+
+<p>The preview window is still empty.  There is still a problem with the code, but now it"s not a JavaScript error, it"s a Kendo UI configuration error.  The Bootstrapper also ships with the <a href="https://github.com/kendo-labs/kendo-lint">Kendo Linter</a>.  This tool is much like JSHint, but it is specific to Kendo UI.  It"s job is to inspect and warn you about invalid widget configuration.  From the Bootstrapper, click the Kendo Lint button.</p>
+
+<p><img src="/getting-started/images/bootstrapper10.jpeg" alt="Kendo Linter Button" /></p>
+
+<p><img src="/getting-started/images/bootstrapper11.jpeg" alt="Kendo Linter Output" /></p>
+
+<p>The Kendo Linter is telling us that the option that was specified as <code class="language-plaintext highlighter-rouge">datasource</code> is invalid.  You can now consult the documentation inside of the Bootstrapper to find the ListView.</p>
+
+<p><img src="/getting-started/images/bootstrapper12.jpeg" alt="Filter Documentation Sidebar" /></p>
+
+<p>You can see from the documentation that it should be <code class="language-plaintext highlighter-rouge">dataSource</code>, not <code class="language-plaintext highlighter-rouge">datasource</code>.</p>
+
+<p><img src="/getting-started/images/bootstrapper13.jpeg" alt="dataSource with an uppercase S" /></p>
+
+<p>Make that fix in the code and then return to the preview window.  You should see the most popular pictures from Instagram returned.</p>
+
+<h3 id="realtime-style-updates">Realtime Style Updates</h3>
+
+<p>While the Bootstrapper refreshes the page for JavaScript and HTML changes, it applies CSS changes in realtime without a refresh.  In the <code class="language-plaintext highlighter-rouge">app.less</code> file, remove the body style to make the entire app white.  Once you save, the style is applied.  Also notice that the LESS file is being compiled to CSS automatically for you.  Add in the following style to put an outline around the pictures.  If you put your editor on one side of the screen and the preview window on the other, you will see it update immediately.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.thumbnail {
+  padding: 5px;
+  background-color: #96CEB4;
+  border-radius: 5px;
+  margin: 5px;
+}
+</code></pre></div></div>
+
+<p><img src="/getting-started/images/bootstrapper14.jpeg" alt="Finished Demo App" /></p>
+
+<h2 id="ready-for-production">Ready For Production</h2>
+
+<p>Now the application is ready to be deployed.  The Kendo UI Bootstrapper is well equiped to help you out here.</p>
+
+<h3 id="compile">Compile</h3>
+
+<p>Right now, the Bootstrapper is serving up the LESS file and letting the browser compile it.  We want the Bootstrapper to do that, so hit the Compile button.</p>
+
+<p><img src="/getting-started/images/bootstrapper15.jpeg" alt="Compile LESS And CoffeeScript Files" /></p>
+
+<p>The LESS file is compiled to CSS.  The Bootstrapper is additionally capable of compiling JavaScript files.</p>
+
+<h3 id="build-kendo">Build Kendo</h3>
+
+<p>You may notice that you are currently using the entire <code class="language-plaintext highlighter-rouge">kendo.web.js</code> file.  That file contains all the widgets and it"s quite large.</p>
+
+<p><img src="/getting-started/images/bootstrapper16.jpeg" alt="Kendo UI Web Is Large" /></p>
+
+<p>It"s entirely uncessary to have all of Kendo UI in an application that is only using one widget.  Really you just want the ListView and any other files it depends on.  The problem is that you don"t know what files the ListView depends on, and it"s kind of a pain to go hunt all of them down and copy and paste them in, hoping to get them in the right order.</p>
+
+<p>The Bootstrapper now takes care of all of this for you.  Simply click the Build Kendo button.</p>
+
+<p><img src="/getting-started/images/bootstrapper18.jpeg" alt="Build Kendo" /></p>
+
+<p>The Bootstrapper will now walk your application and automatically determine what files you need.  It creates a custom build for you based on what widgets your application is actually using.  You can optionally include other files in this window as well by checking them.</p>
+
+<p><img src="/getting-started/images/bootstrapper19.jpeg" alt="Bootstrapper Determines Dependencies" /></p>
+
+<p>The resulting build is only 118K, which is roughly 6 times smaller.</p>
+
+<h3 id="bundle">Bundle</h3>
+
+<p>The last step in a build process is usually to bundle all of the JavaScript and CSS up for delivery by Uglifying it, and then concatenating it together in one file.  The Bootstrapper does this with the Bundle button.</p>
+
+<p><img src="/getting-started/images/bootstrapper20.jpeg" alt="Bundling Minifies and Concatenates Files" /></p>
+
+<p>The resulting output is a zip file containing your project, ready for deployment to production.</p>
+
+<h2 id="other-features">Other Features</h2>
+
+<p>The Kendo UI Bootstrapper also has other features like the ability to open your IDE of choice by clicking the edit icon next to a file.  You can simply preview any file by clicking on it.  You can even open the Bootstrapper on an existing project.  The Bootstrapper also has support for RequireJS and RequireJS builds which it will handle for you automatically.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of the Kendo UI PivotGrid widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Quick steps to help you create a Kendo UI PivotGrid.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/pivotgrid/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="pivotgrid-overview">PivotGrid Overview</h1>
+
+<p>The Kendo UI PivotGrid widget represents multidimensional data in a cross-tabular format. It allows the user to perform a complex analysis on the visualized data. The Kendo UI PivotGrid uses the <em>Online Analytical Processing</em> (<a href="http://en.wikipedia.org/wiki/Online_analytical_processing">OLAP</a>) approach to present the result of multidimensional queries in a comprehensive way. It also supports a drill-down functionality that represents the underlying data for calculated cells. The widget uses an instance of <a href="/api/framework/pivotdatasource">kendo.data.PivotDataSource</a> component as a data source. The PivotDataSource component communicates with OLAP <a href="http://en.wikipedia.org/wiki/OLAP_cube">cube</a> instance on HTTP using the <a href="http://en.wikipedia.org/wiki/XML_for_Analysis">XMLA</a> protocol.</p>
+
+<h2 id="prerequisites">Prerequisites:</h2>
+
+<ul>
+  <li><a href="/getting-started/web/pivotgrid/fundamentals">PivotGrid Fundamentals</a></li>
+  <li><a href="/getting-started/web/pivotgrid/olap-cube-setup">Setup an OLAP cube</a> or use our OLAP service (<a href="http://demos.telerik.com/olap/msmdpump.dll">http://demos.telerik.com/olap/msmdpump.dll</a>)</li>
+</ul>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>The following tutorial shows how to configure Kendo UI PivotGrid to the "Adventure Works" cube hosted on <em>http://demos.telerik.com</em></p>
+
+<ol>
+  <li>
+    <p>Define a HTML Div element</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;!-- Define	 the HTML div that will hold the PivotGrid --&gt;
+ &lt;div id="pivotgrid"&gt;
+ &lt;/div&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Configure the Kendo PivotGrid</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;script&gt;
+ 	$(document).ready(function () {
+     	$("#pivotgrid").kendoPivotGrid({
+             height: 200, //define height of the widget
+             dataSource: {
+                 type: "xmla", //define type
+                 columns: [{ name: "[Date].[Calendar]" }], //specify a dimesion on columns
+                 rows: [{ name: "[Product].[Category]" }], //specify a dimesion on rows
+                 measures: ["[Measures].[Internet Sales Amount]"], //specify a measure to display
+                 transport: {
+                     connection: {
+                         catalog: "Adventure Works DW 2008R2", //specify the name of the catalog
+                         cube: "Adventure Works" //specify the name of the cube
+                     },
+                     read: {
+                         url: "http://demos.telerik.com/olap/msmdpump.dll", //define the URL of the service
+                         dataType: "text",
+                         contentType: "text/xml",
+                         type: "POST"
+                     }
+                 },
+                 schema: {
+                     type: "xmla" //specify the type of the schema
+                 },
+             }
+         });
+ 	});
+ 	&lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>This will create the following PivotGrid widget:</p>
+
+<p><img src="/getting-started/images/pivotgrid.png" alt="Kendo UI PivotGrid" /></p>
+
+<h2 id="accessing-an-existing-pivotgrid">Accessing an Existing PivotGrid</h2>
+
+<p>You can reference an existing <strong>PivotGrid</strong> instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/pivotgrid">PivotGrid API</a> to control its behavior.</p>
+
+<h3 id="accessing-an-existing-pivotgrid-instance">Accessing an existing PivotGrid instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var pivotgrid = $("#pivotgrid").data("kendoPivotGrid");
+</code></pre></div></div>
+
+<h2 id="next-steps">Next steps:</h2>
+<ul>
+  <li><a href="/getting-started/web/pivotgrid/configurator">PivotConfigurator Overview</a></li>
+</ul>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

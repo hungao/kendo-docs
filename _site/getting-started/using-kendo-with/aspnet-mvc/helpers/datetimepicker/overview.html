@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DateTimePicker HtmlHelper extension | Kendo UI documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Configure Kendo UI DateTimePicker for ASP.NET MVC widget, add DataTimePicker HtmlHelper extension and handle events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/datetimepicker/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="datetimepicker">DateTimePicker</h1>
+
+<p>The DateTimePicker HtmlHelper extension is a server-side wrapper for the Kendo UI DateTimePicker widget.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Here is how to configure a simple Kendo DateTimePicker:</p>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create a new action method which renders the view:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    return View();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add a datetimepicker:</p>
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().DateTimePicker()
+      .Name("datetimepicker") //The name of the datetimepicker is mandatory. It specifies the "id" attribute of the widget.
+      .Min(new DateTime(2010, 1, 1, 10, 0, 0)) //Set min time of the datetimepicker
+      .Max(new DateTime(2010, 1, 1, 20, 0, 0)) //Set min date of the datetimepicker
+      .Value(DateTime.Now) //Set the value of the datetimepicker
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  (Html.Kendo().DateTimePicker()
+      .Name("datetimepicker") //The name of the datetimepicker is mandatory. It specifies the "id" attribute of the widget.
+      .Min(new DateTime(2010, 1, 1, 10, 0, 0)) //Set min time of the datetimepicker
+      .Max(new DateTime(2010, 1, 1, 20, 0, 0)) //Set min date of the datetimepicker
+      .Value(DateTime.Now) //Set the value of the datetimepicker
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="accessing-an-existing-datetimepicker">Accessing an Existing DateTimePicker</h2>
+
+<p>You can reference an existing DateTimePicker instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the API to control its behavior.</p>
+
+<h3 id="accessing-an-existing-datetimepicker-instance">Accessing an existing DateTimePicker instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//Put this after your Kendo DateTimePicker for ASP.NET MVC declaration
+&lt;script&gt;
+$(function() {
+// Notice that the Name() of the datetimepicker is used to get its client-side instance
+var datetimepicker = $("#datetimepicker").data("kendoDateTimePicker");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-kendo-ui-datetimepicker-events">Handling Kendo UI DateTimePicker events</h2>
+
+<p>You can subscribe to all events exposed by Kendo UI DateTimePicker:</p>
+
+<h3 id="webforms---subscribe-by-handler-name">WebForms - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%: Html.Kendo().DateTimePicker()
+    .Name("datetimepicker")
+    .Events(e =&gt; e
+        .Open("datetimepicker_open")
+        .Close("datetimepicker_close")
+        .Change("datetimepicker_change")
+    )
+%&gt;
+&lt;script&gt;
+function datetimepicker_open() {
+    //Handle the open event
+}
+
+function datetimepicker_close() {
+    //Handle the close event
+}
+
+function datetimepicker_change() {
+    //Handle the change event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-handler-name">Razor - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().DateTimePicker()
+  .Name("datetimepicker")
+  .Events(e =&gt; e
+        .Open("datetimepicker_open")
+        .Close("datetimepicker_close")
+        .Change("datetimepicker_change")
+  )
+)
+&lt;script&gt;
+function datetimepicker_open() {
+    //Handle the open event
+}
+
+function datetimepicker_close() {
+    //Handle the close event
+}
+
+function datetimepicker_change() {
+    //Handle the change event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-template-delegate">Razor - subscribe by template delegate</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().DateTimePicker()
+  .Name("datetimepicker")
+  .Events(e =&gt; e
+      .Open(@&lt;text&gt;
+        function() {
+            //Handle the open event inline
+        }
+      &lt;/text&gt;)
+      .Change(@&lt;text&gt;
+        function() {
+            //Handle the change event inline
+        }
+        &lt;/text&gt;)
+  )
+)
+</code></pre></div></div>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="display-datetimeoffset-value-in-widget">Display <a href="http://msdn.microsoft.com/en-us/library/system.datetimeoffset.aspx">DateTimeOffset</a> value in widget</h3>
+<p>The DateTimePicker widget supports only DateTime structure. You will need to convert DateTimeOffset into DatePicker in order to show date and time correctly.</p>
+
+<h3 id="client-validation-fails-with-invalid-date">Client validation fails with invalid date</h3>
+<p>By default ASP.NET MVC project uses jQuery validate framework, which does not provide support for internationalized dates.
+In other words, every string which <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Date/parse">Date.parse</a> cannot define as valid date will be reported as invalid. As extending open source libraries is beyond of our product,
+you will need to resolve this issue manually - check this <a href="http://www.dotnet-programming.com/post/2011/12/14/Globalization-Validation-and-DateNumber-Formats-in-AspNet-MVC.aspx">link</a> for more information.
+You can also use <a href="http://demos.telerik.com/kendo-ui/web/validator/index.html">Kendo Validator</a>, which supports validating internationalized dates.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

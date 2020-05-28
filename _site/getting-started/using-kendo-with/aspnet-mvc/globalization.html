@@ -1,0 +1,330 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Globalization guide for Telerik UI for ASP.NET MVC</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Globalize, internationalize a Telerik UI for ASP.NET MVC application">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/globalization.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="globalization">Globalization</h1>
+<p>Globalization is the process of designing and developing an application that works in multiple cultures and languages.
+The culture defines specific information for the number formats, week and month names, date and time formats etc.</p>
+
+<p>To make Kendo UI use a different culture than the default (which is "en-US") you should perform the following steps:</p>
+
+<ol>
+  <li>Copy the required culture JavaScript file from the <strong>\js\culture** directory of your Telerik UI for ASP.NET MVC installation
+to the **~/Scripts/cultures/</strong> directory of your application. Let"s use the Spanish (es-ES) culture for the example.</li>
+  <li>Include the corresponding culture JavaScript file <em>after</em> the other Kendo UI JavaScript files.
+    <ul>
+      <li>
+        <p>ASPX</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script src="&lt;%= Url.Content("~/Scripts/jquery.min.js") %&gt;"&gt;&lt;/script&gt;
+  &lt;script src="&lt;%= Url.Content("~/Scripts/kendo.all.min.js") %&gt;"&gt;&lt;/script&gt;
+  &lt;script src="&lt;%= Url.Content("~/Scripts/kendo.aspnetmvc.min.js") %&gt;"&gt;&lt;/script&gt;
+  &lt;script src="&lt;%= Url.Content("~/Scripts/cultures/kendo.culture.es-ES.min.js") %&gt;"&gt;&lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script src="@Url.Content("~/Scripts/jquery.min.js")"&gt;&lt;/script&gt;
+  &lt;script src="@Url.Content("~/Scripts/kendo.all.min.js")"&gt;&lt;/script&gt;
+  &lt;script src="@Url.Content("~/Scripts/kendo.aspnetmvc.min.js")"&gt;&lt;/script&gt;
+  &lt;script src="@Url.Content("~/Scripts/cultures/kendo.culture.es-ES.min.js")"&gt;&lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Set the current culture by calling the <a href="/api/framework/kendo#methods-culture">kendo.culture</a> method. The script block should come <em>after</em> the culture JavaScript file.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;script&gt;
+ kendo.culture("es-ES");
+ &lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>After performing those steps all Kendo UI widgets will use the "es-ES" culture for parsing and formatting dates and numbers.</p>
+
+<h2 id="set-the-current-server-side-culture">Set the current server-side culture</h2>
+
+<p>The previous tutorial showed how to set the client-side Kendo UI culture. To set the server-side culture you need to update the
+<strong>web.config</strong> file of your ASP.NET MVC application:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;system.web&gt;
+    &lt;!-- snip --!&gt;
+    &lt;globalization uiCulture="es-ES" culture="es-ES"&gt;&lt;/globalization&gt;
+    &lt;!-- snip --!&gt;
+&lt;/system.web&gt;
+</code></pre></div></div>
+
+<p>This will set both the <a href="http://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.currentculture.aspx">CurrentCulture</a>
+and <a href="http://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.currentuiculture.aspx">CurrentUICulture</a> to "es-ES".</p>
+
+<h2 id="use-the-same-culture-on-the-server-and-client-side">Use the same culture on the server and client-side</h2>
+
+<p>To make Kendo UI use the same culture as the server-side follow these steps:</p>
+
+<ol>
+  <li>Copy the required culture JavaScript files from the <strong>\js\culture** directory of your Telerik UI for ASP.NET MVC installation
+to the **~/Scripts/cultures/</strong> directory of your application.</li>
+  <li>Get the current culture
+    <ul>
+      <li>
+        <p>ASPX</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%
+      var culture =  System.Globalization.CultureInfo.CurrentCulture.ToString();
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @{
+      var culture =  System.Globalization.CultureInfo.CurrentCulture.ToString();
+  }
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Include the corresponding Kendo UI culture JavaScript file.
+    <ul>
+      <li>
+        <p>ASPX</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script src="&lt;%= Url.Content("~/Scripts/cultures/kendo.culture." + culture + ".min.js") %&gt;"&gt;&lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script src="@Url.Content("~/Scripts/cultures/kendo.culture." + culture + ".min.js")"&gt;&lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Set the current culture by calling the <a href="/api/framework/kendo#methods-culture">kendo.culture</a> method. The script block should come <em>after</em> the culture JavaScript file.
+    <ul>
+      <li>
+        <p>ASPX</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script&gt;
+      kendo.culture("&lt;%= culture %&gt;");
+  &lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script&gt;
+      kendo.culture("@culture");
+  &lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="localized-user-interface">Localized user interface</h2>
+
+<p>If the <code class="language-plaintext highlighter-rouge">CurrentUICulture</code> is set (from code or <strong>web.config</strong>) Telerik UI for ASP.NET MVC will use localized user interface messages.</p>
+
+<p>Telerik UI for ASP.NET MVC comes with localized messages for the following cultures:</p>
+
+<ul>
+  <li>bg-BG - Bulgarian (Bulgaria)</li>
+  <li>da-DK - Danish (Denmark)</li>
+  <li>de-DE - German (Germany)</li>
+  <li>es-ES - Spanish (Spain)</li>
+  <li>en-US - English (US)</li>
+  <li>fr-FR - French (French)</li>
+  <li>nl-NL - Dutch (Netherlands)</li>
+  <li>pl-PL - Polish (Poland)</li>
+  <li>pt-BR - Portuguese (Brazil)</li>
+  <li>pt-PT - Portuguese (Portugal)</li>
+  <li>ro-RO - Romanian (Romania)</li>
+  <li>ru-RU - Russian (Russia)</li>
+  <li>sv-SE - Swedish (Sweden)</li>
+  <li>uk-UA - Ukrainian (Ukraine)</li>
+  <li>zh-CN - Chinese (PRC)</li>
+</ul>
+
+<p>If the <code class="language-plaintext highlighter-rouge">CurrentUICulture</code> is not supported the default "en-US" will be used.</p>
+
+<blockquote>
+  <p>The culture used for the localization messages is determined by the <code class="language-plaintext highlighter-rouge">CurrentUICulture</code> property and <strong>not</strong> by <code class="language-plaintext highlighter-rouge">CurrentCulture</code>.</p>
+</blockquote>
+
+<h2 id="changing-the-localization-messages">Changing the localization messages</h2>
+
+<p>Telerik UI for ASP.NET MVC uses <a href="http://blogs.msdn.com/b/global_developer/archive/2011/07/22/introduction-to-satellite-assemblies.aspx">satellite assemblies</a> to support localization (user interface messages localized for a set of cultures).</p>
+
+<p>To change the provided localization messages a custom version of Kendo.Mvc.dll must be built. This is required because Kendo.Mvc.dll is a strongly named assembly and its private key is not shipped as part of the Telerik UI for ASP.NET MVC distribution.</p>
+
+<ol>
+  <li>Open the <strong>\src\Kendo.Mvc\Kendo.Mvc.csproj</strong> Visual Studio project. The <strong>\src</strong> directory is available only with the commercial version of Telerik UI for ASP.NET MVC.</li>
+  <li>Locate the <strong>Resources</strong> directory in the solution explorer. It contains the resource files for the supported cultures.
+<img src="/getting-started/using-kendo-with/aspnet-mvc/images/resources.png" alt="Resources" /></li>
+  <li>Open the resource file which corresponds to the target culture e.g. "Messages.es-ES.resx".</li>
+  <li>Edit the resource file and save it.</li>
+  <li>Change the solution configuration to "Release".</li>
+  <li>Build the project.</li>
+  <li>Copy <strong>\src\Kendo.Mvc\bin\Release\Kendo.Mvc.dll</strong> and <strong>\src\Kendo.Mvc\bin\Release\es-ES\Kendo.Mvc.resources.dll</strong> to your ASP.NET MVC application.</li>
+  <li>Update the Kendo.Mvc.dll assembly reference to the newly copied one.</li>
+</ol>
+
+<p>Apart from building a custom version of Kendo.Mvc.dll you can specify a new value for the corresponding message in the Kendo UI widget HtmlHelper configuration.</p>
+
+<p>For example to change the default message for the "create" grid toolbar command you can do the following:</p>
+<ul>
+  <li>
+    <p>ASPX</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%:Html.Kendo().Grid&lt;Product&gt;()
+         .Toolbar(toolbar =&gt;
+         {
+             toolbar.Create().Text("Add new product");
+         })
+  %&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Razor</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().Grid&lt;Product&gt;()
+        .Toolbar(toolbar =&gt;
+        {
+          toolbar.Create().Text("Add new product");
+        })
+  )
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="adding-new-localizations">Adding new localizations</h2>
+
+<p>To add a localization for a new language a custom version of Kendo.Mvc.dll must be built. This is required because Kendo.Mvc.dll is a strongly named assembly and its private key is not shipped as part of the Telerik UI for ASP.NET MVC distribution.</p>
+
+<ol>
+  <li>Open the <strong>\src\Kendo.Mvc\Kendo.Mvc.csproj</strong> Visual Studio project. The <strong>\src</strong> directory is available only with the commercial version of Telerik UI for ASP.NET MVC.</li>
+  <li>Locate the <strong>Resources</strong> directory in the solution explorer. It contains the resource files for the supported cultures.
+<img src="/getting-started/using-kendo-with/aspnet-mvc/images/resources.png" alt="Resources" /></li>
+  <li>Copy <strong>Messages.resx</strong> and paste it. Rename the copy to <strong>Messages.culture-code.resx</strong> e.g. <strong>Messages.es-MX.resx</strong>.</li>
+  <li>Open the newly created resource file.</li>
+  <li>Edit the resource file and save it. The <strong>Messagex.resx</strong> file contains the English messages.</li>
+  <li>Change the solution configuration to "Release".</li>
+  <li>Build the project.</li>
+  <li>Copy <strong>\src\Kendo.Mvc\bin\Release\Kendo.Mvc.dll</strong> and <strong>\src\Kendo.Mvc\bin\Release\es-MX\Kendo.Mvc.resources.dll</strong> to your ASP.NET MVC application.</li>
+  <li>Update the Kendo.Mvc.dll assembly reference to the newly copied one.</li>
+</ol>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

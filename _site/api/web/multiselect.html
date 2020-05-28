@@ -1,0 +1,1340 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI MultiSelect</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/multiselect.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouimultiselect">kendo.ui.MultiSelect</h1>
+
+<p>Represents the Kendo UI MultiSelect widget. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="animation-object">animation <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Configures the opening and closing animations of the suggestion popup. Setting the <code class="language-plaintext highlighter-rouge">animation</code> option to <code class="language-plaintext highlighter-rouge">false</code> will disable the opening and closing animations. As a result the suggestion popup will open and close instantly.</p>
+
+<h4 id="example---disable-open-and-close-animations">Example - disable open and close animations</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  animation: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---configure-the-animation">Example - configure the animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  animation: {
+   close: {
+     effects: "fadeOut zoom:out",
+     duration: 300
+   },
+   open: {
+     effects: "fadeIn zoom:in",
+     duration: 300
+   }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationclose-object">animation.close <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<h4 id="example---configure-the-close-animation">Example - configure the close animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  animation: {
+   close: {
+     effects: "zoom:out",
+     duration: 300
+   }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationcloseeffects-string">animation.close.effects <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The effect(s) to use when playing the close animation. Multiple effects should be separated with a space.</p>
+
+<p><a href="/api/framework/fx/common">Complete list of available animations</a></p>
+
+<h3 id="animationcloseduration-number-default-100">animation.close.duration <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 100)</em></h3>
+
+<p>The duration of the close animation in milliseconds.</p>
+
+<h3 id="animationopen-object">animation.open <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The animation played when the suggestion popup is opened.</p>
+
+<h4 id="example---configure-the-open-animation">Example - configure the open animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  animation: {
+   open: {
+     effects: "zoom:in",
+     duration: 300
+   }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationopeneffects-string">animation.open.effects <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The effect(s) to use when playing the open animation. Multiple effects should be separated with a space.</p>
+
+<p><a href="/api/framework/fx/common">Complete list of available animations</a></p>
+
+<h3 id="animationopenduration-number-default-200">animation.open.duration <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 200)</em></h3>
+
+<p>The duration of the open animation in milliseconds.</p>
+
+<h3 id="autobind-booleandefault-true">autoBind <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>Controls whether to bind the widget to the data source on initialization.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+    autoBind: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="autoclose-booleandefault-true">autoClose <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>Controls whether to close the widget suggestion list on item selection.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+    autoClose: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="datasource-objectarraykendodatadatasource">dataSource <code class="language-plaintext highlighter-rouge">Object|Array|kendo.data.DataSource</code></h3>
+
+<p>The data source of the widget which is used to display a list of values. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing <a href="/api/framework/datasource">kendo.data.DataSource</a>
+instance.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dataSource</code> option is set to a JavaScript object or array the widget will initialize a new <a href="/api/framework/datasource">kendo.data.DataSource</a> instance using that value as data source configuration.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dataSource</code> option is an existing <a href="/api/framework/datasource">kendo.data.DataSource</a> instance the widget will use that instance and will <strong>not</strong> initialize a new one.</p>
+
+<h4 id="example---set-datasource-as-a-javascript-object">Example - set dataSource as a JavaScript object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  dataSource: {
+    data: ["One", "Two"]
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-datasource-as-a-javascript-array">Example - set dataSource as a JavaScript array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+var data = ["One", "Two"];
+$("#multiselect").kendoMultiSelect({
+  dataSource: data
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-datasource-as-an-existing-kendodatadatasource-instance">Example - set dataSource as an existing kendo.data.DataSource instance</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp"
+    }
+  }
+});
+$("#multiselect").kendoMultiSelect({
+  dataSource: dataSource,
+  dataTextField: "ProductName",
+  dataValueField: "ProductID"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="datatextfield-stringdefault-">dataTextField <code class="language-plaintext highlighter-rouge">String</code><em>(default: "")</em></h3>
+
+<p>The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.</p>
+
+<blockquote>
+  <p><strong>Important</strong> When <code class="language-plaintext highlighter-rouge">dataTextField</code> is defined, the<code class="language-plaintext highlighter-rouge">dataValueField</code> option also should be set.</p>
+</blockquote>
+
+<h4 id="example---set-the-datatextfield">Example - set the dataTextField</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+    dataSource: [
+        { Name: "Parent1", Id: 1 },
+        { Name: "Parent2", Id: 2 }
+    ],
+    dataTextField: "Name",
+    dataValueField: "Id"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="datavaluefield-stringdefault-">dataValueField <code class="language-plaintext highlighter-rouge">String</code><em>(default: "")</em></h3>
+
+<p>The field of the data item that provides the value of the widget.</p>
+
+<blockquote>
+  <p><strong>Important</strong> When <code class="language-plaintext highlighter-rouge">dataValueField</code> is defined, the<code class="language-plaintext highlighter-rouge">dataTextField</code> option also should be set.</p>
+</blockquote>
+
+<h4 id="example---set-the-datavaluefield">Example - set the dataValueField</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+    dataSource: [{
+        { Name: "Parent1", Id: 1 },
+        { Name: "Parent2", Id: 2 }
+    }]
+    dataTextField: "Name",
+    dataValueField: "Id"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="delay-numberdefault-200">delay <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 200)</em></h3>
+
+<p>Specifies the delay in milliseconds after which the multiselect will start filtering dataSource.</p>
+
+<h4 id="example---set-the-delay">Example - set the delay</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+    delay: 1000 // wait 1 second before clearing the user input
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable-booleandefault-true">enable <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will be disabled and will not allow user input. The widget is enabled by default and allows user input.</p>
+
+<h4 id="example---disable-the-widget">Example - disable the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  enable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filter-stringdefault-startswith">filter <code class="language-plaintext highlighter-rouge">String</code><em>(default: "startswith")</em></h3>
+
+<p>The filtering method used to determine the suggestions for the current value. Filtration is turned of by default.
+The supported filter values are <code class="language-plaintext highlighter-rouge">startswith</code>, <code class="language-plaintext highlighter-rouge">endswith</code> and <code class="language-plaintext highlighter-rouge">contains</code>.</p>
+
+<h4 id="example---set-the-filter">Example - set the filter</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  filter: "contains"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="height-numberdefault-200">height <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 200)</em></h3>
+
+<p>The height of the suggestion popup in pixels. The default value is 200 pixels.</p>
+
+<h4 id="example---set-the-height">Example - set the height</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  height: 500
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="highlightfirst-booleandefault-true">highlightFirst <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the first suggestion will be automatically highlighted.</p>
+
+<h4 id="example---set-highlightfirst">Example - set highlightFirst</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  highlightFirst: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="ignorecase-stringdefault-true">ignoreCase <code class="language-plaintext highlighter-rouge">String</code><em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> case-sensitive search will be performed to find suggestions. The widget performs case-insensitive searching by default.</p>
+
+<h4 id="example---disable-case-insensitive-suggestions">Example - disable case-insensitive suggestions</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  ignoreCase: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="minlength-numberdefault-1">minLength <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 1)</em></h3>
+
+<p>The minimum number of characters the user must type before a search is performed. Set to higher value than <code class="language-plaintext highlighter-rouge">1</code> if the search could match a lot of items.</p>
+
+<h4 id="example---set-minlength">Example - set minLength</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  minLength: 3
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="maxselecteditems-numberdefault-null">maxSelectedItems <code class="language-plaintext highlighter-rouge">Number</code><em>(default: null)</em></h3>
+
+<p>Defines the limit of the selected items. If set to null widget will not limit number of the selected items.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+    &lt;option&gt;Item3&lt;/option&gt;
+    &lt;option&gt;Item4&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+    maxSelectedItems: 3 //only three or less items could be selected
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="placeholder-stringdefault-">placeholder <code class="language-plaintext highlighter-rouge">String</code><em>(default: "")</em></h3>
+
+<p>The hint displayed by the widget when it is empty. Not set by default.</p>
+
+<h4 id="example---specify-placeholder-option">Example - specify placeholder option</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  placeholder: "Select..."
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-placeholder-as-html-attribute">Example - specify placeholder as HTML attribute</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect data-placeholder="Select..." multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="headertemplate-stringfunction">headerTemplate <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>Specifies a static HTML content, which will be rendered as a header of the popup element.</p>
+
+<blockquote>
+  <p><strong>Important</strong> Widget does not pass a model data to the header template. Use this option only with static HTML.</p>
+</blockquote>
+
+<h4 id="example---specify-headertemplate-as-a-string">Example - specify headerTemplate as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  headerTemplate: '&lt;div&gt;&lt;h2&gt;Fruits&lt;/h2&gt;&lt;/div&gt;'
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="itemtemplate-stringfunction">itemTemplate <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The <a href="/api/framework/kendo#methods-template">template</a> used to render the items in the popup list.</p>
+
+<h4 id="example---specify-template-as-a-function">Example - specify template as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script id="itemTemplate" type="text/x-kendo-template"&gt;
+  &lt;span&gt;
+    &lt;img src="/img/#: id #.png" alt="#: name #" /&gt;
+    #: name #
+  &lt;/span&gt;
+&lt;/script&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  itemTemplate: kendo.template($("#itemTemplate").html())
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-template-as-a-string">Example - specify template as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  itemTemplate: '&lt;span&gt;&lt;img src="/img/#: id #.png" alt="#: name #" /&gt;#: name #&lt;/span&gt;'
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="tagtemplate-string">tagTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The <a href="/api/framework/kendo#methods-template">template</a> used to render the tags.</p>
+
+<h4 id="example---specify-template-as-a-function-1">Example - specify template as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script id="tagTemplate" type="text/x-kendo-template"&gt;
+  &lt;span&gt;
+    &lt;img src="/img/#: id #.png" alt="#: name #" /&gt;
+    #: name #
+  &lt;/span&gt;
+&lt;/script&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  tagTemplate: kendo.template($("#tagTemplate").html())
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-template-as-a-string-1">Example - specify template as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  tagTemplate: '&lt;span&gt;&lt;img src="/img/#: id #.png" alt="#: name #" /&gt;#: name #&lt;/span&gt;'
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value-arraydefault-">value <code class="language-plaintext highlighter-rouge">Array</code><em>(default: [])</em></h3>
+
+<p>Define the value of the widget</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+     dataSource: ["Item1", "Item2", "Item3", "Item4"],
+     value: ["Item2", "Item3"]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Important:</strong> Define a list of data items if widget is not initially bound</p>
+</blockquote>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+    autoBind: false,
+    dataTextField: "productName",
+    dataValueField: "productId",
+    value: [{ productName: "Item 1", productId: "1" }, { productName: "Item 2", productId: "2" }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="valueprimitive-booleandefault-false">valuePrimitive <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>Specifies the <a href="/getting-started/framework/mvvm/bindings/value">value binding</a> behavior for the widget. If set to true, the View-Model field will be updated with the selected item value field. If set to false, the View-Model field will be updated with the selected item.</p>
+
+<h4 id="example---specify-that-the-view-model-field-should-be-updated-with-the-selected-item-value">Example - specify that the View-Model field should be updated with the selected item value</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple" data-bind="value: values, source: products"&gt;&lt;/select&gt;
+
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  valuePrimitive: true,
+  dataTextField: "name",
+  dataValueField: "id"
+});
+var viewModel = kendo.observable({
+  selectedProductId: [],
+  products: [
+    { id: 1, name: "Coffee" },
+    { id: 2, name: "Tea" },
+    { id: 3, name: "Juice" }
+  ]
+});
+
+kendo.bind($("#multiselect"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="datasource-kendodatadatasource">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code></h3>
+
+<p>The <a href="/api/framework/datasource">data source</a> of the widget. Configured via the <a href="#configuration-dataSource">dataSource</a> option.</p>
+
+<blockquote>
+  <p>Changes of the data source will be reflected in the widget.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Important:</strong> Assigning a new data source would have no effect. Use the <a href="#methods-setDataSource">setDataSource</a> method instead.</p>
+</blockquote>
+
+<h4 id="example---add-a-data-item-to-the-data-source">Example - add a data item to the data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  dataSource: [
+    { name: "Apples" },
+    { name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "name"
+});
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.dataSource.add({ name: "Appricot" });
+multiselect.search("A");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="input-jquery">input <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+<p>A jQuery object of the visible input element, where the user types.</p>
+
+<h4 id="example---get-input-element">Example - get input element</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+var input = multiselect.input;
+&lt;script&gt;
+</code></pre></div></div>
+
+<h3 id="options-object">options <code class="language-plaintext highlighter-rouge">Object</code></h3>
+<p>An object, which holds the options of the widget.</p>
+
+<h4 id="example---get-options-of-the-widget">Example - get options of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+var options = multiselect.options;
+&lt;script&gt;
+</code></pre></div></div>
+
+<h3 id="list-jquery">list <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+<p>A jQuery object of the drop-down list element.</p>
+
+<h4 id="example---get-list-element">Example - get list element</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+var list = multiselect.list;
+&lt;script&gt;
+</code></pre></div></div>
+
+<h3 id="ul-jquery">ul <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+<p>A jQuery object of the ul element, which holds the available options.</p>
+
+<h4 id="example---get-ul-element">Example - get ul element</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+var ul = multiselect.ul;
+&lt;script&gt;
+</code></pre></div></div>
+
+<h3 id="taglist-jquery">tagList <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+<p>A jQuery object of the ul element, which holds the selected tags.</p>
+
+<h4 id="example---get-taglist-element">Example - get tagList element</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+var tagList = multiselect.tagList;
+&lt;script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="close">close</h3>
+
+<p>Closes the widget popup.</p>
+
+<h4 id="example---close-the-suggestion-popup">Example - close the suggestion popup</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Apples&lt;/option&gt;
+    &lt;option&gt;Oranges&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+// Search for items starting with "A" - will open the suggestion popup and show "Apples"
+multiselect.search("A");
+// Close the suggestion popup
+multiselect.close();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dataitems">dataItems</h3>
+
+<p>Returns list of raw data records corresponding to the selected items.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> The raw data records. Returns empty array ([]) if no selected options</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+// get data items for the selected options.
+var dataItem = multiselect.dataItems();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+<p>Prepares the <strong>MultiSelect</strong> for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the MultiSelect element from DOM.</p>
+</blockquote>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.destroy();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable">enable</h3>
+
+<p>Enables or disables the widget.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="enable-boolean">enable <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the widget will be enabled. If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will be disabled.</p>
+
+<h4 id="example---enable-the-widget">Example - enable the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  enable: false
+});
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.enable(true);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="readonly">readonly</h3>
+
+<p>Toggles the readonly state of the widget. When the widget is readonly it doesn"t allow user input.</p>
+
+<blockquote>
+  <p>There is a difference between disabled and readonly mode. The value of a disabled widget is <strong>not</strong> posted as part of a <code class="language-plaintext highlighter-rouge">form</code> whereas the value of a readonly widget is posted.</p>
+</blockquote>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="readonly-boolean">readonly <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the widget will not allow user input. If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will allow user input.</p>
+
+<h4 id="example---make-the-widget-readonly">Example - make the widget readonly</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.readonly(true);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="focus">focus</h3>
+
+<p>Focuses the widget.</p>
+
+<h4 id="example---focus-the-widget">Example - focus the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.focus();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open">open</h3>
+
+<p>Opens the popup.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.focus();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="refresh">refresh</h3>
+
+<p>Refresh the popup by rendering all items again.</p>
+
+<h4 id="example---refresh-the-popup-items">Example - refresh the popup items</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+multiselect.refresh();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="search">search</h3>
+
+<p>Searches the data source for the provided value and displays any matches as suggestions.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="word-string">word <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The filter value.</p>
+
+<h4 id="example---search-the-widget">Example - search the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+multiselect.search("Item1");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="setdatasource">setDataSource</h3>
+
+<p>Sets the dataSource of an existing DropDownList and rebinds it.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="datasource-kendodatadatasource-1">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code></h5>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  dataSource: [ "Apples", "Oranges" ]
+});
+var dataSource = new kendo.data.DataSource({
+  data: [ "Bananas", "Cherries" ]
+});
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.setDataSource(dataSource);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toggle">toggle</h3>
+
+<p>Opens or closes the widget popup.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="toggle-boolean">toggle <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Defines the whether to open/close the drop-down list.</p>
+
+<h4 id="example---set-text-of-the-widget">Example - set text of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+multiselect.toggle();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value">value</h3>
+
+<p>Gets or sets the value of the multiselect. Accepts <i>string</i> value or <i>Array of strings</i>.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> If no items, value method will pre-fetch the data before continue with the value setting.</p>
+</blockquote>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-arraystring">value <code class="language-plaintext highlighter-rouge">Array|String</code></h5>
+
+<p>The value to set.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> The value of the multiselect.</p>
+
+<h4 id="example---set-value">Example - set value</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option value="1"&gt;Item1&lt;/option&gt;
+    &lt;option value="2"&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+// get the value of the multiselect.
+var value = multiselect.value();
+
+// set the value of the multiselect.
+multiselect.value(["1", "2"]); //select items which have value respectively "1" and "2"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>If initial items are lost in attempt to set new values, probably the widget is filtered by the end user, but no value has been selected. You will need to remove applied filter, before calling value method</p>
+</blockquote>
+
+<h4 id="example---remove-applied-filter-before-set-the-value">Example - remove applied filter before set the value</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option value="1"&gt;Item1&lt;/option&gt;
+    &lt;option value="2"&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect();
+
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+
+//clear filter
+multiselect.dataSource.filter({});
+
+//set value
+multiselect.value(["1", "2"]);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="change">change</h3>
+
+<p>Fired when the value of the widget is changed by the user.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The event is not fired when the value of the widget is changed from code.</p>
+</blockquote>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="esender-kendouimultiselect">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.MultiSelect</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-change-event-during-initialization">Example - subscribe to the "change" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  change: function(e) {
+    var value = this.value();
+    // Use the value of the widget
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-change-event-after-initialization">Example - subscribe to the "change" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+function multiselect_change(e) {
+  var value = this.value();
+  // Use the value of the widget
+}
+$("#multiselect").kendoMultiSelect();
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.bind("change", multiselect_change);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="close-1">close</h3>
+
+<p>Fired when the popup of the widget is closed.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="esender-kendouimultiselect-1">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.MultiSelect</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-close-event-during-initialization">Example - subscribe to the "close" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  close: function(e) {
+    // handle the event
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-close-event-after-initialization">Example - subscribe to the "close" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+function multiselect_close(e) {
+  // handle the event
+}
+$("#multiselect").kendoMultiSelect();
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.bind("close", multiselect_close);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound">dataBound</h3>
+
+<p>Fired when the widget is bound to data from its data source.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="esender-kendouimultiselect-2">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.MultiSelect</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-databound-event-during-initialization">Example - subscribe to the "dataBound" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  dataBound: function(e) {
+      // handle the event
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-databound-event-after-initialization">Example - subscribe to the "dataBound" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+function multiselect_dataBound(e) {
+  // handle the event
+}
+$("#multiselect").kendoMultiSelect();
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.bind("dataBound", multiselect_dataBound);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open-1">open</h3>
+
+<p>Fired when the popup of the widget is opened by the user.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="esender-kendouimultiselect-3">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.MultiSelect</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-open-event-during-initialization">Example - subscribe to the "open" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  open: function(e) {
+    // handle the event
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-open-event-after-initialization">Example - subscribe to the "open" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+function multiselect_open(e) {
+  // handle the event
+}
+$("#multiselect").kendoMultiSelect();
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.bind("open", multiselect_open);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+
+<p>Fired when an item from the popup is selected by the user.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The event is not fired when an item is selected programmatically.</p>
+</blockquote>
+
+<h4 id="event-data-4">Event Data</h4>
+
+<h5 id="eitem-jquery">e.item <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The jQuery object which represents the selected item.</p>
+
+<h5 id="esender-kendouimultiselect-4">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.MultiSelect</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-select-event-during-initialization">Example - subscribe to the "select" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#multiselect").kendoMultiSelect({
+  select: function(e) {
+    var item = e.item;
+    var text = item.text();
+    // Use the selected item or its text
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-select-event-after-initialization">Example - subscribe to the "select" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="multiselect" multiple="multiple"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+function multiselect_select(e) {
+  var item = e.item;
+  var text = item.text();
+  // Use the selected item or its text
+}
+$("#multiselect").kendoMultiSelect();
+var multiselect = $("#multiselect").data("kendoMultiSelect");
+multiselect.bind("select", multiselect_select);
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

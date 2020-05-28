@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Kendo UI Declarative Initialization | Kendo UI Docs</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to use Kendo UI Declarative Initialization both with and without the MVVM framework.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li class="active">How Do I?</li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/howto.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("howto/declarative_initialization.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="how-to-use-kendo-ui-declarative-initialization">How To Use Kendo UI Declarative Initialization</h1>
+
+<p>In this how-to, we"ll look at how to use Kendo UI Declarative Initialization both with and without the MVVM framework.</p>
+
+<p>Since the introduction of <a href="http://dev.w3.org/html5/spec/#custom">Custom Data Attributes</a> in the HTML5 spec,
+developers have discovered a whole new world of possibilities.  When you
+combine the ability to store arbitrary information in an HTML element with the
+power of JavaScript, you get some very interesting alternative development
+experiences.</p>
+
+<p>One of the places where it has become very popular in the JavaScript community
+at large, is providing information to the underlying JavaScript framework
+(such as MVVM) which allows the executing code to mutate the HTML element;
+thusly doing things such as binding it to data, transforming it into a custom
+UI control or getting configuration values off of it that can’t be stored in
+the standard provided HTML attributes.</p>
+
+<p>Kendo UI uses this syntax heavily.  In order to be able to use the full power
+of Kendo UI, you really need to know what you can bind with data attributes,
+when to use it so it benefits you most and how to use it in concert with Kendo
+UI as a whole.  In order to provide some clarity around this, it really needs
+to be discussed in two separate contexts.</p>
+
+<p><a href="#using-the-data-bind-syntax-with-mvvm">1. Using the data-bind syntax with MVVM</a></p>
+
+<p><a href="#declarative-initialization">2. Using data- syntax with declarative widget initialization/configuration</a></p>
+
+<h2 id="using-the-data-bind-syntax-with-mvvm">Using the data bind syntax with MVVM</h2>
+
+<p>Lets look at the **data-bind **specific syntax first as it is essential to the
+Kendo UI MVVM implementation as well as Knockout. MVVM will not be covered conceptually in this tutorial, but you can go through this article here to get a full explanation on what it is and how to use it.</p>
+
+<p>Assume that we have a simple select list and we want to bind it to the view
+model.  We declare the HTML and the view model.</p>
+
+<iframe src="http://jsfiddle.net/YtYrC/14/embedded/js,html,result" frameborder="0" style="width: 100%; height: 300px;" allowfullscreen="allowfullscreen"></iframe>
+
+<p>This is very basic, but we are using the <strong>data-bind **to bind the source of
+the select to the view model **things</strong> array.  Also note that you can bind to
+a function as well as I’m doing with <strong>data-bind=”text: thingSelection” **on
+the **h2</strong>.</p>
+
+<p>But the question now becomes, what else can I bind and how do I do it?</p>
+
+<p>This is well documented in our <a href="/getting-started/framework/mvvm/overview">Getting Started</a> section of the documentation.
+On the <em>mvvm</em> section, you will find a high level explanation of how to
+bind with the Kendo UI MVVM framework.  Under the <a href="/getting-started/framework/mvvm/bindings/attr">Bindings</a> sub-topic, you
+will find a complete list of what you can bind to.  For reference, I have
+included that list here as well.</p>
+
+<ul>
+  <li>
+    <p><a href="/getting-started/framework/mvvm/bindings/attr">Attr</a></p>
+  </li>
+  <li>
+    <p><a href="/getting-started/framework/mvvm/bindings/checked">Checked</a></p>
+  </li>
+  <li>
+    <p><a href="/getting-started/framework/mvvm/bindings/click">Click</a></p>
+  </li>
+  <li>
+    <p><a href="/getting-started/framework/mvvm/bindings/disabled">Disabled</a></p>
+  </li>
+  <li>
+    <p><a href="/getting-started/framework/mvvm/bindings/enabled">Enabled</a></p>
+  </li>
+  <li>
+    <p><a href="/getting-started/framework/mvvm/bindings/events">Events</a></p>
+  </li>
+  <li>
+    <p><a href="/getting-started/framework/mvvm/bindings/html">Html</a></p>
+  </li>
+  <li>
+    <p><a href="/getting-started/framework/mvvm/bindings/source">Source</a></p>
+  </li>
+  <li>
+    <p><a href="/getting-started/framework/mvvm/bindings/style">Style</a></p>
+  </li>
+  <li>
+    <p><a href="/getting-started/framework/mvvm/bindings/text">Text</a></p>
+  </li>
+  <li>
+    <p><a href="/getting-started/framework/mvvm/bindings/value">Value</a></p>
+  </li>
+</ul>
+
+<p>We have provided samples with each of these binding declarations to help you
+understand how and when you can use them.</p>
+
+<p>For instance, lets look at styling the drop down a bit using the data-bind
+syntax with style.  I can set the drop down width as well as setting its
+margins by using data-bind and the above referenced style.</p>
+
+<p>data-bind="style: { width: thingsWidth, fontSize: thingsFontSize}"</p>
+
+<iframe src="http://jsfiddle.net/YtYrC/15/embedded/js,html,result" frameborder="0" style="width: 100%; height: 300px;" allowfullscreen="allowfullscreen"></iframe>
+
+<p>The width and font-size are now bound to view model properties and the select
+element will be styled appropriately based on the values in the view model.
+The **h2 **also has its color bound to the view model.  When those properties
+change, so will the style on the select element.  Feel free to try it for
+yourself in the above fiddle.</p>
+
+<p>Whenever you are referencing a css property that has a dash, you eliminate the
+dash and use lower camel case notation (i.e. fontSize instead of font-size) as
+is documented <a href="/getting-started/framework/mvvm/bindings/style#using-style-attributes-which-contain-a-dash">here</a>.</p>
+
+<h2 id="declarative-initialization">Declarative Initialization</h2>
+
+<p>The other way of using <strong>data</strong> attributes with Kendo UI is something that we
+call Declarative Initialization.  This is the concept of initializing widgets
+and configuring those widgets with data attributes instead of having to select
+each element that we want to turn into a widget and configure it with
+JavaScript.</p>
+
+<p>Let’s take a look at the above example using Declarative Initialization to
+turn the select into a Kendo UI DropDown List.  We do this by setting the
+<strong>data-role</strong> attribute to <strong>dropdownlist.</strong>  Normally this would be done by
+calling **kendoDropDownList **on the element.  Thanks to declarative binding,
+we don’t have to do that anymore.</p>
+
+<iframe src="http://jsfiddle.net/YtYrC/16/embedded/js,html,result" frameborder="0" style="width: 100%; height: 300px;" allowfullscreen="allowfullscreen"></iframe>
+
+<p>Notice that we lost our previous styling.  This is because the ordinary select
+is now a Kendo UI DropDown which has it’s own styling.  Everything else keeps
+right on working exactly they way you would expect.</p>
+
+<p>Now we could have several drop downs on a page and we only need to configure
+them with declarative data attributes instead of having to select each and
+every one with jQuery and call the **kendoDropDownList **method on them.</p>
+
+<blockquote>
+  <p>It has always been our goal to not force things on you.  Declarative
+Bindings are powerful, but you don’t need to buy into the MVVM pattern to use
+them.</p>
+</blockquote>
+
+<p>Let’s rework the above example and get rid of the view model, but this time
+we’ll bind it to a DataSource and let declarative initialization do all the
+work for us.</p>
+
+<iframe src="http://jsfiddle.net/YtYrC/22/embedded/js,html,result" frameborder="0" style="width: 100%; height: 300px;" allowfullscreen="allowfullscreen"></iframe>
+
+<p>The <strong>kendo.init **call will initialize whatever piece of the UI is passed in
+as a reference. Notice that I am only calling **init</strong> on the **main **div.
+For maximum performance, specify the container for Kendo UI to initialize so
+it doesn’t have to walk the entire document to find the relevant widgets.</p>
+
+<p>You can see that I have supplied configuration attributes for the drop down
+list such as <strong>data-source **which binds the drop down to the Kendo UI
+DataSource.  Also, I have specified configuration attributes like **data-text-
+field</strong> and <strong>data-value-field</strong>.  You can specify any configuration value
+with declarative initialization, and it will work.  Attributes like
+<strong>dataTextField</strong> become <strong>data-text-field</strong>.  Bindings are specified as lower
+case separated by dashes.</p>
+
+<p>Events can be bound as well. Above, I bind to the <strong>change</strong> event.  When the
+event is called, <strong>this **will be the object that fired the event.  In this
+case, that’s our drop down list.  I can then get its **text</strong> value and update
+the <strong>h2</strong> tag.</p>
+
+<h2 id="important-things-to-know">IMPORTANT THINGS TO KNOW</h2>
+
+<ol>
+  <li>Bindings are not JavaScript.  Do not try and do this…</li>
+</ol>
+
+<p>data-bind="value: if ($(“#div”).html() === “somevalue”)…</p>
+
+<p>That won’t work.  You should be doing that in your view model.  If you aren’t
+using a view model and you have a good use case for sticking JavaScript into
+your markup, consider using a <a href="http://demos.telerik.com/kendo-ui/web/templates/index.html">Kendo UI Template</a> instead.</p>
+
+<ol>
+  <li>
+    <p>Kendo UI is not the only framework that uses data attributes for binding.
+In fact, its pretty common.  If you find yourself in a situation where you
+need to mitigate collisions with Kendo UI and some other JS library, you can
+provide a namespace for Kendo UI and then reference that namespace instead.</p>
+
+    <p>kendo.ns="kendo-";</p>
+
+    <p>// then
+ data-bind="value: someValue"</p>
+
+    <p>// becomes
+ data-kendo-bind="value: someValue"</p>
+  </li>
+</ol>
+
+<h2 id="dont-do-guesswork">Don’t Do Guesswork!</h2>
+
+<p>It’s easy when you start using these bindings to try and guess what you can
+and can’t do.  Instead, refer to the docs for the MVVM framework bindings
+<a href="/getting-started/framework/mvvm/overview">here</a>, and the standard widget declarative bindings <a href="/getting-started/framework/mvvm/bindings/attr">here</a>.  When
+doing initialization of widgets using configuration attributes in the
+declarative bindings, simply look up the configuration values so you know what
+you can and can’t use to configure the widget.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,1147 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DataSource Configuration of Kendo UI Grid for ASP.NET MVC | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Kendo UI DataSource documentation guides you how to configure DataSource to use Ajax binding, add grid columns.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/grid/configuration.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="grid-configuration-settings">Grid Configuration Settings</h1>
+
+<p>This help topic explains the various configuration options exposed via the Kendo UI Grid fluent API.</p>
+
+<p>All code examples assume the following model:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class Product
+{
+    public int ProductID { get; set; }
+    public string ProductName { get; set; }
+    public int UnitsInStock { get; set; }
+    public int UnitsOnOrder { get; set; }
+    public double UnitPrice { get; set; }
+}
+</code></pre></div></div>
+
+<p>The Kendo UI Grid fluent API is exposed via the <a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridBuilder">Kendo.Mvc.UI.Fluent.GridBuilder</a> class.
+You don"t need to instantiate that class though. You need to use the <code class="language-plaintext highlighter-rouge">Grid</code> HtmlHelper extension method instead:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;().Name("grid"))
+</code></pre></div></div>
+
+<h2 id="common-datasource-settings">Common DataSource Settings</h2>
+
+<p>The <a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridBuilder#methods-DataSource(System.Action&lt;Kendo.Mvc.UI.Fluent.DataSourceBuilder&lt;T&gt;&gt;)">DataSource</a>
+method of Kendo UI Grid for ASP.NET MVC configures the <a href="/api/web/grid#configuration-dataSource">data source</a>.</p>
+
+<h3 id="aggregates">Aggregates</h3>
+
+<p>Sets the aggregates.</p>
+
+<h4 id="example---set-the-aggregates">Example - set the aggregates</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or .Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+        .Aggregates(aggregates =&gt;
+        {
+            aggregates.Add(product =&gt; product.UnitsInStock).Min().Max().Count();
+            aggregates.Add(product =&gt; product.UnitsOnOrder).Average();
+            aggregates.Add(product =&gt; product.ProductName).Count();
+            aggregates.Add(product =&gt; product.UnitPrice).Sum();
+        })
+    )
+)
+</code></pre></div></div>
+
+<h3 id="create">Create</h3>
+
+<p>Sets the action method which is responsible for saving new data items.</p>
+
+<h4 id="example---set-the-create-action">Example - set the create action</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .ToolBar(toolbar =&gt; toolbar.Create())
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or .Server()
+        .Model(model =&gt; model.Id(product =&gt; product.ProductID))
+        .Create(create =&gt; create.Action(/* action */"Products_Create", /* controller */ "Home"))
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h3 id="destroy">Destroy</h3>
+
+<p>Sets the action method which is responsible for destroying data items.</p>
+
+<h4 id="example---set-the-destroy-action">Example - set the destroy action</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(columns =&gt;
+    {
+        columns.Bound(product =&gt; product.ProductName);
+        columns.Command(command =&gt; command.Destroy());
+    })
+    .Editable(editable =&gt; editable.Mode(GridEditMode.InLine))
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or .Server()
+        .Model(model =&gt; model.Id(product =&gt; product.ProductID))
+        .Destroy(destroy =&gt; destroy.Action(/* action */"Products_Destroy", /* controller */ "Home"))
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h3 id="events">Events</h3>
+
+<p>Specifies the event handlers for the data source <a href="/api/framework/datasource#events">events</a>.</p>
+
+<h4 id="example---handle-data-source-events">Example - handle data source events</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+        .Events(events =&gt; events
+            // Subscribe to the "change" event.
+            .Change("dataSource_change")
+            // Subscribe to the "error" event.
+            .Error("dataSource_error")
+            // Subscribe to the "requestStart" event.
+            .RequestStart("dataSource_requestStart")
+        )
+    )
+)
+&lt;script&gt;
+function dataSource_change(e) {
+    // handle the "change" event
+}
+function dataSource_error(e) {
+    // handle the "error" event
+}
+function dataSource_requestStart(e) {
+    // handle the "requestStart" event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filter">Filter</h3>
+
+<p>Sets the initial filter of the data source.</p>
+
+<h4 id="example---set-the-filter">Example - set the filter</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+        .Filter(filters =&gt;
+        {
+            // Show products whose ProductName property contains "C"
+            filters.Add(product =&gt; product.ProductName).Contains("C");
+            // and UnitsInStock is greater than 10
+            filters.Add(product =&gt; product.UnitsInStock).IsGreaterThan(10);
+        })
+    )
+)
+</code></pre></div></div>
+
+<h3 id="group">Group</h3>
+
+<p>Sets the initial grouping configuration of the data source.</p>
+
+<h4 id="example---set-the-grouping-configuration">Example - set the grouping configuration</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+        .Group(groups =&gt;
+        {
+            groups.Add(product =&gt; product.UnitPrice);
+            groups.Add(product =&gt; product.ProductName);
+        })
+    )
+)
+</code></pre></div></div>
+
+<h3 id="model">Model</h3>
+
+<p>Configures the model of the data source.</p>
+
+<h4 id="example---configure-the-model">Example - configure the model</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+        .Model(model =&gt;
+        {
+            //The unique identifier (primary key) of the model is the ProductID property
+            model.Id(product =&gt; product.ProductID);
+
+            // Declare a model field and optionally specify its default value (used when a new model instance is created)
+            model.Field(product =&gt; product.ProductName).DefaultValue("N/A");
+
+            // Declare a model field and make it readonly
+            model.Field(product =&gt; product.UnitPrice).Editable(false);
+        })
+    )
+)
+</code></pre></div></div>
+
+<h3 id="pagesize">PageSize</h3>
+
+<p>Set the page size used during paging. The default page size is 10.</p>
+
+<h4 id="example---set-the-page-size">Example - set the page size</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or .Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+        .PageSize(20)
+    )
+)
+</code></pre></div></div>
+
+<h3 id="read">Read</h3>
+
+<p>Sets the action method which is responsible for reading data items and returning them as JSON.</p>
+
+<h4 id="example---set-the-read-action">Example - set the read action</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or .Server()
+        .Read(read =&gt; read.Action(/* action */"Products_Read", /* controller */"Home"))
+    )
+)
+</code></pre></div></div>
+
+<h3 id="sort">Sort</h3>
+
+<p>Sets the initial sorting.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or .Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+        .Sort(sort =&gt;
+        {
+            // Sort by UnitsInStock in descending order
+            sort.Add(product =&gt; product.UnitsInStock).Descending();
+            // then by ProductName in ascending order
+            sort.Add(product =&gt; product.ProductName);
+        })
+    )
+)
+</code></pre></div></div>
+
+<h3 id="update">Update</h3>
+
+<p>Sets the action method which is responsible for saving updated data items</p>
+
+<h4 id="example---set-the-update-action">Example - set the update action</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(columns =&gt;
+    {
+        columns.Bound(product =&gt; product.ProductName);
+        columns.Command(command =&gt; command.Edit());
+    })
+    .Editable(editable =&gt; editable.Mode(GridEditMode.InLine))
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or .Server()
+        .Model(model =&gt; model.Id(product =&gt; product.ProductID))
+        .Update(update =&gt; update.Action(/* action */"Products_Update", /* controller */ "Home"))
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h2 id="ajax-datasource-settings">Ajax DataSource Settings</h2>
+
+<h3 id="batch">Batch</h3>
+
+<p>Enable or disable batch create, update and destroy operations. By default batch operations are disabled.</p>
+
+<h4 id="example---enable-batch-mode">Example - enable batch mode</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(columns =&gt;
+    {
+        columns.Bound(product =&gt; product.ProductName);
+        columns.Command(command =&gt; command.Edit());
+    })
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or .Server()
+        .Batch(true)
+        .Model(model =&gt; model.Id(product =&gt; product.ProductID))
+        .Update(update =&gt; update.Action(/* action */"Products_Update", /* controller */ "Home"))
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h2 id="column-configuration">Column Configuration</h2>
+
+<p>The <a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridBuilder#methods-Columns(System.Action&lt;Kendo.Mvc.UI.Fluent.GridColumnFactory&lt;T&gt;&gt;)">Columns</a> method configures the grid columns. If not used the grid will create a column for every public property of the model.</p>
+
+<h3 id="example---configure-the-grid-columns-webforms">Example - configure the grid columns (WebForms)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Grid&lt;Product&gt;()
+   .Name("grid")
+   .Columns(columns =&gt;
+   {
+       // Define a column which will display the value of the ProductID property
+       columns.Bound(product =&gt; product.ProductID);
+
+       // Define a column and set a column setting
+       columns.Bound(product =&gt; product.ProductName).Title("Product Name");
+
+       // Define a template column - it needs a server side code block &lt;% %&gt;
+       columns.Template(product =&gt;
+       {
+            %&gt;
+                &lt;%: Html.ActionLink("Edit", "Home", new { id = p.ProductID }) %&gt;
+            &lt;%
+       });
+
+       // Define a command column with a "Destroy" button
+
+       columns.Command(commands =&gt;
+       {
+            commands.Destroy();
+       });
+   })
+   // The Render method is used because of the server side code blocks
+   .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="example---configure-the-grid-columns-razor">Example - configure the grid columns (Razor)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@( Html.Kendo().Grid&lt;Product&gt;()
+   .Name("grid")
+   .Columns(columns =&gt;
+   {
+       // Define a column which will display the value of the ProductID property
+       columns.Bound(product =&gt; product.ProductID);
+
+       // Define a column and set a column setting
+       columns.Bound(product =&gt; product.ProductName).Title("Product Name");
+
+       // Define a template column - it needs a templated razor delegate
+       columns.Template(@&lt;text&gt;
+            @Html.ActionLink("Edit", "Home", new { id = item.ProductID })
+       &lt;/text&gt;);
+
+       // Define a command column with a "Destroy" button
+
+       columns.Command(commands =&gt;
+       {
+            commands.Destroy();
+       });
+   })
+)
+</code></pre></div></div>
+
+<h2 id="bound-column-settings">Bound Column Settings</h2>
+
+<p>A bound column is declared via the <code class="language-plaintext highlighter-rouge">Bound</code> method. It has the following settings:</p>
+
+<h3 id="clienttemplate">ClientTemplate</h3>
+
+<p>A <a href="/getting-started/framework/templates/overview">Kendo template</a> which specifies the way the column is displayed.</p>
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">ClientTemplate</code> is used when he grid is configured for <a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/ajax-binding">ajax binding</a>.</p>
+</blockquote>
+
+<h4 id="example---set-the-column-client-template">Example - set the column client template</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(
+    {
+        columns.Bound(product =&gt; product.ProductName).ClientTemplate("&lt;strong&gt;#: ProductName #&lt;/strong&gt;");
+    })
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h3 id="encoded">Encoded</h3>
+<p>Enables or disables the HTML encoding of the bound property value. By default is set to <code class="language-plaintext highlighter-rouge">true</code> which means that
+column values are encoded.</p>
+
+<h4 id="example---prevent-html-encoding">Example - prevent html encoding</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(
+    {
+        // Stop encoding the value of the bound field
+        columns.Bound(product =&gt; product.ProductName).Encoded(false);
+    })
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h3 id="filterable">Filterable</h3>
+
+<p>Enables or disables the filtering UI. By default set to <code class="language-plaintext highlighter-rouge">true</code> which means that bound grid columns can be filtered using
+the filtering UI.</p>
+
+<h4 id="example---disable-filtering">Example - disable filtering</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(
+    {
+        columns.Bound(product =&gt; product.ProductID).Filterable(false);
+        columns.Bound(product =&gt; product.ProductName);
+    })
+    .Filterable()
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h3 id="format">Format</h3>
+
+<p>Specifies the format used when displaying the value of the bound property. Empty by default.</p>
+
+<h4 id="example---specify-the-column-format-string">Example - specify the column format string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(
+    {
+        // Format the value as currency
+        columns.Bound(product =&gt; product.UnitPrice).Format("{0:C}");
+    })
+    .Filterable()
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<p>The supported formats are described in the <a href="/getting-started/framework/globalization/overview">globalization</a>
+help topic.</p>
+
+<h3 id="groupable">Groupable</h3>
+<p>Enables or disables dragging the column header to group by its bound property. By default set to <code class="language-plaintext highlighter-rouge">true</code> which means that bound
+grid columns can be dragged for grouping.</p>
+
+<h4 id="example---disable-grouping">Example - disable grouping</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(
+    {
+        columns.Bound(product =&gt; product.ProductID).Groupable(false);
+        columns.Bound(product =&gt; product.ProductName);
+    })
+    .Groupable()
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h3 id="sortable">Sortable</h3>
+
+<p>Enables or disables sorting by that column.</p>
+
+<h4 id="example---disable-sorting">Example - disable sorting</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(
+    {
+        columns.Bound(product =&gt; product.ProductID).Sortable(false);
+        columns.Bound(product =&gt; product.ProductName);
+    })
+    .Groupable()
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h3 id="template">Template</h3>
+<p>Sets the server template which will be used when displaying the bound field.</p>
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">Template</code> is used when he grid is configured for <a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/ajax-binding">server binding</a>.</p>
+</blockquote>
+
+<p>In WebForms the template is a <a href="http://msdn.microsoft.com/en-us/library/ms178135%28vs.80%29.aspx">server side code block</a>.
+In Razor the template is a <a href="http://haacked.com/archive/2011/02/27/templated-razor-delegates.aspx">templated razor delegate</a>.</p>
+
+<h4 id="example---set-the-column-template-webforms">Example - set the column template (WebForms)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Columns(columns =&gt;
+    {
+        // Template is a server side code block &lt;% %&gt;
+        columns.Bound(product =&gt; product.ProductID).Template(product =&gt;
+        {
+            %&gt;
+                &lt;strong&gt;&lt;%: p.ProductID %&gt;&lt;/strong&gt;
+            &lt;%
+        });
+    })
+    // The Render method is used because of the server side code blocks
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-the-column-template-razor">Example - set the column template (Razor)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Columns(columns =&gt;
+    {
+         // Template is a templated razor delegate - the argument of the delegate is called "item"
+         columns.Bound(product =&gt; product.ProductID).Template(@&lt;text&gt;
+             &lt;strong&gt;@item.ProductID&lt;/strong&gt;
+         &lt;/text&gt;);
+    })
+ )
+</code></pre></div></div>
+
+<h3 id="title">Title</h3>
+
+<p>Sets the text displayed in the header of the column. By default the property name is used.</p>
+
+<h4 id="example---set-the-column-title">Example - set the column title</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(
+    {
+        columns.Bound(product =&gt; product.ProductName).Title("Product Name");
+    })
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h3 id="width">Width</h3>
+
+<p>Sets the width of the column in pixels or other units. By default the width is not set and the column would try to accomodate its content.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(
+    {
+        // Set the column width in pixels
+        columns.Bound(product =&gt; product.ProductID).Width(200);
+        // Set the column width in em
+        columns.Bound(product =&gt; product.ProductName).Width("10em");
+    })
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h2 id="template-column-settings">Template Column Settings</h2>
+
+<p>A template column is declared via the <code class="language-plaintext highlighter-rouge">Template</code> method. It has the following settings:</p>
+
+<h3 id="clienttemplate-1">ClientTemplate</h3>
+
+<p>A <a href="/getting-started/framework/templates/overview">Kendo template</a> which specifies the way the column is displayed.</p>
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">ClientTemplate</code> is used when he grid is configured for <a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/ajax-binding">ajax binding</a>.</p>
+</blockquote>
+
+<h4 id="example---set-the-template-column-client-template">Example - set the template column client template</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(
+    {
+        columns.Template(@&lt;text&gt;
+                    &lt;strong&gt;@item.ProductName&lt;/strong&gt;
+                &lt;/text&gt;)
+               .ClientTemplate("&lt;strong&gt;#: ProductName #&lt;/strong&gt;");
+    })
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h3 id="title-1">Title</h3>
+
+<p>Sets the text displayed in the header of the column. Empty by default.</p>
+
+<h4 id="example---set-the-template-column-title">Example - set the template column title</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(
+    {
+        columns.Template(@&lt;text&gt;
+                    &lt;strong&gt;@item.ProductName&lt;/strong&gt;
+                &lt;/text&gt;)
+               .Title("Product Name")
+               .ClientTemplate("&lt;strong&gt;#: ProductName #&lt;/strong&gt;");
+    })
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+) ###   Width Sets the width of the column in pixels or other units. By default the width is not set and the column would try to accomodate its content.
+</code></pre></div></div>
+
+<h4 id="example---set-the-template-column-width">Example - set the template column width</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;Product&gt;()
+    .Name("grid")
+    .Columns(
+    {
+        columns.Template(@&lt;text&gt;
+                    &lt;strong&gt;@item.ProductName&lt;/strong&gt;
+                &lt;/text&gt;)
+               .Width(200)
+               .ClientTemplate("&lt;strong&gt;#: ProductName #&lt;/strong&gt;");
+    })
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+)
+</code></pre></div></div>
+
+<h2 id="paging">Paging</h2>
+
+<p>To configure paging use the <code class="language-plaintext highlighter-rouge">Pageable</code> method.</p>
+
+<h3 id="enable-paging">Enable paging</h3>
+
+<p>To enable paging with default settings call the <code class="language-plaintext highlighter-rouge">Paegable</code> method without arguments.</p>
+
+<h4 id="example---enable-paging-webforms">Example - enable paging (WebForms)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%: Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable() // Enable paging
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+%&gt;
+</code></pre></div></div>
+
+<h4 id="example---enable-paging-razor">Example - enable paging (Razor)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable() // Enable paging
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h3 id="buttoncount">ButtonCount</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">ButtonCount</code> method specifies how many numeric buttons should be displayed in the pager. By default 10 buttons are shown.</p>
+
+<h4 id="example---specify-custom-button-count">Example - specify custom button count</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager.ButtonCount(15))
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h3 id="enabled">Enabled</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Enabled</code> method enables or disables paging. Use when paging should be enabled based on a condition:</p>
+
+<h4 id="example---conditionally-enable-paging">Example - conditionally enable paging</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager.Enabled((bool)ViewData["EnablePager"]))
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h3 id="info">Info</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Info</code> method specifies whether to show additional paging info. By default the pager will display the total number of
+items in the grid and the first and last item number e.g. "1-50 of 50 items".
+If the grid is empty the pager would show "No items to display". Paging info is displayed by default.</p>
+
+<h4 id="example---hide-the-paging-info">Example - hide the paging info</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager.Info(false))
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h3 id="input">Input</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Input</code> method specifies whether to show a textbox for typing in a page number. By default such a textbox is not shown.</p>
+
+<h4 id="example---show-a-textbox-for-the-page-number">Example - show a textbox for the page number</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager.Input(true))
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h3 id="messages">Messages</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Messages</code> method configures all messages displayed by the pager. Use this setting to override the default messages or localize the pager.
+The available messages are:</p>
+
+<h4 id="display">Display</h4>
+
+<p>The pager info messge. By default set to <code class="language-plaintext highlighter-rouge">"{0} - {1} of {2} items"</code>. The placeholders represent the first item in the page, the last item in the page and the total number of items in the grid.</p>
+
+<h5 id="example---set-the-display-message">Example - set the display message</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .Messages(messages =&gt; messages.Display("Showing items from {0} to {1}. Total items: {2}"))
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h4 id="empty">Empty</h4>
+
+<p>The pager info message displayed when there are no items in the grid. By default set to <code class="language-plaintext highlighter-rouge">"No items to display"</code>.</p>
+
+<h5 id="example---set-the-empty-message">Example - set the empty message</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .Messages(messages =&gt; messages.Empty("No data"))
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h4 id="first">First</h4>
+
+<p>The tooltip displayed when the user hovers the "first" button of the pager. Clicking that button navigates to the first page.
+By default set to <code class="language-plaintext highlighter-rouge">"Go to the first page"</code>.</p>
+
+<h5 id="example---set-the-first-message">Example - set the first message</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .Messages(messages =&gt; messages.First("First page"))
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h4 id="itemsperpage">ItemsPerPage</h4>
+
+<p>The label displayed when page sizes dropdown is displayed. By default set to <code class="language-plaintext highlighter-rouge">"items per page</code>".</p>
+
+<h5 id="example---set-the-items-per-page-message">Example - set the items per page message</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .PageSizes(true)
+        .Messages(messages =&gt; messages.ItemsPerPage("items are currently displayed"))
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h4 id="last">Last</h4>
+
+<p>The tooltip displayed when the user hovers the "last" button of the pager. Clicking that button navigates to the last page.
+By default set to <code class="language-plaintext highlighter-rouge">"Go to the last page"</code>.</p>
+
+<h5 id="example---set-the-last-message">Example - set the last message</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .Messages(messages =&gt; messages.Last("Last page"))
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h4 id="next">Next</h4>
+
+<p>The tooltip displayed when the user hovers the "next" button of the pager. Clicking that button navigates to the next page.
+By default set to <code class="language-plaintext highlighter-rouge">"Go to the next page"</code>.</p>
+
+<h5 id="example---set-the-next-message">Example - set the next message</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .Messages(messages =&gt; messages.Next("Next page"))
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h4 id="of">Of</h4>
+
+<p>The label displayed after the page textbox. By default set to <code class="language-plaintext highlighter-rouge">"of {0}"</code>. The placeholder will contain the total number of pages.</p>
+
+<h5 id="example---set-the-of-message">Example - set the "of" message</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .Input(true)
+        .Messages(messages =&gt; messages.Of("of {0} pages"))
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h4 id="page">Page</h4>
+
+<p>The label displayed before the page textbox. By default set to <code class="language-plaintext highlighter-rouge">"Page"</code>.</p>
+
+<h5 id="example---set-the-page-message">Example - set the "page" message</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .Input(true)
+        .Messages(messages =&gt; messages.Page("Current page:"))
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h4 id="previous">Previous</h4>
+
+<p>The tooltip displayed when the user hovers the "previous" button of the pager. Clicking that button navigates to the previous page.
+By default set to <code class="language-plaintext highlighter-rouge">"Go to the previous page"</code>.</p>
+
+<h5 id="example---set-the-previous-message">Example - set the "previous" message</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .Messages(messages =&gt; messages.Previous("Previous page"))
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h4 id="refresh">Refresh</h4>
+
+<p>The tooltip displayed when the user hovers the "refresh" button of the pager. Clicking that button refreshes the current page.
+By default set to <code class="language-plaintext highlighter-rouge">"Refresh"</code>.</p>
+
+<h5 id="example---set-the-refresh-message">Example - set the "refresh" message</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .Refresh(true)
+        .Messages(messages =&gt; messages.Refresh("Click to refresh"))
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h3 id="numeric">Numeric</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Numeric</code> method enables or disables the numeric pager. When enabled the pager will display
+numeric pager buttons. Numeric paging is enabled by default.</p>
+
+<h4 id="example---disable-the-numeric-pager">Example - disable the numeric pager</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .Numeric(false)
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h3 id="pagesizes">PageSizes</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">PageSizes</code> method enables or disables the page size dropdown. When enabled the pager displays a dropdown which allows the user to
+change the page size to a predefined value. The page size dropdown is disabled by default.</p>
+
+<h4 id="example---enable-page-size-dropdown">Example - enable page size dropdown</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .PageSizes(true) // Default page sizes are 5, 10 and 20
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h4 id="example---enable-page-size-dropdown-with-custom-page-sizes">Example - enable page size dropdown with custom page sizes</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .PageSizes(new [] { 10, 20, 30 }) // Default page sizes are 5, 10 and 20
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h3 id="previousnext">PreviousNext</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">PreviousNext</code> method enables or disables the previous/next/first/last pager buttons. Those buttons navigate to the corresponding page when clicked.
+Enabled by default.</p>
+
+<h4 id="example---disable-previous-and-next-pager-buttons">Example - disable previous and next pager buttons</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .PreviousNext(false)
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h3 id="refresh-1">Refresh</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Refresh</code> method enables or disables the refresh pager button. Clicking that button will reload the current page. Disabled by default.</p>
+
+<h4 id="example---show-the-refresh-button">Example - show the refresh button</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Pageable(pager =&gt; pager
+        .Refresh(true)
+    )
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax() // or Server()
+        .Read(read =&gt; read.Action("Products_Read", "Home"))
+    )
+ )
+</code></pre></div></div>
+
+<h2 id="scrolling">Scrolling</h2>
+
+<p>By default, the Kendo UI MVC Grid is not scrollable. If scrolling is enabled, the widget will apply a default height of 200px to its data area.
+That can be changed or removed by setting an optional height style in the Grid"s <code class="language-plaintext highlighter-rouge">Scrollable</code> settings:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Scrollable(s =&gt; s.Height(400)) // set 400px height style
+ )
+ 
+ // or
+ 
+@(Html.Kendo().Grid(Model)
+    .Name("grid")
+    .Scrollable(s =&gt; s.Height("auto")) // remove default height
+ )
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

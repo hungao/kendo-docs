@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/saleshub/home-page/kendo-saleshub-filtering-orders-server-side.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="filtering-orders-server-side---saleshub">Filtering Orders Server-Side - SalesHub</h1>
+
+<p><img src="/tutorials/asp.net/saleshub/home-page/images/kendo-saleshub-customer-treeview-and-grid-screenshot.png" alt="kendo-saleshub-customer-TreeView-and-grid-screenshot" /></p>
+
+<p>Since <strong>SalesHub</strong> contains a lot of orders for various customers, it would not be very efficient for <strong>all</strong>
+of the orders to be returned when the orders grid renders. To reduce wait times and cut back on the amount of bandwidth
+that is used when retrieving orders from the server, the <a href="http://demos.telerik.com/kendo-ui/web/datasource/index.html">Kendo DataSource</a>
+that the orders grid uses has been configured to do server-side operations.</p>
+
+<h2 id="configure-grid-for-server-side-operations">Configure Grid for Server-Side Operations</h2>
+
+<p>The first step for supporting server-side filtering in the orders grid is to enable <code class="language-plaintext highlighter-rouge">ServerOperation</code> on the DataSource declaration
+for the grid.</p>
+
+<p>Here"s an excerpt from the declaration of the orders grid (which can be found in <strong>Views/Home/Index.cshtml</strong>) that shows how
+the DataSource is configured:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.DataSource(dataSource =&gt; dataSource
+    .Ajax()
+    .Read(builder =&gt; builder.Url("/api/CustomerOrders/GetOrdersForCustomer/").Type(HttpVerbs.Get))
+    .Model(model =&gt; model.Id("OrderId"))
+    .ServerOperation(true)
+    .PageSize(20)
+</code></pre></div></div>
+
+<p>The part we care about in this DataSource configuration is the <code class="language-plaintext highlighter-rouge">ServerOperation(true)</code> function call. Passing <code class="language-plaintext highlighter-rouge">true</code> to this
+function causes the resulting client-side Kendo DataSource to include any <a href="/api/framework/datasource#methods-filter">filters</a>
+that are being applied to it in the request that it sends to the server. In passing along any filters that need to be
+applied, the DataSource will also pass up any paging information (if it has been configured for it) to the server in its
+request.</p>
+
+<p>The full declaration for orders grid can be found in <strong>Views/Home/Index.cshtml</strong>.</p>
+
+<h2 id="supporting-server-side-operations">Supporting Server-Side Operations</h2>
+
+<p>To make supporting server-side filtering easier the Kendo UI MVC extensions expose a few classes and functions which do all
+of the hard work for you. The extensions provide <strong>DataSourceRequest</strong>, <strong>DataSourceResponse</strong>, and <strong>ToDataSourceResult</strong>
+to help with server-side filtering. Let"s look at code in the <strong>Api/CustomerOrdersController.cs</strong> to see how these help us.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>using System.Linq;
+using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+using SalesHub.Client.ViewModels.Api;
+using SalesHub.Core.Models;
+using SalesHub.Core.Repositories;
+
+namespace SalesHub.Client.Api
+{
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+    public class CustomerOrdersController : Controller
+    {
+        private readonly IOrderRepository _orderRepository;
+
+        public CustomerOrdersController(IOrderRepository orderRepository)
+        {
+            _orderRepository = orderRepository;
+        }
+
+        public JsonResult GetOrdersForCustomer([DataSourceRequest] DataSourceRequest request)
+        {
+            IQueryable&lt;Order&gt; orders = _orderRepository.GetAllOrders();
+
+            DataSourceResult response = orders.ToDataSourceResult(request, o =&gt; new CustomerOrderViewModel
+            {
+                IsActive = o.IsActive,
+                OrderDate = o.OrderDate,
+                OrderId = o.OrderId,
+                OrderNumber = o.OrderNumber,
+                Value = o.ContractAmount,
+                Weight = o.ContractWeight
+            });
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+    }
+}
+</code></pre></div></div>
+
+<p>As you can see, the implementation for the CustomerOrdersController isn"t very big and this is because the Kendo UI MVC extensions
+greatly reduce the amount of code you have to write to support filtering. Let"s step through this code and see what everything does.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+</code></pre></div></div>
+
+<p>These are the important <code class="language-plaintext highlighter-rouge">using</code> statements in our Controller implementation. They include the namespaces which contain the DataSource
+request helpers that we"ll be using later.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+</code></pre></div></div>
+
+<p>This isn"t Kendo UI related, but this attribute is useful when trying to prevent some browsers (ex. IE) from caching AJAX calls to our service.
+We want this on our controller because the underlying data could change at any time, and we don"t want old data to be displayed to users.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public JsonResult GetOrdersForCustomer([DataSourceRequest] DataSourceRequest request)
+</code></pre></div></div>
+
+<p>In this code snippet we declare an MVC Action for our CustomerOrdersController. Since it"s a data service, the return value
+of the function is a <code class="language-plaintext highlighter-rouge">JsonResult</code>. As we"ll be receiving filtering data from the client-side DataSource we need to take
+a <strong>DataSourceRequest</strong> object as a parameter. The <code class="language-plaintext highlighter-rouge">[DataSourceRequest]</code> attribute, which is applied to the parameter, is used
+by the MVC framework when it binds data from the request to parameters that the Action takes.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IQueryable&lt;Order&gt; orders = _orderRepository.GetAllOrders();
+
+DataSourceResult response = orders.ToDataSourceResult(request, o =&gt; new CustomerOrderViewModel
+{
+    IsActive = o.IsActive,
+    OrderDate = o.OrderDate,
+    OrderId = o.OrderId,
+    OrderNumber = o.OrderNumber,
+    Value = o.ContractAmount,
+    Weight = o.ContractWeight
+});
+return Json(response, JsonRequestBehavior.AllowGet);
+</code></pre></div></div>
+
+<p>In the body of the function we get all of the Orders from the database in the form of a Queryable. We then call an extension method, <code class="language-plaintext highlighter-rouge">ToDataSourceResult</code>,
+on the Queryable of orders. This extension method is one that"s provided by the Kendo UI MVC extenions and does all the hardwork of filtering our
+Queryable of orders based on the DataSourceRequest that we got from DataSource.</p>
+
+<p><strong>ToDataSourceResult</strong> also provides an overload that allows you to specify a selector function. This selector function is the same as what you would
+pass to the standard <code class="language-plaintext highlighter-rouge">Select</code> LINQ function. In our case we convert each Order to a CustomerOrderViewModel before we return it to the client.</p>
+
+<p>The <strong>DataSourceResult</strong> that we get from calling <code class="language-plaintext highlighter-rouge">ToDataSourceResult</code> has the filtered list of Orders, which we can now return to the client by
+calling the <code class="language-plaintext highlighter-rouge">Json</code> function and passing in the response.</p>
+
+<h2 id="filtering-orders-by-customer">Filtering Orders by Customer</h2>
+
+<p>Since we only want to display orders for the currently selected Customer in the TreeView we had to write some custom JavaScript to handle this.
+The JavaScript we wrote simply listens to the <code class="language-plaintext highlighter-rouge">select</code> event of the Customer TreeView and updates the filters on the DataSource that the orders
+grid is using.</p>
+
+<p>The following code snippets can be found in <strong>Scripts/home.js</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var updateGridCustomerFilter = function (customerId) {
+    var ordersGrid = $("#ordersGrid").data("kendoGrid");
+    ordersGrid.dataSource.filter({ field: "CustomerId", operator: "eq", value: customerId });
+};
+
+window.SalesHub.CustomerTreeView_Select = function (e) {
+    var node = $(e.node);
+    var dataItem = e.sender.dataItem(e.node);
+
+    if (!dataItem.hasChildren) {
+        updateGridCustomerFilter(node.data("customer-id"));
+    }
+};
+</code></pre></div></div>
+
+<p>If you remember how we <a href="kendo-saleshub-customer-TreeView">setup the Customer TreeView</a> we specified a <code class="language-plaintext highlighter-rouge">select</code> event handler for it. This
+is where we declare that event handler (<code class="language-plaintext highlighter-rouge">window.SalesHub.CustomerTreeView_Select</code>).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.SalesHub.CustomerTreeView_Select = function (e) {
+    var node = $(e.node);
+    var dataItem = e.sender.dataItem(e.node);
+
+    if (!dataItem.hasChildren) {
+        updateGridCustomerFilter(node.data("customer-id"));
+    }
+};
+</code></pre></div></div>
+
+<p>The event handler has one parameter <code class="language-plaintext highlighter-rouge">e</code>. This is the event object that we get from the Kendo
+TreeView when a new node is selected in it; it contains information about which node was
+selected.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var node = $(e.node);
+var dataItem = e.sender.dataItem(e.node);
+</code></pre></div></div>
+
+<p>The first part of our event handler interacts with the <code class="language-plaintext highlighter-rouge">node</code> property on the event object.
+The <code class="language-plaintext highlighter-rouge">node</code> property is the element the DOM that was selected. So the first thing we do is convert
+the DOM object into a jQuery object and the next thing we do is get the corresponding <code class="language-plaintext highlighter-rouge">dataItem</code> for that node.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">dataItem</code> we get from the Kendo TreeView is an object that the Kendo TreeView uses to describe each node in the tree.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (!dataItem.hasChildren) {
+    updateGridCustomerFilter(node.data("customer-id"));
+}
+</code></pre></div></div>
+
+<p>After we"ve gotten the dataItem and jQuery object for node we need to see if
+the node that was selected was a actually a Customer (we don"t care about the grouping or
+selling company nodes). To do this we check if the dataItem has any children; if it doesn"t,
+that means a Customer was selected.</p>
+
+<p>We then call the <code class="language-plaintext highlighter-rouge">updateGridCustomerFilter</code> function, this takes a customerId as a parameter.
+Since we added a the <strong>data-customer-id</strong> attribute to all of the Customer nodes when we
+generated the TreeView server-side, we just retrieve that value from the jQuery object
+by calling the <code class="language-plaintext highlighter-rouge">data</code> function on it.</p>
+
+<p>Let"s talk about the function which is in charge of updating the filters on the grid:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var updateGridCustomerFilter = function (customerId) {
+    var ordersGrid = $("#ordersGrid").data("kendoGrid");
+    ordersGrid.dataSource.filter({ field: "CustomerId", operator: "eq", value: customerId });
+};
+</code></pre></div></div>
+
+<p>First we have to find the orders grid element on the page using a jQuery selector that finds it
+by id. Once we"ve gotten the grid on the page, we need to get the <code class="language-plaintext highlighter-rouge">kendoGrid</code> object that is
+associated with it.</p>
+
+<p>Once we have the <code class="language-plaintext highlighter-rouge">kendoGrid</code> object we can access the DataSource for it through the <code class="language-plaintext highlighter-rouge">dataSource</code>
+property. Using the DataSource we call the <code class="language-plaintext highlighter-rouge">filter</code> function on it and pass in a new filter object
+to it.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ field: "CustomerId", operator: "eq", value: customerId }
+</code></pre></div></div>
+
+<p>The filter that we add to the DataSource says that we want the DataSource to only have items
+which have a <code class="language-plaintext highlighter-rouge">CustomerId</code> equal to the customerId that we got as a parameter to the function.
+Adding this filter causes the DataSource to send a request to the server asking for only Orders
+that belong to the specified Customer.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

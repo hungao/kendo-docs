@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/jsp/tags/upload/modes.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="upload-modes">Upload Modes</h1>
+
+<p>The Upload supports two modes of operation - synchronous and asynchronous.</p>
+
+<p>This help topic explains how to use these modes with the Spring MVC framework.
+Please review the main <a href="/getting-started/web/upload/modes">Upload Modes</a> help topic for general information.</p>
+
+<h2 id="synchronous-mode">Synchronous mode</h2>
+
+<p>In this mode the upload is executed as part of the form submit (synchronously). No dedicated action methods are required.</p>
+
+<ol>
+  <li>
+    <p>Add a form declaration and set a controller action.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;form method="post" action="&lt;c:url value='/web/upload/' /&gt;"&gt;
+ &lt;/form&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add the Upload inside the form. The only required setting is a Name.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;kendo:upload name="files" /&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add a submit and reset buttons to the form.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;input type="submit" value="Send" class="t-button" /&gt;
+ &lt;input type="reset" value="Reset" class="t-button" /&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>The form should look like this:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;form method="post" action="&lt;c:url value='/web/upload/' /&gt;"&gt;
+     &lt;kendo:upload name="files" /&gt;
+     &lt;input type="submit" value="Send" class="t-button" /&gt;
+     &lt;input type="reset" value="Reset" class="t-button" /&gt;
+ &lt;/form&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Process the files in the action. It requires no special server handling compared to a regular input.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @RequestMapping(value = {"/", "/index"}, method = RequestMethod.POST)
+ public String save(@RequestParam List&lt;MultipartFile&gt; files, Model model) {
+     model.addAttribute("files", files);
+
+     return "web/upload/results";
+ }
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="asynchronous-mode">Asynchronous mode</h2>
+
+<p>In this mode the files are uploaded to a controller action without interrupting the user interaction with the page.</p>
+
+<h3 id="save-handler">Save handler</h3>
+
+<ol>
+  <li>
+    <p>Add the upload to the view:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload name="files"&gt;
+    &lt;kendo:upload-async saveUrl="${saveUrl}"/&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div>    </div>
+
+    <p>The name attribute is required and must be unique.
+It will be used as a form field name in the requests to the server.</p>
+  </li>
+  <li>
+    <p>Implement the Save controller action:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @RequestMapping(value = "/async/save", method = RequestMethod.POST)
+ public @ResponseBody String save(@RequestParam List&lt;MultipartFile&gt; files) {
+     // Save the files
+     // for (MultipartFile file : files) {
+     // }
+
+     // Return an empty string to signify success
+     return "";
+ }
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="remove-handler">Remove handler</h3>
+
+<p>Users can remove files even after they"ve been uploaded asynchronously. To enable this feature you need a Remove action.</p>
+
+<ol>
+  <li>
+    <p>Specify a Remove action</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;kendo:upload name="files"&gt;
+     &lt;kendo:upload-async saveUrl="${saveUrl}" removeUrl="${removeUrl}"/&gt;
+ &lt;/kendo:upload&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the Remove action. It takes a fileNames parameter of type string[]</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @RequestMapping(value = "/async/remove", method = RequestMethod.POST)
+ public @ResponseBody String remove(@RequestParam String[] fileNames) {
+     // Remove the files
+     // for (String fileName : fileNames) {
+     // }
+     // Return an empty string to signify success
+     return "";
+ }
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<blockquote>
+  <p>The Remove action can be used as an attack vector if implemented poorly. Always sanitize the file names and verify that the user has the appropriate permissions before actually deleting any files.</p>
+</blockquote>
+
+<h3 id="disabling-automatic-upload">Disabling automatic upload</h3>
+
+<p>The selected files will be uploaded immediately by default.
+You can change this behavior by setting AutoUpload to false.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;kendo:upload name="files"&gt;
+        &lt;kendo:upload-async autoUpload="false" saveUrl="${saveUrl}" removeUrl="${removeUrl}"/&gt;
+    &lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

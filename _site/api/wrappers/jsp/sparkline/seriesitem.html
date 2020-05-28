@@ -1,0 +1,535 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/sparkline/seriesitem.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendosparkline-seriesitem">&lt;kendo:sparkline-seriesItem&gt;</h1>
+
+<p>Array of series definitions.The series type is determined by the value of the type field.
+If a type value is missing, the type is assumed to be the one specified in seriesDefaults.Each series type has a different set of options.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-series&gt;
+    &lt;kendo:sparkline-seriesItem&gt;&lt;/kendo:sparkline-seriesItem&gt;
+&lt;/kendo:sparkline-series&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="aggregate-javalangstring">aggregate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The aggregate function to apply for date series.This function is used when a category (an year, month, etc.) contains two or more points.
+The function return value is displayed instead of the individual points.The supported values are:</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem aggregate="aggregate"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="axis-javalangstring">axis <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The name of the value axis to use.** Applicable to area, bar, column and line series **</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem axis="axis"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="categoryfield-javalangstring">categoryField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the point category name.** Applicable to pie series. **</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem categoryField="categoryField"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="color-javalangstring">color <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The series base color. The supported values are:</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem color="color"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="colorfield-javalangstring">colorField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the point color.** Applicable for bar, column and pie series. **</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem colorField="colorField"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="currentfield-javalangstring">currentField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the current value.** Available for bullet and verticalBullet series. **</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem currentField="currentField"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="dashtype-javalangstring">dashType <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The series line dash type.** Applicable only to line series **</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem dashType="dashType"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="data-javalangobject">data <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Array of data items. The data item type can be either a:</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem data="data"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="explodefield-javalangstring">explodeField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing a boolean value that indicates if the sector is exploded.** Available for pie series **</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem explodeField="explodeField"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="field-javalangstring">field <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the series value.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem field="field"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="gap-float">gap <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The distance between category clusters.** Applicable for bar and column series. **</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem gap="gap"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="line-javalangstring">line <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Line options.** Applicable to area series. ** Further configuration is available via <a href="#kendo-sparkline-seriesItem-line">kendo:sparkline-seriesItem-line</a>.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem line="line"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="missingvalues-javalangstring">missingValues <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The behavior for handling missing values. The supported values are:</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem missingValues="missingValues"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="name-javalangstring">name <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The series name.The name can also be a template which sets the name of the series when bound to grouped data source.The fields which can be used in the template are:</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem name="name"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="negativecolor-javalangstring">negativeColor <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Color to use for bars with negative values.** Applicable only to bar and column series. **</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem negativeColor="negativeColor"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="opacity-float">opacity <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The series opacity.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem opacity="opacity"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="padding-float">padding <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The padding around the chart (equal on all sides).** Available for pie series. **</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem padding="padding"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="size-float">size <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The size (or radius) of the series in pixels.
+If not specified, the available space is split evenly between the series.Available for only.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem size="size"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="spacing-float">spacing <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Space between points as proportion of the point width.** Available for bar and column series. **</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem spacing="spacing"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="stack-javalangobject">stack <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>A boolean value indicating if the series should be stacked.
+A string value is interpreted as series.stack.group. Further configuration is available via <a href="#kendo-sparkline-seriesItem-stack">kendo:sparkline-seriesItem-stack</a>.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem stack="stack"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="startangle-float">startAngle <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The start angle of the first segment.Available for pie series.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem startAngle="startAngle"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="style-javalangstring">style <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The supported values are:</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem style="style"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="targetfield-javalangstring">targetField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the target value.** Available for bullet and verticalBullet series. <em>**</em> Available for pie series **</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem targetField="targetField"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The type of the series. Available types:</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem type="type"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="width-float">width <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The line width.** Available for line series **</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem width="width"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendosparkline-seriesitem-border">kendo:sparkline-seriesItem-border</h3>
+
+<p>The border of the points.** Applicable to bar, column and pie series **</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesitem-border">kendo:sparkline-seriesItem-border</a>.</p>
+
+<h4 id="example-26">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-border&gt;&lt;/kendo:sparkline-seriesItem-border&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesitem-connectors">kendo:sparkline-seriesItem-connectors</h3>
+
+<p>The label connectors options.** Applicable to pie series. **</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesitem-connectors">kendo:sparkline-seriesItem-connectors</a>.</p>
+
+<h4 id="example-27">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-connectors&gt;&lt;/kendo:sparkline-seriesItem-connectors&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesitem-highlight">kendo:sparkline-seriesItem-highlight</h3>
+
+<p>Configures the appearance of highlighted points.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesitem-highlight">kendo:sparkline-seriesItem-highlight</a>.</p>
+
+<h4 id="example-28">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-highlight&gt;&lt;/kendo:sparkline-seriesItem-highlight&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesitem-labels">kendo:sparkline-seriesItem-labels</h3>
+
+<p>Configures the series data labels.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesitem-labels">kendo:sparkline-seriesItem-labels</a>.</p>
+
+<h4 id="example-29">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-labels&gt;&lt;/kendo:sparkline-seriesItem-labels&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesitem-line">kendo:sparkline-seriesItem-line</h3>
+
+<p>Line options.** Applicable to area series. **</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesitem-line">kendo:sparkline-seriesItem-line</a>.</p>
+
+<h4 id="example-30">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-line&gt;&lt;/kendo:sparkline-seriesItem-line&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesitem-markers">kendo:sparkline-seriesItem-markers</h3>
+
+<p>Marker options.** Applicable to area and line series **</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesitem-markers">kendo:sparkline-seriesItem-markers</a>.</p>
+
+<h4 id="example-31">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-markers&gt;&lt;/kendo:sparkline-seriesItem-markers&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesitem-notes">kendo:sparkline-seriesItem-notes</h3>
+
+<p>The series notes configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesitem-notes">kendo:sparkline-seriesItem-notes</a>.</p>
+
+<h4 id="example-32">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-notes&gt;&lt;/kendo:sparkline-seriesItem-notes&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesitem-overlay">kendo:sparkline-seriesItem-overlay</h3>
+
+<p>The effects overlay.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesitem-overlay">kendo:sparkline-seriesItem-overlay</a>.</p>
+
+<h4 id="example-33">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-overlay&gt;&lt;/kendo:sparkline-seriesItem-overlay&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesitem-stack">kendo:sparkline-seriesItem-stack</h3>
+
+<p>A boolean value indicating if the series should be stacked.
+A string value is interpreted as series.stack.group.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesitem-stack">kendo:sparkline-seriesItem-stack</a>.</p>
+
+<h4 id="example-34">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-stack&gt;&lt;/kendo:sparkline-seriesItem-stack&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesitem-target">kendo:sparkline-seriesItem-target</h3>
+
+<p>The target of the bullet chart.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesitem-target">kendo:sparkline-seriesItem-target</a>.</p>
+
+<h4 id="example-35">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-target&gt;&lt;/kendo:sparkline-seriesItem-target&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesitem-tooltip">kendo:sparkline-seriesItem-tooltip</h3>
+
+<p>The data point tooltip configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesitem-tooltip">kendo:sparkline-seriesItem-tooltip</a>.</p>
+
+<h4 id="example-36">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-tooltip&gt;&lt;/kendo:sparkline-seriesItem-tooltip&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="color-string">color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The series base color. The supported values are:</p>
+
+<h4 id="example-37">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem color="handle_color"&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+&lt;script&gt;
+    function handle_color(e) {
+        // Code to handle the color event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendosparkline-seriesitem-color">kendo:sparkline-seriesItem-color</h3>
+
+<p>The series base color. The supported values are:</p>
+
+<h4 id="example-38">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline-seriesItem&gt;
+    &lt;kendo:sparkline-seriesItem-color&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the color event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-seriesItem-color&gt;
+&lt;/kendo:sparkline-seriesItem&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

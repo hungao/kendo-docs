@@ -1,0 +1,407 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API Reference for Kendo UI Hierarchical DataSource</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn more about the configuration of Kendo UI DataSource, methods and events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/framework/hierarchicaldatasource.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatahierarchicaldatasource">kendo.data.HierarchicalDataSource</h1>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>See the <a href="/api/framework/datasource#configuration">DataSource configuration</a> for all inherited configuration.</p>
+
+<h3 id="schema-object">schema <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The schema configuration. See the <a href="/api/framework/datasource#configuration-schema">DataSource.schema configuration</a> for all available options.</p>
+
+<h3 id="schemamodel-objectkendodatanode">schema.model <code class="language-plaintext highlighter-rouge">Object|kendo.data.Node</code></h3>
+
+<p>The data item (model) configuration. See the <a href="/api/framework/datasource#configuration-schema.model">DataSource.schema.model configuration</a> for all available options.</p>
+
+<blockquote>
+  <p>The model <strong>must</strong> inherit from <a href="/api/framework/node">kendo.data.Node</a>.</p>
+</blockquote>
+
+<h4 id="example---use-a-custom-model">Example - use a custom model</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var CustomNode = kendo.data.Node.define({
+  averageRating: function() {
+    var movies = this.children.data();
+    var rating = 0;
+
+    if (movies.length) {
+      $.each(movies, function() { rating += this.rating; });
+      rating /= movies.length;
+    }
+
+    return rating.toFixed(2);
+  }
+});
+
+var datasource = new kendo.data.HierarchicalDataSource({
+  data: [
+    { categoryName: "SciFi", items: [
+      { movieName: "Inception", rating: 8.8 },
+      { movieName: "The Matrix", rating: 8.7 }
+    ] },
+    { categoryName: "Drama", hasAssignedMovies: true }
+  ],
+  schema: {
+    model: CustomNode
+  }
+});
+
+datasource.read();
+
+var category = datasource.data()[0];
+category.load();
+console.log(category.averageRating()); // logs 8.75
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemamodelhaschildren-booleanstringfunction-default-false">schema.model.hasChildren <code class="language-plaintext highlighter-rouge">Boolean|String|Function</code> <em>(default: false)</em></h3>
+
+<p>Specifies whether the model might have children and might be loaded. Applicable when the rendering of a
+widget needs to have different states for items that have no children (e.g. the toggle button of the TreeView).</p>
+
+<h4 id="example---map-the-haschildren-field-to-another-field">Example - map the hasChildren field to another field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var datasource = new kendo.data.HierarchicalDataSource({
+  data: [
+    { categoryName: "SciFi", hasAssignedMovies: false },
+    { categoryName: "Drama", hasAssignedMovies: true }
+  ],
+  schema: {
+    model: {
+      hasChildren: "hasAssignedMovies"
+    }
+  }
+});
+
+datasource.read();
+
+console.log(datasource.data()[0].hasChildren); // logs false
+console.log(datasource.data()[1].hasChildren); // logs true
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---compute-if-an-item-has-children-with-a-function">Example - compute if an item has children with a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var datasource = new kendo.data.HierarchicalDataSource({
+  data: [
+    { categoryName: "SciFi" },
+    { categoryName: "Drama" }
+  ],
+  schema: {
+    model: {
+      hasChildren: function(item) {
+        return item.categoryName != "Drama";
+      }
+    }
+  }
+});
+
+datasource.read();
+
+console.log(datasource.data()[0].hasChildren); // logs true
+console.log(datasource.data()[1].hasChildren); // logs false
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-that-all-items-may-have-children">Example - specify that all items may have children</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var datasource = new kendo.data.HierarchicalDataSource({
+  data: [
+    { categoryName: "SciFi" },
+    { categoryName: "Drama" }
+  ],
+  schema: {
+    model: {
+      hasChildren: true
+    }
+  }
+});
+
+datasource.read();
+
+console.log(datasource.data()[0].hasChildren); // logs true
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---compute-if-an-item-has-children-with-a-function-1">Example - compute if an item has children with a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var datasource = new kendo.data.HierarchicalDataSource({
+  data: [
+    { categoryName: "SciFi" },
+    { categoryName: "Drama" }
+  ],
+  schema: {
+    model: {
+      hasChildren: function(item) {
+        return item.categoryName != "Drama";
+      }
+    }
+  }
+});
+
+datasource.read();
+
+console.log(datasource.data()[0].hasChildren); // logs true
+console.log(datasource.data()[1].hasChildren); // logs false
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemamodelchildren-stringobject-default-items">schema.model.children <code class="language-plaintext highlighter-rouge">String|Object</code> <em>(default: "items")</em></h3>
+
+<p>DataSource object or configuration for fetching child nodes. Through examples of that can be found
+in the <strong>Getting started</strong> section.</p>
+
+<blockquote>
+  <p>Note that "children" is not a valid value. The model already has a children property - the child data source.</p>
+</blockquote>
+
+<p>For static HierarchicalDataSource (local data), this field may be a <code class="language-plaintext highlighter-rouge">String</code>,
+indicating which field holds the nested data.</p>
+
+<h4 id="example---specify-children-field">Example - specify children field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var datasource = new kendo.data.HierarchicalDataSource({
+  data: [
+    {
+      categoryName: "SciFi",
+      movies: [
+        { title: "Star Wars: A New Hope", year: 1977 },
+        { title: "Star Wars: The Empire Strikes Back", year: 1980 },
+        { title: "Star Wars: Return of the Jedi", year: 1983 }
+      ]
+    },
+    {
+      categoryName: "Drama",
+      movies: [
+        { title: "The Shawshenk Redemption", year: 1994 },
+        { title: "Fight Club", year: 1999 },
+        { title: "The Usual Suspects", year: 1995 }
+      ]
+    }
+  ],
+  schema: {
+    model: {
+      children: "movies"
+    }
+  }
+});
+
+datasource.read();
+
+var scifi = datasource.data()[0];
+scifi.load();
+console.log(scifi.children.data().length); // logs 3
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example--">Example -</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var datasource = new kendo.data.HierarchicalDataSource({
+  data: [
+    {
+      categoryName: "SciFi",
+      movies: [
+        { title: "Star Wars: A New Hope", year: 1977, cast: [
+            { actor: "Mark Hamill", character: "Luke Skywalker" },
+            { actor: "Harrison Ford", character: "Han Solo" },
+            { actor: "Carrie Fisher", character: "Princess Leia Organa" }
+        ] },
+        { title: "Star Wars: The Empire Strikes Back", year: 1980, cast: [
+            { actor: "Mark Hamill", character: "Luke Skywalker" },
+            { actor: "Harrison Ford", character: "Han Solo" },
+            { actor: "Carrie Fisher", character: "Princess Leia Organa" },
+            { actor: "Billy Dee Williams", character: "Lando Calrissian" }
+        ] }
+      ]
+    }
+  ],
+  schema: {
+    model: {
+      children: { // define options for second level
+        schema: {
+          data: "movies",
+          model: {
+            children: "cast" // third level is defined by the field "cast"
+          }
+        }
+      }
+    }
+  }
+});
+
+datasource.read();
+
+var scifi = datasource.data()[0];
+scifi.load();
+var sw5 = scifi.children.data()[1];
+sw5.load();
+console.log(sw5.children.data().length); // logs 4
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<p>See the <a href="/api/framework/datasource#methods">DataSource methods</a> for all inherited methods.</p>
+
+<p>The <strong>remove</strong> and <strong>getByUid</strong> methods are overridden and work with the hierarchical data
+(they will act on all child datasources that have been read).</p>
+
+<h2 id="events">Events</h2>
+
+<p>See the <a href="/api/framework/datasource#events">DataSource events</a> for all inherited events.</p>
+
+<h3 id="change">change</h3>
+
+<p>Fires when data is changed. In addition to the <a href="/api/framework/datasource#change">standard change event</a>,
+the HierarchicalDataSource includes additional data when the event has been triggered from a child
+DataSource.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="enode-kendodatanode">e.node <code class="language-plaintext highlighter-rouge">kendo.data.Node</code></h5>
+
+<p>If the event was triggered by a child datasource, this field holds a reference to the parent node.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var datasource = new kendo.data.HierarchicalDataSource({
+  data: [
+    { id: 1, text: "foo", items: [
+      { id: 2, text: "bar" }
+    ] }
+  ],
+  change: function(e) {
+    console.log(e.node);
+  }
+});
+
+// logs `undefined`, because the change event is not triggered by a node
+datasource.read();
+
+// logs `{ id: 1, text: "foo" }`, because the event is triggered by the root item
+datasource.get(1).load();
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

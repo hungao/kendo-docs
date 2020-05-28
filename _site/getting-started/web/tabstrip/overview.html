@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of Tabstrip UI widget | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="This documentation helps you get started with TabStrip, initialize the widget and how to load the content with AJAX.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/tabstrip/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="tabstrip-overview">TabStrip Overview</h1>
+
+<p>A <strong>TabStrip</strong> displays a collection of tabs with associated content. It is composed of an
+unordered list of items - representing tabs - and a collection of div elements, which contain the content for
+each tab.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="create-an-unordered-list-for-tabs-with-associated-div-elements-for-content">Create an unordered list for tabs with associated div elements for content</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="tabStrip"&gt;
+    &lt;ul&gt;
+        &lt;li&gt;First tab&lt;/li&gt;
+        &lt;li&gt;Second tab&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div&gt;First tab content&lt;/div&gt;
+    &lt;div&gt;Second tab content&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Initialization of a <strong>TabStrip</strong> should occur after the DOM is fully loaded. It is recommended
+that initialization the <strong>TabStrip</strong> occur within a handler is provided to $(document).ready().</p>
+
+<h3 id="initialize-a-tabstrip-using-a-selector-within-documentready">Initialize a TabStrip using a selector within $(document).ready()</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function() {
+    $("#tabStrip").kendoTabStrip();
+});
+</code></pre></div></div>
+
+<h3 id="initialize-the-tabstrip-using-json-data-object">Initialize the TabStrip using JSON data object</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function() {
+    $("#tabstrip").kendoTabStrip({
+        dataTextField: "text",
+        dataContentField: "content",
+        dataUrlField: "url",
+        dataImageUrlField: "imageUrl",
+        dataSpriteCssClass: "spriteCssClass",
+        dataContentUrlField: "contentUrl",
+        dataSource:
+        [{
+            text: "Item 1",
+            url: "http://www.telerik.com"               // Link URL if navigation is needed, optional.
+        },
+        {
+            text: "Item 2",
+            content: "text"                             // Content for the content element
+        },
+        {
+            text: "Item 3",
+            contentUrl: "partialContent.html"           // From where to load the item content
+        },
+        {
+            text: "Item 4",
+            imageUrl: "http://www.telerik.com/test.jpg" // Item image URL, optional.
+        },
+        {
+            text: "Item 5",
+            spriteCssClass: "imageClass3"               // Item image sprite CSS class, optional.
+        }]
+    });
+});
+</code></pre></div></div>
+
+<p>The tabs of a <strong>TabStrip</strong> are not required to have content. Should a tab have no content, it is
+safe to omit its associated div.</p>
+
+<h2 id="loading-tabstrip-content-with-ajax">Loading TabStrip content with AJAX</h2>
+
+<p>While any valid technique for loading AJAX content can be used, a <strong>TabStrip</strong> supports loading
+content from URLs in an asynchronous manner. These URLs should return HTML fragments that can be loaded in a
+TabStrip content area. Content DIVs are not required and if present should be completely empty for AJAX loading
+to work.</p>
+
+<h3 id="loading-tab-content-asynchronously">Loading Tab content asynchronously</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="tabstrip"&gt;
+    &lt;ul&gt;
+        &lt;li&gt;First Tab&lt;/li&gt;
+        &lt;li&gt;Second Tab&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+ &lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-tabstrip-and-configure-one-tab-with-async-content-loading">Initialize TabStrip and configure one tab with async content loading</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#tabstrip").kendoTabStrip({
+        contentUrls: [null, "html-content-snippet.html"]
+    });
+ });
+</code></pre></div></div>
+
+<h2 id="dynamically-configure-tabstrip-tabs">Dynamically Configure TabStrip Tabs</h2>
+
+<p>The <strong>TabStrip</strong> API provides several methods for dynamically adding or removing tabs. To add
+tabs, provide the new item as a JSON object along with a reference item that will be used to determine the
+placement in the <strong>TabStrip</strong>. Note: append() does not require a reference item.</p>
+
+<p>A reference item is simply a target DOM element of a tab that already exists in the TabStrip. Any valid
+selector may be used to obtain a reference to the target item.</p>
+
+<p>Removing an item requires a reference to the target element.</p>
+
+<h3 id="dynamically-add-a-new-tab">Dynamically add a new tab</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var tabStrip = $("#tabStrip").data("kendoTabStrip");
+tabStrip.insertAfter(
+    { text: "New Tab" },
+    tabstrip.tabGroup.children("li:last")
+);
+</code></pre></div></div>
+
+<h2 id="selecting-a-tab-on-initial-load">Selecting a Tab on Initial Load</h2>
+
+<p>It is possible to select a tab and display its associated content upon its initial load. There are two (2) ways
+to accomplish this task:</p>
+
+<ol>
+  <li>Add a "k-state-active" class to the DOM element of the tab</li>
+  <li>Use select() to target and select a tab either by selector or index</li>
+</ol>
+
+<p>Both approaches produce the same result.</p>
+
+<h3 id="selecting-a-default-tab-manually-using-html">Selecting a default tab manually using HTML</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="tabstrip"&gt;
+    &lt;ul&gt;
+        &lt;li class="k-state-active"&gt;First Tab&lt;/li&gt;
+        &lt;li&gt;Second Tab&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-a-tabstrip-and-select-first-tab-via-selectelement">Initialize a TabStrip and select first tab via select(element)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    var tabstrip = $("#tabstrip").kendoTabStrip().data("kendoTabStrip");
+    tabstrip.select(tabstrip.tabGroup.children("li:first"));
+});
+</code></pre></div></div>
+
+<h3 id="initialize-a-tabstrip-and-select-first-tab-via-selectindex">Initialize a TabStrip and select first tab via select(index)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    var tabstrip = $("#tabstrip").kendoTabStrip().data("kendoTabStrip");
+    tabstrip.select(0);
+});
+</code></pre></div></div>
+
+<h2 id="accessing-an-existing-tabstrip">Accessing an Existing TabStrip</h2>
+
+<p>You can reference an existing <strong>TabStrip</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>. Once a reference has been established, you can
+use the API to control its behavior.</p>
+
+<h3 id="accessing-an-existing-tabstrip-instance">Accessing an existing TabStrip instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var tabStrip = $("#tabStrip").data("kendoTabStrip");
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

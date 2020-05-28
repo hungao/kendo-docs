@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Kendo UI Mobile View Widget Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Discover how to use Kendo UI Mobile View widget, mark header and footer elements, view parameters of navigational widgets and view DOM elements.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/mobile/view.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="view">View</h1>
+
+<p>The Kendo mobile View widget represents a screen in the kendo mobile Application. The
+Application automatically instantiates a mobile View for each element with a <code class="language-plaintext highlighter-rouge">role</code> data attribute set
+to <strong>view</strong>.</p>
+
+<h2 id="hello-world-mobile-view">Hello World mobile View</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;Hello world!&lt;/div&gt;
+</code></pre></div></div>
+
+<h2 id="headers-and-footers">Headers and Footers</h2>
+
+<p>By default, the mobile View contents stretch to fit the application element.
+In addition to that, The mobile View may also have a header and a footer.
+In order to mark header and footer elements, add block elements (<code class="language-plaintext highlighter-rouge">div</code>, <code class="language-plaintext highlighter-rouge">header</code>, <code class="language-plaintext highlighter-rouge">footer</code>, etc.) with attribute <code class="language-plaintext highlighter-rouge">data-role="header"</code> and
+<code class="language-plaintext highlighter-rouge">data-role="footer"</code>.</p>
+
+<h2 id="mobile-view-with-header-and-footer">Mobile View with Header and Footer</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;div data-role="header"&gt;Header&lt;/div&gt;
+    Hello world!
+    &lt;div data-role="footer"&gt;Footer&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p><strong>Important:</strong>
+Because of the OS UI design conventions, the header and the footer switch positions when an Android device is detected.
+Usually the footer hosts a mobile Tabstrip widget, which is located at the bottom of the screen on iOS,
+and at the top of the screen in Android applications.</p>
+
+<h2 id="view-parameters">View Parameters</h2>
+
+<p>Navigational widgets can pass additional URL parameters when navigating to Views. The parameters will be accessible in the  view <code class="language-plaintext highlighter-rouge">show</code> event handlers.</p>
+
+<h3 id="button-with-additional-url-parameters">Button with additional URL parameters</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a data-role="button" href="#foo?bar=baz"&gt;Link to FOO &lt;strong&gt;View&lt;/strong&gt; with bar parameter set to baz&lt;/a&gt;
+
+&lt;div data-role="view" id="foo" data-show="fooShow"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    function fooShow(e) {
+         e.view.params // {bar: "baz"}
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="view-dom-elements">View DOM elements</h2>
+
+<p>Each mobile View instance exposes the following fields:</p>
+
+<ul>
+  <li><strong>header</strong> - the view (or the applied mobile layout) header DOM element;</li>
+  <li><strong>footer</strong> - the view (or the applied mobile layout) footer DOM element;</li>
+  <li><strong>content</strong> - the view content DOM element;</li>
+  <li><strong>scrollerContent</strong> - the view mobile scroller container DOM element. Recommended if the mobile View contents need to be manipulated or <strong>replaced</strong>.</li>
+</ul>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

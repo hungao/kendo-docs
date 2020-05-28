@@ -1,0 +1,394 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Mobile ActionSheet</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Quickly configure mobile ActionSheet widget, close and open it using methods, find which events to use.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/mobile/actionsheet.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomobileuiactionsheet">kendo.mobile.ui.ActionSheet</h1>
+
+<p>Represents the Kendo UI Mobile ActionSheet widget. Inherits from <a href="/api/framework/mobilewidget">kendo.mobile.ui.Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="cancel-stringdefault-cancel">cancel <code class="language-plaintext highlighter-rouge">String</code><em>(default: "Cancel")</em></h3>
+
+<p>The text of the cancel button.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-rel="actionsheet" href="#actionsheet"&gt;Open&lt;/a&gt;
+  &lt;ul id="actionsheet" data-role="actionsheet" data-cancel="Close"&gt;
+    &lt;li&gt;&lt;a&gt;Foo&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a&gt;Bar&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="popup-object">popup <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The popup configuration options (tablet only).</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-rel="actionsheet" href="#actionsheet"&gt;Open&lt;/a&gt;
+  &lt;ul id="actionsheet" data-role="actionsheet" data-popup='{ "height": "auto", "width": 200, "direction": "left" }'&gt;
+    &lt;li&gt;&lt;a&gt;Foo&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a&gt;Bar&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="popupdirection-number--stringdefault-down">popup.direction <code class="language-plaintext highlighter-rouge">Number | String</code><em>(default: "down")</em></h3>
+
+<p>The direction to which the popup will expand, relative to the target that opened it.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-rel="actionsheet" href="#actionsheet"&gt;Open&lt;/a&gt;
+  &lt;ul id="actionsheet" data-role="actionsheet" data-popup='{ "direction": "left" }'&gt;
+    &lt;li&gt;&lt;a&gt;Foo&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a&gt;Bar&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="popupheight-number--stringdefault-auto">popup.height <code class="language-plaintext highlighter-rouge">Number | String</code><em>(default: "auto")</em></h3>
+
+<p>The height of the popup in pixels.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-rel="actionsheet" href="#actionsheet"&gt;Open&lt;/a&gt;
+  &lt;ul id="actionsheet" data-role="actionsheet" data-popup='{ "height": 400 }'&gt;
+    &lt;li&gt;&lt;a&gt;Foo&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a&gt;Bar&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="popupwidth-number--stringdefault-240">popup.width <code class="language-plaintext highlighter-rouge">Number | String</code><em>(default: 240)</em></h3>
+
+<p>The width of the popup in pixels.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-rel="actionsheet" href="#actionsheet"&gt;Open&lt;/a&gt;
+  &lt;ul id="actionsheet" data-role="actionsheet" data-popup='{ "width": 400 }'&gt;
+    &lt;li&gt;&lt;a&gt;Foo&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a&gt;Bar&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="type-stringdefault-auto">type <code class="language-plaintext highlighter-rouge">String</code><em>(default: auto)</em></h3>
+
+<p>By default, the actionsheet opens as a full screen dialog on a phone device or as a popover if a tablet is detected. Setting the type to <code class="language-plaintext highlighter-rouge">"phone"</code> or <code class="language-plaintext highlighter-rouge">"tablet"</code> will force the looks of the widget regardless of the device.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-rel="actionsheet" href="#actionsheet"&gt;Open&lt;/a&gt;
+  &lt;ul id="actionsheet" data-role="actionsheet" data-type="tablet"&gt;
+    &lt;li&gt;&lt;a&gt;Foo&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a&gt;Bar&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="close">close</h3>
+
+<p>Close the ActionSheet.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-rel="actionsheet" href="#actionsheet"&gt;Open&lt;/a&gt;
+  &lt;ul id="actionsheet" data-role="actionsheet"&gt;
+      &lt;li&gt;&lt;a data-action="close"&gt;Close&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function close() {
+  $("#actionsheet").data("kendoMobileActionSheet").close();
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+<p>Prepares the <strong>ActionSheet</strong> for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the ActionSheet element from DOM.</p>
+</blockquote>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-click="destroy"&gt;Destroy&lt;/a&gt;
+  &lt;ul id="actionsheet" data-role="actionsheet"&gt;
+    &lt;li&gt;&lt;a&gt;Foo&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a&gt;Bar&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function destroy() {
+  // detach events
+  $("#actionsheet").data("kendoMobileActionSheet").destroy();
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open">open</h3>
+
+<p>Open the ActionSheet.</p>
+
+<h4 id="example---opens-the-widget-each-time-the-view-becomes-visible">Example - opens the widget each time the View becomes visible</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-show="onShow"&gt;
+  &lt;ul id="actionsheet" data-role="actionsheet"&gt;
+    &lt;li&gt;&lt;a&gt;Foo&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a&gt;Bar&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function onShow() {
+  $("#actionsheet").data("kendoMobileActionSheet").open();
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul data-role="listview"&gt;
+  &lt;li&gt; Foo &lt;a data-role="button" id="button"&gt;Delete&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul data-role="actionsheet" id="actionsheet"&gt;
+  &lt;li&gt;&lt;a&gt;Foo&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a&gt;Bar&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+$("#actionsheet").data("kendoMobileActionSheet").open($("#button"));
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="target-jquery">target <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>(optional) The target element of the ActionSheet, available in the callback methods.</p>
+
+<p><strong>Notice</strong> The target element is <strong>mandatory</strong> on tablets, as the ActionSheet widget positions itself relative to opening element when a tablet is detected.</p>
+
+<h5 id="context-object">context <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>(optional) The context of the ActionSheet, available in the callback methods.</p>
+
+<h2 id="events">Events</h2>
+
+<h3 id="close-1">close</h3>
+
+<p>Fires when the ActionSheet is closed.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-rel="actionsheet" href="#actionsheet"&gt;Open&lt;/a&gt;
+  &lt;ul id="actionsheet" data-role="actionsheet" data-close="onClose"&gt;
+    &lt;li&gt;&lt;a&gt;Foo&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a&gt;Bar&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  var app = new kendo.mobile.Application();
+
+  function onClose() {
+    console.log("closed");
+  }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open-1">open</h3>
+
+<p>Fires when the ActionSheet is opened.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-rel="actionsheet" href="#actionsheet"&gt;Open&lt;/a&gt;
+  &lt;ul id="actionsheet" data-role="actionsheet" data-open="onOpen"&gt;
+    &lt;li&gt;&lt;a&gt;Foo&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a&gt;Bar&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  var app = new kendo.mobile.Application();
+
+  function onOpen() {
+    console.log("opened");
+  }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="etarget-jquery">e.target <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The invocation target of the ActionSheet.</p>
+
+<h5 id="econtext-jquery">e.context <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The defined ActionSheet context.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

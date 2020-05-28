@@ -1,0 +1,572 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/UI/Sortable.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouisortable">\Kendo\UI\Sortable</h1>
+
+<p>A PHP wrapper for Kendo UI <a href="/api/web/sortable">Sortable</a>.</p>
+
+<p>Inherits from <a href="/api/wrappers/php/Kendo/UI/Widget">\Kendo\UI\Widget</a>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use Sortable in a PHP page instantiate a new instance, configure it via the available
+configuration <a href="#methods">methods</a> and output it by <code class="language-plaintext highlighter-rouge">echo</code>-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+<h3 id="using-kendo-sortable">Using Kendo Sortable</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// Create a new instance of Sortable and specify its id
+$sortable = new \Kendo\UI\Sortable('Sortable');
+
+// Configure it
+$sortable-&gt;axis('value')
+
+// Output it
+
+echo $sortable-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="axis">axis</h3>
+<p>Constrains the hint movement to either the horizontal (x) or vertical (y) axis. Can be set to either "x" or "y".</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;axis('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="cancel">cancel</h3>
+<p>Fires when item sorting is canceled by pressing the Escape key.
+For additional information check the <a href="/api/web/sortable#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;cancel('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onCancel(e) {
+        // handle the cancel event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;cancel('onCancel');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;cancel(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="change">change</h3>
+<p>Fires when item is sorted and the item"s position is changed in the DOM.
+For additional information check the <a href="/api/web/sortable#events-change">change</a> event documentation.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-1">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;change('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-1">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onChange(e) {
+        // handle the change event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;change('onChange');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-1">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;change(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="connectwith">connectWith</h3>
+<p>Selector which determines if items from the current Sortable widget can be accepted from another Sortable container(s). The connectWith option describes one way relationship, if the developer wants a two way connection then the connectWith option should be set on both widgets.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;connectWith('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="container">container</h3>
+<p>Selector that determines the container to which boundaries the hint movement will be constrained.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;container('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="cursor">cursor</h3>
+<p>The cursor that will be shown while user drags sortable item.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-string-3">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;cursor('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="cursoroffset">cursorOffset</h3>
+
+<p>If set, specifies the offset of the hint relative to the mouse cursor/finger.
+By default, the hint is initially positioned on top of the draggable source offset. The option accepts an object with two keys: top and left.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-kendouisortablecursoroffsetarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\UI\SortableCursorOffset|array</code></h5>
+
+<h4 id="example---using-kendouisortablecursoroffset">Example - using <a href="/api/wrappers/php/Kendo/UI/SortableCursorOffset">\Kendo\UI\SortableCursorOffset</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$cursorOffset = new \Kendo\UI\SortableCursorOffset();
+$left = 1;
+$cursorOffset-&gt;left($left);
+$sortable-&gt;cursorOffset($cursorOffset);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$left = 1;
+$sortable-&gt;cursorOffset(array('left' =&gt; $left));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="disabled">disabled</h3>
+<p>Selector that determines which items are disabled. Disabled items cannot be dragged but are valid sort targets.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-string-4">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;disabled('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="end">end</h3>
+<p>Fires when item dragging ends but before the item"s position is changed in the DOM. This event is suitable for preventing the sort action.
+For additional information check the <a href="/api/web/sortable#events-end">end</a> event documentation.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-2">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-2">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;end('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-2">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onEnd(e) {
+        // handle the end event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;end('onEnd');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-2">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;end(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="filter">filter</h3>
+<p>Selector that determines which items are sortable. Filtered items cannot be dragged and are not valid sort targets.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-string-5">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;filter('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="handler">handler</h3>
+<p>Selector that determines which element will be used as a draggable handler. If a handler is defined, the user will be able to move the Sortable items only if the cursor/finger is positioned onto the handler element.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-string-6">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;handler('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="hint">hint</h3>
+<p>Provides a way for customization of the sortable item hint. If a function is supplied, it receives one argument - the draggable element"s jQuery object.
+If hint function is not provided the widget will clone dragged item and use it as a hint.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-kendojavascriptfunctionstring">$value <code class="language-plaintext highlighter-rouge">\Kendo\JavaScriptFunction|string|</code></h5>
+
+<h4 id="example----using-kendojavascriptfunction">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;hint(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-string">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;hint('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="holdtodrag">holdToDrag</h3>
+<p>Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the item will be activated after the user taps and holds the finger on the element for a short amount of time.
+The item will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;holdToDrag(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="ignore">ignore</h3>
+<p>Selector that determines which elements inside the sorted item"s container will be ignored. Useful if the sortable item contains input elements.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-string-7">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;ignore('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="move">move</h3>
+<p>Fires when Sortable"s placeholder changes its position.
+For additional information check the <a href="/api/web/sortable#events-move">move</a> event documentation.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-3">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-3">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;move('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-3">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onMove(e) {
+        // handle the move event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;move('onMove');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-3">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;move(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="placeholder">placeholder</h3>
+<p>Provides a way for customization of the sortable item placeholder. If a function is supplied, it receives one argument - the draggable element"s jQuery object.
+If placeholder function is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-kendojavascriptfunctionstring-1">$value <code class="language-plaintext highlighter-rouge">\Kendo\JavaScriptFunction|string|</code></h5>
+
+<h4 id="example----using-kendojavascriptfunction-1">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;placeholder(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-string-1">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;placeholder('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="start">start</h3>
+<p>Fires when sortable item drag starts.
+For additional information check the <a href="/api/web/sortable#events-start">start</a> event documentation.</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Sortable</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-4">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-4">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;start('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-4">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onStart(e) {
+        // handle the start event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;start('onStart');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-4">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('Sortable');
+$sortable-&gt;start(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

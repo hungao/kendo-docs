@@ -1,0 +1,335 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/kendo-music-store/music-store-dashboard/Creating-a-Single-Page-App-with-KenoUI.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="creating-a-single-page-app-with-kendoui---music-dashboard">Creating a Single-Page App with KendoUI - Music Dashboard</h1>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/dashboard-overview.png" alt="dashboard-overview" /></p>
+
+<p>The Music Dashboard is constructed as a single page app, built to have smooth transitions and high performance. Using the Sammy.js framework, the various pages of the application are routed through this framework and in ASP.NET MVC.</p>
+
+<h2 id="initializing-the-application-in-mvc">Initializing the application in MVC</h2>
+
+<p>We start with the basic ASP.NET MVC <strong>HomeController.cs</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class HomeController : Controller
+{
+	public ActionResult Index()
+	{
+		return View();
+	}
+}
+</code></pre></div></div>
+
+<p><strong>Index.cshtml</strong> is reduced to a very skeletal structure:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+&lt;div id="container"&gt;
+	&lt;div id="main"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Each page of the app requires three components: an HTML page, a CSS stylesheet, and a JavaScript file. Additionally, a site-wide <strong>Site.css</strong>, <strong>app.js</strong>, and <strong>main-view.js</strong> are required. MVC provides the framework for the single page, but the plumbing must be included.</p>
+
+<p>A large amount of the structure is therefore included in <strong>_Layout.cshtml</strong> (portions ommitted for brevity):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" /&gt;
+	&lt;link href="@Url.Content("~/Content/home-view.css")" rel="stylesheet" type="text/css" /&gt;
+	&lt;link href="@Url.Content("~/Content/music-view.css")" rel="stylesheet" type="text/css" /&gt;
+	&lt;link href="@Url.Content("~/Content/social-view.css")" rel="stylesheet" type="text/css" /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+	@RenderBody()
+
+    &lt;script src="@Url.Content("~/js/libs/jquery-2.0.0.min.js")" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;script src="@Url.Content("~/js/libs/kendo.all.js")" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;script src="@Url.Content("~/js/debug/app.js")" type="text/javascript"&gt;&lt;/script&gt;
+&lt;/body&gt;
+</code></pre></div></div>
+
+<p>Obviously, there are also required references to various Kendo CSS (in <strong>&lt;head&gt;</strong>):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;link href="@Url.Content("~/Content/themes/base/kendo.common.min.css")" rel="stylesheet" type="text/css" /&gt;
+&lt;link href="@Url.Content("~/Content/themes/base/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" /&gt;
+&lt;link href="@Url.Content("~/Content/themes/kendo.moonlight.min.css")" rel="stylesheet" type="text/css" /&gt;
+&lt;link href="@Url.Content("~/Content/themes/kendo.dataviz.moonlight.min.css")" rel="stylesheet" type="text/css" /&gt;
+</code></pre></div></div>
+
+<p>#Setup The Kendo SPA Plumbing</p>
+
+<p>The Music Store Dashboard application is a simple JavaScript object named musicDashboard. It is defined in an 
+anonymous function and added to the Window object:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(function (window, undefined) {
+
+    var musicDashboard = {
+
+        // The Guts Go Here
+
+    };
+
+    return (window.musicDashboard = musicDashboard);
+
+}(window));
+</code></pre></div></div>
+
+<p>The musicDashboard object has a setup method that initilizes the router member to a new Kendo UI Router object.
+The Router object allows you to define your application"s URLs. This means they can be shared to provide deep linking to your application.
+You can read more about the <a href="http://blogs.telerik.com/kendoui/posts/13-05-09/a-day-at-the-spa-with-kendo.router" title="Kendo Router">Kendo Router</a> object at http://blogs.telerik.com/kendoui/posts/13-05-09/a-day-at-the-spa-with-kendo.router</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    //kendoui router object
+    router: undefined,
+
+    setup: function () {
+
+        this.router = new kendo.Router();
+
+        //setup views
+        this.setupRoutes();
+
+        this.router.start();
+
+    },
+</code></pre></div></div>
+
+<p>Each route must be defined and the Music Dashboard does this in a method called setupRoutes. Once the routes have been defined
+the router is started by calling the start() method.</p>
+
+<p>Each route is defined by a URL and a callback method. The URL is the route or value defined after the hash, #. Single Page Apps
+rely on an old technique of using a # in a URL to define a unique URL. When the # value changes in a URL the browser does not 
+send the request to the server, instead is looks for the target on the page, it also fires a "hashchange" event. The Kendo Router
+object is wired to the "hashchange" event and executes the route"s corresponding callback when the event fires. Here you see a truncated
+callback method and routes defined for each view in the Music Dashboard application.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    //defined Routes for KendoUI
+    setupRoutes: function () {
+
+        var that = this;
+
+        if (that.router) {
+
+            that.router.route("/", function () {});
+
+            that.router.route("/sales", function () {});
+
+            that.router.route("/social", function () {});
+
+        }
+
+    },
+</code></pre></div></div>
+
+<p>The dashboard"s route callbacks follow a common pattern; destroy any existing views (more about views in the next section),
+make sure the top navigation has CSS classes applied correctly and finally create the target view.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            that.router.route("/", function () {
+
+                console.log("home");
+
+                //destroy other views or they will be markup artifacts on the screen
+                that.salesView.destroy();
+                that.socialView.destroy();
+                
+                $(".main-nav-item-selected").removeClass("main-nav-item-selected");
+                $(".main-nav-item-icon-selected").removeClass("main-nav-item-icon-selected");
+                $(".nav-music-icon").addClass("main-nav-item-icon-selected");
+                $(".nav-music").addClass("main-nav-item-selected");
+
+                that.createMainView();
+
+            });
+</code></pre></div></div>
+
+<h1 id="managing-views">Managing Views</h1>
+
+<p>The musicDashboard object"s setup method calls another method, setupViews, to initilize the Kendo UI views:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    setup: function () {
+
+        this.router = new kendo.Router();
+
+        this.setupViews();
+        this.setupRoutes();            
+
+        this.router.start();
+
+    },
+</code></pre></div></div>
+
+<p>The setupViews method initializes each view: main, social and sales by selecting the elements from the page and passing their
+corresponding markup to the kendo.View "constructor". There is an additional, optional model parameter that can be provided, but
+is not needed for the Music Dashboard. The Kendo Views are used to help manage swaping the main content between views as the user
+navigates the application.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    //define views for KendoUI
+    setupViews: function () {
+
+        var that = this,
+            sv = document.querySelector("#salesview"),
+            socv = document.querySelector("#socialView"),
+            mv = document.querySelector("#mainview");
+
+        //outerHTML
+        that.salesView = new kendo.View(sv.outerHTML);
+        that.socialView = new kendo.View(socv.outerHTML);
+        that.mainView = new kendo.View(mv.outerHTML);
+
+    },
+</code></pre></div></div>
+
+<p>When a view is requested it"s create method is called. For the Music Store Dashboard this is done in the router"s callback 
+methods. The non-active views are destroyed, which removes them from the DOM as well as clears variables used by the view.
+When a view is displayed it is rendered. This is done by calling the view"s render method and passing the selector of the 
+view"s parent element. For the Music Dashboard this is the #main element.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    createMainView: function () {
+
+        var that = this;
+
+        that.mainView.render("#main");
+
+        //more functionality here
+    },
+</code></pre></div></div>
+
+<h1 id="page-navigation">Page navigation</h1>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/navigation-strip.png" alt="navigation-strip" /></p>
+
+<p>The various pages of the Music Dashboard are accessed through the nagivation strip along the top.</p>
+
+<h2 id="layout-placement">Layout Placement</h2>
+
+<p>Because the Music Dashboard is a single-page app, for the navigation to be available on every page the strip must be placed in <strong>_Layout.cshtml</strong>. Each page other than the main must be placed in the <strong>&lt;nav&gt;</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;header id="main-header"&gt;
+    &lt;nav class="main-nav"&gt;
+        &lt;a href="#"&gt;&lt;span class="main-nav-item nav-music"&gt;&lt;span class="main-nav-item-icon nav-music-icon"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;
+        &lt;a href="#/sales"&gt;&lt;span class="main-nav-item nav-sales"&gt;&lt;span class="main-nav-item-icon nav-sales-icon"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;
+        &lt;a href="#/social"&gt;&lt;span class="main-nav-item nav-social"&gt;&lt;span class="main-nav-item-icon nav-social-icon"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+</code></pre></div></div>
+
+<p>The <strong>class</strong> attributes in the <strong>&lt;span&gt;</strong> tags are defined in <strong>Site.css</strong>.</p>
+
+<h2 id="clicks-and-routing">Clicks and Routing</h2>
+
+<p>Because the routes are defined using the Kendo Router there is no real need to define click or touch event handlers to drive navigation.
+Instead simple anchors <a href=""> are defined for each menu item that change the URL # value.</a></p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

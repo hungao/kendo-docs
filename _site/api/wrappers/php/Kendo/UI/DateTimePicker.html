@@ -1,0 +1,542 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/UI/DateTimePicker.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouidatetimepicker">\Kendo\UI\DateTimePicker</h1>
+
+<p>A PHP wrapper for Kendo UI <a href="/api/web/datetimepicker">DateTimePicker</a>.</p>
+
+<p>Inherits from <a href="/api/wrappers/php/Kendo/UI/Widget">\Kendo\UI\Widget</a>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use DateTimePicker in a PHP page instantiate a new instance, configure it via the available
+configuration <a href="#methods">methods</a> and output it by <code class="language-plaintext highlighter-rouge">echo</code>-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+<h3 id="using-kendo-datetimepicker">Using Kendo DateTimePicker</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// Create a new instance of DateTimePicker and specify its id
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+
+// Configure it
+$dateTimePicker-&gt;culture('value')
+
+// Output it
+
+echo $dateTimePicker-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="ariatemplate">ARIATemplate</h3>
+<p>Specifies a template used to populate value of the aria-label attribute.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;ARIATemplate('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="animation">animation</h3>
+
+<p>Configures the opening and closing animations of the popups. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-kendouidatetimepickeranimationarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePickerAnimation|array</code></h5>
+
+<h4 id="example---using-kendouidatetimepickeranimation">Example - using <a href="/api/wrappers/php/Kendo/UI/DateTimePickerAnimation">\Kendo\UI\DateTimePickerAnimation</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$animation = new \Kendo\UI\DateTimePickerAnimation();
+$close = new \Kendo\UI\DateTimePickerAnimationClose();
+$animation-&gt;close($close);
+$dateTimePicker-&gt;animation($animation);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$close = new \Kendo\UI\DateTimePickerAnimationClose();
+$dateTimePicker-&gt;animation(array('close' =&gt; $close));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="change">change</h3>
+<p>Triggered when the underlying value of a DateTimePicker is changed.
+For additional information check the <a href="/api/web/datetimepicker#events-change">change</a> event documentation.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;change('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onChange(e) {
+        // handle the change event.
+    }
+&lt;/script&gt;
+&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;change('onChange');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;change(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="close">close</h3>
+<p>Fires when the calendar or the time drop-down list is closed
+For additional information check the <a href="/api/web/datetimepicker#events-close">close</a> event documentation.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-1">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;close('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-1">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onClose(e) {
+        // handle the close event.
+    }
+&lt;/script&gt;
+&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;close('onClose');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-1">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;close(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="culture">culture</h3>
+<p>Specifies the culture info used by the widget.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;culture('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dates">dates</h3>
+<p>Specifies a list of dates, which will be passed to the month template of the DateView. All dates, which match the date portion of the selected date will be used to re-bind the TimeView.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-array">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;dates(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="depth">depth</h3>
+<p>Specifies the navigation depth of the calendar. The following
+settings are available for the depth value:</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;depth('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="footer">footer</h3>
+<p>The template which renders the footer of the calendar. If false, the footer will not be rendered.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-string-3">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;footer('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="format">format</h3>
+<p>Specifies the format, which is used to format the value of the DateTimePicker displayed in the input. The format also will be used to parse the input.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-string-4">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;format('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="interval">interval</h3>
+<p>Specifies the interval, between values in the popup list, in minutes.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;interval(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="max">max</h3>
+<p>Specifies the maximum date, which the calendar can show.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-date">$value <code class="language-plaintext highlighter-rouge">date</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;max(new date());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="min">min</h3>
+<p>Specifies the minimum date that the calendar can show.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-date-1">$value <code class="language-plaintext highlighter-rouge">date</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;min(new date());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="month">month</h3>
+
+<p>Templates for the cells rendered in the calendar "month" view.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-kendouidatetimepickermontharray">$value <code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePickerMonth|array</code></h5>
+
+<h4 id="example---using-kendouidatetimepickermonth">Example - using <a href="/api/wrappers/php/Kendo/UI/DateTimePickerMonth">\Kendo\UI\DateTimePickerMonth</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$month = new \Kendo\UI\DateTimePickerMonth();
+$content = 'value';
+$month-&gt;content($content);
+$dateTimePicker-&gt;month($month);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$content = 'value';
+$dateTimePicker-&gt;month(array('content' =&gt; $content));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="open">open</h3>
+<p>Fires when the calendar or the time drop-down list is opened
+For additional information check the <a href="/api/web/datetimepicker#events-open">open</a> event documentation.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-2">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-2">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;open('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-2">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onOpen(e) {
+        // handle the open event.
+    }
+&lt;/script&gt;
+&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;open('onOpen');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-2">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;open(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="parseformats">parseFormats</h3>
+<p>Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used. Note that value of the format option is always used.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-array-1">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;parseFormats(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="start">start</h3>
+<p>Specifies the start view of the calendar.
+ The following settings are available for the start value:</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-string-5">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;start('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="timeformat">timeFormat</h3>
+<p>Specifies the format, which is used to format the values in the time drop-down list.</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-string-6">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;timeFormat('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="value">value</h3>
+<p>Specifies the selected value.</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\DateTimePicker</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-date-2">$value <code class="language-plaintext highlighter-rouge">date</code></h5>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dateTimePicker = new \Kendo\UI\DateTimePicker('DateTimePicker');
+$dateTimePicker-&gt;value(new date());
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

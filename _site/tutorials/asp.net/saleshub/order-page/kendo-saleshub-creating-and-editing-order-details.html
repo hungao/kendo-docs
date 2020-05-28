@@ -1,0 +1,366 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/saleshub/order-page/kendo-saleshub-creating-and-editing-order-details.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="creating-and-editing-order-details---saleshub">Creating and Editing Order Details - SalesHub</h1>
+
+<p><img src="/tutorials/asp.net/saleshub/order-page/images/kendo-saleshub-order-details-edit-dialog-screenshot.png" alt="kendo-saleshub-order-details-edit-dialog-screenshot" /></p>
+
+<h2 id="how-to-setup-the-custom-order-detail-editor">How to Setup the Custom Order Detail Editor</h2>
+
+<p>Since the MVC extensions for the <a href="http://demos.telerik.com/kendo-ui/web/grid/index.html">Kendo Grid</a> make use of MVC"s
+<a href="http://msdn.microsoft.com/en-us/library/system.web.mvc.html.editorextensions.editorformodel.aspx">EditorForModel</a>
+we"re able to customize the editor that the grid uses by creating an Editor template. To
+set up the custom editor for the grid, we first have to create a partial Razor view with the same name as the type that
+we bound against the grid. If we look at how we set up the grid we can see how this works.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;OrderDetailViewModel&gt;()
+    .Name("orderDetailsGrid"))
+</code></pre></div></div>
+
+<p>Since we declared the grid to bind against <strong>OrderDetailViewModel</strong>"s this means we need to a create a partial view
+ called <strong>OrderDetailViewModel.cshtml</strong>. Once we"ve created this partial view it needs to be moved into the
+<strong>Views/Shared/EditorTemplates</strong>. The reason for this is that MVC will look in the <strong>EditorTemplates</strong> folder
+when it"s trying to resolve an editor for a model.</p>
+
+<p>The contents of <strong>OrderDetailViewModel.cshtml</strong> include inputs for the fields that we would like users to be able
+to edit when the <strong>PopUp</strong> editor for the grid is open. We"ll go over a few key aspects of the OrderDetailViewModel
+editor template, which can be found in <strong>Views/Shared/EditorTemplates/OrderDetailViewModel.cshtml</strong>. Since we"ve
+already gone over how to set up most of the Kendo widgets that this template uses, we"ll only cover the important
+parts of the template.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@model OrderDetailViewModel
+</code></pre></div></div>
+
+<p>Since this partial view will be displaying inputs for properties on an OrderDetailViewModel we need to set the model
+for the view.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul class="errors"&gt;&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>Since we also want to display validation errors from the server, we add a <code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code> with a <strong>class</strong> of "errors",
+which will be used by our custom client-side JavaScript to display the errors that we got back from the server.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div class="editor-label"&gt;
+    @Html.LabelFor(model =&gt; model.Origin)
+&lt;/div&gt;
+&lt;div class="editor-field"&gt;
+    @Html.Kendo().DropDownListFor(m =&gt; m.Origin).BindTo((System.Collections.IEnumerable) ViewData["Origins"]).DataTextField("Name").DataValueField("Value").OptionLabel("Select an Origin")
+    @Html.ValidationMessageFor(model =&gt; model.Origin)
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Here we setup the <a href="http://demos.telerik.com/kendo-ui/web/dropdownlist/index.html">Kendo DropDownList</a> for the <strong>Origin</strong>
+property. We"re using its <code class="language-plaintext highlighter-rouge">BindTo</code> function against the <strong>Origins</strong> property in the <strong>ViewData</strong>. As we"re not
+binding the dropdown list against <strong>SelectListItem</strong>s, we have to tell it which property should be used as the
+text and which property should be used as the value. To do this we use the <code class="language-plaintext highlighter-rouge">DataTextField</code> and <code class="language-plaintext highlighter-rouge">DataValueField</code>
+functions. Lastly we specify the <code class="language-plaintext highlighter-rouge">OptionLabel</code> for the dropdown list; this is the text that is displayed when
+no value from the dropdown has been selected.</p>
+
+<p>The reason we"re getting the list of origins from the <strong>ViewData</strong> is because this partial view isn"t being bound
+against its data until the grid opens its editor. This means we can"t use any of the values of properties on the view
+model because the partial view is rendered server-side and those values don"t exist yet. Another reason is because
+we"re getting the <strong>OrderDetailViewModel</strong>"s back from a remote service call, which means every <strong>OrderDetailViewModel</strong>
+that we get back from the server would have to have all of the possible Origins stored in them. This would result in a
+lot of duplicate/unneeded data being sent back to the client. To avoid all of this, we store the Origins in the
+<strong>ViewData</strong>.</p>
+
+<h2 id="auto-updating-fields-based-on-value-changes">Auto Updating Fields Based on Value Changes</h2>
+
+<p>There are a couple of properties on an order detail which are interrelated, and when one changes we need to update the
+others.</p>
+
+<p>The related fields are:</p>
+
+<ul>
+  <li>
+    <p><strong>NetWeight</strong> - When the net weight is changed, we update the units count.</p>
+  </li>
+  <li>
+    <p><strong>Units</strong> - When the number of units is changed, we recalculate the net weight.</p>
+  </li>
+  <li>
+    <p><strong>UnitWeight</strong> - When the unit weight is updated, we recalculate the net weight.</p>
+  </li>
+</ul>
+
+<p>In order to update these values we need to set up event handlers for the <strong>Change</strong> event of the widgets.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Html.Kendo().NumericTextBoxFor(model =&gt; model.NetWeight).Decimals(2).Events(events =&gt; events.Change("window.SalesHub.OrderDetailsEdit_NetWeight_Change"))
+</code></pre></div></div>
+
+<p>How you hook up the change event handlers is the same regardless of which Kendo UI widget is being used.</p>
+
+<p>After setting up the event handlers we need to actually handle the changes events correctly.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.SalesHub.OrderDetailsEdit_NetWeight_Change = function(e) {
+    var grid = $("#orderDetailsGrid").data("kendoGrid");
+    var orderDetails = grid.editable.options.model;
+    if (orderDetails.UnitWeight !== 0) {
+        orderDetails.set("Units", orderDetails.NetWeight / orderDetails.UnitWeight);
+    }
+};
+
+window.SalesHub.OrderDetailsEdit_UnitWeight_Change = function(e) {
+    var grid = $("#orderDetailsGrid").data("kendoGrid");
+    var orderDetails = grid.editable.options.model;
+    orderDetails.set("NetWeight", orderDetails.UnitWeight * orderDetails.Units);
+};
+
+window.SalesHub.OrderDetailsEdit_Units_Change = function() {
+    var grid = $("#orderDetailsGrid").data("kendoGrid");
+    var orderDetails = grid.editable.options.model;
+    orderDetails.set("NetWeight", orderDetails.UnitWeight * orderDetails.Units);
+};
+</code></pre></div></div>
+
+<p>Each of the event handlers has the same basic set of operations – they find the order details grid on the
+page and get the <strong>kendoGrid</strong> object from it. Once they have the grid, they access the order detail which
+is currently being edited by the user. To do this easily we access the grid"s <strong>editable</strong> property, which
+contains an <strong>option</strong> property that has the order detail which is currently being edited. After we get
+the order detail, we then compute and update the related value using the <strong>set</strong>. The reason we use the
+<strong>set</strong> function is because the order detail is bound to the dialog using Kendo"s MVVM framework, and we
+want the value update to be visible to the user.</p>
+
+<h2 id="adding-server-side-validation">Adding Server-side Validation</h2>
+
+<p>On top of the validation that Kendo provides client-side, we"d also like to have some validation server-side. Using
+the Kendo UI MVC extensions makes this simple to do. In the <strong>Api/CustomerOrderDetailsController.cs</strong> you can see how
+the server-side validation is implemented.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[HttpPost]
+public JsonResult UpdateOrderDetail([DataSourceRequest] DataSourceRequest dataSourceRequest, OrderDetailViewModel orderDetailViewModel)
+{
+    var order = _orderRepository.GetOrderById(orderDetailViewModel.OrderId);
+
+    if (order.OrderDate &gt; orderDetailViewModel.ValueDate)
+    {
+        ModelState.AddModelError("OrderDate", "Order detail can't pre-date order");
+    }
+    if (ModelState.IsValid)
+    {
+        var recordToUpdate = _orderDetailRepository.GetOrderDetailById(orderDetailViewModel.OrderDetailId);
+        recordToUpdate.NetWeight = orderDetailViewModel.NetWeight;
+        recordToUpdate.Origin = orderDetailViewModel.Origin;
+        recordToUpdate.PricePerUnitOfWeight = orderDetailViewModel.PricePerUnitOfWeight;
+        recordToUpdate.Units = orderDetailViewModel.Units;
+        recordToUpdate.UnitWeight = orderDetailViewModel.UnitWeight;
+        recordToUpdate.ValueDate = orderDetailViewModel.ValueDate;
+        recordToUpdate.PackageTypeId = int.Parse(orderDetailViewModel.PackageTypeId);
+        _orderRepository.SaveChanges();
+    }
+
+    var resultData = new[] { orderDetailViewModel };
+    return Json(resultData.AsQueryable().ToDataSourceResult(dataSourceRequest, ModelState));
+}
+</code></pre></div></div>
+
+<p>Since the datasource for the grid is sending the update request to the server, we"ll be receiving both
+a <strong>DataSourceRequest</strong> and a <strong>OrderDetailViewModel</strong>. Our service only does one validation check on
+top of the validation that MVC does by default using any validation attributes that are the properties
+of the models. We simply check to make sure that the date of the order detail does not pre-date that of
+the order it"s a part of. If it does pre-date the order, then we add a model error to the <strong>ModelState</strong>.</p>
+
+<p>We only want to update the Order detail in the database if there aren"t any <strong>ModelState</strong> errors, so we
+check to make sure the <strong>ModelState</strong> is valid.</p>
+
+<p>The datasource for the grid also expects the order detail which is being updated to be returned in the
+response from the server. This is why we create an array which only contains the <strong>OrderDetailViewModel</strong>
+that we got from the datasource.</p>
+
+<p>Using this array, we convert it to a <code class="language-plaintext highlighter-rouge">Queryable</code> and use the <code class="language-plaintext highlighter-rouge">ToDataSourceResult</code> extension method that is
+provided by the Kendo UI MVC extensions. This extension provides a few different overloads, but each one
+requires you to at least pass in a <strong>DataSourceRequest</strong>. One of the overloads for this function allows you
+to pass in the <strong>ModelState</strong> of your controller and it will use this to generate errors that it sends
+back to client (if there are any errors in the <strong>ModelState</strong>).</p>
+
+<p><img src="/tutorials/asp.net/saleshub/order-page/images/kendo-saleshub-order-details-errors.png" alt="kendo-saleshub-order-details-errors" /></p>
+
+<p>Using your browser"s developer tools, you can see how <code class="language-plaintext highlighter-rouge">ToDataSourceResult</code> formats the errors in the
+<strong>ModelState</strong> when it generates the response. The <strong>Errors</strong> property of the response contains the
+errors that were found in the <strong>ModelState</strong>. We can use these errors to display messages to user about
+what fields they need to change in order to update the object.</p>
+
+<h2 id="handling-errors-from-the-server">Handling Errors from the Server</h2>
+
+<p>Now that we send back any server-side validation errors we need a way of handling them client-side.
+This is where the <strong>Error</strong> event of a datasource comes in handy. As you remember from our declaration
+of the order details grid we subscribed to the <strong>Error</strong> event of the datsource.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Events(events =&gt;  events.Error("window.SalesHub.OrderDetails_Error"))
+</code></pre></div></div>
+
+<p>In <strong>Views/Order/_Order.cshtml</strong> we also declared a
+<a href="http://demos.telerik.com/kendo-ui/web/templates/index.html">Kendo template</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script type="text/x-kendo-template" id="orderDetailsValidationMessageTemplate"&gt;
+    # if (messages.length) { #
+        &lt;li&gt;#=field#
+            &lt;ul&gt;
+                # for (var i = 0; i &lt; messages.length; ++i) { #
+                    &lt;li&gt;#= messages[i] #&lt;/li&gt;
+                # } #
+            &lt;/ul&gt;
+        &lt;/li&gt;
+    # } #
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>This template is used to display the errors from server. The template takes an object
+with two properties: <strong>field</strong> and <strong>messages</strong>. The <strong>field</strong> property is the name of the
+property on the <strong>OrderDetailViewModel</strong> that the errors apply to. The <strong>messages</strong> property
+contains all of the error messages associated with the property. All this template does is
+generate an <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> with the <strong>field</strong> as text and a nested <code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code> that contains the
+error messages for the <strong>field</strong>.</p>
+
+<p>Now let"s see how the event handler is set up:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.SalesHub.OrderDetails_Error = function (args) {
+    if (args.errors) {
+        var grid = $("#orderDetailsGrid").data("kendoGrid");
+        var validationTemplate = kendo.template($("#orderDetailsValidationMessageTemplate").html());
+        grid.one("dataBinding", function (e) {
+            e.preventDefault();
+
+            $.each(args.errors, function (propertyName) {
+                var renderedTemplate = validationTemplate({ field: propertyName, messages: this.errors });
+                grid.editable.element.find(".errors").append(renderedTemplate);
+            });
+        });
+    }
+};
+</code></pre></div></div>
+
+<p>The event handler is passed an object (<strong>args</strong>) which contains the errors that were received from the server.
+Using <strong>args</strong> we check to see if there are any errors that we need to process. The reason we check this is because
+a datasource request can fail for reasons other than validation errors server-side (ex. network
+related issues).</p>
+
+<p>Next we find the order details grid on the page using jQuery and we get the <strong>kendoGrid</strong> object off of it. The next
+thing we do is find the Kendo template that we declared earlier. To actually turn this into a real Kendo template we
+need to pass the html contents of the template into <code class="language-plaintext highlighter-rouge">kendo.template</code>. This function will return a template function
+that we can call later (with parameters) and it will render the template against those parameters and return the
+resulting html.</p>
+
+<p>Now that we have our template function we need to setup a one time event handler for the <strong>dataBinding</strong> event on
+the grid. We do this to prevent the grid from rebinding against the data which failed
+the server-side validation. To prevent the binding from occurring, we call <code class="language-plaintext highlighter-rouge">preventDefault()</code> on the event object
+that we get as a parameter. To display the errors inside of the editor dialog we use
+<a href="http://api.jquery.com/jQuery.each/">jQuery"s each</a> function to iterate over each property in the <strong>errors</strong>
+object. Using the <strong>validationTemplate</strong> function, we construct a new object which has the properties that
+the template uses.</p>
+
+<p>Using the rendered result of the template we find the <code class="language-plaintext highlighter-rouge">&lt;ul class="errors"&gt;</code> which is in the editor dialog and
+append the result to it using jQuery. An easy way of finding the editor dialog in the DOM is use the <strong>editable</strong>
+property on the grid. The <strong>editable</strong> object has a property called <strong>element</strong> which is a jQuery object that
+points the dialog in the DOM.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

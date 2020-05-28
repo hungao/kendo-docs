@@ -1,0 +1,334 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/kendo-music-store/music-store-web/kendo-music-store-web-search.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="album-search---kendo-music-store">Album Search - Kendo Music Store</h1>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-web/images/kendo-search-overview.png" alt="kendo-search-overview" /></p>
+
+<p>The Music Store application provides an text box for searching the store by album title.
+To implement this, a <a href="http://demos.telerik.com/kendo-ui/web/autocomplete/index.html">Kendo AutoComplete Widget</a> was used.
+The desire was to have the autocomplete box query the server for albums that match the user"s entered text and have
+the filtering performed server-side, using a <a href="http://demos.telerik.com/kendo-ui/web/datasource/remote-data.html">remote DataSource</a>.
+The results would then be listed with the album art, title, and artist name, and be clickable to get details about the album.</p>
+
+<h2 id="add-the-input-box">Add the input box</h2>
+
+<p>We start with a normal <strong>&lt;input&gt;</strong> element:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="main-search"/&gt;
+</code></pre></div></div>
+
+<p>Here we have assigned an ID to the element so that we can easily target it with jQuery.
+Next we turn the input element into an AutoComplete widget with JavaScript:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#main-search").kendoAutoComplete({
+    filter: 'contains',
+    minLength: 3,
+    dataTextField: "Title",
+    placeholder: "Search music...",
+    height: 300,
+    template: kendo.template($("#search-result-template").html()),
+
+    dataSource: {
+        type: "odata",
+        serverFiltering: true,
+        serverPaging: true,
+        pageSize: store.config.searchMaxResults,
+        transport: {
+            read: store.config.albumsWithArtistsUrl
+        },
+        schema: {
+            data: function (data) {
+                return data.value;
+            },
+            total: function (data) {
+                return data["odata.count"];
+            }
+        }
+    },
+
+    select: function (e) {
+        e.preventDefault(); // Stop the selected item text from moving up to the AutoComplete.
+        e.sender.value(""); // clear the user entered search term.
+        var albumId = e.item.children("div").data("album-id");
+        store.viewAlbumDetails(albumId);
+    }
+});
+</code></pre></div></div>
+
+<p>Let"s look closer at what each part of this JavaScript is doing:</p>
+
+<p><strong>filter: "contains"</strong> - Specifies that autocomplete results just need to contain the entered text, anywhere. The default is "starts with".</p>
+
+<p><strong>minLength: 3</strong> - Indicates that the autocomplete dropdown will not display until the user has entered at least 3 characters.</p>
+
+<p><strong>dataTextField: "Title"</strong> - The name of the field in the data that is searched to find autocomplete results. In this example, we are showing autocomplete results for albums whose titles contain the text entered by the user.</p>
+
+<p><strong>placeholder: "Search music…"</strong> - This is the text that is displayed in the text box as a placeholder until the user clicks into the input box.</p>
+
+<p><strong>dataSource: {}</strong> - Here we configure the source for our autocomplete data. We have specified the URL of our Albums service as the source. There is a lot going on in this data source, but most of it is enabling server-side filtering using OData.</p>
+
+<h2 id="customizing-the-dropdown-items">Customizing the Dropdown Items</h2>
+
+<p>Each autocomplete item in the dropdown will be a &lt;li&gt; element. Within that element, a template is used to render the result.
+If not specified, Kendo will put the text of the field specified by the <strong>dataTextField</strong> property into the &lt;li&gt;.
+We can use templates to make much nicer looking results. In this case, we are including the album cover art, title, and artist name.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>template: kendo.template($("#search-result-template").html())
+</code></pre></div></div>
+
+<p>The template property <em>could</em> be set to a string, for example <strong>template: "foo"</strong>, and each result would render &lt;li&gt;foo&lt;/li&gt;.
+To make more intricate templates, you can use "#…#" or "${…}" to put in JavaScript and calculated values.</p>
+
+<p>For example, a better template than "foo" would be:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>template: "&lt;img src='${data.AlbumArtUrl}' /&gt;&lt;span&gt;${data.Title}&lt;/span&gt;&lt;span&gt;${data.Artist.Name}&lt;/span&gt;"
+</code></pre></div></div>
+
+<p>Here, the template is using the special value <strong>data</strong>.
+This variable is set to the JavaScript object that this template is being generated for.
+Looking at this template, we can infer that our returned JSON from the server had included search results in the format:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    AlbumArtUrl: "...",
+    Artist: {
+        Name: "..."
+    }
+}
+</code></pre></div></div>
+
+<p>However, even with this improved template, we are including some HTML elements in an inline string in JavaScript.
+This isn"t always a good maintainable approach, as it can be difficult to track down generated HTML in JavaScript.
+Instead, we can use the <strong>kendo.template()</strong> method to render HTML from a template that was included back in the HTML body.</p>
+
+<p>Including a template in the body of your HTML is done by placing the tag:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script type="text/x-kendo-template" id="some-template-name"&gt;...&lt;/script&gt;
+</code></pre></div></div>
+
+<p>inside the &lt;body&gt; of your document. The <strong>type</strong> is always <strong>"text/x-kendo-template"</strong>, and the <strong>id</strong> is the unique name of your template.
+The HTML for your template then goes inside the &lt;script&gt; tags. For our auto-complete search box, out template is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script id="search-result-template" type="text/x-kendo-template"&gt;
+    &lt;div class="album-wide" data-album-id="${data.AlbumId}"&gt;
+        &lt;img src="${data.AlbumArtUrl}" /&gt;
+        &lt;div&gt;
+            &lt;span&gt;${data.Title}&lt;/span&gt;
+            &lt;span&gt;${data.Artist.Name}&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>You can see here that we are using the <strong>${…}</strong> notation to indicate fields that need to be pulled from the JS object that is being bound to the template.
+We also could have used the <strong>#= #</strong> notation; <strong>&lt;span&gt;#=data.Title#&lt;/span&gt;</strong> would have worked as well.</p>
+
+<p>We are also taking advantage of ASP.NET MVC"s ability to render partial pages here, and including out templates as partial pages.
+In the <strong>_Layout.cshtml</strong> file, this template is included with the line:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Html.Partial("_SearchResultTemplatePartial")
+</code></pre></div></div>
+
+<p>If we were not using ASP.NET MVC, we could have written some additional code to load templates from external files.
+For more information on remote template loading, see <a href="http://docs.telerik.com/kendo-ui/howto/load-templates-external-files">How To: Load Templates from External Files</a>.</p>
+
+<p>Now that the template is included in the body of the page, the application code is using a jQuery selector to fetch this &lt;script&gt; element by its id and get the contents.
+It then calls <strong>kendo.template()</strong> to process the template.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kendo.template($("#search-result-template").html())
+</code></pre></div></div>
+
+<h2 id="getting-the-data-from-the-server-and-server-side-filtering">Getting the data from the server, and server-side filtering.</h2>
+
+<p>Ideally, we want the server to perform the filtering for our search autocomplete box.
+Kendo supports both client and server side filtering, but in a real music store, we would not
+want to return every album title in the store to the client. A quick breakdown of the code
+to do this is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    dataSource: {
+    
+        // We will use OData format requests.
+        type: "odata",
+        
+        // Let paging and filtering happen on the server, not on the client.
+        serverFiltering: true,
+        serverPaging: true,
+        
+        // Set the number of records for the server to return.
+        // This will be our max number of search results,
+        // since we will just show the 1st "page".
+        pageSize: store.config.searchMaxResults,
+        
+        
+        transport: {
+            // Set the URL to read data from
+            read: store.config.albumsWithArtistsUrl
+        },
+        
+        // This fixes some compatibility issues between Kendo and WCF Data Service OData
+        schema: {
+            data: function (data) {
+                return data.value;
+            },
+            total: function (data) {
+                return data["odata.count"];
+            }
+        }
+    }
+</code></pre></div></div>
+
+<p>The <strong>schema.data</strong> and <strong>schema.total</strong> functions overcome a JSON formatting difference between Kendo and WCF Data Services OData.
+For more information on each field set on the DataSource, also see the <a href="http:///api/framework/datasource">DataSource documentation</a>.</p>
+
+<h2 id="handling-the-selection-of-a-search-result">Handling the selection of a search result</h2>
+
+<p>When a search result is clicked, we want to show the details for the selected album.
+We do this by specifying a function to handle the <strong>selected</strong> event on the auto-complete box.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    // This function will be called when the user selects an item from the auto-complete result list.
+    select: function (e) {
+        // ... code omitted ...
+    }
+</code></pre></div></div>
+
+<p>The first thing we will do in this case is override some of the default behavior for the autocomplete box.
+Normally, when you select something from a standard auto-complete box, the selected text is moved up into the box.
+We don"t need that behavior. Instead, we want to clear the user"s entered text, resetting back to the "Search music…" placeholder text.
+To do this, we call <strong>preventDefault()</strong> on the event to suppress the normal handling and <strong>e.sender.value("")</strong> to clear the text:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    select: function (e) {
+        e.preventDefault(); // Stop the selected item text from moving up to the AutoComplete.
+        e.sender.value(""); // Clear the user entered search term.
+</code></pre></div></div>
+
+<p><strong>e.sender</strong> is the jQuery object representing the &lt;input&gt; element.
+The <strong>.value()</strong> method is also standard jQuery, and sets the value of the &lt;input&gt; element to an empty string. This triggers Kendo to put the placeholder message back in place.</p>
+
+<p>Next we want to display the album details to the user. To do this, we need to get the album ID.
+This process was somewhat complicated. You may have noticed we added a <strong>data-album-id</strong> attribute to each search result on our template:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script id="search-result-template" type="text/x-kendo-template"&gt;
+    &lt;div class="album-wide" data-album-id="${data.AlbumId}"&gt;
+</code></pre></div></div>
+
+<p>In the event object <strong>e</strong>, <strong>e.item</strong> is the &lt;li&gt; element.
+Then we can use a jQuery selector to get the &lt;div&gt; element within the &lt;li&gt;, and jQuery"s <strong>.data()</strong> method to get the value of the <strong>data-album-id</strong> attribute:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    select: function (e) {
+        // ... code omitted ...
+        var albumId = e.item.children("div").data("album-id");
+</code></pre></div></div>
+
+<p>Once we have the album ID, we can show our album details by calling <strong>store.viewAlbumDetails(albumId);</strong>, which
+will be discussed in more detail later in this tutorial.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Instructions for Kendo UI DataViz Chart Widget appearance</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to control the appearance of the chart, change the theme of the widget and manage the animated transitions.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/dataviz/chart/appearance.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h2 id="chart-appearance">Chart Appearance</h2>
+
+<p>The appearance of the Chart is controlled with style options.</p>
+
+<p>This is in contrast with the other components in the suite that use CSS for styling.</p>
+
+<h3 id="chart-structure">Chart structure</h3>
+
+<p>The main building blocks of the chart are:</p>
+
+<ul>
+  <li>Title</li>
+  <li>Legend</li>
+  <li>Chart Area</li>
+  <li>Plot Area</li>
+  <li>Axes</li>
+  <li>Series</li>
+</ul>
+
+<p><img src="/getting-started/dataviz/chart/chart-structure.png" alt="Chart Structure" /></p>
+
+<h3 id="title">Title</h3>
+
+<p>The title location can be controlled with the <code class="language-plaintext highlighter-rouge">position</code> option of the <code class="language-plaintext highlighter-rouge">title</code> object. Available options are:</p>
+
+<ul>
+  <li>"top"</li>
+  <li>"bottom"</li>
+</ul>
+
+<h3 id="legend">Legend</h3>
+
+<p>The legend position is also controllable. Supported <code class="language-plaintext highlighter-rouge">position</code> values:</p>
+
+<ul>
+  <li>"top"</li>
+  <li>"bottom"</li>
+  <li>"left"</li>
+  <li>"right"</li>
+  <li>"custom"</li>
+</ul>
+
+<p>Custom positioning is configured through the <code class="language-plaintext highlighter-rouge">offsetX</code>  and <code class="language-plaintext highlighter-rouge">offsetY</code> options. For example:</p>
+
+<p><img src="/getting-started/dataviz/chart/chart-legend-custom-position.png" alt="Custom legend position" /></p>
+
+<p>Series can be excluded from the legend by setting their <code class="language-plaintext highlighter-rouge">visibleInLegend</code> option to <code class="language-plaintext highlighter-rouge">false</code>.</p>
+
+<h3 id="themes">Themes</h3>
+
+<p>The Chart comes with a number of predefined themes:</p>
+
+<ul>
+  <li>Default</li>
+  <li>Black</li>
+  <li>BlueOpal</li>
+  <li>Metro</li>
+  <li>Silver</li>
+</ul>
+
+<p>Use the <code class="language-plaintext highlighter-rouge">theme</code> option to select a theme:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#chart").kendoChart({
+    theme: "blueOpal",
+    series: [{
+        type: "bar",
+        name: "United States",
+        data: [67.96, 68.93, 75, 74, 78]
+    }],
+    categoryAxis: {
+        categories: [2005, 2006, 2007, 2008, 2009]
+    }
+});
+</code></pre></div></div>
+
+<p>Note that theme names are case insensitive.</p>
+
+<h3 id="transitions">Transitions</h3>
+
+<p>The Chart uses animated transitions to display new and updated data. These transitions can be disabled through the <code class="language-plaintext highlighter-rouge">transitions</code> option:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#chart").kendoChart({
+    series: [{
+        type: "bar",
+        name: "United States",
+        data: [67.96, 68.93, 75, 74, 78]
+    }],
+    categoryAxis: {
+        categories: [2005, 2006, 2007, 2008, 2009]
+    },
+    transitions: false
+});
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Specific characteristics of the different symbologies of the Barcode widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Check information about the character set, length and check digit of the Barcode symbologies.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/dataviz/barcode/encodings.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h2 id="what-is-encodingsymbology">What is Encoding/Symbology?</h2>
+
+<p>The mapping between messages and barcodes is called a symbology (encoding).
+The specification of a symbology includes the encoding of the single digits/characters of the message
+as well as the start and stop markers into bars and space,
+the size of the quiet zone required to be before and after the barcode as well as the computation of a checksum.</p>
+
+<p>Currently the Kendo Barcode widget supports the following symbologies with the their specifications:</p>
+
+<style scoped="">
+    .stripes
+    {
+        border: 1px solid #E15613;
+        border-collapse: collapse;
+    }
+    .stripes th
+    {
+        background: #E15613;
+        color: #fff;
+    }
+    .stripes tr:nth-child(2n+1) td
+    {
+        background: #fed;
+    }
+    .stripes td:nth-child(n+2)
+    {
+        text-align: center;
+    }
+    .stripes th,
+    .stripes td
+    {
+        padding: 3px 5px;
+    }
+</style>
+
+<blockquote>
+  <p>Error will be thrown if the value provided for a particular encoding does not meet the expected length or character set.</p>
+</blockquote>
+
+<table class="stripes" style="margin-top: 1.2em;">
+   <tbody>
+        <tr>
+            <th>Symbology</th>
+            <th>Character set</th>
+            <th>Length</th>
+            <th>Check digits</th>
+        </tr>
+        <tr>
+           <td><a href="https://en.wikipedia.org/wiki/Code_128">Code 39 (default)</a></td>
+           <td>[A-Z]; [0-9]; [ - . $ / + % ]</td>
+           <td>variable (avg. up to 20 chars)</td>
+           <td>optional (Mod. 43)</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/Code_39#Full_ASCII_Code_39">Code39Extended</a></td>
+           <td>ASCII (128 characters)</td>
+           <td>variable</td>
+           <td>optional (Mod. 43)</td>
+        </tr>
+        <tr>
+           <td><a href="http://www.barcodeisland.com/code93.phtml">Code 93</a></td>
+           <td>[0-9];[A-Z];[SPACE . + - / % $]</td>
+           <td>variable</td>
+           <td>2 check digits</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/Code_93">Code93Extended</a></td>
+           <td>ASCII(128 characters)</td>
+           <td>variable</td>
+           <td>2 check digits</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/International_Article_Number_(EAN)">EAN-13</a></td>
+           <td>numeric [0..9]</td>
+           <td>12 usable digits</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/EAN-8">EAN-8</a></td>
+           <td>numeric [0..9]</td>
+           <td>7 usable digits</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/Universal_Product_Code">UPC-A</a></td>
+           <td>numeric [0..9]</td>
+           <td>11 usable digits (first is always 0)</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/Universal_Product_Code">UPC-E</a></td>
+           <td>numeric [0..9]</td>
+           <td>6 usable digits (first is always 0)</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/POSTNET">POSTNET</a></td>
+           <td>numeric [0..9]</td>
+           <td>variable</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="http://www.barcodeisland.com/code11.phtml">Code 11</a></td>
+           <td>[0-9]; [-]</td>
+           <td>variable</td>
+           <td>1 or 2 based on length</td>
+        </tr>
+        <tr>
+           <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128</a></td>
+           <td>LATIN-1 (<a href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859-1</a>)</td>
+           <td>variable</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128A</a></td>
+           <td>ASCII 00 to 95 (0-9, A-Z and control codes), special characters</td>
+           <td>variable</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128B</a></td>
+           <td>ASCII 32 to 127 (0-9, A-Z, a-z), special characters</td>
+           <td>variable</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="https://en.wikipedia.org/wiki/Code_128">Code128C</a></td>
+           <td>ASCII 00-99 (encodes each two digits with one code)</td>
+           <td>variable</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/GS1-128">GS1-128</a></td>
+           <td>depending on Application Identifier</td>
+           <td>variable</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod10</a></td>
+           <td>numeric [0..9]</td>
+           <td>variable</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod11</a></td>
+           <td>numeric [0..9]</td>
+           <td>variable</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod1010</a></td>
+           <td>numeric [0..9]</td>
+           <td>variable</td>
+           <td>1 check digit</td>
+        </tr>
+        <tr>
+           <td><a href="http://en.wikipedia.org/wiki/MSI_Barcode">MSImod1110</a></td>
+           <td>numeric [0..9]</td>
+           <td>variable</td>
+           <td>1 check digit</td>
+        </tr>
+    </tbody>
+</table>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

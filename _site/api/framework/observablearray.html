@@ -1,0 +1,488 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API Reference for ObservableArray wrap in Kendo MVVM and Kendo DataSource</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to create a new ObservableArray, explanations how to use kendo.observable methods, fields and events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/framework/observablearray.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodataobservablearray">kendo.data.ObservableArray</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">ObservableArray</code> wraps an existing Array object with change tracking capabilities. It is used by <a href="/getting-started/framework/mvvm/overview">Kendo MVVM</a> and
+the <a href="/getting-started/framework/datasource/overview">kendo.data.DataSource</a>. Inherits from <a href="/api/framework/observable">kendo.Observable</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>To create a new <code class="language-plaintext highlighter-rouge">ObservableArray</code>, use its constructor or the <code class="language-plaintext highlighter-rouge">kendo.observable</code> method.</p>
+
+<h4 id="example---use-the-observablearray-constructor">Example - use the ObservableArray constructor</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([
+    { name: "John Doe" },
+    { name: "Jane Doe" }
+]);
+console.log(array[0].name); // outputs "John Doe"
+console.log(array.length); // outputs "2"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---use-the-kendoobservable-method">Example - use the kendo.observable method</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = kendo.observable({
+    people: [
+        { name: "John Doe" },
+        { name: "Jane Doe" }
+    ]
+});
+console.log(observable.people instanceof kendo.data.ObservableArray); // outputs "true"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Important</strong>: The <code class="language-plaintext highlighter-rouge">kendo.data.ObservableArray</code> wraps its items <a href="/api/framework/observableobject">kendo.data.ObservableObject</a> instances (unless the items are of primitive type).</p>
+</blockquote>
+
+<h4 id="example---array-of-complex-and-primitive-type">Example - array of complex and primitive Type</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var complex = new kendo.data.ObservableArray([
+    { name: "John Doe" },
+    { name: "Jane Doe" }
+]);
+console.log(complex[0] instanceof kendo.data.ObservableObject); // outputs "true"
+var primitive = new kendo.data.ObservableArray([
+    "John Doe", "Jane Doe"
+]);
+console.log(typeof (primitive[0]) ); // outputs "string"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="length">length</h3>
+
+<p>An unsigned, 32-bit integer that specifies the number of items in an <code class="language-plaintext highlighter-rouge">ObservableArray</code>.</p>
+
+<h4 id="example---iterating-over-observablearray">Example - iterating over ObservableArray</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([1, 2, 3]);
+for (var i = 0; i &lt; array.length; i++) {
+    console.log(array[i]); // outputs the current item
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="bind">bind</h3>
+
+<p>Attaches an event handler for the specified event.</p>
+
+<h4 id="example---subscribe-to-an-event">Example - subscribe to an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([1, 2]);
+array.bind("change", function(e) {
+    console.log("changed");
+});
+array.push(3); // raises the "change" event and the handler outputs "changed"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="eventname-string">eventName <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the event.</p>
+
+<h5 id="handler-function">handler <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>The function which will be invoked when the event is raised.</p>
+
+<h3 id="join">join</h3>
+
+<p>Joins all items of an <code class="language-plaintext highlighter-rouge">ObservableArray</code> into a string. Equivalent of
+<a href="http://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/join">Array.prototype.join</a>.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="separator-string">separator <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>Specifies the string to separate each item of the array. If omitted the array items are
+separated with a comma (<code class="language-plaintext highlighter-rouge">,</code>)</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([1, 2, 3]);
+console.log(array.join("-")); // outputs "1-2-3"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="parent">parent</h3>
+
+<p>Gets the parent of the array if such parent exists.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.ObservableObject</code> the parent of the array; <code class="language-plaintext highlighter-rouge">undefined</code> if the array is not nested and doesn"t have a parent.</p>
+
+<h4 id="example---get-the-parent">Example - get the parent</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([1, 2]);
+console.log(array.parent()); // outputs "undefined"
+var observable = kendo.observable({ numbers: [1, 2] });
+var numbers = observable.get("numbers");
+console.log(numbersperson.parent() === observable); // outputs "true"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pop">pop</h3>
+
+<p>Removes the last item from an array and returns that item. Equivalent of <a href="http://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/pop">Array.prototype.pop</a>.</p>
+
+<blockquote>
+  <p><strong>Important</strong>: The <code class="language-plaintext highlighter-rouge">pop</code> method raises the <a href="#events-change">change</a> event. The <code class="language-plaintext highlighter-rouge">action</code> field of the
+event argument is set to <code class="language-plaintext highlighter-rouge">"remove"</code>. The <code class="language-plaintext highlighter-rouge">items</code> field of the event argument is the array that contains the removed item.</p>
+</blockquote>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> the item which was removed.</p>
+
+<h4 id="example---remove-the-last-item-from-an-observablearray">Example - remove the last item from an <code class="language-plaintext highlighter-rouge">ObservableArray</code></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([{ name: "John Doe" }]);
+var result = array.pop();
+console.log(array.length); // outputs "0"
+console.log(result.get("name")); // outputs "John Doe"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="push">push</h3>
+
+<p>Appends the given items to the array and returns the new length of the array. Equivalent of <a href="http://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/push">Array.prototype.push</a>.
+The new items are wrapped as <code class="language-plaintext highlighter-rouge">ObservableObject</code> if they are complex objects.</p>
+
+<blockquote>
+  <p><strong>Important</strong>: The <code class="language-plaintext highlighter-rouge">push</code> method raises the <a href="#events-change">change</a> event. The <code class="language-plaintext highlighter-rouge">action</code> field of the
+event argument is set to <code class="language-plaintext highlighter-rouge">"add"</code>. The <code class="language-plaintext highlighter-rouge">items</code> field of the event argument is the array that contains the appended items.</p>
+</blockquote>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> the new length of the array.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="item1--itemn">item1, …, itemN</h5>
+
+<p>The item(s) to append to the array.</p>
+
+<h4 id="example---append-an-item-to-an-observablearray">Example - append an item to an <code class="language-plaintext highlighter-rouge">ObservableArray</code></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([{ name: "John Doe" }]);
+var length = array.push({ name: "Jane Doe" });
+console.log(length); // outputs "2"
+console.log(array[1] instanceof kendo.data.ObservableObject); // outputs "true"
+console.log(array[1].get("name")); // outputs "Jane Doe"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---append-more-than-one-item-to-an-observablearray">Example - append more than one item to an <code class="language-plaintext highlighter-rouge">ObservableArray</code></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([ 1 ]);
+var length = array.push(2, 3);
+console.log(length); // outputs "3"
+console.log(array[1]); // outputs "2"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="slice">slice</h3>
+
+<p>Returns a one-level deep copy of a portion of an array. Equivalent of
+<a href="http://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/slice">Array.prototype.slice</a>.
+The result of the <code class="language-plaintext highlighter-rouge">slice</code> method is <strong>not</strong> an instance of <code class="language-plaintext highlighter-rouge">ObvservableArray</code>. It is a regular JavaScript Array object.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The <code class="language-plaintext highlighter-rouge">slice</code> method does not modify the original <code class="language-plaintext highlighter-rouge">ObservableArray</code>.</p>
+</blockquote>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="begin-number">begin <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>Zero-based index at which to begin extraction.</p>
+
+<h5 id="end-number">end <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>Zero-based index at which to end extraction. If <code class="language-plaintext highlighter-rouge">end</code> is omitted, <code class="language-plaintext highlighter-rouge">slice</code> extracts to the
+end of the sequence.</p>
+
+<h4 id="example---slice-items-from-an-observablearray">Example - slice items from an <code class="language-plaintext highlighter-rouge">ObservableArray</code></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([1, 2, 3]);
+var firstAndSecond = array.slice(0, 2);
+console.log(firstAndSecond); // outputs [1, 2]
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="splice">splice</h3>
+
+<p>Changes an <code class="language-plaintext highlighter-rouge">ObservableArray</code>, by adding new items while removing old items. Equivalent of
+<a href="http://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/splice">Array.prototype.splice</a></p>
+
+<blockquote>
+  <p><strong>Important</strong>: The <code class="language-plaintext highlighter-rouge">splice</code> method raises the <a href="#events-change">change</a> event once or twice depending on the change. The <code class="language-plaintext highlighter-rouge">action</code> field of the
+event argument is set to <code class="language-plaintext highlighter-rouge">"add"</code> (if items are added) or <code class="language-plaintext highlighter-rouge">"remove</code> (if items are removed). The <code class="language-plaintext highlighter-rouge">items</code> field of the event argument is the array that
+contains the appended items or removed items. In the above example the <code class="language-plaintext highlighter-rouge">change</code> event will be raised two times - first because "baseball" is removed and
+second because "tennis" and "hockey" are added.</p>
+</blockquote>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> containing the removed items. The result of the <code class="language-plaintext highlighter-rouge">splice</code> method is <strong>not</strong> an instance of <code class="language-plaintext highlighter-rouge">ObvservableArray</code>.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="index-number">index <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>Index at which to start changing the array. If negative, will begin that many elements from the end.</p>
+
+<h5 id="howmany-number">howMany <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>An integer indicating the number of items to remove. If set to 0, no items are removed. In this case, you should specify at least one new item.</p>
+
+<h5 id="item1--itemn-optional">item1, …, itemN <em>(optional)</em></h5>
+
+<p>The items to add to the array. If you don"t specify any items, <code class="language-plaintext highlighter-rouge">splice</code> simply removes items from the array.</p>
+
+<h4 id="example---splice-array-items">Example - splice array items</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var sports = new kendo.data.ObservableArray(["football", "basketball", "volleyball"]);
+var removed = sports.splice(1, 1, "tennis", "hockey");
+console.log(removed); // outputs ["basketball"]
+console.log(sports); // outputs ["football", "tennis", "hockey", "volleyball"]
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="shift">shift</h3>
+
+<p>Removes the first item from an <code class="language-plaintext highlighter-rouge">ObvservableArray</code> and returns that item. Equivalent of <a href="http://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/shift">Array.prototype.shift</a>.</p>
+
+<blockquote>
+  <p><strong>Important</strong>: The <code class="language-plaintext highlighter-rouge">shift</code> method raises the <code class="language-plaintext highlighter-rouge">change</code> event. The <code class="language-plaintext highlighter-rouge">action</code> field of the
+event argument is set to <code class="language-plaintext highlighter-rouge">"remove"</code>. The <code class="language-plaintext highlighter-rouge">items</code> field of the event argument is an array that
+contains the removed item.</p>
+</blockquote>
+
+<h4 id="returns-4">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> the item which was removed.</p>
+
+<h4 id="example---remove-the-first-item">Example - remove the first item</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([1, 2, 3]);
+var removed = array.shift();
+console.log(removed); // outputs "1"
+console.log(array.length); // outputs "2"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="tojson">toJSON</h3>
+
+<p>Returns a JavaScript Array which represents the contents of the <code class="language-plaintext highlighter-rouge">ObservableArray</code>.</p>
+
+<h4 id="example---return-the-raw-array-representation">Example - return the raw array representation</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var people = new kendo.data.ObservableArray([
+    { name: "John Doe" },
+    { name: "Jane Doe" }
+]);
+var json = people.toJSON();
+console.log(JSON.stringify(json)); // outputs [{"name":"John Doe"},{"name":"Jane Doe"}]
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="unshift">unshift</h3>
+
+<p>Adds one or more items to the beginning of an <code class="language-plaintext highlighter-rouge">ObservableArray</code> and returns the new length.  Equivalent of <a href="http://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/unshift">Array.prototype.unshift</a>.</p>
+
+<blockquote>
+  <p><strong>Important</strong>: The <code class="language-plaintext highlighter-rouge">unshift</code> method raises the <a href="#events-change">change</a> event. The <code class="language-plaintext highlighter-rouge">action</code> field of the
+event argument is set to <code class="language-plaintext highlighter-rouge">"add"</code>. The <code class="language-plaintext highlighter-rouge">items</code> field of the event argument is an array that
+contains the new items.</p>
+</blockquote>
+
+<h4 id="returns-5">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> the new length of the array.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="item1--itemn-1">item1, …, itemN</h5>
+
+<p>The items to add to the beginning of the <code class="language-plaintext highlighter-rouge">ObservableArray</code>.</p>
+
+<h4 id="example---add-items-to-the-beginning-of-an-observablearray">Example - add items to the beginning of an <code class="language-plaintext highlighter-rouge">ObservableArray</code></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([2, 3]);
+var result = array.unshift(0, 1);
+console.log(result); // outputs "4"
+console.log(array); // outputs [0, 1, 2, 3]
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="change">change</h3>
+
+<p>Fired when the items of the <code class="language-plaintext highlighter-rouge">ObservableArray</code> change in some way.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="eaction-string">e.action <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>Specifies the type of change. Possible values are: <code class="language-plaintext highlighter-rouge">"add"</code>- items are added to the <code class="language-plaintext highlighter-rouge">ObservableArray</code>, <code class="language-plaintext highlighter-rouge">"itemchange"</code> - a field of an item changed, <code class="language-plaintext highlighter-rouge">"remove"</code> - items are removed from the <code class="language-plaintext highlighter-rouge">ObservableArray</code>.</p>
+
+<h5 id="eindex-number">e.index <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The index at which items are removed or added. Set to <code class="language-plaintext highlighter-rouge">undefined</code> if <code class="language-plaintext highlighter-rouge">e.action</code> is <code class="language-plaintext highlighter-rouge">"itemchange"</code>.</p>
+
+<h5 id="eitems-array">e.items <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>The items which were changed.</p>
+
+<h5 id="efield-string">e.field <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the field of an item that changed. Available only when <code class="language-plaintext highlighter-rouge">e.action</code> is <code class="language-plaintext highlighter-rouge">"itemchange"</code>.</p>
+
+<h4 id="example---subscribe-to-the-change-event">Example - subscribe to the change event</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var array = new kendo.data.ObservableArray([1, 2, 3]);
+array.bind("change", function(e) {
+    console.log(e.action, e.index, e.items);
+});
+array.push(4, 5); // outputs "add", 3, [4, 5]
+array.pop(); // outputs "remove", 4, [5]
+var people = new kendo.data.ObservableArray([{ name: "John Doe" }]);
+people.bind("change", function(e) {
+    console.log(e.action, e.field, e.items[0].get("name"));
+});
+people[0].set("name", "Jane Doe"); // outputs "itemchange", "name", "Jane Doe"
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

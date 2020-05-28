@@ -1,0 +1,348 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/jsp/tags/grid/batch-editing.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="cell-editing-and-batch-updates">Cell Editing and Batch Updates</h1>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>Cell editing mode allows the user to edit data in a way similar to popular spreadsheet programs - double clicking a cell puts it in edit mode.
+Clicking outside the cell accepts the new value. All modified grid records are updated (saved, inserted or deleted) when the "Save changes" button is clicked.</p>
+
+<p>To enable this mode follow these steps (using Spring MVC framework):</p>
+
+<ol>
+  <li>
+    <p>Set the edit mode to <code class="language-plaintext highlighter-rouge">InCell</code>:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid name="grid"&gt;
+    &lt;kendo:grid-editable mode="incell"/&gt;
+&lt;/kendo:grid&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add <code class="language-plaintext highlighter-rouge">Create</code> and <code class="language-plaintext highlighter-rouge">Save</code> commands:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;kendo:grid name="grid"&gt;
+    &lt;kendo:grid-editable mode="incell"/&gt;
+    // Command configuration --&gt;
+    &lt;kendo:grid-toolbar&gt;
+        &lt;kendo:grid-toolbarItem name="create"/&gt;
+        &lt;kendo:grid-toolbarItem name="save"/&gt;
+        &lt;kendo:grid-toolbarItem name="cancel"/&gt;
+    &lt;/kendo:grid-toolbar&gt;
+    // &lt;-- Command configuration
+    &lt;kendo:grid-columns&gt;
+        &lt;kendo:grid-column title="Product Name" field="productName" /&gt;
+        &lt;kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" /&gt;
+        &lt;kendo:grid-column title="Units In Stock" field="unitsInStock" /&gt;
+        &lt;kendo:grid-column title="Discontinued" field="discontinued" /&gt;
+        &lt;kendo:grid-column command="destroy" title="&amp;nbsp;" /&gt;
+    &lt;/kendo:grid-columns&gt;
+&lt;/kendo:grid&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Specify the parameterMap and the action methods which will handle the <code class="language-plaintext highlighter-rouge">Create</code>, <code class="language-plaintext highlighter-rouge">Update</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> operations:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   &lt;kendo:grid name="grid"&gt;
+        &lt;kendo:grid-editable mode="incell"/&gt;
+        &lt;kendo:grid-toolbar&gt;
+            &lt;kendo:grid-toolbarItem name="create"/&gt;
+            &lt;kendo:grid-toolbarItem name="save"/&gt;
+            &lt;kendo:grid-toolbarItem name="cancel"/&gt;
+        &lt;/kendo:grid-toolbar&gt;
+        &lt;kendo:grid-columns&gt;
+            &lt;kendo:grid-column title="Product Name" field="productName" /&gt;
+            &lt;kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" /&gt;
+            &lt;kendo:grid-column title="Units In Stock" field="unitsInStock" /&gt;
+            &lt;kendo:grid-column title="Discontinued" field="discontinued" /&gt;
+            &lt;kendo:grid-column command="destroy" title="&amp;nbsp;" /&gt;
+        &lt;/kendo:grid-columns&gt;
+        &lt;kendo:dataSource batch="true"&gt;
+            // CRUD configuration --&gt;
+            &lt;kendo:dataSource-transport&gt;
+                &lt;kendo:dataSource-transport-create url="${createUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+                &lt;kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+                &lt;kendo:dataSource-transport-update url="${updateUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+                &lt;kendo:dataSource-transport-destroy url="${destroyUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+                &lt;kendo:dataSource-transport-parameterMap&gt;
+                    &lt;script&gt;
+                        function parameterMap(options,type) { 
+                            if(type==="read"){
+                                return JSON.stringify(options);
+                            } else {
+                                return JSON.stringify(options.models);
+                            }
+                        }
+                    &lt;/script&gt;
+                &lt;/kendo:dataSource-transport-parameterMap&gt;
+            &lt;/kendo:dataSource-transport&gt;
+            // &lt;-- CRUD configuration
+        &lt;/kendo:dataSource&gt;
+    &lt;/kendo:grid&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Specify the property of the model which is the unique identifier (primary key):</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid name="grid"&gt;
+    &lt;kendo:grid-editable mode="incell"/&gt;
+    &lt;kendo:grid-toolbar&gt;
+        &lt;kendo:grid-toolbarItem name="create"/&gt;
+        &lt;kendo:grid-toolbarItem name="save"/&gt;
+        &lt;kendo:grid-toolbarItem name="cancel"/&gt;
+    &lt;/kendo:grid-toolbar&gt;
+    &lt;kendo:grid-columns&gt;
+        &lt;kendo:grid-column title="Product Name" field="productName" /&gt;
+        &lt;kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" /&gt;
+        &lt;kendo:grid-column title="Units In Stock" field="unitsInStock" /&gt;
+        &lt;kendo:grid-column title="Discontinued" field="discontinued" /&gt;
+        &lt;kendo:grid-column command="destroy" title="&amp;nbsp;" /&gt;
+    &lt;/kendo:grid-columns&gt;
+    &lt;kendo:dataSource&gt;
+        &lt;kendo:dataSource-transport&gt;
+            &lt;kendo:dataSource-transport-create url="${createUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+            &lt;kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+            &lt;kendo:dataSource-transport-update url="${updateUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+            &lt;kendo:dataSource-transport-destroy url="${destroyUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+        &lt;/kendo:dataSource-transport&gt;
+        &lt;kendo:dataSource-schema&gt;
+        	&lt;kendo:dataSource-schema-model id="productId"&gt;
+                &lt;kendo:dataSource-schema-model-fields&gt;
+                    &lt;kendo:dataSource-schema-model-field name="productName" type="string"&gt;
+                    	&lt;kendo:dataSource-schema-model-field-validation required="true" /&gt;
+                    &lt;/kendo:dataSource-schema-model-field&gt;
+                    &lt;kendo:dataSource-schema-model-field name="unitPrice" type="number"&gt;
+                    	&lt;kendo:dataSource-schema-model-field-validation required="true" min="1" /&gt;
+                    &lt;/kendo:dataSource-schema-model-field&gt;
+                    &lt;kendo:dataSource-schema-model-field name="unitsInStock" type="number"&gt;
+                    	&lt;kendo:dataSource-schema-model-field-validation required="true" min="0" /&gt;
+                    &lt;/kendo:dataSource-schema-model-field&gt;
+                    &lt;kendo:dataSource-schema-model-field name="discontinued" type="boolean" /&gt;
+                &lt;/kendo:dataSource-schema-model-fields&gt;
+            &lt;/kendo:dataSource-schema-model&gt;
+        &lt;/kendo:dataSource-schema&gt;
+    &lt;/kendo:dataSource&gt;
+&lt;/kendo:grid&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Enable batch mode:</p>
+  </li>
+</ol>
+
+   		<kendo:grid name="grid">
+</kendo:grid><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>		&lt;kendo:grid-editable mode="incell"/&gt;
+        &lt;kendo:grid-toolbar&gt;
+            &lt;kendo:grid-toolbarItem name="create"/&gt;
+            &lt;kendo:grid-toolbarItem name="save"/&gt;
+            &lt;kendo:grid-toolbarItem name="cancel"/&gt;
+        &lt;/kendo:grid-toolbar&gt;
+        &lt;kendo:grid-columns&gt;
+            &lt;kendo:grid-column title="Product Name" field="productName" /&gt;
+            &lt;kendo:grid-column title="Unit Price" field="unitPrice" format="{0:c}" /&gt;
+            &lt;kendo:grid-column title="Units In Stock" field="unitsInStock" /&gt;
+            &lt;kendo:grid-column title="Discontinued" field="discontinued" /&gt;
+            &lt;kendo:grid-column command="destroy" title="&amp;nbsp;" /&gt;
+        &lt;/kendo:grid-columns&gt;
+        &lt;kendo:dataSource batch="true"&gt;
+           &lt;%-- ... --%&gt;
+        &lt;/kendo:dataSource&gt;
+    &lt;/kendo:grid&gt;
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Read</code> action method.
+    @Autowired
+    private ProductDao product;</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@RequestMapping(value = "/editing/read", method = RequestMethod.POST)
+public @ResponseBody List&lt;Product&gt; read() {
+    return product.getList();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Create</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@RequestMapping(value = "/editing/create", method = RequestMethod.POST)
+public @ResponseBody List&lt;Product&gt; create(@RequestBody ArrayList&lt;Map&lt;String, Object&gt;&gt; models) {
+    List&lt;Product&gt; products = new ArrayList&lt;Product&gt;();
+
+    for (Map&lt;String, Object&gt; model : models) {
+        Product product = new Product();
+
+        product.setProductName((String)model.get("productName"));
+        product.setUnitPrice(Double.parseDouble(model.get("unitPrice").toString()));
+        product.setUnitsInStock((int)model.get("unitsInStock"));
+        product.setDiscontinued((boolean)model.get("discontinued"));
+
+        products.add(product);
+    }
+
+    product.saveOrUpdate(products);
+
+    return products;
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Update</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@RequestMapping(value = "/editing/update", method = RequestMethod.POST)
+public @ResponseBody List&lt;Product&gt; update(@RequestBody ArrayList&lt;Map&lt;String, Object&gt;&gt; models) {
+    List&lt;Product&gt; products = new ArrayList&lt;Product&gt;();
+
+    for (Map&lt;String, Object&gt; model : models) {
+        Product product = new Product();
+
+        product.setProductId((int)model.get("productId"));
+        product.setProductName((String)model.get("productName"));
+        product.setUnitPrice(Double.parseDouble(model.get("unitPrice").toString()));
+        product.setUnitsInStock((int)model.get("unitsInStock"));
+        product.setDiscontinued((boolean)model.get("discontinued"));
+        product.setCategoryId((int)model.get("categoryId"));
+
+        products.add(product);
+    }
+
+    product.saveOrUpdate(products);
+
+    return products;
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Destroy</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@RequestMapping(value = "/editing/destroy", method = RequestMethod.POST)
+   		public @ResponseBody List&lt;Product&gt; destroy(@RequestBody ArrayList&lt;Map&lt;String, Object&gt;&gt; models) {
+    List&lt;Product&gt; products = new ArrayList&lt;Product&gt;();
+
+    for (Map&lt;String, Object&gt; model : models) {
+        Product product = new Product();
+
+        product.setProductId((int)model.get("productId"));
+
+        products.add(product);
+    }
+
+    product.delete(products);
+
+    return products;
+}
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,571 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/UI/Tooltip.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouitooltip">\Kendo\UI\Tooltip</h1>
+
+<p>A PHP wrapper for Kendo UI <a href="/api/web/tooltip">Tooltip</a>.</p>
+
+<p>Inherits from <a href="/api/wrappers/php/Kendo/UI/Widget">\Kendo\UI\Widget</a>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use Tooltip in a PHP page instantiate a new instance, configure it via the available
+configuration <a href="#methods">methods</a> and output it by <code class="language-plaintext highlighter-rouge">echo</code>-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+<h3 id="using-kendo-tooltip">Using Kendo Tooltip</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// Create a new instance of Tooltip and specify its id
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+
+// Configure it
+$tooltip-&gt;autoHide(true)
+
+// Output it
+
+echo $tooltip-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="animation">animation</h3>
+
+<p>A collection of {Animation} objects, used to change default animations. A value of false
+will disable all animations in the widget.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-kendouitooltipanimationarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\UI\TooltipAnimation|array</code></h5>
+
+<h4 id="example---using-kendouitooltipanimation">Example - using <a href="/api/wrappers/php/Kendo/UI/TooltipAnimation">\Kendo\UI\TooltipAnimation</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$animation = new \Kendo\UI\TooltipAnimation();
+$close = new \Kendo\UI\TooltipAnimationClose();
+$animation-&gt;close($close);
+$tooltip-&gt;animation($animation);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$close = new \Kendo\UI\TooltipAnimationClose();
+$tooltip-&gt;animation(array('close' =&gt; $close));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="autohide">autoHide</h3>
+<p>Specifies if the tooltip will be hidden when mouse leaves the target element. If set to false a close button will be shown within tooltip. If set to false, showAfter is specified and the showOn is set to "mouseenter" the Tooltip will be displayed after the given timeout even if the element is no longer hovered.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;autoHide(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="callout">callout</h3>
+<p>Specifies if the tooltip callout will be displayed.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;callout(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="content">content</h3>
+
+<p>Sets the HTML content of the Tooltip.</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Tooltip</code></p>
+
+<h4 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h4>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;content('&lt;strong&gt;Content&lt;/strong&gt;');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="contentload">contentLoad</h3>
+<p>Triggered when an AJAX request for content completes.
+For additional information check the <a href="/api/web/tooltip#events-contentLoad">contentLoad</a> event documentation.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;contentLoad('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onContentLoad(e) {
+        // handle the contentLoad event.
+    }
+&lt;/script&gt;
+&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;contentLoad('onContentLoad');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;contentLoad(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="endcontent">endContent</h3>
+
+<p>Stops output bufferring and sets the preceding markup as the content of the Tooltip.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;startContent();
+?&gt;
+&lt;strong&gt;Content&lt;/strong&gt;
+&lt;?php
+$tooltip-&gt;endContent(); // content is set to &lt;strong&gt;Content&lt;/strong&gt;
+?&gt;
+</code></pre></div></div>
+
+<h3 id="error">error</h3>
+<p>Triggered when an AJAX request for content fails.
+For additional information check the <a href="/api/web/tooltip#events-error">error</a> event documentation.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-1">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;error('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-1">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onError(e) {
+        // handle the error event.
+    }
+&lt;/script&gt;
+&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;error('onError');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-1">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;error(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="filter">filter</h3>
+<p>Specifies a selector for elements, within the container, for which the tooltip will be displayed.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;filter('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="height">height</h3>
+<p>The height (in pixels) of the tooltip.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;height(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="hide">hide</h3>
+<p>Triggered when a Tooltip is hidden
+For additional information check the <a href="/api/web/tooltip#events-hide">hide</a> event documentation.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-2">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-2">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;hide('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-2">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onHide(e) {
+        // handle the hide event.
+    }
+&lt;/script&gt;
+&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;hide('onHide');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-2">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;hide(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="iframe">iframe</h3>
+<p>Explicitly states whether content iframe should be created.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-boolean-2">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;iframe(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="position">position</h3>
+<p>The position relative to the target element, at which the tooltip will be shown. Predefined values are "bottom", "top", "left", "right", "center".</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;position('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="requeststart">requestStart</h3>
+<p>Triggered before an AJAX request started. Note that this event is triggered only when an AJAX request, instead of an iframe, is used.
+For additional information check the <a href="/api/web/tooltip#events-requestStart">requestStart</a> event documentation.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-3">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-3">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;requestStart('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-3">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onRequestStart(e) {
+        // handle the requestStart event.
+    }
+&lt;/script&gt;
+&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;requestStart('onRequestStart');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-3">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;requestStart(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="show">show</h3>
+<p>Triggered when a Tooltip is shown.
+For additional information check the <a href="/api/web/tooltip#events-show">show</a> event documentation.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-4">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-4">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;show('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-4">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onShow(e) {
+        // handle the show event.
+    }
+&lt;/script&gt;
+&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;show('onShow');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-4">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;show(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="showafter">showAfter</h3>
+<p>Specify the delay in milliseconds before the tooltip is shown. This option is ignored if showOn is set to "click" or "focus".</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-float-1">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;showAfter(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="showon">showOn</h3>
+<p>The event on which the tooltip will be shown. Predefined values are "mouseenter", "click" and "focus".</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-string-3">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;showOn('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="startcontent">startContent</h3>
+
+<p>Starts output bufferring. Any following markup will be set as the content of the Tooltip.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;startContent();
+?&gt;
+&lt;strong&gt;Content&lt;/strong&gt;
+&lt;?php
+$tooltip-&gt;endContent(); // content is set to &lt;strong&gt;Content&lt;/strong&gt;
+?&gt;
+</code></pre></div></div>
+
+<h3 id="width">width</h3>
+<p>The width (in pixels) of the tooltip.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\Tooltip</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-float-2">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tooltip = new \Kendo\UI\Tooltip('Tooltip');
+$tooltip-&gt;width(1);
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

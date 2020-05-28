@@ -1,0 +1,343 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>How to bind Kendo MultiSelect for PHP to remote service which returns JSON</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to bind Kendo UI MultiSelect for PHP to JSON">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/php/widgets/multiselect/remote-binding.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="remote-binding">Remote Binding</h1>
+
+<p>This help topic shows how to bind Kendo MultiSelect for PHP to JSON response. Remote binding means that filter operation
+will happen on the server-side.</p>
+
+<h2 id="binding-to-array-returned-by-pdo">Binding to array returned by PDO</h2>
+
+<h3 id="configure-multiselect-for-remote-binding">Configure MultiSelect for Remote Binding</h3>
+
+<ol>
+  <li>Follow the steps from the <a href="/getting-started/using-kendo-with/php/introduction">introduction</a> - include the autoloader, JavaScript and CSS files.</li>
+  <li>
+    <p>Create a data source and configure it:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $transport = new \Kendo\Data\DataSourceTransport();
+
+ $read = new \Kendo\Data\DataSourceTransportRead();
+
+ // Specify the url of the PHP page which will act as the remote service
+ $read-&gt;url('products.php')
+      -&gt;type('POST');
+
+ $transport-&gt;read($read);
+
+ // Configure the model
+ $model = new \Kendo\Data\DataSourceSchemaModel();
+
+ $productNameField = new \Kendo\Data\DataSourceSchemaModelField('ProductName');
+ $productNameField-&gt;type('string');
+
+ $productIDField = new \Kendo\Data\DataSourceSchemaModelField('ProductID');
+ $productIDField-&gt;type('number');
+
+ $model-&gt;addField($productNameField, $productIDField);
+ $schema = new \Kendo\Data\DataSourceSchema();
+
+ $schema-&gt;model($model);
+
+ $dataSource = new \Kendo\Data\DataSource();
+
+ // Configure data source
+ $dataSource-&gt;transport($transport)
+            -&gt;schema($schema);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a multiselect, configure its dataTextField option and set its data source.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $multiSelect = new \Kendo\UI\MultiSelect('MultiSelect');
+ $multiSelect-&gt;dataSource($dataSource);
+ $multiSelect-&gt;dataTextField('ProductName');
+ $multiSelect-&gt;dataValueField('ProductID');
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Output the multiselect by echo-ing the result of the render method.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ echo $multiSelect-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="create-php-file-which-returns-json">Create PHP file which returns JSON</h3>
+
+<ol>
+  <li>Create a new php file called <strong>products.php</strong>. This file will return data in JSON format. The data source is configured to request it via the <a href="/api/wrappers/php/Kendo/Data/DataSourceTransportRead#url">url</a> setting.</li>
+  <li>
+    <p>Create a PDO connection</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $db = new PDO('sqlite:../sample.db');
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Retrieve all records from the <code class="language-plaintext highlighter-rouge">Products</code> table</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $statement = $db-&gt;prepare('SELECT * FROM Products');
+ $products = $statement-&gt;fetchAll(PDO::FETCH_ASSOC);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Return the records as JSON</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ // Set response content type
+ header('Content-Type: application/json');
+ // Return JSON
+
+ echo json_encode($products);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="binding-using-the-datasourceresult-helper">Binding using the DataSourceResult Helper</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">DataSourceResult</code> class is a helper utility on top of PDO which simplifies common CRUD operations.
+The DataSourceResult can also perform paging, sorting, filtering, grouping and aggregate calculation on the server side by generating SQL executed via PDO.
+It is distributed with the Telerik UI for PHP** demos and can be found in the <strong>/wrappers/php/lib/</strong> directory of the **Telerik UI for PHP distribution.</p>
+
+<blockquote>
+  <p>The following demo is using the sample SQLite database shipped with the Telerik UI for PHP** demos (**/wrappers/php/sample.db).</p>
+</blockquote>
+
+<p>First we will configure a Kendo MultiSelect for PHP binding and then we will implement the remote service which will return JSON.</p>
+
+<h3 id="configure-multiselect-for-remote-binding-using-datasourceresult">Configure MultiSelect for Remote Binding (using DataSourceResult)</h3>
+
+<ol>
+  <li>Follow the steps from the <a href="/getting-started/using-kendo-with/php/introduction">introduction</a> - include the autoloader, JavaScript and CSS files.</li>
+  <li>
+    <p>Create a data source and configure it:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $transport = new \Kendo\Data\DataSourceTransport();
+
+ $read = new \Kendo\Data\DataSourceTransportRead();
+
+ // Specify the url of the PHP page which will act as the remote service
+ $read-&gt;url('products.php')
+      -&gt;contentType('application/json')
+      -&gt;type('POST');
+
+ // Configure the transport to send the data source parameters as JSON.
+ // This is required by the DataSourceResult helper.
+ $transport-&gt;read($read)
+           -&gt;parameterMap('function(data) {
+               return kendo.stringify(data);
+           }');
+
+ // Configure the model
+ $model = new \Kendo\Data\DataSourceSchemaModel();
+
+ $productNameField = new \Kendo\Data\DataSourceSchemaModelField('ProductName');
+ $productNameField-&gt;type('string');
+
+ $productIDField = new \Kendo\Data\DataSourceSchemaModelField('ProductID');
+ $productIDField-&gt;type('number');
+
+ $model-&gt;addField($productNameField, $productIDField);
+
+ $schema = new \Kendo\Data\DataSourceSchema();
+ // Configure the schema to accept the format returned by DataSourceResult
+ $schema-&gt;model($model)
+        -&gt;data('data')
+        -&gt;errors('errors')
+        -&gt;total('total');
+
+ $dataSource = new \Kendo\Data\DataSource();
+
+ // Configure data source and enable server filtering operation.
+ $dataSource-&gt;transport($transport)
+            -&gt;schema($schema)
+            -&gt;serverFiltering(true);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a multiselect, configure its dataTextField option and set its data source.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $multiSelect = new \Kendo\UI\MultiSelect('MultiSelect');
+ $multiSelect-&gt;dataSource($dataSource);
+ $multiSelect-&gt;dataTextField('ProductName');
+ $multiSelect-&gt;dataValueField('ProductID');
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Output the multiselect by echo-ing the result of the render method.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ echo $multiSelect-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="create-php-file-which-returns-json-using-datasourceresult">Create PHP file which returns JSON (using DataSourceResult)</h3>
+
+<ol>
+  <li>Create a new php file called <strong>products.php</strong>. This file will return data in JSON format. The data source is configured to request it via the <a href="/api/wrappers/php/Kendo/Data/DataSourceTransportRead#url">url</a> setting.</li>
+  <li>
+    <p>Copy <strong>/wrappers/php/lib/DataSourceResult.php</strong> to your web site root and include it.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php require_once 'lib/DataSourceResult.php'; ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Read the request body and parse it as JSON. In the previous example we configured the Kendo DataSource to submit its parameters as JSON via the <a href="/api/wrappers/php/Kendo/Data/DataSourceTransport#parametermap">parameterMap</a>.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $request = json_decode(file_get_contents('php://input'));
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a new instance of the <code class="language-plaintext highlighter-rouge">DataSourceResult</code> class and call its read method.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $result = new DataSourceResult('sqlite:../sample.db');
+
+ // The 'read' method accepts table name, array of columns to select and request parameters as array
+ $data = $result-&gt;read('Products', array('ProductID', 'ProductName'), $request));
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Return the result of the <code class="language-plaintext highlighter-rouge">read</code> method as JSON</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ // Set response content type
+ header('Content-Type: application/json');
+ // Return JSON
+
+ echo json_encode($data);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,596 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration and methods for Mobile Application widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to hide the browser address bar, set the platform which will force on the application, hide/show a loading animation and more in Kendo UI Mobile Application widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/mobile/application.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomobileapplication">kendo.mobile.Application</h1>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="hideaddressbar-booleandefault-true">hideAddressBar <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>Whether to hide the browser address bar. Supported only in iPhone and iPod. Doesn"t affect standalone mode as there the address bar is always hidden.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;&lt;a data-role="button"&gt;Foo&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application($(document.body), { hideAddressBar: false });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="updatedocumenttitle-boolean-default-true">updateDocumentTitle <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Whether to update the document title.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;&lt;a data-role="button"&gt;Foo&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application($(document.body), { updateDocumentTitle: false });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="hashbang-boolean-default-false">hashBang <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Introduced in the 2014 Q1 Service Pack 1 release. If set to <code class="language-plaintext highlighter-rouge">true</code>, the navigation will parse and prefix the url fragment value with <code class="language-plaintext highlighter-rouge">!</code>,
+which <a href="http://googlewebmastercentral.blogspot.com/2009/10/proposal-for-making-ajax-crawlable.html">should be SEO friendly</a>.</p>
+
+<h3 id="initial-string">initial <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The id of the initial mobile View to display.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;&lt;a data-role="button"&gt;Foo&lt;/a&gt;&lt;/div&gt;
+
+&lt;div data-role="view" id="bar"&gt;&lt;a data-role="button"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application($(document.body), { initial: "#bar" });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="layout-string">layout <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The id of the default Application layout.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;Bar&lt;/div&gt;
+
+&lt;div data-role="layout" data-id="foo"&gt;
+  &lt;div data-role="header"&gt;Header&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application($(document.body), { layout: "foo" });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="loading-stringdefault-h1loadingh1">loading <code class="language-plaintext highlighter-rouge">String</code><em>(default: "&lt;h1&gt;Loading…&lt;/h1&gt;")</em></h3>
+
+<p>The text displayed in the loading popup. Setting this value to false will disable the loading popup.</p>
+
+<p><em>Note</em>: The text should be wrapped inside <code class="language-plaintext highlighter-rouge">&lt;h1&gt;</code> tag.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;Bar&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application($(document.body), {
+    loading: "&lt;h1&gt;Please wait...&lt;/h1&gt;"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="modelscope-object-default-window">modelScope <code class="language-plaintext highlighter-rouge">Object</code> <em>(default: "window")</em></h3>
+
+<p>The view model scope. By default, the views will try to resolve their models from the global scope (window).</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-model="foo" data-bind="events: {init: onInit }"&gt;Bar&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application($(document.body), {
+    modelScope: {
+        foo: {
+            onInit: function(e) {
+                console.log(e);
+            }
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="platform-string">platform <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Which platform look to force on the application. Supported values are <code class="language-plaintext highlighter-rouge">"ios"</code> (meaning iOS 6 look), <code class="language-plaintext highlighter-rouge">"ios7"</code>,<code class="language-plaintext highlighter-rouge">"android"</code>, <code class="language-plaintext highlighter-rouge">"blackberry"</code> and <code class="language-plaintext highlighter-rouge">"wp"</code>.
+You can also set platform variants with it (<code class="language-plaintext highlighter-rouge">"android-light"</code> or <code class="language-plaintext highlighter-rouge">"android-dark"</code>), but keep in mind that it will still override the platform. If this is not desired, use the <code class="language-plaintext highlighter-rouge">skin</code> option.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;Bar&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application($(document.body), {
+    platform: "android"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pushstate-boolean-default-false">pushState <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to true, the application router instance will use the <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history#The_pushState().C2.A0method">history pushState API</a>.</p>
+
+<blockquote>
+  <p>The history pushState API currently has <a href="http://caniuse.com/#search=pushstate">limited support accross current browsers</a>.</p>
+</blockquote>
+
+<h3 id="root-string-default-">root <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "/")</em></h3>
+
+<p>Applicable if <code class="language-plaintext highlighter-rouge">pushState</code> is used and the application is deployed to a path different than <code class="language-plaintext highlighter-rouge">/</code>. If the application start page is hosted on <code class="language-plaintext highlighter-rouge">http://foo.com/myapp/</code>, the root option should be set to <code class="language-plaintext highlighter-rouge">/myapp/</code>.</p>
+
+<h3 id="servernavigation-boolean-default-false">serverNavigation <code class="language-plaintext highlighter-rouge">Boolean</code> <strong>(default: false)</strong></h3>
+
+<p>If set to true, the application will not use AJAX to load remote views.</p>
+
+<blockquote>
+  <p>Using this configuration option will affect the user experience, as blank screens will be visible between application states. As the page will be completely reloaded, the application state will not be transferred to the next view.</p>
+</blockquote>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;Bar &lt;a data-role="button" href="another-view.html"&gt;Go to another page&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application($(document.body), { serverNavigation: true });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="skin-string">skin <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The skin to apply to the application. Currently, Kendo UI Mobile ships with a <strong>flat</strong> skin in addition to the native looking ones. You can also set platform variants with it ("android-light" or "android-dark").</p>
+
+<blockquote>
+  <p>The skin setting will be applied on any device, making the application look the same way.</p>
+</blockquote>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;&lt;a data-role="button"&gt;Foo&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+     new kendo.mobile.Application($(document.body), {
+         skin: "flat"
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="statusbarstyle-stringdefault-black">statusBarStyle <code class="language-plaintext highlighter-rouge">String</code><em>(default: "black")</em></h3>
+
+<p>Set the status bar style meta tag in iOS used to control the styling of the status bar in a pinned to the Home Screen app. Available as of Q2 2013 SP.</p>
+
+<blockquote>
+  <p>The default setting of "black" pushes down the content of the page, while the rest overlay it. To create seamless status bar in iOS7,
+check <a href="/getting-started/mobile/application#seamless-status-bar-in-ios7">Seamless Status Bar in iOS7</a> section in Mobile Application"s Getting Started page.</p>
+</blockquote>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;&lt;a data-role="button" href="#bar"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    new kendo.mobile.Application($(document.body), {
+        statusBarStyle: "black"
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transition-string">transition <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The default View transition.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;&lt;a data-role="button" href="#bar"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+&lt;div data-role="view" id="bar"&gt;&lt;a data-role="button" href="#foo"&gt;Foo&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application($(document.body), { transition: "slide" });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="webappcapable-boolean-default-true">webAppCapable <code class="language-plaintext highlighter-rouge">Boolean</code> <strong>(default: true)</strong></h3>
+
+<p>Disables the default behavior of Kendo UI Mobile apps to be web app capable (open in a chromeless browser). Introduced in Q2 2013.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;&lt;a data-role="button" href="#bar"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application($(document.body), { webAppCapable: false });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="changeloadingmessage">changeLoadingMessage</h3>
+
+<p>Changes the loading message.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;a data-role="button" data-click="showLoading"&gt;Show loading&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+    function showLoading() {
+        app.showLoading();
+        setTimeout(function() {
+            app.changeLoadingMessage("Please wait...");
+        }, 1000);
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="text-string">text <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>New text of the loading animation.</p>
+
+<h3 id="hideloading">hideLoading</h3>
+
+<p>Hide the loading animation.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;&lt;a data-role="button" href="#bar"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  var app = new kendo.mobile.Application();
+  $(function() {
+    app.showLoading();
+    setTimeout(function() {
+        app.hideLoading();
+    }, 2000);
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="navigate">navigate</h3>
+
+<p>Navigate to local or to remote view.</p>
+
+<h4 id="navigate-to-a-remote-view">Navigate to a remote view</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;&lt;a data-role="button" data-click="navigateToSettings"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+
+    function navigateToSettings() {
+        app.navigate("settings.html"); // the url of the remote view
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="navigate-to-a-local-view">Navigate to a local view</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;&lt;a data-role="button" data-click="navigateToSettings"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+&lt;div data-role="view" id="settings"&gt;Settings&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+
+    function navigateToSettings() {
+        app.navigate("#settings"); // the id of the local view
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="navigate-backwards-to-the-previously-visited-mobile-view">Navigate backwards to the previously visited mobile View</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;&lt;a data-role="button" href="#settings"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+&lt;div data-role="view" id="settings"&gt;&lt;a data-role="button" data-click="goBack"&gt;Back&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+
+    function goBack() {
+        app.navigate("#:back");
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="url-string">url <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The id or url of the view.</p>
+
+<h5 id="transition-string-1">transition <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>Optional. The transition to apply when navigating. See <a href="/getting-started/mobile/application#view-transitions">View Transitions section</a> for more information.</p>
+
+<h6 id="example-14">Example</h6>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;&lt;a data-role="button" data-click="navigateToSettings"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+&lt;div data-role="view" id="settings"&gt;Settings&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+
+    function navigateToSettings() {
+        app.navigate("#settings", "slide");
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="replace">replace</h3>
+
+<p>Navigate to local or to remote view. The view will replace the current one in the history stack.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="url-string-1">url <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The id or url of the view.</p>
+
+<h5 id="transition-string-2">transition <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>Optional. The transition to apply when navigating. See <a href="/getting-started/mobile/application#view-transitions">View Transitions section</a> for more information.</p>
+
+<h6 id="example-15">Example</h6>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;
+    Foo
+    &lt;a href="#bar" data-role="button"&gt;Bar&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div data-role="view" id="bar"&gt;
+    &lt;a data-role="button" data-click="replaceBar"&gt;Baz&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div data-role="view" id="baz"&gt;
+    &lt;a data-role="backbutton"&gt;Back (will show Foo view)&lt;/a&gt;
+    Baz
+&lt;/div&gt;
+
+&lt;script type="text/javascript" charset="utf-8"&gt;
+    function replaceBar() {
+        kendo.mobile.application.replace("#baz");
+    }
+
+    new kendo.mobile.Application(document.body);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="scroller">scroller</h3>
+
+<p>Get a reference to the current view"s scroller widget instance.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;&lt;div style="height: 1000px"&gt;Scroll a bit... &lt;/div&gt;&lt;a data-role="button" data-click="resetScroller"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+
+    function resetScroller() {
+        app.scroller().reset();
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.mobile.ui.Scroller</code> the scroller widget instance.</p>
+
+<h3 id="showloading">showLoading</h3>
+
+<p>Show the loading animation.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;&lt;a data-role="button" href="#bar"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  var app = new kendo.mobile.Application();
+  $(function() {
+    app.showLoading();
+    setTimeout(function() {
+        app.hideLoading();
+    }, 2000);
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="skin">skin</h3>
+
+<p>Change the current skin of the mobile application. When used without parameters, returns the currently used skin. Available as of Q2 2013.</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;&lt;a data-role="button" href="#bar"&gt;Bar&lt;/a&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  var app = new kendo.mobile.Application();
+  $(function() {
+          app.skin("flat");
+  });
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="skin-string-1">skin <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The skin name to switch to or empty string ("") to return to native.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> Current skin in effect.</p>
+
+<h3 id="view">view</h3>
+
+<p>Get a reference to the current view.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;
+    &lt;a id="button" data-role="button" data-click="logCurrentView"&gt;I am a mobile button&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+    function logCurrentView() {
+        console.log(app.view()); // the foo mobile view instance
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.mobile.ui.View</code> the view instance.</p>
+
+<h2 id="events">Events</h2>
+
+<h3 id="init">init</h3>
+
+<p>Fires after the mobile application is instantiated.</p>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;
+    &lt;a id="button" data-role="button" data-click="logCurrentView"&gt;I am a mobile button&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application(document.body, {
+        init: function() {
+            console.log("Kendo UI Mobile application is ready");
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

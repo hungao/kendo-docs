@@ -1,0 +1,430 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/ChartAxisCrosshairTooltipBuilder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluentchartaxiscrosshairtooltipbuilder">Kendo.Mvc.UI.Fluent.ChartAxisCrosshairTooltipBuilder</h1>
+<p>Defines the fluent interface for configuring ChartAxisCrosshairTooltipBuilder.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="fontsystemstring">Font(System.String)</h3>
+<p>Sets the tooltip font</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="font-systemstring">font <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The tooltip font (CSS format).</p>
+
+<h4 id="example-aspx">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; {
+        .series.Bar(new double[] { 15.7, 16.7, 20, 23.5, 26.6 }).Name("World");
+        .series.Bar(new double[] { 67.96, 68.93, 75, 74, 78 }).Name("United States");
+    })
+    .CategoryAxis(axis =&gt; axis
+        .Categories("2005", "2006", "2007", "2008", "2009")
+        .Crosshair(crosshair =&gt; crosshair
+            .Visible(true)
+            .Tooltip(tooltip =&gt; tooltip
+                .Font("14px Arial,Helvetica,sans-serif")
+                .Visible(true)
+            )
+        )
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="visiblesystemboolean">Visible(System.Boolean)</h3>
+<p>Sets the tooltip visible</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="visible-systemboolean">visible <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The tooltip visible.</p>
+
+<h4 id="example-aspx-1">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; {
+        .series.Bar(new double[] { 15.7, 16.7, 20, 23.5, 26.6 }).Name("World");
+        .series.Bar(new double[] { 67.96, 68.93, 75, 74, 78 }).Name("United States");
+    })
+    .CategoryAxis(axis =&gt; axis
+        .Categories("2005", "2006", "2007", "2008", "2009")
+        .Crosshair(crosshair =&gt; crosshair
+            .Visible(true)
+            .Tooltip(tooltip =&gt; tooltip
+                .Visible(true)
+            )
+        )
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="backgroundsystemstring">Background(System.String)</h3>
+<p>Sets the tooltip background</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="background-systemstring">background <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The tooltip background.</p>
+
+<h4 id="example-aspx-2">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; {
+        .series.Bar(new double[] { 15.7, 16.7, 20, 23.5, 26.6 }).Name("World");
+        .series.Bar(new double[] { 67.96, 68.93, 75, 74, 78 }).Name("United States");
+    })
+    .CategoryAxis(axis =&gt; axis
+        .Categories("2005", "2006", "2007", "2008", "2009")
+        .Crosshair(crosshair =&gt; crosshair
+            .Visible(true)
+            .Tooltip(tooltip =&gt; tooltip
+                .Background("red")
+                .Visible(true)
+            )
+        )
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="colorsystemstring">Color(System.String)</h3>
+<p>Sets the tooltip text color</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="color-systemstring">color <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The tooltip text color.
+            The default is the same as the series labels color.</p>
+
+<h4 id="example-aspx-3">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; {
+        .series.Bar(new double[] { 15.7, 16.7, 20, 23.5, 26.6 }).Name("World");
+        .series.Bar(new double[] { 67.96, 68.93, 75, 74, 78 }).Name("United States");
+    })
+    .CategoryAxis(axis =&gt; axis
+        .Categories("2005", "2006", "2007", "2008", "2009")
+        .Crosshair(crosshair =&gt; crosshair
+            .Visible(true)
+            .Tooltip(tooltip =&gt; tooltip
+                .color("red")
+                .Visible(true)
+            )
+        )
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="paddingsystemint32systemint32systemint32systemint32">Padding(System.Int32,System.Int32,System.Int32,System.Int32)</h3>
+<p>Sets the tooltip padding</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="top-systemint32">top <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The tooltip top padding.</p>
+
+<h5 id="right-systemint32">right <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The tooltip right padding.</p>
+
+<h5 id="bottom-systemint32">bottom <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The tooltip bottom padding.</p>
+
+<h5 id="left-systemint32">left <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The tooltip left padding.</p>
+
+<h4 id="example-aspx-4">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; {
+        .series.Bar(new double[] { 15.7, 16.7, 20, 23.5, 26.6 }).Name("World");
+        .series.Bar(new double[] { 67.96, 68.93, 75, 74, 78 }).Name("United States");
+    })
+    .CategoryAxis(axis =&gt; axis
+        .Categories("2005", "2006", "2007", "2008", "2009")
+        .Crosshair(crosshair =&gt; crosshair
+            .Visible(true)
+            .Tooltip(tooltip =&gt; tooltip
+                .Padding(0, 5, 5, 0)
+                .Visible(true)
+            )
+        )
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="paddingsystemint32">Padding(System.Int32)</h3>
+<p>Sets the tooltip padding</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="padding-systemint32">padding <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The tooltip padding.</p>
+
+<h4 id="example-aspx-5">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; {
+        .series.Bar(new double[] { 15.7, 16.7, 20, 23.5, 26.6 }).Name("World");
+        .series.Bar(new double[] { 67.96, 68.93, 75, 74, 78 }).Name("United States");
+    })
+    .CategoryAxis(axis =&gt; axis
+        .Categories("2005", "2006", "2007", "2008", "2009")
+        .Crosshair(crosshair =&gt; crosshair
+            .Visible(true)
+            .Tooltip(tooltip =&gt; tooltip
+                .Padding(20)
+                .Visible(true)
+            )
+        )
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bordersystemint32systemstring">Border(System.Int32,System.String)</h3>
+<p>Sets the tooltip border</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="width-systemint32">width <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The tooltip border width.</p>
+
+<h5 id="color-systemstring-1">color <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The tooltip border color (CSS syntax).</p>
+
+<h4 id="example-aspx-6">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; {
+        .series.Bar(new double[] { 15.7, 16.7, 20, 23.5, 26.6 }).Name("World");
+        .series.Bar(new double[] { 67.96, 68.93, 75, 74, 78 }).Name("United States");
+    })
+    .CategoryAxis(axis =&gt; axis
+        .Categories("2005", "2006", "2007", "2008", "2009")
+        .Crosshair(crosshair =&gt; crosshair
+            .Visible(true)
+            .Tooltip(tooltip =&gt; tooltip
+                .Border(1, "Red")
+                .Visible(true)
+            )
+        )
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bordersystemactionkendomvcuifluentchartborderbuilder">Border(System.Action&lt;Kendo.Mvc.UI.Fluent.ChartBorderBuilder&gt;)</h3>
+<p>Configures the tooltip border</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentchartborderbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/ChartBorderBuilder">Kendo.Mvc.UI.Fluent.ChartBorderBuilder</a>&gt;</h5>
+<p>The border configuration action</p>
+
+<h3 id="formatsystemstring">Format(System.String)</h3>
+<p>Sets the tooltip format</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="format-systemstring">format <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The tooltip format.</p>
+
+<h4 id="example-aspx-7">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; {
+        .series.Bar(new double[] { 15.7, 16.7, 20, 23.5, 26.6 }).Name("World");
+        .series.Bar(new double[] { 67.96, 68.93, 75, 74, 78 }).Name("United States");
+    })
+    .CategoryAxis(axis =&gt; axis
+        .Categories("2005", "2006", "2007", "2008", "2009")
+        .Crosshair(crosshair =&gt; crosshair
+            .Visible(true)
+            .Tooltip(tooltip =&gt; tooltip
+                .Format("{0:C}")
+                .Visible(true)
+            )
+        )
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="templatesystemstring">Template(System.String)</h3>
+<p>Sets the tooltip template</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="template-systemstring">template <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The tooltip template.</p>
+
+<h4 id="example-aspx-8">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; {
+        .series.Bar(new double[] { 15.7, 16.7, 20, 23.5, 26.6 }).Name("World");
+        .series.Bar(new double[] { 67.96, 68.93, 75, 74, 78 }).Name("United States");
+    })
+    .CategoryAxis(axis =&gt; axis
+        .Categories("2005", "2006", "2007", "2008", "2009")
+        .Crosshair(crosshair =&gt; crosshair
+            .Visible(true)
+            .Tooltip(tooltip =&gt; tooltip
+                .Template("|&lt;#= value #|&gt;")
+                .Visible(true)
+            )
+        )
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="opacitysystemdouble">Opacity(System.Double)</h3>
+<p>Sets the tooltip opacity.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="opacity-systemdouble">opacity <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The series opacity in the range from 0 (transparent) to 1 (opaque).
+            The default value is 1.</p>
+
+<h4 id="example-aspx-9">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; {
+        .series.Bar(new double[] { 15.7, 16.7, 20, 23.5, 26.6 }).Name("World");
+        .series.Bar(new double[] { 67.96, 68.93, 75, 74, 78 }).Name("United States");
+    })
+    .CategoryAxis(axis =&gt; axis
+        .Categories("2005", "2006", "2007", "2008", "2009")
+        .Crosshair(crosshair =&gt; crosshair
+            .Visible(true)
+            .Tooltip(tooltip =&gt; tooltip
+                .Opacity(0.5)
+                .Visible(true)
+            )
+        )
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

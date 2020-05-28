@@ -1,0 +1,332 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API reference for methods and fields of Kendo UI DataViz Geometry Arc</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/dataviz/geometry/arc.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizgeometryarc">kendo.dataviz.geometry.Arc</h1>
+
+<p>Represents an arc with set center, direction, angular range and x/y radius.</p>
+
+<h2 id="example---creating-an-arc">Example - Creating an arc</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;script&gt;
+        var geo = kendo.dataviz.geometry;
+        var center = [10, 10];
+        var arc = new geo.Arc(center, {
+            radiusX: 10,
+            radiusY: 5,
+            startAngle: 90,
+            endAngle: 270,
+            anticlockwise: false
+        });
+    &lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="anticlockwise-boolean-default-false">anticlockwise <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>A flag indicating if the arc should be drawn in clockwise or anticlockwise direction.
+Defaults to clockwise direction.</p>
+
+<h3 id="center-kendodatavizgeometrypoint">center <code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Point</code></h3>
+
+<p>The location of the arc center.</p>
+
+<h3 id="endangle-number">endAngle <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The end angle of the arc in decimal degrees.
+Measured in clockwise direction with 0 pointing "up".
+Negative values or values greater than 360 will be normalized.</p>
+
+<h3 id="radiusx-number">radiusX <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The x radius of the arc.</p>
+
+<h3 id="radiusy-number">radiusY <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The y radius of the arc.</p>
+
+<h3 id="startangle-number">startAngle <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The start angle of the arc in decimal degrees.
+Measured in clockwise direction with 0 pointing "up".
+Negative values or values greater than 360 will be normalized.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="bbox">bbox</h3>
+
+<p>Returns the bounding box of this arc after applying the specified transformation matrix.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="matrix-kendodatavizgeometrymatrix">matrix <code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Matrix</code></h5>
+
+<p>Transformation matrix to apply.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Rect</code> The bounding box after applying the transformation matrix.</p>
+
+<h3 id="getanticlockwise">getAnticlockwise</h3>
+
+<p>Gets the arc anticlokwise flag.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Boolean</code> The anticlokwise flag of the arc.</p>
+
+<h3 id="getcenter">getCenter</h3>
+
+<p>Gets the arc center location.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Point</code> The location of the arc center.</p>
+
+<h3 id="getendangle">getEndAngle</h3>
+
+<p>Gets the end angle of the arc in decimal degrees.
+Measured in clockwise direction with 0 pointing "up".</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> The end angle of the arc.</p>
+
+<h3 id="getradiusx">getRadiusX</h3>
+
+<p>Gets the x radius of the arc.</p>
+
+<h4 id="returns-4">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> The x radius of the arc.</p>
+
+<h3 id="getradiusy">getRadiusY</h3>
+
+<p>Gets the y radius of the arc.</p>
+
+<h4 id="returns-5">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> The y radius of the arc.</p>
+
+<h3 id="getstartangle">getStartAngle</h3>
+
+<p>Gets the start angle of the arc in decimal degrees.
+Measured in clockwise direction with 0 pointing "up".</p>
+
+<h4 id="returns-6">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> The start angle of the arc.</p>
+
+<h3 id="pointat">pointAt</h3>
+
+<p>Gets the location of a point on the arc"s circumference at a given angle.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="angle-number">angle <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>Angle in decimal degrees. Measured in clockwise direction with 0 pointing "up".
+Negative values or values greater than 360 will be normalized.</p>
+
+<h4 id="returns-7">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Point</code> The point on the arc"s circumference.</p>
+
+<h3 id="setanticlockwise">setAnticlockwise</h3>
+
+<p>Sets the arc anticlokwise flag.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-boolean">value <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>The new anticlockwise value.</p>
+
+<h4 id="returns-8">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Arc</code> The current arc instance.</p>
+
+<h3 id="setcenter">setCenter</h3>
+
+<p>Sets the arc center location.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-kendodatavizgeometrypoint">value <code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Point</code></h5>
+
+<p>The new arc center.</p>
+
+<h4 id="returns-9">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Arc</code> The current arc instance.</p>
+
+<h3 id="setendangle">setEndAngle</h3>
+
+<p>Sets the end angle of the arc in decimal degrees.
+Measured in clockwise direction with 0 pointing "up".</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-number">value <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The new arc end angle.</p>
+
+<h4 id="returns-10">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Arc</code> The current arc instance.</p>
+
+<h3 id="setradiusx">setRadiusX</h3>
+
+<p>Sets the x radius of the arc.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-number-1">value <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The new arc x radius.</p>
+
+<h4 id="returns-11">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Arc</code> The current arc instance.</p>
+
+<h3 id="setradiusy">setRadiusY</h3>
+
+<p>Sets the y radius of the arc.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-number-2">value <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The new arc y radius.</p>
+
+<h4 id="returns-12">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Arc</code> The current arc instance.</p>
+
+<h3 id="setstartangle">setStartAngle</h3>
+
+<p>Sets the start angle of the arc in decimal degrees.
+Measured in clockwise direction with 0 pointing "up".</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-number-3">value <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The new arc atart angle.</p>
+
+<h4 id="returns-13">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.geometry.Arc</code> The current arc instance.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

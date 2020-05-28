@@ -1,0 +1,710 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>How to bind Kendo Scheduler for PHP to remote service which returns JSON</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to bind Kendo UI Scheduler for PHP to JSON">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/php/widgets/scheduler/remote-binding.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="remote-binding">Remote Binding</h1>
+
+<p>This help topic shows how to bind Kendo Scheduler for PHP to JSON response.</p>
+
+<blockquote>
+  <p>The following demos are using the sample SQLite database shipped with the Telerik UI for PHP** demos (**/wrappers/php/sample.db).</p>
+</blockquote>
+
+<h2 id="binding-to-array-returned-by-pdo">Binding to array returned by PDO</h2>
+
+<h3 id="configure-scheduler-for-remote-binding">Configure Scheduler for Remote Binding</h3>
+
+<ol>
+  <li>Follow the steps from the <a href="/getting-started/using-kendo-with/php/introduction">introduction</a> - include the autoloader, JavaScript and CSS files.</li>
+  <li>
+    <p>Create a data source and configure it:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $transport = new \Kendo\Data\DataSourceTransport();
+
+ // Configure the remote service - a PHP file called 'tasks.php'
+ // The query string parameter 'type' specifies the type of CRUD operation
+
+ $create = new \Kendo\Data\DataSourceTransportCreate();
+
+ $create-&gt;url('tasks.php?type=create')
+      -&gt;contentType('application/json')
+      -&gt;type('POST');
+
+ $read = new \Kendo\Data\DataSourceTransportRead();
+
+ $read-&gt;url('tasks.php?type=read')
+      -&gt;contentType('application/json')
+      -&gt;type('POST');
+
+ $update = new \Kendo\Data\DataSourceTransportUpdate();
+
+ $update-&gt;url('tasks.php?type=update')
+      -&gt;contentType('application/json')
+      -&gt;type('POST');
+
+ $destroy = new \Kendo\Data\DataSourceTransportDestroy();
+
+ $destroy-&gt;url('tasks.php?type=destroy')
+      -&gt;contentType('application/json')
+      -&gt;type('POST');
+
+ // Configure the transport. Send all data source parameters as JSON using the parameterMap setting
+ $transport-&gt;create($create)
+           -&gt;read($read)
+           -&gt;update($update)
+           -&gt;destroy($destroy)
+           -&gt;parameterMap('function(data) {
+               return kendo.stringify(data);
+           }');
+
+ $model = new \Kendo\Data\DataSourceSchemaModel();
+
+ $taskIDField = new \Kendo\Data\DataSourceSchemaModelField('taskID');
+ $taskIDField-&gt;type('number')
+             -&gt;from('TaskID')
+             -&gt;nullable(true);
+
+ $titleField = new \Kendo\Data\DataSourceSchemaModelField('title');
+ $titleField-&gt;from('Title')
+         -&gt;defaultValue('No title')
+         -&gt;validation(array('required' =&gt; true));
+
+ $startField = new \Kendo\Data\DataSourceSchemaModelField('start');
+ $startField-&gt;type('date')
+         -&gt;from('Start');
+
+ $endField = new \Kendo\Data\DataSourceSchemaModelField('end');
+ $endField-&gt;type('date')
+         -&gt;from('End');
+
+ $isAllDayField = new \Kendo\Data\DataSourceSchemaModelField('isAllDay');
+ $isAllDayField-&gt;type('boolean')
+         -&gt;from('IsAllDay');
+
+ $descriptionField = new \Kendo\Data\DataSourceSchemaModelField('description');
+ $descriptionField-&gt;type('string')
+         -&gt;from('Description');
+
+ $recurrenceIdField = new \Kendo\Data\DataSourceSchemaModelField('recurrenceId');
+ $recurrenceIdField-&gt;from('RecurrenceID');
+
+ $recurrenceRuleField = new \Kendo\Data\DataSourceSchemaModelField('recurrenceRule');
+ $recurrenceRuleField-&gt;from('RecurrenceRule');
+
+ $recurrenceExceptionField = new \Kendo\Data\DataSourceSchemaModelField('recurrenceException');
+ $recurrenceExceptionField-&gt;from('RecurrenceException');
+
+ $ownerIdField = new \Kendo\Data\DataSourceSchemaModelField('ownerId');
+ $ownerIdField-&gt;from('OwnerID')
+         -&gt;defaultValue(1);
+
+ $model-&gt;id('taskID')
+     -&gt;addField($taskIDField)
+     -&gt;addField($titleField)
+     -&gt;addField($startField)
+     -&gt;addField($endField)
+     -&gt;addField($descriptionField)
+     -&gt;addField($recurrenceIdField)
+     -&gt;addField($recurrenceRuleField)
+     -&gt;addField($recurrenceExceptionField)
+     -&gt;addField($ownerIdField)
+     -&gt;addField($isAllDayField);
+
+ $schema = new \Kendo\Data\DataSourceSchema();
+ $schema -&gt;errors('errors')
+         -&gt;model($model);
+
+ $dataSource = new \Kendo\Data\DataSource();
+
+ $dataSource-&gt;transport($transport)
+     -&gt;schema($schema)
+     -&gt;batch(true);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a scheduler, configure its resources and set its data source.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ //create Resource configuration
+ $resource = new \Kendo\UI\SchedulerResource();
+ $resource-&gt;field('ownerId')
+     -&gt;title('Owner')
+     -&gt;dataSource(array(
+             array('text'=&gt; 'Alex', 'value' =&gt; 1, 'color' =&gt; '#ef701d'),
+             array('text'=&gt; 'Bob', 'value' =&gt; 2, 'color' =&gt; '#5fb1f7'),
+             array('text'=&gt; 'Charlie', 'value' =&gt; 3, 'color' =&gt; '#35a964')
+         ));
+
+ $scheduler = new \Kendo\UI\Scheduler('scheduler');
+ $scheduler-&gt;timezone("Etc/UTC") // set timezone
+     -&gt;addResource($resource) // add resource configuration
+     -&gt;addView('day', 'week', 'month', 'agenda') // configure views
+     -&gt;dataSource($dataSource);// add dataSource
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Output the scheduler by echo-ing the result of the render method.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ echo $scheduler-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="create-php-file-which-returns-json">Create PHP file which returns JSON</h3>
+
+<ol>
+  <li>Create a new php file called <strong>tasks.php</strong>. This file will return data in JSON format. The data source is configured to request it via the <a href="/api/wrappers/php/Kendo/Data/DataSourceTransportRead#url">url</a> setting.</li>
+  <li>
+    <p>Create a PDO connection</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $db = new PDO('sqlite:../sample.db');
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Retrieve all records from the <code class="language-plaintext highlighter-rouge">Tasks</code> table</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $statement = $db-&gt;prepare('SELECT * FROM Products');
+ $statement-&gt;execute();
+ $products = $statement-&gt;fetchAll(PDO::FETCH_ASSOC);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Return the records as JSON</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ // Set response content type
+ header('Content-Type: application/json');
+ // Return JSON
+
+ echo json_encode($products);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="create-php-file-which-performs-crud">Create PHP file which performs CRUD</h3>
+
+<ol>
+  <li>Create a new php file called <strong>tasks.php</strong>. This file will peform CRUD operations.</li>
+  <li>
+    <p>Create a PDO connection</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $db = new PDO('sqlite:../sample.db');
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Read the request body and parse it as JSON. In the previous example we configured the Kendo DataSource to submit its parameters as JSON via the <a href="/api/wrappers/php/Kendo/Data/DataSourceTransport#parametermap">parameterMap</a>.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $request = json_decode(file_get_contents('php://input'));
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Get the current operation type. Available as the <code class="language-plaintext highlighter-rouge">type</code> query string parameter.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $type = $_GET['type'];
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Declare variable which will be returned as result of the operation</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $result = null;
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement "create":</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ if ($type == 'create') {
+     // In batch mode the inserted records are available in the 'models' field
+     $createdTasks = $request-&gt;models;
+
+     // Will store the TaskID fields of the inserted records
+     $result = array();
+
+     foreach($createdTasks as $task) {
+         // Create SQL INSERT statement
+         $statement = $db-&gt;prepare('INSERT INTO Tasks (Title, Start, End, IsAllDay, Description, RecurrenceID, RecurrenceRule, RecurrenceException, OwnerID) VALUES (:title, :start, :end, :isAllDay, :descrip    tion, :recurrenceID, :recurrenceRule, :recurrenceException, :ownerID)');
+
+         // Bind parameter values
+         $statement-&gt;bindValue(':title', $task-&gt;Title);
+         $statement-&gt;bindValue(':start', $task-&gt;Start);
+         $statement-&gt;bindValue(':end', $task-&gt;End);
+         $statement-&gt;bindValue(':isAllDay', $task-&gt;IsAllDay);
+         $statement-&gt;bindValue(':description', $task-&gt;Description);
+         $statement-&gt;bindValue(':recurrenceID', $task-&gt;RecurrenceID);
+         $statement-&gt;bindValue(':recurrenceRule', $task-&gt;RecurrenceRule);
+         $statement-&gt;bindValue(':recurrenceException', $task-&gt;RecurrenceException);
+         $statement-&gt;bindValue(':ownerID', $task-&gt;OwnerID);
+
+         // Execute the statement
+         $statement-&gt;execute();
+
+         // Set TaskID to the last inserted ID (TaskID is auto-incremented column)
+         $task-&gt;TaskID = $db-&gt;lastInsertId();
+
+         // The result of the 'create' operation is all inserted tasks
+         $result[] = $task;
+     }
+ }
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement "read":</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ if ($type == 'read') {
+     $statement = $db-&gt;prepare('SELECT *, strftime(\'%Y-%m-%dT%H:%M:%SZ\', Start) as Start, strftime(\'%Y-%m-%dT%H:%M:%SZ\', End) as End FROM Tasks');
+     $statement-&gt;execute();
+     $result = $statement-&gt;fetchAll(PDO::FETCH_ASSOC);
+ }
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement "update":</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ if ($type == 'update') {
+     // in batch mode the updated records are available in the 'models' field
+     $updatedTasks = $request-&gt;models;
+
+     foreach($updatedTasks as $task) {
+         // Create UPDATE SQL statement
+         $statement = $db-&gt;prepare('UPDATE Tasks SET Title = :title, Start = :start, End = :end, IsAllDay = :isAllDay, Description = :description, RecurrenceID = :recurrenceID, RecurrenceRule = :recurrenceR    ule, RecurrenceException = :recurrenceException, OwnerID = :ownerID WHERE TaskID = :taskID');
+
+         // Bind parameter values
+         $statement-&gt;bindValue(':title', $task-&gt;Title);
+         $statement-&gt;bindValue(':start', $task-&gt;Start);
+         $statement-&gt;bindValue(':end', $task-&gt;End);
+         $statement-&gt;bindValue(':isAllDay', $task-&gt;IsAllDay);
+         $statement-&gt;bindValue(':description', $task-&gt;Description);
+         $statement-&gt;bindValue(':recurrenceID', $task-&gt;RecurrenceID);
+         $statement-&gt;bindValue(':recurrenceRule', $task-&gt;RecurrenceRule);
+         $statement-&gt;bindValue(':recurrenceException', $task-&gt;RecurrenceException);
+         $statement-&gt;bindValue(':ownerID', $task-&gt;OwnerID);
+         $statement-&gt;bindValue(':taskID', $task-&gt;TaskID);
+
+         // Execute the statement
+         $statement-&gt;execute();
+     }
+ }
+?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement "destroy":</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ if ($type == 'destroy') {
+     // in batch mode the destroyed records are available in the 'models' field
+     $destroyedTasks = $request-&gt;models;
+
+     foreach($destroyedTasks as $task) {
+         // Create DELETE SQL statement
+         $statement = $db-&gt;prepare('DELETE FROM Tasks WHERE TaskID = :taskID');
+
+         // Bind parameter values
+         $statement-&gt;bindValue(':taskID', $task-&gt;TaskID);
+
+         // Execute the statement
+         $statement-&gt;execute();
+     }
+ }
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Return the result of the operation as JSON</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ // Set response content type
+ header('Content-Type: application/json');
+
+ echo json_encode($result);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="binding-using-the-datasourceresult-helper">Binding using the DataSourceResult Helper</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">DataSourceResult</code> class is a helper utility on top of PDO which simplifies common CRUD operations.
+It is distributed with the Telerik UI for PHP** demos and can be found in the <strong>/wrappers/php/lib/</strong> directory of the **Telerik UI for PHP distribution.</p>
+
+<p>First we will configure a Kendo Grid for PHP binding and then we will implement the remote service.</p>
+
+<h3 id="configure-scheduler-for-editing-using-datasourceresult">Configure Scheduler for editing (using DataSourceResult)</h3>
+<ol>
+  <li>Follow the steps from the <a href="/getting-started/using-kendo-with/php/introduction">introduction</a> - include the autoloader, JavaScript and CSS files.</li>
+  <li>
+    <p>Create a data source and configure it:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ // Configure the remote service - a PHP file called 'tasks.php'
+ // The query string parameter 'type' specifies the type of CRUD operation
+ $transport = new \Kendo\Data\DataSourceTransport();
+
+ $create = new \Kendo\Data\DataSourceTransportCreate();
+
+ $create-&gt;url('tasks.php?type=create')
+      -&gt;contentType('application/json')
+      -&gt;type('POST');
+
+ $read = new \Kendo\Data\DataSourceTransportRead();
+
+ $read-&gt;url('tasks.php?type=read')
+      -&gt;contentType('application/json')
+      -&gt;type('POST');
+
+ $update = new \Kendo\Data\DataSourceTransportUpdate();
+
+ $update-&gt;url('tasks.php?type=update')
+      -&gt;contentType('application/json')
+      -&gt;type('POST');
+
+ $destroy = new \Kendo\Data\DataSourceTransportDestroy();
+
+ $destroy-&gt;url('tasks.php?type=destroy')
+      -&gt;contentType('application/json')
+      -&gt;type('POST');
+
+ // Configure the transport. Send all data source parameters as JSON using the parameterMap setting.
+ $transport-&gt;create($create)
+           -&gt;read($read)
+           -&gt;update($update)
+           -&gt;destroy($destroy)
+           -&gt;parameterMap('function(data) {
+               return kendo.stringify(data);
+           }');
+
+ $model = new \Kendo\Data\DataSourceSchemaModel();
+
+ $taskIDField = new \Kendo\Data\DataSourceSchemaModelField('taskID');
+ $taskIDField-&gt;type('number')
+             -&gt;from('TaskID')
+             -&gt;nullable(true);
+
+ $titleField = new \Kendo\Data\DataSourceSchemaModelField('title');
+ $titleField-&gt;from('Title')
+         -&gt;defaultValue('No title')
+         -&gt;validation(array('required' =&gt; true));
+
+ $startField = new \Kendo\Data\DataSourceSchemaModelField('start');
+ $startField-&gt;type('date')
+         -&gt;from('Start');
+
+ $endField = new \Kendo\Data\DataSourceSchemaModelField('end');
+ $endField-&gt;type('date')
+         -&gt;from('End');
+
+ $isAllDayField = new \Kendo\Data\DataSourceSchemaModelField('isAllDay');
+ $isAllDayField-&gt;type('boolean')
+         -&gt;from('IsAllDay');
+
+ $descriptionField = new \Kendo\Data\DataSourceSchemaModelField('description');
+ $descriptionField-&gt;type('string')
+         -&gt;from('Description');
+
+ $recurrenceIdField = new \Kendo\Data\DataSourceSchemaModelField('recurrenceId');
+ $recurrenceIdField-&gt;from('RecurrenceID');
+
+ $recurrenceRuleField = new \Kendo\Data\DataSourceSchemaModelField('recurrenceRule');
+ $recurrenceRuleField-&gt;from('RecurrenceRule');
+
+ $recurrenceExceptionField = new \Kendo\Data\DataSourceSchemaModelField('recurrenceException');
+ $recurrenceExceptionField-&gt;from('RecurrenceException');
+
+ $ownerIdField = new \Kendo\Data\DataSourceSchemaModelField('ownerId');
+ $ownerIdField-&gt;from('OwnerID')
+         -&gt;defaultValue(1);
+
+ $model-&gt;id('taskID')
+     -&gt;addField($taskIDField)
+     -&gt;addField($titleField)
+     -&gt;addField($startField)
+     -&gt;addField($endField)
+     -&gt;addField($descriptionField)
+     -&gt;addField($recurrenceIdField)
+     -&gt;addField($recurrenceRuleField)
+     -&gt;addField($recurrenceExceptionField)
+     -&gt;addField($ownerIdField)
+     -&gt;addField($isAllDayField);
+
+ // Configure the schema to accept the format returned by DataSourceResult
+ $schema = new \Kendo\Data\DataSourceSchema();
+ $schema-&gt;data('data')
+        -&gt;errors('errors')
+        -&gt;model($model)
+        -&gt;total('total');
+
+ $dataSource = new \Kendo\Data\DataSource();
+
+ $dataSource-&gt;transport($transport)
+            -&gt;batch(true)
+            -&gt;schema($schema);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a scheduler, configure its resources and set its data source.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ //create Resource configuration
+ $resource = new \Kendo\UI\SchedulerResource();
+ $resource-&gt;field('ownerId')
+     -&gt;title('Owner')
+     -&gt;dataSource(array(
+             array('text'=&gt; 'Alex', 'value' =&gt; 1, 'color' =&gt; '#ef701d'),
+             array('text'=&gt; 'Bob', 'value' =&gt; 2, 'color' =&gt; '#5fb1f7'),
+             array('text'=&gt; 'Charlie', 'value' =&gt; 3, 'color' =&gt; '#35a964')
+         ));
+
+ $scheduler = new \Kendo\UI\Scheduler('scheduler');
+ $scheduler-&gt;timezone("Etc/UTC") // set timezone
+     -&gt;addResource($resource) // add resource configuration
+     -&gt;addView('day', 'week', 'month', 'agenda') // configure views
+     -&gt;dataSource($dataSource);// add dataSource
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Output the scheduler by echo-ing the result of the render method.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ echo $scheduler-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="create-php-file-which-performs-crud-using-datasourceresult">Create PHP file which performs CRUD (using DataSourceResult)</h3>
+
+<ol>
+  <li>Create a new php file called <strong>tasks.php</strong>. This file will peform CRUD operations.</li>
+  <li>
+    <p>Copy <strong>/wrappers/php/lib/DataSourceResult.php</strong> to your web site root and include it.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php require_once 'lib/DataSourceResult.php'; ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Read the request body and parse it as JSON. In the previous example we configured the Kendo DataSource to submit its parameters as JSON via the <a href="/api/wrappers/php/Kendo/Data/DataSourceTransport#parametermap">parameterMap</a>.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $request = json_decode(file_get_contents('php://input'));
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a new instance of the <code class="language-plaintext highlighter-rouge">DataSourceResult</code>.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $result = new DataSourceResult('sqlite:../sample.db');
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Get the current operation type. Available as the <code class="language-plaintext highlighter-rouge">type</code> query string parameter.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $type = $_GET['type'];
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Declare variable which will be returned as result of the operation</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $data = null;
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement "create":</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ if ($type == 'create') {
+     // The 'create' method of DataSourceResult accepts table name, array of column names, array of models and the name of the primary key column
+     $data = $result-&gt;create('Tasks',
+         array('TaskID', 'Title', 'Start', 'End', 'IsAllDay', 'Description', 'RecurrenceID', 'RecurrenceRule', 'RecurrenceException', 'OwnerID'),
+         $request-&gt;models, 'TaskID');
+ }
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement "read":</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ if ($type == 'read') {
+     // The 'read' method accepts table name, array of columns to select and request parameters as array
+     $data = $result-&gt;read('Tasks',
+             array('TaskID', 'Title', 'strftime(\'%Y-%m-%dT%H:%M:%SZ\', Start) as Start', 'strftime(\'%Y-%m-%dT%H:%M:%SZ\', End) as End', 'IsAllDay', 'Description', 'RecurrenceID', 'RecurrenceRule', 'RecurrenceException', 'OwnerID'), $request));
+ }
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement "update":</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ if ($type == 'update') {
+     // The 'update' method of DataSourceResult accepts table name, array of column names, array of models and the name of the primary key column
+     $data = $result-&gt;update('Tasks',
+         array('TaskID', 'Title', 'Start', 'End', 'IsAllDay', 'Description', 'RecurrenceID', 'RecurrenceRule', 'RecurrenceException', 'OwnerID'),
+         $request-&gt;models, 'TaskID');
+ }
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement "destroy":</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ if ($type == 'destroy') {
+     // The 'destroy' method of DataSourceResult accepts table name, array of models and the name of the primary key column
+     $data = $result-&gt;update('Tasks', $request-&gt;models, 'TaskID');
+ }
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Return the result of the operation as JSON</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ // Set response content type
+ header('Content-Type: application/json');
+
+ echo json_encode($data);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/framework/binder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatabinder">kendo.data.Binder</h1>
+
+<p>The base class of the Kendo UI MVVM-style bindings. Use it to create custom MVVM bindings.</p>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="bindings-object">bindings <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Represents all bindings applied to the current HTML <a href="#fields-element">element</a>. Use it to get or set the current view model field value.</p>
+
+<h4 id="example---get-the-view-model-field">Example - get the view model field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-bind="slide: slideChecked" style="background: orange; width: 100px; height: 100px"&gt;&lt;/div&gt;
+&lt;label&gt;Check to slide&lt;input type="checkbox" data-bind="checked: slideChecked"&gt;&lt;/label&gt;
+&lt;script&gt;
+kendo.data.binders.slide = kendo.data.Binder.extend({
+    refresh: function() {
+        // get the value of the view model field to which the slide binding is bound (slideChecked)
+        var value = this.bindings["slide"].get();
+
+        if (value) {
+            $(this.element).slideDown();
+        } else {
+            $(this.element).slideUp();
+        }
+    }
+});
+var viewModel = kendo.observable({
+  slideChecked: true
+});
+kendo.bind(document.body, viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="element-element">element <code class="language-plaintext highlighter-rouge">Element</code></h3>
+
+<p>The bound HTML element.</p>
+
+<h4 id="example---use-the-html-element-of-the-binder">Example - use the HTML element of the binder</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-bind="slide: slideChecked" style="background: orange; width: 100px; height: 100px"&gt;&lt;/div&gt;
+&lt;label&gt;Check to slide&lt;input type="checkbox" data-bind="checked: slideChecked"&gt;&lt;/label&gt;
+&lt;script&gt;
+kendo.data.binders.slide = kendo.data.Binder.extend({
+    refresh: function() {
+        var value = this.bindings["slide"].get();
+
+        if (value) {
+            $(this.element).slideDown();
+        } else {
+            $(this.element).slideUp();
+        }
+    }
+});
+var viewModel = kendo.observable({
+  slideChecked: true
+});
+kendo.bind(document.body, viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="class-methods">Class methods</h2>
+
+<h3 id="extend">extend</h3>
+
+<p>Creates a new binding which inherits from the kendo.data.Binder class.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> a new class which inherits the base methods.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="prototype-object">prototype <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>A key/value pair of all methods that the new class will have.</p>
+
+<h4 id="example---create-custom-html-element-binding">Example - create custom HTML element binding</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-bind="slide: slideChecked" style="background: orange; width: 100px; height: 100px"&gt;&lt;/div&gt;
+&lt;label&gt;Check to slide&lt;input type="checkbox" data-bind="checked: slideChecked"&gt;&lt;/label&gt;
+&lt;script&gt;
+kendo.data.binders.slide = kendo.data.Binder.extend({
+    refresh: function() {
+        var value = this.bindings["slide"].get();
+
+        if (value) {
+            $(this.element).slideDown();
+        } else {
+            $(this.element).slideUp();
+        }
+    }
+});
+var viewModel = kendo.observable({
+  slideChecked: true
+});
+kendo.bind(document.body, viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---create-custom-kendo-ui-widget-binding">Example - create custom Kendo UI Widget binding</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input data-role="numerictextbox" id="numeric" data-bind="value: value, max: max" /&gt;
+&lt;script&gt;
+kendo.data.binders.widget.max = kendo.data.Binder.extend({
+  init: function(widget, bindings, options) {
+      //call the base constructor
+      kendo.data.Binder.fn.init.call(this, widget.element[0], bindings, options);
+  },
+  refresh: function() {
+      var that = this,
+      value = that.bindings["max"].get(); //get the value from the View-Model
+      $(that.element).data("kendoNumericTextBox").max(value); //update the widget
+  }
+});
+var viewModel = kendo.observable( {
+  value: 10,
+  max: 100
+});
+kendo.bind(document.body, viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="refresh">refresh</h3>
+
+<p>Invoked by the Kendo UI MVVM framework when the bound view model value is changed. The binder should update the UI (HTML element or Kendo UI widget) to reflect the view model change.</p>
+
+<h4 id="example---slide-up-or-down-the-element-when-the-bound-value-changes">Example - slide up or down the element when the bound value changes</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-bind="slide: slideChecked" style="background: orange; width: 100px; height: 100px"&gt;&lt;/div&gt;
+&lt;label&gt;Check to slide&lt;input type="checkbox" data-bind="checked: slideChecked"&gt;&lt;/label&gt;
+&lt;script&gt;
+kendo.data.binders.slide = kendo.data.Binder.extend({
+    refresh: function() {
+        var value = this.bindings["slide"].get();
+
+        if (value) {
+            $(this.element).slideDown();
+        } else {
+            $(this.element).slideUp();
+        }
+    }
+});
+var viewModel = kendo.observable({
+  slideChecked: true
+});
+kendo.bind(document.body, viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/using-kendo-with-requirejs.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="using-kendo-with-requirejs">Using Kendo with RequireJS</h1>
+
+<p>The production (minified) builds of Kendo UI are designed to work with <a href="http://requirejs.org/">RequireJS</a>.  Therefore if you need to use only a few components instead of loading the full "kendo.all.js", you can now declare only the components you need and RequireJS will take care to load any needed dependencies.</p>
+
+<p>For example, supposing you need to use a grid and a menu, your code could look like this (replace VERSION with the Kendo UI version that you want to use):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script data-main="http://cdn.kendostatic.com/VERSION/js/jquery.min.js"
+        src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.1/require.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  require([ "kendo.menu.min", "kendo.grid.min" ], initApp);
+  function initApp() {
+      // here it's safe to use kendo.menu and kendo.grid widgets
+  }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>and you don"t need to worry about which other files are necessary for the grid and menu widgets.</p>
+
+<h2 id="configuring-requirejs">Configuring RequireJS</h2>
+
+<p>Above we load RequireJS from a CDN, and configure it to load Kendo UI files from the Kendo CDN by using the "data-main" attribute (which also loads jQuery).</p>
+
+<p>In practice, if you use RequireJS you will probably have some files of your own that need to be loaded and those will reside in a different location than Kendo files.  Here is a more complete example of how you could organize things:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- first, load RequireJS --&gt;
+&lt;script src="require.js"&gt;&lt;/script&gt;
+
+&lt;!-- configure RequireJS with two logical paths:
+     - "app/" will be used for your files
+     - "k/" will be for Kendo UI modules --&gt;
+
+&lt;script&gt;
+  requirejs.config({
+      paths: {
+          app: "/path/to/your/files",
+          k: "http://cdn.kendostatic.com/VERSION/js"
+      }
+  });
+
+  require([
+      "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
+      "app/foo",
+      "app/bar",
+      "k/kendo.menu.min",
+      "k/kendo.grid.min"
+  ], initApp);
+
+  function initApp() {
+     // main entry point of your application
+  }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>For more information about RequireJS please <a href="http://requirejs.org/">visit the website</a>.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

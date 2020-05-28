@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Kendo UI PivotGrid Frequently Asked Questions</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Answers to Frequently Asked Questions about what Kendo UI PivotGrid supports">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/pivotgrid/pivot-grid-faq.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-ui-pivotgrid-frequently-asked-questions">Kendo UI PivotGrid Frequently Asked Questions</h1>
+
+<p>This is a collection of frequently asked questions about what Kendo UI PivotGrid supports.</p>
+
+<h2 id="q-does-the-pivotgrid-widget-works-with-olap-cube-delived-by-ms-ssas">Q: Does the PivotGrid widget works with OLAP cube delived by MS SSAS?</h2>
+
+<p>A: <em><strong>Yes.</strong></em> The <a href="http://technet.microsoft.com/en-us/library/ms175609(v=sql.90).aspx">MS SSAS</a> uses <a href="http://en.wikipedia.org/wiki/XML_for_Analysis">XMLA</a> protocol, which is the main requirement for the PivotGrid to work.</p>
+
+<h2 id="q-does-the-pivotgrid-widget-works-with-different-olap-servers">Q: Does the PivotGrid widget works with different OLAP servers?</h2>
+
+<p>A: If the OLAP service implements <a href="http://en.wikipedia.org/wiki/XML_for_Analysis">XMLA</a> standard, then it should work out-of-the-box. Please note that the supported format of <a href="http://msdn.microsoft.com/en-us/library/ms186691.Aspx">Execute</a> method is a <strong>Multidimensional</strong> property:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;PropertyList&gt;
+   &lt;Format&gt;Multidimensional&lt;/Format&gt;
+&lt;/PropertyList&gt;
+</code></pre></div></div>
+
+<p>and value of the <em>Axis format</em> should be <strong>TupleFormat</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;PropertyList&gt;
+   &lt;AxisFormat&gt;TupleFormat&lt;/AxisFormat&gt;
+&lt;/PropertyList&gt;
+</code></pre></div></div>
+
+<h2 id="q-i-dont-have-olap-cube-can-i-still-use-kendo-ui-pivotgrid">Q: I don"t have OLAP cube, can I still use Kendo UI PivotGrid?</h2>
+
+<p>A: Currently, the Kendo UI PivotDataSource has limited support for <a href="http://demos.telerik.com/kendo-ui/pivotgrid/local-flat-data-binding">binding to flat data</a>. Note that in this scenario not all of the features avialable when bound to a OLAP cube are supported. Those includes filtering, hierarchies, multiple measures etc.</p>
+
+<h2 id="next-steps">Next steps:</h2>
+<ul>
+  <li><a href="/getting-started/web/pivotgrid/overview">Getting started</a></li>
+</ul>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

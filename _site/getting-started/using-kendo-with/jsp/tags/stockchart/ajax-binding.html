@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/jsp/tags/stockchart/ajax-binding.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h2 id="ajax-binding">Ajax Binding</h2>
+
+<p>When configured for ajax binding the Kendo StockChart for JSP will make an ajax requests to populate its series.</p>
+
+<p>To configure the Kendo StockChart for ajax binding follow these steps (using Spring MVC framework):</p>
+
+<ol>
+  <li>
+    <p>Add a new action method which will return data to populate the chart:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@RequestMapping(value = "/index/read", method = RequestMethod.POST)
+public @ResponseBody List&lt;StockDataPoint&gt; read() {
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Return the data as JSON:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@RequestMapping(value = "/index/read", method = RequestMethod.POST)
+public @ResponseBody List&lt;StockDataPoint&gt; read() {
+    return ChartDataRepository.BoeingStockData();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>In the view configure the chart to use the action method created in the previous steps:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;kendo:stockChart name="stockChart" dateField="date"&gt;
+ 	&lt;kendo:stockChart-title text="The Boeing Company (NYSE:BA)" /&gt;
+    &lt;kendo:dataSource&gt;
+	 	 &lt;kendo:dataSource-transport&gt;
+     		 &lt;kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+         &lt;/kendo:dataSource-transport&gt;
+    &lt;/kendo:dataSource&gt;
+ &lt;/kendo:stockChart&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create the main and navigator series:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;kendo:stockChart name="stockChart" dateField="date"&gt;
+  	&lt;kendo:stockChart-title text="The Boeing Company (NYSE:BA)" /&gt;
+     &lt;kendo:dataSource&gt;
+ 	 	 &lt;kendo:dataSource-transport&gt;
+      		 &lt;kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+          &lt;/kendo:dataSource-transport&gt;
+     &lt;/kendo:dataSource&gt;
+     &lt;kendo:stockChart-series&gt;
+     	&lt;kendo:stockChart-seriesItem type="candlestick" openField="open" highField="high" lowField="low" closeField="close" /&gt;
+     &lt;/kendo:stockChart-series&gt;
+     &lt;kendo:stockChart-navigator&gt;
+     	&lt;kendo:stockChart-navigator-series&gt;
+     		&lt;kendo:stockChart-navigator-seriesItem type="line" field="close" /&gt;
+     	&lt;/kendo:stockChart-navigator-series&gt;
+     &lt;/kendo:stockChart-navigator&gt;
+      &lt;/kendo:stockChart&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

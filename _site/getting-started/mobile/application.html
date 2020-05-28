@@ -1,0 +1,536 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Documentation for Kendo UI Mobile Application</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to initiate Kendo UI Mobile Application and handle the navigation.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/mobile/application.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="application">Application</h1>
+
+<p>The Kendo UI Mobile <strong>Application</strong> provides the necessary tools for building native-looking web based mobile applications.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> Kendo UI Mobile Application init takes care of adding a Viewport meta tag to your app, in order to set the correct options it needs to function properly. Additional Viewport meta tags
+or at least the <strong>width</strong> and <strong>height</strong> options are not supported and may result in unexpected behavior.</p>
+</blockquote>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The simplest mobile <strong>Application</strong> consists of a single mobile <strong>View</strong>.</p>
+
+<h3 id="hello-world-mobile-application">Hello World mobile Application</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;body&gt;
+   &lt;div data-role="view"&gt;
+       &lt;div data-role="header"&gt;Header&lt;/div&gt;
+       Hello world!
+       &lt;div data-role="footer"&gt;Footer&lt;/div&gt;
+   &lt;/div&gt;
+
+   &lt;script&gt;
+        // the content of the document.body is used by default
+       var app = new kendo.mobile.Application();
+   &lt;/script&gt;
+&lt;/body&gt;
+</code></pre></div></div>
+
+<h2 id="mobile-views">Mobile Views</h2>
+
+<p>The mobile <strong>Application</strong> consists of a single HTML page with one or more mobile Views,
+linked with navigational widgets (Buttons, TabStrip, etc.).
+Each <strong>immediate</strong> child of the application element (<code class="language-plaintext highlighter-rouge">&lt;body&gt;</code> by default) with <code class="language-plaintext highlighter-rouge">data-role="view"</code>
+is considered a mobile view.</p>
+
+<p>When a mobile View is initialized (the first time the user visits it), it initializes all Mobile, Web, and DataViz Kendo widgets it contains.
+Please refer to the <a href="/getting-started/data-attribute-initialization">Data Attribute Initialization section</a> for more details regarding declarative widget initialization.</p>
+
+<h3 id="mobile-view-with-mobile-button-widget">Mobile View with Mobile Button widget</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;body&gt;
+   &lt;div data-role="view"&gt;
+       &lt;div data-role="header"&gt;Header&lt;/div&gt;
+        &lt;a data-role="button"&gt;Click Me!&lt;/a&gt;
+       &lt;div data-role="footer"&gt;Footer&lt;/div&gt;
+   &lt;/div&gt;
+
+   &lt;script&gt;
+        // the content of the document.body is used by default
+       var app = new kendo.mobile.Application();
+   &lt;/script&gt;
+&lt;/body&gt;
+</code></pre></div></div>
+
+<h2 id="navigation">Navigation</h2>
+
+<p>When initialized, the mobile <strong>Application</strong> modifies the behavior of the Kendo mobile widgets
+(listview link items, buttons, tabs, etc.) so that they navigate between the mobile views
+when the user taps them.</p>
+
+<p>When targeting local views, the <code class="language-plaintext highlighter-rouge">href</code> attribute of navigation widgets specifies the <strong>View</strong> id to navigate to, prefixed with <code class="language-plaintext highlighter-rouge">#</code>, like an anchor.</p>
+
+<h3 id="views-linked-with-mobile-buttons">Views linked with mobile Buttons</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;Foo &lt;a href="#bar" data-role="button"&gt;Go to Bar&lt;/a&gt;&lt;/div&gt;
+&lt;div data-role="view" id="bar"&gt;Bar &lt;a href="#foo" data-role="button"&gt;Go to Foo&lt;/a&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<h2 id="linking-to-external-pages">Linking to External Pages</h2>
+
+<p>By default, all navigational widgets try to navigate to local views when tapped. This behavior can be overridden by setting <code class="language-plaintext highlighter-rouge">data-rel="external"</code> attribute to the link element.</p>
+
+<h3 id="example-external-links">Example: External links</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a href="http://telerik.com/" data-role="button" data-rel="external"&gt;Visit KendoUI&lt;/a&gt;
+</code></pre></div></div>
+
+<h2 id="view-transitions">View Transitions</h2>
+
+<p><strong>View</strong> transitions are defined by setting a <code class="language-plaintext highlighter-rouge">data-transition</code> attribute to the <strong>View</strong> DOM element or to the navigational widget <code class="language-plaintext highlighter-rouge">A</code> DOM element.
+If both are present, the navigational widget transition takes precedence.
+An application-wide default transition may be set using the <code class="language-plaintext highlighter-rouge">transition</code> parameter in the options parameter of the <strong>Application</strong> constructor.
+The following transitions are supported:</p>
+
+<h3 id="slide">slide</h3>
+
+<p>This is the default iOS <strong>View</strong> transition. Old <strong>View</strong> content slides to the left and the new <strong>View</strong> content slides in its place.
+Headers and footers (if present) use the <strong>fade</strong> transition.</p>
+
+<p>The transition direction can be specified by using <code class="language-plaintext highlighter-rouge">slide:(direction)</code>.
+Supported directions are <code class="language-plaintext highlighter-rouge">left</code> and <code class="language-plaintext highlighter-rouge">right</code>. By default, the direction is <code class="language-plaintext highlighter-rouge">left</code>.</p>
+
+<h3 id="zoom">zoom</h3>
+
+<p>The new <strong>View</strong> (along with its header and footer) content zooms from the center of the previous <strong>View</strong>. The old <strong>View</strong> content fades out. Suitable for displaying dialogs.</p>
+
+<h3 id="fade">fade</h3>
+
+<p>The new <strong>View</strong> (along with its header and footer) content fades in on top of the previous <strong>View</strong> content.</p>
+
+<h3 id="overlay">overlay</h3>
+
+<p>The new <strong>View</strong> content slides on top of the previous <strong>View</strong>. Unlike the <code class="language-plaintext highlighter-rouge">slide</code> transition,
+the previous View stays "under" the new one, and the headers / footers do not transition separately.</p>
+
+<p>The transition direction can be specified by using <code class="language-plaintext highlighter-rouge">overlay:(direction)</code> format.
+Supported directions are <code class="language-plaintext highlighter-rouge">down</code>, <code class="language-plaintext highlighter-rouge">left</code>, <code class="language-plaintext highlighter-rouge">up</code> and <code class="language-plaintext highlighter-rouge">right</code>. By default, the direction is <code class="language-plaintext highlighter-rouge">left</code>.</p>
+
+<h3 id="views-with-transitions">Views with Transitions</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo" data-transition="slide"&gt;Foo &lt;a href="#bar" data-role="button"&gt;Go to Bar&lt;/a&gt;&lt;/div&gt;
+&lt;div data-role="view" id="bar" data-transition="overlay:up"&gt;Bar &lt;a href="#foo" data-role="button"&gt;Go to Foo&lt;/a&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Each transition may be played in <strong>reverse</strong>. To do so, add <code class="language-plaintext highlighter-rouge">" reverse"</code> after the transition definition. For
+instance, to simulate returning to previous view using slide transition, use <code class="language-plaintext highlighter-rouge">"slide:left reverse"</code></p>
+
+<h3 id="reverse-transition">Reverse transition</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;Foo &lt;a href="#bar" data-role="button"&gt;Go to Bar&lt;/a&gt;&lt;/div&gt;
+&lt;div data-role="view" id="bar"&gt;Bar &lt;a href="#foo" data-role="button" data-transition="slide:left reverse"&gt;Go to Foo&lt;/a&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<p>When a <strong>View</strong> transitions to the <strong>View</strong> displayed before it (foo → bar → foo), this is considered a <strong>back</strong> navigation.
+In this case, the animation of the current <strong>View</strong> is applied in reverse.
+For instance, navigating with slide transition from <code class="language-plaintext highlighter-rouge">foo</code> to <code class="language-plaintext highlighter-rouge">bar</code>, then back to <code class="language-plaintext highlighter-rouge">foo</code>
+would cause the <code class="language-plaintext highlighter-rouge">foo</code> <strong>View</strong> to slide from the right side of the screen.</p>
+
+<h2 id="remote-views">Remote Views</h2>
+
+<p>The Kendo mobile <strong>Application</strong> can load <strong>Views</strong> remotely, using AJAX. If the navigational widget href attribute value does not start with a hash (#),
+the application considers the View to be remote, and issues an AJAX request to the provided URL.</p>
+
+<p>The View content (the first element with <code class="language-plaintext highlighter-rouge">data-role="view"</code>) is extracted from the AJAX response and appended into the Application DOM element.
+If no element with <code class="language-plaintext highlighter-rouge">data-role="view"</code> is found, the <code class="language-plaintext highlighter-rouge">body</code> contents are wrapped in a <code class="language-plaintext highlighter-rouge">&lt;div data-role="view"&gt;</code> tag and used as a remote view.
+If no element with <code class="language-plaintext highlighter-rouge">data-role="view"</code> is found and no body element is present, the entire response is wrapped in in a <code class="language-plaintext highlighter-rouge">&lt;div data-role="view"&gt;</code> tag and used as a remote view.</p>
+
+<p>Once the remote <strong>View</strong> is fetched, no additional round trips to the server occur when the <strong>View</strong> is displayed again.</p>
+
+<h3 id="remote-view">Remote view</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- foo.html --&gt;
+&lt;div data-role="view"&gt;Foo &lt;a href="bar.html" data-role="button"&gt;Go to Bar&lt;/a&gt;&lt;/div&gt;
+
+&lt;!-- bar.html --&gt;
+&lt;div data-role="view"&gt;Bar&lt;/div&gt;
+</code></pre></div></div>
+
+<p>The remote view request will also append (but not initialize) any <strong>additional views</strong> found in the AJAX
+response. <strong>Inline style</strong> elements, <strong>inline script</strong> elements, and <strong>mobile layout</strong> definitions will also be evaluated and appended to the
+application. The elements must be available in the root of the response, or nested inside the <strong>body</strong> element.</p>
+
+<p>Scripts and styles from the <strong>head</strong> element (if present) will <strong>not</strong> be evaluated.</p>
+
+<p>If the remote view needs an <strong>additional scripting (widget initialization/binding)</strong> logic, it may be defined in the view init event handler,  in the AJAX response.</p>
+
+<h3 id="remote-view-with-init-event-handler">Remote view with init event handler</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- foo.html --&gt;
+&lt;div data-role="view"&gt;
+&lt;a data-role="button" href="bar.html"&gt;Go to bar&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;!-- bar.html --&gt;
+&lt;div data-role="view" data-init="initBar"&gt;
+  &lt;a href="#" id="link"&gt;Link&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  function initBar(e) {
+      e.view.element.find("#link").kendoMobileButton();
+  }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="remote-views-with-parameters">Remote Views With Parameters</h3>
+
+<p>Once a remote view is loaded, subsequent view displays for the same path with different query string parameters do not perform additional requests <strong>by default</strong>.
+In order to reload the remote view contents each time the view is shown, set the <strong>reload</strong> configuration option.</p>
+
+<h3 id="remote-view-that-is-refreshed-on-every-request">Remote view that is refreshed on every request</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- foo.html --&gt;
+&lt;div data-role="view"&gt;
+&lt;a data-role="button" href="bar.html"&gt;Go to bar&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;!-- bar.html --&gt;
+&lt;div data-role="view" data-reload="true"&gt;
+    I will be requested from the server every time I am displayed
+  &lt;a href="#" id="link"&gt;Link&lt;/a&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<h2 id="initial-view">Initial View</h2>
+
+<p>The <strong>Application</strong> provides a way to specify the initial view to show. The initial view can be set by
+passing the view id in the options parameter of the Application"s constructor:</p>
+
+<h3 id="define-initial-view">Define initial view</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+     new kendo.mobile.Application($(document.body), {
+         initial: "ViewID"
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="web-clips">Web Clips</h2>
+
+<p>The mobile devices can create a bookmark placed on the Home screen, which is called a web clip. Users can use the shortcut to open that web page later. While instantiating the Application, you can specify a custom icon or disable the app mode.</p>
+
+<h3 id="define-web-clip-icon">Define web clip icon</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+     new kendo.mobile.Application($(document.body), {
+         icon: "URL to a web clip icon"
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Multiple icons for different sizes can be defined. Please refer to Apple <a href="https://developer.apple.com/library/ios/#documentation/userexperience/conceptual/mobilehig/IconsImages/IconsImages.html#//apple_ref/doc/uid/TP40006556-CH14-SW11">Web Clip Icons help topic</a>
+for more information.</p>
+
+<h3 id="define-multiple-web-clip-icons">Define multiple web clip icons</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+     new kendo.mobile.Application($(document.body), {
+         icon: {
+           "72x72" : "URL to a 72 x 72 pixels web clip icon",
+           "114x114" : "URL to a 114 x 114 pixels web clip icon"
+         }
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>As of Q2 2013, you can disable the app mode and open the home screen web clip link in the browser (by default Kendo UI Mobile applications are web app capable and open without the browser chrome).</p>
+
+<h3 id="open-web-clip-link-in-the-browser">Open web clip link in the browser</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+     new kendo.mobile.Application($(document.body), {
+         webAppCapable: false
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="hidden-status-bar-in-ioscordova">Hidden Status Bar in iOS/Cordova</h2>
+
+<p>In order to hide the status bar in in an application deployed with Cordova, the <a href="https://github.com/apache/cordova-labs/tree/plugins/statusbar">Cordova Status Bar Plugin</a> should be enabled.
+Next, call the StatusBar <code class="language-plaintext highlighter-rouge">hide</code> method and set the mobile application statusBarStyle to <code class="language-plaintext highlighter-rouge">hidden</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-title="Pink"&gt;
+    &lt;header data-role="header"&gt;
+        &lt;div data-role="navbar"&gt;
+            &lt;div data-role="view-title"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+    Hello world!
+&lt;/div&gt;
+
+&lt;script&gt;
+    document.addEventListener('deviceready', function() {
+        StatusBar.hide();
+        new kendo.mobile.Application($(document.body), { statusBarStyle: "hidden" });
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="seamless-status-bar-in-ios7">Seamless Status Bar in iOS7</h2>
+
+<p>iOS7 introduced application status bars that merge with your application, creating a more unified look. This can be achieved in a native application by setting UIStatusBarStyleLightContent style.
+However Apple didn"t update the web clip status bar meta tag to support similar functionality, except that now black-translucent makes the status bar completely transparent with white icons.
+On the contrary, in Telerik AppBuilder/PhoneGap, the status bar has black icons - their color can be only controlled with the <a href="https://github.com/apache/cordova-labs/tree/plugins/statusbar">official Cordova Status Bar Plugin</a>.
+Knowing this, you can achieve the seamless status bar in Kendo UI Mobile starting from Q2 2013 SP, but only with darker backgrounds. For instance, this complete example will make a pink NavBar
+with seamless status bar on top of it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;style scoped&gt;
+    .km-on-ios .km-header .km-navbar
+    {
+        background-color: deeppink;
+    }
+
+    .km-on-ios .km-header .km-widget,
+    .km-on-ios .km-header .km-view-title
+    {
+        color: white;
+    }
+&lt;/style&gt;
+
+&lt;div data-role="view" data-title="Pink"&gt;
+    &lt;header data-role="header"&gt;
+        &lt;div data-role="navbar"&gt;
+            &lt;div data-role="view-title"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+    Hello world!
+&lt;/div&gt;
+
+&lt;script&gt;
+    new kendo.mobile.Application($(document.body), {
+        statusBarStyle: "black-translucent"
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="mobile-safari-address-bar-tint-in-ios7">Mobile Safari address bar tint in iOS7</h2>
+
+<p>Another neat addition in iOS7 Mobile Safari is that the browser address bar and the status bar above it inherits a tint from the opened web page.
+The tint is directly taken from the background-color of the page, so in order to use it in your Kendo Mobile app, you can do this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.km-on-ios.km-ios7
+{
+    background-color: deeppink; /* Required for the tint */
+    -webkit-linear-gradient(top, white, white); /* Colorize the body as you wish. */
+}
+</code></pre></div></div>
+
+<h2 id="place-tabstrip-at-bottom-in-android">Place TabStrip at bottom in Android</h2>
+
+<p>By default Android Kendo UI Mobile styling switches the places of the application header and footer. If TabStrip at bottom is preferred (as in iOS and BlackBerry) this behavior can be switched off with a simple CSS rule:</p>
+
+<h3 id="switch-places-of-header-and-footer">Switch places of header and footer</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.km-android .km-view:not(.km-splitview) {
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+</code></pre></div></div>
+
+<h2 id="forcing-platform-styles">Forcing Platform Styles</h2>
+
+<p>The <strong>Application</strong> provides a way to force a specific platform look on your application upon init by
+passing the platform name in the <code class="language-plaintext highlighter-rouge">options</code> parameter of the Application"s constructor:</p>
+
+<h3 id="force-ios-look">Force iOS look</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+     new kendo.mobile.Application($(document.body), {
+         platform: "ios"
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Platform can be one of "ios", "ios7", "android", "blackberry", "wp", "meego". Additionally, platform theme variants can be set by either using platform or skin configuration option.
+Platform variants can be "android-light" and "android-dark" (which is default):</p>
+
+<h3 id="force-android-holo-light-theme">Force Android Holo Light theme</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+     new kendo.mobile.Application($(document.body), {
+         skin: "android-light"
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Additionally, the OS version can be specified by passing a <code class="language-plaintext highlighter-rouge">kendo.support.mobileOS</code> object that is expected by Kendo UI Mobile.
+This allows fine-grained tuning of the application look and behavior. A sample object initialization is like this:</p>
+
+<h3 id="force-ios-5-look">Force iOS 5 look</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    new kendo.mobile.Application($(document.body), {
+        platform: {
+            device: "ipad",       // Mobile device, can be "ipad", "iphone", "android", "fire", "blackberry", "wp", "meego"
+            name: "ios",          // Mobile OS, can be "ios", "android", "blackberry", "wp", "meego"
+            ios: true,            // Mobile OS name as a flag
+            majorVersion: 5,      // Major OS version
+            minorVersion: "0.0",  // Minor OS versions
+            flatVersion: "500",   // Flat OS version for easier comparison
+            appMode: false,       // Whether running in browser or in AppMode/Cordova/PhoneGap/Telerik AppBuilder.
+            cordova: false,       // Whether running in Cordova/PhoneGap/Telerik AppBuilder.
+            tablet: "ipad"        // If a tablet - tablet name or false for a phone.
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="stop-link-highlighting-in-windows-phone-8">Stop link highlighting in Windows Phone 8</h2>
+
+<p>By default Windows Phone 8 highlights all links when they are active (hold down). Stopping this behaviour requires manually adding a meta tag to your application/site -
+adding the tag through Javascript is ignored:</p>
+
+<h3 id="stop-link-highlighting-in-wp8">Stop link highlighting in WP8</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;meta name="msapplication-tap-highlight" content="no" /&gt;
+</code></pre></div></div>
+
+<h3 id="using-kendo-ui-mobile-in-aspnet-webforms-project">Using Kendo UI Mobile in ASP.NET WebForms project</h3>
+
+<p>In order to use Kendo UI Mobile in ASP.NET WebForms project you should:</p>
+
+<ul>
+  <li>set the form element as mobile application container</li>
+  <li>stretch the form element to 100% height and remove the body margin and padding</li>
+</ul>
+
+<h3 id="example-initialize-mobile-application-in-aspnet-webforms-project">Example: Initialize mobile application in ASP.NET WebForms project</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form id="mobileContainer" runat="server"&gt;
+    &lt;div data-role="view"&gt;
+        kendo mobile view
+    &lt;/div&gt;
+    &lt;script&gt;
+        //set the form element as mobile application container
+        new kendo.mobile.Application($("#mobileContainer"));
+    &lt;/script&gt;
+&lt;/form&gt;
+&lt;style&gt;
+    /* stretch the form element */
+    html, body, #mobileContainer { height: 100%; }
+    /* remove margin and padding */
+    body { margin: 0; padding: 0; }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>Note that KendoUI Mobile application is a type of <a href="http://en.wikipedia.org/wiki/Single-page_application">single page application</a>. This type of web applications fit on a single page with the goal of providing a more fluid user experience and native-like responsiveness. Forms post-backs which cause page reloading are in conflict with that approach. That said forms post-backs that the .NET framework makes automatically should be avoided - in the mobile application all the dynamic content should be sent or retrieved via Ajax requests.</p>
+</blockquote>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,742 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Sortable</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/sortable.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouisortable">kendo.ui.Sortable</h1>
+
+<p>Represents the Kendo UI Sortable. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="axis-stringdefault-null">axis <code class="language-plaintext highlighter-rouge">String</code><em>(default: null)</em></h3>
+
+<p>Constrains the hint movement to either the horizontal (x) or vertical (y) axis. Can be set to either "x" or "y".</p>
+
+<h4 id="example---initiate-horizontally-draggable-sortable-widget">Example - initiate horizontally draggable Sortable widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="sortable"&gt;
+    &lt;span&gt;Item1&lt;/span&gt;
+    &lt;span&gt;Item2&lt;/span&gt;
+    &lt;span&gt;Item3&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        axis: "x"
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="container-stringdefault-null">container <code class="language-plaintext highlighter-rouge">String</code><em>(default: null)</em></h3>
+
+<p>Selector that determines the container to which boundaries the hint movement will be constrained.</p>
+
+<h4 id="example---initiate-sortable-widget-with-hint-movement-constrains">Example - initiate Sortable widget with hint movement constrains</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="wrapper"&gt;
+    &lt;ul id="sortable"&gt;
+        &lt;li&gt;Item1&lt;/li&gt;
+        &lt;li&gt;Item2&lt;/li&gt;
+        &lt;li&gt;Item3&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        container: $("#wrapper")
+     });
+&lt;/script&gt;
+
+&lt;style&gt;
+    #wrapper {
+        padding: 10px;
+        width: 100px;
+        border: 1px solid #FF0000;
+    }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="connectwith-stringdefault-null">connectWith <code class="language-plaintext highlighter-rouge">String</code><em>(default: null)</em></h3>
+
+<p>Selector which determines if items from the current Sortable widget can be accepted from another Sortable container(s). The connectWith option describes <strong>one way</strong> relationship, if the developer wants a two way connection then the connectWith option should be set on both widgets.</p>
+
+<blockquote>
+  <p>By default when the Sortable widget is left with no items its height will become zero. This will prevent the user from being able to drop items back into it. To avoid this behaviour the developer should set the min-height CSS property of the sortable container.</p>
+</blockquote>
+
+<h4 id="example---set-up-a-one-way-connection-from-lista-to-listb">Example - set up a one way connection from ListA to ListB</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="listA"&gt;
+    &lt;li&gt;ItemA1&lt;/li&gt;
+    &lt;li&gt;ItemA2&lt;/li&gt;
+    &lt;li&gt;ItemA3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul id="listB"&gt;
+    &lt;li&gt;ItemB1&lt;/li&gt;
+    &lt;li&gt;ItemB2&lt;/li&gt;
+    &lt;li&gt;ItemB3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#listA").kendoSortable({ 
+        connectWith: $("#listB")
+    });
+
+    $("#listB").kendoSortable();
+&lt;/script&gt;
+
+&lt;style&gt;
+    #listA li { background-color: #FF0000; }
+    #listB li { background-color: #0000FF; }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-up-a-bidirectional-connection-between-sortable-widgets">Example - set up a bidirectional connection between Sortable widgets</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="listA"&gt;
+    &lt;li&gt;ItemA1&lt;/li&gt;
+    &lt;li&gt;ItemA2&lt;/li&gt;
+    &lt;li&gt;ItemA3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul id="listB"&gt;
+    &lt;li&gt;ItemB1&lt;/li&gt;
+    &lt;li&gt;ItemB2&lt;/li&gt;
+    &lt;li&gt;ItemB3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#listA").kendoSortable({ 
+        connectWith: $("#listB")
+    });
+
+    $("#listB").kendoSortable({
+        connectWith: $("#listA")
+    });
+&lt;/script&gt;
+
+&lt;style&gt;
+    #listA, #listB {
+        border: 1px solid #000000;
+        min-height: 20px;
+    }
+
+    #listA li { background-color: #FF0000; }
+    #listB li { background-color: #0000FF; }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="cursor-stringdefault-auto">cursor <code class="language-plaintext highlighter-rouge">String</code><em>(default: "auto")</em></h3>
+
+<p>The cursor that will be shown while user drags sortable item.</p>
+
+<h4 id="example---setting-cursor-to-move">Example - setting cursor to move</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;ItemA1&lt;/li&gt;
+    &lt;li&gt;ItemA2&lt;/li&gt;
+    &lt;li&gt;ItemA3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({
+        cursor: "move"
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="cursoroffset-objectdefault-null">cursorOffset <code class="language-plaintext highlighter-rouge">Object</code><em>(default: null)</em></h3>
+
+<p>If set, specifies the offset of the hint relative to the mouse cursor/finger.
+By default, the hint is initially positioned on top of the draggable source offset. The option accepts an object with two keys: <code class="language-plaintext highlighter-rouge">top</code> and <code class="language-plaintext highlighter-rouge">left</code>.</p>
+
+<h4 id="example---initialize-sortable-with-cursoroffset">Example - initialize Sortable with cursorOffset</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;ItemA1&lt;/li&gt;
+    &lt;li&gt;ItemA2&lt;/li&gt;
+    &lt;li&gt;ItemA3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({
+        cursorOffset: { top: 30, left: 30 }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="cursoroffsetleft-number">cursorOffset.left <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The left offset of the hint element relative to the mouse cursor/finger.</p>
+
+<h3 id="cursoroffsettop-number">cursorOffset.top <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The top offset of the hint element relative to the mouse cursor/finger.</p>
+
+<h3 id="disabled-stringdefault-null">disabled <code class="language-plaintext highlighter-rouge">String</code><em>(default: null)</em></h3>
+
+<p>Selector that determines which items are disabled. <strong>Disabled items cannot be dragged but are valid sort targets</strong>.</p>
+
+<h4 id="example---disabled-sortable-items">Example - disabled sortable items</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li class="disabled"&gt;ItemA1&lt;/li&gt;
+    &lt;li&gt;ItemA2&lt;/li&gt;
+    &lt;li&gt;ItemA3&lt;/li&gt;
+    &lt;li&gt;ItemA4&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        disabled: ".disabled"
+    });
+&lt;/script&gt;
+
+&lt;style&gt;
+    .disabled { color: #FF0000; }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="filter-stringdefault-null">filter <code class="language-plaintext highlighter-rouge">String</code><em>(default: null)</em></h3>
+
+<p>Selector that determines which items are sortable. <strong>Filtered items cannot be dragged and are not valid sort targets</strong>.</p>
+
+<h4 id="example---filtered-sortable-items">Example - filtered sortable items</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li class="filtered"&gt;ItemA1&lt;/li&gt;
+    &lt;li&gt;ItemA2&lt;/li&gt;
+    &lt;li&gt;ItemA3&lt;/li&gt;
+    &lt;li&gt;ItemA4&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        filter: "&gt;li:not(.filtered)"
+    });
+&lt;/script&gt;
+
+&lt;style&gt;
+    .filtered { color: #FF0000; }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="handler-stringdefault-null">handler <code class="language-plaintext highlighter-rouge">String</code><em>(default: null)</em></h3>
+
+<p>Selector that determines which element will be used as a draggable handler. If a handler is defined, the user will be able to move the Sortable items only if the cursor/finger is positioned onto the handler element.</p>
+
+<h4 id="example---sortable-widget-with-drag-handlers">Example - Sortable widget with drag handlers</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;&lt;span class="handler"&gt;&lt;/span&gt;ItemA1&lt;/li&gt;
+    &lt;li&gt;&lt;span class="handler"&gt;&lt;/span&gt;ItemA2&lt;/li&gt;
+    &lt;li&gt;&lt;span class="handler"&gt;&lt;/span&gt;ItemA3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        handler: ".handler"
+    });
+&lt;/script&gt;
+
+&lt;style&gt;
+    .handler { 
+        width: 16px;
+        height: 16px;
+        background-color: #FF0000;
+        display: inline-block;
+    }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="hint-function--string--jquery">hint <code class="language-plaintext highlighter-rouge">Function | String | jQuery</code></h3>
+
+<p>Provides a way for customization of the sortable item hint. If a function is supplied, it receives one argument - the draggable element"s jQuery object.
+If hint function is not provided the widget will clone dragged item and use it as a hint.</p>
+
+<blockquote>
+  <p><strong>Important: The hint element is appended to the <code class="language-plaintext highlighter-rouge">&lt;body&gt;</code> tag.</strong> The developer should have this in mind in order to avoid styling issues.</p>
+</blockquote>
+
+<h4 id="example---sortable-with-custom-hint">Example - Sortable with custom hint</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;ItemA1&lt;/li&gt;
+    &lt;li&gt;ItemA2&lt;/li&gt;
+    &lt;li&gt;ItemA3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        hint: function(element) {
+            return $("&lt;span&gt;&lt;/span&gt;")
+                    .text(element.text())
+                    .css("color", "#FF0000");
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="holdtodrag-booleandefault-false">holdToDrag <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to <code class="language-plaintext highlighter-rouge">true</code>, the item will be activated after the user taps and holds the finger on the element for a short amount of time.
+The item will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately.</p>
+
+<h4 id="example---sortable-with-holdtodrag-enabled">Example - Sortable with holdToDrag enabled</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;ItemA1&lt;/li&gt;
+    &lt;li&gt;ItemA2&lt;/li&gt;
+    &lt;li&gt;ItemA3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({
+        holdToDrag: true
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="ignore-stringdefault-null">ignore <code class="language-plaintext highlighter-rouge">String</code><em>(default: null)</em></h3>
+
+<p>Selector that determines which elements inside the sorted item"s container will be ignored. <em>Useful if the sortable item contains input elements.</em></p>
+
+<blockquote>
+  <p><strong>Important</strong> The <code class="language-plaintext highlighter-rouge">ignore</code> option is available in the latest internal build! This feature is <strong>not</strong> included in Q1 2014 (v2014.1.318).</p>
+</blockquote>
+
+<h4 id="example---sortable-widget-with-input-elements">Example - Sortable widget with input elements</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;ItemA1 &lt;input type="text" /&gt;&lt;/li&gt;
+    &lt;li&gt;ItemA2 &lt;input type="text" /&gt;&lt;/li&gt;
+    &lt;li&gt;ItemA3 &lt;input type="text" /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        ignore: "input"
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="placeholder-function--string--jquery">placeholder <code class="language-plaintext highlighter-rouge">Function | String | jQuery</code></h3>
+
+<p>Provides a way for customization of the sortable item placeholder. If a function is supplied, it receives one argument - the draggable element"s jQuery object.
+If placeholder function is not provided the widget will clone dragged item, remove its ID attribute, set its visibility to hidden and use it as a placeholder.</p>
+
+<blockquote>
+  <p>**Important: The placeholder element is appended to the Sortable widget container.</p>
+</blockquote>
+
+<h4 id="example---sortable-with-custom-placeholder">Example - Sortable with custom placeholder</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;ItemA1&lt;/li&gt;
+    &lt;li&gt;ItemA2&lt;/li&gt;
+    &lt;li&gt;ItemA3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        placeholder: function(element) {
+            return element.clone().css({
+                "opacity": 0.3,
+                "border": "1px dashed #000000"
+            });
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="indexof">indexOf</h3>
+
+<p>Returns the index of specified item. <strong>Filtered items are excluded from the collection.</strong></p>
+
+<blockquote>
+  <p><strong>Important:</strong> While user drags to sort the original item is hidden and the placeholder is appended to the Sortable collection. This is why jQuery"s <code class="language-plaintext highlighter-rouge">index</code> method might return incorrect results. When the developer wants to find the index of a given item it is recommended to use widget"s <code class="language-plaintext highlighter-rouge">indexOf</code> method.</p>
+</blockquote>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="element-jquery">element <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>jQuery object which represents the sortable element.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> the index of specified item.</p>
+
+<h4 id="example---working-with-indexof-method">Example - working with indexOf method</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="sortable"&gt;
+    &lt;h4&gt;Sortable List&lt;/h4&gt;
+    &lt;div&gt;Item1&lt;/div&gt;
+    &lt;div&gt;Item2&lt;/div&gt;
+    &lt;div&gt;Item3&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        filter: "&gt;div",
+        move: function(e) {
+            //NOTE: the heading element will be excluded from the
+            //collection as it does not match the filter
+
+            //shows the original position of the item
+            console.log("index of item", this.indexOf(e.item));
+            //shows the position where item will be moved to
+            console.log("index of placeholder", this.indexOf(this.placeholder));
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="items">items</h3>
+
+<p>Returns the sortable elements. <strong>Filtered items and the placeholder are excluded from the collection.</strong></p>
+
+<blockquote>
+  <p><strong>Important:</strong> While user drags to sort the original item is hidden and the placeholder is appended to the Sortable collection. This is why jQuery"s <code class="language-plaintext highlighter-rouge">children</code> method might return incorrect results. When the developer wants to obtain the sortable items it is recommended to use widget"s <code class="language-plaintext highlighter-rouge">items</code> method.</p>
+</blockquote>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> the sortable items</p>
+
+<h4 id="example---using-the-items-method">Example - using the items method</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="sortable"&gt;
+    &lt;h4&gt;Sortable List&lt;/h4&gt;
+    &lt;div&gt;Item1&lt;/div&gt;
+    &lt;div&gt;Item2&lt;/div&gt;
+    &lt;div&gt;Item3&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    var sortable = $("#sortable").kendoSortable({ 
+        filter: "&gt;div"
+    }).data("kendoSortable");
+
+    console.log(sortable.items());
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="start">start</h3>
+
+<p>Fires when sortable item drag starts.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="edraggableevent-object">e.draggableEvent <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The original draggable"s dragstart event data.</p>
+
+<h5 id="eitem-jquery">e.item <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The element that will be dragged.</p>
+
+<h5 id="epreventdefault-function">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the drag start action. The element will remain at its original position. The hint and placeholder will not be initialized.</p>
+
+<h4 id="example---prevent-certain-item-from-being-sorted-by-cancelling-the-drag-start-action">Example - prevent certain item from being sorted by cancelling the drag start action</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;Item1&lt;/li&gt;
+    &lt;li&gt;Item2&lt;/li&gt;
+    &lt;li&gt;Item3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        start: function(e) {
+            if(e.item.text() === "Item1") {
+                e.preventDefault();
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="move">move</h3>
+
+<p>Fires when Sortable"s placeholder changes its position.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="eitem-jquery-1">e.item <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The element that is dragged.</p>
+
+<h5 id="etarget-jquery">e.target <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The target element under cursor against which placeholder is positioned.</p>
+
+<h5 id="elist-kendouisortable">e.list <code class="language-plaintext highlighter-rouge">kendo.ui.Sortable</code></h5>
+
+<p>The Sortable widget instance which the item belongs to (useful in case there are connected Sortable widgets).</p>
+
+<h5 id="edraggableevent-object-1">e.draggableEvent <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The original draggable"s drag event data.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;Item1&lt;/li&gt;
+    &lt;li&gt;Item2&lt;/li&gt;
+    &lt;li&gt;Item3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        move: function(e) {
+            console.log("move to index: " + this.indexOf(this.placeholder));
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="end">end</h3>
+
+<p>Fires when item dragging ends but before the item"s position is changed in the DOM. This event is suitable for preventing the sort action.</p>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="eaction-string">e.action <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>Possible values are: "sort" - indicates that item"s position was changed inside the same Sortable container; "remove" - indicates that the item was removed from current Sortable widget; "receive" - indicates that the item was received by a connected Sortable widget instance;</p>
+
+<h5 id="epreventdefault-function-1">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the sort action. The element will be reverted at its original position. The hint and placeholder will be destroyed.</p>
+
+<h5 id="eitem-jquery-2">e.item <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The element that is dragged.</p>
+
+<h5 id="eoldindex-number">e.oldIndex <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The original position of the item in the Sortable collection. In case the item is received from connected Sortable the value will be -1</p>
+
+<h5 id="enewindex-number">e.newIndex <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The position where item will be placed. In case the item is removed from connected Sortable the value will be -1</p>
+
+<h5 id="edraggableevent-object-2">e.draggableEvent <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The original draggable"s drag event data.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;Item1&lt;/li&gt;
+    &lt;li&gt;Item2&lt;/li&gt;
+    &lt;li&gt;Item3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        end: function(e) {
+            console.log("from " + e.oldIndex + " to " + e.newIndex);
+
+            //prevent first item to be placed at the end of the list
+            if(e.newIndex == 2 &amp;&amp; e.oldIndex == 0) {
+                e.preventDefault();
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="change">change</h3>
+
+<p>Fires when item is sorted and the item"s position is changed in the DOM.</p>
+
+<blockquote>
+  <p>Important: This event cannot be prevented. If this is required the developer should use the <code class="language-plaintext highlighter-rouge">end</code> event.</p>
+</blockquote>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="eaction-string-1">e.action <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>Possible values are: "sort" - indicates that item"s position was changed inside the same Sortable container; "remove" - indicates that the item was removed from current Sortable widget; "receive" - indicates that the item was received by a connected Sortable widget instance;</p>
+
+<h5 id="eitem-jquery-3">e.item <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The element that is dragged.</p>
+
+<h5 id="eoldindex-number-1">e.oldIndex <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The original position where the item was located at. In case the item is received from connected Sortable the value will be -1</p>
+
+<h5 id="enewindex-number-1">e.newIndex <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The position where item is placed. In case the item is removed from connected Sortable the value will be -1</p>
+
+<h5 id="edraggableevent-object-3">e.draggableEvent <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The original draggable"s drag event data.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;Item1&lt;/li&gt;
+    &lt;li&gt;Item2&lt;/li&gt;
+    &lt;li&gt;Item3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        change: function(e) {
+            console.log("from " + e.oldIndex + " to " + e.newIndex);
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="cancel">cancel</h3>
+
+<p>Fires when item sorting is canceled by pressing the Escape key.</p>
+
+<h4 id="event-data-4">Event Data</h4>
+
+<h5 id="eitem-jquery-4">e.item <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The element that is dragged.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="sortable"&gt;
+    &lt;li&gt;Item1&lt;/li&gt;
+    &lt;li&gt;Item2&lt;/li&gt;
+    &lt;li&gt;Item3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    $("#sortable").kendoSortable({ 
+        cancel: function(e) {
+            console.log(e.item.text() + " sorting called!");
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

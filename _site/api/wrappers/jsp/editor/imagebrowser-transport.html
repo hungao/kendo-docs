@@ -1,0 +1,288 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/editor/imagebrowser-transport.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendoeditor-imagebrowser-transport">&lt;kendo:editor-imageBrowser-transport&gt;</h1>
+
+<p>Specifies the settings for loading and saving data.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser&gt;
+    &lt;kendo:editor-imageBrowser-transport&gt;&lt;/kendo:editor-imageBrowser-transport&gt;
+&lt;/kendo:editor-imageBrowser&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="create-javalangstring">create <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Options or URL which will handle the directory creation. If not specified that create new folder button will not be present. Further configuration is available via <a href="#kendo-editor-imageBrowser-transport-create">kendo:editor-imageBrowser-transport-create</a>.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport create="create"&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+</code></pre></div></div>
+
+<h3 id="destroy-javalangstring">destroy <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Options or URL which will handle the file and directory deletion. If not specified the delete button will not be present. Further configuration is available via <a href="#kendo-editor-imageBrowser-transport-destroy">kendo:editor-imageBrowser-transport-destroy</a>.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport destroy="destroy"&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+</code></pre></div></div>
+
+<h3 id="imageurl-javalangstring">imageUrl <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The URL responsible for serving the original image. A file name placeholder should be specified.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport imageUrl="imageUrl"&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+</code></pre></div></div>
+
+<h3 id="read-javalangstring">read <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Options or URL for remote image retrieval. Further configuration is available via <a href="#kendo-editor-imageBrowser-transport-read">kendo:editor-imageBrowser-transport-read</a>.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport read="read"&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+</code></pre></div></div>
+
+<h3 id="thumbnailurl-javalangstring">thumbnailUrl <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The URL for retrieving the thumbnail version of the image. If not specified a default image icon will be shown.
+If function is assigned, the current path and image name will be provided.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport thumbnailUrl="thumbnailUrl"&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+</code></pre></div></div>
+
+<h3 id="uploadurl-javalangstring">uploadUrl <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The URL which will handle the upload of the new images. If not specified the Upload button will not be displayed.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport uploadUrl="uploadUrl"&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendoeditor-imagebrowser-transport-create">kendo:editor-imageBrowser-transport-create</h3>
+
+<p>Options or URL which will handle the directory creation. If not specified that create new folder button will not be present.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/editor/imagebrowser-transport-create">kendo:editor-imageBrowser-transport-create</a>.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport&gt;
+    &lt;kendo:editor-imageBrowser-transport-create&gt;&lt;/kendo:editor-imageBrowser-transport-create&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+</code></pre></div></div>
+
+<h3 id="kendoeditor-imagebrowser-transport-destroy">kendo:editor-imageBrowser-transport-destroy</h3>
+
+<p>Options or URL which will handle the file and directory deletion. If not specified the delete button will not be present.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/editor/imagebrowser-transport-destroy">kendo:editor-imageBrowser-transport-destroy</a>.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport&gt;
+    &lt;kendo:editor-imageBrowser-transport-destroy&gt;&lt;/kendo:editor-imageBrowser-transport-destroy&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+</code></pre></div></div>
+
+<h3 id="kendoeditor-imagebrowser-transport-read">kendo:editor-imageBrowser-transport-read</h3>
+
+<p>Options or URL for remote image retrieval.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/editor/imagebrowser-transport-read">kendo:editor-imageBrowser-transport-read</a>.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport&gt;
+    &lt;kendo:editor-imageBrowser-transport-read&gt;&lt;/kendo:editor-imageBrowser-transport-read&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="thumbnailurl-string">thumbnailUrl <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The URL for retrieving the thumbnail version of the image. If not specified a default image icon will be shown.
+If function is assigned, the current path and image name will be provided.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport thumbnailUrl="handle_thumbnailUrl"&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+&lt;script&gt;
+    function handle_thumbnailUrl(e) {
+        // Code to handle the thumbnailUrl event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="imageurl-string">imageUrl <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The URL responsible for serving the original image. A file name placeholder should be specified.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport imageUrl="handle_imageUrl"&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+&lt;script&gt;
+    function handle_imageUrl(e) {
+        // Code to handle the imageUrl event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendoeditor-imagebrowser-transport-thumbnailurl">kendo:editor-imageBrowser-transport-thumbnailUrl</h3>
+
+<p>The URL for retrieving the thumbnail version of the image. If not specified a default image icon will be shown.
+If function is assigned, the current path and image name will be provided.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport&gt;
+    &lt;kendo:editor-imageBrowser-transport-thumbnailUrl&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the thumbnailUrl event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:editor-imageBrowser-transport-thumbnailUrl&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+</code></pre></div></div>
+
+<h3 id="kendoeditor-imagebrowser-transport-imageurl">kendo:editor-imageBrowser-transport-imageUrl</h3>
+
+<p>The URL responsible for serving the original image. A file name placeholder should be specified.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:editor-imageBrowser-transport&gt;
+    &lt;kendo:editor-imageBrowser-transport-imageUrl&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the imageUrl event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:editor-imageBrowser-transport-imageUrl&gt;
+&lt;/kendo:editor-imageBrowser-transport&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

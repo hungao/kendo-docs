@@ -1,0 +1,951 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/chart.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendochart">&lt;kendo:chart&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/dataviz/chart">Chart</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="autobind-boolean">autoBind <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart autoBind="autoBind"&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="renderas-javalangstring">renderAs <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the preferred rendering engine.
+If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are:</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart renderAs="renderAs"&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="seriescolors-javalangobject">seriesColors <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The default colors for the chart"s series. When all colors are used, new colors are pulled from the start again.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart seriesColors="seriesColors"&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="theme-javalangstring">theme <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The chart theme.The supported values are:</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart theme="theme"&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="title-javalangstring">title <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The chart title configuration options or text. Further configuration is available via <a href="#kendo-chart-title">kendo:chart-title</a>.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart title="title"&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="transitions-boolean">transitions <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the chart will play animations when displaying the series. By default animations are enabled.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart transitions="transitions"&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendochart-categoryaxis">kendo:chart-categoryAxis</h3>
+
+<p>The category axis configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/categoryaxis">kendo:chart-categoryAxis</a>.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-categoryAxis&gt;&lt;/kendo:chart-categoryAxis&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-chartarea">kendo:chart-chartArea</h3>
+
+<p>The chart area configuration options. Represents the entire visible area of the chart.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/chartarea">kendo:chart-chartArea</a>.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-chartArea&gt;&lt;/kendo:chart-chartArea&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-legend">kendo:chart-legend</h3>
+
+<p>The chart legend configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/legend">kendo:chart-legend</a>.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-legend&gt;&lt;/kendo:chart-legend&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-panes">kendo:chart-panes</h3>
+
+<p>The chart panes configuration.Panes are used to split the chart in two or more parts. The panes are ordered from top to bottom.Each axis can be associated with a pane by setting its pane option to the name of the desired pane.
+Axis that don"t have specified pane are placed in the top (default) pane.Series are moved to the desired pane by associating them with an axis.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/panes">kendo:chart-panes</a>.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-panes&gt;&lt;/kendo:chart-panes&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-plotarea">kendo:chart-plotArea</h3>
+
+<p>The plot area configuration options. The plot area is the area which displays the series.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/plotarea">kendo:chart-plotArea</a>.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-plotArea&gt;&lt;/kendo:chart-plotArea&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-series">kendo:chart-series</h3>
+
+<p>The configuration of the chart series.The series type is determined by the value of the type field.
+If a type value is missing, the type is assumed to be the one specified in seriesDefaults.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/series">kendo:chart-series</a>.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-series&gt;&lt;/kendo:chart-series&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesdefaults">kendo:chart-seriesDefaults</h3>
+
+<p>The default options for all series.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesdefaults">kendo:chart-seriesDefaults</a>.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-seriesDefaults&gt;&lt;/kendo:chart-seriesDefaults&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-title">kendo:chart-title</h3>
+
+<p>The chart title configuration options or text.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/title">kendo:chart-title</a>.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-title&gt;&lt;/kendo:chart-title&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-tooltip">kendo:chart-tooltip</h3>
+
+<p>The chart series tooltip configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/tooltip">kendo:chart-tooltip</a>.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-tooltip&gt;&lt;/kendo:chart-tooltip&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-valueaxis">kendo:chart-valueAxis</h3>
+
+<p>The value axis configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/valueaxis">kendo:chart-valueAxis</a>.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-valueAxis&gt;&lt;/kendo:chart-valueAxis&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-xaxis">kendo:chart-xAxis</h3>
+
+<p>The X-axis configuration options of the scatter chart X-axis. Supports all valueAxis options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/xaxis">kendo:chart-xAxis</a>.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-xAxis&gt;&lt;/kendo:chart-xAxis&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-yaxis">kendo:chart-yAxis</h3>
+
+<p>The y axis configuration options of the scatter chart. Supports all valueAxis options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/yaxis">kendo:chart-yAxis</a>.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-yAxis&gt;&lt;/kendo:chart-yAxis&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="axislabelclick-string">axisLabelClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user clicks an axis label.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-axisLabelClick">axisLabelClick</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart axisLabelClick="handle_axisLabelClick"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_axisLabelClick(e) {
+        // Code to handle the axisLabelClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="legenditemclick-string">legendItemClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when an legend item is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-legendItemClick">legendItemClick</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart legendItemClick="handle_legendItemClick"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_legendItemClick(e) {
+        // Code to handle the legendItemClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="legenditemhover-string">legendItemHover <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when an legend item is hovered.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-legendItemHover">legendItemHover</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart legendItemHover="handle_legendItemHover"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_legendItemHover(e) {
+        // Code to handle the legendItemHover event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound-string">dataBound <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart dataBound="handle_dataBound"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_dataBound(e) {
+        // Code to handle the dataBound event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="drag-string">drag <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired as long as the user is dragging the chart using the mouse or swipe gestures.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-drag">drag</a> event documentation.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart drag="handle_drag"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_drag(e) {
+        // Code to handle the drag event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragend-string">dragEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user stops dragging the chart.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-dragEnd">dragEnd</a> event documentation.</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart dragEnd="handle_dragEnd"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_dragEnd(e) {
+        // Code to handle the dragEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragstart-string">dragStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user starts dragging the chart.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-dragStart">dragStart</a> event documentation.</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart dragStart="handle_dragStart"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_dragStart(e) {
+        // Code to handle the dragStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="noteclick-string">noteClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user clicks one of the notes.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-noteClick">noteClick</a> event documentation.</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart noteClick="handle_noteClick"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_noteClick(e) {
+        // Code to handle the noteClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="notehover-string">noteHover <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user hovers one of the notes.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-noteHover">noteHover</a> event documentation.</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart noteHover="handle_noteHover"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_noteHover(e) {
+        // Code to handle the noteHover event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="plotareaclick-string">plotAreaClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user clicks the plot area.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-plotAreaClick">plotAreaClick</a> event documentation.</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart plotAreaClick="handle_plotAreaClick"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_plotAreaClick(e) {
+        // Code to handle the plotAreaClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select-string">select <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user modifies the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-select">select</a> event documentation.</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart select="handle_select"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_select(e) {
+        // Code to handle the select event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="selectend-string">selectEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user completes modifying the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-selectEnd">selectEnd</a> event documentation.</p>
+
+<h4 id="example-29">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart selectEnd="handle_selectEnd"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_selectEnd(e) {
+        // Code to handle the selectEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="selectstart-string">selectStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user starts modifying the axis selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-selectStart">selectStart</a> event documentation.</p>
+
+<h4 id="example-30">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart selectStart="handle_selectStart"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_selectStart(e) {
+        // Code to handle the selectStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="seriesclick-string">seriesClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user clicks the chart series.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-seriesClick">seriesClick</a> event documentation.</p>
+
+<h4 id="example-31">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart seriesClick="handle_seriesClick"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_seriesClick(e) {
+        // Code to handle the seriesClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="serieshover-string">seriesHover <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user hovers the chart series.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-seriesHover">seriesHover</a> event documentation.</p>
+
+<h4 id="example-32">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart seriesHover="handle_seriesHover"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_seriesHover(e) {
+        // Code to handle the seriesHover event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoom-string">zoom <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired as long as the user is zooming the chart using the mousewheel.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-zoom">zoom</a> event documentation.</p>
+
+<h4 id="example-33">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart zoom="handle_zoom"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_zoom(e) {
+        // Code to handle the zoom event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoomend-string">zoomEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user stops zooming the chart.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-zoomEnd">zoomEnd</a> event documentation.</p>
+
+<h4 id="example-34">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart zoomEnd="handle_zoomEnd"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_zoomEnd(e) {
+        // Code to handle the zoomEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoomstart-string">zoomStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user uses the mousewheel to zoom the chart.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-zoomStart">zoomStart</a> event documentation.</p>
+
+<h4 id="example-35">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart zoomStart="handle_zoomStart"&gt;
+&lt;/kendo:chart&gt;
+&lt;script&gt;
+    function handle_zoomStart(e) {
+        // Code to handle the zoomStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendochart-axislabelclick">kendo:chart-axisLabelClick</h3>
+
+<p>Fired when the user clicks an axis label.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-axisLabelClick">axisLabelClick</a> event documentation.</p>
+
+<h4 id="example-36">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-axisLabelClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the axisLabelClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-axisLabelClick&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-legenditemclick">kendo:chart-legendItemClick</h3>
+
+<p>Fires when an legend item is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-legendItemClick">legendItemClick</a> event documentation.</p>
+
+<h4 id="example-37">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-legendItemClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the legendItemClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-legendItemClick&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-legenditemhover">kendo:chart-legendItemHover</h3>
+
+<p>Fires when an legend item is hovered.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-legendItemHover">legendItemHover</a> event documentation.</p>
+
+<h4 id="example-38">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-legendItemHover&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the legendItemHover event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-legendItemHover&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-databound">kendo:chart-dataBound</h3>
+
+<p>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-39">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-dataBound&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dataBound event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-dataBound&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-drag">kendo:chart-drag</h3>
+
+<p>Fired as long as the user is dragging the chart using the mouse or swipe gestures.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-drag">drag</a> event documentation.</p>
+
+<h4 id="example-40">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-drag&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the drag event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-drag&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-dragend">kendo:chart-dragEnd</h3>
+
+<p>Fired when the user stops dragging the chart.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-dragEnd">dragEnd</a> event documentation.</p>
+
+<h4 id="example-41">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-dragEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dragEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-dragEnd&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-dragstart">kendo:chart-dragStart</h3>
+
+<p>Fired when the user starts dragging the chart.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-dragStart">dragStart</a> event documentation.</p>
+
+<h4 id="example-42">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-dragStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dragStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-dragStart&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-noteclick">kendo:chart-noteClick</h3>
+
+<p>Fired when the user clicks one of the notes.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-noteClick">noteClick</a> event documentation.</p>
+
+<h4 id="example-43">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-noteClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the noteClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-noteClick&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-notehover">kendo:chart-noteHover</h3>
+
+<p>Fired when the user hovers one of the notes.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-noteHover">noteHover</a> event documentation.</p>
+
+<h4 id="example-44">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-noteHover&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the noteHover event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-noteHover&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-plotareaclick">kendo:chart-plotAreaClick</h3>
+
+<p>Fired when the user clicks the plot area.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-plotAreaClick">plotAreaClick</a> event documentation.</p>
+
+<h4 id="example-45">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-plotAreaClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the plotAreaClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-plotAreaClick&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-select">kendo:chart-select</h3>
+
+<p>Fired when the user modifies the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-select">select</a> event documentation.</p>
+
+<h4 id="example-46">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-select&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the select event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-select&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-selectend">kendo:chart-selectEnd</h3>
+
+<p>Fired when the user completes modifying the selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-selectEnd">selectEnd</a> event documentation.</p>
+
+<h4 id="example-47">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-selectEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the selectEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-selectEnd&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-selectstart">kendo:chart-selectStart</h3>
+
+<p>Fired when the user starts modifying the axis selection.The range units are:The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-selectStart">selectStart</a> event documentation.</p>
+
+<h4 id="example-48">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-selectStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the selectStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-selectStart&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesclick">kendo:chart-seriesClick</h3>
+
+<p>Fired when the user clicks the chart series.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-seriesClick">seriesClick</a> event documentation.</p>
+
+<h4 id="example-49">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-seriesClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the seriesClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-seriesClick&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-serieshover">kendo:chart-seriesHover</h3>
+
+<p>Fired when the user hovers the chart series.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-seriesHover">seriesHover</a> event documentation.</p>
+
+<h4 id="example-50">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-seriesHover&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the seriesHover event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-seriesHover&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-zoom">kendo:chart-zoom</h3>
+
+<p>Fired as long as the user is zooming the chart using the mousewheel.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-zoom">zoom</a> event documentation.</p>
+
+<h4 id="example-51">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-zoom&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the zoom event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-zoom&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-zoomend">kendo:chart-zoomEnd</h3>
+
+<p>Fired when the user stops zooming the chart.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-zoomEnd">zoomEnd</a> event documentation.</p>
+
+<h4 id="example-52">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-zoomEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the zoomEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-zoomEnd&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-zoomstart">kendo:chart-zoomStart</h3>
+
+<p>Fired when the user uses the mousewheel to zoom the chart.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/dataviz/chart#events-zoomStart">zoomStart</a> event documentation.</p>
+
+<h4 id="example-53">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart&gt;
+    &lt;kendo:chart-zoomStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the zoomStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-zoomStart&gt;
+&lt;/kendo:chart&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

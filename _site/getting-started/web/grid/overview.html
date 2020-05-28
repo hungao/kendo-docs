@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of Grid UI widget | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Quick steps to help you create Kendo UI Grid, initialization and enabling of Grid UI virtualization.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/grid/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="grid-overview">Grid Overview</h1>
+
+<p>The Grid widget displays tabular data and offers rich support interacting with data,
+including paging, sorting, grouping, and selection. Grid is a powerful widget with
+many configuration options. It can be bound to local JSON data or to remote data
+using the Kendo DataSource component.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>There are two primary ways to create a Kendo Grid:</p>
+
+<ol>
+  <li>From an existing HTML table element, defining columns, rows, and data in HTML</li>
+  <li>From an HTML div element, defining columns and rows with configuration, and binding to data</li>
+</ol>
+
+<h3 id="creating-a-grid-from-existing-html-table-element">Creating a <strong>Grid</strong> from existing HTML Table element</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;!-- Define the HTML table, with rows, columns, and data --&gt;
+ &lt;table id="grid"&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th data-field="title"&gt;Title&lt;/th&gt;
+          &lt;th data-field="year"&gt;Year&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Star Wars: A New Hope&lt;/td&gt;
+          &lt;td&gt;1977&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Star Wars: The Empire Strikes Back&lt;/td&gt;
+          &lt;td&gt;1980&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+ &lt;/table&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>The Grid data field names are either created from the header cell content or the <code class="language-plaintext highlighter-rouge">data-field</code> attributes.
+The data field names should be valid Javascript identifiers, that"s why using data-field attributes is highly recommended.
+Otherwise there would be limitations imposed on the header cell content (e.g. no special characters and spaces).</p>
+</blockquote>
+
+<h3 id="initialize-the-kendo-grid">Initialize the Kendo Grid</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $(document).ready(function(){
+      $("#grid").kendoGrid();
+  });
+</code></pre></div></div>
+
+<h3 id="creating-a-grid-from-existing-html-div-element">Creating a <strong>Grid</strong> from existing HTML Div element</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;!-- Define the HTML div that will hold the Grid --&gt;
+ &lt;div id="grid"&gt;
+ &lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-the-kendo-grid-and-configure-columns--data-binding">Initialize the Kendo Grid and configure columns &amp; data binding</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   $(document).ready(function(){
+      $("#grid").kendoGrid({
+          columns:[
+              {
+                  field: "FirstName",
+                  title: "First Name"
+              },
+              {
+                  field: "LastName",
+                  title: "Last Name"
+          }],
+          dataSource: {
+              data: [
+                  {
+                      FirstName: "Joe",
+                      LastName: "Smith"
+                  },
+                  {
+                      FirstName: "Jane",
+                      LastName: "Smith"
+              }]
+          }
+      });
+  });
+</code></pre></div></div>
+
+<h2 id="configuring-grid-behavior">Configuring Grid Behavior</h2>
+
+<p>Kendo Grid supports paging, sorting, grouping, and scrolling. Configuring any of
+these Grid behaviors is done using simple boolean configuration options. For
+example, the follow snippet shows how to enable all of these behaviors.</p>
+
+<h3 id="enabling-grid-paging-sorting-grouping-and-scrolling">Enabling Grid paging, sorting, grouping, and scrolling</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   $(document).ready(function(){
+      $("#grid").kendoGrid({
+         groupable: true,
+         scrollable: true,
+         sortable: true,
+         pageable: true
+      });
+  });
+</code></pre></div></div>
+
+<p>By default, paging, grouping, and sorting are <strong>disabled</strong>. Scrolling is enabled by default.</p>
+
+<h2 id="performance-with-virtual-scrolling">Performance with Virtual Scrolling</h2>
+
+<p>When binding to large data sets or when using large page sizes, reducing active in-memory
+DOM objects is important for performance. Kendo Grid provides built-in UI virtualization
+for highly optimized binding to large data sets. Enabling UI virtualization is done via simple configuration.</p>
+
+<h3 id="enabling-grid-ui-virtualization">Enabling Grid UI virtualization</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   $(document).ready(function(){
+      $("#grid").kendoGrid({
+         scrollable: {
+             virtual: true
+         }
+      });
+  });
+</code></pre></div></div>
+
+<h2 id="accessing-an-existing-grid">Accessing an Existing Grid</h2>
+
+<p>You can reference an existing <strong>Grid</strong> instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/grid">Grid API</a> to control its behavior.</p>
+
+<h3 id="accessing-an-existing-grid-instance">Accessing an existing Grid instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var grid = $("#grid").data("kendoGrid");
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,574 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/UI/TabStrip.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouitabstrip">\Kendo\UI\TabStrip</h1>
+
+<p>A PHP wrapper for Kendo UI <a href="/api/web/tabstrip">TabStrip</a>.</p>
+
+<p>Inherits from <a href="/api/wrappers/php/Kendo/UI/Widget">\Kendo\UI\Widget</a>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use TabStrip in a PHP page instantiate a new instance, configure it via the available
+configuration <a href="#methods">methods</a> and output it by <code class="language-plaintext highlighter-rouge">echo</code>-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+<h3 id="using-kendo-tabstrip">Using Kendo TabStrip</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// Create a new instance of TabStrip and specify its id
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+
+// Configure it
+$tabStrip-&gt;animation(true)
+
+// Output it
+
+echo $tabStrip-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="activate">activate</h3>
+<p>Triggered after a tab is being made visible and its animation complete. Before Q2 2014 this event was invoked after tab show, but before the end of the animation.
+For additional information check the <a href="/api/web/tabstrip#events-activate">activate</a> event documentation.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;activate('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onActivate(e) {
+        // handle the activate event.
+    }
+&lt;/script&gt;
+&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;activate('onActivate');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;activate(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="animation">animation</h3>
+
+<p>A collection of visual animations used when TabStrip tab are selected through
+user interactions. Setting this option to false will disable all animations.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-booleankendouitabstripanimationarray">$value <code class="language-plaintext highlighter-rouge">boolean|\Kendo\UI\TabStripAnimation|array</code></h5>
+
+<h4 id="example----using-boolean">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;animation(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendouitabstripanimation">Example - using <a href="/api/wrappers/php/Kendo/UI/TabStripAnimation">\Kendo\UI\TabStripAnimation</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$animation = new \Kendo\UI\TabStripAnimation();
+$close = new \Kendo\UI\TabStripAnimationClose();
+$animation-&gt;close($close);
+$tabStrip-&gt;animation($animation);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$close = new \Kendo\UI\TabStripAnimationClose();
+$tabStrip-&gt;animation(array('close' =&gt; $close));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="collapsible">collapsible</h3>
+<p>Specifies whether the TabStrip should be able to collapse completely when clicking an expanded tab.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;collapsible(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="contentload">contentLoad</h3>
+<p>Triggered when content is fetched from an AJAX request.
+For additional information check the <a href="/api/web/tabstrip#events-contentLoad">contentLoad</a> event documentation.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-1">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;contentLoad('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-1">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onContentLoad(e) {
+        // handle the contentLoad event.
+    }
+&lt;/script&gt;
+&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;contentLoad('onContentLoad');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-1">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;contentLoad(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="contenturls">contentUrls</h3>
+<p>Sets an array with the URLs from which the tabs content to be loaded from. If only specific tabs should be loaded via Ajax, then you should set the URLs to the corresponding positions in the array and set the other elements to null.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-array">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;contentUrls(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="datacontentfield">dataContentField</h3>
+<p>Sets the field of the data item that provides the text content of
+the tab content element.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;dataContentField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="datacontenturlfield">dataContentUrlField</h3>
+<p>Sets the field of the data item that provides the URL for
+the ajax loaded tab content.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;dataContentUrlField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dataimageurlfield">dataImageUrlField</h3>
+<p>Sets the field of the data item that provides the image URL of
+the tab.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;dataImageUrlField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dataspritecssclass">dataSpriteCssClass</h3>
+<p>Sets the field of the data item that provides the CSS class of
+the tab.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-string-3">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;dataSpriteCssClass('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="datatextfield">dataTextField</h3>
+<p>Sets the field of the data item that provides the text name of the tab.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-string-4">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;dataTextField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dataurlfield">dataUrlField</h3>
+<p>Sets the field of the data item that provides the link URL for the
+tab.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-string-5">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;dataUrlField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="error">error</h3>
+<p>Triggered when an AJAX request results in an error.
+For additional information check the <a href="/api/web/tabstrip#events-error">error</a> event documentation.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-2">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-2">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;error('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-2">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onError(e) {
+        // handle the error event.
+    }
+&lt;/script&gt;
+&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;error('onError');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-2">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;error(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="additem">addItem</h3>
+
+<p>Adds one or more TabStripItem to the TabStrip.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-value2--kendouitabstripitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStripItem|array</code></h5>
+
+<h4 id="example---using-kendouitabstripitem">Example - using \Kendo\UI\TabStripItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$item = new \Kendo\UI\TabStripItem();
+$contentUrl = 'value';
+$item-&gt;contentUrl($contentUrl);
+$tabStrip-&gt;addItem($item);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$contentUrl = 'value';
+$tabStrip-&gt;addItem(array('contentUrl' =&gt; $contentUrl));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-tabstripitem">Example - adding more than one TabStripItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$first  = new \Kendo\UI\TabStripItem();
+$second = new \Kendo\UI\TabStripItem();
+$tabStrip-&gt;addItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="navigatable">navigatable</h3>
+<p>Specifies whether the TabStrip should be keyboard navigatable.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;navigatable(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+<p>Triggered before a tab is selected.
+For additional information check the <a href="/api/web/tabstrip#events-select">select</a> event documentation.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-3">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-3">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;select('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-3">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSelect(e) {
+        // handle the select event.
+    }
+&lt;/script&gt;
+&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;select('onSelect');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-3">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;select(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="show">show</h3>
+<p>Triggered just after a tab is being made visible, but before the end of the animation. Before Q2 2014 this event was called activate.
+For additional information check the <a href="/api/web/tabstrip#events-show">show</a> event documentation.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\TabStrip</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-4">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-4">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;show('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-4">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onShow(e) {
+        // handle the show event.
+    }
+&lt;/script&gt;
+&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;show('onShow');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-4">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$tabStrip = new \Kendo\UI\TabStrip('TabStrip');
+$tabStrip-&gt;show(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

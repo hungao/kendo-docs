@@ -1,0 +1,637 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Configuration, methods and events of the Kendo UI Notification">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/notification.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouinotification">kendo.ui.Notification</h1>
+
+<p><em>It is assumed that the reader of this page is familiar with the <a href="/getting-started/web/notification/overview/">Notification widget Overview</a>.</em></p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="allowhideafter-number-default-0">allowHideAfter <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 0)</em></h3>
+
+<p>Indicates the period in milliseconds after which a notification can be dismissed (hidden) by the user.</p>
+
+<h4 id="example---set-allowhideafter-to-1-second">Example - set allowHideAfter to 1 second</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	allowHideAfter: 1000
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animation-objectboolean">animation <code class="language-plaintext highlighter-rouge">Object|Boolean</code></h3>
+
+<p>Defines custom show and hide animations via an Kendo UI Animation object. Setting the value to false disables animations.</p>
+
+<h4 id="example---disable-animations">Example - disable animations</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	animation: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="appendto-stringelementjquery-default-null">appendTo <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code> <em>(default: null)</em></h3>
+
+<p>Defines the element to which the notifications will be appended or prepended (depending on the <a href="#configuration-stacking">stacking</a> direction).</p>
+
+<h4 id="example---set-appendto-as-a-selector-string">Example - set appendTo as a selector string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;div id="container"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	appendTo: "#container"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-appendto-as-a-dom-element">Example - set appendTo as a DOM element</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;div id="container"&gt;&lt;/div&gt;
+&lt;script&gt;
+var container = document.getElementById("container");
+$("#notification").kendoNotification({
+	appendTo: container
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-appendto-as-a-jquery-object">Example - set appendTo as a jQuery object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="notification"&gt;&lt;/div&gt;
+&lt;script&gt;
+var element = $("#notification");
+element.kendoNotification({
+	appendTo: element
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="autohideafter-number-default-5000">autoHideAfter <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 5000)</em></h3>
+
+<p>Indicates the period in milliseconds after which a notification disappears automatically. Setting a zero value disables this behavior.</p>
+
+<h4 id="example---set-autohideafter-to-3-seconds">Example - set autoHideAfter to 3 seconds</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	autoHideAfter: 3000
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---disable-automatic-hiding">Example - disable automatic hiding</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	autoHideAfter: 0
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="button-boolean-default-false">button <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Determines whether the notifications will include a hide button. <strong>This setting works with the built-in templates only.</strong></p>
+
+<h4 id="example---enable-hide-buttons">Example - enable hide buttons</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	button: true
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="height-numberstring-default-null">height <code class="language-plaintext highlighter-rouge">Number|String</code> <em>(default: null)</em></h3>
+
+<p>Defines the notifications" height. Numbers are treated as pixels.</p>
+
+<h4 id="example---set-height-as-a-number">Example - set height as a number</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	height: 50
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-height-as-a-string">Example - set height as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	height: "4em"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="hideonclick-boolean-default-true">hideOnClick <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Determines whether notifications can be hidden by clicking anywhere on their content.</p>
+
+<h4 id="example---disable-hideonclick">Example - disable hideOnClick</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	hideOnClick: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="position-object">position <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p><strong>This setting applies to popup notifications only, i.e. in cases when <code class="language-plaintext highlighter-rouge">appendTo</code> is not set.</strong>
+It determines the position of the first notification on the screen, as well as whether the notifications will move together with the page content during scrolling.
+<code class="language-plaintext highlighter-rouge">top</code> takes precedence over <code class="language-plaintext highlighter-rouge">bottom</code> and <code class="language-plaintext highlighter-rouge">left</code> takes precedence over <code class="language-plaintext highlighter-rouge">right</code>.</p>
+
+<h4 id="default-position-settings">Default position settings</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	position: {
+        pinned: true,
+        top: null,
+        left: null,
+        bottom: 20,
+        right: 20
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="positionbottom-number-default-20">position.bottom <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 20)</em></h3>
+
+<p>Determines the pixel position of the first popup notification with regard to the viewport"s bottom edge.</p>
+
+<h4 id="example---set-positionbottom">Example - set position.bottom</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	position: {
+        bottom: 30
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="positionleft-number-default-null">position.left <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: null)</em></h3>
+
+<p>Determines the pixel position of the first popup notification with regard to the viewport"s left edge.</p>
+
+<h4 id="example---set-positionleft">Example - set position.left</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	position: {
+        left: 30
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="positionpinned-boolean-default-true">position.pinned <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Determines whether the popup notifications will move together with the other page content during scrolling.</p>
+
+<h4 id="example---disable-pinned-notifications">Example - disable pinned notifications</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	position: {
+        pinned: false
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="positionright-number-default-20">position.right <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 20)</em></h3>
+
+<p>Determines the pixel position of the first popup notification with regard to the viewport"s right edge.</p>
+
+<h4 id="example---set-positionright">Example - set position.right</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	position: {
+        right: 30
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="positiontop-number-default-null">position.top <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: null)</em></h3>
+
+<p>Determines the position of the first popup notification with regard to the viewport"s top edge. Numeric values are treated as pixels.</p>
+
+<h4 id="example---set-positiontop">Example - set position.top</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	position: {
+        top: 30
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="stacking-string-default-default">stacking <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "default")</em></h3>
+
+<p>Determines the direction in which multiple notification will stack (arrange) with regard to the first one. Possible values are <code class="language-plaintext highlighter-rouge">"up"</code>, <code class="language-plaintext highlighter-rouge">"right"</code>, <code class="language-plaintext highlighter-rouge">"down"</code>, <code class="language-plaintext highlighter-rouge">"left"</code> and <code class="language-plaintext highlighter-rouge">"default"</code>.
+The <code class="language-plaintext highlighter-rouge">"default"</code> setting takes into consideration the applied <code class="language-plaintext highlighter-rouge">position</code> settings and is evaluated to <code class="language-plaintext highlighter-rouge">"up"</code> or <code class="language-plaintext highlighter-rouge">"down"</code>.</p>
+
+<h4 id="example---set-downward-stacking">Example - set downward stacking</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	position: {
+        top: 20,
+        right: 20
+    },
+    stacking: "down"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="templates-array-default-">templates <code class="language-plaintext highlighter-rouge">Array</code> <em>(default: [])</em></h3>
+
+<p>Describes the HTML markup of the different notification types as Kendo UI template strings. The built-in types are <code class="language-plaintext highlighter-rouge">"info"</code>, <code class="language-plaintext highlighter-rouge">"success"</code>, <code class="language-plaintext highlighter-rouge">"warning"</code> and <code class="language-plaintext highlighter-rouge">"error"</code>.</p>
+
+<p><em>This documentation section assumes that you are familiar with <a href="/getting-started/framework/templates/overview">Kendo UI templates</a></em>.</p>
+
+<h4 id="example---define-several-custom-templates">Example - define several custom templates</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+
+&lt;script id="myAlertTemplate" type="text/x-kendo-template"&gt;
+    &lt;div class="myAlert"&gt;System alert generated at #= time # : #= myMessage #&lt;/div&gt;
+&lt;/script&gt;
+
+&lt;script&gt;
+$(function(){
+    var notificationElement = $("#notification");
+    
+	notificationElement.kendoNotification({
+        templates: [{
+                // define a custom template for the built-in "warning" notification type
+                type: "warning",
+                template: "&lt;div class='myWarning'&gt;Warning: #= myMessage #&lt;/div&gt;"
+            }, {
+                // define a template for the custom "timeAlert" notification type
+                type: "timeAlert",
+                template: "&lt;div class='myAlert'&gt;System alert generated at #= time # : #= myMessage #&lt;/div&gt;"
+                // template content can also be defined separately
+                //template: $("#myAlertTemplate").html()
+        }]
+    });
+    
+    var n = notificationElement.data("kendoNotification");
+    
+    // show a warning message using the built-in shorthand method
+    n.warning({
+        myMessage: "some warning message here"
+    });
+    
+    // show a "timeAlert" message using the default show() method
+    n.show({
+        time: new Date().toLocaleTimeString(),
+        myMessage: "Server will be restarted."
+    }, "timeAlert");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="templatestype-string-default-">templates.type <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "")</em></h3>
+
+<p><strong>Required.</strong> Specified a unique identifier, which is used to retrieve the correct template when a notification of this type is shown.</p>
+
+<p>See the <a href="#configuration-templates">example above</a>.</p>
+
+<h3 id="templatestemplate-string-default-">templates.template <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "")</em></h3>
+
+<p>Defines a Kendo UI template to be used with the corresponding notification type.</p>
+
+<p>See the <a href="#configuration-templates">example above</a>.</p>
+
+<h3 id="width-numberstring-default-null">width <code class="language-plaintext highlighter-rouge">Number|String</code> <em>(default: null)</em></h3>
+
+<p>Defines the notifications" width. Numbers are treated as pixels.</p>
+
+<h4 id="example---set-width-as-a-number">Example - set width as a number</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	width: 300
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-width-as-a-string">Example - set width as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+$("#notification").kendoNotification({
+	width: "20em"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="error">error</h3>
+
+<p>This is a shorthand method for <a href="#methods-show"><code class="language-plaintext highlighter-rouge">show(data, "error")</code></a></p>
+
+<h3 id="getnotifications">getNotifications</h3>
+
+<p>Returns a jQuery collection of all visible notifications, displayed by the given widget instance. Each item in the collection is a <code class="language-plaintext highlighter-rouge">div.k-notification</code> element.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+var notificationWidget = $("#notification").kendoNotification({
+    button: false,
+    hideOnClick: false,
+    autoHideAfter: 0
+}).data("kendoNotification");
+
+notificationWidget.show("foo");
+notificationWidget.show("bar");
+
+// since there is no way for the user to hide notifications,
+// the following expression will return two elements, no matter when it is executed
+var elements = notificationWidget.getNotifications();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="hide">hide</h3>
+
+<p>Hides all notifications from the given widget instance.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+var notificationWidget = $("#notification").kendoNotification().data("kendoNotification");
+
+notificationWidget.show("foo");
+notificationWidget.show("bar");
+
+notificationWidget.hide();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="info">info</h3>
+
+<p>This is a shorthand method for <a href="#methods-show"><code class="language-plaintext highlighter-rouge">show(data, "info")</code></a></p>
+
+<h3 id="show">show</h3>
+
+<p>Displays a notification.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="data-objectstringfunction">data <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h5>
+
+<p><strong>Required</strong>. The string content for the notification; or the object with the values for the variables inside the notification template; or the function, which returns the required string or an object.</p>
+
+<h5 id="type-string">type <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The notification type. Built-in types include <code class="language-plaintext highlighter-rouge">"info"</code>, <code class="language-plaintext highlighter-rouge">"success"</code>, <code class="language-plaintext highlighter-rouge">"warning"</code> and <code class="language-plaintext highlighter-rouge">"error"</code>. Custom types should match the types from the <a href="#configuration-templates">template configuration</a>.
+If this argument is not supplied, then <code class="language-plaintext highlighter-rouge">"info"</code> is assumed.</p>
+
+<h4 id="example---use-the-show-method-with-a-string-argument">Example - use the show method with a string argument</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+var notificationWidget = $("#notification").kendoNotification().data("kendoNotification");
+
+notificationWidget.show("foo text", "warning");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---use-the-show-method-with-an-object-argument">Example - use the show method with an object argument</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+var notificationWidget = $("#notification").kendoNotification({
+    templates: {
+        myAlert: "&lt;div&gt;System alert: #= myMessage #&lt;/div&gt;"
+    }
+}).data("kendoNotification");
+
+notificationWidget.show({ myMessage: "foo text" }, "myAlert");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---use-the-show-method-with-a-function-argument">Example - use the show method with a function argument</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+function getNotificationMessage() {
+    return {
+        myMessage: "foo text"
+    }
+}
+
+var notificationWidget = $("#notification").kendoNotification({
+    templates: {
+        myAlert: "&lt;div&gt;System alert: #= myMessage #&lt;/div&gt;"
+    }
+}).data("kendoNotification");
+
+notificationWidget.show(getNotificationMessage, "myAlert");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="success">success</h3>
+
+<p>This is a shorthand method for <a href="#methods-show"><code class="language-plaintext highlighter-rouge">show(data, "success")</code></a></p>
+
+<h3 id="warning">warning</h3>
+
+<p>This is a shorthand method for <a href="#methods-show"><code class="language-plaintext highlighter-rouge">show(data, "warning")</code></a></p>
+
+<h2 id="events">Events</h2>
+
+<h3 id="hide-1">hide</h3>
+
+<p>Fires when a notification"s hiding animation starts.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="eelement-jquery">e.element <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The jQuery object, which wraps the element being hidden.</p>
+
+<h4 id="example---subscribe-to-the-hide-event-during-initialization">Example - subscribe to the "hide" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+
+function onHide(e) {
+    var elementBeingHidden = e.element;
+}
+
+$("#notification").kendoNotification({
+	hide: onHide
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="show-1">show</h3>
+
+<p>Fires when a notification"s showing animation starts.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="eelement-jquery-1">e.element <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The jQuery object, which wraps the element being displayed.</p>
+
+<h4 id="example---subscribe-to-the-show-event-during-initialization">Example - subscribe to the "show" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span id="notification"&gt;&lt;/span&gt;
+&lt;script&gt;
+
+function onShow(e) {
+    var elementBeingShown = e.element;
+}
+
+$("#notification").kendoNotification({
+	show: onShow
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

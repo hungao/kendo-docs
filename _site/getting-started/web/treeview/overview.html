@@ -1,0 +1,372 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of Kendo UI jQuery TreeView widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Documentation for Kendo UI TreeView widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/treeview/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="overview">Overview</h1>
+
+<p>The TreeView displays hierarchical data in a traditional tree structure. It supports user
+interaction through the mouse or touch to perform re-ordering operations via drag-and-drop.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>A TreeView can be created in two ways:</p>
+
+<ol>
+  <li>Define a hierarchical list with static HTML</li>
+  <li>Use dynamic data binding either to a local or remote data source.</li>
+</ol>
+
+<p>Static HTML definition is appropriate for small hierarchies and for data that does not change frequently.
+Databinding should be used for larger data sets and for data that changes frequently.</p>
+
+<h2 id="creating-a-treeview-from-html">Creating a TreeView from HTML</h2>
+
+<h3 id="create-a-hierarchical-list-in-html">Create a hierarchical list in HTML</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="treeView"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Item 1.1&lt;/li&gt;
+            &lt;li&gt;Item 1.2&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>Initialization of a TreeView should occur after the DOM is fully loaded,
+preferably in the $(document).ready() event handler.</p>
+
+<h3 id="initialize-a-treeview-using-a-selector-within-documentready">Initialize a TreeView using a selector within $(document).ready()</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function() {
+    $("#treeView").kendoTreeView();
+});
+</code></pre></div></div>
+
+<h2 id="creating-a-treeview-with-data-binding-to-a-local-data-source">Creating a TreeView with Data Binding to a Local Data Source</h2>
+
+<h3 id="create-the-treeview-container">Create the TreeView container</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeView"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-and-bind-the-treeview">Initialize and bind the TreeView</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function() {
+    $("#treeView").kendoTreeView({
+        dataSource: [
+            {
+                text: "Item 1",
+                items: [
+                    { text: "Item 1.1" },
+                    { text: "Item 1.2" }
+                ]
+            },
+            { text: "Item 2" }
+        ]
+    })
+});
+</code></pre></div></div>
+
+<h3 id="binding-to-a-remote-hierarchicaldatasource">Binding to a remote HierarchicalDataSource</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#treeView").kendoTreeView({
+    dataSource: {
+        transport: {
+            read: {
+                url: "http://demos.telerik.com/kendo-ui/service/Employees",
+                dataType: "json"
+            }
+        },
+        schema: {
+            model: {
+                id: "EmployeeId",
+                hasChildren: "HasEmployees"
+            }
+        }
+    }
+})
+</code></pre></div></div>
+
+<p>A complete reference on how to bind the TreeView to different service end-points can be found
+on the <a href="/api/framework/hierarchicaldatasource">HierarchicalDataSource API help</a>.</p>
+
+<h3 id="enabling-drag-and-drop-for-treeview-nodes">Enabling drag-and-drop for TreeView nodes</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#treeView").kendoTreeView({
+    dragAndDrop: true
+});
+</code></pre></div></div>
+
+<p>When drag-and-drop is enabled, the nodes of a TreeView can be dragged and dropped between all
+levels, with useful tooltips helping indicate where the node will be dropped.</p>
+
+<h2 id="accessing-an-existing-treeview">Accessing an Existing TreeView</h2>
+
+<p>You can reference an existing <strong>TreeView</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>. Once a reference has been established, you can
+use the API to control its behavior.</p>
+
+<h3 id="accessing-an-existing-treeview-instance">Accessing an existing TreeView instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var treeView = $("#treeView").data("kendoTreeView");
+</code></pre></div></div>
+
+<h2 id="item-definition">Item definition</h2>
+
+<p>When binding through the dataSource configuration option, each item can have the following properties:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var item = {
+    text: "Item text",
+
+    // if specified, renders the item as a link. (&lt;a href=""&gt;&lt;/a&gt;)
+    url: "/",
+
+    // renders a &lt;img class="k-image" src="/images/icon.png" /&gt;
+    imageUrl: "/images/icon.png",
+
+    // renders a &lt;span class="k-sprite icon save" /&gt;
+    spriteCssClass: "icon save",
+
+    // specifies whether the node text should be encoded or not
+    // useful when rendering node-specific HTML
+    encoded: false,
+
+    // specifies whether the item is initially expanded
+    // (applicable when the item has child nodes)
+    expanded: true,
+
+    // specifies whether the item checkbox is initially checked
+    // (applicable for items with checkboxes using the default checkbox template)
+    checked: true,
+
+    // specifies whether the item is initially selected
+    selected: true,
+
+    // indicates the sub-items of the item
+    items: [
+        { text: "Subitem text" }
+    ]
+};
+</code></pre></div></div>
+
+<p>The <strong>text</strong>, <strong>imageUrl</strong>, <strong>spriteCssClass</strong> and <strong>url</strong> fields can be changed through the
+<a href="/api/web/treeview#dataTextField">datatextfield</a>, <a href="/api/web/treeview#dataImageUrlField">dataimageurlfield</a>,
+<a href="/api/web/treeview#dataSpriteCssClassField">dataspritecssclassfield</a>, and <a href="/api/web/treeview#dataUrlField">dataurlfield</a>,
+respectively.</p>
+
+<p>You can add arbitrary fields when binding through a dataSource. These are stored in the HierarchicalDataSource,
+and can be easily accessed through the treeview <a href="/api/web/treeview#dataitem">dataItem method</a>:</p>
+
+<h2 id="common-operations">Common operations</h2>
+
+<h3 id="getting-the-node-data-in-the-select-event-handler">Getting the node data in the select event handler</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function onSelect(e) {
+    // `this` refers to the TreeView object
+    var dataItem = this.dataItem(e.node);
+
+    console.log("Selected node with id=" + dataItem.id);
+}
+
+$("#treeview").kendoTreeView({
+    dataSource: [
+        { id: 1, text: "Item 1", items: [
+            { id: 3, text: "Item 3" }
+        ] },
+        { id: 2, text: "Item 2" }
+    ],
+    select: onSelect
+});
+</code></pre></div></div>
+
+<p>Since the dataItem is of type <a href="/api/framework/node">Node</a>,
+you can use its <a href="/api/framework/node#methods-loaded">loaded flag</a> to force reloading of nodes from the server.</p>
+
+<h3 id="reloading-child-nodes-when-nodes-are-expanded">Reloading child nodes when nodes are expanded</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function onExpand(e) {
+    var dataItem = this.dataItem(e.node);
+
+    dataItem.loaded(false);
+}
+
+$("#treeview").kendoTreeView({
+    dataSource: remoteDataSource,
+    expand: onExpand
+});
+</code></pre></div></div>
+
+<p>The Node.loaded method sets the loaded flag of the node, indicating that it needs to be refreshed.</p>
+
+<h3 id="gathering-the-checked-nodes-from-a-treeview">Gathering the checked nodes from a treeview</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var treeview = $("#treeview").data("kendoTreeView");
+var checkedNodes = [];
+
+function gatherStates(nodes) {
+    for (var i = 0; i &lt; nodes.length; i++) {
+        if (nodes[i].checked) {
+            checkedNodes.push(nodes[i].id);
+        }
+
+        if (nodes[i].hasChildren) {
+           gatherStates(nodes[i].children.view());
+        }
+    }
+}
+
+gatherStates(treeview.dataSource.view());
+</code></pre></div></div>
+
+<p>The same approach can be used for gathering of expanded nodes.</p>
+
+<h3 id="projecting-the-treeview-state">Projecting the TreeView state</h3>
+
+<p>Because the HierarchicalDataSource does not support data projection, you might need to remap state fields via the <a href="/api/framework/datasource#configuration-schema.parse">schema.parse</a> configuration option:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="tree"&gt;
+&lt;script&gt;
+  $("#tree").kendoTreeView({
+    dataSource: {
+      transport: {
+        read: function (options) {
+          setTimeout(function() {
+            options.success([
+              { hasChildren: false, text: "Node 1", Downloaded: false },
+              { hasChildren: true, text: "Node 2", Downloaded: true, items: [
+                { hasChildren: false, text: "Node 2.1", Downloaded: false },
+              ] }
+            ]);
+          }, 1000);
+        }
+      },
+      schema: {
+        parse: function(response) {
+          return $.map(response, function(x) {
+            x.expanded = x.Downloaded;
+            return x;
+          });
+        },
+        model: {
+          id: "id",
+          hasChildren: "hasChildren",
+          children: "items"
+        }
+      }
+    }
+  });
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

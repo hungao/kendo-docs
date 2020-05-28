@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/scheduler/messages-editor.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendoscheduler-messages-editor">&lt;kendo:scheduler-messages-editor&gt;</h1>
+
+<p>The configuration of the scheduler editor messages. Use this option to customize or localize the scheduler editor messages.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages&gt;
+    &lt;kendo:scheduler-messages-editor&gt;&lt;/kendo:scheduler-messages-editor&gt;
+&lt;/kendo:scheduler-messages&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="alldayevent-javalangstring">allDayEvent <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "All day event" displayed in the scheduler event editor.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor allDayEvent="allDayEvent"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="description-javalangstring">description <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "Description" displayed in the scheduler event editor.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor description="description"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="editortitle-javalangstring">editorTitle <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "Event" displayed as title of the scheduler event editor.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor editorTitle="editorTitle"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="end-javalangstring">end <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "End" displayed in the scheduler event editor.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor end="end"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="endtimezone-javalangstring">endTimezone <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "End timezone" displayed in the scheduler event editor.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor endTimezone="endTimezone"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="repeat-javalangstring">repeat <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "Repeat" displayed in the scheduler event editor.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor repeat="repeat"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="separatetimezones-javalangstring">separateTimezones <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "Use separate start and end time zones" displayed in the scheduler event editor.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor separateTimezones="separateTimezones"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="start-javalangstring">start <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "Start" displayed in the scheduler event editor.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor start="start"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="starttimezone-javalangstring">startTimezone <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "Start timezone" displayed in the scheduler event editor.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor startTimezone="startTimezone"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="timezone-javalangstring">timezone <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "Timezone" displayed in the scheduler event editor.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor timezone="timezone"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="timezoneeditorbutton-javalangstring">timezoneEditorButton <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "Time zone" displayed as text of timezone editor button in the scheduler event editor.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor timezoneEditorButton="timezoneEditorButton"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="timezoneeditortitle-javalangstring">timezoneEditorTitle <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "Timezones" displayed as title of timezone editor in the scheduler event editor.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor timezoneEditorTitle="timezoneEditorTitle"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+<h3 id="title-javalangstring">title <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text similar to "Title of the event" displayed in the scheduler event editor.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-messages-editor title="title"&gt;
+&lt;/kendo:scheduler-messages-editor&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

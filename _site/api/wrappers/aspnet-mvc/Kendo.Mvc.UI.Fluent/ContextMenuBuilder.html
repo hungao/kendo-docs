@@ -1,0 +1,437 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/ContextMenuBuilder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluentcontextmenubuilder">Kendo.Mvc.UI.Fluent.ContextMenuBuilder</h1>
+<p>Defines the fluent interface for configuring the ContextMenu component.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="itemssystemactionkendomvcuifluentcontextmenuitemfactory">Items(System.Action&lt;Kendo.Mvc.UI.Fluent.ContextMenuItemFactory&gt;)</h3>
+<p>Defines the items in the menu</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="addaction-systemactionkendomvcuifluentcontextmenuitemfactory">addAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/ContextMenuItemFactory">Kendo.Mvc.UI.Fluent.ContextMenuItemFactory</a>&gt;</h5>
+<p>The add action.</p>
+
+<h4 id="example-aspx">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.Items(items =&gt;
+{
+    items.Add().Text("First Item");
+    items.Add().Text("Second Item");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="eventssystemactionkendomvcuifluentcontextmenueventbuilder">Events(System.Action&lt;Kendo.Mvc.UI.Fluent.ContextMenuEventBuilder&gt;)</h3>
+<p>Configures the client-side events.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="clienteventsaction-systemactionkendomvcuifluentcontextmenueventbuilder">clientEventsAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/ContextMenuEventBuilder">Kendo.Mvc.UI.Fluent.ContextMenuEventBuilder</a>&gt;</h5>
+<p>The client events action.</p>
+
+<h4 id="example-aspx-1">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.Events(events =&gt;
+    events.Open("onOpen").OnClose("onClose")
+)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="directionkendomvcuicontextmenudirection">Direction(Kendo.Mvc.UI.ContextMenuDirection)</h3>
+<p>Specifies ContextMenu opening direction.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-kendomvcuicontextmenudirection">value <a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/ContextMenuDirection">Kendo.Mvc.UI.ContextMenuDirection</a></h5>
+<p>The desired direction.</p>
+
+<h4 id="example-aspx-2">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.Direction(ContextMenuDirection.Left)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="directionsystemstring">Direction(System.String)</h3>
+<p>Specifies ContextMenu opening direction.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-systemstring">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The desired direction.</p>
+
+<h4 id="example-aspx-3">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.Direction("top")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="targetsystemstring">Target(System.String)</h3>
+<p>Specifies ContextMenu target to bind to.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-systemstring-1">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The desired target.</p>
+
+<h4 id="example-aspx-4">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.Target("#target")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="filtersystemstring">Filter(System.String)</h3>
+<p>Specifies ContextMenu filter selector - would filter elements inside the target to bind to.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-systemstring-2">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The desired filter.</p>
+
+<h4 id="example-aspx-5">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.Filter(".item")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="showonsystemstring">ShowOn(System.String)</h3>
+<p>Specifies ContextMenu triggering event.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-systemstring-3">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The desired event.</p>
+
+<h4 id="example-aspx-6">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.ShowOn("click")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="orientationkendomvcuicontextmenuorientation">Orientation(Kendo.Mvc.UI.ContextMenuOrientation)</h3>
+<p>Sets the menu orientation.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-kendomvcuicontextmenuorientation">value <a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/ContextMenuOrientation">Kendo.Mvc.UI.ContextMenuOrientation</a></h5>
+<p>The desired orientation.</p>
+
+<h4 id="example-aspx-7">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.Orientation(ContextMenuOrientation.Vertical)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="openonclicksystemboolean">OpenOnClick(System.Boolean)</h3>
+<p>Enables or disables the "open-on-click" feature.</p>
+
+<h4 id="example-aspx-8">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.OpenOnClick(true)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="closeonclicksystemboolean">CloseOnClick(System.Boolean)</h3>
+<p>Specifies that sub menus should close after item selection (provided they won"t navigate).</p>
+
+<h4 id="example-aspx-9">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.CloseOnClick(false)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="aligntoanchorsystemboolean">AlignToAnchor(System.Boolean)</h3>
+<p>Specifies that context menu would align to its anchor (target or filter).</p>
+
+<h4 id="example-aspx-10">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.AlignToAnchor(false)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="hoverdelaysystemint32">HoverDelay(System.Int32)</h3>
+<p>Specifies the delay in ms before the menu is opened/closed - used to avoid accidental closure on leaving.</p>
+
+<h4 id="example-aspx-11">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.HoverDelay(300)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemstringsystemactionkendomvcuicontextmenuitemkendomvcsitemapnode">BindTo(System.String,System.Action&lt;Kendo.Mvc.UI.ContextMenuItem,Kendo.Mvc.SiteMapNode&gt;)</h3>
+<p>Binds the menu to a sitemap</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="viewdatakey-systemstring">viewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The view data key.</p>
+
+<h5 id="sitemapaction-systemactionkendomvcuicontextmenuitemkendomvcsitemapnode">siteMapAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/ContextMenuItem">Kendo.Mvc.UI.ContextMenuItem</a>,Kendo.Mvc.SiteMapNode&gt;</h5>
+<p>The action to configure the item.</p>
+
+<h4 id="example-aspx-12">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.BindTo("examples", (item, siteMapNode) =&gt;
+{
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemstring">BindTo(System.String)</h3>
+<p>Binds the menu to a sitemap.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="viewdatakey-systemstring-1">viewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The view data key.</p>
+
+<h4 id="example-aspx-13">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.BindTo("examples")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemcollectionsgenericienumerablet1systemactionkendomvcuicontextmenuitemt1">BindTo(System.Collections.Generic.IEnumerable&lt;T1&gt;,System.Action&lt;Kendo.Mvc.UI.ContextMenuItem,T1&gt;)</h3>
+<p>Binds the menu to a list of objects. The menu will be "flat" which means a menu item will be created for
+            every item in the data source.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="datasource-systemcollectionsgenericienumerablet1">dataSource <code class="language-plaintext highlighter-rouge">System.Collections.Generic.IEnumerable&lt;T1&gt;</code></h5>
+<p>The data source.</p>
+
+<h5 id="itemdatabound-systemactionkendomvcuicontextmenuitemt1">itemDataBound System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/ContextMenuItem">Kendo.Mvc.UI.ContextMenuItem</a>,T1&gt;</h5>
+<p>The action executed for every data bound item.</p>
+
+<h4 id="example-aspx-14">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.BindTo(new []{"First", "Second"}, (item, value) =&gt;
+{
+    item.Text = value;
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemcollectionsienumerablesystemactionkendomvcuifluentnavigationbindingfactorykendomvcuicontextmenuitem">BindTo(System.Collections.IEnumerable,System.Action&lt;Kendo.Mvc.UI.Fluent.NavigationBindingFactory&lt;Kendo.Mvc.UI.ContextMenuItem&gt;&gt;)</h3>
+<p>Binds the menu to a list of objects. The menu will create a hierarchy of items using the specified mappings.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="datasource-systemcollectionsienumerable">dataSource <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data source.</p>
+
+<h5 id="factoryaction-systemactionkendomvcuifluentnavigationbindingfactory">factoryAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/NavigationBindingFactory">Kendo.Mvc.UI.Fluent.NavigationBindingFactory</a><Kendo.Mvc.UI.ContextMenuItem>&gt;</Kendo.Mvc.UI.ContextMenuItem></h5>
+<p>The action which will configure the mappings</p>
+
+<h4 id="example-aspx-15">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.BindTo(Model, mapping =&gt; mapping
+    .For&lt;Customer&gt;(binding =&gt; binding
+        .Children(c =&gt; c.Orders) // The "child" items will be bound to the the "Orders" property
+        .ItemDataBound((item, c) =&gt; item.Text = c.ContactName) // Map "Customer" properties to ContextMenuItem properties
+    )
+    .For&lt;Order&lt;(binding =&gt; binding
+        .Children(o =&gt; null) // "Orders" do not have child objects so return "null"
+        .ItemDataBound((item, o) =&gt; item.Text = o.OrderID.ToString()) // Map "Order" properties to ContextMenuItem properties
+    )
+)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="itemactionsystemactionkendomvcuicontextmenuitem">ItemAction(System.Action&lt;Kendo.Mvc.UI.ContextMenuItem&gt;)</h3>
+<p>Callback for each item.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="action-systemactionkendomvcuicontextmenuitem">action System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/ContextMenuItem">Kendo.Mvc.UI.ContextMenuItem</a>&gt;</h5>
+<p>Action, which will be executed for each item.</p>
+
+<h4 id="example-aspx-16">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.ItemAction(item =&gt;
+{
+    item
+    .Text(...)
+    .HtmlAttributes(...);
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="highlightpathsystemboolean">HighlightPath(System.Boolean)</h3>
+<p>Select item depending on the current URL.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-systemboolean">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>If true the item will be highlighted.</p>
+
+<h4 id="example-aspx-17">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.HighlightPath(true)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="securitytrimmingsystemboolean">SecurityTrimming(System.Boolean)</h3>
+<p>Enable/disable security trimming functionality of the component.</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-systemboolean-1">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>If true security trimming is enabled.</p>
+
+<h4 id="example-aspx-18">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.SecurityTrimming(false)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="securitytrimmingsystemactionkendomvcuisecuritytrimmingbuilder">SecurityTrimming(System.Action&lt;Kendo.Mvc.UI.SecurityTrimmingBuilder&gt;)</h3>
+<p>Defines the security trimming functionality of the component</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="securitytrimmingaction-systemactionkendomvcuisecuritytrimmingbuilder">securityTrimmingAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/SecurityTrimmingBuilder">Kendo.Mvc.UI.SecurityTrimmingBuilder</a>&gt;</h5>
+<p>The securityTrimming action.</p>
+
+<h4 id="example-aspx-19">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ContextMenu()
+.Name("ContextMenu")
+.SecurityTrimming(builder =&gt;
+{
+    builder.Enabled(true).HideParent(true);
+})
+%&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

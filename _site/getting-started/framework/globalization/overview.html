@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of Globalization in Kendo UI framework</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Documentation how to define current culture settings, format number or date objects in the process of globalization.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/globalization/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-globalization-overview">Kendo Globalization Overview</h1>
+
+<p>Globalization is the process of designing and developing an application that works in multiple cultures. The culture defines specific information for the number formats, week and month names, date and time formats and etc.</p>
+
+<p>Kendo provides a way to internationalize the current page using a culture script. Kendo exposes culture(cultureName) method which allows to select the culture script coresponding to the "<code class="language-plaintext highlighter-rouge">&lt;language code&gt;-&lt;country/region code&gt;</code>". For complete overview of the <em>culture</em> method, <a href="/api/framework/kendo#methods-culture">review the Kendo API Reference</a>.</p>
+
+<h2 id="define-the-current-culture">Define the current culture</h2>
+
+<p>First let"s start by adding the required culture script:</p>
+
+<h3 id="add-culture-scripts-to-the-page">Add culture scripts to the page:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="jquery.js"&gt;&lt;/script&gt;
+&lt;script src="kendo.all.min.js"&gt;&lt;/script&gt;
+&lt;script src="kendo.culture.en-GB.js"&gt;&lt;/script&gt;
+
+&lt;!-- or when using the Kendo CDN --&gt;
+&lt;script src="http://cdn.kendostatic.com/&lt;version&gt;/js/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="http://cdn.kendostatic.com/&lt;version&gt;/js/kendo.all.min.js"&gt;&lt;/script&gt;
+&lt;script src="http://cdn.kendostatic.com/&lt;version&gt;/js/cultures/kendo.culture.en-GB.min.js"&gt;&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Now, you just need to set the culture script, which kendo should use:</p>
+
+<h3 id="set-current-culture">Set current culture:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script type="text/javascript"&gt;
+     //set current to the "en-GB" culture script
+     kendo.culture("en-GB");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The default culture, which Kendo widgets uses is "en-US".</p>
+
+<h2 id="format-number-or-date-object">Format Number or Date object</h2>
+
+<p>Kendo exposes methods which can format number or date object using specific format string and the current specified culture:</p>
+
+<ul>
+  <li><a href="/api/framework/kendo#methods-toString">kendo.toString(object, format, [culture])</a> - returns a string representation of the current object taking into account the given format and culture.</li>
+  <li><a href="/api/framework/kendo#methods-format">kendo.format(format, arguments)</a> -  replaces each format item in a specified string with the text equivalent of a corresponding object"s value.</li>
+</ul>
+
+<p>For more detail information check <a href="/getting-started/framework/globalization/formatting">this help topic</a>.</p>
+
+<h2 id="parsing-a-string">Parsing a string</h2>
+<p>Kendo exposes methods which converts the specified string to date or number object:</p>
+
+<ul>
+  <li><a href="/api/framework/kendo#methods-parseInt">kendo.parseInt(string, [culture])</a> - converts a string to a whole number using the specified culture (current culture by default).</li>
+  <li><a href="/api/framework/kendo#methods-parseFloat">kendo.parseFloat(string, [culture])</a> - converts a string to a number with floating point using the specified culture (current culture by default).</li>
+  <li><a href="/api/framework/kendo#methods-parseDate">kendo.parseDate(string, [formats], [culture])</a> - converts a string to a JavaScript Date object, taking into account the given format/formats (or the given culture"s set of default formats).</li>
+</ul>
+
+<p>For more detail information check <a href="/getting-started/framework/globalization/parsers">this help topic</a>.</p>
+
+<h2 id="globalizejs-support">globalize.js support</h2>
+
+<blockquote>
+  <p>When globalize.js is registered before Kendo scripts, then Kendo will use globalize.js features instead of Kendo Globalization.</p>
+</blockquote>
+
+<h2 id="widgets-that-depend-on-culture-info">Widgets that depend on culture info</h2>
+
+<p>Here is a list of widgets which depends on the current culture:</p>
+
+<ul>
+  <li>Calendar</li>
+  <li>DatePicker</li>
+  <li>TimePicker</li>
+  <li>DateTimePicker</li>
+  <li>NumericTextBox</li>
+</ul>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

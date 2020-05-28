@@ -1,0 +1,390 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/tooltip.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendotooltip">&lt;kendo:tooltip&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/tooltip">Tooltip</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="autohide-boolean">autoHide <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Specifies if the tooltip will be hidden when mouse leaves the target element. If set to false a close button will be shown within tooltip. If set to false, showAfter is specified and the showOn is set to "mouseenter" the Tooltip will be displayed after the given timeout even if the element is no longer hovered.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip autoHide="autoHide"&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="callout-boolean">callout <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Specifies if the tooltip callout will be displayed.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip callout="callout"&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="filter-javalangstring">filter <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Specifies a selector for elements, within the container, for which the tooltip will be displayed.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip filter="filter"&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="height-float">height <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The height (in pixels) of the tooltip.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip height="height"&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="iframe-boolean">iframe <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Explicitly states whether content iframe should be created.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip iframe="iframe"&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="position-javalangstring">position <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The position relative to the target element, at which the tooltip will be shown. Predefined values are "bottom", "top", "left", "right", "center".</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip position="position"&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="showafter-float">showAfter <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Specify the delay in milliseconds before the tooltip is shown. This option is ignored if showOn is set to "click" or "focus".</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip showAfter="showAfter"&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="showon-javalangstring">showOn <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The event on which the tooltip will be shown. Predefined values are "mouseenter", "click" and "focus".</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip showOn="showOn"&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="width-float">width <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The width (in pixels) of the tooltip.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip width="width"&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendotooltip-animation">kendo:tooltip-animation</h3>
+
+<p>A collection of {Animation} objects, used to change default animations. A value of false
+will disable all animations in the widget.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/tooltip/animation">kendo:tooltip-animation</a>.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip&gt;
+    &lt;kendo:tooltip-animation&gt;&lt;/kendo:tooltip-animation&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="contentload-string">contentLoad <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when an AJAX request for content completes.</p>
+
+<p>For additional information check the <a href="/api/web/tooltip#events-contentLoad">contentLoad</a> event documentation.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip contentLoad="handle_contentLoad"&gt;
+&lt;/kendo:tooltip&gt;
+&lt;script&gt;
+    function handle_contentLoad(e) {
+        // Code to handle the contentLoad event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="show-string">show <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a Tooltip is shown.</p>
+
+<p>For additional information check the <a href="/api/web/tooltip#events-show">show</a> event documentation.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip show="handle_show"&gt;
+&lt;/kendo:tooltip&gt;
+&lt;script&gt;
+    function handle_show(e) {
+        // Code to handle the show event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="hide-string">hide <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a Tooltip is hidden</p>
+
+<p>For additional information check the <a href="/api/web/tooltip#events-hide">hide</a> event documentation.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip hide="handle_hide"&gt;
+&lt;/kendo:tooltip&gt;
+&lt;script&gt;
+    function handle_hide(e) {
+        // Code to handle the hide event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="requeststart-string">requestStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered before an AJAX request started. Note that this event is triggered only when an AJAX request, instead of an iframe, is used.</p>
+
+<p>For additional information check the <a href="/api/web/tooltip#events-requestStart">requestStart</a> event documentation.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip requestStart="handle_requestStart"&gt;
+&lt;/kendo:tooltip&gt;
+&lt;script&gt;
+    function handle_requestStart(e) {
+        // Code to handle the requestStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="error-string">error <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when an AJAX request for content fails.</p>
+
+<p>For additional information check the <a href="/api/web/tooltip#events-error">error</a> event documentation.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip error="handle_error"&gt;
+&lt;/kendo:tooltip&gt;
+&lt;script&gt;
+    function handle_error(e) {
+        // Code to handle the error event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendotooltip-contentload">kendo:tooltip-contentLoad</h3>
+
+<p>Triggered when an AJAX request for content completes.</p>
+
+<p>For additional information check the <a href="/api/web/tooltip#events-contentLoad">contentLoad</a> event documentation.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip&gt;
+    &lt;kendo:tooltip-contentLoad&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the contentLoad event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:tooltip-contentLoad&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="kendotooltip-show">kendo:tooltip-show</h3>
+
+<p>Triggered when a Tooltip is shown.</p>
+
+<p>For additional information check the <a href="/api/web/tooltip#events-show">show</a> event documentation.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip&gt;
+    &lt;kendo:tooltip-show&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the show event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:tooltip-show&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="kendotooltip-hide">kendo:tooltip-hide</h3>
+
+<p>Triggered when a Tooltip is hidden</p>
+
+<p>For additional information check the <a href="/api/web/tooltip#events-hide">hide</a> event documentation.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip&gt;
+    &lt;kendo:tooltip-hide&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the hide event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:tooltip-hide&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="kendotooltip-requeststart">kendo:tooltip-requestStart</h3>
+
+<p>Triggered before an AJAX request started. Note that this event is triggered only when an AJAX request, instead of an iframe, is used.</p>
+
+<p>For additional information check the <a href="/api/web/tooltip#events-requestStart">requestStart</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip&gt;
+    &lt;kendo:tooltip-requestStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the requestStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:tooltip-requestStart&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+<h3 id="kendotooltip-error">kendo:tooltip-error</h3>
+
+<p>Triggered when an AJAX request for content fails.</p>
+
+<p>For additional information check the <a href="/api/web/tooltip#events-error">error</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tooltip&gt;
+    &lt;kendo:tooltip-error&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the error event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:tooltip-error&gt;
+&lt;/kendo:tooltip&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

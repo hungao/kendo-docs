@@ -1,0 +1,636 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/scheduler/view.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendoscheduler-view">&lt;kendo:scheduler-view&gt;</h1>
+
+<p>The views displayed by the scheduler and their configuration. The array items can be either objects specifying the view configuration or strings representing the view types (assuming default configuration).
+By default the Kendo UI Scheduler widget displays "day" and "week" view.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-views&gt;
+    &lt;kendo:scheduler-view&gt;&lt;/kendo:scheduler-view&gt;
+&lt;/kendo:scheduler-views&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="alldayeventtemplate-javalangstring">allDayEventTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the "all day" scheduler events.The fields which can be used in the template are:</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view allDayEventTemplate="allDayEventTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="alldayslot-boolean">allDaySlot <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the scheduler will display a slot for "all day" events.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view allDaySlot="allDaySlot"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="alldayslottemplate-javalangstring">allDaySlotTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the all day slot cell.The fields which can be used in the template are:</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view allDaySlotTemplate="allDaySlotTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="dateheadertemplate-javalangstring">dateHeaderTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the date header cells.By default the scheduler renders the date using the current culture date format.The fields which can be used in the template are:</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view dateHeaderTemplate="dateHeaderTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="daytemplate-javalangstring">dayTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the day slots in month view.The fields which can be used in the template are:</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view dayTemplate="dayTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="editable-boolean">editable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the user would be able to create new scheduler events and modify or delete existing ones.Overrides the editable option of the scheduler. Further configuration is available via <a href="#kendo-scheduler-view-editable">kendo:scheduler-view-editable</a>.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view editable="editable"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="endtime-javautildate">endTime <code class="language-plaintext highlighter-rouge">java.util.Date</code></h3>
+
+<p>The end time of the view. The scheduler will display events ending before the endTime.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view endTime="endTime"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="eventheight-float">eventHeight <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The height of the scheduler event rendered in month view.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view eventHeight="eventHeight"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="eventtemplate-javalangstring">eventTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used by the view to render the scheduler events.The fields which can be used in the template are:</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view eventTemplate="eventTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="eventtimetemplate-javalangstring">eventTimeTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used by the agenda view to render the time of the scheduler events.The fields which can be used in the template are:</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view eventTimeTemplate="eventTimeTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="majortick-float">majorTick <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The number of minutes represented by a major tick.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view majorTick="majorTick"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="majortimeheadertemplate-javalangstring">majorTimeHeaderTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are:</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view majorTimeHeaderTemplate="majorTimeHeaderTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="minortickcount-float">minorTickCount <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The number of time slots to display per major tick.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view minorTickCount="minorTickCount"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="minortimeheadertemplate-javalangstring">minorTimeHeaderTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the minor ticks.By default the scheduler renders a " ".The fields which can be used in the template are:</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view minorTimeHeaderTemplate="minorTimeHeaderTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="selected-boolean">selected <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the view will be initially selected by the scheduler widget.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view selected="selected"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="selecteddateformat-javalangstring">selectedDateFormat <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The format used to display the selected date. Uses kendo.format.Contains two placeholders - "{0}" and "{1}" which represent the start and end date displayed by the view.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view selectedDateFormat="selectedDateFormat"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="showworkhours-boolean">showWorkHours <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the view will be initially shown in business hours mode. By default view is displyed in full day mode.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view showWorkHours="showWorkHours"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="slottemplate-javalangstring">slotTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the time slot cells.The fields which can be used in the template are:</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view slotTemplate="slotTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="starttime-javautildate">startTime <code class="language-plaintext highlighter-rouge">java.util.Date</code></h3>
+
+<p>The start time of the view. The scheduler will display events starting after the startTime.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view startTime="startTime"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="title-javalangstring">title <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The user-friendly title of the view displayed by the scheduler.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view title="title"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The type of the view. The built-in views are: "day", "week", "month" and "agenda".</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view type="type"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="workweekend-float">workWeekEnd <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The end of working week (index based).</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view workWeekEnd="workWeekEnd"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="workweekstart-float">workWeekStart <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The start of working week (index based).</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view workWeekStart="workWeekStart"&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendoscheduler-view-editable">kendo:scheduler-view-editable</h3>
+
+<p>If set to true the user would be able to create new scheduler events and modify or delete existing ones.Overrides the editable option of the scheduler.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/scheduler/view-editable">kendo:scheduler-view-editable</a>.</p>
+
+<h4 id="example-24">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view&gt;
+    &lt;kendo:scheduler-view-editable&gt;&lt;/kendo:scheduler-view-editable&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-view-group">kendo:scheduler-view-group</h3>
+
+<p>The configuration of the view resource(s) grouping.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/scheduler/view-group">kendo:scheduler-view-group</a>.</p>
+
+<h4 id="example-25">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view&gt;
+    &lt;kendo:scheduler-view-group&gt;&lt;/kendo:scheduler-view-group&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="alldayeventtemplate-string">allDayEventTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template used to render the "all day" scheduler events.The fields which can be used in the template are:</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view allDayEventTemplate="handle_allDayEventTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+&lt;script&gt;
+    function handle_allDayEventTemplate(e) {
+        // Code to handle the allDayEventTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="alldayslottemplate-string">allDaySlotTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template used to render the all day slot cell.The fields which can be used in the template are:</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view allDaySlotTemplate="handle_allDaySlotTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+&lt;script&gt;
+    function handle_allDaySlotTemplate(e) {
+        // Code to handle the allDaySlotTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dateheadertemplate-string">dateHeaderTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template used to render the date header cells.By default the scheduler renders the date using the current culture date format.The fields which can be used in the template are:</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view dateHeaderTemplate="handle_dateHeaderTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+&lt;script&gt;
+    function handle_dateHeaderTemplate(e) {
+        // Code to handle the dateHeaderTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="daytemplate-string">dayTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template used to render the day slots in month view.The fields which can be used in the template are:</p>
+
+<h4 id="example-29">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view dayTemplate="handle_dayTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+&lt;script&gt;
+    function handle_dayTemplate(e) {
+        // Code to handle the dayTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="eventtemplate-string">eventTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template used by the view to render the scheduler events.The fields which can be used in the template are:</p>
+
+<h4 id="example-30">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view eventTemplate="handle_eventTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+&lt;script&gt;
+    function handle_eventTemplate(e) {
+        // Code to handle the eventTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="eventtimetemplate-string">eventTimeTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template used by the agenda view to render the time of the scheduler events.The fields which can be used in the template are:</p>
+
+<h4 id="example-31">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view eventTimeTemplate="handle_eventTimeTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+&lt;script&gt;
+    function handle_eventTimeTemplate(e) {
+        // Code to handle the eventTimeTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="majortimeheadertemplate-string">majorTimeHeaderTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are:</p>
+
+<h4 id="example-32">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view majorTimeHeaderTemplate="handle_majorTimeHeaderTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+&lt;script&gt;
+    function handle_majorTimeHeaderTemplate(e) {
+        // Code to handle the majorTimeHeaderTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="minortimeheadertemplate-string">minorTimeHeaderTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template used to render the minor ticks.By default the scheduler renders a " ".The fields which can be used in the template are:</p>
+
+<h4 id="example-33">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view minorTimeHeaderTemplate="handle_minorTimeHeaderTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+&lt;script&gt;
+    function handle_minorTimeHeaderTemplate(e) {
+        // Code to handle the minorTimeHeaderTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="slottemplate-string">slotTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template used to render the time slot cells.The fields which can be used in the template are:</p>
+
+<h4 id="example-34">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view slotTemplate="handle_slotTemplate"&gt;
+&lt;/kendo:scheduler-view&gt;
+&lt;script&gt;
+    function handle_slotTemplate(e) {
+        // Code to handle the slotTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendoscheduler-view-alldayeventtemplate">kendo:scheduler-view-allDayEventTemplate</h3>
+
+<p>The template used to render the "all day" scheduler events.The fields which can be used in the template are:</p>
+
+<h4 id="example-35">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view&gt;
+    &lt;kendo:scheduler-view-allDayEventTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the allDayEventTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-view-allDayEventTemplate&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-view-alldayslottemplate">kendo:scheduler-view-allDaySlotTemplate</h3>
+
+<p>The template used to render the all day slot cell.The fields which can be used in the template are:</p>
+
+<h4 id="example-36">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view&gt;
+    &lt;kendo:scheduler-view-allDaySlotTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the allDaySlotTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-view-allDaySlotTemplate&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-view-dateheadertemplate">kendo:scheduler-view-dateHeaderTemplate</h3>
+
+<p>The template used to render the date header cells.By default the scheduler renders the date using the current culture date format.The fields which can be used in the template are:</p>
+
+<h4 id="example-37">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view&gt;
+    &lt;kendo:scheduler-view-dateHeaderTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dateHeaderTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-view-dateHeaderTemplate&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-view-daytemplate">kendo:scheduler-view-dayTemplate</h3>
+
+<p>The template used to render the day slots in month view.The fields which can be used in the template are:</p>
+
+<h4 id="example-38">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view&gt;
+    &lt;kendo:scheduler-view-dayTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dayTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-view-dayTemplate&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-view-eventtemplate">kendo:scheduler-view-eventTemplate</h3>
+
+<p>The template used by the view to render the scheduler events.The fields which can be used in the template are:</p>
+
+<h4 id="example-39">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view&gt;
+    &lt;kendo:scheduler-view-eventTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the eventTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-view-eventTemplate&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-view-eventtimetemplate">kendo:scheduler-view-eventTimeTemplate</h3>
+
+<p>The template used by the agenda view to render the time of the scheduler events.The fields which can be used in the template are:</p>
+
+<h4 id="example-40">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view&gt;
+    &lt;kendo:scheduler-view-eventTimeTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the eventTimeTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-view-eventTimeTemplate&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-view-majortimeheadertemplate">kendo:scheduler-view-majorTimeHeaderTemplate</h3>
+
+<p>The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are:</p>
+
+<h4 id="example-41">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view&gt;
+    &lt;kendo:scheduler-view-majorTimeHeaderTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the majorTimeHeaderTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-view-majorTimeHeaderTemplate&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-view-minortimeheadertemplate">kendo:scheduler-view-minorTimeHeaderTemplate</h3>
+
+<p>The template used to render the minor ticks.By default the scheduler renders a " ".The fields which can be used in the template are:</p>
+
+<h4 id="example-42">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view&gt;
+    &lt;kendo:scheduler-view-minorTimeHeaderTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the minorTimeHeaderTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-view-minorTimeHeaderTemplate&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-view-slottemplate">kendo:scheduler-view-slotTemplate</h3>
+
+<p>The template used to render the time slot cells.The fields which can be used in the template are:</p>
+
+<h4 id="example-43">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler-view&gt;
+    &lt;kendo:scheduler-view-slotTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the slotTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-view-slotTemplate&gt;
+&lt;/kendo:scheduler-view&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

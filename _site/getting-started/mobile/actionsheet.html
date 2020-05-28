@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Intuitive choices with mobile ActionSheet widget | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="The user of HTML5 mobile app initiates a task and the mobile ActionSheet widget displays a set of choices.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/mobile/actionsheet.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="actionsheet">ActionSheet</h1>
+
+<p>The mobile ActionSheet widget displays a set of choices related to a task the user initiates.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The mobile Application will automatically initialize a mobile ActionSheet widget for every <code class="language-plaintext highlighter-rouge">ul</code> element with <code class="language-plaintext highlighter-rouge">role</code>
+data attribute set to <code class="language-plaintext highlighter-rouge">actionsheet</code> present in the views/layouts" markup.
+Alternatively, it can be initialized using jQuery plugin syntax in the containing mobile View <strong>init event handler</strong>.
+The actionsheet element should contain one or more <code class="language-plaintext highlighter-rouge">li</code> elements, each with an <code class="language-plaintext highlighter-rouge">a</code> element inside. A "Cancel" action is automatically added to the bottom of the actions.</p>
+
+<h3 id="define-an-actionsheet-with-two-buttons">Define an ActionSheet with two buttons</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul data-role="actionsheet"&gt;
+  &lt;li&gt;&lt;a data-action="foo"&gt;Foo&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a data-action="bar"&gt;Bar&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>In iOS, the ActionSheet slides in from the bottom of the screen; In <em>iOS6</em>,  It also acts like a modal dialog - tapping the background does not close it.</p>
+
+<p>In Android and Blackberry, the available actions are centered in the middle of the screen, and tapping the background closes it.</p>
+
+<h2 id="actionsheet-in-tablets">ActionSheet in Tablets</h2>
+
+<p>If a tablet is detected, the ActionSheet widget will be displayed in a PopOver. The sizing and the direction of the popover may be customized
+through the <code class="language-plaintext highlighter-rouge">popup</code> configuration option.</p>
+
+<h2 id="opening-an-actionsheet">Opening an ActionSheet</h2>
+
+<p>The widget can be open when any mobile navigational widget (listview link item, button, tabstrip, etc.) is tapped.
+To do so, set <code class="language-plaintext highlighter-rouge">data-rel="actionsheet"</code> attribute and a <code class="language-plaintext highlighter-rouge">href</code> attribute equal to the ActionSheet"s element <code class="language-plaintext highlighter-rouge">id</code> (prefixed with <code class="language-plaintext highlighter-rouge">#</code>, like an anchor).</p>
+
+<h3 id="mobile-button-opening-actionsheet">Mobile Button opening ActionSheet</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a data-role="button" data-rel="actionsheet" href="#replyActionSheet"&gt;Reply&lt;/a&gt;
+&lt;ul data-role="actionsheet" id="replyActionSheet"&gt;
+    &lt;li&gt;&lt;a data-action="foo"&gt;Reply&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a data-action="foo"&gt;Reply to All&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a data-action="bar"&gt;Forward&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h2 id="executing-actions">Executing Actions</h2>
+
+<p>Each link in the ActionSheet should have a <code class="language-plaintext highlighter-rouge">data-action</code> attribute set, specifying the callback method to be executed when the user taps it.
+The callback can be either a function, or a method of a JavaScript object in the global scope.</p>
+
+<p>The callback receives a object with two fields: <code class="language-plaintext highlighter-rouge">target</code> and (optional) <code class="language-plaintext highlighter-rouge">context</code> as a
+parameter. The <code class="language-plaintext highlighter-rouge">target</code> holds a reference to the DOM element which has opened the ActionSheet. The <code class="language-plaintext highlighter-rouge">context</code> contains
+to the optional <code class="language-plaintext highlighter-rouge">actionsheet-context</code> data attribute of the opening DOM element.</p>
+
+<p>After the callback has been executed, the ActionSheet closes automatically.</p>
+
+<h3 id="mobile-actionsheet-actions-and-context">Mobile ActionSheet actions and context</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a id="myButton"
+   data-role="button"
+   data-actionsheet-context="1"
+   data-rel="actionsheet" href="#myActionSheet"&gt;Foo...&lt;/a&gt;
+
+&lt;ul data-role="actionsheet" id="myActionSheet"&gt;
+    &lt;li&gt;&lt;a data-action="foo"&gt;Foo&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a data-action="bar.baz"&gt;Bar&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    function foo(e) {
+        e.context; // 1
+        e.target; // $("#myButton")
+    }
+
+    var bar = {
+        baz: function(e) {
+            e.context; // 1
+            e.target; // $("#myButton")
+        }
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

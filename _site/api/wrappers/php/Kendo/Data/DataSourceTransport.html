@@ -1,0 +1,332 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/Data/DataSourceTransport.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatadatasourcetransport">\Kendo\Data\DataSourceTransport</h1>
+
+<p>A PHP class representing the transport setting of DataSource.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="create">create</h3>
+
+<p>The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.create is a string the data source uses this string as the URL of the remote service.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceTransport</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunctionkendodatadatasourcetransportcreatearray">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction|\Kendo\Data\DataSourceTransportCreate|array</code></h5>
+
+<h4 id="example----using-string">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$transport-&gt;create('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$transport-&gt;create(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatadatasourcetransportcreate">Example - using <a href="/api/wrappers/php/Kendo/Data/DataSourceTransportCreate">\Kendo\Data\DataSourceTransportCreate</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$create = new \Kendo\Data\DataSourceTransportCreate();
+$cache = true;
+$create-&gt;cache($cache);
+$transport-&gt;create($create);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$cache = true;
+$transport-&gt;create(array('cache' =&gt; $cache));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+
+<p>The configuration used when the data source destroys data items. Those are items removed from the data source via the remove method.If the value of transport.destroy is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.destroy is a string the data source uses this string as the URL of the remote service.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceTransport</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunctionkendodatadatasourcetransportdestroyarray">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction|\Kendo\Data\DataSourceTransportDestroy|array</code></h5>
+
+<h4 id="example----using-string-1">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$transport-&gt;destroy('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction-1">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$transport-&gt;destroy(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatadatasourcetransportdestroy">Example - using <a href="/api/wrappers/php/Kendo/Data/DataSourceTransportDestroy">\Kendo\Data\DataSourceTransportDestroy</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$destroy = new \Kendo\Data\DataSourceTransportDestroy();
+$cache = true;
+$destroy-&gt;cache($cache);
+$transport-&gt;destroy($destroy);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$cache = true;
+$transport-&gt;destroy(array('cache' =&gt; $cache));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="parametermap">parameterMap</h3>
+<p>The function which converts the request parameters to a format suitable for the remote service. By default
+the data source sends the parameters using jQuery"s conventions.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceTransport</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-kendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$transport-&gt;parameterMap(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="push">push</h3>
+<p>The function invoked during transport initialization which sets up push notifications. The data source will call this function only once and provide
+callbacks which will handle push notifications (data pushed from the server).</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceTransport</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-kendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$transport-&gt;push(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="read">read</h3>
+
+<p>The configuration used when the data source loads data items from a remote service.If the value of transport.read is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.read is a string the data source uses this string as the URL of the remote service.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceTransport</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunctionkendodatadatasourcetransportreadarray">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction|\Kendo\Data\DataSourceTransportRead|array</code></h5>
+
+<h4 id="example----using-string-2">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$transport-&gt;read('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction-2">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$transport-&gt;read(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatadatasourcetransportread">Example - using <a href="/api/wrappers/php/Kendo/Data/DataSourceTransportRead">\Kendo\Data\DataSourceTransportRead</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$read = new \Kendo\Data\DataSourceTransportRead();
+$cache = true;
+$read-&gt;cache($cache);
+$transport-&gt;read($read);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$cache = true;
+$transport-&gt;read(array('cache' =&gt; $cache));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="update">update</h3>
+
+<p>The configuration used when the data source saves updated data items. Those are data items whose fields have been updated.If the value of transport.update is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.update is a string the data source uses this string as the URL of the remote service.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSourceTransport</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunctionkendodatadatasourcetransportupdatearray">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction|\Kendo\Data\DataSourceTransportUpdate|array</code></h5>
+
+<h4 id="example----using-string-3">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$transport-&gt;update('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction-3">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$transport-&gt;update(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatadatasourcetransportupdate">Example - using <a href="/api/wrappers/php/Kendo/Data/DataSourceTransportUpdate">\Kendo\Data\DataSourceTransportUpdate</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$update = new \Kendo\Data\DataSourceTransportUpdate();
+$cache = true;
+$update-&gt;cache($cache);
+$transport-&gt;update($update);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-3">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$transport = new \Kendo\Data\DataSourceTransport();
+$cache = true;
+$transport-&gt;update(array('cache' =&gt; $cache));
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

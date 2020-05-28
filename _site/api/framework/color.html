@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API Reference for Kendo Color</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Documentation how to get started with the kendo.Color object. Find examples and guidelines for methods, fields and events of kendo.Color.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/framework/color.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendocolor">kendo.Color</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">Color</code> object provides a representation of colors, with a set of utility functions.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="diff">diff</h3>
+
+<p>Computes the relative luminance between two colors.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> The relative luminance.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var red = kendo.parseColor("#ff0000");
+
+var crimson = kendo.parseColor("#dc143c");
+var pink = kendo.parseColor("#ffc0cb");
+var white = kendo.parseColor("#ffffff");
+
+console.log(red.diff(crimson)); // logs 17.118
+console.log(red.diff(pink));    // logs 115.459
+console.log(red.diff(white));   // logs 153.042
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="equals">equals</h3>
+
+<p>Compares two color objects for equality.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Boolean</code> returns <code class="language-plaintext highlighter-rouge">true</code> if the two colors are the same. Otherwise, <code class="language-plaintext highlighter-rouge">false</code></p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var red = kendo.Color.fromRGB(1,0,0);
+var green = kendo.Color.fromRGB(0,1,0);
+console.log(red.equals(green)); // logs false
+
+var opaqueRed = kendo.Color.fromBytes(255,0,0,1);
+console.log(red.equals(opaqueRed)); // logs true
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="static-methods">Static Methods</h2>
+
+<h3 id="fromrgb">fromRGB</h3>
+
+<p>Creates a new color object from the rgba channels in the 0..1 range.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="red-number">red <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The red channel of the color, in the range from 0 to 1.</p>
+
+<h5 id="green-number">green <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The green channel of the color, in the range from 0 to 1.</p>
+
+<h5 id="blue-number">blue <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The blue channel of the color, in the range from 0 to 1.</p>
+
+<h5 id="alpha-number-optional">alpha <code class="language-plaintext highlighter-rouge">Number</code> <em>(optional)</em></h5>
+
+<p>The alpha channel of the color, in the range from 0 to 1. Defaults to 1 when omitted.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.Color</code> A new object that represents the color with the passed color coordinates</p>
+
+<h4 id="example---get-the-level-of-the-node">Example - get the level of the node</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var color = kendo.Color.fromRGB(1,0,0);
+console.log(color.toCss()); // logs "#ff0000"
+
+color = kendo.Color.fromRGB(0,1,0,1);
+console.log(color.toCssRgba()); // logs "rgba(0, 255, 0, 1)"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="fromhsv">fromHSV</h3>
+
+<p>Creates a new color object from the hsva channels in the 0..1 range.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="hue-number">hue <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The hue channel of the color, in the range from 0 to 1.</p>
+
+<h5 id="saturation-number">saturation <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The saturation channel of the color, in the range from 0 to 1.</p>
+
+<h5 id="value-number">value <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The value channel of the color, in the range from 0 to 1.</p>
+
+<h5 id="alpha-number-optional-1">alpha <code class="language-plaintext highlighter-rouge">Number</code> <em>(optional)</em></h5>
+
+<p>The alpha channel of the color, in the range from 0 to 1. Defaults to 1 when omitted.</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.Color</code> A new object that represents the color with the passed color coordinates</p>
+
+<h4 id="example---get-the-level-of-the-node-1">Example - get the level of the node</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var color = kendo.Color.fromHSV(1,.5,.5);
+console.log(color.toCss()); // logs "#804140"
+
+color = kendo.Color.fromHSV(.5,1,.5,1);
+console.log(color.toCssRgba()); // logs "rgba(128, 1, 0, 1)"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="frombytes">fromBytes</h3>
+
+<p>Creates a new color object from the rgba channels in the 0..255 range.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="red-number-1">red <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The red channel of the color, in the range from 0 to 255.</p>
+
+<h5 id="green-number-1">green <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The green channel of the color, in the range from 0 to 255.</p>
+
+<h5 id="blue-number-1">blue <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The blue channel of the color, in the range from 0 to 255.</p>
+
+<h5 id="alpha-number-optional-2">alpha <code class="language-plaintext highlighter-rouge">Number</code> <em>(optional)</em></h5>
+
+<p>The alpha channel of the color, in the range from 0 to 1. Defaults to 1 when omitted.</p>
+
+<h4 id="returns-4">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.Color</code> A new object that represents the color with the passed color coordinates</p>
+
+<h4 id="example---get-the-level-of-the-node-2">Example - get the level of the node</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var color = kendo.Color.fromBytes(0,0,255);
+console.log(color.toCss()); // logs "#0000ff"
+
+color = kendo.Color.fromBytes(255,255,0,.5);
+console.log(color.toCssRgba()); // logs "rgba(255, 255, 0, 0.5)"
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

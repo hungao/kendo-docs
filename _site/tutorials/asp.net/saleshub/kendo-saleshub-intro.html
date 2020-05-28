@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/saleshub/kendo-saleshub-intro.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="tutorial-saleshub-introduction">Tutorial: SalesHub: Introduction</h1>
+
+<p><img src="/tutorials/asp.net/saleshub/images/kendo-saleshub-intro-home-screenshot.png" alt="kendo-saleshub-intro-home-screenshot" /></p>
+
+<p>In this tutorial, we will review portions of the <strong>SalesHub</strong> sample project.</p>
+
+<p>SalesHub is an Order Management System that demonstrates the usage of the Telerik UI for ASP.NET MVC in
+an enterprise environment.</p>
+
+<p>The goal of this sample project to is show how to use a subset of Kendo UI widgets using Telerik UI for ASP.NET MVC, as well as
+to show how to easily implement server-side filtering for <a href="/api/framework/datasource">DataSource</a> requests, using the
+server-side components that the Telerik UI for ASP.NET MVC provide.</p>
+
+<p>This sample is not feature-complete and is only meant to be used as a reference for how to use the Telerik UI for ASP.NET MVC.</p>
+
+<h2 id="view-the-live-site">View the live site</h2>
+
+<p>The live SalesHub demo can be viewed at <a href="http://demos.telerik.com/kendo-ui/saleshub">demos.telerik.com/kendo-ui/saleshub</a>.</p>
+
+<h1 id="getting-started">Getting Started</h1>
+
+<p>This sample project is for Microsoft Visual Studio 2012, and requires MVC4, NuGet, Telerik UI for ASP.NET MVC, and SQLExpress in order to run.</p>
+
+<h2 id="get-the-source-code">Get the Source Code</h2>
+
+<p>Start by getting the source for <a href="https://github.com/telerik/kendo-saleshub-demo">SalesHub from GitHub</a>.</p>
+
+<h2 id="adding-kendo-ui-mvc-extensions-to-the-project">Adding Kendo UI MVC Extensions to the Project</h2>
+
+<p>Due to licensing restrictions, the sample project does not include the dll for the Telerik UI for ASP.NET MVC.</p>
+
+<p>If you have a license for the Telerik UI for ASP.NET MVC, you can use the <a href="http://www.telerik.com/download-trial-file.aspx?pid=972">Telerik Control Panel</a>
+to download and install the extensions. If you haven"t purchased a license yet, you can download and install the 30 day <a href="http://www.telerik.com/download/kendo-ui-complete">free trial</a>
+for the extensions.</p>
+
+<p>Once you"ve downloaded and installed the extensions, all that is required is for <code class="language-plaintext highlighter-rouge">\wrappers\aspnetmvc\Binaries\Mvc3\Kendo.Mvc.dll</code> to be copied from the installation
+directory of the Telerik UI for ASP.NET MVC into the <code class="language-plaintext highlighter-rouge">SalesHub\libs</code> directory.</p>
+
+<blockquote>
+  <p>The standard installation directory for the extensions is <strong><code class="language-plaintext highlighter-rouge">C:\Program Files (x86)\Telerik\Telerik UI for ASP.NET MVC &lt;version&gt;</code></strong>.</p>
+</blockquote>
+
+<h2 id="building-and-running-the-application">Building and Running the Application</h2>
+
+<p>Once you"ve copied <strong>Kendo.Mvc.dll</strong> to the correct location, you should be able to build and run the application.</p>
+
+<p>The first time the application launches, it creates and seeds its database.</p>
+
+<blockquote>
+  <p>Seeding the database may take a few minutes to complete.</p>
+</blockquote>
+
+<h1 id="solution-structure">Solution Structure</h1>
+
+<p><img src="/tutorials/asp.net/saleshub/images/kendo-saleshub-intro-project-structure-screenshot.png" alt="kendo-saleshub-intro-project-structure-screenshot" /></p>
+
+<p>There are three main projects in this sample application. They are:</p>
+
+<ol>
+  <li>
+    <p><strong>SalesHub.Client</strong>:</p>
+
+    <p>This is a standard MVC project and uses the default MVC project structure with one exception. The data services, which
+ are MVC controllers that return JSON results, are in their own namespace (<strong>SalesHub.Client.Api</strong>), so as to avoid confusion
+ with which controllers return Views and which ones return JSON.</p>
+  </li>
+  <li>
+    <p><strong>SalesHub.Data</strong>:</p>
+
+    <p>This project contains the Entity Framework repositories for data models.</p>
+  </li>
+  <li>
+    <p><strong>SalesHub.Core</strong>:</p>
+
+    <p>This project contains the data models and the repository interfaces used by SalesHub.Data.</p>
+  </li>
+</ol>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

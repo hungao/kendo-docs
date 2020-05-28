@@ -1,0 +1,242 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DataSource component for data binding in Kendo UI framework</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to get started using DataSource component in Kendo UI framework to simplify data binding and operations.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/datasource/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-datasource-overview">Kendo DataSource Overview</h1>
+
+<p>The DataSource component is an abstraction for using local (arrays of JavaScript objects) or
+remote (XML, JSON, JSONP) data. It fully supports CRUD (Create, Read, Update, Destroy) data
+operations and provides both local and server-side support for sorting, paging, filtering, grouping, and aggregates.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="creating-a-datasource-bound-to-local-data">Creating a DataSource bound to local data</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var movies = [ {
+      title: "Star Wars: A New Hope",
+      year: 1977
+   }, {
+     title: "Star Wars: The Empire Strikes Back",
+     year: 1980
+   }, {
+     title: "Star Wars: Return of the Jedi",
+     year: 1983
+   }
+];
+var localDataSource = new kendo.data.DataSource({data: movies});
+</code></pre></div></div>
+
+<h3 id="creating-a-datasource-bound-to-a-remote-data-service-twitter">Creating a DataSource bound to a remote data service (Twitter)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var dataSource = new kendo.data.DataSource({
+    transport: {
+        read: {
+            // the remote service url
+            url: "http://search.twitter.com/search.json",
+
+            // JSONP is required for cross-domain AJAX
+            dataType: "jsonp",
+
+            // additional parameters sent to the remote service
+            data: {
+                q: "html5"
+            }
+        }
+    },
+    // describe the result format
+    schema: {
+        // the data which the data source will be bound to is in the "results" field
+        data: "results"
+    }
+});
+</code></pre></div></div>
+
+<h2 id="binding-ui-widgets-to-datasource">Binding UI widgets to DataSource</h2>
+
+<p>Many Kendo UI widgets support data binding, and the Kendo UI DataSource is an ideal
+binding source for both local and remote data. A DataSource can be created in-line
+with other UI widget configuration settings, or a shared DataSource can be created
+to enable multiple UI widgets to bind to the same, observable data collection.</p>
+
+<h3 id="creating-a-local-datasource-in-line-with-ui-widget-configuration">Creating a local DataSource in-line with UI widget configuration</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#chart").kendoChart({
+    title: {
+        text: "Employee Sales"
+    },
+    dataSource: new kendo.data.DataSource({
+        data: [
+        {
+            employee: "Joe Smith",
+            sales: 2000
+        },
+        {
+            employee: "Jane Smith",
+            sales: 2250
+        },
+        {
+            employee: "Will Roberts",
+            sales: 1550
+        }]
+    }),
+    series: [{
+        type: "line",
+        field: "sales",
+        name: "Sales in Units"
+    }],
+    categoryAxis: {
+        field: "employee"
+    }
+});
+</code></pre></div></div>
+
+<h3 id="creating-and-binding-to-a-sharable-remote-datasource">Creating and binding to a sharable remote DataSource</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var sharableDataSource = new kendo.data.DataSource({
+    transport: {
+        read: {
+            url: "data-service.json",
+            dataType: "json"
+        }
+    }
+});
+
+// Bind two UI widgets to same DataSource
+$("#chart").kendoChart({
+    title: {
+        text: "Employee Sales"
+    },
+    dataSource: sharableDataSource,
+    series: [{
+        field: "sales",
+        name: "Sales in Units"
+    }],
+    categoryAxis: {
+        field: "employee"
+    }
+});
+
+$("#grid").kendoGrid({
+    dataSource: sharableDataSource,
+        columns: [
+        {
+            field: "employee",
+            title: "Employee"
+        },
+        {
+            field: "sales",
+            title: "Sales",
+            template: '#= kendo.toString(sales, "N0") #'
+    }]
+});
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

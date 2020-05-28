@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/AngularJS/global-events.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="global-events-in-angular-kendo">Global events in Angular-Kendo</h1>
+
+<p>Angular-Kendo emits a <code class="language-plaintext highlighter-rouge">"kendoWidgetCreated"</code> event for each widget which is created, and a <code class="language-plaintext highlighter-rouge">"kendoRendered"</code> event after all widgets defined in the page were created.</p>
+
+<h2 id="kendowidgetcreated"><code class="language-plaintext highlighter-rouge">kendoWidgetCreated</code></h2>
+
+<p>For example, suppose we want to create a TreeView widget that automatically expands the checked items upon initialization. We can"t easily do without "kendoWidgetCreated" because the widget is not instantiated at the time our controller function runs, but only after (that should be obvious, since the widget is built from data defined by the controller). Here is how we can do it with this event:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// controller:
+function Ctrl1($scope) {
+    $scope.treeOptions = {
+        dataSource: makeData(),
+        checkboxes: {
+            template: "&lt;input type='checkbox' ng-model='dataItem.checked' /&gt;"
+        }
+    };
+
+    $scope.$on("kendoWidgetCreated", function(event, widget){
+        // the event is emitted for every widget; if we have multiple
+        // widgets in this controller, we need to check that the event
+        // is for the one we're interested in.
+        if (widget === $scope.treeWidget) {
+            widget.element.find(".k-checkbox input:checked").each(function(){
+                widget.expand( $(this).parents(".k-item") );
+            });
+        }
+    });
+
+    function makeData() {
+        return [
+            { text: "Item 1", items: [
+                { text: "SubItem 1.1", items: [
+                    { text: "SubItem 1.1.1" },
+                    { text: "SubItem 1.1.2" },
+                    { text: "SubItem 1.1.3", checked: true }]},
+                { text: "SubItem 1.2", items: [
+                    { text: "SubItem 1.2.1" },
+                    { text: "SubItem 1.2.2" },
+                    { text: "SubItem 1.2.3" }]},
+                { text: "SubItem 1.3", items: [
+                    { text: "SubItem 1.3.1" },
+                    { text: "SubItem 1.3.2" },
+                    { text: "SubItem 1.3.3" }]}]},
+            { text: "Item 2", checked: true, items: [
+                { text: "SubItem 2.1", items: [
+                    { text: "SubItem 2.1.1" },
+                    { text: "SubItem 2.1.2" },
+                    { text: "SubItem 2.1.3" }]},
+                { text: "SubItem 2.2", items: [
+                    { text: "SubItem 2.2.1" },
+                    { text: "SubItem 2.2.2", checked: true },
+                    { text: "SubItem 2.2.3" }]},
+                { text: "SubItem 2.3", items: [
+                    { text: "SubItem 2.3.1" },
+                    { text: "SubItem 2.3.2" },
+                    { text: "SubItem 2.3.3", checked: true }]}]},
+            { text: "Item 3", items: [
+                { text: "SubItem 3.1", items: [
+                    { text: "SubItem 3.1.1" },
+                    { text: "SubItem 3.1.2" },
+                    { text: "SubItem 3.1.3" }]},
+                { text: "SubItem 3.2", items: [
+                    { text: "SubItem 3.2.1" },
+                    { text: "SubItem 3.2.2" },
+                    { text: "SubItem 3.2.3" }]},
+                { text: "SubItem 3.3", items: [
+                    { text: "SubItem 3.3.1" },
+                    { text: "SubItem 3.3.2" },
+                    { text: "SubItem 3.3.3" }]}]},
+        ]
+    }
+}
+
+&lt;!-- markup --&gt;
+&lt;div kendo-tree-view="treeWidget" k-options="treeOptions"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<h2 id="kendorendered"><code class="language-plaintext highlighter-rouge">kendoRendered</code></h2>
+
+<p>This event might be useful to know when all widgets defined in page have been rendered, since everything happens asynchronously. Using it you can for instance hide the view initially and display it when widgets have been initialized; or you can show a “loading” overlay, etc.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

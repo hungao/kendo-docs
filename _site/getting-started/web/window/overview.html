@@ -1,0 +1,405 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of Kendo UI Window widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to get started with Kendo UI Window widget, load content via Ajax, access an existing window.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/window/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="window-overview">Window Overview</h1>
+
+<p>A <strong>Window</strong> displays content in a modal or non-modal HTML window. By default, a
+<strong>Window</strong> can be moved, resized, and closed. Its content can also be defined with either as
+static HTML or loaded dynamically via AJAX.</p>
+
+<p>A <strong>Window</strong> can be initialized from virtually any DOM element. During initialization, the
+targeted content will automatically be wrapped in the div element of the <strong>Window</strong>.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="create-a-simple-html-element-with-the-window-content">Create a simple HTML element with the Window content</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="window"&gt;
+    Content of the Window
+&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-the-window-using-a-selector">Initialize the Window using a selector</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function() {
+    $("#window").kendoWindow();
+});
+</code></pre></div></div>
+
+<p>When a <strong>Window</strong> is initialized, it will automatically be displayed open near the location of the
+DOM element that was used to initialize the content.</p>
+
+<h3 id="html-structure-and-dom-placement">HTML structure and DOM Placement</h3>
+
+<p>By default, the Window is created as a child of the <code class="language-plaintext highlighter-rouge">&amp;lt;body&amp;gt;</code> element. This behavior should be taken into account with regard to CSS selectors or element discovery via Javascript.
+The behavior is configurable via the <a href="/api/web/window#configuration-appendTo"><code class="language-plaintext highlighter-rouge">appendTo</code> setting</a>.</p>
+
+<h4 id="before-initialization">Before initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;body&gt;
+	&lt;div id="container1"&gt;
+		&lt;div id="window"&gt;
+			Content of the Window
+		&lt;/div&gt;
+		...
+	&lt;/div&gt;
+	&lt;div id="container2"&gt;
+		...
+	&lt;/div&gt;
+&lt;/body&gt;
+</code></pre></div></div>
+
+<h4 id="after-initialization">After initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;body&gt;
+	&lt;div id="container1"&gt;
+		...
+	&lt;/div&gt;
+	&lt;div id="container2"&gt;
+		...
+	&lt;/div&gt;
+	&lt;div class="k-widget k-window"&gt;
+		&lt;div class="k-window-titlebar"&gt;...&lt;/div&gt;
+		&lt;div id="window" class="k-window-content"&gt;
+			Content of the Window
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/body&gt;
+</code></pre></div></div>
+
+<h2 id="configuring-window-behaviors">Configuring Window Behaviors</h2>
+
+<p>A <strong>Window</strong> provides many configuration options that can be easily set during initialization.
+Among the properties that can be controlled:</p>
+
+<ul>
+  <li>Minimum height/width</li>
+  <li>Available user actions (close/refresh/maximize/minimize/pin) and ability to define custom ones</li>
+  <li>Title</li>
+  <li>Draggable and resizable behaviors</li>
+  <li>Initial position in pixels, with regard to the page top-left corner</li>
+  <li>Pinned state - whether the Window moves together with the rest of the page content during scrolling</li>
+</ul>
+
+<h3 id="create-a-modal-window-with-all-user-actions-enabled-and-a-predefined-position">Create a modal Window with all user actions enabled and a predefined position</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#window").kendoWindow({
+    actions: ["Custom", "Pin", "Refresh", "Maximize", "Minimize", "Close"],
+    draggable: false,
+    height: "300px",
+    modal: true,
+	pinned: false,
+	position: {
+		top: 100,
+		left: 100
+	},
+    resizable: false,
+    title: "Modal Window",
+    width: "500px"
+});
+</code></pre></div></div>
+
+<p>The order of the values in the actions array determines the order in which the action buttons will be rendered
+in the title of a <strong>Window</strong>. The maximize action serves both as a button for expanding a
+<strong>Window</strong> to fill the screen and as a button to restore a <strong>Window</strong> to its previous
+size. The minimize action collapses a <strong>Window</strong> to its title.</p>
+
+<p>If a non-recognized action name is supplied, it is treated as a custom action and the following CSS classes are rendered for it - <strong>k-icon</strong> and <strong>k-i-actionname</strong> (all letters lowercase).
+No click event handler is attached automatically either. The Kendo stylesheets have a supplied icon for actions with the name "custom", but any name can be used.
+Click events can be captured and handled in a standard way:</p>
+
+<h3 id="custom-actions">Custom actions</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $("#window").kendoWindow({
+      actions: ["Custom", "Minimize", "Maximize", "Close"],
+      title: "Window Title"
+  }).data("kendoWindow").wrapper.find(".k-i-custom").click(function(e) {
+      alert("Custom action button clicked");
+      e.preventDefault();
+  });
+
+&lt;h3&gt;Positioning and Opening a Window&lt;/h3&gt;
+&lt;p&gt;
+ In some scenarios, it is preferable to center a &lt;strong&gt;Window&lt;/strong&gt; rather than open it near the HTML
+ element used to define the content. It is also common to open a &lt;strong&gt;Window&lt;/strong&gt; as the result of the
+ action of a user rather than on the load event of a page. The &lt;strong&gt;Window&lt;/strong&gt; API provides methods for
+ handling these scenarios.
+&lt;/p&gt;
+</code></pre></div></div>
+
+<h3 id="centering-a-window-and-opening-on-button-click">Centering a Window and opening on button click</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="window"&gt;
+    Content of the Window
+&lt;/div&gt;
+&lt;button id="openButton"&gt;Open Window&lt;/button&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-window-center-and-configure-button-click-action">Initialize Window, center, and configure button click action</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    var win = $("#window").kendoWindow({
+        height: "200px",
+        title: "Centered Window",
+        visible: false,
+        width: "200px"
+    }).data("kendoWindow");
+});
+
+$("#openButton").click(function(){
+    var win = $("#window").data("kendoWindow");
+    win.center();
+    win.open();
+});
+</code></pre></div></div>
+
+<h2 id="loading-window-content-via-ajax">Loading Window content via AJAX</h2>
+
+<p>A <strong>Window</strong> provides built-in support for asynchronously loading content from a URL. This URL
+should return an <strong>HTML fragment</strong> that can be loaded in a Window content area.</p>
+
+<blockquote>
+  <p>Loading full pages (i.e. ones with a DOCTYPE, <code class="language-plaintext highlighter-rouge">html</code>, <code class="language-plaintext highlighter-rouge">head</code> and <code class="language-plaintext highlighter-rouge">body</code> tags) inside the Window with AJAX is incorrect and will cause
+all sorts of undesired side effects, including a broken DOM tree, deleted widget instances and Javascript errors.</p>
+</blockquote>
+
+<h3 id="load-window-content-asynchronously">Load Window content asynchronously</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="window"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-window-and-configure-content-loading">Initialize window and configure content loading</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#window").kendoWindow({
+        content: "html-content-snippet.html",
+        title: "Async Window Content"
+    });
+});
+</code></pre></div></div>
+
+<h2 id="using-iframes">Using iframes</h2>
+
+<p>The Window creates an <code class="language-plaintext highlighter-rouge">iframe</code> for its content if the content URL contains a protocol, i.e. it is assumed that in this case the nested page resides on another domain.
+If the URL does not contain s protocol, the assumption is that it is a local URL that will load a partial view (not a full page), so an iframe is not created.
+This behavior can be controlled explicitly via the widget configuration.</p>
+
+<blockquote>
+  <p>Loading HTML fragments (partial content) inside an iframe is incorrect. Iframe pages should include a DOCTYPE, <code class="language-plaintext highlighter-rouge">html</code>, <code class="language-plaintext highlighter-rouge">head</code> and <code class="language-plaintext highlighter-rouge">body</code> tags, just like a standard web page does.</p>
+</blockquote>
+
+<h3 id="accessing-the-window-and-document-objects-inside-the-iframe">Accessing the <code class="language-plaintext highlighter-rouge">window</code> and <code class="language-plaintext highlighter-rouge">document</code> objects inside the <code class="language-plaintext highlighter-rouge">iframe</code></h3>
+
+<p>In order to access content and script objects inside the Kendo UI Window <code class="language-plaintext highlighter-rouge">iframe</code>, the nested page must belong to the <strong>same domain</strong> as the main page.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="window"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+
+var windowElement = $("#window").kendoWindow({
+    iframe: true,
+    content: "http://docs.telerik.com/kendo-ui/"
+});
+
+var iframeDomElement = windowElement.children("iframe")[0];
+var iframeWindowObject = iframeDomElement.contentWindow;
+var iframeDocumentObject = iframeDomElement.contentDocument;
+// which is equivalent to
+// var iframeDocumentObject = iframeWindowObject.document;
+var iframejQuery = iframeWindowObject.$; // if jQuery is registered inside the iframe page, of course
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="accessing-an-existing-window">Accessing an Existing Window</h2>
+
+<p>You can reference an existing <strong>Window</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>. Once a reference has been established, you can
+use the API to control its behavior.</p>
+
+<h3 id="accessing-an-existing-window-instance">Accessing an existing Window instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var win = $("#window").data("kendoWindow");
+</code></pre></div></div>
+
+<h3 id="accessing-an-existing-window-instance-from-its-non-iframe-content">Accessing an existing Window instance from its non-iframe content</h3>
+
+<p>An easy way to obtain reference to a Kendo UI Window instance from within its non-iframe content is to use DOM traversal.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var win = elementInsideWindow.closest(".k-window-content").data("kendoWindow");
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">elementInsideWindow</code> is a jQuery object containing and element inside the Window content area.</p>
+
+<h3 id="accessing-an-existing-window-instance-from-within-an-iframe">Accessing an existing Window instance from within an iframe</h3>
+
+<p>If the Window is displaying a page in an iframe and the page needs to access the widget, this can be achieved by using <code class="language-plaintext highlighter-rouge">window.parent</code> from within the iframe.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var win = window.parent.$("#window").data("kendoWindow");
+</code></pre></div></div>
+
+<blockquote>
+  <p>Please note that iframe-parent access is possible only if the iframe and the parent page belong to the same domain.</p>
+</blockquote>
+
+<h2 id="using-kendo-ui-window-with-a-form">Using Kendo UI Window with a form</h2>
+
+<p>By default, the Window widget is moved in the DOM and placed as a child of the <code class="language-plaintext highlighter-rouge">body</code> element after initialization. This facilitates positioning the widget on top of everything else,
+but may lead to undesired side effects if the Window is created from an element inside a form, as the moved form fields will not be submitted. There are two ways to avoid this:</p>
+
+<ol>
+  <li>the whole form including its opening and closing tags should be inside the element, from which the Window is created;</li>
+  <li>if the Window is created from an element inside the form, then the <a href="/api/web/window#configuration-appendTo">appendTo</a> property should be used, so that the Window is not moved outside the form;</li>
+</ol>
+
+<p>If form data is validated on the server, we recommend submitting via AJAX, so that the Window remains visible and any validation messages are displayed seamlessly.</p>
+
+<p>The above remarks only apply to the case when the Window is <em>not</em> using an <code class="language-plaintext highlighter-rouge">iframe</code>.</p>
+
+<h2 id="destroying-a-kendo-ui-window">Destroying a Kendo UI Window</h2>
+
+<p>Unlike most other widgets, the Kendo UI Window is <strong>completely removed from the DOM</strong> when <a href="/getting-started/widgets#destroying-kendo-ui-widgets">destroyed</a>.
+This means that the element, from which it was initialized, no longer exists on the page, so a new Window instance can be created only from another element.</p>
+
+<h2 id="printing-the-window-contents">Printing the Window contents</h2>
+
+<p>The CSS code below can be used to hide all the page content and leave only the Window content visible during printing.
+The code assumes that only one Window instance exists on the page and it is a child of the <code class="language-plaintext highlighter-rouge">body</code>, i.e. the <code class="language-plaintext highlighter-rouge">appendTo</code> option is <strong>not</strong> used.
+If there are multiple Window instances on the page and only one should be printed, then the <code class="language-plaintext highlighter-rouge">.k-window</code> class below should be replaced by a custom CSS class, which is applied to the Window wrapper element manually.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@media print
+{
+    body &gt; *
+    {
+        display: none !important;
+    }
+    
+    body &gt; .k-window
+    {
+        display: block !important;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        width: auto !important;
+        height: auto !important;
+        border-width: 0;
+        box-shadow: none !important;
+    }
+    
+    .k-window .k-window-titlebar
+    {
+        display: none;
+    }
+}
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

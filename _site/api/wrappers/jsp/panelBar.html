@@ -1,0 +1,385 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/panelBar.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendopanelbar">&lt;kendo:panelBar&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/panelbar">PanelBar</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="animation-boolean">animation <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>A collection of visual animations used when PanelBar items are expand or collapsed through
+user interactions. Setting this option to false will disable all animations. Further configuration is available via <a href="#kendo-panelBar-animation">kendo:panelBar-animation</a>.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar animation="animation"&gt;
+&lt;/kendo:panelBar&gt;
+</code></pre></div></div>
+
+<h3 id="contenturls-javalangobject">contentUrls <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Sets an array with the URLs from which the PanelBar items content to be loaded from. If only specific items should be loaded via Ajax, then you should set the URLs to the corresponding positions in the array and set the other elements to null.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar contentUrls="contentUrls"&gt;
+&lt;/kendo:panelBar&gt;
+</code></pre></div></div>
+
+<h3 id="expandmode-javalangstring">expandMode <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Specifies how the PanelBar items are displayed when opened and closed. The following values
+are available:</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar expandMode="expandMode"&gt;
+&lt;/kendo:panelBar&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendopanelbar-animation">kendo:panelBar-animation</h3>
+
+<p>A collection of visual animations used when PanelBar items are expand or collapsed through
+user interactions. Setting this option to false will disable all animations.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/panelbar/animation">kendo:panelBar-animation</a>.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar&gt;
+    &lt;kendo:panelBar-animation&gt;&lt;/kendo:panelBar-animation&gt;
+&lt;/kendo:panelBar&gt;
+</code></pre></div></div>
+
+<h3 id="kendopanelbar-items">kendo:panelBar-items</h3>
+
+<p>Contains the items of the panelbar widget</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/panelbar/items">kendo:panelBar-items</a>.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar&gt;
+    &lt;kendo:panelBar-items&gt;&lt;/kendo:panelBar-items&gt;
+&lt;/kendo:panelBar&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="activate-string">activate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when an item of a PanelBar is activated.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-activate">activate</a> event documentation.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar activate="handle_activate"&gt;
+&lt;/kendo:panelBar&gt;
+&lt;script&gt;
+    function handle_activate(e) {
+        // Code to handle the activate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="collapse-string">collapse <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when an item of a PanelBar is collapsed.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-collapse">collapse</a> event documentation.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar collapse="handle_collapse"&gt;
+&lt;/kendo:panelBar&gt;
+&lt;script&gt;
+    function handle_collapse(e) {
+        // Code to handle the collapse event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="contentload-string">contentLoad <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when content is fetched from an AJAX request.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-contentLoad">contentLoad</a> event documentation.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar contentLoad="handle_contentLoad"&gt;
+&lt;/kendo:panelBar&gt;
+&lt;script&gt;
+    function handle_contentLoad(e) {
+        // Code to handle the contentLoad event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="error-string">error <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when AJAX request results in an error.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-error">error</a> event documentation.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar error="handle_error"&gt;
+&lt;/kendo:panelBar&gt;
+&lt;script&gt;
+    function handle_error(e) {
+        // Code to handle the error event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="expand-string">expand <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when an item of a PanelBar is expanded.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-expand">expand</a> event documentation.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar expand="handle_expand"&gt;
+&lt;/kendo:panelBar&gt;
+&lt;script&gt;
+    function handle_expand(e) {
+        // Code to handle the expand event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select-string">select <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when an item of a PanelBar is selected.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-select">select</a> event documentation.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar select="handle_select"&gt;
+&lt;/kendo:panelBar&gt;
+&lt;script&gt;
+    function handle_select(e) {
+        // Code to handle the select event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendopanelbar-activate">kendo:panelBar-activate</h3>
+
+<p>Triggered when an item of a PanelBar is activated.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-activate">activate</a> event documentation.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar&gt;
+    &lt;kendo:panelBar-activate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the activate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:panelBar-activate&gt;
+&lt;/kendo:panelBar&gt;
+</code></pre></div></div>
+
+<h3 id="kendopanelbar-collapse">kendo:panelBar-collapse</h3>
+
+<p>Triggered when an item of a PanelBar is collapsed.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-collapse">collapse</a> event documentation.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar&gt;
+    &lt;kendo:panelBar-collapse&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the collapse event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:panelBar-collapse&gt;
+&lt;/kendo:panelBar&gt;
+</code></pre></div></div>
+
+<h3 id="kendopanelbar-contentload">kendo:panelBar-contentLoad</h3>
+
+<p>Fires when content is fetched from an AJAX request.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-contentLoad">contentLoad</a> event documentation.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar&gt;
+    &lt;kendo:panelBar-contentLoad&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the contentLoad event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:panelBar-contentLoad&gt;
+&lt;/kendo:panelBar&gt;
+</code></pre></div></div>
+
+<h3 id="kendopanelbar-error">kendo:panelBar-error</h3>
+
+<p>Fires when AJAX request results in an error.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-error">error</a> event documentation.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar&gt;
+    &lt;kendo:panelBar-error&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the error event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:panelBar-error&gt;
+&lt;/kendo:panelBar&gt;
+</code></pre></div></div>
+
+<h3 id="kendopanelbar-expand">kendo:panelBar-expand</h3>
+
+<p>Triggered when an item of a PanelBar is expanded.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-expand">expand</a> event documentation.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar&gt;
+    &lt;kendo:panelBar-expand&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the expand event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:panelBar-expand&gt;
+&lt;/kendo:panelBar&gt;
+</code></pre></div></div>
+
+<h3 id="kendopanelbar-select">kendo:panelBar-select</h3>
+
+<p>Triggered when an item of a PanelBar is selected.</p>
+
+<p>For additional information check the <a href="/api/web/panelbar#events-select">select</a> event documentation.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:panelBar&gt;
+    &lt;kendo:panelBar-select&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the select event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:panelBar-select&gt;
+&lt;/kendo:panelBar&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

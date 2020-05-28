@@ -1,0 +1,246 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/datasource/transport-create.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatasource-transport-create">&lt;kendo:dataSource-transport-create&gt;</h1>
+
+<p>The configuration used when the data source saves newly created data items. Those are items added to the data source via the add or insert methods.If the value of transport.create is a function, the data source invokes that function instead of jQuery.ajax.If the value of transport.create is a string the data source uses this string as the URL of the remote service.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-transport&gt;
+    &lt;kendo:dataSource-transport-create&gt;&lt;/kendo:dataSource-transport-create&gt;
+&lt;/kendo:dataSource-transport&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="cache-boolean">cache <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the request result will not be cached by the browser. Setting cache to false will only work correctly with HEAD and GET requests. It works by appending "_={timestamp}" to the GET parameters.
+By default "jsonp" requests are not cached.Refer to the jQuery.ajax documentation for further info.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-transport-create cache="cache"&gt;
+&lt;/kendo:dataSource-transport-create&gt;
+</code></pre></div></div>
+
+<h3 id="contenttype-javalangstring">contentType <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The content-type HTTP header sent to the server. Default is "application/x-www-form-urlencoded". Use "application/json" if the content is JSON.
+Refer to the jQuery.ajax documentation for further info.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-transport-create contentType="contentType"&gt;
+&lt;/kendo:dataSource-transport-create&gt;
+</code></pre></div></div>
+
+<h3 id="data-javalangobject">data <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-transport-create data="data"&gt;
+&lt;/kendo:dataSource-transport-create&gt;
+</code></pre></div></div>
+
+<h3 id="datatype-javalangstring">dataType <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The type of result expected from the server. Commonly used values are "json" and "jsonp".Refer to the jQuery.ajax documentation for further info.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-transport-create dataType="dataType"&gt;
+&lt;/kendo:dataSource-transport-create&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The type of request to make ("POST", "GET", "PUT" or "DELETE"), default is "GET".Refer to the jQuery.ajax documentation for further info.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-transport-create type="type"&gt;
+&lt;/kendo:dataSource-transport-create&gt;
+</code></pre></div></div>
+
+<h3 id="url-javalangstring">url <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The URL to which the request is sent.If set to function the data source will invoke it and use the result as the URL.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-transport-create url="url"&gt;
+&lt;/kendo:dataSource-transport-create&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="data-string">data <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-transport-create data="handle_data"&gt;
+&lt;/kendo:dataSource-transport-create&gt;
+&lt;script&gt;
+    function handle_data(e) {
+        // Code to handle the data event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="url-string">url <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The URL to which the request is sent.If set to function the data source will invoke it and use the result as the URL.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-transport-create url="handle_url"&gt;
+&lt;/kendo:dataSource-transport-create&gt;
+&lt;script&gt;
+    function handle_url(e) {
+        // Code to handle the url event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendodatasource-transport-create-data">kendo:dataSource-transport-create-data</h3>
+
+<p>Additional parameters which are sent to the remote service.Refer to the jQuery.ajax documentation for further info.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-transport-create&gt;
+    &lt;kendo:dataSource-transport-create-data&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the data event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-transport-create-data&gt;
+&lt;/kendo:dataSource-transport-create&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-transport-create-url">kendo:dataSource-transport-create-url</h3>
+
+<p>The URL to which the request is sent.If set to function the data source will invoke it and use the result as the URL.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource-transport-create&gt;
+    &lt;kendo:dataSource-transport-create-url&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the url event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-transport-create-url&gt;
+&lt;/kendo:dataSource-transport-create&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

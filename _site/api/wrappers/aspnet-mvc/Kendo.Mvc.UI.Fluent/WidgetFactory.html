@@ -1,0 +1,1086 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/WidgetFactory.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluentwidgetfactory">Kendo.Mvc.UI.Fluent.WidgetFactory</h1>
+<p>Creates the fluent API builders of the Kendo UI widgets</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="menu">Menu</h3>
+<p>Creates a Menu</p>
+
+<h4 id="example-aspx">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Menu()
+.Name("Menu")
+.Items(items =&gt; { /* add items here */ });
+%&gt;
+</code></pre></div></div>
+
+<h3 id="editor">Editor</h3>
+<p>Creates a Editor</p>
+
+<h4 id="example-aspx-1">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Editor()
+.Name("Editor");
+%&gt;
+</code></pre></div></div>
+
+<h3 id="gridt1">GridT1</h3>
+<p>Creates a new 1 bound to the specified data item type.</p>
+
+<h4 id="example-aspx-2">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Grid&lt;Order&gt;()
+.Name("Grid")
+.BindTo(Model)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="gridsystemcollectionsgenericienumerablet1">Grid(System.Collections.Generic.IEnumerable&lt;T1&gt;)</h3>
+<p>Creates a new 1 bound to the specified data source.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="datasource-systemcollectionsgenericienumerablet1">dataSource <code class="language-plaintext highlighter-rouge">System.Collections.Generic.IEnumerable&lt;T1&gt;</code></h5>
+<p>The data source.</p>
+
+<h4 id="example-aspx-3">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Grid(Model)
+.Name("Grid")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="gridsystemdatadatatable">Grid(System.Data.DataTable)</h3>
+<p>Creates a new 1 bound to a DataTable.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="datasource-systemdatadatatable">dataSource <code class="language-plaintext highlighter-rouge">System.Data.DataTable</code></h5>
+<p>DataTable from which the grid instance will be bound</p>
+
+<h3 id="gridsystemdatadataview">Grid(System.Data.DataView)</h3>
+<p>Creates a new 1 bound to a DataView.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="datasource-systemdatadataview">dataSource <code class="language-plaintext highlighter-rouge">System.Data.DataView</code></h5>
+<p>DataView from which the grid instance will be bound</p>
+
+<h3 id="gridsystemstring">Grid(System.String)</h3>
+<p>Creates a new 1 bound an item in ViewData.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="datasourceviewdatakey-systemstring">dataSourceViewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The data source view data key.</p>
+
+<h4 id="example-aspx-4">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Grid&lt;Order&gt;("orders")
+.Name("Grid")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="listviewt1">ListViewT1</h3>
+<p>Creates a new 1 bound to the specified data item type.</p>
+
+<h4 id="example-aspx-5">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ListView&lt;Order&gt;()
+.Name("ListView")
+.BindTo(Model)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="listviewsystemcollectionsgenericienumerablet1">ListView(System.Collections.Generic.IEnumerable&lt;T1&gt;)</h3>
+<p>Creates a new 1 bound to the specified data source.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="datasource-systemcollectionsgenericienumerablet1-1">dataSource <code class="language-plaintext highlighter-rouge">System.Collections.Generic.IEnumerable&lt;T1&gt;</code></h5>
+<p>The data source.</p>
+
+<h4 id="example-aspx-6">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ListView(Model)
+.Name("ListView")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="listviewsystemstring">ListView(System.String)</h3>
+<p>Creates a new 1 bound an item in ViewData.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="datasourceviewdatakey-systemstring-1">dataSourceViewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The data source view data key.</p>
+
+<h4 id="example-aspx-7">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ListView&lt;Order&gt;("orders")
+.Name("ListView")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilelistviewt1">MobileListViewT1</h3>
+<p>Creates a new 1 bound to the specified data item type.</p>
+
+<h4 id="example-aspx-8">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileListView&lt;Order&gt;()
+.Name("MobileListView")
+.BindTo(Model)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilelistview">MobileListView</h3>
+<p>Creates a new MobileListView.</p>
+
+<h4 id="example-aspx-9">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileListView()
+.Name("MobileListView")
+.Items(items =&gt;
+{
+    items.Add().Text("Item");
+    items.AddLink().Text("Link Item");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilelistviewsystemcollectionsgenericienumerablet1">MobileListView(System.Collections.Generic.IEnumerable&lt;T1&gt;)</h3>
+<p>Creates a new 1 bound to the specified data source.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="datasource-systemcollectionsgenericienumerablet1-2">dataSource <code class="language-plaintext highlighter-rouge">System.Collections.Generic.IEnumerable&lt;T1&gt;</code></h5>
+<p>The data source.</p>
+
+<h4 id="example-aspx-10">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileListView(Model)
+.Name("MobileListView")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilelistviewsystemstring">MobileListView(System.String)</h3>
+<p>Creates a new 1 bound an item in ViewData.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="datasourceviewdatakey-systemstring-2">dataSourceViewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The data source view data key.</p>
+
+<h4 id="example-aspx-11">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileListView&lt;Order&gt;("orders")
+.Name("MobileListView")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="splitter">Splitter</h3>
+<p>Creates a Splitter</p>
+
+<h4 id="example-aspx-12">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Splitter()
+.Name("Splitter");
+%&gt;
+</code></pre></div></div>
+
+<h3 id="tabstrip">TabStrip</h3>
+<p>Creates a new TabStrip.</p>
+
+<h4 id="example-aspx-13">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("TabStrip")
+.Items(items =&gt;
+{
+    items.Add().Text("First");
+    items.Add().Text("Second");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="datetimepicker">DateTimePicker</h3>
+<p>Creates a new DateTimePicker.</p>
+
+<h4 id="example-aspx-14">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().DateTimePicker()
+.Name("DateTimePicker")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="datepicker">DatePicker</h3>
+<p>Creates a new DatePicker.</p>
+
+<h4 id="example-aspx-15">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().DatePicker()
+.Name("DatePicker")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="timepicker">TimePicker</h3>
+<p>Creates a new TimePicker.</p>
+
+<h4 id="example-aspx-16">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TimePicker()
+.Name("TimePicker")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="barcode">Barcode</h3>
+<p>Creates a new Barcode.</p>
+
+<h4 id="example-aspx-17">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Barcode()
+.For("Container")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="sortable">Sortable</h3>
+<p>Creates a new Sortable.</p>
+
+<h4 id="example-aspx-18">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Sortable()
+.For("Container")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="tooltip">Tooltip</h3>
+<p>Creates a new Tooltip.</p>
+
+<h4 id="example-aspx-19">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Tooltip()
+.For("Container")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="colorpicker">ColorPicker</h3>
+<p>Creates a new ColorPicker.</p>
+
+<h4 id="example-aspx-20">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ColorPicker()
+.Name("ColorPicker")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="colorpalette">ColorPalette</h3>
+<p>Creates a new ColorPalette.</p>
+
+<h4 id="example-aspx-21">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ColorPalette()
+.Name("ColorPalette")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="flatcolorpicker">FlatColorPicker</h3>
+<p>Creates a new FlatColorPicker.</p>
+
+<h4 id="example-aspx-22">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().FlatColorPicker()
+.Name("FlatColorPicker")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="calendar">Calendar</h3>
+<p>Creates a new Calendar.</p>
+
+<h4 id="example-aspx-23">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Calendar()
+.Name("Calendar")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="panelbar">PanelBar</h3>
+<p>Creates a new PanelBar.</p>
+
+<h4 id="example-aspx-24">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().PanelBar()
+.Name("PanelBar")
+.Items(items =&gt;
+{
+    items.Add().Text("First");
+    items.Add().Text("Second");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="recurrenceeditor">RecurrenceEditor</h3>
+<p>Creates a new RecurrenceEditor.</p>
+
+<h4 id="example-aspx-25">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().RecurrenceEditor()
+.Name("recurrenceEditor")
+.FirstWeekDay(0)
+.Timezone("Etc/UTC")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="timezoneeditor">TimezoneEditor</h3>
+<p>Creates a new TimezoneEditor.</p>
+
+<h4 id="example-aspx-26">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TimezoneEditor()
+.Name("timezoneEditor")
+.Value("Etc/UTC")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="schedulert1">SchedulerT1</h3>
+<p>Creates a new 1.</p>
+
+<h4 id="example-aspx-27">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Scheduler&lt;SchedulerEvent&gt;()
+.Name("Scheduler")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="pivotgrid">PivotGrid</h3>
+<p>Creates a new 1.</p>
+
+<h4 id="example-aspx-28">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().PivotGrid()
+.Name("PivotGrid")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="pivotgridt1">PivotGridT1</h3>
+<p>Creates a new 1.</p>
+
+<h4 id="example-aspx-29">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().PivotGrid&lt;EventData&gt;()
+.Name("PivotGrid")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="pivotconfigurator">PivotConfigurator</h3>
+<p>Creates a new PivotConfigurator.</p>
+
+<h4 id="example-aspx-30">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().PivotConfigurator()
+.Name("PivotConfigurator")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="treeview">TreeView</h3>
+<p>Creates a TreeView</p>
+
+<h4 id="example-aspx-31">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.Items(items =&gt; { /* add items here */ });
+%&gt;
+</code></pre></div></div>
+
+<h3 id="numerictextbox">NumericTextBox</h3>
+<p>Creates a new NumericTextBox.</p>
+
+<h4 id="example-aspx-32">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().NumericTextBox()
+.Name("NumericTextBox")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="numerictextboxt1">NumericTextBoxT1</h3>
+<p>Creates a new 1.</p>
+
+<h4 id="example-aspx-33">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().NumericTextBox&lt;double&gt;()
+.Name("NumericTextBox")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="currencytextbox">CurrencyTextBox</h3>
+<p>Creates a new CurrencyTextBox.</p>
+
+<h4 id="example-aspx-34">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().CurrencyTextBox()
+.Name("CurrencyTextBox")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="percenttextbox">PercentTextBox</h3>
+<p>Creates a new PercentTextBox.</p>
+
+<h4 id="example-aspx-35">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().PercentTextBox()
+.Name("PercentTextBox")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="integertextbox">IntegerTextBox</h3>
+<p>Creates a new IntegerTextBox.</p>
+
+<h4 id="example-aspx-36">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().IntegerTextBox()
+.Name("IntegerTextBox")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="maskedtextbox">MaskedTextBox</h3>
+<p>Creates a new MaskedTextBox.</p>
+
+<h4 id="example-aspx-37">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MaskedTextBox()
+.Name("MaskedTextBox")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="textbox">TextBox</h3>
+<p>Creates a new TextBox.</p>
+
+<h4 id="example-aspx-38">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TextBox()
+.Name("TextBox")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="textboxt1">TextBoxT1</h3>
+<p>Creates a new 1.</p>
+
+<h4 id="example-aspx-39">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TextBox&lt;double&gt;()
+.Name("TextBox")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="window">Window</h3>
+<p>Creates a new Window.</p>
+
+<h4 id="example-aspx-40">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Window()
+.Name("Window")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="lineargauge">LinearGauge</h3>
+<p>Creates a new LinearGauge.</p>
+
+<h4 id="example-aspx-41">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().LinearGauge()
+.Name("linearGauge")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="radialgauge">RadialGauge</h3>
+<p>Creates a new RadialGauge.</p>
+
+<h4 id="example-aspx-42">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().RadialGauge()
+.Name("radialGauge")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="dropdownlist">DropDownList</h3>
+<p>Creates a new DropDownList.</p>
+
+<h4 id="example-aspx-43">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().DropDownList()
+.Name("DropDownList")
+.Items(items =&gt;
+{
+    items.Add().Text("First Item");
+    items.Add().Text("Second Item");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="combobox">ComboBox</h3>
+<p>Creates a new ComboBox.</p>
+
+<h4 id="example-aspx-44">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ComboBox()
+.Name("ComboBox")
+.Items(items =&gt;
+{
+    items.Add().Text("First Item");
+    items.Add().Text("Second Item");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="autocomplete">AutoComplete</h3>
+<p>Creates a new AutoComplete.</p>
+
+<h4 id="example-aspx-45">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().AutoComplete()
+.Name("AutoComplete")
+.Items(items =&gt;
+{
+    items.Add().Text("First Item");
+    items.Add().Text("Second Item");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="multiselect">MultiSelect</h3>
+<p>Creates a new MultiSelect.</p>
+
+<h4 id="example-aspx-46">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MultiSelect()
+.Name("MultiSelect")
+.Items(items =&gt;
+{
+    items.Add().Text("First Item");
+    items.Add().Text("Second Item");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="slidert1">SliderT1</h3>
+<p>Creates a new Slider.</p>
+
+<h4 id="example-aspx-47">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Slider()
+.Name("Slider")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="slider">Slider</h3>
+<p>Creates a new Slider.</p>
+
+<h4 id="example-aspx-48">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Slider()
+.Name("Slider")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="rangeslidert1">RangeSliderT1</h3>
+<p>Creates a new RangeSlider.</p>
+
+<h4 id="example-aspx-49">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().RangeSlider()
+.Name("RangeSlider")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="rangeslider">RangeSlider</h3>
+<p>Creates a new RangeSlider.</p>
+
+<h4 id="example-aspx-50">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().RangeSlider()
+.Name("RangeSlider")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="progressbar">ProgressBar</h3>
+<p>Creates a new ProgressBar</p>
+
+<h4 id="example-aspx-51">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ProgressBar()
+.Name("progressBar")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="upload">Upload</h3>
+<p>Creates a Upload</p>
+
+<h4 id="example-aspx-52">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Upload()
+.Name("Upload")
+.Async(async =&gt; async
+    .Save("ProcessAttachments", "Home")
+    .Remove("RemoveAttachment", "Home")
+)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="button">Button</h3>
+<p>Creates a Button</p>
+
+<h4 id="example-aspx-53">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Button()
+.Name("Button1");
+%&gt;
+</code></pre></div></div>
+
+<h3 id="notification">Notification</h3>
+<p>Creates a Notification</p>
+
+<h4 id="example-aspx-54">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Notification()
+.Name("Notification1");
+%&gt;
+</code></pre></div></div>
+
+<h3 id="chartt1">ChartT1</h3>
+<p>Creates a 1</p>
+
+<h4 id="example-aspx-55">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Chart()
+.Name("Chart")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="chartsystemcollectionsgenericienumerablet1">Chart(System.Collections.Generic.IEnumerable&lt;T1&gt;)</h3>
+<p>Creates a new 1 bound to the specified data source.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="data-systemcollectionsgenericienumerablet1">data <code class="language-plaintext highlighter-rouge">System.Collections.Generic.IEnumerable&lt;T1&gt;</code></h5>
+<p>The data source.</p>
+
+<h4 id="example-aspx-56">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Chart(Model)
+.Name("Chart")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="chartsystemstring">Chart(System.String)</h3>
+<p>Creates a new 1 bound an item in ViewData.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="dataviewdatakey-systemstring">dataViewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The data source view data key.</p>
+
+<h4 id="example-aspx-57">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Chart&lt;SalesData&gt;("sales")
+.Name("Chart")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="chart">Chart</h3>
+<p>Creates a new unbound Chart.</p>
+
+<h4 id="example-aspx-58">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Chart()
+.Name("Chart")
+.Series(series =&gt; {
+    series.Bar(new int[] { 1, 2, 3 }).Name("Total Sales");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="stockchartt1">StockChartT1</h3>
+<p>Creates a 1</p>
+
+<h4 id="example-aspx-59">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().StockChart()
+.Name("StockChart")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="stockchartsystemcollectionsgenericienumerablet1">StockChart(System.Collections.Generic.IEnumerable&lt;T1&gt;)</h3>
+<p>Creates a new 1 bound to the specified data source.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="data-systemcollectionsgenericienumerablet1-1">data <code class="language-plaintext highlighter-rouge">System.Collections.Generic.IEnumerable&lt;T1&gt;</code></h5>
+<p>The data source.</p>
+
+<h4 id="example-aspx-60">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().StockChart(Model)
+.Name("StockChart")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="stockchartsystemstring">StockChart(System.String)</h3>
+<p>Creates a new 1 bound an item in ViewData.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="dataviewdatakey-systemstring-1">dataViewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The data source view data key.</p>
+
+<h4 id="example-aspx-61">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().StockChart&lt;SalesData&gt;("sales")
+.Name("StockChart")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="stockchart">StockChart</h3>
+<p>Creates a new unbound StockChart.</p>
+
+<h4 id="example-aspx-62">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().StockChart()
+.Name("StockChart")
+.Series(series =&gt; {
+    series.Bar(new int[] { 1, 2, 3 }).Name("Total Sales");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="sparklinet1">SparklineT1</h3>
+<p>Creates a 1</p>
+
+<h4 id="example-aspx-63">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Sparkline()
+.Name("Sparkline")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="sparklinesystemcollectionsgenericienumerablet1">Sparkline(System.Collections.Generic.IEnumerable&lt;T1&gt;)</h3>
+<p>Creates a new 1 bound to the specified data source.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="data-systemcollectionsgenericienumerablet1-2">data <code class="language-plaintext highlighter-rouge">System.Collections.Generic.IEnumerable&lt;T1&gt;</code></h5>
+<p>The data source.</p>
+
+<h4 id="example-aspx-64">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Sparkline(Model)
+.Name("Sparkline")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="sparklinesystemstring">Sparkline(System.String)</h3>
+<p>Creates a new 1 bound an item in ViewData.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="dataviewdatakey-systemstring-2">dataViewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The data source view data key.</p>
+
+<h4 id="example-aspx-65">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Sparkline&lt;SalesData&gt;("sales")
+.Name("Sparkline")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="sparkline">Sparkline</h3>
+<p>Creates a new unbound Sparkline.</p>
+
+<h4 id="example-aspx-66">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Sparkline()
+.Name("Sparkline")
+.Series(series =&gt; {
+    series.Bar(new int[] { 1, 2, 3 }).Name("Total Sales");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="qrcode">QRCode</h3>
+<p>Creates a QRCode</p>
+
+<h4 id="example-aspx-67">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().QRCode()
+.Name("qrCode")
+.Value("Hello World")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="deferredscriptssystemboolean">DeferredScripts(System.Boolean)</h3>
+<p>Returns the initialization scripts for widgets set as deferred</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="renderscripttags-systemboolean">renderScriptTags <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>Determines if the script should be rendered within a script tag</p>
+
+<h4 id="returns">Returns</h4>
+
+<h3 id="deferredscriptsforsystemstringsystemboolean">DeferredScriptsFor(System.String,System.Boolean)</h3>
+<p>Returns the initialization scripts for the specified widget.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="name-systemstring">name <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the widget.</p>
+
+<h5 id="renderscripttags-systemboolean-1">renderScriptTags <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>Determines if the script should be rendered within a script tag</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<h3 id="contextmenu">ContextMenu</h3>
+<p>Creates a Menu</p>
+
+<h4 id="example-aspx-68">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Menu()
+.Name("Menu")
+.Items(items =&gt; { /* add items here */ });
+%&gt;
+</code></pre></div></div>
+
+<h3 id="diagram">Diagram</h3>
+<p>Creates a Diagram</p>
+
+<h4 id="example-aspx-69">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Diagram()
+.Name("Diagram")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="ganttt1">GanttT1</h3>
+<p>Creates a 2</p>
+
+<h4 id="example-aspx-70">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Gantt()
+.Name("Gantt")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="map">Map</h3>
+<p>Creates a Map</p>
+
+<h4 id="example-aspx-71">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Map()
+.Name("Map")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="toolbar">ToolBar</h3>
+<p>Creates a ToolBar</p>
+
+<h4 id="example-aspx-72">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().ToolBar()
+.Name("ToolBar")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="treemap">TreeMap</h3>
+<p>Creates a TreeMap</p>
+
+<h4 id="example-aspx-73">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeMap()
+.Name("TreeMap")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobileactionsheet">MobileActionSheet</h3>
+<p>Creates a MobileActionSheet</p>
+
+<h4 id="example-aspx-74">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileActionSheet()
+.Name("MobileActionSheet")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobileapplication">MobileApplication</h3>
+<p>Creates a MobileApplication</p>
+
+<h4 id="example-aspx-75">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileApplication()
+.Name("MobileApplication")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilebackbutton">MobileBackButton</h3>
+<p>Creates a MobileBackButton</p>
+
+<h4 id="example-aspx-76">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileBackButton()
+.Name("MobileBackButton")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilebutton">MobileButton</h3>
+<p>Creates a MobileButton</p>
+
+<h4 id="example-aspx-77">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileButton()
+.Name("MobileButton")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilebuttongroup">MobileButtonGroup</h3>
+<p>Creates a MobileButtonGroup</p>
+
+<h4 id="example-aspx-78">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileButtonGroup()
+.Name("MobileButtonGroup")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobiledetailbutton">MobileDetailButton</h3>
+<p>Creates a MobileDetailButton</p>
+
+<h4 id="example-aspx-79">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileDetailButton()
+.Name("MobileDetailButton")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobiledrawer">MobileDrawer</h3>
+<p>Creates a MobileDrawer</p>
+
+<h4 id="example-aspx-80">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileDrawer()
+.Name("MobileDrawer")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilelayout">MobileLayout</h3>
+<p>Creates a MobileLayout</p>
+
+<h4 id="example-aspx-81">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileLayout()
+.Name("MobileLayout")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilemodalview">MobileModalView</h3>
+<p>Creates a MobileModalView</p>
+
+<h4 id="example-aspx-82">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileModalView()
+.Name("MobileModalView")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilenavbar">MobileNavBar</h3>
+<p>Creates a MobileNavBar</p>
+
+<h4 id="example-aspx-83">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileNavBar()
+.Name("MobileNavBar")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilepopover">MobilePopOver</h3>
+<p>Creates a MobilePopOver</p>
+
+<h4 id="example-aspx-84">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobilePopOver()
+.Name("MobilePopOver")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilescrollview">MobileScrollView</h3>
+<p>Creates a MobileScrollView</p>
+
+<h4 id="example-aspx-85">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileScrollView()
+.Name("MobileScrollView")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobilesplitview">MobileSplitView</h3>
+<p>Creates a MobileSplitView</p>
+
+<h4 id="example-aspx-86">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileSplitView()
+.Name("MobileSplitView")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobileswitch">MobileSwitch</h3>
+<p>Creates a MobileSwitch</p>
+
+<h4 id="example-aspx-87">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileSwitch()
+.Name("MobileSwitch")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobiletabstrip">MobileTabStrip</h3>
+<p>Creates a MobileTabStrip</p>
+
+<h4 id="example-aspx-88">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileTabStrip()
+.Name("MobileTabStrip")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="mobileview">MobileView</h3>
+<p>Creates a MobileView</p>
+
+<h4 id="example-aspx-89">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().MobileView()
+.Name("MobileView")
+%&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

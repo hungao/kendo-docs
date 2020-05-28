@@ -1,0 +1,566 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/grid/column.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendogrid-column">&lt;kendo:grid-column&gt;</h1>
+
+<p>The configuration of the grid columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+field to which the column is bound. The grid will create a column for every item of the array.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-columns&gt;
+    &lt;kendo:grid-column&gt;&lt;/kendo:grid-column&gt;
+&lt;/kendo:grid-columns&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="aggregates-javalangobject">aggregates <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The aggregate(s) which are calculated when the grid is grouped by the columns field.
+The supported aggregates are "average", "count", "max", "min" and "sum".</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column aggregates="aggregates"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="attributes-javalangobject">attributes <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>HTML attributes of the table cell (&lt;td&gt;) rendered for the column.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column attributes="attributes"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="command-javalangstring">command <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The configuration of the column command(s). If set the column would display a button for every command. Commands can be custom or built-in ("edit" or "destroy").The "edit" built-in command switches the current table row in edit mode.The "destroy" built-in command removes the data item to which the current table row is bound.Custom commands are supported by specifying the click option. Further configuration is available via <a href="#kendo-grid-column-command">kendo:grid-column-command</a>.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column command="command"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="editor-javalangstring">editor <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Provides a way to specify a custom editing UI for the column. Use the container parameter to create the editing UI.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column editor="editor"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="encoded-boolean">encoded <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the column value will be HTML-encoded before it is displayed. If set to false the column value will be displayed as is. By default the column value is HTML-encoded.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column encoded="encoded"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="field-javalangstring">field <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The field to which the column is bound. The value of this field is displayed by the column during data binding.
+The field name should be a valid Javascript identifier and should contain no spaces, no special characters, and the first character should be a letter.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column field="field"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="filterable-boolean">filterable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
+for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration. Further configuration is available via <a href="#kendo-grid-column-filterable">kendo:grid-column-filterable</a>.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column filterable="filterable"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="footertemplate-javalangstring">footerTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template which renders the footer table cell for the column.The fields which can be used in the template are:</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column footerTemplate="footerTemplate"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="format-javalangstring">format <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The format that is applied to the value before it is displayed. Takes the form "{0:format}" where "format" is a standard number format,
+custom number format, standard date format or a custom date format.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column format="format"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="groupfootertemplate-javalangstring">groupFooterTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template which renders the group footer when the grid is grouped by the column field. By default the group footer is not displayed.The fields which can be used in the template are:</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column groupFooterTemplate="groupFooterTemplate"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="groupheadertemplate-javalangstring">groupHeaderTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template which renders the group header when the grid is grouped by the column field. By default the name of the field
+and the current group value is displayed.The fields which can be used in the template are:</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column groupHeaderTemplate="groupHeaderTemplate"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="groupable-boolean">groupable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the column will not be groupable (requires Grid groupable property to be enabled). By default all columns are groupable</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column groupable="groupable"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="headerattributes-javalangobject">headerAttributes <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>HTML attributes of the column header. The grid renders a table header cell (&lt;th&gt;) for every column. The headerAttributes option can be used to set the HTML attributes of that th.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column headerAttributes="headerAttributes"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="headertemplate-javalangstring">headerTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template which renders the column header content. By default the value of the title column option
+is displayed in the column header cell.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column headerTemplate="headerTemplate"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="hidden-boolean">hidden <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the column will not be displayed in the grid. By default all columns are displayed.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column hidden="hidden"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="lockable-boolean">lockable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the column will remain in the side of the grid into which its own locked configuration placed it.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column lockable="lockable"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="locked-boolean">locked <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the column will be displayed as locked in the grid. Also see Frozen Columns.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column locked="locked"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="menu-boolean">menu <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the column will be visible in the grid column menu. By default the column menu includes all data-bound columns (ones that have their field set).</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column menu="menu"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="sortable-boolean">sortable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the user can click the column header and sort the grid by the column field when sorting is enabled. If set to false sorting will
+be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option. Further configuration is available via <a href="#kendo-grid-column-sortable">kendo:grid-column-sortable</a>.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column sortable="sortable"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="template-javalangstring">template <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template which renders the column content. The grid renders table rows (&lt;tr&gt;) which represent the data source items.
+Each table row consists of table cells (&lt;td&gt;) which represent the grid columns. By default the HTML-encoded value of the field is displayed in the column.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column template="template"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="title-javalangstring">title <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The text that is displayed in the column header cell. If not set the field is used.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column title="title"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="width-javalangobject">width <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The width of the column. Numeric values are treated as pixels. For more important information, please refer to Column Widths.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column width="width"&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendogrid-column-command">kendo:grid-column-command</h3>
+
+<p>The configuration of the column command(s). If set the column would display a button for every command. Commands can be custom or built-in ("edit" or "destroy").The "edit" built-in command switches the current table row in edit mode.The "destroy" built-in command removes the data item to which the current table row is bound.Custom commands are supported by specifying the click option.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/grid/column-command">kendo:grid-column-command</a>.</p>
+
+<h4 id="example-23">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column&gt;
+    &lt;kendo:grid-column-command&gt;&lt;/kendo:grid-column-command&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="kendogrid-column-filterable">kendo:grid-column-filterable</h3>
+
+<p>If set to true a filter menu will be displayed for this column when filtering is enabled. If set to false the filter menu will not be displayed. By default a filter menu is displayed
+for all columns when filtering is enabled via the filterable option.Can be set to a JavaScript object which represents the filter menu configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/grid/column-filterable">kendo:grid-column-filterable</a>.</p>
+
+<h4 id="example-24">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column&gt;
+    &lt;kendo:grid-column-filterable&gt;&lt;/kendo:grid-column-filterable&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="kendogrid-column-sortable">kendo:grid-column-sortable</h3>
+
+<p>If set to true the user can click the column header and sort the grid by the column field when sorting is enabled. If set to false sorting will
+be disabled for this column. By default all columns are sortable if sorting is enabled via the sortable option.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/grid/column-sortable">kendo:grid-column-sortable</a>.</p>
+
+<h4 id="example-25">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column&gt;
+    &lt;kendo:grid-column-sortable&gt;&lt;/kendo:grid-column-sortable&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="editor-string">editor <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Provides a way to specify a custom editing UI for the column. Use the container parameter to create the editing UI.</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column editor="handle_editor"&gt;
+&lt;/kendo:grid-column&gt;
+&lt;script&gt;
+    function handle_editor(e) {
+        // Code to handle the editor event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="footertemplate-string">footerTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template which renders the footer table cell for the column.The fields which can be used in the template are:</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column footerTemplate="handle_footerTemplate"&gt;
+&lt;/kendo:grid-column&gt;
+&lt;script&gt;
+    function handle_footerTemplate(e) {
+        // Code to handle the footerTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="groupheadertemplate-string">groupHeaderTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template which renders the group header when the grid is grouped by the column field. By default the name of the field
+and the current group value is displayed.The fields which can be used in the template are:</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column groupHeaderTemplate="handle_groupHeaderTemplate"&gt;
+&lt;/kendo:grid-column&gt;
+&lt;script&gt;
+    function handle_groupHeaderTemplate(e) {
+        // Code to handle the groupHeaderTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="groupfootertemplate-string">groupFooterTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template which renders the group footer when the grid is grouped by the column field. By default the group footer is not displayed.The fields which can be used in the template are:</p>
+
+<h4 id="example-29">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column groupFooterTemplate="handle_groupFooterTemplate"&gt;
+&lt;/kendo:grid-column&gt;
+&lt;script&gt;
+    function handle_groupFooterTemplate(e) {
+        // Code to handle the groupFooterTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="headertemplate-string">headerTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template which renders the column header content. By default the value of the title column option
+is displayed in the column header cell.</p>
+
+<h4 id="example-30">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column headerTemplate="handle_headerTemplate"&gt;
+&lt;/kendo:grid-column&gt;
+&lt;script&gt;
+    function handle_headerTemplate(e) {
+        // Code to handle the headerTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="template-string">template <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The template which renders the column content. The grid renders table rows (&lt;tr&gt;) which represent the data source items.
+Each table row consists of table cells (&lt;td&gt;) which represent the grid columns. By default the HTML-encoded value of the field is displayed in the column.</p>
+
+<h4 id="example-31">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column template="handle_template"&gt;
+&lt;/kendo:grid-column&gt;
+&lt;script&gt;
+    function handle_template(e) {
+        // Code to handle the template event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendogrid-column-editor">kendo:grid-column-editor</h3>
+
+<p>Provides a way to specify a custom editing UI for the column. Use the container parameter to create the editing UI.</p>
+
+<h4 id="example-32">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column&gt;
+    &lt;kendo:grid-column-editor&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the editor event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:grid-column-editor&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="kendogrid-column-footertemplate">kendo:grid-column-footerTemplate</h3>
+
+<p>The template which renders the footer table cell for the column.The fields which can be used in the template are:</p>
+
+<h4 id="example-33">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column&gt;
+    &lt;kendo:grid-column-footerTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the footerTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:grid-column-footerTemplate&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="kendogrid-column-groupheadertemplate">kendo:grid-column-groupHeaderTemplate</h3>
+
+<p>The template which renders the group header when the grid is grouped by the column field. By default the name of the field
+and the current group value is displayed.The fields which can be used in the template are:</p>
+
+<h4 id="example-34">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column&gt;
+    &lt;kendo:grid-column-groupHeaderTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the groupHeaderTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:grid-column-groupHeaderTemplate&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="kendogrid-column-groupfootertemplate">kendo:grid-column-groupFooterTemplate</h3>
+
+<p>The template which renders the group footer when the grid is grouped by the column field. By default the group footer is not displayed.The fields which can be used in the template are:</p>
+
+<h4 id="example-35">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column&gt;
+    &lt;kendo:grid-column-groupFooterTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the groupFooterTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:grid-column-groupFooterTemplate&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="kendogrid-column-headertemplate">kendo:grid-column-headerTemplate</h3>
+
+<p>The template which renders the column header content. By default the value of the title column option
+is displayed in the column header cell.</p>
+
+<h4 id="example-36">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column&gt;
+    &lt;kendo:grid-column-headerTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the headerTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:grid-column-headerTemplate&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+<h3 id="kendogrid-column-template">kendo:grid-column-template</h3>
+
+<p>The template which renders the column content. The grid renders table rows (&lt;tr&gt;) which represent the data source items.
+Each table row consists of table cells (&lt;td&gt;) which represent the grid columns. By default the HTML-encoded value of the field is displayed in the column.</p>
+
+<h4 id="example-37">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:grid-column&gt;
+    &lt;kendo:grid-column-template&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the template event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:grid-column-template&gt;
+&lt;/kendo:grid-column&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

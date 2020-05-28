@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Ajax Binding of Kendo jQuery ListView widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn the steps to configure Kendo UI ListView component for AJAX binding and easily enable client data processing during AJAX binding.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/listview/binding.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="listview-binding">ListView Binding</h1>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>When configured for ajax binding the Kendo ListView for ASP.NET MVC will make ajax requests when doing paging.</p>
+
+<p>To configure the Kendo ListView for ajax binding follow these steps:</p>
+
+<ol>
+  <li>
+    <p>Add a new action method which will return data to populate the listview:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Products_Read()
+{
+    var products = new NorthwindDataContext().Products;
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add a new parameter of type <code class="language-plaintext highlighter-rouge">Kendo.UI.DataSourceRequest</code>.
+It will contain the current listview request information.
+Decorate that parameter with the <code class="language-plaintext highlighter-rouge">Kendo.UI.DataSourceRequestAttribute</code>. That attribute is responsible for populating the <code class="language-plaintext highlighter-rouge">DataSourceRequest</code> object.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Products_Read([DataSourceRequest]DataSourceRequest request)
+{
+    var products = new NorthwindDataContext().Products;
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Use the <code class="language-plaintext highlighter-rouge">ToDataSourceResult</code> extension method to convert your <code class="language-plaintext highlighter-rouge">IQueryable</code> or <code class="language-plaintext highlighter-rouge">IEnumerable</code> to a
+<code class="language-plaintext highlighter-rouge">Kendo.UI.DataSourceResult</code> object. That extension method will page, filter, sort or group your data using the information provided by the
+<code class="language-plaintext highlighter-rouge">DataSourceRequest</code> object. To use the <code class="language-plaintext highlighter-rouge">ToDataSourceResult</code> extension method import the <code class="language-plaintext highlighter-rouge">Kendo.Mvc.Extensions</code> namespace.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Products_Read([DataSourceRequest]DataSourceRequest request)
+{
+    var products = new NorthwindDataContext().Products;
+
+    DataSourceResult result = products.ToDataSourceResult(request);
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Return the <code class="language-plaintext highlighter-rouge">DataSourceResult</code> as JSON:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Products_Read([DataSourceRequest]DataSourceRequest request)
+{
+    var products = new NorthwindDataContext().Products;
+
+    DataSourceResult result = products.ToDataSourceResult(request);
+
+    return Json(result);
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>In the view configure the listview to use the action method created in the previous steps:</p>
+    <ul>
+      <li>
+        <p>ListView item template</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script type="text/x-kendo-tmpl" id="template"&gt;
+      &lt;div class="product"&gt;
+          &lt;img src="@Url.Content("~/content/web/foods/")${ProductID}.jpg" alt="${ProductName} image" /&gt;
+          &lt;h3&gt;${ProductName}&lt;/h3&gt;
+          &lt;dl&gt;
+              &lt;dt&gt;Price:&lt;/dt&gt;
+              &lt;dd&gt;${kendo.toString(UnitPrice, "c")}&lt;/dd&gt;
+          &lt;/dl&gt;
+      &lt;/div&gt;
+  &lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().ListView&lt;MvcApplication1.Models.Product&gt;()
+      .Name("ListView")
+      .TagName("div")
+      .ClientTemplateId("template")
+      .DataSource(dataSource =&gt; dataSource
+          .Read(read =&gt; read.Action("Products_Read", "Home")) // Specify the action method and controller name
+      )
+      .Pageable()
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().ListView&lt;MvcApplication1.Models.Product&gt;()
+      .Name("ListView")
+      .TagName("div")
+      .ClientTemplateId("template")
+      .DataSource(dataSource =&gt; dataSource
+          .Read(read =&gt; read.Action("Products_Read", "Home")) // Specify the action method and controller name
+      )
+      .Pageable()
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p>The <code class="language-plaintext highlighter-rouge">ToDataSourceResult</code> method uses the <code class="language-plaintext highlighter-rouge">DataSourceRequest</code> parameter and Linq expressions to apply paging, sorting, filtering and grouping.
+The JSON response of the action method will contain only a single page of data. The listview will be bound to that data.</p>
+
+<h2 id="pass-additional-data-to-action-method">Pass Additional Data to Action Method</h2>
+
+<p>To pass additional parameters to the action method use the <code class="language-plaintext highlighter-rouge">Data</code> setting. Provide the name of a JavaScript function which will return an object
+containing the additional data:</p>
+
+<h3 id="action-method">Action method</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Products_Read([DataSourceRequest]DataSourceRequest request, string firstName, string lastName)
+{
+    //Implementation omitted
+}
+</code></pre></div></div>
+
+<h3 id="webforms---send-additional-data">WebForms - Send additional data</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%: Html.Kendo().ListView&lt;MvcApplication1.Models.Product&gt;()
+        .Name("ListView")
+        .TagName("div")
+        .ClientTemplateId("template")
+        .DataSource(dataSource =&gt; dataSource
+            .Read(read =&gt; read.Action("Products_Read", "Home")
+                              .Data("additionalData")) // Specify the name of the JavaScript function that returns the data
+        )
+        .Pageable()
+%&gt;
+&lt;script&gt;
+function additionalData() {
+    return {
+        firstName: "John",
+        lastName: "Doe"
+    };
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---send-additional-data">Razor - Send additional data</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().ListView&lt;MvcApplication1.Models.Product&gt;()
+    .Name("ListView")
+    .TagName("div")
+    .ClientTemplateId("template")
+    .DataSource(dataSource =&gt; dataSource
+        .Read(read =&gt; read.Action("Products_Read", "Home")
+            .Data("additionalData")) // Specify the name of the JavaScript function that returns the data
+    )
+    .Pageable()
+)
+&lt;script&gt;
+function additionalData() {
+    return {
+        firstName: "John",
+        lastName: "Doe"
+    };
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="enable-client-data-processing-during-ajax-binding">Enable Client Data Processing during Ajax Binding</h2>
+
+<p>By default Kendo ListView for ASP.NET MVC will request data from the server every time the user changes the page, filters the grid, sorts or groups. This behavior
+can be changed by disabling <code class="language-plaintext highlighter-rouge">ServerOperation</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.DataSource(dataSource =&gt; dataSource
+    .ServerOperation(false) // paging will be applied client-side
+    .Read(read =&gt; read.Action("Products_Read", "Home"))
+)
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

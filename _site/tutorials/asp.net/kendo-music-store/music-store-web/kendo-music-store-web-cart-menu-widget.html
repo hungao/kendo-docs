@@ -1,0 +1,415 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/kendo-music-store/music-store-web/kendo-music-store-web-cart-menu-widget.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="custom-shopping-cart-menu-widget---kendo-music-store">Custom Shopping Cart Menu Widget - Kendo Music Store</h1>
+
+<p>Inevitably at some point in a project you will come across a feature that you need to implement that doesn"t seem
+to fit a standard Kendo UI Widget. In the Music Store sample project, this was the case with the shopping cart
+embedded in a menu item. The UI designer for the project drafted this screen mockup:</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-web/images/kendo-cart-menu-mockup.png" alt="kendo-cart-menu-mockup" /></p>
+
+<p>The first reaction was "That isn"t any of the standard Kendo widgets… this is going to be hard!"
+It turns out, it wasn"t actually too difficult.</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-web/images/kendo-cart-menu-screenshot.png" alt="kendo-cart-menu-mockup" /></p>
+
+<p>Instead of trying to use the standard Kendo Menu widget and getting the "Total" and "Checkout" as the last item,
+we took the approach of making a custom Kendo UI Widget. This "cart menu" widget is actually more of a
+"composite widget" because it is one widget composed of others (a Menu and a ListView).</p>
+
+<h2 id="cart-menu-widget-functionality">Cart Menu Widget Functionality</h2>
+
+<p>These are the features that we want the Cart Menu widget to support:</p>
+
+<ul>
+  <li>Works like a dropdown menu of cart items.</li>
+  <li>Indicates number of items in cart on main menu element.</li>
+  <li>Each album in cart has a "remove" button.</li>
+  <li>Shows album total price in dropdown.</li>
+  <li>Widget is bound to a DataSource.</li>
+  <li>Main button flashes orange for a moment when an item is added to the cart (when the DataSource is changed).</li>
+  <li>Provides a button to proceed to checkout screen.</li>
+</ul>
+
+<h2 id="boilerplate-custom-widget">Boilerplate Custom Widget</h2>
+
+<blockquote>
+  <p>For more information on creating a custom widget, Burke Holland has a couple excellent blog posts on the KendoUI blog:
+<a href="http://blogs.telerik.com/kendoui/posts/12-04-03/creating_custom_kendo_ui_plugins">Creating Custom Kendo UI Plugins</a>
+and <a href="http://blogs.telerik.com/kendoui/posts/12-04-10/creating_a_datasource_aware_kendo_ui_widget">Creating a DataSource Aware Kendo UI Widget</a></p>
+</blockquote>
+
+<p>The JavaScript code for the cart menu widget is in the file <strong>Scripts/App/kendo-cart-menu-widget.js</strong>.</p>
+
+<p>First we need to extend the base Widget class in the kendo.ui namespace.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(function($) {
+    var CartMenu = kendo.ui.Widget.extend({
+        // method called when a new widget is created
+        init: function (element, options) {
+            var that = this;
+            kendo.ui.Widget.fn.init.call(that, element, options);
+        }
+
+        // options that are available to the user when initializing the widget
+        options: {
+            name: "CartMenu"
+        }
+    });
+
+    // Register CartMenu as a Kendo Plugin.
+    kendo.ui.plugin(CartMenu);
+})(jQuery);
+</code></pre></div></div>
+
+<p>We start by calling <strong>kendo.ui.Widget.extend()</strong> and passing in an object with the properties and functions that we want our widget to contain.
+This kendo method builds a new Kendo Plugin object with the correct prototype that also contains the properties and functions we defined.
+This created widget object is then passed to <strong>kendo.ui.plugin()</strong> to register it in Kendo"s collection of plugins.</p>
+
+<h2 id="using-the-widget-in-html">Using the Widget in HTML.</h2>
+
+<p>With our widget now registered with Kendo, we can create an HTML element that will become the Cart Menu to display to the user.
+We are basing the Cart Menu on a &lt;ul&gt; element, since it will behave much like a regular Kendo Menu widget.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="cart-menu"&gt;&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>In the JavaScript for the page, we initialize the widget just like any other:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#cart-menu").kendoCartMenu();
+</code></pre></div></div>
+
+<p>Note that The function name to initialize the widget is "kendo" plus the widget name that was specified in <strong>options.name</strong> when the widget was defined.</p>
+
+<h2 id="binding-to-a-datasource">Binding to a DataSource.</h2>
+
+<p>We need to use a DataSource that represents the shopping cart to display the cart items and the total.
+To do this, we will pass the datasource as an option when the JavaScript call is made to initialize the widget.
+To be consistent with the other Kendo widgets, this parameter is named <strong>dataSource</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#cart-menu").kendoCartMenu({
+    dataSource: store.cart.getCart()
+});
+</code></pre></div></div>
+
+<p>Within the boilerplate code for the widget we had defined an <strong>options</strong> object:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    // options that are available to the user when initializing the widget
+    options: {
+        name: "CartMenu",
+        autoBind: true,
+        template: ""
+    }
+</code></pre></div></div>
+
+<p>In addition, the initialization JavaScript call is passing in the object:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    {
+        dataSource: store.cart.getCart()
+    }
+</code></pre></div></div>
+
+<p>When the call to <strong>.kendoCartMenu()</strong> is made, the passed in options object is passed to the init function.
+So when <strong>init: function (element, options)</strong> is called on the widget,
+the <strong>options</strong> parameter contains the passed in object:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    {
+        dataSource: store.cart.getCart()
+    }
+</code></pre></div></div>
+
+<p>When the init function calls:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kendo.ui.Widget.fn.init.call(that, element, options);
+</code></pre></div></div>
+
+<p>Kendo takes the options parameter and uses it to extend the widget"s defined options.
+When that method call returns, <strong>this.options</strong> will be:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    {
+        name: "CartMenu",
+        autoBind: true,
+        template: "",
+        dataSource: store.cart.getCart()
+    }
+</code></pre></div></div>
+
+<p>In the init function, we now call:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        // initialize or create dataSource
+        that._dataSource(that);
+</code></pre></div></div>
+
+<p>This function is defined in the widget:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    _dataSource: function (that) {
+        // returns the datasource OR creates one if using array or configuration
+        that.dataSource = kendo.data.DataSource.create(that.options.dataSource);
+
+        // bind to the change event to refresh the widget
+        that.dataSource.bind("change", function () {
+            that._refresh();
+        });
+
+        // trigger a read on the dataSource if one hasn't happened yet
+        if (that.options.autoBind) {
+            that.dataSource.fetch();
+        }
+    }
+</code></pre></div></div>
+
+<p>This starts by making a call to <strong>kendo.data.DataSource.create()</strong> and passes in the options.
+This Kendo function will look at the options object and return the dataSource, if it contains one.
+If the options object did not contain a dataSource then a new empty DataSource is created and returned.</p>
+
+<p>Next we bind the <strong>_refresh()</strong> function to the "change" event on the dataSource.
+This means any time the shopping cart data source changes, the <strong>_refresh()</strong> method will be called.</p>
+
+<p>Finally, we check to see if the "autoBind" option is set. If it is, we perform a <strong>fetch()</strong> against the datasource.
+Implementing an option named <strong>autoBind</strong> is not required but is common practice for any widget that is binding to a data source.</p>
+
+<p>At this point, a reference to the passed in data source is saved as <strong>that.dataSource</strong> and the <strong>_refresh()</strong> function
+will be called whenever that data source changes.</p>
+
+<h2 id="creating-the-composite-widgets">Creating the Composite Widgets.</h2>
+
+<p>Now we are ready to implement the widget"s functionality.
+The <strong>init</strong> function is called when the widget is created, and should perform any work needed to create the widget including manipulating any DOM elements.
+For this widget, we are going to turn the targeted element into a normal Kendo Menu that contains a drop open item.
+We do this in the init function:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    // method called when a new widget is created
+    init: function (element, options) {
+        var that = this;
+        kendo.ui.Widget.fn.init.call(that, element, options);
+
+        // create default template
+        // Note that the element with class="k-delete-button" will automatically be wired by Kendo to delete the corresponding item from the dataSource.
+        that.template = kendo.template(that.options.template || '&lt;li&gt;&lt;span&gt;#=Album.Title#&lt;/span&gt;&lt;span class="k-icon k-i-close k-delete-button"&gt;&lt;/span&gt;&lt;/li&gt;');
+
+        // append menu elements
+        that._menu = $(element);
+        var subMenu = $("&lt;li&gt;&lt;span class='cm-count'&gt;&lt;/span&gt;&lt;ul&gt;&lt;li&gt;&lt;div class='k-content'&gt;&lt;ul&gt;&lt;/ul&gt;&lt;div class='cm-checkout'&gt;&lt;span class='cm-total'&gt;Total: &lt;span class='cm-amount'&gt;&lt;/span&gt;&lt;/span&gt;&lt;a href='/ShoppingCart/' class='k-button'&gt;Checkout&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;");
+        that._menu.append(subMenu);
+
+        // initialize or create dataSource
+        that._dataSource(that);
+
+        // init composite widgets
+        that._listView = that._menu.find(".k-content &gt; ul");
+        that._menu.kendoMenu();
+        that._listView.kendoListView({
+            dataSource: that.dataSource,
+            template: that.template
+        });
+    }
+</code></pre></div></div>
+
+<p>This gets the targeted &lt;ul&gt; element using <strong>$(element)</strong> and saves a reference to it in <strong>that._menu</strong> so we can use it in later functions.
+It then appends the rest of the contents for the menu to the element with <strong>that._menu.append(subMenu)</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;li&gt;
+  &lt;span class='cm-count'&gt;&lt;/span&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;div class='k-content'&gt;
+        &lt;ul&gt;&lt;/ul&gt;
+        &lt;div class='cm-checkout'&gt;
+          &lt;span class='cm-total'&gt;Total: &lt;span class='cm-amount'&gt;&lt;/span&gt;&lt;/span&gt;
+          &lt;a href='/ShoppingCart/' class='k-button'&gt;Checkout&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/li&gt;
+</code></pre></div></div>
+
+<p>The appended HTML follows the normal layout for a Kendo Menu drop down panel.
+Inside that panel, we include the other elements we need to hold our displayed data:</p>
+
+<p>This element will be displayed as the menu item, and will be set to the number of items in the cart.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span class='cm-count'&gt;&lt;/span&gt;
+</code></pre></div></div>
+
+<p>This list element will become a Kendo ListView widget that lists each item in the cart:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul&gt;&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>The span with class cm-amount will show the total price for the items in the cart.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span class='cm-total'&gt;Total: &lt;span class='cm-amount'&gt;&lt;/span&gt;&lt;/span&gt;
+</code></pre></div></div>
+
+<p>This anchor tag is the Checkout button that will proceed to the store"s checkout page:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a href='/ShoppingCart/' class='k-button'&gt;Checkout&lt;/a&gt;
+</code></pre></div></div>
+
+<p>After manipulating the DOM elements we make standard Kendo method calls to initialize these elements as Kendo widgets:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        that._menu.kendoMenu();
+        that._listView.kendoListView({
+            dataSource: that.dataSource,
+            template: that.template
+        });
+</code></pre></div></div>
+
+<p>Note that we are binding our ListView to the same DataSource that was originally passed to the Cart Menu widget.</p>
+
+<h2 id="updating-the-display">Updating the Display</h2>
+
+<p>We update the displayed items to the user whenever the DataSource changes within the <strong>_refresh()</strong> function.
+This function is bound to the data source"s "change" event.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    _refresh: function () {
+        var albums = this.dataSource.view();
+
+        // update total price
+        var totalPrice = this.dataSource.aggregates().Total ? this.dataSource.aggregates().Total.sum : 0;
+        var totalElement = $(this.element).find(".cm-amount");
+        totalElement.text(kendo.toString(totalPrice, "c"));
+
+        // set the menu item text to the number of cart items.
+        $(this.element).find('.cm-count').text(albums.length);
+
+        // flash the menu item if the cart has items.
+        if (albums.length &gt; 0) {
+            //$(this.element).css('background-color', 'rgba(251, 176, 59, 1)');
+            this._animate_bg($(this.element), 1, this._animate_bg);
+        }
+    }
+</code></pre></div></div>
+
+<p>Here we use jQuery to update the text of our total price element, display the total number of items in the cart,
+and call <strong>_animate_bg()</strong> to cause the top level menu element to flash orange for a moment.</p>
+
+<h2 id="removing-albums-from-the-cart">Removing Albums from the Cart.</h2>
+
+<p>Each cart item displayed in the cart is displayed in a Kendo ListView widget and is bound to the cart DataSource.
+They are rendered using the template:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;li&gt;&lt;span&gt;#=Album.Title#&lt;/span&gt;&lt;span class="k-icon k-i-close k-delete-button"&gt;&lt;/span&gt;&lt;/li&gt;
+</code></pre></div></div>
+
+<p>The second &lt;span&gt; element represents the remove button, and has the following css classes:</p>
+
+<p><strong>k-icon</strong> and <strong>k-i-close</strong> indicate that this element will be a Kendo Icon and that the close icon is to be displayed in this element. See: <a href="http://demos.telerik.com/kendo-ui/web/styling/icons.html">Styling / Icons</a></p>
+
+<p><strong>k-delete-button</strong> indicates that this is a delete button.
+Within a ListView widget, elements of this special class <em>automatically</em> become a button that deletes the item from the bound DataSource.
+Note that we do not define any click event handler for this element in the widget.
+The removal from the DataSource is wired up automatically by the ListView widget.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

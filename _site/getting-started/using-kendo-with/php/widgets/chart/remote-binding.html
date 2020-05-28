@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>How to bind Kendo Chart for PHP to remote service which returns JSON</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to bind Kendo UI Chart for PHP to JSON">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/php/widgets/chart/remote-binding.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="remote-binding">Remote Binding</h1>
+
+<p>This help topic shows how to bind Kendo Chart for PHP to JSON response.</p>
+
+<blockquote>
+  <p>The following demos are using the sample SQLite database shipped with the Telerik UI for PHP** demos (**/wrappers/php/sample.db).</p>
+</blockquote>
+
+<h2 id="binding-to-array-returned-by-pdo">Binding to array returned by PDO</h2>
+
+<h3 id="configure-chart-for-remote-binding">Configure Chart for Remote Binding</h3>
+
+<ol>
+  <li>Follow the steps from the <a href="/getting-started/using-kendo-with/php/introduction">introduction</a> - include the autoloader, JavaScript and CSS files.</li>
+  <li>
+    <p>Create a data source and configure it:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $transport = new \Kendo\Data\DataSourceTransport();
+
+ $read = new \Kendo\Data\DataSourceTransportRead();
+
+ // Specify the url of the PHP page which will act as the remote service
+ $read-&gt;url('weather.php')
+      -&gt;type('POST');
+
+ $transport-&gt;read($read);
+
+ // Configure the model
+ $model = new \Kendo\Data\DataSourceSchemaModel();
+
+ // Create a field for the 'Date' column of the 'Weather' table
+ $dateField = new \Kendo\Data\DataSourceSchemaModelField('Date');
+ $dateField-&gt;type('date');
+
+ // Create a field for the 'TMax' column of the 'Weather' table
+ $tmaxField = new \Kendo\Data\DataSourceSchemaModelField('TMax');
+ $tmaxField-&gt;type('number');
+
+ $model-&gt;addField($dateField, $tmaxField);
+
+ $schema = new \Kendo\Data\DataSourceSchema();
+
+ $schema-&gt;model($model);
+
+ $dataSource = new \Kendo\Data\DataSource();
+
+ // Configure data source
+ $dataSource-&gt;transport($transport)
+            -&gt;schema($schema);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a chart, configure its series and set its data source.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $chart = new \Kendo\Dataviz\UI\Chart('chart');
+
+ $tmaxSeries = new \Kendo\Dataviz\UI\ChartSeriesItem();
+ $tmaxSeries-&gt;field('TMax');
+
+ $categoryAxis = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+ $categoryAxis-&gt;field('Date');
+
+ $chart-&gt;addSeriesItem($tmaxSeries)
+       -&gt;addCategoryAxisItem($categoryAxis)
+       -&gt;dataSource($dataSource);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Output the chart by echo-ing the result of the render method.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ echo $chart-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="create-php-file-which-returns-json">Create PHP file which returns JSON</h3>
+
+<ol>
+  <li>Create a new php file called <strong>weather.php</strong>. This file will return data in JSON format. The data source is configured to request it via the <a href="/api/wrappers/php/Kendo/Data/DataSourceTransportRead#url">url</a> setting.</li>
+  <li>
+    <p>Create a PDO connection</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $db = new PDO('sqlite:../sample.db');
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Retrieve records from the <code class="language-plaintext highlighter-rouge">Weather</code> table</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $statement = $db-&gt;prepare('SELECT Date, TMax FROM Weather LIMIT 10');
+ $statement-&gt;execute();
+ $weather = $statement-&gt;fetchAll(PDO::FETCH_ASSOC);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Return the records as JSON</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ // Set response content type
+ header('Content-Type: application/json');
+ // Return JSON
+
+ echo json_encode($weather);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

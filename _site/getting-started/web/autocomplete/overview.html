@@ -1,0 +1,332 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Documentation for Autocomplete UI widget in Kendo UI framework</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to provide AutoComplete Suggestions, guide to Autocomplete UI widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/autocomplete/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="autocomplete-overview">AutoComplete Overview</h1>
+
+<p>The <strong>AutoComplete</strong> provides suggestions depending on the typed
+text. It also allows multiple value entries. The suggestions shown by
+the <strong>AutoComplete</strong> can come from a local Array or from a remote data service.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="create-a-html-input-element">Create a HTML input element</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autoComplete" /&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-the-autocomplete-using-a-jquery-selector">Initialize the AutoComplete using a jQuery selector</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function() {
+ $("#autoComplete").kendoAutoComplete(["Item1", "Item2"]);
+});
+</code></pre></div></div>
+
+<blockquote>
+  <p>Widget copies any styles and CSS classes from the input element to the wrapper element.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autoComplete" class="myClass" /&gt;
+
+results to:
+
+&lt;span class="k-widget k-autocomplete k-header k-state-default myClass"&gt;
+    &lt;input id="autoComplete" class="myClass" /&gt;
+&lt;/span&gt;
+</code></pre></div></div>
+
+<h2 id="autocomplete-suggestions">AutoComplete Suggestions</h2>
+
+<p>There are two primary ways to provide the <strong>AutoComplete</strong>
+suggestions:</p>
+
+<ol>
+  <li>From a local array</li>
+  <li>From a remote data service</li>
+</ol>
+
+<p>Locally defined values are best for small, fixed sets of suggestions.
+Remote suggestions should be used for larger data sets. When used
+with the <strong>DataSource</strong> component,
+filtering large remote data services can be pushed to the server as
+well, maximizing client-side performance.</p>
+
+<h2 id="local-suggestions">Local Suggestions</h2>
+
+<p>To configure and provide <strong>AutoComplete</strong> suggestions locally, you
+can either pass an array directly to its constructor or you can set
+the dataSource property to an local array.</p>
+
+<h3 id="directly-initialize-suggestions-in-constructor">Directly initialize suggestions in constructor</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#autoComplete").kendoAutoComplete(["Item1", "Item2", "Item3"]);
+</code></pre></div></div>
+
+<h3 id="using-datasource-property-to-bind-to-local-array">Using dataSource property to bind to local Array</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var data = ["Item1", "Item2", "Item3"];
+$("#autoComplete").kendoAutoComplete({
+   dataSource: data
+});
+</code></pre></div></div>
+
+<h2 id="remote-suggestions">Remote Suggestions</h2>
+
+<p>The easiest way to bind an <strong>AutoComplete</strong> to remote
+suggestions is to use the
+<strong>DataSource</strong> component; an
+abstraction for local and remote data. The <strong>DataSource</strong>
+component can be used to serve data from a variety of data services,
+such as
+<a href="http://en.wikipedia.org/wiki/XML">XML</a>,
+<a href="http://en.wikipedia.org/wiki/JSON">JSON</a>, and
+<a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a>.</p>
+
+<h3 id="using-the-kendo-ui-web-datasource-component-to-bind-to-remote-suggestions-with-odata">Using the Kendo UI Web DataSource component to bind to remote suggestions with OData</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#autoComplete").kendoAutoComplete({
+        minLength: 3,
+        dataTextField: "ContactName", // JSON property name to use
+        dataSource: new kendo.data.DataSource({
+            type: "odata", // specifies data protocol
+            transport: {
+                read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers"
+            }
+        })
+    });
+});
+</code></pre></div></div>
+
+<h3 id="using-the-kendo-ui-web-datasource-to-bind-to-jsonp-suggestions">Using the Kendo UI Web DataSource to bind to JSONP suggestions</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+ $("#autoComplete").kendoAutoComplete({
+  minLength:6,
+  dataTextField:"title",
+  filter: "contains",
+  dataSource: new kendo.data.DataSource({
+   transport: {
+    read: {
+     url: "http://api.geonames.org/wikipediaSearchJSON",
+     data: {
+      q: function(){
+       return $("#autoComplete").data("kendoAutoComplete").value();
+      },
+      maxRows: 10,
+      username: "demo"
+     }
+    }
+   },
+   schema: {
+    data:"geonames"
+   }
+  }),
+  change: function(){
+   this.dataSource.read();
+  }
+ })
+});
+</code></pre></div></div>
+
+<h2 id="customizing-templates">Customizing Templates</h2>
+
+<p>The <strong>AutoComplete</strong> uses Kendo UI templates to enable control over how item and popup header is rendered. For a
+detailed description of the capabilities and syntax of the Kendo UI templates, please refer to the
+<a href="/getting-started/framework/templates/overview">documentation</a>.</p>
+
+<h3 id="item-template-customization">Item template customization</h3>
+
+<p>The <strong>AutoComplete</strong> uses Kendo UI templates to control how <em>drop-down items</em> are rendered.</p>
+
+<h4 id="example---define-an-item-template">Example - define an item template</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autocomplete" /&gt;
+&lt;!-- Template --&gt;
+&lt;script id="scriptTemplate" type="text/x-kendo-template"&gt;
+    ContactName: #:data.ContactName#, CustomerID: #:data.CustomerID#
+&lt;/script&gt;
+
+&lt;!-- AutoComplete initialization --&gt;
+&lt;script&gt;
+    $(document).ready(function() {
+        $("#autocomplete").kendoAutoComplete({
+            template: $("#scriptTemplate").html(),
+            dataTextField: "ContactName",
+            dataSource: {
+                transport: {
+                    read: {
+                        dataType: "jsonp",
+                        url: "http://demos.telerik.com/kendo-ui/service/Customers"
+                    }
+                }
+            }
+        });
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="header-template-customization">Header template customization</h3>
+
+<p>The <strong>AutoComplete</strong> gives the ability to render a popup header.</p>
+
+<h4 id="example---define-a-header-template">Example - define a header template</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="autocomplete" /&gt;
+&lt;!-- Template --&gt;
+&lt;script id="headerTemplate" type="text/x-kendo-template"&gt;
+    &lt;strong&gt;Header&lt;/strong&gt;
+&lt;/script&gt;
+
+&lt;!-- AutoComplete initialization --&gt;
+&lt;script&gt;
+    $(document).ready(function() {
+        $("#autocomplete").kendoAutoComplete({
+            headerTemplate: $("#headerTemplate").html(),
+            dataTextField: "ContactName",
+            dataSource: {
+                transport: {
+                    read: {
+                        dataType: "jsonp",
+                        url: "http://demos.telerik.com/kendo-ui/service/Customers"
+                    }
+                }
+            }
+        });
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="customizing-the-width-of-the-drop-down-list">Customizing the width of the drop-down list</h2>
+
+<p>Width of AutoComplete"s drop-down list can be changed via jQuery width method.</p>
+
+<h3 id="example">Example</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var autoComplete = $("#autoComplete").data("kendoAutoComplete");
+
+// set width of the drop-down list
+autoComplete.list.width(400);
+</code></pre></div></div>
+
+<h2 id="accessing-an-existing-autocomplete">Accessing an Existing AutoComplete</h2>
+
+<p>You can reference an existing <strong>AutoComplete</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the API to control
+its behavior.</p>
+
+<h3 id="accessing-an-existing-autocomplete-instance">Accessing an existing AutoComplete instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var autoComplete = $("#autoComplete").data("kendoAutoComplete");
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

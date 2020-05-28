@@ -1,0 +1,290 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Telerik UI for ASP.NET MVC Fundamentals</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Kendo UI server-side wrappers, configuration, fluent interface, initialization">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/fundamentals.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="telerik-ui-for-aspnet-mvc-fundamentals">Telerik UI for ASP.NET MVC Fundamentals</h1>
+
+<h2 id="server-side-wrappers">Server-side wrappers</h2>
+
+<p>Telerik UI for ASP.NET MVC is a set of server-side wrappers. A server-wrapper does the following.</p>
+
+<ul>
+  <li>Allows the developer to configure a Kendo UI widget via C# or VB.NET code - set its value, data source etc.</li>
+  <li>Renders the HTML and JavaScript needed to initialize the Kendo UI widget. The widget options propagate to the client-side via the widget initialization script.</li>
+</ul>
+
+<p><img src="/getting-started/using-kendo-with/aspnet-mvc/images/wrapper-output.png" alt="Server-side wrapper outputs HTML and JavaScript" /></p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="kendo-htmlhelper-extension-method">Kendo HtmlHelper extension method</h3>
+
+<p>The <strong>Kendo</strong> <a href="http://www.asp.net/mvc/tutorials/older-versions/views/creating-custom-html-helpers-cs">HtmlHelper</a> exposes all Kendo UI server-wrappers.</p>
+
+<p><img src="/getting-started/using-kendo-with/aspnet-mvc/images/kendo-extension.png" alt="Kendo HtmlHelper extension method" /></p>
+
+<h3 id="widget-options">Widget options</h3>
+
+<p>The widget options are exposed via <a href="http://en.wikipedia.org/wiki/Fluent_interface">fluent interface</a>.</p>
+
+<p><img src="/getting-started/using-kendo-with/aspnet-mvc/images/fluent-interface.png" alt="Fluent interface" /></p>
+
+<p>To set an option call the corresponding method and pass the required option value.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().NumericTextBox()
+      .Name("name") // set the name of the NumericTextBox
+      .Value(10) //set the value
+      .Spinners(false) // disable the spinners
+)
+</code></pre></div></div>
+
+<h3 id="name">Name</h3>
+
+<p>You must set the <strong>Name</strong> option of a Kendo UI widget. The value will be used as the <code class="language-plaintext highlighter-rouge">id</code> and <code class="language-plaintext highlighter-rouge">name</code> HTML attributes (the <code class="language-plaintext highlighter-rouge">name</code> HTML attribute is set only for input widgets e.g. DatePicker, NumericTextBox, DropDownList etc.).
+The <code class="language-plaintext highlighter-rouge">id</code> HTML attribute is used to initialize the Kendo UI widget.</p>
+
+<p><img src="/getting-started/using-kendo-with/aspnet-mvc/images/wrapper-name.png" alt="Wrapper name" /></p>
+
+<p>Alternatively you can use <code class="language-plaintext highlighter-rouge">NumericTextBoxFor</code>. All Kendo UI widgets which accept a value can be initialized via a [WidgetName]For method e.g. DatePicker -&gt; DatePicker<strong>For</strong>.
+Those methods set the <strong>Name</strong> of the widget automatically. Thus <code class="language-plaintext highlighter-rouge">@Html.Kendo().NumericTextBoxFor(model =&gt; model.Age)</code> is the same as <code class="language-plaintext highlighter-rouge">@Html.Kendo().NumericTextBox().Name("Age").Value(Model.Age)</code>.</p>
+
+<h2 id="deferred-initialization">Deferred initialization</h2>
+
+<p>The server-side wrapper outputs the Kendo UI widget initialization script right after the widget HTML markup. This may not be always desired, e.g. if the script files are registered at the bottom of the page,
+or when nesting Kendo UI widgets. In order to move initialization statements, you can use the following approach.</p>
+
+<ol>
+  <li>
+    <p>Call the <code class="language-plaintext highlighter-rouge">Deferred</code> method of the wrapper. This will suppress the immediate script statement rendering.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @(Html.Kendo().NumericTextBox()
+       .Name("age")
+       .Deferred()
+ )
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Call the <code class="language-plaintext highlighter-rouge">DeferredScripts</code> method. This will output all previously deferred initialization statements.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @Html.Kendo().DeferredScripts()
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>The <code class="language-plaintext highlighter-rouge">DeferredScripts</code> method accepts a boolean parameter, which determines whether script elements should be rendered automatically.
+This is useful if you want to render the deferred initialization scripts inside existing script element.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    @Html.Kendo().DeferredScripts(false)
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>You can render the deferred initialization script of a particular widget via the <code class="language-plaintext highlighter-rouge">DeferredScriptsFor</code> method.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().NumericTextBox()
+      .Name("age")
+      .Deferred()
+)
+&lt;!-- other code --&gt;
+@Html.Kendo().DeferredScriptsFor("age")
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">DeferredScriptsFor</code> method also can suppress the output of script elements around the initialization script.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+@Html.Kendo().DeferredScriptsFor("age", false)
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<p>To subscribe to the client-side events exposed by a Kendo UI widget use the <strong>Events</strong> method.</p>
+
+<ol>
+  <li>
+    <p>Specify the name of the JavaScript function which will handle the event.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @(Html.Kendo().NumericTextBox()
+       .Name("age")
+       .Events(events =&gt;
+           events.Change("age_change") // handle the "change" event
+                 .Spin("age_spin")     // handle the "spin" event
+       )
+ )
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Declare the event handlers.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;script&gt;
+ function age_change(e) {
+     // handle the event
+ }
+ function age_spin(e) {
+     // handle the event
+ }
+ &lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="client-side-object">Client-side object</h2>
+
+<p>You can get a reference to the client-side object initialized by the server-side wrapper via the <a href="http://api.jquery.com/data/">data</a> jQuery method. Use the <code class="language-plaintext highlighter-rouge">Name</code> of the widget to form the jQuery selector
+and obtain the reference in a document.ready handler. After you get the reference, you can use the widget client-side API.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().NumericTextBox()
+    .Name("age")
+)
+&lt;script&gt;
+$(function(){
+    var numeric = $("#age").data("kendoNumericTextBox");
+    numeric.value(10);    
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>If you have deferred the initialization of the widget, make sure you get its instance <strong>after</strong> calling <code class="language-plaintext highlighter-rouge">DeferredScripts</code> or <code class="language-plaintext highlighter-rouge">DeferredScriptsFor</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().NumericTextBox()
+    .Name("age")
+    .Deferred()
+)
+@Html.Kendo().DeferredScripts()
+&lt;script&gt;
+$(function(){
+    var numeric = $("#age").data("kendoNumericTextBox");
+    numeric.value(10);    
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="client-templates">Client Templates</h2>
+
+<p>By default every Kendo UI wrapper renders a script elements with an initialization statement. If the wrapper declaration is placed inside a Kendo UI template, this would lead to nested script elements which is invalid.
+The <code class="language-plaintext highlighter-rouge">ToClientTemplate</code> method instructs the widget wrapper to escape its own script element, so that it can be nested.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script id="template" type="text/x-kendo-template"&gt;
+    @(Html.Kendo().NumericTextBox()
+          .Name("age").ToClientTemplate()
+    )
+&lt;/script&gt;
+&lt;div id="container"&gt;&lt;/div&gt;
+&lt;script&gt;
+    $(function () {
+       var template = kendo.template($("#template").html());
+       $("#container").append( template ({}) );
+    })
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

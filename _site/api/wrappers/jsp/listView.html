@@ -1,0 +1,449 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/listView.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendolistview">&lt;kendo:listView&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/listview">ListView</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="alttemplate-javalangstring">altTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Template to be used for rendering the alternate items in the listview.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView altTemplate="altTemplate"&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="autobind-boolean">autoBind <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView autoBind="autoBind"&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="edittemplate-javalangstring">editTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Specifies ListView item template in edit mode.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView editTemplate="editTemplate"&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="navigatable-boolean">navigatable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Indicates whether keyboard navigation is enabled/disabled.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView navigatable="navigatable"&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="pageable-boolean">pageable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Indicates whether paging is enabled/disabled. Further configuration is available via <a href="#kendo-listView-pageable">kendo:listView-pageable</a>.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView pageable="pageable"&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="selectable-javalangobject">selectable <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Indicates whether selection is enabled/disabled. Possible values:</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView selectable="selectable"&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="tagname-javalangstring">tagName <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Specifies ListView wrapper element tag name.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView tagName="tagName"&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="template-javalangstring">template <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The id of the template used for rendering the items in the listview.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView template="template"&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendolistview-pageable">kendo:listView-pageable</h3>
+
+<p>Indicates whether paging is enabled/disabled.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/listview/pageable">kendo:listView-pageable</a>.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView&gt;
+    &lt;kendo:listView-pageable&gt;&lt;/kendo:listView-pageable&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="cancel-string">cancel <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user clicks the "cancel" button.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView cancel="handle_cancel"&gt;
+&lt;/kendo:listView&gt;
+&lt;script&gt;
+    function handle_cancel(e) {
+        // Code to handle the cancel event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="change-string">change <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-change">change</a> event documentation.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView change="handle_change"&gt;
+&lt;/kendo:listView&gt;
+&lt;script&gt;
+    function handle_change(e) {
+        // Code to handle the change event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound-string">dataBound <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the list view has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView dataBound="handle_dataBound"&gt;
+&lt;/kendo:listView&gt;
+&lt;script&gt;
+    function handle_dataBound(e) {
+        // Code to handle the dataBound event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databinding-string">dataBinding <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the list view is about to be rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-dataBinding">dataBinding</a> event documentation.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView dataBinding="handle_dataBinding"&gt;
+&lt;/kendo:listView&gt;
+&lt;script&gt;
+    function handle_dataBinding(e) {
+        // Code to handle the dataBinding event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="edit-string">edit <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the list view enters edit mode.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-edit">edit</a> event documentation.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView edit="handle_edit"&gt;
+&lt;/kendo:listView&gt;
+&lt;script&gt;
+    function handle_edit(e) {
+        // Code to handle the edit event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="remove-string">remove <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires before the list view item is removed. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-remove">remove</a> event documentation.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView remove="handle_remove"&gt;
+&lt;/kendo:listView&gt;
+&lt;script&gt;
+    function handle_remove(e) {
+        // Code to handle the remove event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="save-string">save <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when a data item is saved.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-save">save</a> event documentation.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView save="handle_save"&gt;
+&lt;/kendo:listView&gt;
+&lt;script&gt;
+    function handle_save(e) {
+        // Code to handle the save event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendolistview-cancel">kendo:listView-cancel</h3>
+
+<p>Fired when the user clicks the "cancel" button.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView&gt;
+    &lt;kendo:listView-cancel&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the cancel event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:listView-cancel&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="kendolistview-change">kendo:listView-change</h3>
+
+<p>Fires when the list view selection has changed.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-change">change</a> event documentation.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView&gt;
+    &lt;kendo:listView-change&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the change event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:listView-change&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="kendolistview-databound">kendo:listView-dataBound</h3>
+
+<p>Fires when the list view has received data from the data source and it is already rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView&gt;
+    &lt;kendo:listView-dataBound&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dataBound event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:listView-dataBound&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="kendolistview-databinding">kendo:listView-dataBinding</h3>
+
+<p>Fires when the list view is about to be rendered.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-dataBinding">dataBinding</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView&gt;
+    &lt;kendo:listView-dataBinding&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dataBinding event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:listView-dataBinding&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="kendolistview-edit">kendo:listView-edit</h3>
+
+<p>Fires when the list view enters edit mode.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-edit">edit</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView&gt;
+    &lt;kendo:listView-edit&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the edit event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:listView-edit&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="kendolistview-remove">kendo:listView-remove</h3>
+
+<p>Fires before the list view item is removed. If it is not prevented will call DataSource sync method.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-remove">remove</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView&gt;
+    &lt;kendo:listView-remove&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the remove event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:listView-remove&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+<h3 id="kendolistview-save">kendo:listView-save</h3>
+
+<p>Fired when a data item is saved.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/listview#events-save">save</a> event documentation.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView&gt;
+    &lt;kendo:listView-save&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the save event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:listView-save&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,420 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/ChartSeriesBuilderBase.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluentchartseriesbuilderbase">Kendo.Mvc.UI.Fluent.ChartSeriesBuilderBase</h1>
+<p>Defines the fluent interface for configuring series.</p>
+
+<h2 id="properties">Properties</h2>
+
+<h3 id="series">Series</h3>
+
+<p>Gets or sets the series.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="namesystemstring">Name(System.String)</h3>
+<p>Sets the series title displayed in the legend.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="text-systemstring">text <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The title.</p>
+
+<h4 id="example-aspx">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Chart(Model)
+.Name("Chart")
+.Series(series =&gt; series.Bar(s =&gt; s.Sales).Name("Sales"))
+%&gt;
+</code></pre></div></div>
+
+<h3 id="groupnametemplatesystemstring">GroupNameTemplate(System.String)</h3>
+<p>Sets the name template for auto-generated series when binding to grouped data.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="groupnametemplate-systemstring">groupNameTemplate <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name template for auto-generated series when binding to grouped data.</p>
+
+<h4 id="example-aspx-1">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .DataSource(dataSource =&gt; dataSource
+        .Read(read =&gt; read.Action("_StockData", "Scatter_Charts"))
+        .Group(group =&gt; group.Add(model =&gt; model.Symbol))
+    )
+    .Series(series =&gt; series.Bar(s =&gt; s.Sales)
+        .Name("Sales")
+        .GroupNameTemplate("#= series.name # for #= group.field # #= group.value #")
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="opacitysystemdouble">Opacity(System.Double)</h3>
+<p>Sets the series opacity.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="opacity-systemdouble">opacity <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The series opacity in the range from 0 (transparent) to 1 (opaque).
+            The default value is 1.</p>
+
+<h4 id="example-aspx-2">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Chart(Model)
+.Name("Chart")
+.Series(series =&gt; series.Bar(s =&gt; s.Sales).Opacity(0.5))
+%&gt;
+</code></pre></div></div>
+
+<h3 id="colorsystemstring">Color(System.String)</h3>
+<p>Sets the bar fill color</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="color-systemstring">color <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The bar fill color (CSS syntax).</p>
+
+<h4 id="example-aspx-3">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; series.Bar(s =&gt; s.Sales).Color("Red"))
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="colorsystemfuncsystemobjectsystemobject">Color(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Sets the function used to retrieve point color.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="colorfunction-systemfuncsystemobjectsystemobject">colorFunction <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The JavaScript function that will be executed
+                to retrieve the color of each point.</p>
+
+<h4 id="example-aspx-4">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; series
+        .Bar(s =&gt; s.Sales)
+        .Color(
+            @&lt;text&gt;
+                function(point) {
+                return point.value &gt; 5 ? "red" : "green";
+                }
+                &lt;/text&gt;
+            )
+        )
+        .Render();
+        %&gt;
+</code></pre></div></div>
+
+<h3 id="colorhandlersystemfuncsystemobjectsystemobject">ColorHandler(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Sets the function used to retrieve point color.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="colorfunction-systemfuncsystemobjectsystemobject-1">colorFunction <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The JavaScript function that will be executed
+                to retrieve the color of each point.</p>
+
+<h4 id="example-aspx-5">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; series
+        .Bar(s =&gt; s.Sales)
+        .ColorHandler(
+            @&lt;text&gt;
+                function(point) {
+                return point.value &gt; 5 ? "red" : "green";
+                }
+                &lt;/text&gt;
+            )
+        )
+        .Render();
+        %&gt;
+</code></pre></div></div>
+
+<h3 id="colorhandlersystemstring">ColorHandler(System.String)</h3>
+<p>Sets the function used to retrieve point color.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="colorfunction-systemstring">colorFunction <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The JavaScript function that will be executed
+                to retrieve the color of each point.</p>
+
+<h4 id="example-aspx-6">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; series
+        .Bar(s =&gt; s.Sales)
+        .ColorHandler("pointColor")
+    )
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="tooltipsystemactionkendomvcuifluentcharttooltipbuilder">Tooltip(System.Action&lt;Kendo.Mvc.UI.Fluent.ChartTooltipBuilder&gt;)</h3>
+<p>Configure the data point tooltip for the series.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentcharttooltipbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/ChartTooltipBuilder">Kendo.Mvc.UI.Fluent.ChartTooltipBuilder</a>&gt;</h5>
+<p>Use the configurator to set data tooltip options.</p>
+
+<h4 id="example-aspx-7">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Chart()
+.Name("Chart")
+.Series(series =&gt; series.Bar(s =&gt; s.Sales)
+    .Tooltip(tooltip =&gt;
+    {
+        tooltip.Visible(true).Format("{0:C}");
+    })
+)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="tooltipsystemboolean">Tooltip(System.Boolean)</h3>
+<p>Sets the data point tooltip visibility.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="visible-systemboolean">visible <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>A value indicating if the data point tooltip should be displayed.
+            The tooltip is not visible by default.</p>
+
+<h4 id="example-aspx-8">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Chart()
+.Name("Chart")
+.Series(series =&gt; series.Bar(s =&gt; s.Sales).Tooltip(true))
+%&gt;
+</code></pre></div></div>
+
+<h3 id="axissystemstring">Axis(System.String)</h3>
+<p>Sets the axis name to use for this series.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="axis-systemstring">axis <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The axis name for this series.</p>
+
+<h4 id="example-aspx-9">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Chart(Model)
+.Name("Chart")
+.Series(series =&gt; series.Bar(s =&gt; s.Sales).Name("Sales").Axis("secondary"))
+.ValueAxis(axis =&gt; axis.Numeric())
+.ValueAxis(axis =&gt; axis.Numeric("secondary"))
+.CategoryAxis(axis =&gt; axis.AxisCrossingValue(0, 10))
+%&gt;
+</code></pre></div></div>
+
+<h3 id="categoryaxissystemstring">CategoryAxis(System.String)</h3>
+<p>Sets the axis name to use for this series.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="categoryaxis-systemstring">categoryAxis <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The category axis name for this series.</p>
+
+<h3 id="highlightsystemactionkendomvcuifluentchartserieshighlightbuilder">Highlight(System.Action&lt;Kendo.Mvc.UI.Fluent.ChartSeriesHighlightBuilder&gt;)</h3>
+<p>Configures the series highlight</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentchartserieshighlightbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/ChartSeriesHighlightBuilder">Kendo.Mvc.UI.Fluent.ChartSeriesHighlightBuilder</a>&gt;</h5>
+<p>The configuration action.</p>
+
+<h3 id="highlightsystemboolean">Highlight(System.Boolean)</h3>
+<p>Configures the highlight visibility</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="configurator-systemboolean">configurator <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The highlight visibility.</p>
+
+<h3 id="visiblesystemboolean">Visible(System.Boolean)</h3>
+<p>Sets the labels visibility</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="visible-systemboolean-1">visible <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The labels visibility.</p>
+
+<h4 id="example-aspx-10">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; series.Bar(s =&gt; s.Sales).Visible(false))
+    .Render();
+%&gt;
+</code></pre></div></div>
+
+<h3 id="notessystemactionkendomvcuifluentchartnotebuilder">Notes(System.Action&lt;Kendo.Mvc.UI.Fluent.ChartNoteBuilder&gt;)</h3>
+<p>Configures the series notes</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentchartnotebuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/ChartNoteBuilder">Kendo.Mvc.UI.Fluent.ChartNoteBuilder</a>&gt;</h5>
+<p>The configuration action.</p>
+
+<h3 id="aggregatesystemfuncsystemobjectsystemobject">Aggregate(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Sets the function used to retrieve point color.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="aggregatefunction-systemfuncsystemobjectsystemobject">aggregateFunction <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The JavaScript function that will be executed
+                to retrieve the value of each aggregated point.</p>
+
+<h4 id="example-aspx-11">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; series
+        .Bar(s =&gt; s.Sales)
+        .Aggregate(
+            @&lt;text&gt;
+                function(values) {
+                return values[0];
+                }
+                &lt;/text&gt;
+            )
+        )
+        .Render();
+        %&gt;
+</code></pre></div></div>
+
+<h3 id="aggregatesystemstring">Aggregate(System.String)</h3>
+<p>Sets the function used to retrieve point color.</p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="aggregatefunction-systemstring">aggregateFunction <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The JavaScript function that will be executed
+                to retrieve the value of each aggregated point.</p>
+
+<h4 id="example-aspx-12">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Chart()
+    .Name("Chart")
+    .Series(series =&gt; series
+        .Bar(s =&gt; s.Sales)
+        .Aggregate("myAggregate")
+    )
+    .Render();
+%&gt;
+&lt;script&gt;
+function myAggregate(values) {
+return values[0];
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

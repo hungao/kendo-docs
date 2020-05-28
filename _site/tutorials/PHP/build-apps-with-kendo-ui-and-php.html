@@ -1,0 +1,533 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Intro tutorial for Kendo UI PHP app development</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn step-by-step how to build your first Kendo UI PHP application.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/PHP/build-apps-with-kendo-ui-and-php.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="tutorial-intro-to-building-apps-with-kendo-ui-and-php---part-1">Tutorial: Intro to Building Apps with Kendo UI And PHP - Part 1</h1>
+
+<p>This tutorial will walk you through building your first Kendo UI PHP Application.  It is a two part tutorial in which you will learn…</p>
+
+<ul>
+  <li>How to setup your PHP Development Environment, including selecting an IDE</li>
+  <li>How to connect to your database and return data</li>
+  <li>How to create a Kendo UI Grid bound to data</li>
+  <li>How to handle read, create, update and delete operations</li>
+  <li>How to filter data</li>
+  <li>How to use detail grids</li>
+</ul>
+
+<h3 id="setting-up-to-develop-in-php">Setting Up To Develop In PHP</h3>
+
+<p>The development environment that will be used for this consists of a MacBook Pro running Lion.  Install MySQL, PHP and Apache by using <a href="http://www.mamp.info/en/index.html">MAMP</a>
+(Macintosh Apache MySQL PHP).  Once you do this, you will have a neat
+environment setup for running PHP applications with a MySQL database.  MAMP
+will run by default on port 8888 for the webserver, and the root folder will
+be <strong>htdocs</strong> inside of the <strong>Applications/MAMP</strong> directory.</p>
+
+<p>The next step is to get an IDE.  It’s all text in the end, but a good PHP IDE
+is a must.  The Eclipse PHP development environment is recommended for this.  You can pick up
+their community tools contribution to Eclipse free <a href="http://www.zend.com/en/community/pdt">here</a>.</p>
+
+<p>Once you download the IDE, you are all setup to start building PHP
+applications.</p>
+
+<h3 id="we-need-some-data">We Need Some Data</h3>
+
+<p>For this tutorial we will be using the Northwind database.</p>
+
+<p>Northwind comes in Microsoft Access and SQL Server flavors, but someone was
+nice enough to port it to just about every other database type out there.  You
+can download the .sql script <a href="http://code.google.com/p/northwindextended/downloads/detail?name=Northwind.MySQL5.sql">here</a> and run it in to MySQL to create the
+database.</p>
+
+<h3 id="project-setup">Project Setup</h3>
+
+<p>Below is a screenshot of how the project looks in Eclipse.  Normally, you would
+put your publicly accessible files in a “public” folder and restrict access to
+ones that are server only.  For the sake of simplicity, all the files are
+public.</p>
+
+<p><a href="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-1_4_1.png"><img src="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-1_thumb_1.png (1)" alt="1" /></a></p>
+
+<p>Let’s look a bit at the structure.</p>
+
+<p>The css files for Kendo UI and images are in the <strong>css</strong> folder.  Additionally, the Metro theme for Kendo UI is being used. The Kendo UI JavaScript files and
+jQuery are in a <strong>js</strong> folder.  The startup page for the site is <strong>index.php</strong>.
+A <strong>data</strong> folder has been manually added.  In this folder is where all of the data access code will go.  Each of these files will return a JSON formatted
+string of data from the MySQL database.</p>
+
+<p>The next thing to do is to add in the CSS and JavaScript files to the head of
+the** index.php **page.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+        &lt;head&gt;
+            &lt;link href="css/kendo.metro.min.css" rel="stylesheet"&gt;
+            &lt;link href="css/kendo.common.min.css" rel="stylesheet"&gt;
+            &lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+            &lt;script src="js/kendo.all.min.js"&gt;&lt;/script&gt; &lt;/head&gt;
+</code></pre></div></div>
+
+<p>So far this is probably all very familiar if you have done any PHP development
+in the past at all.</p>
+
+<h3 id="create-the-grid">Create The Grid</h3>
+
+<p>Next, we are just going to add an empty <strong>div</strong> and then turn that div into a
+grid by selecting it with a jQuery selector and calling the <strong>kendoGrid</strong> function.
+For more information about the basics of working with the grid, see the
+“<a href="http://www.telerik.com/videos/kendo-ui-web">Getting Started With The Kendo UI Grid</a>” Screencast, or the
+<a href="http://docs.telerik.com/kendo-ui/getting-started/web/grid/walkthrough">Walkthrough</a>.</p>
+
+<p>This is what the whole page looks like so far.  The grid has no columns and no
+data.  The next step is to create the .php file which will return the data
+from the MySQL database.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;link href="css/kendo.metro.min.css"rel="stylesheet"&gt;
+        &lt;link href="css/kendo.common.min.css" rel="stylesheet"&gt;
+        &lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+        &lt;script src="js/kendo.all.min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id="grid"&gt;&lt;/div&gt;
+        &lt;script&gt;
+            $(function() {
+                $("#grid").kendoGrid();
+            });
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<h3 id="connect-to-the-database">Connect To The Database</h3>
+
+<p>We are going to create a file in the <strong>data</strong> folder called <strong>employees.php</strong>.
+This file will connect to the MySQL instance and return all of the employees.
+To do this, we need to connect to the database instance using the MySQL PHP
+commands.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.  &lt;?php
+2.
+3.     $link = mysql_pconnect("localhost", "root", "root") or die("Unable To Connect To Database Server");
+4.     mysql_select_db("northwind") or die("Unable To Connect To Northwind");
+5.
+6.      $arr = array();
+7.
+8.     $rs = mysql_query("SELECT EmployeeID, LastName, FirstName FROM Employees");
+9.
+10.    while($obj = mysql_fetch_object($rs)) {
+11.           $arr[] = $obj;
+12.    }
+13.
+14.    echo "{\"data\":" .json_encode($arr). "}";
+15.
+16. ?&gt;
+</code></pre></div></div>
+
+<p><strong>Line 3</strong> connects to the MySQL server.  The first parameter is the server
+name, the second is the username and the third is the password.</p>
+
+<p><strong>Line 4</strong> selects the Northwind database.</p>
+
+<p><strong>Line 8</strong> defines a SQL query and associates the results with the <strong>rs</strong>
+variable.</p>
+
+<p><strong>Lines 10 through 13</strong> iterate over the <strong>rs</strong> variable, which holds a
+collection of records and stuffs each record into an array that was defined on
+line 5.</p>
+
+<p><strong>Line 14</strong> returns back the results of the array using the <strong>json_encode</strong>
+PHP function which turns the array into formatted JSON.  Additionally, I have
+prefixed the array of data with a top level <strong>data</strong> element.  It’s typically
+a good idea to not have an array as your top level JSON element.</p>
+
+<p>You could now hit that PHP page directly from your browser and see the
+results.  Your URL might be something similar to the following depending on how your development environment is setup.
+<a href="http://[yourserver]/KendoUI/data/employees.php">http://[yourserver]/KendoUI/data/employees.php</a></p>
+
+<p><a href="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-2_6.png"><img src="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-2_thumb_2.png (2)" alt="2" /></a></p>
+
+<h3 id="wire-up-the-grid">Wire Up The Grid</h3>
+
+<p>We define a data source for the grid and bind that data source to this URL
+which returns the JSON data.  The <strong>transport</strong> defines how the grid will
+interact with remote endpoints, and the <strong>read</strong> method defines which URL will
+provide the data when the grid is loaded.  Additionally, we are defining columns
+for the <strong>LastName</strong> and <strong>FirstName</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;body&gt;
+
+    &lt;div id="grid"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+
+        $(function() {
+            $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: "data/employees.php"
+                    },
+                    schema: {
+                        data: "data"
+                    }
+                },
+                columns: [{ field: "FirstName" }, { field: "LastName" }]
+            });
+        });
+
+    &lt;/script&gt;
+
+&lt;/body&gt;
+</code></pre></div></div>
+
+<p>Note that since we are not actually defining anything in the column but the
+field, we could have just specified the columns as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>columns: [ “FirstName”, “LastName” ]
+</code></pre></div></div>
+
+<p>Also notice that we only have to reference <strong>data/employees.php</strong> as the URL to
+read because the path is relative to the current application page being served
+up.  I also set some <strong>schema</strong> information basically telling the grid that
+the repeating information that it needs to display is found in the top level
+<strong>data</strong> element.  Let’s save and have a look at it in the browser.</p>
+
+<p><a href="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-3_6.png"><img src="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-3_thumb_2.png (3)" alt="3" /></a></p>
+
+<h2 id="theres-no-data">There’s No Data….</h2>
+
+<p>This was done on purpose to demonstrate a rather important detail.  If you look
+in the Developer Tools on Chrome you will see an error saying that “length”
+cannot be read off of undefined.</p>
+
+<p><a href="hhttps://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-4_2.png"><img src="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-4_thumb.png (4)" alt="4" /></a></p>
+
+<p>That’s a good indication that something is wrong with your JSON data.  Either
+it isn’t formatted correctly, or you have some other issue.  In this case the
+data is formatted correctly, the problem is that when the PHP file gets read,
+it’s getting read as HTML and not as JSON.</p>
+
+<p>How do you know this?</p>
+
+<p>Have a look in the “Network Activity” tab in Chrome Developer Tools.  You can
+examine the content type there.</p>
+
+<p><a href="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-5_4.png"><img src="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-5_thumb_1.png (5)" alt="5" /></a></p>
+
+<p>Actually, it is JSON but the server is reporting that it’s HTML.  How do we
+fix this?  We just need to specify in our PHP file right before we echo back
+that the type is JSON.  We do this by adding a header.  The PHP file now looks
+like this…</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+
+    $link = mysql_pconnect("localhost", "root", "root") or die("Unable To Connect To Database Server");
+
+    mysql_select_db("northwind") or die("Unable To Connect To Northwind");
+
+    $arr = array();
+
+    $rs = mysql_query("SELECT EmployeeID, LastName, FirstName FROM Employees");
+
+    while($obj = mysql_fetch_object($rs)) {
+
+        $arr[] = $obj;
+
+    }
+
+    // add the header line to specify that the content type is JSON
+    header("Content-type: application/json");
+
+    echo "{\"data\":" .json_encode($arr). "}";
+
+?&gt;
+</code></pre></div></div>
+
+<p>Now we can refresh the page and there will be data in the grid.</p>
+
+<p><a href="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-6_2.png"><img src="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-6_thumb.png (6)" alt="6" /></a></p>
+
+<h3 id="more-complex-data">More Complex Data</h3>
+
+<p>That’s all well and good, but that data is really simple.  Let’s make it a bit
+more complex.  Each of these employees is in sales.  They all have territories
+that they are responsible for.  Ideally, we need to be able to display 1 to
+many territories per each employee.</p>
+
+<p>With Kendo UI, you can define a detail template for each item in the grid.  In
+other words, we are going to nest a grid within a grid.</p>
+
+<p><strong>The Detail Template</strong></p>
+
+<p>The detail template is very simple.  It’s just an empty <strong>div</strong>.  We could do
+much more complex things here like adding in tab controls like we did in the
+detail template example on the <a href="http://demos.telerik.com/kendo-ui/web/grid/detailtemplate.html">demo’s page</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script type="text/x-kendo-template" id="template"&gt;
+
+    &lt;div class="subgrid"&gt;&lt;/div&gt;
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>For more information on Kendo UI Templates, refer to the <a href="http://docs.telerik.com/kendo-ui/getting-started/framework/templates/overview">documentation</a>
+and <a href="http://demos.telerik.com/kendo-ui/web/templates/index.html">examples</a>.  Now that we have a template defined, we need to specify
+in the grid that we do in fact want a detail template and a function to call
+each time a row is expanded to check the details.</p>
+
+<p>Our main grid function now looks like this.  The last two lines define the
+template, and to call the <strong>detailInit()</strong> function when a grid row is
+expanded.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#grid").kendoGrid({
+    dataSource: {
+        transport: {
+            read: "data/employees.php"
+        },
+        schema: {
+           data: "data"
+        }
+    },
+    columns: [{ field: "FirstName" }, { field: "LastName" }],
+    detailTemplate: kendo.template($("#template").html()),
+    detailInit: detailInit
+});
+</code></pre></div></div>
+
+<p>The <strong>detailInit</strong> function is fairly straightforward.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function detailInit(e) {
+    // get a reference to the current row being initialized
+    var detailRow = e.detailRow;
+
+    // create a subgrid for the current detail row, getting territory data for this employee
+
+    detailRow.find(".subgrid").kendoGrid({
+        dataSource: {
+            transport: {
+                 read: "data/territories.php"
+            },
+            schema: {
+                data: "data"
+            },
+
+            serverFiltering: true,
+            filter: { field: "EmployeeID", operator: "eq", value:e.data.EmployeeID }
+       },
+
+       columns: [{ title: "Territories", field: "TerritoryDescription" }],
+
+    });
+}
+</code></pre></div></div>
+
+<p>It takes in an argument of <strong>e</strong> which will contain data about the row we
+expanded in the grid, and the data that was in that row.</p>
+
+<p>The <strong>subgrid</strong> has a class of <strong>.subgrid</strong>. The .<strong>find()</strong> is a jQuery
+method to search the children of the current row and find the grid.  Again,
+having a full template here is unnecessary since all we have is a simple
+<strong>div</strong>, but it should give you a better idea of where you would start if you
+wanted to have a robust details section.</p>
+
+<p>The only other thing of note in the <strong>subgrid</strong> declaration is that we are
+going to pass the EmployeeID on which to filter the territories by using
+filtering.  Filtering will pass a filter object with the request to the
+<strong>data/territories.php</strong> file.</p>
+
+<h3 id="create-the-territories-file">Create The Territories File</h3>
+
+<p>We need a new file for querying territories.  Make one exactly like the
+<strong>employees.php</strong> file and call it <strong>territories.php</strong>.  You can copy the code
+inside verbatim.  We do need to swap out the SQL.  It’s going to have to join
+several tables together to get from the Territories table back to the
+Employees Table.</p>
+
+<p>We can get the <strong>EmployeeID</strong> off the <strong>filter</strong> object which Kendo UI sends
+to the server as part of the request.  Filter objects are complex in their
+structure because they can contain extensive filtering instructions.  The
+filter we defined above will pass an object filter that is an array of
+filters.  Each of these filters has a field to filter on, an operator (eq,
+greaterthan, ect.) and a value.  We are only interested in the one value we
+are passing and we know the operator is always equals.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1:  &lt;?php
+2:      // DISCLAIMER: It is better to use prepared statements in PHP.
+3.      // This provides protection against sql injection.
+4.      // [http://php.net/manual/en/pdo.prepared-statements.php][26]
+5:      // get the employee id off the request. escape it to protect against sql injection
+6:      $employeeID = mysql_real_escape_string($_REQUEST["filter"]["filters"][0]["value"]);
+7:
+8:      $link = mysql_pconnect("localhost", "root", "root") or die("Unable To Connect To Database Server");
+9:      mysql_select_db("northwind") or die("Unable To Connect To Northwind");
+10:
+11:     $arr = array();
+12:     $rs = mysql_query("SELECT TRIM(t.TerritoryDescription) AS TerritoryDescription
+13:                          FROM Territories t
+14:                          INNER JOIN EmployeeTerritories et ON t.TerritoryID = et.TerritoryID
+15:                          INNER JOIN Employees e ON et.EmployeeID = e.EmployeeID
+16:                          WHERE e.EmployeeID = " .$employeeID);
+17:
+18:      while($obj = mysql_fetch_object($rs)) {
+19:          $arr[] = $obj;
+20:     }
+21:
+22:     // add the header line to specify that the content type is JSON
+23:     header("Content-type: application/json");
+24:
+25:     echo "{\"data\":" .json_encode($arr). "}";
+26:
+27:  ?&gt;
+</code></pre></div></div>
+
+<p><strong>Line 6</strong> pulls the filter data of the PHP <strong>$_REQUEST</strong> object.  This is not
+necessarily the best way to read the parameter, but for the sake of simplicity
+and the ability to see how the filter object is actually structured, I have
+done it this way.</p>
+
+<p>Now whenever a row is expanded, a query will be made to the**
+territories.php** file which will provide the territories that are associated
+with each employee.</p>
+
+<p><a href="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-7_6.png"><img src="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-7_thumb_2.png (7)" alt="7" /></a></p>
+
+<p>And expanded…</p>
+
+<p><a href="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-8_4.png"><img src="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/ff819b019713_9A19-8_thumb_1.png (8)" alt="8" /></a></p>
+
+<h3 id="wrap-up">Wrap Up</h3>
+
+<p>We walked through a lot of content here, but let’s review.  We accomplished
+the following things…</p>
+
+<ol>
+  <li>
+    <p>Installed PHP, MySQL</p>
+  </li>
+  <li>
+    <p>Created A PHP Application</p>
+  </li>
+  <li>
+    <p>Wrote Endpoints For Returning Data</p>
+  </li>
+  <li>
+    <p>Wired Up A Kendo UI Grid For Displaying Parent-Child Data</p>
+  </li>
+</ol>
+
+<p>This has been an example of how to get rolling with PHP and <a href="http://www.telerik.com/download/kendo-ui-complete">Kendo UI</a>.</p>
+
+<p><a href="http://docs.telerik.com/kendo-ui/tutorials/PHP/build-apps-with-kendo-ui-and-php-2">Proceed To Part 2</a></p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

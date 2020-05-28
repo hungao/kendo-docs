@@ -1,0 +1,343 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.Extensions/QueryableExtensions.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcextensionsqueryableextensions">Kendo.Mvc.Extensions.QueryableExtensions</h1>
+<p>Provides extension methods to process DataSourceRequest.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="sortsystemlinqiqueryablesystemcollectionsgenericienumerablekendomvcsortdescriptor">Sort(System.Linq.IQueryable,System.Collections.Generic.IEnumerable&lt;Kendo.Mvc.SortDescriptor&gt;)</h3>
+<p>Sorts the elements of a sequence using the specified sort descriptors.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>A sequence of values to sort.</p>
+
+<h5 id="sortdescriptors-systemcollectionsgenericienumerablekendomvcsortdescriptor">sortDescriptors System.Collections.Generic.IEnumerable&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc/SortDescriptor">Kendo.Mvc.SortDescriptor</a>&gt;</h5>
+<p>The sort descriptors used for sorting.</p>
+
+<h4 id="returns">Returns</h4>
+<p>An IQueryable whose elements are sorted according to a .</p>
+
+<h3 id="pagesystemlinqiqueryablesystemint32systemint32">Page(System.Linq.IQueryable,System.Int32,System.Int32)</h3>
+<p>Pages through the elements of a sequence until the specified 
+             using .</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-1">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>A sequence of values to page.</p>
+
+<h5 id="pageindex-systemint32">pageIndex <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>Index of the page.</p>
+
+<h5 id="pagesize-systemint32">pageSize <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>Size of the page.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p>An IQueryable whose elements are at the specified .</p>
+
+<h3 id="selectsystemlinqiqueryablesystemlinqexpressionslambdaexpression">Select(System.Linq.IQueryable,System.Linq.Expressions.LambdaExpression)</h3>
+<p>Projects each element of a sequence into a new form.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-2">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>A sequence of values to project.</p>
+
+<h5 id="selector-systemlinqexpressionslambdaexpression">selector <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.LambdaExpression</code></h5>
+<p>A projection function to apply to each element.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p>An IQueryable whose elements are the result of invoking a 
+            projection selector on each element of .</p>
+
+<h3 id="groupbysystemlinqiqueryablesystemlinqexpressionslambdaexpression">GroupBy(System.Linq.IQueryable,System.Linq.Expressions.LambdaExpression)</h3>
+<p>Groups the elements of a sequence according to a specified key selector function.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-3">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>An IQueryable whose elements to group.</p>
+
+<h5 id="keyselector-systemlinqexpressionslambdaexpression">keySelector <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.LambdaExpression</code></h5>
+<p>A function to extract the key for each element.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p>An IQueryable with 2 items, 
+            whose elements contains a sequence of objects and a key.</p>
+
+<h3 id="orderbysystemlinqiqueryablesystemlinqexpressionslambdaexpression">OrderBy(System.Linq.IQueryable,System.Linq.Expressions.LambdaExpression)</h3>
+<p>Sorts the elements of a sequence in ascending order according to a key.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-4">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>A sequence of values to order.</p>
+
+<h5 id="keyselector-systemlinqexpressionslambdaexpression-1">keySelector <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.LambdaExpression</code></h5>
+<p>A function to extract a key from an element.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p>An IQueryable whose elements are sorted according to a key.</p>
+
+<h3 id="orderbydescendingsystemlinqiqueryablesystemlinqexpressionslambdaexpression">OrderByDescending(System.Linq.IQueryable,System.Linq.Expressions.LambdaExpression)</h3>
+<p>Sorts the elements of a sequence in descending order according to a key.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-5">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>A sequence of values to order.</p>
+
+<h5 id="keyselector-systemlinqexpressionslambdaexpression-2">keySelector <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.LambdaExpression</code></h5>
+<p>A function to extract a key from an element.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p>An IQueryable whose elements are sorted in descending order according to a key.</p>
+
+<h3 id="orderbysystemlinqiqueryablesystemlinqexpressionslambdaexpressionsystemnullablesystemcomponentmodellistsortdirection">OrderBy(System.Linq.IQueryable,System.Linq.Expressions.LambdaExpression,System.Nullable&lt;System.ComponentModel.ListSortDirection&gt;)</h3>
+<p>Calls M:Kendo.Mvc.Extensions.QueryableExtensions.OrderBy(System.Linq.IQueryable,System.Linq.Expressions.LambdaExpression) 
+            or M:Kendo.Mvc.Extensions.QueryableExtensions.OrderByDescending(System.Linq.IQueryable,System.Linq.Expressions.LambdaExpression) depending on the .</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-6">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>The source.</p>
+
+<h5 id="keyselector-systemlinqexpressionslambdaexpression-3">keySelector <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.LambdaExpression</code></h5>
+<p>The key selector.</p>
+
+<h5 id="sortdirection-systemnullablesystemcomponentmodellistsortdirection">sortDirection <code class="language-plaintext highlighter-rouge">System.Nullable&lt;System.ComponentModel.ListSortDirection&gt;</code></h5>
+<p>The sort direction.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p>An IQueryable whose elements are sorted according to a key.</p>
+
+<h3 id="groupbysystemlinqiqueryablesystemcollectionsgenericienumerablekendomvcgroupdescriptor">GroupBy(System.Linq.IQueryable,System.Collections.Generic.IEnumerable&lt;Kendo.Mvc.GroupDescriptor&gt;)</h3>
+<p>Groups the elements of a sequence according to a specified .</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-7">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>An IQueryable whose elements to group.</p>
+
+<h5 id="groupdescriptors-systemcollectionsgenericienumerablekendomvcgroupdescriptor">groupDescriptors System.Collections.Generic.IEnumerable&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc/GroupDescriptor">Kendo.Mvc.GroupDescriptor</a>&gt;</h5>
+<p>The group descriptors used for grouping.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p>An IQueryable with IGroup items, 
+            whose elements contains a sequence of objects and a key.</p>
+
+<h3 id="aggregatesystemlinqiqueryablesystemcollectionsgenericienumerablekendomvcaggregatefunction">Aggregate(System.Linq.IQueryable,System.Collections.Generic.IEnumerable&lt;Kendo.Mvc.AggregateFunction&gt;)</h3>
+<p>Calculates the results of given aggregates functions on a sequence of elements.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-8">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>An IQueryable whose elements will 
+            be used for aggregate calculation.</p>
+
+<h5 id="aggregatefunctions-systemcollectionsgenericienumerablekendomvcaggregatefunction">aggregateFunctions System.Collections.Generic.IEnumerable&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc/AggregateFunction">Kendo.Mvc.AggregateFunction</a>&gt;</h5>
+<p>The aggregate functions.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p>Collection of AggregateResults calculated for each function.</p>
+
+<h3 id="wheresystemlinqiqueryablesystemlinqexpressionsexpression">Where(System.Linq.IQueryable,System.Linq.Expressions.Expression)</h3>
+<p>Filters a sequence of values based on a predicate.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-9">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>An IQueryable to filter.</p>
+
+<h5 id="predicate-systemlinqexpressionsexpression">predicate <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression</code></h5>
+<p>A function to test each element for a condition.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p>An IQueryable that contains elements from the input sequence 
+            that satisfy the condition specified by .</p>
+
+<h3 id="wheresystemlinqiqueryablesystemcollectionsgenericienumerablekendomvcifilterdescriptor">Where(System.Linq.IQueryable,System.Collections.Generic.IEnumerable&lt;Kendo.Mvc.IFilterDescriptor&gt;)</h3>
+<p>Filters a sequence of values based on a collection of IFilterDescriptor.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-10">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>The source.</p>
+
+<h5 id="filterdescriptors-systemcollectionsgenericienumerablekendomvcifilterdescriptor">filterDescriptors System.Collections.Generic.IEnumerable&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc/IFilterDescriptor">Kendo.Mvc.IFilterDescriptor</a>&gt;</h5>
+<p>The filter descriptors.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p>An IQueryable that contains elements from the input sequence 
+            that satisfy the conditions specified by each filter descriptor in .</p>
+
+<h3 id="takesystemlinqiqueryablesystemint32">Take(System.Linq.IQueryable,System.Int32)</h3>
+<p>Returns a specified number of contiguous elements from the start of a sequence.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-11">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>The sequence to return elements from.</p>
+
+<h5 id="count-systemint32">count <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The number of elements to return.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p>An IQueryable that contains the specified number 
+            of elements from the start of .</p>
+
+<h3 id="skipsystemlinqiqueryablesystemint32">Skip(System.Linq.IQueryable,System.Int32)</h3>
+<p>Bypasses a specified number of elements in a sequence 
+            and then returns the remaining elements.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-12">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>An IQueryable to return elements from.</p>
+
+<h5 id="count-systemint32-1">count <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The number of elements to skip before returning the remaining elements.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p>An IQueryable that contains elements that occur 
+            after the specified index in the input sequence.</p>
+
+<h3 id="countsystemlinqiqueryable">Count(System.Linq.IQueryable)</h3>
+<p>Returns the number of elements in a sequence.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-13">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>The IQueryable that contains the elements to be counted.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p>The number of elements in the input sequence.</p>
+
+<h3 id="elementatsystemlinqiqueryablesystemint32">ElementAt(System.Linq.IQueryable,System.Int32)</h3>
+<p>Returns the element at a specified index in a sequence.</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="source-systemlinqiqueryable-14">source <code class="language-plaintext highlighter-rouge">System.Linq.IQueryable</code></h5>
+<p>An IQueryable to return an element from.</p>
+
+<h5 id="index-systemint32">index <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The zero-based index of the element to retrieve.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p>The element at the specified position in .</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

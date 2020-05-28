@@ -1,0 +1,339 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Using Kendo UI with ASP.NET MVC 3</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to use Telerik UI  for ASP.NET MVC in ASP.NET MVC 3 applications">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/asp-net-mvc-3.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-ui-in-aspnet-mvc-3-applications">Kendo UI in ASP.NET MVC 3 applications</h1>
+
+<p>This tutorial shows how to use Telerik UI for ASP.NET MVC in ASP.NET MVC 3 applications. The tutorial uses Visual Studio 2010 but will work with all Visual Studio versions that support ASP.NET MVC 3. The tutorial also creates a new ASP.NET MVC 3 application but the steps to use Kendo UI in exsiting ASP.NET MVC 3 application are the same.</p>
+
+<p><strong>The Telerik UI for ASP.NET MVC Visual Studio extensions (http://docs.telerik.com/kendo-ui/getting-started/using-kendo-with/aspnet-mvc/vs-integration/introduction) automate the whole procedure which this document describes.</strong></p>
+
+<h2 id="create-a-new-aspnet-mvc-3-application">Create a new ASP.NET MVC 3 Application</h2>
+
+<p>To create a new ASP.NET MVC 3 Application follow these steps.</p>
+
+<ol>
+  <li>Open <strong>Visual Studio 2010</strong>.</li>
+  <li>Press <strong>CTRL+SHIFT+N</strong> to create a new project.</li>
+  <li>Select the <strong>Visual C#</strong> node and then <strong>Web</strong> to show all available web project templates for C#.</li>
+  <li>Select ASP.NET MVC 3 Web Application and click <strong>OK</strong>. This will start the New ASP.NET MVC 3 Project wizard.</li>
+  <li>Select <strong>Internet Application</strong> from the available templates and click <strong>OK</strong>. Alternatively you can select other templates - the remaining steps are the same.</li>
+  <li>Press <strong>CTRL+F5</strong> to build and run the application.</li>
+</ol>
+
+<p><img src="/getting-started/using-kendo-with/aspnet-mvc/images/mvc3-new-app.png" alt="New ASP.NET MVC 3 Application" /></p>
+
+<h2 id="add-telerik-ui-for-aspnet-mvc-to-the-application">Add Telerik UI for ASP.NET MVC to the application</h2>
+
+<p>To use Telerik UI for ASP.NET MVC you need to include the required JavaScript and CSS files, reference the Kendo.Mvc.dll assembly and update the web.config file of the application.</p>
+
+<h3 id="include-the-javascript-and-css-files">Include the JavaScript and CSS files</h3>
+
+<p>Kendo UI requires certain JavaScript and CSS files to be included in the page. There are two options - either to include a local copy of those files <strong>or</strong> to use Kendo UI CDN (Content Delivery Network).</p>
+
+<p>Using local JavaScript and CSS</p>
+
+<p>To copy the Kendo UI JavaScript and CSS files in the Visual Studio Solution of the application follow these steps.</p>
+
+<ol>
+  <li>Navigate to the install location of Telerik UI for ASP.NET MVC**. By default it is in **C:\Program Files (x86)\Telerik.</li>
+  <li>Copy the <strong>js</strong> directory from the install location and paste it in the <strong>Scripts</strong> folder of the application.</li>
+  <li>Copy the <strong>styles</strong> directory from the install location and paste it in the <strong>Content</strong> folder of the application.</li>
+  <li>Rename the <strong>Scripts/js</strong> directory to <strong>Scripts/kendo</strong>. Rename <strong>Content/styles</strong> to <strong>Content/kendo</strong>.
+<img src="/getting-started/using-kendo-with/aspnet-mvc/images/mvc3-solution.png" alt="Kendo directories in Solution Explorer" /></li>
+</ol>
+
+<p>After the Kendo UI JavaScript and CSS files are added in the application you can include them.</p>
+
+<ol>
+  <li>Open the layout of the application. By default it is <strong>Views/Shared/_Layout.cshtml</strong> (or <strong>Site.master</strong> if using ASPX).</li>
+  <li>Include <strong>Content/kendo/kendo.common.min.css</strong> and <strong>Content/kendo/kendo.default.min.css</strong>. Add a <strong>link</strong> tag within the <strong>head</strong> tag of the layout.
+    <ul>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;link rel="stylesheet" href="@Url.Content("~/Content/kendo/kendo.common.min.css")" /&gt;
+  &lt;link rel="stylesheet" href="@Url.Content("~/Content/kendo/kendo.default.min.css")" /&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>ASPX</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;link rel="stylesheet" href="&lt;%: Url.Content("~/Content/kendo/kendo.common.min.css") %&gt;" /&gt;
+  &lt;link rel="stylesheet" href="&lt;%: Url.Content("~/Content/kendo/kendo.default.min.css") %&gt;" /&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Delete any existing <strong>script</strong> tags that include older versions of jQuery.</li>
+  <li>Include the jQuery JavaScript file distributed with Kendo UI or a compatible version from other location. Add a <strong>script</strong> tag in within the <strong>head</strong> tag of the layout.
+    <ul>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script src="@Url.Content("~/Scripts/kendo/jquery.min.js")"&gt;&lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>ASPX</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script src="&lt;%: Url.Content("~/Scripts/kendo/jquery.min.js") %&gt;"&gt;&lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Include <strong>Scripts/kendo/kendo.all.min.js</strong> and <strong>Scripts/kendo/kendo.aspnetmvc.min.js</strong> after jQuery.
+    <ul>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script src="@Url.Content("~/Scripts/kendo/jquery.min.js")"&gt;&lt;/script&gt;
+  &lt;script src="@Url.Content("~/Scripts/kendo/kendo.all.min.js")"&gt;&lt;/script&gt;
+  &lt;script src="@Url.Content("~/Scripts/kendo/kendo.aspnetmvc.min.js")"&gt;&lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>ASPX</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script src="&lt;%: Url.Content("~/Scripts/kendo/jquery.min.js") %&gt;"&gt;&lt;/script&gt;
+  &lt;script src="&lt;%: Url.Content("~/Scripts/kendo/kendo.all.min.js") %&gt;"&gt;&lt;/script&gt;
+  &lt;script src="&lt;%: Url.Content("~/Scripts/kendo/kendo.aspnetmvc.min.js") %&gt;"&gt;&lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>If using Kendo UI Scheduler include <strong>Scripts/kendo/kendo.timezones.min.js</strong> after <strong>kendo.all.min.js</strong>.
+    <ul>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script src="@Url.Content("~/Scripts/kendo/jquery.min.js")"&gt;&lt;/script&gt;
+  &lt;script src="@Url.Content("~/Scripts/kendo/kendo.all.min.js")"&gt;&lt;/script&gt;
+  &lt;script src="@Url.Content("~/Scripts/kendo/kendo.timezones.min.js")"&gt;&lt;/script&gt;
+  &lt;script src="@Url.Content("~/Scripts/kendo/kendo.aspnetmvc.min.js")"&gt;&lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>ASPX</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;script src="&lt;%: Url.Content("~/Scripts/kendo/jquery.min.js") %&gt;"&gt;&lt;/script&gt;
+  &lt;script src="&lt;%: Url.Content("~/Scripts/kendo/kendo.all.min.js") %&gt;"&gt;&lt;/script&gt;
+  &lt;script src="&lt;%: Url.Content("~/Scripts/kendo/kendo.timezones.min.js") %&gt;"&gt;&lt;/script&gt;
+  &lt;script src="&lt;%: Url.Content("~/Scripts/kendo/kendo.aspnetmvc.min.js") %&gt;"&gt;&lt;/script&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="using-kendo-ui-cdn">Using Kendo UI CDN</h4>
+
+<p>To include the Kendo UI JavaScript and CSS files from CDN follow these steps. Important! Dont’t forget to replace "kendo ui version" from the code snippets below with the current version of Kendo UI e.g. “2013.2.918”.</p>
+
+<ol>
+  <li>Open the layout of the application. By default it is <strong>Views/Shared/_Layout.cshtml</strong> (or <strong>Site.master</strong> if using ASPX).</li>
+  <li>
+    <p>Include <strong>kendo.common.min.css</strong> and <strong>kendo.default.min.css</strong>. Add a <strong>link</strong> tag within the <strong>head</strong> tag of the layout.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;link rel="stylesheet" href="http://cdn.kendostatic.com/&lt;kendo ui version&gt;/styles/kendo.common.min.css" /&gt;
+ &lt;link rel="stylesheet" href="http://cdn.kendostatic.com/&lt;kendo ui version&gt;/styles/kendo.default.min.css" /&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>Delete any existing <strong>script</strong> tags that include older versions of jQuery.</li>
+  <li>
+    <p>Include the jQuery JavaScript file from Kendo CDN or a compatible version from other location. Add a <strong>script</strong> tag in within the <strong>head</strong> tag.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;script src="http://cdn.kendostatic.com/&lt;kendo ui version&gt;/js/jquery.min.js”&gt;&lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Include <strong>kendo.all.min.js</strong> and <strong>kendo.aspnetmvc.min.js</strong> after jQuery.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;script src="http://cdn.kendostatic.com/&lt;kendo ui version&gt;/js/kendo.all.min.js”&gt;&lt;/script&gt;
+ &lt;script src=”http://cdn.kendostatic.com/&lt;kendo ui version&gt;/js/kendo.aspnetmvc.min.js”&gt;&lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>If using Kendo UI Scheduler include <strong>kendo.timezones.min.js</strong> <em>after</em> <strong>kendo.all.min.js</strong></p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;script src="http://cdn.kendostatic.com/&lt;kendo ui version&gt;/js/kendo.all.min.js"&gt;&lt;/script&gt;
+ &lt;script src="http://cdn.kendostatic.com/&lt;kendo ui version&gt;/js/kendo.timezones.min.js"&gt;&lt;/script&gt;
+ &lt;script src="http://cdn.kendostatic.com/&lt;kendo ui version&gt;/js/kendo.aspnetmvc.min.js"&gt;&lt;/script&gt; ### Add reference to Kendo.Mvc.dll
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>The next step is to add a reference to <strong>Kendo.Mvc.dll</strong> which is the assembly containing the Kendo UI server-side wrappers.</p>
+
+<ol>
+  <li>Right-click the <strong>References</strong> node in Solution Explorer and click <strong>Add Reference</strong>.</li>
+  <li>Select the <strong>Browse</strong> tab of the <strong>Add Reference</strong> dialog and navigate to the install location of Telerik UI for ASP.NET MVC.</li>
+  <li>Navigate to <strong>wrappers/aspnetmvc/Binaries/MVC3</strong>. This directory contains the ASP.NET MVC 3 version of Telerik UI for ASP.NET MVC.</li>
+  <li>Select <strong>Kendo.Mvc.dll</strong> and click <strong>OK</strong>.</li>
+</ol>
+
+<h3 id="update-the-webconfig">Update the web.config</h3>
+
+<p>The next step is to let ASP.NET MVC know of the Kendo.Mvc.UI namespace where the server-side wrappers are. To do this update the web.config file of the web application.</p>
+
+<ol>
+  <li>Open <strong>Views/Web.config</strong> (or root <strong>Web.config</strong> if using <strong>ASPX</strong>).</li>
+  <li>Locate the <strong>namespaces</strong> tag.</li>
+  <li>
+    <p>Append an <strong>add</strong> tag to the <strong>namespaces</strong> tag.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;namespaces&gt;
+     &lt;add namespace="System.Web.Mvc" /&gt;
+     &lt;add namespace="System.Web.Mvc.Ajax" /&gt;
+     &lt;add namespace="System.Web.Mvc.Html" /&gt;
+     &lt;add namespace="System.Web.Routing" /&gt;
+     &lt;add namespace="Kendo.Mvc.UI" /&gt;
+ &lt;/namespaces&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="use-a-kendo-ui-widget">Use a Kendo UI widget</h2>
+
+<p>Finally lets use a Kendo UI widget.</p>
+
+<ol>
+  <li>Open the <strong>Views/Home/Index.cshtml</strong> view (or <strong>Index.aspx</strong> if using <strong>ASPX</strong>).</li>
+  <li>Add a Kendo UI DatePicker widget.
+    <ul>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().DatePicker().Name("datepicker"))
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>ASPX</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().DatePicker().Name("datepicker") %&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Press <strong>CTRL+F5</strong> to build and run the application.</li>
+</ol>
+
+<p><img src="/getting-started/using-kendo-with/aspnet-mvc/images/mvc3-final.png" alt="Final result" /></p>
+
+<h2 id="next-steps">Next steps</h2>
+
+<ul>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/fundamentals">Fundamentals</a></li>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/vs-integration/introduction">Using the Kendo UI Visual Studio Extensions</a></li>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/troubleshooting">Troubleshooting</a></li>
+</ul>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

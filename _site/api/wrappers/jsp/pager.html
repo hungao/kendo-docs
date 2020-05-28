@@ -1,0 +1,262 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/pager.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendopager">&lt;kendo:pager&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/pager">Pager</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="autobind-boolean">autoBind <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Indicates whether the pager refresh method will be called within its initialization.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager autoBind="autoBind"&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+<h3 id="buttoncount-float">buttonCount <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Defines the number of buttons displayed in the numeric pager.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager buttonCount="buttonCount"&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+<h3 id="info-boolean">info <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Defines if a label showing current paging information will be displayed.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager info="info"&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+<h3 id="input-boolean">input <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Defines if an input element which allows the user to navigate to given page will be displayed.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager input="input"&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+<h3 id="linktemplate-javalangstring">linkTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template for page number links.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager linkTemplate="linkTemplate"&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+<h3 id="numeric-boolean">numeric <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Defines if numeric portion of the pager will be shown.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager numeric="numeric"&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+<h3 id="pagesizes-javalangobject">pageSizes <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Displays a list with predefined page sizes. An array of values to be displayed can be provided. If pageSize option is provided for DataSource then this pageSize value will be automatically selected in created selectbox.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager pageSizes="pageSizes"&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+<h3 id="previousnext-boolean">previousNext <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Defines if buttons for navigating to the first, last, previous and next pages will be shown.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager previousNext="previousNext"&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+<h3 id="refresh-boolean">refresh <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Defines if a refresh button will be displayed. Click on that button will call DataSource read() method to get actual data.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager refresh="refresh"&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+<h3 id="selecttemplate-javalangstring">selectTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template for selected page number link.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager selectTemplate="selectTemplate"&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendopager-messages">kendo:pager-messages</h3>
+
+<p>Defines texts shown within the pager. Use this option to customize or localize the pager messages.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/pager/messages">kendo:pager-messages</a>.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager&gt;
+    &lt;kendo:pager-messages&gt;&lt;/kendo:pager-messages&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="change-string">change <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the current page has changed.</p>
+
+<p>For additional information check the <a href="/api/web/pager#events-change">change</a> event documentation.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager change="handle_change"&gt;
+&lt;/kendo:pager&gt;
+&lt;script&gt;
+    function handle_change(e) {
+        // Code to handle the change event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendopager-change">kendo:pager-change</h3>
+
+<p>Fires when the current page has changed.</p>
+
+<p>For additional information check the <a href="/api/web/pager#events-change">change</a> event documentation.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:pager&gt;
+    &lt;kendo:pager-change&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the change event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:pager-change&gt;
+&lt;/kendo:pager&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

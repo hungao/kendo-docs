@@ -1,0 +1,255 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/kendo-music-store/music-store-dashboard/building-the-social-stats-page.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="building-the-social-stats-page">Building the Social Stats Page</h1>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/social-overview.png" alt="social-overview" /></p>
+
+<p>The Social Stats page contains various views of social networking data taken from the Kendo UI Music Store. This includes Facebook Likes, Twitter tweets, Google Plus pluses, and Pintrest pins.</p>
+
+<p>The different social networks can be selected to show their data in the main graph view, potentially combining the views and adding axes to the graph.</p>
+
+<p>This page is contained in the following files: <strong>app/social-view.js</strong>, <strong>app/views/social.html</strong>, and <strong>Content/social-view.css</strong>.</p>
+
+<h2 id="constructing-the-dynamic-chart">Constructing the Dynamic Chart</h2>
+
+<p>The chart itself is defined as a Kendo Chart in the Javascript, with some special considerations for the series and value axis (as these are the dynamic portions of the chart, along with the data source. The relevant portions of the chart"s initilizer are below, cut down for brevity:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('#social-stats-chart').kendoChart({
+    title: {
+        text: "Social Stats",
+        ...
+    },
+    dataSource: socialStatsDataSource,
+    ...
+    series: buildSocialStatsSeries(),
+    ...
+    valueAxis: buildSocialStatsValueAxis(),
+    ...
+});
+</code></pre></div></div>
+
+<p>Note the functions <strong>buildSocialStatsSeries</strong> and <strong>buildSocialStatsValueAxis</strong>: these define which data views appear in the chart and their styles. It is these functions that perform the addition and removal of the dynamic content, and so are called when the chart is created and also whenever the user selects or deselects one of the social networks via the interactive elments located below the chart.</p>
+
+<p>These "social tiles" are located below the chart:</p>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-dashboard/images/social-tiles.png" alt="social-tiles" /></p>
+
+<p>These tiles are constructed using standard declarative markup in HTML and Javascript events. The HTML is below:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div class="social-tiles"&gt;
+    &lt;span class="social-tile-wrapper" data-selected="true"&gt;
+        &lt;span class="social-tile-title social-tile-title-selected"&gt;Facebook&lt;/span&gt;
+        &lt;span class="social-tile social-tile-selected facebook-tile"&gt;&lt;/span&gt;
+    &lt;/span&gt;&lt;span class="social-tile-wrapper" data-selected="false"&gt;
+        &lt;span class="social-tile-title"&gt;Twitter&lt;/span&gt;
+        &lt;span class="social-tile twitter-tile"&gt;&lt;/span&gt;
+    &lt;/span&gt;&lt;span class="social-tile-wrapper" data-selected="false"&gt;
+        &lt;span class="social-tile-title"&gt;Google +&lt;/span&gt;
+        &lt;span class="social-tile google-tile"&gt;&lt;/span&gt;
+    &lt;/span&gt;&lt;span class="social-tile-wrapper" data-selected="false"&gt;
+        &lt;span class="social-tile-title"&gt;Pinterest&lt;/span&gt;
+        &lt;span class="social-tile pinterest-tile"&gt;&lt;/span&gt;
+    &lt;/span&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Each tile is its own <strong>&lt;span&gt;</strong>, each with class "<strong>social-tile-wrapper</strong>" that is used to associate a click event in the Javascript.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(".social-tile-wrapper").click(function (e) {
+    changeChartData.call(this);
+});
+</code></pre></div></div>
+
+<p><strong>changeChartData()</strong> is invoked this way so it runs in the context of the tile wrapper itself, rather than globally. It has the task of marking the wrapper as selected (and therefore updating its style), as well as invoking the help functions <strong>buildSocialStatsSeries</strong> and <strong>buildSocialStatsValueAxis</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function changeChartData() {
+    var selected = $(this).data('selected'),
+        $this = $(this),
+        chart = $("#social-stats-chart").data('kendoChart');
+
+    $this.data('selected', !selected);
+
+    if (selected) {
+        $(".social-tile-selected", $this).removeClass("social-tile-selected");
+        $(".social-tile-title", $this).removeClass("social-tile-title-selected");
+    } else {
+        $(".social-tile", $this).addClass("social-tile-selected");
+        $(".social-tile-title", $this).addClass("social-tile-title-selected");
+    }
+
+    chart.options.valueAxis = buildSocialStatsValueAxis();
+    chart.options.series = buildSocialStatsSeries();
+    chart.refresh();
+}
+</code></pre></div></div>
+
+<p>jQuery does the heavy-lifting of locating the data and facilitating the actions, while the chart itself handles redrawing the new data.</p>
+
+<p><strong>buildSocialStatsValueAxis</strong> builds the Javascript object the chart expects for defining the ValueAxis property, taking its information from the social tiles and if they have the <strong>social-tile-selected</strong> class attached. An excerpt of this function is below, snipped for brevity (as the use of the Facebook tile is representative of the use of the others):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function buildSocialStatsValueAxis() {
+    var axis = [
+        {
+            title: { text: "sales" },
+            name: "Sales",
+            min: 100000,
+            max: 3000000,
+            labels: {
+                format: "{0}",
+                color: "#fff"
+            },
+            color: "#fff"
+        }
+    ];
+
+    //facebook selected
+    if ($('.facebook-tile').hasClass("social-tile-selected")) {
+        axis.push({
+            title: { text: "likes" },
+            name: 'Likes',
+            color: "#fff"
+        });
+    }
+	...
+	return axis;
+}
+</code></pre></div></div>
+
+<p><strong>buildSocialStatsSeries</strong> is similarly constructed, but instead provides information for the Series of the chart, including the axis names and legend title. Similar trimmed for brevity:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function buildSocialStatsSeries() {
+
+    var series = [{
+        type: "column",
+        field: "Sales",
+        name: "Sales",
+        groupNameTemplate: "#= group.value # (#= series.name #)"
+    }];
+
+    if ($('.facebook-tile').hasClass("social-tile-selected")) {
+        series.push({
+            field: 'Likes',
+            name: 'Likes',
+            type: 'line',
+            axis: 'Likes',
+            color: "#4099FF"
+        });
+    }
+	...
+	return series;
+}
+</code></pre></div></div>
+
+<p>Combined, these functions make the data presentation of the chart dynamic, and allow for the user to select multiple views while remaining robust and clear to develop.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

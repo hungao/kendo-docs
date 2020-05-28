@@ -1,0 +1,314 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/gantt/view.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendogantt-view">&lt;kendo:gantt-view&gt;</h1>
+
+<p>The views displayed by the gantt and their configuration. The array items can be either objects specifying the view configuration or strings representing the view types (assuming default configuration).
+By default the Kendo UI Gantt widget displays all three ("day", "week", and "month") views.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-views&gt;
+    &lt;kendo:gantt-view&gt;&lt;/kendo:gantt-view&gt;
+&lt;/kendo:gantt-views&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="dayheadertemplate-javalangstring">dayHeaderTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the day slots in "day" and "week" views.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view dayHeaderTemplate="dayHeaderTemplate"&gt;
+&lt;/kendo:gantt-view&gt;
+</code></pre></div></div>
+
+<h3 id="monthheadertemplate-javalangstring">monthHeaderTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the month slots in "month" views.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view monthHeaderTemplate="monthHeaderTemplate"&gt;
+&lt;/kendo:gantt-view&gt;
+</code></pre></div></div>
+
+<h3 id="selected-boolean">selected <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the view will be initially selected by the gantt widget. The default selected view is "day".</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view selected="selected"&gt;
+&lt;/kendo:gantt-view&gt;
+</code></pre></div></div>
+
+<h3 id="slotsize-javalangobject">slotSize <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The size of the time slot headers. Values are treated as pixels.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view slotSize="slotSize"&gt;
+&lt;/kendo:gantt-view&gt;
+</code></pre></div></div>
+
+<h3 id="timeheadertemplate-javalangstring">timeHeaderTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the time slots in "day" view</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view timeHeaderTemplate="timeHeaderTemplate"&gt;
+&lt;/kendo:gantt-view&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The view type. Supported types are "day", "week", and "month".</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view type="type"&gt;
+&lt;/kendo:gantt-view&gt;
+</code></pre></div></div>
+
+<h3 id="weekheadertemplate-javalangstring">weekHeaderTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the week slots in "week" and "month" views.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view weekHeaderTemplate="weekHeaderTemplate"&gt;
+&lt;/kendo:gantt-view&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="timeheadertemplate-string">timeHeaderTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the time slots in "day" view</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view timeHeaderTemplate="handle_timeHeaderTemplate"&gt;
+&lt;/kendo:gantt-view&gt;
+&lt;script&gt;
+    function handle_timeHeaderTemplate(e) {
+        // Code to handle the timeHeaderTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dayheadertemplate-string">dayHeaderTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the day slots in "day" and "week" views.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view dayHeaderTemplate="handle_dayHeaderTemplate"&gt;
+&lt;/kendo:gantt-view&gt;
+&lt;script&gt;
+    function handle_dayHeaderTemplate(e) {
+        // Code to handle the dayHeaderTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="weekheadertemplate-string">weekHeaderTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the week slots in "week" and "month" views.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view weekHeaderTemplate="handle_weekHeaderTemplate"&gt;
+&lt;/kendo:gantt-view&gt;
+&lt;script&gt;
+    function handle_weekHeaderTemplate(e) {
+        // Code to handle the weekHeaderTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="monthheadertemplate-string">monthHeaderTemplate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the month slots in "month" views.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view monthHeaderTemplate="handle_monthHeaderTemplate"&gt;
+&lt;/kendo:gantt-view&gt;
+&lt;script&gt;
+    function handle_monthHeaderTemplate(e) {
+        // Code to handle the monthHeaderTemplate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendogantt-view-timeheadertemplate">kendo:gantt-view-timeHeaderTemplate</h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the time slots in "day" view</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view&gt;
+    &lt;kendo:gantt-view-timeHeaderTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the timeHeaderTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-view-timeHeaderTemplate&gt;
+&lt;/kendo:gantt-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-view-dayheadertemplate">kendo:gantt-view-dayHeaderTemplate</h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the day slots in "day" and "week" views.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view&gt;
+    &lt;kendo:gantt-view-dayHeaderTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dayHeaderTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-view-dayHeaderTemplate&gt;
+&lt;/kendo:gantt-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-view-weekheadertemplate">kendo:gantt-view-weekHeaderTemplate</h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the week slots in "week" and "month" views.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view&gt;
+    &lt;kendo:gantt-view-weekHeaderTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the weekHeaderTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-view-weekHeaderTemplate&gt;
+&lt;/kendo:gantt-view&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-view-monthheadertemplate">kendo:gantt-view-monthHeaderTemplate</h3>
+
+<p>The [template](/api/framework/kendo#methods-template used to render the month slots in "month" views.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt-view&gt;
+    &lt;kendo:gantt-view-monthHeaderTemplate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the monthHeaderTemplate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-view-monthHeaderTemplate&gt;
+&lt;/kendo:gantt-view&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,543 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/Dataviz/UI/DiagramShape.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizuidiagramshape">\Kendo\Dataviz\UI\DiagramShape</h1>
+
+<p>A PHP class representing the shape setting of DiagramShapes.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="addconnector">addConnector</h3>
+
+<p>Adds one or more DiagramShapeConnector to the DiagramShape.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuidiagramshapeconnectorarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShapeConnector|array</code></h5>
+
+<h4 id="example---using-kendodatavizuidiagramshapeconnector">Example - using \Kendo\Dataviz\UI\DiagramShapeConnector</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$connector = new \Kendo\Dataviz\UI\DiagramShapeConnector();
+$description = 'value';
+$connector-&gt;description($description);
+$shape-&gt;addConnector($connector);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$description = 'value';
+$shape-&gt;addConnector(array('description' =&gt; $description));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-diagramshapeconnector">Example - adding more than one DiagramShapeConnector</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$first  = new \Kendo\Dataviz\UI\DiagramShapeConnector();
+$second = new \Kendo\Dataviz\UI\DiagramShapeConnector();
+$shape-&gt;addConnector($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="content">content</h3>
+
+<p>Defines the shapes content settings.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-kendodatavizuidiagramshapecontentarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShapeContent|array</code></h5>
+
+<h4 id="example---using-kendodatavizuidiagramshapecontent">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/DiagramShapeContent">\Kendo\Dataviz\UI\DiagramShapeContent</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$content = new \Kendo\Dataviz\UI\DiagramShapeContent();
+$align = 'value';
+$content-&gt;align($align);
+$shape-&gt;content($content);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$align = 'value';
+$shape-&gt;content(array('align' =&gt; $align));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="editable">editable</h3>
+
+<p>Defines the shape editable options.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-booleankendodatavizuidiagramshapeeditablearray">$value <code class="language-plaintext highlighter-rouge">boolean|\Kendo\Dataviz\UI\DiagramShapeEditable|array</code></h5>
+
+<h4 id="example----using-boolean">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;editable(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatavizuidiagramshapeeditable">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/DiagramShapeEditable">\Kendo\Dataviz\UI\DiagramShapeEditable</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$editable = new \Kendo\Dataviz\UI\DiagramShapeEditable();
+$connect = true;
+$editable-&gt;connect($connect);
+$shape-&gt;editable($editable);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$connect = true;
+$shape-&gt;editable(array('connect' =&gt; $connect));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="fill">fill</h3>
+
+<p>Defines the fill options of the shape.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-stringkendodatavizuidiagramshapefillarray">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\Dataviz\UI\DiagramShapeFill|array</code></h5>
+
+<h4 id="example----using-string">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;fill('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatavizuidiagramshapefill">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/DiagramShapeFill">\Kendo\Dataviz\UI\DiagramShapeFill</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$fill = new \Kendo\Dataviz\UI\DiagramShapeFill();
+$color = 'value';
+$fill-&gt;color($color);
+$shape-&gt;fill($fill);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-3">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$color = 'value';
+$shape-&gt;fill(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="height">height</h3>
+<p>Defines the height of the shape when added to the diagram.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;height(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="hover">hover</h3>
+
+<p>Defines the hover configuration.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-kendodatavizuidiagramshapehoverarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShapeHover|array</code></h5>
+
+<h4 id="example---using-kendodatavizuidiagramshapehover">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/DiagramShapeHover">\Kendo\Dataviz\UI\DiagramShapeHover</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$hover = new \Kendo\Dataviz\UI\DiagramShapeHover();
+$fill = 'value';
+$hover-&gt;fill($fill);
+$shape-&gt;hover($hover);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-4">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$fill = 'value';
+$shape-&gt;hover(array('fill' =&gt; $fill));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="id">id</h3>
+<p>The unique identifier for a Shape.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;id('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="minheight">minHeight</h3>
+<p>Defines the minimum height the shape should have, i.e. it cannot be resized to a value smaller than the given one.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-float-1">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;minHeight(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="minwidth">minWidth</h3>
+<p>Defines the minimum width the shape should have, i.e. it cannot be resized to a value smaller than the given one.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-float-2">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;minWidth(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="path">path</h3>
+<p>The path option of a Shape is a description of a custom geometry. The format follows the standard SVG format (http://www.w3.org/TR/SVG/paths.html#PathData "SVG Path data.").</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;path('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="rotation">rotation</h3>
+
+<p>The function that positions the connector.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-kendodatavizuidiagramshaperotationarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShapeRotation|array</code></h5>
+
+<h4 id="example---using-kendodatavizuidiagramshaperotation">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/DiagramShapeRotation">\Kendo\Dataviz\UI\DiagramShapeRotation</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$rotation = new \Kendo\Dataviz\UI\DiagramShapeRotation();
+$angle = 1;
+$rotation-&gt;angle($angle);
+$shape-&gt;rotation($rotation);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-5">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$angle = 1;
+$shape-&gt;rotation(array('angle' =&gt; $angle));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="source">source</h3>
+<p>The source of the shape image. Applicable when the type is set to "image".</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;source('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="stroke">stroke</h3>
+
+<p>Defines the stroke configuration.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-kendodatavizuidiagramshapestrokearray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShapeStroke|array</code></h5>
+
+<h4 id="example---using-kendodatavizuidiagramshapestroke">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/DiagramShapeStroke">\Kendo\Dataviz\UI\DiagramShapeStroke</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$stroke = new \Kendo\Dataviz\UI\DiagramShapeStroke();
+$color = 'value';
+$stroke-&gt;color($color);
+$shape-&gt;stroke($stroke);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-6">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$color = 'value';
+$shape-&gt;stroke(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="type">type</h3>
+<p>Specifies the type of the Shape using any of the built-in shape type.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-string-3">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;type('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="visual">visual</h3>
+<p>A function returning a visual element to render for this shape.
+See visual.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-kendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;visual(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="width">width</h3>
+<p>Defines the width of the shape when added to the diagram.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-float-3">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;width(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="x">x</h3>
+<p>Defines the x-coordinate of the shape when added to the diagram.</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-float-4">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;x(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="y">y</h3>
+<p>Defines the y-coordinate of the shape when added to the diagram.</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\DiagramShape</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-float-5">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$shape = new \Kendo\Dataviz\UI\DiagramShape();
+$shape-&gt;y(1);
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

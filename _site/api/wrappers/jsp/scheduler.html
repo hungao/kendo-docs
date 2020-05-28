@@ -1,0 +1,985 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/scheduler.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendoscheduler">&lt;kendo:scheduler&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/scheduler">Scheduler</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="alldayeventtemplate-javalangstring">allDayEventTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the "all day" scheduler events.The fields which can be used in the template are:</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler allDayEventTemplate="allDayEventTemplate"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="alldayslot-boolean">allDaySlot <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the scheduler will display a slot for "all day" events.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler allDaySlot="allDaySlot"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="autobind-boolean">autoBind <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler autoBind="autoBind"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="currenttimemarker-boolean">currentTimeMarker <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the "current time" marker of the scheduler would not be displayed. Further configuration is available via <a href="#kendo-scheduler-currentTimeMarker">kendo:scheduler-currentTimeMarker</a>.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler currentTimeMarker="currentTimeMarker"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="date-javautildate">date <code class="language-plaintext highlighter-rouge">java.util.Date</code></h3>
+
+<p>The current date of the scheduler. Used to determine the period which is displayed by the widget.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler date="date"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="dateheadertemplate-javalangstring">dateHeaderTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the date header cells.By default the scheduler renders the date using a custom date format - "ddd M/dd".
+The "ddd" specifier, a.k.a abbreviated name of the week day, will be localized using the current Kendo UI culture.
+If the developer wants to control the day and month order then one needs to define a custom template.The fields which can be used in the template are:</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler dateHeaderTemplate="dateHeaderTemplate"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="editable-boolean">editable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the user would be able to create new scheduler events and modify or delete existing ones. Further configuration is available via <a href="#kendo-scheduler-editable">kendo:scheduler-editable</a>.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler editable="editable"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="endtime-javautildate">endTime <code class="language-plaintext highlighter-rouge">java.util.Date</code></h3>
+
+<p>The end time of the week and day views. The scheduler will display events ending before the endTime.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler endTime="endTime"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="eventtemplate-javalangstring">eventTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the scheduler events.The fields which can be used in the template are:</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler eventTemplate="eventTemplate"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="footer-boolean">footer <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the footer of the scheduler would not be displayed. Further configuration is available via <a href="#kendo-scheduler-footer">kendo:scheduler-footer</a>.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler footer="footer"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="height-javalangobject">height <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The height of the widget. Numeric values are treated as pixels.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler height="height"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="majortick-float">majorTick <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The number of minutes represented by a major tick.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler majorTick="majorTick"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="majortimeheadertemplate-javalangstring">majorTimeHeaderTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are:</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler majorTimeHeaderTemplate="majorTimeHeaderTemplate"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="max-javautildate">max <code class="language-plaintext highlighter-rouge">java.util.Date</code></h3>
+
+<p>Constraints the maximum date which can be selected via the scheduler navigation.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler max="max"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="min-javautildate">min <code class="language-plaintext highlighter-rouge">java.util.Date</code></h3>
+
+<p>Constraints the minimum date which can be selected via the scheduler navigation.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler min="min"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="minortickcount-float">minorTickCount <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The number of time slots to display per major tick.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler minorTickCount="minorTickCount"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="minortimeheadertemplate-javalangstring">minorTimeHeaderTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the minor ticks.By default the scheduler renders a " ".The fields which can be used in the template are:</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler minorTimeHeaderTemplate="minorTimeHeaderTemplate"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="mobile-javalangobject">mobile <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>If set to true and the scheduler is viewed on mobile browser it will use adaptive rendering.Can be set to a string phone or tablet which will force the widget to use adaptive rendering regardless of browser type.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler mobile="mobile"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="selectable-boolean">selectable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the user would be able to select scheduler cells and events. By default selection is disabled.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler selectable="selectable"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="showworkhours-boolean">showWorkHours <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the view will be initially shown in business hours mode. By default view is displyed in full day mode.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler showWorkHours="showWorkHours"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="snap-boolean">snap <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the scheduler will snap events to the nearest slot during dragging (resizing or moving). Set it to false to allow free moving and resizing of events.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler snap="snap"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="starttime-javautildate">startTime <code class="language-plaintext highlighter-rouge">java.util.Date</code></h3>
+
+<p>The start time of the week and day views. The scheduler will display events starting after the startTime.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler startTime="startTime"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="timezone-javalangstring">timezone <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The timezone which the scheduler will use to display the scheduler appointment dates. By default the current system timezone is used. This is an acceptable default when the
+scheduler widget is bound to local array of events. It is advisable to specify a timezone if the scheduler is bound to a remote service.
+That way all users would see the same dates and times no matter their configured system timezone.The complete list of the supported timezones is available in the List of IANA time zones Wikipedia page.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler timezone="timezone"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="width-javalangobject">width <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The width of the widget. Numeric values are treated as pixels.</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler width="width"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="workdayend-javautildate">workDayEnd <code class="language-plaintext highlighter-rouge">java.util.Date</code></h3>
+
+<p>Sets the end of the work day when the  "Show business hours" button is clicked.</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler workDayEnd="workDayEnd"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="workdaystart-javautildate">workDayStart <code class="language-plaintext highlighter-rouge">java.util.Date</code></h3>
+
+<p>Sets the start of the work day when the  "Show business hours" button is clicked.</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler workDayStart="workDayStart"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="workweekend-float">workWeekEnd <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The end of working week (index based).</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler workWeekEnd="workWeekEnd"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="workweekstart-float">workWeekStart <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The start of working week (index based).</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler workWeekStart="workWeekStart"&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendoscheduler-currenttimemarker">kendo:scheduler-currentTimeMarker</h3>
+
+<p>If set to false the "current time" marker of the scheduler would not be displayed.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/scheduler/currenttimemarker">kendo:scheduler-currentTimeMarker</a>.</p>
+
+<h4 id="example-28">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-currentTimeMarker&gt;&lt;/kendo:scheduler-currentTimeMarker&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-editable">kendo:scheduler-editable</h3>
+
+<p>If set to true the user would be able to create new scheduler events and modify or delete existing ones.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/scheduler/editable">kendo:scheduler-editable</a>.</p>
+
+<h4 id="example-29">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-editable&gt;&lt;/kendo:scheduler-editable&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-footer">kendo:scheduler-footer</h3>
+
+<p>If set to false the footer of the scheduler would not be displayed.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/scheduler/footer">kendo:scheduler-footer</a>.</p>
+
+<h4 id="example-30">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-footer&gt;&lt;/kendo:scheduler-footer&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-group">kendo:scheduler-group</h3>
+
+<p>The configuration of the scheduler resource(s) grouping.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/scheduler/group">kendo:scheduler-group</a>.</p>
+
+<h4 id="example-31">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-group&gt;&lt;/kendo:scheduler-group&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-messages">kendo:scheduler-messages</h3>
+
+<p>The configuration of the scheduler messages. Use this option to customize or localize the scheduler messages.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/scheduler/messages">kendo:scheduler-messages</a>.</p>
+
+<h4 id="example-32">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-messages&gt;&lt;/kendo:scheduler-messages&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-resources">kendo:scheduler-resources</h3>
+
+<p>The configuration of the scheduler resource(s). A scheduler resource is optional metadata that can be associated
+with a scheduler event.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/scheduler/resources">kendo:scheduler-resources</a>.</p>
+
+<h4 id="example-33">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-resources&gt;&lt;/kendo:scheduler-resources&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-views">kendo:scheduler-views</h3>
+
+<p>The views displayed by the scheduler and their configuration. The array items can be either objects specifying the view configuration or strings representing the view types (assuming default configuration).
+By default the Kendo UI Scheduler widget displays "day" and "week" view.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/scheduler/views">kendo:scheduler-views</a>.</p>
+
+<h4 id="example-34">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-views&gt;&lt;/kendo:scheduler-views&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="add-string">add <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the a new event is about to be added.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-add">add</a> event documentation.</p>
+
+<h4 id="example-35">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler add="handle_add"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_add(e) {
+        // Code to handle the add event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="cancel-string">cancel <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user cancels editing by clicking the "cancel" button.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="example-36">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler cancel="handle_cancel"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_cancel(e) {
+        // Code to handle the cancel event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="change-string">change <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user selects a cell or event in the scheduler.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-change">change</a> event documentation.</p>
+
+<h4 id="example-37">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler change="handle_change"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_change(e) {
+        // Code to handle the change event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databinding-string">dataBinding <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired before the widget binds to its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-dataBinding">dataBinding</a> event documentation.</p>
+
+<h4 id="example-38">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler dataBinding="handle_dataBinding"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_dataBinding(e) {
+        // Code to handle the dataBinding event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound-string">dataBound <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-39">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler dataBound="handle_dataBound"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_dataBound(e) {
+        // Code to handle the dataBound event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="edit-string">edit <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user opens a scheduler event in edit mode by or creates a new event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-edit">edit</a> event documentation.</p>
+
+<h4 id="example-40">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler edit="handle_edit"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_edit(e) {
+        // Code to handle the edit event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="movestart-string">moveStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user starts to drag an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-moveStart">moveStart</a> event documentation.</p>
+
+<h4 id="example-41">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler moveStart="handle_moveStart"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_moveStart(e) {
+        // Code to handle the moveStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="move-string">move <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user is moving an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-move">move</a> event documentation.</p>
+
+<h4 id="example-42">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler move="handle_move"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_move(e) {
+        // Code to handle the move event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="moveend-string">moveEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user stops moving an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-moveEnd">moveEnd</a> event documentation.</p>
+
+<h4 id="example-43">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler moveEnd="handle_moveEnd"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_moveEnd(e) {
+        // Code to handle the moveEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="navigate-string">navigate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user changes the selected date, or view of the schedulerThe event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-navigate">navigate</a> event documentation.</p>
+
+<h4 id="example-44">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler navigate="handle_navigate"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_navigate(e) {
+        // Code to handle the navigate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="remove-string">remove <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user clicks the "destroy" button.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-remove">remove</a> event documentation.</p>
+
+<h4 id="example-45">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler remove="handle_remove"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_remove(e) {
+        // Code to handle the remove event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resizestart-string">resizeStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user starts to resize an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resizeStart">resizeStart</a> event documentation.</p>
+
+<h4 id="example-46">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler resizeStart="handle_resizeStart"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_resizeStart(e) {
+        // Code to handle the resizeStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resize-string">resize <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user is resizing an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resize">resize</a> event documentation.</p>
+
+<h4 id="example-47">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler resize="handle_resize"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_resize(e) {
+        // Code to handle the resize event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resizeend-string">resizeEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user releases the mouse after resizing an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resizeEnd">resizeEnd</a> event documentation.</p>
+
+<h4 id="example-48">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler resizeEnd="handle_resizeEnd"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_resizeEnd(e) {
+        // Code to handle the resizeEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="save-string">save <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user saves a scheduler event by clicking the "save" button.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-save">save</a> event documentation.</p>
+
+<h4 id="example-49">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler save="handle_save"&gt;
+&lt;/kendo:scheduler&gt;
+&lt;script&gt;
+    function handle_save(e) {
+        // Code to handle the save event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendoscheduler-add">kendo:scheduler-add</h3>
+
+<p>Fired when the a new event is about to be added.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-add">add</a> event documentation.</p>
+
+<h4 id="example-50">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-add&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the add event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-add&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-cancel">kendo:scheduler-cancel</h3>
+
+<p>Fired when the user cancels editing by clicking the "cancel" button.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="example-51">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-cancel&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the cancel event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-cancel&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-change">kendo:scheduler-change</h3>
+
+<p>Fired when the user selects a cell or event in the scheduler.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-change">change</a> event documentation.</p>
+
+<h4 id="example-52">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-change&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the change event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-change&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-databinding">kendo:scheduler-dataBinding</h3>
+
+<p>Fired before the widget binds to its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-dataBinding">dataBinding</a> event documentation.</p>
+
+<h4 id="example-53">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-dataBinding&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dataBinding event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-dataBinding&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-databound">kendo:scheduler-dataBound</h3>
+
+<p>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-54">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-dataBound&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dataBound event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-dataBound&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-edit">kendo:scheduler-edit</h3>
+
+<p>Fired when the user opens a scheduler event in edit mode by or creates a new event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-edit">edit</a> event documentation.</p>
+
+<h4 id="example-55">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-edit&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the edit event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-edit&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-movestart">kendo:scheduler-moveStart</h3>
+
+<p>Fired when the user starts to drag an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-moveStart">moveStart</a> event documentation.</p>
+
+<h4 id="example-56">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-moveStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the moveStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-moveStart&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-move">kendo:scheduler-move</h3>
+
+<p>Fired when the user is moving an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-move">move</a> event documentation.</p>
+
+<h4 id="example-57">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-move&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the move event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-move&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-moveend">kendo:scheduler-moveEnd</h3>
+
+<p>Fired when the user stops moving an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-moveEnd">moveEnd</a> event documentation.</p>
+
+<h4 id="example-58">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-moveEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the moveEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-moveEnd&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-navigate">kendo:scheduler-navigate</h3>
+
+<p>Fired when the user changes the selected date, or view of the schedulerThe event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-navigate">navigate</a> event documentation.</p>
+
+<h4 id="example-59">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-navigate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the navigate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-navigate&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-remove">kendo:scheduler-remove</h3>
+
+<p>Fired when the user clicks the "destroy" button.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-remove">remove</a> event documentation.</p>
+
+<h4 id="example-60">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-remove&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the remove event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-remove&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-resizestart">kendo:scheduler-resizeStart</h3>
+
+<p>Fired when the user starts to resize an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resizeStart">resizeStart</a> event documentation.</p>
+
+<h4 id="example-61">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-resizeStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the resizeStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-resizeStart&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-resize">kendo:scheduler-resize</h3>
+
+<p>Fired when the user is resizing an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resize">resize</a> event documentation.</p>
+
+<h4 id="example-62">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-resize&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the resize event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-resize&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-resizeend">kendo:scheduler-resizeEnd</h3>
+
+<p>Fired when the user releases the mouse after resizing an event.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resizeEnd">resizeEnd</a> event documentation.</p>
+
+<h4 id="example-63">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-resizeEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the resizeEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-resizeEnd&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+<h3 id="kendoscheduler-save">kendo:scheduler-save</h3>
+
+<p>Fired when the user saves a scheduler event by clicking the "save" button.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-save">save</a> event documentation.</p>
+
+<h4 id="example-64">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:scheduler&gt;
+    &lt;kendo:scheduler-save&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the save event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:scheduler-save&gt;
+&lt;/kendo:scheduler&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

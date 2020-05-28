@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configure Kendo UI TreeView for ASP.NET MVC for Ajax binding</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Kendo UI TreeView for ASP.NET MVC makes Ajax requests to populate with nodes.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/treeview/ajax-binding.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="ajax-binding">Ajax Binding</h1>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The following tutorial shows how to configure Kendo UI TreeView for ASP.NET MVC to do ajax binding using Entity Framework and the Northwind database.</p>
+
+<ol>
+  <li>Create a new ASP.NET MVC application (or Telerik UI for ASP.NET MVC application if you have installed the
+<a href="/getting-started/using-kendo-with/aspnet-mvc/introduction#kendo-ui-for-asp.net-mvc-visual-studio-extensions">Telerik UI for ASP.NET MVC Visual Studio Extensions</a>).</li>
+  <li>Name the application <strong>KendoTreeViewAjaxBinding</strong>. If you decided not to use the Visual Studio extensions follow the procedure for adding Telerik UI for ASP.NET MVC to existing application:
+<a href="/getting-started/using-kendo-with/aspnet-mvc/aspnet-mvc-4.md">ASP.NET MVC 4</a>, <a href="/getting-started/using-kendo-with/aspnet-mvc/aspnet-mvc-5.md">ASP.NET MVC 5</a></li>
+  <li>Add a new <strong>Entity Framework DataM Model</strong>. Right-click the <strong>Models</strong> folder in Visual Studio solution explorer and select <strong>Add-&gt;New Item</strong>. Choose <strong>Data-&gt; ADO.NET Data Model</strong> from the <strong>Add New Item</strong> dialog.</li>
+  <li>Name the model <strong>Northwind.edmx</strong> and click <strong>Next</strong>. This starts the <strong>Entity Data Model Wizard</strong>.</li>
+  <li>Select <strong>Generate from database</strong> and click <strong>Next</strong>. Configure a connection to the Northwind database and click <strong>Next</strong>.
+<img src="/getting-started/using-kendo-with/aspnet-mvc/helpers/treeview/images/tree-entity-data-model.png" alt="New entity data model" /></li>
+  <li>Select the <strong>Employees</strong> table and click <strong>Finish</strong>.
+<img src="/getting-started/using-kendo-with/aspnet-mvc/helpers/treeview/images/tree-employees-table.png" alt="Choose the Employees table" /></li>
+  <li>
+    <p>Open <strong>Controllers/HomeController.cs</strong> and add a new action method which will return JSON. The tree view will make an ajax request to this action method any time the
+user expands a parent node. The action method returns only the child nodes of the expanded parent node. The tree view will provide the unique identifier of the parent node or <code class="language-plaintext highlighter-rouge">null</code> when it makes the initial request.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> public JsonResult Employees_Read(int? employeeId)
+ {
+     using (var norhtwind = new NorthwindEntities())
+     {
+         // Get employees who report to employeeId (null for root nodes)
+         var employees = norhtwind.Employees
+                                  // Workaround for the EF null comparison bug: http://stackoverflow.com/a/2541042/10141
+                                  .Where(employee =&gt; employeeId.HasValue ? employee.ReportsTo == employeeId : employee.ReportsTo == null);
+         // Project the results to avoid JSON serialization errors
+         var result = employees.Select(employee =&gt; new
+                               {
+                                   EmployeeID = employee.EmployeeID,
+                                   Name = employee.FirstName + " " + employee.LastName,
+                                   HasChildren = employee.Employees1.Any()
+                               })
+                               .ToList();
+         return Json(result, JsonRequestBehavior.AllowGet);
+     }
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Open <strong>Views/Index.cshtml</strong> (or <strong>Views/Index.aspx</strong>) and add a tree view.</p>
+
+    <ul>
+      <li>
+        <p>Index.cshtml (Razor)</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().TreeView()
+      .Name("treeview")
+      // The property that specifies the text of the node
+      .DataTextField("Name")
+      .DataSource(dataSource =&gt; dataSource
+          .Model(model =&gt; model
+              // The property that uniquely identieis a node.
+              // The value of this property is the argument of the action method
+              .Id("EmployeeID")
+              // the boolean property that tells whether a node has children
+              .HasChildren("HasChildren")
+          )
+          .Read(read =&gt; read
+              // The action method which will return JSON
+              .Action("Employees_Read", "Home")
+          )
+      )
+  )
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Index.aspx (ASPX)</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().TreeView()
+      .Name("treeview")
+      // The property that specifies the text of the node
+      .DataTextField("Name")
+      .DataSource(dataSource =&gt; dataSource
+          .Model(model =&gt; model
+              // The property that uniquely identieis a node.
+              // The value of this property is the argument of the action method
+              .Id("EmployeeID")
+              // the boolean property that tells whether a node has children
+              .HasChildren("HasChildren")
+          )
+          .Read(read =&gt; read
+              // The action method which will return JSON
+              .Action("Employees_Read", "Home")
+          )
+      )
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Press <strong>CTRL+F5</strong> to build and run the application. Expand the <strong>Andrew Fuller</strong> node and the tree view will load its children.
+<img src="/getting-started/using-kendo-with/aspnet-mvc/helpers/treeview/images/tree-employees.png" alt="Final result" /></li>
+</ol>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

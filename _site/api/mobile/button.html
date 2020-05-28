@@ -1,0 +1,316 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Mobile Button</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Find which events to use in Mobile Button Widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/mobile/button.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomobileuibutton">kendo.mobile.ui.Button</h1>
+
+<p>Represents the Kendo UI Mobile Button widget. Inherits from <a href="/api/framework/mobilewidget">kendo.mobile.ui.Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="badge-string">badge <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The badge of the button.</p>
+
+<h4 id="example---configuration-based-on-data-attributes">Example - configuration based on data attributes</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+  &lt;a data-role="button" data-badge="10"&gt;Foo&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---configuration-based-on-jquery-plugin-syntax">Example - configuration based on jQuery plugin syntax</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view" data-init="onInit"&gt;
+  &lt;a id="button"&gt;Foo&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function onInit() {
+  $("#button").kendoMobileButton({ badge: 10 });
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable-booleandefault-true">enable <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will be disabled and will not allow the user to click it. The widget is enabled by default.</p>
+
+<h4 id="example---initialize-disabled-button">Example - initialize disabled button.</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;a data-role="button" data-enable="false" data-click="onClick"&gt;Button&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+    function onClick() {
+        console.log("click");
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="icon-string">icon <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The icon of the button. It can be either one of the built-in icons, or a custom one.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+  &lt;a data-role="button" data-icon="play"&gt;Foo&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="badge">badge</h3>
+
+<p><strong>Introduced in Q1 2013 SP</strong> Sets a badge on the <strong>Button</strong> with the specified value. If invoked without parameters, returns the current badge value. Set the value to <code class="language-plaintext highlighter-rouge">false</code> to remove the badge.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-stringboolean">value <code class="language-plaintext highlighter-rouge">String|Boolean</code></h5>
+
+<p>The target value to be set or <code class="language-plaintext highlighter-rouge">false</code> to be removed.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String | kendo.mobile.ui.Button</code> the badge value if invoked without parameters, otherwise the Button object.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+  &lt;a data-role="button" data-badge="1" data-click="countClicks"&gt;Foo&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function countClicks() {
+    var badge = parseInt(this.badge()); //get badge value
+    badge++;
+    this.badge(badge); //set new badge value
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---remove-the-badge">Example - remove the badge</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a id="btn" data-role="button" data-badge="1"&gt;Foo&lt;/a&gt;
+  &lt;a data-role="button" data-click="removeBadge"&gt;Remove badge&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function removeBadge() {
+  $("#btn").data("kendoMobileButton").badge(false);
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+<p>Prepares the <strong>Button</strong> for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the Button element from DOM.</p>
+</blockquote>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a id="btn" data-role="button"&gt;Foo&lt;/a&gt;
+  &lt;a data-role="button" data-click="removeBtn"&gt;Remove button&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  var app = new kendo.mobile.Application();
+
+  function removeBtn() {
+    $("#btn").data("kendoMobileButton").destroy(); //detach events
+    $("#btn").remove();
+  }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable">enable</h3>
+
+<p>Changes the enabled state of the widget.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="enable-boolean">enable <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Whether to enable or disable the widget.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;a id="foo" data-role="button" data-click="onClick"&gt;Button&lt;/a&gt;
+    &lt;input type="checkbox" data-role="switch" data-change="onChange" /&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+    function change() {
+        $("#foo").data("kendoMobileButton").enable(this.check());
+    }
+    function onClick() {
+        console.log("click");
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="click">click</h3>
+
+<p>Fires when the user taps the button.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a id="btn" data-role="button" data-click="onClick"&gt;Click me!&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function onClick() {
+  console.log("clicked");
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="etarget-jquery">e.target <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The clicked DOM element</p>
+
+<h5 id="ebutton-jquery">e.button <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The button DOM element</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

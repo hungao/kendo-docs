@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of TimePicker UI widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to create, initialize and use TimePicker UI widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/timepicker/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="timepicker-overview">TimePicker Overview</h1>
+
+<p>The <strong>TimePicker</strong> allows the end user to select a time value from a list of predefined values or
+to type a new value. It supports configurable options for the format, minimum and maximum time, and the
+interval between predefined values in the list.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="creating-a-timepicker-from-existing-input-element">Creating a TimePicker from existing input element</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="timePicker" /&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-the-panelbar-via-an-id-selector">Initialize the PanelBar via an ID selector</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#timePicker").kendoTimePicker();
+});
+</code></pre></div></div>
+
+<p>When a <strong>TimePicker</strong> is initialized, it will automatically be displayed near the location of the
+used HTML element.</p>
+
+<blockquote>
+  <p>Widget copies any styles and CSS classes from the input element to the wrapper element.</p>
+</blockquote>
+
+<h2 id="configuring-timepicker-behaviors">Configuring TimePicker Behaviors</h2>
+
+<p>A <strong>TimePicker</strong> provides configuration options that can be easily set during initialization.
+Among the properties that can be controlled:</p>
+
+<ul>
+  <li>Selected time</li>
+  <li>Minimum/Maximum time</li>
+  <li>Define format</li>
+  <li>Define interval between predefined values in the list</li>
+</ul>
+
+<h3 id="create-timepicker-with-selected-time-and-defined-min-and-max-time">Create TimePicker with selected time and defined min and max time</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#timePicker").kendoTimePicker({
+    value: new Date(2000, 10, 10, 10, 0, 0),
+    min: new Date(1950, 0, 1, 8, 0, 0),
+    max: new Date(2049, 11, 31, 18, 0, 0)
+});
+</code></pre></div></div>
+
+<p>A <strong>TimePicker</strong> will set the value only if the entered time is valid and if it is in the defined
+range.</p>
+
+<h3 id="define-time-format">Define time format</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#timePicker").kendoTimePicker({
+    format: "hh:mm:ss tt"
+});
+</code></pre></div></div>
+
+<h3 id="define-the-interval-in-minutes-between-values-in-the-list">Define the interval (in minutes) between values in the list</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#timePicker").kendoTimePicker({
+    interval: 15
+});
+</code></pre></div></div>
+
+<h2 id="accessing-an-existing-timepicker">Accessing an Existing TimePicker</h2>
+
+<p>You can reference an existing <strong>TimePicker</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>. Once a reference has been established, you can
+use the API to control its behavior.</p>
+
+<h3 id="accessing-an-existing-timepicker-instance">Accessing an existing TimePicker instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var timePicker = $("#timePicker").data("kendoTimePicker");
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

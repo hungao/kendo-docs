@@ -1,0 +1,317 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GanttBuilder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluentganttbuilder">Kendo.Mvc.UI.Fluent.GanttBuilder</h1>
+<p>Defines the fluent API for configuring the Kendo Gantt for ASP.NET MVC.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="datasourcesystemactionkendomvcuifluentganttdatasourcebuildert">DataSource(System.Action&lt;Kendo.Mvc.UI.Fluent.GanttDataSourceBuilder&lt;T&gt;&gt;)</h3>
+<p>Configures the DataSource options.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentganttdatasourcebuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GanttDataSourceBuilder">Kendo.Mvc.UI.Fluent.GanttDataSourceBuilder</a><T>&gt;</T></h5>
+<p>The DataSource configurator action.</p>
+
+<h4 id="example-aspx">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Gantt&lt;Task&gt;()
+.Name("Gantt")
+.DataSource(source =&gt;
+{
+    source.Read(read =&gt;
+    {
+        read.Action("Read", "Gantt");
+        });
+    })
+%&gt;
+</code></pre></div></div>
+
+<h3 id="dependenciesdatasourcesystemactionkendomvcuifluentganttdependenciesdatasourcebuildert">DependenciesDataSource(System.Action&lt;Kendo.Mvc.UI.Fluent.GanttDependenciesDataSourceBuilder&lt;T&gt;&gt;)</h3>
+<p>Configures the dependencies DataSource options.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentganttdependenciesdatasourcebuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GanttDependenciesDataSourceBuilder">Kendo.Mvc.UI.Fluent.GanttDependenciesDataSourceBuilder</a><T>&gt;</T></h5>
+<p>The DataSource configurator action.</p>
+
+<h4 id="example-aspx-1">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Gantt&lt;Task&gt;()
+.Name("Gantt")
+.DependenciesDataSource(source =&gt;
+{
+    source.Read(read =&gt;
+    {
+        read.Action("Read", "Gantt");
+        });
+    })
+%&gt;
+</code></pre></div></div>
+
+<h3 id="columnssystemactionkendomvcuifluentganttcolumnfactorytt">Columns(System.Action&lt;Kendo.Mvc.UI.Fluent.GanttColumnFactory&lt;T,T&gt;&gt;)</h3>
+<p>The configuration of the gantt columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+            field to which the column is bound. The gantt will create a column for every item of the array.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentganttcolumnfactorytt">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GanttColumnFactory">Kendo.Mvc.UI.Fluent.GanttColumnFactory</a>&lt;T,T»</h5>
+<p>The action that configures the columns.</p>
+
+<h3 id="autobindsystemboolean">AutoBind(System.Boolean)</h3>
+<p>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+            data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-systemboolean">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the autobind.</p>
+
+<h3 id="editablesystemboolean">Editable(System.Boolean)</h3>
+<p>If set to false the user won"t be able to create, modify or delete tasks and dependencies.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-systemboolean-1">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the editable.</p>
+
+<h3 id="navigatablesystemboolean">Navigatable(System.Boolean)</h3>
+<p>If set to true the user could navigate the widget using the keyboard. By default keyboard navigation is disabled.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-systemboolean-2">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the navigatable.</p>
+
+<h3 id="workdaystartsystemdatetime">WorkDayStart(System.DateTime)</h3>
+<p>Sets the start of the work day.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-systemdatetime">value <code class="language-plaintext highlighter-rouge">System.DateTime</code></h5>
+<p>The value that configures the workdaystart.</p>
+
+<h3 id="workdayendsystemdatetime">WorkDayEnd(System.DateTime)</h3>
+<p>Sets the end of the work day.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-systemdatetime-1">value <code class="language-plaintext highlighter-rouge">System.DateTime</code></h5>
+<p>The value that configures the workdayend.</p>
+
+<h3 id="workweekstartsystemdouble">WorkWeekStart(System.Double)</h3>
+<p>The start of working week (index based).</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-systemdouble">value <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The value that configures the workweekstart.</p>
+
+<h3 id="workweekendsystemdouble">WorkWeekEnd(System.Double)</h3>
+<p>The end of working week (index based).</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-systemdouble-1">value <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The value that configures the workweekend.</p>
+
+<h3 id="hourspansystemdouble">HourSpan(System.Double)</h3>
+<p>The span of an hour slot.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-systemdouble-2">value <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The value that configures the hourspan.</p>
+
+<h3 id="snapsystemboolean">Snap(System.Boolean)</h3>
+<p>If set to true the gantt will snap tasks to the nearest slot during dragging (resizing or moving). Set it to false to allow free moving and resizing of tasks.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-systemboolean-3">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the snap.</p>
+
+<h3 id="heightsystemdouble">Height(System.Double)</h3>
+<p>The height of the widget. Numeric values are treated as pixels.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-systemdouble-3">value <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The value that configures the height.</p>
+
+<h3 id="listwidthsystemstring">ListWidth(System.String)</h3>
+<p>The width of the task list. Numeric values are treated as pixels.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-systemstring">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the listwidth.</p>
+
+<h3 id="messagessystemactionkendomvcuifluentganttmessagessettingsbuilder">Messages(System.Action&lt;Kendo.Mvc.UI.Fluent.GanttMessagesSettingsBuilder&gt;)</h3>
+<p>The configuration of the gantt messages. Use this option to customize or localize the gantt messages.</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentganttmessagessettingsbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GanttMessagesSettingsBuilder">Kendo.Mvc.UI.Fluent.GanttMessagesSettingsBuilder</a>&gt;</h5>
+<p>The action that configures the messages.</p>
+
+<h3 id="selectablesystemboolean">Selectable(System.Boolean)</h3>
+<p>If set to false the user won"t be able to select tasks in the gantt. By default selection is enabled and triggers the change event.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-systemboolean-4">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the selectable.</p>
+
+<h3 id="showworkdayssystemboolean">ShowWorkDays(System.Boolean)</h3>
+<p>If set to false, gantt views will show all days of the week. By default the views display only business days.</p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-systemboolean-5">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the showworkdays.</p>
+
+<h3 id="showworkhourssystemboolean">ShowWorkHours(System.Boolean)</h3>
+<p>If set to false, the day view will show all hours of the day. By default the view displays only business hours.</p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-systemboolean-6">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the showworkhours.</p>
+
+<h3 id="viewssystemactionkendomvcuifluentganttviewfactory">Views(System.Action&lt;Kendo.Mvc.UI.Fluent.GanttViewFactory&gt;)</h3>
+<p>The views displayed by the gantt and their configuration. The array items can be either objects specifying the view configuration or strings representing the view types (assuming default configuration).
+            By default the Kendo UI Gantt widget displays all three ("day", "week", and "month") views.</p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentganttviewfactory">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GanttViewFactory">Kendo.Mvc.UI.Fluent.GanttViewFactory</a>&gt;</h5>
+<p>The action that configures the views.</p>
+
+<h3 id="eventssystemactionkendomvcuifluentgantteventbuilder">Events(System.Action&lt;Kendo.Mvc.UI.Fluent.GanttEventBuilder&gt;)</h3>
+<p>Configures the client-side events.</p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentgantteventbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GanttEventBuilder">Kendo.Mvc.UI.Fluent.GanttEventBuilder</a>&gt;</h5>
+<p>The client events action.</p>
+
+<h4 id="example-aspx-2">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Gantt()
+.Name("Gantt")
+.Events(events =&gt; events
+    .DataBinding("onDataBinding")
+)
+%&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

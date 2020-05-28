@@ -1,0 +1,399 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/chart/xaxisitem.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendochart-xaxisitem">&lt;kendo:chart-xAxisItem&gt;</h1>
+
+<p>The X-axis configuration options of the scatter chart X-axis. Supports all valueAxis options.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxis&gt;
+    &lt;kendo:chart-xAxisItem&gt;&lt;/kendo:chart-xAxisItem&gt;
+&lt;/kendo:chart-xAxis&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="axiscrossingvalue-javalangobject">axisCrossingValue <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Value at which the Y axis crosses this axis. (Only for object)Value indices at which the Y axes cross the value axis. (Only for array)Date at which the Y axis crosses this axis. (Only for date)</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem axisCrossingValue="axisCrossingValue"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="background-javalangstring">background <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The background color of the axis.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem background="background"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="baseunit-javalangstring">baseUnit <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The base time interval for the axis labels. The default baseUnit is determined automatically from the value range. Available options:</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem baseUnit="baseUnit"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="color-javalangstring">color <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The color of the axis. Accepts a valid CSS color string, including hex and rgb.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem color="color"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="majorunit-float">majorUnit <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The interval between major divisions.
+If this is a date axis the value represents the number of xAxis.baseUnits between major divisions.
+If the xAxis.type is set to "log", the majorUnit value will be used for the base of the logarithm.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem majorUnit="majorUnit"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="max-javalangobject">max <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The maximum value of the axis.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem max="max"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="min-javalangobject">min <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The minimum value of the axis.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem min="min"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="minorunit-float">minorUnit <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The interval between minor divisions. It defaults to 1/5th of the xAxis.majorUnit.
+If the xAxis.type is set to "log", the minorUnit value represents the number of divisions between two major units and defaults to the major unit minus one.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem minorUnit="minorUnit"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="name-javalangobject">name <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The unique axis name. Used to associate a series with a x axis using the series.xAxis option.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem name="name"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="narrowrange-boolean">narrowRange <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the chart will prevent the automatic axis range from snapping to 0.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem narrowRange="narrowRange"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="pane-javalangstring">pane <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The name of the pane that the axis should be rendered in.
+The axis will be rendered in the first (default) pane if not set.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem pane="pane"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="reverse-boolean">reverse <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the value axis direction will be reversed. By default values increase from left to right and from bottom to top.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem reverse="reverse"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="startangle-float">startAngle <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The angle (degrees) where the 0 value is placed.Angles increase counterclockwise and zero is to the right. Negative values are acceptable.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem startAngle="startAngle"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The axis type.The supported values are:</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem type="type"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="visible-boolean">visible <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the chart will display the x axis. By default the x axis is visible.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem visible="visible"&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendochart-xaxisitem-crosshair">kendo:chart-xAxisItem-crosshair</h3>
+
+<p>The crosshair configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/xaxisitem-crosshair">kendo:chart-xAxisItem-crosshair</a>.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem&gt;
+    &lt;kendo:chart-xAxisItem-crosshair&gt;&lt;/kendo:chart-xAxisItem-crosshair&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-xaxisitem-labels">kendo:chart-xAxisItem-labels</h3>
+
+<p>The axis labels configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/xaxisitem-labels">kendo:chart-xAxisItem-labels</a>.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem&gt;
+    &lt;kendo:chart-xAxisItem-labels&gt;&lt;/kendo:chart-xAxisItem-labels&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-xaxisitem-line">kendo:chart-xAxisItem-line</h3>
+
+<p>The configuration of the axis lines. Also affects the major and minor ticks, but not the grid lines.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/xaxisitem-line">kendo:chart-xAxisItem-line</a>.</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem&gt;
+    &lt;kendo:chart-xAxisItem-line&gt;&lt;/kendo:chart-xAxisItem-line&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-xaxisitem-majorgridlines">kendo:chart-xAxisItem-majorGridLines</h3>
+
+<p>The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the
+body of the chart.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/xaxisitem-majorgridlines">kendo:chart-xAxisItem-majorGridLines</a>.</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem&gt;
+    &lt;kendo:chart-xAxisItem-majorGridLines&gt;&lt;/kendo:chart-xAxisItem-majorGridLines&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-xaxisitem-majorticks">kendo:chart-xAxisItem-majorTicks</h3>
+
+<p>The configuration of the scatter chart x axis major ticks.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/xaxisitem-majorticks">kendo:chart-xAxisItem-majorTicks</a>.</p>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem&gt;
+    &lt;kendo:chart-xAxisItem-majorTicks&gt;&lt;/kendo:chart-xAxisItem-majorTicks&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-xaxisitem-minorgridlines">kendo:chart-xAxisItem-minorGridLines</h3>
+
+<p>The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the
+body of the chart.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/xaxisitem-minorgridlines">kendo:chart-xAxisItem-minorGridLines</a>.</p>
+
+<h4 id="example-21">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem&gt;
+    &lt;kendo:chart-xAxisItem-minorGridLines&gt;&lt;/kendo:chart-xAxisItem-minorGridLines&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-xaxisitem-minorticks">kendo:chart-xAxisItem-minorTicks</h3>
+
+<p>The configuration of the x axis minor ticks.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/xaxisitem-minorticks">kendo:chart-xAxisItem-minorTicks</a>.</p>
+
+<h4 id="example-22">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem&gt;
+    &lt;kendo:chart-xAxisItem-minorTicks&gt;&lt;/kendo:chart-xAxisItem-minorTicks&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-xaxisitem-notes">kendo:chart-xAxisItem-notes</h3>
+
+<p>The x axis notes configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/xaxisitem-notes">kendo:chart-xAxisItem-notes</a>.</p>
+
+<h4 id="example-23">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem&gt;
+    &lt;kendo:chart-xAxisItem-notes&gt;&lt;/kendo:chart-xAxisItem-notes&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-xaxisitem-plotbands">kendo:chart-xAxisItem-plotBands</h3>
+
+<p>The plot bands of the x axis.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/xaxisitem-plotbands">kendo:chart-xAxisItem-plotBands</a>.</p>
+
+<h4 id="example-24">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem&gt;
+    &lt;kendo:chart-xAxisItem-plotBands&gt;&lt;/kendo:chart-xAxisItem-plotBands&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-xaxisitem-title">kendo:chart-xAxisItem-title</h3>
+
+<p>The title configuration of the scatter chart x axis.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/xaxisitem-title">kendo:chart-xAxisItem-title</a>.</p>
+
+<h4 id="example-25">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-xAxisItem&gt;
+    &lt;kendo:chart-xAxisItem-title&gt;&lt;/kendo:chart-xAxisItem-title&gt;
+&lt;/kendo:chart-xAxisItem&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

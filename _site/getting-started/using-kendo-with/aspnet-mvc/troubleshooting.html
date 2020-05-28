@@ -1,0 +1,422 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Troubleshooting guide for Telerik UI for ASP.NET MVC</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Find solutions for common problems which you may face while using Telerik UI for ASP.NET MVC">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/troubleshooting.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="troubleshooting">Troubleshooting</h1>
+
+<p>This page provides solutions for common problems you may encounter while working with Telerik UI for ASP.NET MVC. In addition you could check the general <a href="/getting-started/troubleshooting">Kendo UI troubleshooting help topic</a>.</p>
+
+<h2 id="javascript-error-that-jquery-is-unavailable-or-undefined">JavaScript error that jQuery is unavailable or undefined</h2>
+
+<p>If jQuery is not included, or is included after the Kendo UI JavaScript files, or is included after Kendo UI widget declarations, the Kendo UI widgets will not function as expected.
+Check the <a href="/getting-started/troubleshooting#javascript-error-that-jquery-is-unavailable-or-undefined">Kendo UI troubleshooting help topic</a> for more symptoms.</p>
+
+<p>Make sure that jQuery is included <strong>before</strong> the Kendo UI JavaScript files, and before any Kendo UI widget declarations,
+unless <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction#deferring-kendo-ui-initialization-scripts">deferred initialization</a> is used.
+If using ASP.NET bundles move the <code class="language-plaintext highlighter-rouge">Scripts.Render("~/bundles/jquery")</code> block <strong>before</strong> the Kendo JavaScript files.</p>
+
+<h2 id="javascript-error-that-kendo-widgets-are-unavailable-or-undefined">JavaScript error that Kendo widgets are unavailable or undefined</h2>
+
+<p>If jQuery is included more than once in the page all existing jQuery plugins (including Kendo UI) will be wiped out. Will also occur
+if the <a href="/getting-started/javascript-dependencies">required Kendo JavaScript files</a> are not included.</p>
+
+<p>Check the <a href="/getting-started/troubleshooting#javascript-error-that-kendo-widgets-are-unavailable-or-undefined">Kendo UI troubleshooting help topic</a> for more symptoms.</p>
+
+<p>Make sure jQuery is not included more than once in your page. Remove any duplicate <code class="language-plaintext highlighter-rouge">script</code> references to jQuery. Include all <a href="/getting-started/javascript-dependencies">required Kendo JavaScript files</a>.</p>
+
+<p>If the application is also using Telerik Extensions for ASP.NET MVC tell the <code class="language-plaintext highlighter-rouge">ScriptRegistrar</code> not to include jQuery:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Telerik().ScriptRegistrar().jQuery(false)
+</code></pre></div></div>
+
+<p>If using ASP.NET bundles make sure the <code class="language-plaintext highlighter-rouge">Scripts.Render("~/bundles/jquery")</code> block appears <strong>before</strong> the Kendo JavaScript files. In that case you should not include jQuery as a <code class="language-plaintext highlighter-rouge">script</code> element.</p>
+
+<h2 id="javascript-error-that-live-method-is-unavailable-undefined-or-unsupported">JavaScript error that live method is unavailable, undefined or unsupported</h2>
+
+<p>This error occurs after upgrading jQuery to 1.9. The <code class="language-plaintext highlighter-rouge">live</code> method is no longer available in this version of jQuery.
+As a result some JavaScript libraries which are often used in ASP.NET MVC applications will throw errors.
+Those libraries are <strong>jquery.unobtrusive-ajax</strong>, <strong>jquery.validate</strong> and <strong>jquery.validate.unobtrusive</strong>. You need to update the following packages via <a href="http://nuget.org">Nuget</a>:</p>
+
+<ul>
+  <li><a href="https://nuget.org/packages/jQuery.Validation">jQuery.Validation</a></li>
+  <li><a href="http://nuget.org/packages/Microsoft.jQuery.Unobtrusive.Ajax">Microsoft.jQuery.Unobtrusive.Ajax</a></li>
+  <li><a href="http://nuget.org/packages/Microsoft.jQuery.Unobtrusive.Validation">Microsoft.jQuery.Unobtrusive.Validation</a></li>
+</ul>
+
+<blockquote>
+  <p><strong>Important</strong>: In ASP.NET MVC 3 applications <strong>jquery.unobtrusive-ajax</strong> and <strong>jquery.validate.unobtrusive</strong> are not installed as NUget packages.
+You would need to install them separately. The packages are <a href="http://nuget.org/packages/Microsoft.jQuery.Unobtrusive.Ajax">Microsoft.jQuery.Unobtrusive.Ajax</a> and <a href="http://nuget.org/packages/Microsoft.jQuery.Unobtrusive.Validation">Microsoft.jQuery.Unobtrusive.Validation</a>.
+First you must delete <strong>jquery.unobtrusive-ajax.js</strong>, <strong>jquery.unobtrusive-ajax.min.js</strong>, <strong>jquery.validate.unobtrusive.js</strong> and <strong>jquery.validate.unobtrusive.min.js</strong>
+from your <strong>~/Sripts</strong> folder. Then install Microsoft.jQuery.Unobtrusive.Ajax and Microsoft.jQuery.Unobtrusive.Validation.</p>
+</blockquote>
+
+<h2 id="visual-studio-intellisense-does-not-show-the-kendo-htmlhelper-extension-method">Visual Studio IntelliSense does not show the Kendo HtmlHelper extension method</h2>
+
+<h3 id="solution">Solution</h3>
+
+<ol>
+  <li>Make sure the <code class="language-plaintext highlighter-rouge">Kendo.Mvc.UI</code> namespace is imported in <code class="language-plaintext highlighter-rouge">web.config</code>.
+    <ul>
+      <li>
+        <p>If you are using the WebForms view engine open the <strong>web.config</strong> file in the root folder of your application. Add
+  <code class="language-plaintext highlighter-rouge">&lt;add namespace="Kendo.Mvc.UI" /&gt;</code> before the closing <code class="language-plaintext highlighter-rouge">namespaces</code> tag:</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   &lt;namespaces&gt;
+       &lt;add namespace="System.Web.Mvc" /&gt;
+       &lt;add namespace="System.Web.Mvc.Ajax" /&gt;
+       &lt;add namespace="System.Web.Mvc.Html" /&gt;
+       &lt;add namespace="System.Web.Routing" /&gt;
+       &lt;add namespace="System.Linq" /&gt;
+       &lt;add namespace="System.Collections.Generic" /&gt;
+       &lt;add namespace="Kendo.Mvc.UI" /&gt;
+   &lt;/namespaces&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>If you are using the Razor view engine open the <strong>web.config</strong> file which is in the <strong>Views</strong> folder
+  of your application.Add <code class="language-plaintext highlighter-rouge">&lt;add namespace="Kendo.Mvc.UI" /&gt;</code> before the closing <code class="language-plaintext highlighter-rouge">namespaces</code> tag:</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   &lt;system.web.webPages.razor&gt;
+       &lt;pages pageBaseType="System.Web.Mvc.WebViewPage"&gt;
+           &lt;namespaces&gt;
+               &lt;add namespace="System.Web.Mvc" /&gt;
+               &lt;add namespace="System.Web.Mvc.Ajax" /&gt;
+               &lt;add namespace="System.Web.Mvc.Html" /&gt;
+               &lt;add namespace="System.Web.Routing" /&gt;
+               &lt;add namespace="Kendo.Mvc.UI" /&gt;
+           &lt;/namespaces&gt;
+       &lt;/pages&gt;
+   &lt;/system.web.webPages.razor&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Rebuild your solution.</li>
+  <li>Close and open again the view you were editing. Intellisense should be working now.</li>
+</ol>
+
+<h2 id="menu-renders-too-slow-in-debug-mode">Menu renders too slow in debug mode</h2>
+
+<p>The Menu has security trimming functionality, which is enabled by default. Under the hood,
+it creates an <a href="http://msdn.microsoft.com/en-us/library/system.web.mvc.authorizationcontext(v=vs.108).aspx">AuthorizationContext</a> for every menu item
+with set Action/Controller. In "debug" mode those context objects are not cached and as a result there may be delay in rendering the menu in
+case there are a lot of items. When your application is deployed and debug mode is disabled the authorization context objects are cached.</p>
+
+<p>More info about ASP.NET debug mode can be found in the Scott Guthrie"s blog post: <a href="http://weblogs.asp.net/scottgu/archive/2006/04/11/Don_1920_t-run-production-ASP.NET-Applications-with-debug_3D001D20_true_1D20_-enabled.aspx">Don’t run production ASP.NET Applications with debug="true" enabled</a>.</p>
+
+<h3 id="solution-1">Solution</h3>
+
+<ol>
+  <li>Disable security trimming (if not needed or during development). Enable it again when deploying the site.
+    <ul>
+      <li>
+        <p>WebForms View Engine</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().Menu()
+          .SecurityTrimming(false)
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().Menu()
+        .SecurityTrimming(false)
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Disable debug mode. Set the <code class="language-plaintext highlighter-rouge">debug</code> attribute of the <code class="language-plaintext highlighter-rouge">compilation</code> element in web.config to <code class="language-plaintext highlighter-rouge">false</code>:</p>
+
+    <compilation debug="false">
+
+</compilation>
+  </li>
+</ol>
+<h2 id="widgets-value-is-not-bound-to-the-models-property">Widget"s value is not bound to the Model"s property</h2>
+
+<p>If widget"s name is different than the Model"s property then the ModelBinder will not be able to update the model.</p>
+
+<h3 id="solution-2">Solution</h3>
+
+<p>Verify that the name of the widget is the same as the Model"s property you want to update.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> If strongly-typed widget is used do not set Name manually, because name is generated automatically.</p>
+</blockquote>
+
+<h2 id="loading-icon-of-autocompletecomboboxdropdownlistmultiselect-continues-spinning">Loading icon of AutoComplete/ComboBox/DropDownList/MultiSelect continues spinning</h2>
+
+<p>The most common cause of this issue is an <a href="http://www.checkupdown.com/status/E500.html">internal server error</a>.</p>
+<h3 id="solution-3">Solution</h3>
+
+<p>Verify that GET requests are allowed:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public JsonResult GetCascadeCategories()
+    {
+        var northwind = new NorthwindDataContext();
+
+        return Json(northwind.Categories, **JsonRequestBehavior.AllowGet**);
+    }
+</code></pre></div></div>
+
+<p>or change HTTP verb of the DataSource:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* WebForms View Engine
+
+        &lt;%: Html.Kendo().ComboBox()
+                .Name("ComboBox")
+                .DataSource(read =&gt; {
+                    read.Action("GetCascadeCategories", "ComboBox").Type(HttpVerbs.Post);
+                })
+        %&gt;
+* Razor
+
+        @(Html.Kendo().ComboBox()
+              .Name("ComboBox")
+              .DataSource(read =&gt; {
+                  read.Action("GetCascadeCategories", "ComboBox").Type(HttpVerbs.Post);
+              })
+        )
+</code></pre></div></div>
+
+<h2 id="autocompletecomboboxdropdownlistmultiselect-does-not-work-with-remote-binding-and-there-are-no-errors">AutoComplete/ComboBox/DropDownList/MultiSelect does not work with remote binding and there are no errors</h2>
+
+<p>The most common cause of this issue is to use ToDataSourceResult extension method when returning Data. Please note that the method returns the result in a JSON structure,
+which is understandable only for the Grid widget.</p>
+
+<h3 id="solution-4">Solution</h3>
+
+<p>Return simple array of data:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public JsonResult GetCascadeCategories()
+    {
+        var northwind = new NorthwindDataContext();
+
+        //TODO: Do not use northwind.Categories.ToDataSourceResult();
+
+        return Json(northwind.Categories, **JsonRequestBehavior.AllowGet**);
+    }
+</code></pre></div></div>
+
+<p>or return Data property only:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public JsonResult GetCascadeCategories([DataSourceRequest] DataSourceRequest request)
+    {
+        var northwind = new NorthwindDataContext();
+
+        return Json(northwind.Categories.ToDataSourceResult(request).Data, **JsonRequestBehavior.AllowGet**);
+    }
+</code></pre></div></div>
+
+<p>In "Getting Started" section of every widget you can find "Configure widget for ajax binding". It clearly shows how to return data to the client.</p>
+
+<h2 id="only-one-instance-of-the-widget-works-in-the-page">Only one instance of the widget works in the page</h2>
+
+<p>This will happen if two or more widgets have the same <code class="language-plaintext highlighter-rouge">Name()</code>. The value specified via the <code class="language-plaintext highlighter-rouge">Name()</code> method is used as the <code class="language-plaintext highlighter-rouge">id</code> HTML attribute of the widget. The latter must be unique in the page.</p>
+
+<h3 id="solution-5">Solution</h3>
+
+<p>Always use unique widget names. For example you can append an index to make the name unique.</p>
+
+<h2 id="loading-a-partial-view-that-contains-a-kendo-ui-widget-works-only-the-first-time">Loading a partial view that contains a Kendo UI widget works only the first time</h2>
+
+<p>This happens because there is more than one Kendo UI widget with the same <code class="language-plaintext highlighter-rouge">Name()</code>. Check the solution of the previous problem.</p>
+
+<h2 id="using-htmlkendosomekendowidgetfor-helper-does-not-update-the-bound-property-on-the-server">Using Html.Kendo().SomeKendoWidgetFor() helper does not update the bound property on the server</h2>
+
+<p>Most probably this is happening because you have specified Name() for the widget which is different than the property name. Since the Name() controlls not only the "id" attribute of the input element but the "name" attribute as well,
+the MVC model binder will fail to bind the value.</p>
+
+<h3 id="solution-6">Solution</h3>
+
+<p>Omit specifying Name() or use the same Name() as the name of the property.</p>
+
+<h2 id="kendo-ui-wrappers-do-not-work-inside-client-templates">Kendo UI wrappers do not work inside client templates</h2>
+
+<p>This can happen if the wrapper is declared without ToClientTemplate(). For more information please refer to
+<a href="/getting-started/using-kendo-with/aspnet-mvc/fundamentals#client-templates">Using Kendo UI MVC wrappers inside client templates</a></p>
+
+<h2 id="nesting-kendo-ui-wrappers-produces-a-server-side-exception-when-using-the-webforms-view-engine">Nesting Kendo UI wrappers produces a server-side exception when using the WebForms view engine</h2>
+
+<p>This can happen if the nested wrappers are declared within code blocks, which output content directly, i.e. <code class="language-plaintext highlighter-rouge">&lt;%= %&gt;</code> or <code class="language-plaintext highlighter-rouge">&lt;%: %&gt;</code>.
+The following exception is thrown: <strong>Invalid expression term ")"</strong>.
+For example:</p>
+
+<h3 id="wrong">Wrong</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%: Html.Kendo().Splitter()
+	.Name("splitter")
+	.Panes(panes =&gt;
+	{
+		panes.Add()
+		.Content(() =&gt;
+		{ %&gt;
+			&lt;%:  Html.Kendo().NumericTextBox().Name("textbox") %&gt;
+		&lt;% });
+	})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="correct">Correct</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;% Html.Kendo().Splitter()
+	.Name("splitter")
+	.Panes(panes =&gt;
+	{
+		panes.Add()
+		.Content(() =&gt;
+		{ %&gt;
+			&lt;%:  Html.Kendo().NumericTextBox().Name("textbox") %&gt;
+		&lt;% });
+	})
+	.Render();
+%&gt;
+</code></pre></div></div>
+
+<h2 id="nesting-kendo-ui-wrappers-produces-a-server-side-exception-when-using-the-razor-view-engine">Nesting Kendo UI wrappers produces a server-side exception when using the Razor view engine</h2>
+
+<p>This can happen if there are nested <code class="language-plaintext highlighter-rouge">&lt;text&gt;</code> tags, which is not allowed by the Razor view engine.
+The following exception is thrown: <strong>Inline markup blocks cannot be nested. Only one level of inline markup is allowed</strong>.
+In such scenarios the inner widget can be included via a custom helper. For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@helper PanelBarHelper()
+{
+	@(
+		Html.Kendo().PanelBar()
+			.Name("PanelBar")
+			.Items(items =&gt;
+			{
+				items.Add().Text("Item 1")
+					.Content(@&lt;text&gt;
+						Root Item 1 Inner Content
+					&lt;/text&gt;);
+			})
+	)
+}
+
+@(Html.Kendo().TabStrip()
+	.Name("tabstrip")
+	.Items(tabstrip =&gt;
+	{
+		tabstrip.Add().Text("Text")
+			.Content(@&lt;text&gt;
+				&lt;p&gt;some text before&lt;/p&gt;
+				@PanelBarHelper()
+				&lt;p&gt;some text after&lt;/p&gt;
+			&lt;/text&gt;);
+	})
+)
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

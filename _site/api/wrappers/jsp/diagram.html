@@ -1,0 +1,561 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/diagram.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodiagram">&lt;kendo:diagram&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/dataviz/diagram">Diagram</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="autobind-boolean">autoBind <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram autoBind="autoBind"&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="editable-boolean">editable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Specifies the shape editable. Further configuration is available via <a href="#kendo-diagram-editable">kendo:diagram-editable</a>.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram editable="editable"&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="selectable-boolean">selectable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Defines the selectable options. Further configuration is available via <a href="#kendo-diagram-selectable">kendo:diagram-selectable</a>.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram selectable="selectable"&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="template-javalangstring">template <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template which renders the content of the shape when bound to a dataSource. The names you can use in the template correspond to the properties used in the dataSource. See the dataSource topic below for a concrete example.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram template="template"&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="zoom-float">zoom <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The zoom level in percentages.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram zoom="zoom"&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="zoommax-float">zoomMax <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The zoom max level in percentages.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram zoomMax="zoomMax"&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="zoommin-float">zoomMin <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The zoom min level in percentages.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram zoomMin="zoomMin"&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="zoomrate-float">zoomRate <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The zoom step when using the mouse-wheel to zoom in or out.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram zoomRate="zoomRate"&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendodiagram-connectiondefaults">kendo:diagram-connectionDefaults</h3>
+
+<p>Defines the connections configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/connectiondefaults">kendo:diagram-connectionDefaults</a>.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-connectionDefaults&gt;&lt;/kendo:diagram-connectionDefaults&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-connections">kendo:diagram-connections</h3>
+
+<p>Defines the connections configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/connections">kendo:diagram-connections</a>.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-connections&gt;&lt;/kendo:diagram-connections&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-editable">kendo:diagram-editable</h3>
+
+<p>Specifies the shape editable.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/editable">kendo:diagram-editable</a>.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-editable&gt;&lt;/kendo:diagram-editable&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-layout">kendo:diagram-layout</h3>
+
+<p>The layout of a diagram consists in arranging the shapes (sometimes also the connections) in some fashion in order to achieve an aesthetically pleasing experience to the user. It aims at giving a more direct insight in the information contained within the diagram and its relational structure.On a technical level, layout consists of a multitude of algorithms and optimizations:and various ad-hoc calculations which depend on the type of layout. The criteria on which an algorithm is based vary but the common denominator is:Kendo diagram includes three of the most used layout algorithms which should cover most of your layout needs - tree layout, force-directed layout and layered layout. Please, check the type property for more details regarding each type.The generic way to apply a layout is by calling the layout() method on the diagram. The method has a single parameter options. It is an object, which can contain parameters which are specific to the layout as well as parameters customizing the global grid layout. Parameters which apply to other layout algorithms can be included but are overlooked if not applicable to the chose layout type. This means that you can define a set of parameters which cover all possible layout types and simply pass it in the method whatever the layout define in the first parameter.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/layout">kendo:diagram-layout</a>.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-layout&gt;&lt;/kendo:diagram-layout&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-selectable">kendo:diagram-selectable</h3>
+
+<p>Defines the selectable options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/selectable">kendo:diagram-selectable</a>.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-selectable&gt;&lt;/kendo:diagram-selectable&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-shapedefaults">kendo:diagram-shapeDefaults</h3>
+
+<p>Defines the shape options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/shapedefaults">kendo:diagram-shapeDefaults</a>.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-shapeDefaults&gt;&lt;/kendo:diagram-shapeDefaults&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-shapes">kendo:diagram-shapes</h3>
+
+<p>Defines the shape options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/shapes">kendo:diagram-shapes</a>.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-shapes&gt;&lt;/kendo:diagram-shapes&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="change-string">change <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when an item is added or removed to/from the diagram.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-change">change</a> event documentation.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram change="handle_change"&gt;
+&lt;/kendo:diagram&gt;
+&lt;script&gt;
+    function handle_change(e) {
+        // Code to handle the change event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="itemboundschange-string">itemBoundsChange <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the location or size of an item are changed.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-itemBoundsChange">itemBoundsChange</a> event documentation.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram itemBoundsChange="handle_itemBoundsChange"&gt;
+&lt;/kendo:diagram&gt;
+&lt;script&gt;
+    function handle_itemBoundsChange(e) {
+        // Code to handle the itemBoundsChange event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="itemrotate-string">itemRotate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when an item is rotated.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-itemRotate">itemRotate</a> event documentation.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram itemRotate="handle_itemRotate"&gt;
+&lt;/kendo:diagram&gt;
+&lt;script&gt;
+    function handle_itemRotate(e) {
+        // Code to handle the itemRotate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pan-string">pan <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user pans the diagram.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-pan">pan</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram pan="handle_pan"&gt;
+&lt;/kendo:diagram&gt;
+&lt;script&gt;
+    function handle_pan(e) {
+        // Code to handle the pan event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select-string">select <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user selects one or more items.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-select">select</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram select="handle_select"&gt;
+&lt;/kendo:diagram&gt;
+&lt;script&gt;
+    function handle_select(e) {
+        // Code to handle the select event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoomstart-string">zoomStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user starts changing the diagram zoom level.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-zoomStart">zoomStart</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram zoomStart="handle_zoomStart"&gt;
+&lt;/kendo:diagram&gt;
+&lt;script&gt;
+    function handle_zoomStart(e) {
+        // Code to handle the zoomStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoomend-string">zoomEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user changes the diagram zoom level.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-zoomEnd">zoomEnd</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram zoomEnd="handle_zoomEnd"&gt;
+&lt;/kendo:diagram&gt;
+&lt;script&gt;
+    function handle_zoomEnd(e) {
+        // Code to handle the zoomEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="click-string">click <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user clicks on a shape or a connection.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-click">click</a> event documentation.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram click="handle_click"&gt;
+&lt;/kendo:diagram&gt;
+&lt;script&gt;
+    function handle_click(e) {
+        // Code to handle the click event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendodiagram-change">kendo:diagram-change</h3>
+
+<p>Fired when an item is added or removed to/from the diagram.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-change">change</a> event documentation.</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-change&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the change event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:diagram-change&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-itemboundschange">kendo:diagram-itemBoundsChange</h3>
+
+<p>Fired when the location or size of an item are changed.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-itemBoundsChange">itemBoundsChange</a> event documentation.</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-itemBoundsChange&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the itemBoundsChange event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:diagram-itemBoundsChange&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-itemrotate">kendo:diagram-itemRotate</h3>
+
+<p>Fired when an item is rotated.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-itemRotate">itemRotate</a> event documentation.</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-itemRotate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the itemRotate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:diagram-itemRotate&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-pan">kendo:diagram-pan</h3>
+
+<p>Fired when the user pans the diagram.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-pan">pan</a> event documentation.</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-pan&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the pan event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:diagram-pan&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-select">kendo:diagram-select</h3>
+
+<p>Fired when the user selects one or more items.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-select">select</a> event documentation.</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-select&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the select event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:diagram-select&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-zoomstart">kendo:diagram-zoomStart</h3>
+
+<p>Fired when the user starts changing the diagram zoom level.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-zoomStart">zoomStart</a> event documentation.</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-zoomStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the zoomStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:diagram-zoomStart&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-zoomend">kendo:diagram-zoomEnd</h3>
+
+<p>Fired when the user changes the diagram zoom level.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-zoomEnd">zoomEnd</a> event documentation.</p>
+
+<h4 id="example-29">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-zoomEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the zoomEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:diagram-zoomEnd&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-click">kendo:diagram-click</h3>
+
+<p>Fired when the user clicks on a shape or a connection.</p>
+
+<p>For additional information check the <a href="/api/dataviz/diagram#events-click">click</a> event documentation.</p>
+
+<h4 id="example-30">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-click&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the click event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:diagram-click&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

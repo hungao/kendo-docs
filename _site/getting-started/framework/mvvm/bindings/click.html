@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Click binding in Kendo UI MVVM | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Once the user clicks the target DOM element, methods, attached by using the click binding in Kendo UI MVVM, are automatically triggered.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/mvvm/bindings/click.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="click-binding">Click binding</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">click</code> binding will attach a method of the View-Model to the <code class="language-plaintext highlighter-rouge">click</code> DOM event of the target element. The methods will be invoked when the user clicks the target DOM element.</p>
+
+<h2 id="using-the-click-binding">Using the click binding</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="view"&gt;
+&lt;span data-bind="click: showDescription"&gt;Show description&lt;/span&gt;
+&lt;span data-bind="visible: isDescriptionShown, text: description"&gt;&lt;/span&gt;
+
+&lt;script&gt;
+var viewModel = kendo.observable({
+    description: "Description",
+    isDescriptionShown: false,
+    showDescription: function(e) {
+        // show the span by setting isDescriptionShown to true
+        this.set("isDescriptionShown", true);
+    }
+});
+
+kendo.bind($("#view"), viewModel);
+&lt;/script&gt;
+ &lt;/div&gt;
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">click</code> binding is a shorthand for the <a href="events">events</a> binding. The following code snippets are equivalent:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span data-bind="click: clickHandler"&gt;&lt;/span&gt;
+
+&lt;span data-bind="events: { click: clickHandler }"&gt;&lt;/span&gt;
+</code></pre></div></div>
+
+<h2 id="accessing-the-dom-event-argument">Accessing the DOM event argument</h2>
+
+<p>Kendo MVVM supplies the DOM event argument wrapped in a jQuery <a href="http://api.jquery.com/category/events/event-object/">Event object</a>.</p>
+
+<h2 id="stopping-dom-event-bubbling">Stopping DOM event bubbling</h2>
+
+<p>To stop the event from bubbling up the DOM tree use the <a href="http://api.jquery.com/event.stopPropagation/">stopPropagation</a> method.</p>
+
+<h3 id="stop-event-bubbling">Stop event bubbling</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span data-bind="click: click"&gt;Click&lt;/span&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    click: function(e) {
+        e.stopPropagation();
+    }
+});
+
+kendo.bind($("span"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="preventing-the-default-action-of-the-dom-event">Preventing the default action of the DOM event</h2>
+
+<p>For some DOM elements the <code class="language-plaintext highlighter-rouge">click</code> event has a default action - for example navigate to another page or submit a form. To prevent the default action use the
+<a href="http://api.jquery.com/event.preventDefault/">preventDefault</a> method.</p>
+
+<h3 id="prevent-default-event-action">Prevent default event action</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a href="http://example.com" data-bind="click: click"&gt;Click&lt;/span&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    click: function(e) {
+        // stop the browser from navigating to http://example.com
+        e.preventDefault();
+    }
+});
+
+kendo.bind($("a"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

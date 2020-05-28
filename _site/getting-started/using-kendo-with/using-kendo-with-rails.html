@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Examples of using Kendo UI in Ruby on Rails apps</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to quickly add Kendo UI to your Ruby on Rails application with the kendoui-rails Gem.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/using-kendo-with-rails.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="using-kendo-with-ruby-on-rails">Using Kendo with Ruby on Rails</h1>
+
+<p>In this article, I"ll show you how to get up and running with Kendo UI in Ruby on Rails applications. In particular, I cover using the <a href="https://rubygems.org/gems/kendoui-rails" title="kendoui-rails Gem">kendoui-rails Gem</a>, though the concepts in this article are the same if you are using a fully-licensed version of Kendo UI.</p>
+
+<h3 id="kendoui-rails-a-ruby-gem-for-rails-apps"><code class="language-plaintext highlighter-rouge">kendoui-rails</code>: A Ruby Gem for Rails Apps</h3>
+
+<p>Ruby on Rails developers love speeding up common development tasks, and we do too. As such, we created the <a href="https://rubygems.org/gems/kendoui-rails" title="kendoui-rails Gem">kendoui-rails</a> gem to get Kendo UI into your Rails apps with little manual effort on your part. If you"re using the Rails 3.1+ <a href="http://guides.rubyonrails.org/asset_pipeline.html" title="Rails 3.1 Asset Pipeline">Asset Pipeline</a>, you can get up and running with Kendo UI with two simple commands. Even if not, or if you"re using an older version of Rails, this gem will get you rolling with Rails faster.</p>
+
+<p>If you want the sources, check it out over at <a href="https://github.com/telerik/kendoui_rails" title="kendoui_rails on GitHub">http://github.com/telerik/kendoui_rails</a>, and feel free to fork it, send us pull-requests, enter issues or offer any other kind of feedback you think we need.</p>
+
+<blockquote>
+  <p>The kendo-rails gem provides a GPLv3-licensed version of the latest major release of Kendo UI Web. If you own a licensed version of Kendo UI DataViz or Kendo UI Mobile and you want to use the Gem, you can create a private fork and extend the pipeline references below.</p>
+</blockquote>
+
+<h3 id="installing-the-kendoui-rails-gem">Installing the <code class="language-plaintext highlighter-rouge">kendoui-rails</code> Gem</h3>
+
+<p>To start using rails with Kendo UI, create a new Rails application:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rails new shoe_fodder
+ 	$ cd shoe_fodder
+</code></pre></div></div>
+
+<p>Then, edit your Gemfile by adding a reference to the gem, just after <code class="language-plaintext highlighter-rouge">gem 'jquery-rails'</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem 'kendoui-rails'
+</code></pre></div></div>
+
+<blockquote>
+  <p>Because Kendo UI depends on jQuery, kendoui-rails depends on the jquery-rails gem, so make sure to add a reference to this gem as well if it"s no longer in your Gemfile for some reason.</p>
+</blockquote>
+
+<p>Now, return to your console and run <code class="language-plaintext highlighter-rouge">bundle install.</code> Check that wall of text that Bundler sends your way to confirm that kendoui-rails has been properly installed.</p>
+
+<h3 id="installing-kendo-ui-assets">Installing Kendo UI Assets</h3>
+
+<p>The kendoui-rails Gem includes a custom install generator that will make sure you have all the JavaScript and CSS you need to get going with Kendo. To use it, type the following in your console:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rails generate kendoui:install
+</code></pre></div></div>
+
+<p>Depending on your Rails version and environment, one of two things will happen in this step:</p>
+
+<ul>
+  <li>
+    <p>If you"re using Rails 3.1 or later, and have the new asset pipeline features enabled (they are, by default) the Gem will add the appropriate references to your <code class="language-plaintext highlighter-rouge">app/assets/javascripts/application.js</code> and <code class="language-plaintext highlighter-rouge">app/assets/stylesheets/application.css</code> files:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  // app/assets/javascripts/application.js
+  //= require kendo/kendo.all.min
+
+  /* app/assets/stylesheets/application.css */
+  *= require kendo/kendo.common.min
+  *= require kendo/kendo.default.min
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>If, on the other hand, you"re using Rails 3.0 or previous, or have the asset pipeline disabled, the Gem will manually copy all the needed assets into the <code class="language-plaintext highlighter-rouge">public/</code> folder of your app. From there, you"ll need to add the proper <code class="language-plaintext highlighter-rouge">&lt;link&gt;</code> and <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> references for Kendo UI.</p>
+  </li>
+</ul>
+
+<h3 id="specifying-an-alternate-theme">Specifying an Alternate Theme</h3>
+
+<p>Kendo UI ships with several out-of-the-box themes that you can use in your apps. In the example above, the default theme was installed into our app, but the Rails generator for the kendoui-rails gem provides a handy switch that you can use to specify another theme, if you wish. For instance, let"s say I want my app to use the BlueOpal theme:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rails generate kendoui:install --theme=blueopal
+</code></pre></div></div>
+
+<h3 id="using-rails-with-kendo-ui">Using Rails with Kendo UI</h3>
+
+<p>Once the generator command completes, I have everything I need to start using Kendo UI in my Rails app. I"ll start with some quick scaffolding and run the following in my terminal to generate a <code class="language-plaintext highlighter-rouge">shoe</code> model, including views and controller:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rails g scaffold shoe name price:decimal url replacement_mileage
+</code></pre></div></div>
+
+<p>Once that"s finished, I"ll migrate the database:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rake db:migrate
+</code></pre></div></div>
+
+<p>Now, to add a Kendo UI widget. I"ll navigate to my <code class="language-plaintext highlighter-rouge">shoes/new</code> view and add some Kendo goodness to the bottom of the page. In this case, an <a href="http://docs.telerik.com/kendo-ui/api/web/autocomplete" title="AutoComplete Reference">AutoComplete</a> box that provides some assistance to the user when naming a new shoe:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+  $(function() {
+  		var shoes = ["Nike Free", "Saucony Series 7", "Vibram Five Fingers"];
+        $("#shoe_name").kendoAutoComplete(shoes);
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Next, I"ll start up my server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rails server
+</code></pre></div></div>
+
+<p>And finally, open up a browser at <code class="language-plaintext highlighter-rouge">localhost:3000/shoes/new</code>.</p>
+
+<p><img src="/getting-started/using-kendo-with/images/shoefodder.png" alt="Kendo UI and Rails in Action" /></p>
+
+<p>Using Kendo UI with Rails in your apps is simple with the kendo-rails gem. If you want to view a recorded walk-through of this process, you can check out the embedded video below, or <a href="http://www.youtube.com/watch?v=7_KlxiCMQe8" title="Demo of the kendoui-rails Gem on YouTube">watch it over on our YouTube channel</a> (Note: be sure to watch in full screen mode to get all of the detail.)</p>
+
+<h3 id="see-the-gem-in-action">See the Gem in Action</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/7_KlxiCMQe8" frameborder="0"></iframe>
+
+<h3 id="links">Links</h3>
+
+<ul>
+  <li><a href="https://github.com/telerik/kendoui_rails" title="kendoui_rails on GitHub">kendoui-rails on GitHub</a></li>
+  <li><a href="https://rubygems.org/gems/kendoui-rails" title="kendoui-rails Gem">kendoui-rails at RubyGems.org</a></li>
+  <li><a href="http://www.youtube.com/watch?v=7_KlxiCMQe8" title="Demo of the kendoui-rails Gem on YouTube">Screencast on YouTube</a></li>
+</ul>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

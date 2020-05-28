@@ -1,0 +1,653 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI NumericTextBox</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Code examples and tips how to configure NumericTextBox widget, use available methods and events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/numerictextbox.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouinumerictextbox">kendo.ui.NumericTextBox</h1>
+
+<p>Represents the Kendo UI NumericTextBox widget. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="culture-stringdefault-en-us">culture <code class="language-plaintext highlighter-rouge">String</code><em>(default: "en-US")</em></h3>
+
+<p>Specifies the culture info used by the widget.</p>
+
+<h4 id="example---specify-german-culture-internationalization">Example - specify German culture internationalization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    culture: "de-DE"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="decimals-numberdefault-null">decimals <code class="language-plaintext highlighter-rouge">Number</code><em>(default: null)</em></h3>
+
+<p>Specifies the number precision. If not set precision defined by current culture is used.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    decimals: 1
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="downarrowtext-stringdefault-decrease-value">downArrowText <code class="language-plaintext highlighter-rouge">String</code><em>(default: "Decrease value")</em></h3>
+
+<p>Specifies the text of the tooltip on the down arrow.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    downArrowText: "Less"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="format-stringdefault-n">format <code class="language-plaintext highlighter-rouge">String</code><em>(default: "n")</em></h3>
+
+<p>Specifies the format of the number. Any <a href="/getting-started/framework/globalization/numberformatting">valid number format</a> is allowed.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+   format: "c0"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="max-numberdefault-null">max <code class="language-plaintext highlighter-rouge">Number</code><em>(default: null)</em></h3>
+
+<p>Specifies the largest value the user can enter.</p>
+
+<h4 id="example---specify-max-option">Example - specify max option</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    max: 100
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-max-option-as-a-html-attribute">Example - specify max option as a HTML attribute</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" max="100" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="min-numberdefault-null">min <code class="language-plaintext highlighter-rouge">Number</code><em>(default: null)</em></h3>
+
+<p>Specifies the smallest value the user can enter.</p>
+
+<h4 id="example---specify-max-option-1">Example - specify max option</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    min: -100
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-min-option-as-a-html-attribute">Example - specify min option as a HTML attribute</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" min="-100" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="placeholder-stringdefault-">placeholder <code class="language-plaintext highlighter-rouge">String</code><em>(default: "")</em></h3>
+
+<p>The hint displayed by the widget when it is empty. Not set by default.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    placeholder: "Select A Value"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="spinners-booleandefault-true">spinners <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>Specifies whether the up and down spin buttons should be rendered</p>
+
+<h4 id="example---hide-spin-buttons">Example - hide spin buttons</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    spinners: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="step-numberdefault-1">step <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 1)</em></h3>
+
+<p>Specifies the value used to increment or decrement widget value.</p>
+
+<h4 id="example---specify-step-option">Example - specify step option</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    step: 0.1
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-step-option-as-a-html-attribute">Example - specify step option as a HTML attribute</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" step="0.1" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="uparrowtext-stringdefault-increase-value">upArrowText <code class="language-plaintext highlighter-rouge">String</code><em>(default: "Increase value")</em></h3>
+
+<p>Specifies the text of the tooltip on the up arrow.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    upArrowText: "More"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value-numberdefault-null">value <code class="language-plaintext highlighter-rouge">Number</code><em>(default: null)</em></h3>
+
+<p>Specifies the value of the NumericTextBox widget.</p>
+
+<h4 id="example---specify-value-option">Example - specify value option</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    value: 10
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-value-option-as-a-html-attribute">Example - specify value option as a HTML attribute</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" value="10" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="options-object">options <code class="language-plaintext highlighter-rouge">Object</code></h3>
+<p>An object, which holds the options of the widget.</p>
+
+<h4 id="example---get-options-of-the-widget">Example - get options of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+var options = numerictextbox.options;
+&lt;script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="destroy">destroy</h3>
+<p>Prepares the <strong>NumericTextBox</strong> for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the NumericTextBox element from DOM.</p>
+</blockquote>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+// detach events
+numerictextbox.destroy();
+&lt;script&gt;
+</code></pre></div></div>
+
+<h3 id="enable">enable</h3>
+
+<p>Enables or disables the widget.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="enable-boolean">enable <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the widget will be enabled. If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will be disabled.</p>
+
+<h4 id="example---enable-the-widget">Example - enable the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" disabled="disabled" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+numerictextbox.enable(true);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="readonly">readonly</h3>
+
+<p>Toggles the readonly state of the widget. When the widget is readonly it doesn"t allow user input.</p>
+
+<blockquote>
+  <p>There is a difference between disabled and readonly mode. The value of a disabled widget is <strong>not</strong> posted as part of a <code class="language-plaintext highlighter-rouge">form</code> whereas the value of a readonly widget is posted.</p>
+</blockquote>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="readonly-boolean">readonly <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the widget will not allow user input. If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will allow user input.</p>
+
+<h4 id="example---make-the-widget-readonly">Example - make the widget readonly</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+numerictextbox.readonly();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="focus">focus</h3>
+
+<p>Focuses the widget.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+numerictextbox.focus();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="max">max</h3>
+
+<p>Gets or sets the max value of the widget.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-number--string">value <code class="language-plaintext highlighter-rouge">Number | String</code></h5>
+
+<p>The max value to set.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> The max value of the widget.</p>
+
+<h4 id="example---get-the-max-value-of-the-numerictextbox">Example - get the max value of the numerictextbox</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+var max = numerictextbox.max();
+
+console.log(max);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-the-max-value-of-the-numerictextbox">Example - set the max value of the numerictextbox</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+var max = numerictextbox.max();
+
+numerictextbox.max(10);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="min">min</h3>
+
+<p>Gets or sets the min value of the widget.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-number--string-1">value <code class="language-plaintext highlighter-rouge">Number | String</code></h5>
+
+<p>The min value to set.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> The min value of the widget.</p>
+
+<h4 id="example---get-the-min-value-of-the-numerictextbox">Example - get the min value of the numerictextbox</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+var min = numerictextbox.min();
+
+console.log(min);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-the-min-value-of-the-numerictextbox">Example - set the min value of the numerictextbox</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+var min = numerictextbox.min();
+
+numerictextbox.min(10);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="step">step</h3>
+
+<p>Gets or sets the step value of the widget.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-number--string-2">value <code class="language-plaintext highlighter-rouge">Number | String</code></h5>
+
+<p>The step value to set.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> The step value of the widget.</p>
+
+<h4 id="example---get-the-step-value-of-the-numerictextbox">Example - get the step value of the numerictextbox</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+var step = numerictextbox.step();
+
+console.log(step);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-the-step-value-of-the-numerictextbox">Example - set the step value of the numerictextbox</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+var step = numerictextbox.step();
+
+numerictextbox.step(0.5);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value">value</h3>
+
+<p>Gets or sets the value of the numerictextbox.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-number--string-3">value <code class="language-plaintext highlighter-rouge">Number | String</code></h5>
+
+<p>The value to set.</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> The value of the widget.</p>
+
+<h4 id="example---get-the-value-of-the-numerictextbox">Example - get the value of the numerictextbox</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+var value = numerictextbox.value();
+
+console.log(value);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-the-value-of-the-numerictextbox">Example - set the value of the numerictextbox</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+var value = numerictextbox.value();
+
+numerictextbox.value(0.5);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="change">change</h3>
+
+<p>Fires when the value is changed</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="esender-kendouinumerictextbox">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.NumericTextBox</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-change-event-during-initialization">Example - subscribe to the "change" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    change: function() {
+        var value = this.value();
+        console.log(value); //value is the selected date in the numerictextbox
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-change-event-after-initialization">Example - subscribe to the "change" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+numerictextbox.bind("change", function() {
+    var value = this.value();
+    console.log(value); //value is the selected date in the numerictextbox
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="spin">spin</h3>
+
+<p>Fires when the value is changed from the spin buttons</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="esender-kendouinumerictextbox-1">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.NumericTextBox</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-spin-event-during-initialization">Example - subscribe to the "spin" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox({
+    spin: function() {
+        var value = this.value();
+        console.log(value); //value is the selected date in the numerictextbox
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-spin-event-after-initialization">Example - subscribe to the "spin" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="numerictextbox" /&gt;
+&lt;script&gt;
+$("#numerictextbox").kendoNumericTextBox();
+
+var numerictextbox = $("#numerictextbox").data("kendoNumericTextBox");
+
+numerictextbox.bind("spin", function() {
+    var value = this.value();
+    console.log(value); //value is the selected date in the numerictextbox
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

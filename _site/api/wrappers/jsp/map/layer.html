@@ -1,0 +1,306 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/map/layer.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomap-layer">&lt;kendo:map-layer&gt;</h1>
+
+<p>The configuration of the map layers.
+The layer type is determined by the value of the type field.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layers&gt;
+    &lt;kendo:map-layer&gt;&lt;/kendo:map-layer&gt;
+&lt;/kendo:map-layers&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="attribution-javalangstring">attribution <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The attribution for the layer. Accepts valid HTML.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer attribution="attribution"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="autobind-boolean">autoBind <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the layer will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer autoBind="autoBind"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="extent-javalangobject">extent <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Specifies the extent of the region covered by this layer.
+The layer will be hidden when the specified area is out of view.Accepts a four-element array that specifies the extent covered by this layer:
+North-West lat, longitude, South-East latitude, longitude.If not specified, the layer is always visible.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer extent="extent"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="imageryset-javalangstring">imagerySet <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The bing map tile types. Possible options.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer imagerySet="imagerySet"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="key-javalangstring">key <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The API key for the layer. Currently supported only for Bing (tm) tile layers.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer key="key"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="locationfield-javalangstring">locationField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the marker (symbol) location.
+The field should be an array with two numbers - latitude and longitude in decimal degrees.Requires the dataSource option to be set.Only applicable to "marker" and "bubble" layers.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer locationField="locationField"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="maxsize-float">maxSize <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The maximum symbol size for bubble layer symbols.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer maxSize="maxSize"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="minsize-float">minSize <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The minimum symbol size for bubble layer symbols.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer minSize="minSize"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="opacity-float">opacity <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The the opacity for the layer.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer opacity="opacity"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="shape-javalangstring">shape <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The marker shape. Supported shapes are "pin" and "pinTarget".</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer shape="shape"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="subdomains-javalangobject">subdomains <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>A list of subdomains to use for loading tiles.
+Alternating between different subdomains allows more requests to be executed in parallel.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer subdomains="subdomains"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="symbol-javalangstring">symbol <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The bubble layer symbol type. Supported symbols are "circle" and "square".</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer symbol="symbol"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="titlefield-javalangstring">titleField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the marker title.
+Requires the dataSource option to be set.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer titleField="titleField"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The layer type. Supported types are "tile", "bing", "shape", "marker" and "bubble".</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer type="type"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="urltemplate-javalangstring">urlTemplate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The URL template for tile layers. Template variables:</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer urlTemplate="urlTemplate"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="valuefield-javalangstring">valueField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The value field for bubble layer symbols.
+The data item field should be a number.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer valueField="valueField"&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendomap-layer-style">kendo:map-layer-style</h3>
+
+<p>The default style for shapes.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/map/layer-style">kendo:map-layer-style</a>.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer&gt;
+    &lt;kendo:map-layer-style&gt;&lt;/kendo:map-layer-style&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+<h3 id="kendomap-layer-tooltip">kendo:map-layer-tooltip</h3>
+
+<p>The default Kendo UI Tooltip options for data-bound markers.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/map/layer-tooltip">kendo:map-layer-tooltip</a>.</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:map-layer&gt;
+    &lt;kendo:map-layer-tooltip&gt;&lt;/kendo:map-layer-tooltip&gt;
+&lt;/kendo:map-layer&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

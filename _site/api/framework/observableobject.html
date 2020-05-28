@@ -1,0 +1,394 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API Reference for ObservableObject, a building block of Kendo MVVM</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="The documentation contains examples for the configuration of a new ObservableObject, methods and different types of events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/framework/observableobject.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodataobservableobject">kendo.data.ObservableObject</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">kendo.data.ObservableObject</code> is the building block of <a href="/getting-started/framework/mvvm/overview">Kendo MVVM</a>. In addition
+the items of the <a href="/getting-started/framework/datasource/overview">kendo.dat.DataSource</a> are <code class="language-plaintext highlighter-rouge">kendo.data.ObservableObject</code> instances.</p>
+
+<p>Inherits from <a href="/api/framework/observable">kendo.Observable</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>To create a new <code class="language-plaintext highlighter-rouge">ObservableObject</code> use its constructor or the <code class="language-plaintext highlighter-rouge">kendo.observable</code> method.</p>
+
+<h4 id="example---creating-a-new-observableobject-via-its-constructor">Example - creating a new ObservableObject via its constructor</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ name: "John Doe" });
+console.log(observable.name); // outputs "John Doe"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-the-kendoobservable-method">Example - using the kendo.observable method</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = kendo.observable({ name: "John Doe" });
+console.log(observable.name); // outputs "John Doe"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Important:</strong> Complex fields are automatically wrapped in nested <code class="language-plaintext highlighter-rouge">ObservableObject</code> instances.
+Array fields are wrapped as <code class="language-plaintext highlighter-rouge">kendo.data.ObservableArray</code> objects.
+The <code class="language-plaintext highlighter-rouge">change</code> event of the child objects will bubble to the parent <code class="language-plaintext highlighter-rouge">ObservableObject</code>.
+Fields, which name are prefixed with an underscore will not be wrapped.</p>
+</blockquote>
+
+<h4 id="example---creating-observableobject-with-complex-and-array-fields">Example - creating ObservableObject with complex and array fields</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = kendo.observable({
+    // complex object field
+    person: {
+        name: "John Doe"
+    },
+    // array field
+    numbers: [1, 2, 3]
+});
+
+console.log(observable.person instanceof kendo.data.ObservableObject); // outputs "true"
+console.log(observable.numbers instanceof kendo.data.ObservableArray); // outputs "true"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="uid-string">uid <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The unique identifier of the <code class="language-plaintext highlighter-rouge">ObservableObject</code>.</p>
+
+<h4 id="example---using-the-uid-field">Example - using the uid field</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ name: "John Doe" });
+console.log(observable.uid); // outputs "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" where "x" is a number or letter
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="bind">bind</h3>
+
+<p>Attaches a handler to an event. Examples and more info can be found in the <a href="/api/framework/observable#bind">bind</a> section of the
+kendo.Observable API reference.</p>
+
+<h4 id="example---subscribe-to-an-event">Example - subscribe to an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ name: "John Doe" });
+observable.bind("change", function(e) {
+    console.log(e.field); // will output the changed field once the event is raised
+});
+observable.set("name", "Jane Doe"); // raises the "change" event and the handler outputs "name"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="get">get</h3>
+
+<p>Gets the value of the specified field.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> the value of the specified field.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="name-string">name <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the field whose value is going to be returned.</p>
+
+<h4 id="example---get-the-value-of-a-field">Example - get the value of a field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ name: "John Doe" });
+var name = observable.get("name");
+console.log(name); //outputs "John Doe"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-value-of-a-nested-field">Example - get the value of a nested field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ person: { name: "John Doe" } });
+var name = observable.get("person.name"); // use dot notation to denote nested fields
+console.log(name); //outputs "John Doe"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="parent">parent</h3>
+
+<p>Gets the parent of the object if such parent exists.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.ObservableObject</code> the parent of the object; <code class="language-plaintext highlighter-rouge">undefined</code> if the object is not nested and doesn"t have a parent.</p>
+
+<h4 id="example---get-the-parent-object">Example - get the parent object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ person: { name: "John Doe" } });
+var person = observable.get("person");
+console.log(observable.parent()); // outputs "undefined"
+console.log(person.parent() === observable); // outputs "true"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="set">set</h3>
+
+<p>Sets the value of the specified field.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="name-string-1">name <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the field whose value is going to be returned.</p>
+
+<h5 id="value-numberstringdateobject">value <code class="language-plaintext highlighter-rouge">Number|String|Date|Object</code></h5>
+
+<p>The new value of the field.</p>
+
+<h4 id="example---set-the-value-of-a-field">Example - set the value of a field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ name: "John Doe" });
+observable.set("name", "Jane Doe"); // set the value
+console.log(observable.get("name")); //outputs the new value "Jane Doe"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-the-value-of-a-nested-field">Example - set the value of a nested field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ person: { name: "John Doe" } });
+observable.set("person.name", "Jane Doe"); // set the value
+console.log(observable.get("person.name")); //outputs the new value "Jane Doe"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="tojson">toJSON</h3>
+
+<p>Creates a plain JavaScript object which contains all fields of the <code class="language-plaintext highlighter-rouge">ObservableObject</code>.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> which contains only the fields of the <code class="language-plaintext highlighter-rouge">ObservableObject</code>.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ person: { name: "John Doe" } });
+var json = observable.toJSON();
+console.log(JSON.stringify(json)); // outputs {"person":{"name":"John Doe"}}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="change-event">change event</h3>
+
+<p>Fired when a field value is updated via the <code class="language-plaintext highlighter-rouge">set</code> method.</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">change</code> event is raised <strong>after</strong> the field value is updated. Calling the <code class="language-plaintext highlighter-rouge">get</code> method from the event handler will return the new value.</p>
+</blockquote>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="efield-string">e.field <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the field which has changed.</p>
+
+<h4 id="example---subscribe-to-the-change-event">Example - subscribe to the change event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ name: "John Doe" });
+observable.bind("change", function(e) {
+    console.log(e.field); // will output the field name when the event is raised
+});
+observable.set("name", "Jane Doe"); // raises the "change" event and the handler outputs "name"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="get-event">get event</h3>
+
+<p>Fired when the <code class="language-plaintext highlighter-rouge">get</code> method is invoked.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="efield-string-1">e.field <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the field which is retrieved.</p>
+
+<h4 id="example---subscribe-to-the-get-event">Example - subscribe to the get event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ name: "John Doe" });
+observable.bind("get", function(e) {
+    console.log(e.field); // will output the field name when the event is raised
+});
+observable.get("name"); // raises the "get" event and the handler outputs "name"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="set-event">set event</h3>
+
+<p>Fired when the <code class="language-plaintext highlighter-rouge">set</code> method is invoked.</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">set</code> event is raised <strong>before</strong> the field value is updated. Calling the <code class="language-plaintext highlighter-rouge">get</code> method from the event handler will return the old value. Calling
+<code class="language-plaintext highlighter-rouge">e.preventDefault</code> will prevent the update of the field and the <code class="language-plaintext highlighter-rouge">change</code> event will not be raised.</p>
+</blockquote>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="efield-string-2">e.field <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the field which is retrieved.</p>
+
+<h5 id="evalue-numberstringdataobject">e.value <code class="language-plaintext highlighter-rouge">Number|String|Data|Object</code></h5>
+
+<p>The new value.</p>
+
+<h5 id="epreventdefault-function">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>A function which may prevent the update of the value. Can be used to perform validation.</p>
+
+<h4 id="example---subscribe-to-the-set-event">Example - subscribe to the set event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ name: "John Doe" });
+observable.bind("set", function(e) {
+    console.log(e.field); // will output the field name when the event is raised
+});
+observable.set("name", "Jane Doe"); // raises the "set" event and the handler outputs "name"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---perform-validation-by-preventing-the-set-event">Example - perform validation by preventing the set event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var observable = new kendo.data.ObservableObject({ name: "John Doe" });
+observable.bind("set", function(e) {
+    if (e.field == "name") {
+        if (!e.value) {
+            // avoid emtpy value for the "name" field
+            e.preventDefault();
+        }
+    }
+});
+observable.set("name", "Jane Doe");
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

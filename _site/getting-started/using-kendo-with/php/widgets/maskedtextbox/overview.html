@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>How to use the MaskedTextBox PHP class, server-side wrapper for Kendo UI MaskedTextBox widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Getting started with Kendo UI MaskedTextBox for PHP in quick steps - configure Kendo UI MaskedTextBox widget and operate Kendo UI MaskedTextBox events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/php/widgets/maskedtextbox/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="maskedtextbox">MaskedTextBox</h1>
+
+<p>The Kendo MaskedTextBox for PHP is a server-side wrapper for the <a href="/api/web/maskedtextbox">Kendo UI MaskedTextBox</a> widget.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="configure-kendo-maskedtextbox">Configure Kendo MaskedTextBox</h3>
+
+<p>Here is how to configure a simple Kendo MaskedTextBox:</p>
+
+<ol>
+  <li>
+    <p>Follow the steps from the <a href="/getting-started/using-kendo-with/php/introduction">introduction</a> - include the autoloader, JavaScript and CSS files.</p>
+  </li>
+  <li>
+    <p>Create a <a href="/api/wrappers/php/Kendo/UI/MaskedTextBox">maskedtextbox</a>.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $maskedtextbox = new \Kendo\UI\MaskedTextBox('maskedtextbox');
+ $maskedtextbox-&gt;mask("(000) 000-0000")
+               -&gt;value("(123) 345-6789");
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Output the maskedtextbox by echo-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ echo $maskedtextbox-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="define-widgets-mask-value">Define widget"s mask value</h3>
+
+<p>The MaskedTextBox has <a href="/getting-started/web/maskedtextbox/overview#predefined-mask-rules">a list of predefined mask rules</a>,
+which can be used to compose the widget"s mask.</p>
+
+<h4 id="webforms---set-a-zip-code-mask">WebForms - set a <code class="language-plaintext highlighter-rouge">zip code</code> mask</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$maskedtextbox = new \Kendo\UI\MaskedTextBox('maskedtextbox');
+$maskedtextbox-&gt;mask("00000-9999");
+echo $maskedtextbox-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>If no mask is defined widget will allow any input.</p>
+</blockquote>
+
+<h3 id="define-a-custom-mask-rule">Define a custom mask rule</h3>
+
+<p>The MaskedTextBox gives the ability to define custom mask rules if no of the predefined ones is sufficient.
+To add a custom rule use the <strong>rules</strong> method:</p>
+
+<h4 id="define-a-custom-rule-for---and--symbols">Define a custom rule for "-" and "+" symbols</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rules = array('~' =&gt; '/[+-]/');
+
+$maskedtextbox = new \Kendo\UI\MaskedTextBox('maskedtextbox');
+$maskedtextbox-&gt;rules($rules);
+$maskedtextbox-&gt;mask("~0000");
+echo $maskedtextbox-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>Widgets supports <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">JavaScript Reguler Expressions</a>
+defined as a string or JavaScript function.</p>
+</blockquote>
+
+<h2 id="getting-client-side-reference">Getting Client-side Reference</h2>
+
+<p>You can reference the client-side Kendo MaskedTextBox instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/maskedtextbox#methods">API</a> to control its behavior.</p>
+
+<h3 id="example">Example</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$maskedtextbox = new \Kendo\UI\MaskedTextBox('maskedtextbox');
+echo $maskedtextbox-&gt;render();
+?&gt;
+&lt;script&gt;
+$(function() {
+    // The constructor parameter is used as the 'id' HTML attribute of the maskedtextbox
+    var maskedtextbox = $("#maskedtextbox").data("kendoMaskedTextBox")
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-events">Handling Events</h2>
+
+<p>You can subscribe to all maskedtextbox <a href="/api/web/maskedtextbox#events">events</a>.</p>
+
+<h3 id="example---subscribing-by-specifying-javascript-function-name">Example - subscribing by specifying JavaScript function name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$maskedtextbox = new \Kendo\UI\MaskedTextBox('maskedtextbox');
+
+// The 'maskedtextbox' JavaScript function will handle the 'change' event of the maskedtextbox
+$maskedtextbox-&gt;change('maskedtextbox_change');
+
+echo $maskedtextbox-&gt;render();
+?&gt;
+&lt;script&gt;
+function maskedtextbox_change() {
+    // Handle the change event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="example---providing-inline-javascript-code">Example - providing inline JavaScript code</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$maskedtextbox = new \Kendo\UI\MaskedTextBox('maskedtextbox');
+
+// Provide inline JavaScript code that will handle the 'change' event of the maskedtextbox
+$maskedtextbox-&gt;change('function() { /* Handle the change event */ }');
+
+echo $maskedtextbox-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

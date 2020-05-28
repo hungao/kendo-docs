@@ -1,0 +1,1451 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI DropDownList</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to control your DropDown UI widget's behavior to suit your needs: open, close, enable, disable the widget. Events data and code examples available.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/dropdownlist.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouidropdownlist">kendo.ui.DropDownList</h1>
+
+<p>Represents the Kendo UI DropDownList widget. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="animation-object">animation <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Configures the opening and closing animations of the suggestion popup. Setting the <code class="language-plaintext highlighter-rouge">animation</code> option to <code class="language-plaintext highlighter-rouge">false</code> will disable the opening and closing animations. As a result the suggestion popup will open and close instantly.</p>
+
+<h4 id="example---disable-open-and-close-animations">Example - disable open and close animations</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  animation: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---configure-the-animation">Example - configure the animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  animation: {
+   close: {
+     effects: "fadeOut zoom:out",
+     duration: 300
+   },
+   open: {
+     effects: "fadeIn zoom:in",
+     duration: 300
+   }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationclose-object">animation.close <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<h4 id="example---configure-the-close-animation">Example - configure the close animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  animation: {
+   close: {
+     effects: "zoom:out",
+     duration: 300
+   }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationcloseeffects-string">animation.close.effects <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The effect(s) to use when playing the close animation. Multiple effects should be separated with a space.</p>
+
+<p><a href="/api/framework/fx/common">Complete list of available animations</a></p>
+
+<h3 id="animationcloseduration-number-default-100">animation.close.duration <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 100)</em></h3>
+
+<p>The duration of the close animation in milliseconds.</p>
+
+<h3 id="animationopen-object">animation.open <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The animation played when the suggestion popup is opened.</p>
+
+<h4 id="example---configure-the-open-animation">Example - configure the open animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  animation: {
+   open: {
+     effects: "zoom:in",
+     duration: 300
+   }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationopeneffects-string">animation.open.effects <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The effect(s) to use when playing the open animation. Multiple effects should be separated with a space.</p>
+
+<p><a href="/api/framework/fx/common">Complete list of available animations</a></p>
+
+<h3 id="animationopenduration-number-default-200">animation.open.duration <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 200)</em></h3>
+
+<p>The duration of the open animation in milliseconds.</p>
+
+<h3 id="autobind-booleandefault-true">autoBind <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>Controls whether to bind the widget to the data source on initialization.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+    autoBind: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="cascadefrom-string">cascadeFrom <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Use it to set the Id of the parent dropdownlist widget.
+<a href="/getting-started/web/dropdownlist/cascading">Help topic showing how cascading functionality works</a></p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="parent" /&gt;
+&lt;input id="child" /&gt;
+&lt;script&gt;
+$("#parent").kendoDropDownList({
+    dataTextField: "parentName",
+    dataValueField: "parentId",
+    dataSource: [
+        { parentName: "Parent1", parentId: 1 },
+        { parentName: "Parent2", parentId: 2 }
+    ]
+});
+
+$("#child").kendoDropDownList({
+    cascadeFrom: "parent",
+    dataTextField: "childName",
+    dataValueField: "childId",
+    dataSource: [
+        { childName: "Child1", childId: 1, parentId: 1 },
+        { childName: "Child2", childId: 2, parentId: 2 },
+        { childName: "Child3", childId: 3, parentId: 1 },
+        { childName: "Child4", childId: 4, parentId: 2 }
+    ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="cascadefromfield-string">cascadeFromField <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Defines the field to be used to filter the data source. If not defiend the <a href="/api/web/dropdownlist#configuration-dataValueField">parent"s dataValueField option will be used</a>.
+<a href="/web/dropdownlist/cascading">Help topic showing how cascading functionality works</a></p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="parent" /&gt;
+&lt;input id="child" /&gt;
+&lt;script&gt;
+$("#parent").kendoDropDownList({
+    dataTextField: "name",
+    dataValueField: "id",
+    dataSource: [
+        { name: "Parent1", id: 1 },
+        { name: "Parent2", id: 2 }
+    ]
+});
+
+$("#child").kendoDropDownList({
+    cascadeFrom: "parent",
+    cascadeFromField: "parentId",
+    dataTextField: "name",
+    dataValueField: "id",
+    dataSource: [
+        { name: "Child1", id: 1, parentId: 1 },
+        { name: "Child2", id: 2, parentId: 2 },
+        { name: "Child3", id: 3, parentId: 1 },
+        { name: "Child4", id: 4, parentId: 2 }
+    ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="datasource-objectarraykendodatadatasource">dataSource <code class="language-plaintext highlighter-rouge">Object|Array|kendo.data.DataSource</code></h3>
+
+<p>The data source of the widget which is used to display a list of values. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing <a href="/api/framework/datasource">kendo.data.DataSource</a>
+instance.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dataSource</code> option is set to a JavaScript object or array the widget will initialize a new <a href="/api/framework/datasource">kendo.data.DataSource</a> instance using that value as data source configuration.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dataSource</code> option is an existing <a href="/api/framework/datasource">kendo.data.DataSource</a> instance the widget will use that instance and will <strong>not</strong> initialize a new one.</p>
+
+<h4 id="example---set-datasource-as-a-javascript-object">Example - set dataSource as a JavaScript object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: {
+    data: ["One", "Two"]
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-datasource-as-a-javascript-array">Example - set dataSource as a JavaScript array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+var data = ["One", "Two"];
+$("#dropdownlist").kendoDropDownList({
+  dataSource: data
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-datasource-as-an-existing-kendodatadatasource-instance">Example - set dataSource as an existing kendo.data.DataSource instance</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp"
+    }
+  }
+});
+$("#dropdownlist").kendoDropDownList({
+  dataSource: dataSource,
+  dataTextField: "ProductName",
+  dataValueField: "ProductID"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="datatextfield-stringdefault-">dataTextField <code class="language-plaintext highlighter-rouge">String</code><em>(default: "")</em></h3>
+
+<p>The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.</p>
+
+<blockquote>
+  <p><strong>Important</strong> When <code class="language-plaintext highlighter-rouge">dataTextField</code> is defined, the<code class="language-plaintext highlighter-rouge">dataValueField</code> option also should be set.</p>
+</blockquote>
+
+<h4 id="example---set-the-datatextfield">Example - set the dataTextField</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+  $("#dropdownlist").kendoDropDownList({
+    dataSource: [
+      { Name: "Parent1", Id: 1 },
+      { Name: "Parent2", Id: 2 }
+    ],
+    dataTextField: "Name",
+    dataValueField: "Id"
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="datavaluefield-stringdefault-">dataValueField <code class="language-plaintext highlighter-rouge">String</code><em>(default: "")</em></h3>
+
+<p>The field of the data item that provides the value of the widget.</p>
+
+<blockquote>
+  <p><strong>Important</strong> When <code class="language-plaintext highlighter-rouge">dataValueField</code> is defined, the<code class="language-plaintext highlighter-rouge">dataTextField</code> option also should be set.</p>
+</blockquote>
+
+<h4 id="example---set-the-datavaluefield">Example - set the dataValueField</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+    dataSource: [{
+        { Name: "Parent1", Id: 1 },
+        { Name: "Parent2", Id: 2 }
+    }]
+    dataTextField: "Name",
+    dataValueField: "Id"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="delay-numberdefault-500">delay <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 500)</em></h3>
+
+<p>Specifies the delay in milliseconds before the search-text typed by the end user is cleared.</p>
+
+<h4 id="example---set-the-delay">Example - set the delay</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+    delay: 1000 // wait 1 second before clearing the user input
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable-booleandefault-true">enable <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will be disabled and will not allow user input. The widget is enabled by default and allows user input.</p>
+
+<h4 id="example---disable-the-widget">Example - disable the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  enable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filter-stringdefault-none">filter <code class="language-plaintext highlighter-rouge">String</code><em>(default: "none")</em></h3>
+
+<p>The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
+The supported filter values are <code class="language-plaintext highlighter-rouge">startswith</code>, <code class="language-plaintext highlighter-rouge">endswith</code> and <code class="language-plaintext highlighter-rouge">contains</code>.</p>
+
+<h4 id="example---set-the-filter">Example - set the filter</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: ["Chai", "Chang", "Tofu"],
+  filter: "contains"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="height-numberdefault-200">height <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 200)</em></h3>
+
+<p>The height of the suggestion popup in pixels. The default value is 200 pixels.</p>
+
+<h4 id="example---set-the-height">Example - set the height</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  height: 500
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="ignorecase-stringdefault-true">ignoreCase <code class="language-plaintext highlighter-rouge">String</code><em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> case-sensitive search will be performed to find suggestions. The widget performs case-insensitive searching by default.</p>
+
+<h4 id="example---disable-case-insensitive-suggestions">Example - disable case-insensitive suggestions</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  ignoreCase: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="index-numberdefault-0">index <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 0)</em></h3>
+
+<p>The index of the initially selected item. The index is <code class="language-plaintext highlighter-rouge">0</code> based.</p>
+
+<h4 id="example---select-second-item">Example - select second item</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+var items = [{ text: "Item 1", value: "1" }, { text: "Item 2", value: "2" }];
+$("#dropdownlist").kendoDropDownList({
+    dataTextField: "text",
+    dataValueField: "value",
+    dataSource: items,
+    index: 1
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="minlength-numberdefault-1">minLength <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 1)</em></h3>
+
+<p>The minimum number of characters the user must type before a filter is performed. Set to higher value than <code class="language-plaintext highlighter-rouge">1</code> if the search could match a lot of items.</p>
+
+<h4 id="example---set-minlength">Example - set minLength</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: ["Chai", "Chang", "Tofu"],
+  filter: "contains",
+  minLength: 3
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="optionlabel-string--objectdefault-">optionLabel <code class="language-plaintext highlighter-rouge">String | Object</code><em>(default: "")</em></h3>
+
+<p>Define the text of the default empty item. If the value is an object, then the widget will use it a valid data item.
+ Note that the optionLabel will not be available if the widget is empty.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> If optionLabel is an object, it needs to have atleast dataValueField and dataTextField properties. Otherwise, widget will show <code class="language-plaintext highlighter-rouge">undefined</code>.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Important:</strong> Widget"s value will be equal to the optionLabel if the dataValueField and dataTextField options are equal or not defined</p>
+</blockquote>
+
+<h4 id="example---specify-optionlabel-as-a-string">Example - specify optionLabel as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+    dataSource: ["Apples", "Oranges"],
+    optionLabel: "Select a fruit..."
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-optionlabel-as-an-object">Example - specify optionLabel as an object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+    dataSource: [
+        { productName: "Product 1", productId: 1 },
+        { productName: "Product 2", productId: 2 }
+    ],
+    dataTextField: "productName",
+    dataValueField: "productId",
+    optionLabel: {
+        productName: "Select a product...",
+        productId: ""
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="headertemplate-stringfunction">headerTemplate <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>Specifies a static HTML content, which will be rendered as a header of the popup element.</p>
+
+<blockquote>
+  <p><strong>Important</strong> Widget does not pass a model data to the header template. Use this option only with static HTML.</p>
+</blockquote>
+
+<h4 id="example---specify-headertemplate-as-a-string">Example - specify headerTemplate as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  headerTemplate: '&lt;div&gt;&lt;h2&gt;Fruits&lt;/h2&gt;&lt;/div&gt;'
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="template-stringfunction">template <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The <a href="/api/framework/kendo#methods-template">template</a> used to render the items. By default the widget displays only the text of the data item (configured via <code class="language-plaintext highlighter-rouge">dataTextField</code>).</p>
+
+<h4 id="example---specify-template-as-a-function">Example - specify template as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script id="template" type="text/x-kendo-template"&gt;
+  &lt;span&gt;
+    &lt;img src="/img/#: id #.png" alt="#: name #" /&gt;
+    #: name #
+  &lt;/span&gt;
+&lt;/script&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  template: kendo.template($("#template").html())
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-template-as-a-string">Example - specify template as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  template: '&lt;span&gt;&lt;img src="/img/#: id #.png" alt="#: name #" /&gt;#: name #&lt;/span&gt;'
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="valuetemplate-stringfunction">valueTemplate <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The <a href="/api/framework/kendo#methods-template">valueTemplate</a> used to render the selected value. By default the widget displays only the text of the data item (configured via <code class="language-plaintext highlighter-rouge">dataTextField</code>).</p>
+
+<h4 id="example---specify-valuetemplate-as-a-function">Example - specify valueTemplate as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script id="valueTemplate" type="text/x-kendo-template"&gt;
+    &lt;img src="/img/#: id #.png" alt="#: name #" /&gt;
+    #: name #
+&lt;/script&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  valueTemplate: kendo.template($("#valueTemplate").html())
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-template-as-a-string-1">Example - specify template as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  valueTemplate: '&lt;img src="/img/#: id #.png" alt="#: name #" /&gt;#: name #'
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="text-stringdefault-">text <code class="language-plaintext highlighter-rouge">String</code><em>(default: "")</em></h3>
+
+<p>The text of the widget used when the <code class="language-plaintext highlighter-rouge">autoBind</code> is set to <code class="language-plaintext highlighter-rouge">false</code>.</p>
+
+<h4 id="example---specify-text-of-the-widget">Example - specify text of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+     autoBind: false,
+     text: "Chai"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value-stringdefault-">value <code class="language-plaintext highlighter-rouge">String</code><em>(default: "")</em></h3>
+
+<p>The value of the widget.</p>
+
+<h4 id="example---specify-value-of-the-widget">Example - specify value of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+     dataSource: ["Item1", "Item2"],
+     value: "Item1"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="valueprimitive-booleandefault-false">valuePrimitive <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>Spcifies the <a href="/getting-started/framework/mvvm/bindings/value">value binding</a> behavior for the widget when the initial model value is null. If set to true, the View-Model field will be updated with the selected item value field. If set to false, the View-Model field will be updated with the selected item.</p>
+
+<h4 id="example---specify-that-the-view-model-field-should-be-updated-with-the-selected-item-value">Example - specify that the View-Model field should be updated with the selected item value</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="dropdown" data-bind="value: selectedProductId, source: products" &gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+$("#dropdown").kendoDropDownList({
+  valuePrimitive: true,
+  dataTextField: "name",
+  dataValueField: "id",
+  optionLabel: "Select product..."
+});
+var viewModel = kendo.observable({
+  selectedProductId: null,
+  products: [
+    { id: 1, name: "Coffee" },
+    { id: 2, name: "Tea" },
+    { id: 3, name: "Juice" }
+  ]
+});
+
+kendo.bind($("#dropdown"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="datasource-kendodatadatasource">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code></h3>
+
+<p>The <a href="/api/framework/datasource">data source</a> of the widget. Configured via the <a href="#configuration-dataSource">dataSource</a> option.</p>
+
+<blockquote>
+  <p>Changes of the data source will be reflected in the widget.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Important:</strong> Assigning a new data source would have no effect. Use the <a href="#methods-setDataSource">setDataSource</a> method instead.</p>
+</blockquote>
+
+<h4 id="example---add-a-data-item-to-the-data-source">Example - add a data item to the data source</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { name: "Apples" },
+    { name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "name"
+});
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.dataSource.add({ name: "Appricot" });
+dropdownlist.search("A");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="span-jquery">span <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+<p>A jQuery object of the span element which holds the selected text.</p>
+
+<h4 id="example---modify-span-element">Example - modify span element</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList();
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+var span = dropdownlist.span;
+
+span.css("background-color", "red");
+&lt;script&gt;
+</code></pre></div></div>
+
+<h3 id="options-object">options <code class="language-plaintext highlighter-rouge">Object</code></h3>
+<p>An object, which holds the options of the widget.</p>
+
+<h4 id="example---get-options-of-the-widget">Example - get options of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList();
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+var options = dropdownlist.options;
+&lt;script&gt;
+</code></pre></div></div>
+
+<h3 id="list-jquery">list <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+<p>A jQuery object of the drop-down list element.</p>
+
+<h4 id="example---get-list-element">Example - get list element</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList();
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+var list = dropdownlist.list;
+&lt;script&gt;
+</code></pre></div></div>
+
+<h3 id="ul-jquery">ul <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+<p>A jQuery object of the ul element, which holds the available options.</p>
+
+<h4 id="example---get-ul-element">Example - get ul element</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList();
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+var ul = dropdownlist.ul;
+&lt;script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="close">close</h3>
+
+<p>Closes the widget popup.</p>
+
+<h4 id="example---close-the-suggestion-popup">Example - close the suggestion popup</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [ "Apples", "Oranges" ]
+});
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+// Search for items starting with "A" - will open the suggestion popup and show "Apples"
+dropdownlist.search("A");
+// Close the suggestion popup
+dropdownlist.close();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dataitem">dataItem</h3>
+
+<p>Returns the data item at the specified index. If the index is not specified, the selected index will be used.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="index-number-optional">index <code class="language-plaintext highlighter-rouge">Number</code> <em>(optional)</em></h5>
+
+<p>The zero-based index of the data record.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> The raw data record. Returns <i>undefined</i> if no data.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  index: 1
+});
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+// get the dataItem corresponding to the selectedIndex.
+var dataItem = dropdownlist.dataItem();
+
+// get the dataItem corresponding to the passed index.
+var dataItem = dropdownlist.dataItem(0);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+<p>Prepares the <strong>DropDownList</strong> for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the DropDownList element from DOM.</p>
+</blockquote>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList();
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.destroy();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="focus">focus</h3>
+
+<p>Focuses the widget.</p>
+
+<h4 id="example---focus-the-widget">Example - focus the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList();
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.focus();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open">open</h3>
+
+<p>Opens the popup.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  index: 1
+});
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.open();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable">enable</h3>
+
+<p>Enables or disables the widget.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="enable-boolean">enable <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the widget will be enabled. If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will be disabled.</p>
+
+<h4 id="example---enable-the-widget">Example - enable the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select id="dropdownlist"&gt;
+    &lt;option&gt;Item1&lt;/option&gt;
+    &lt;option&gt;Item2&lt;/option&gt;
+&lt;/select&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  enable: false
+});
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.enable(true);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="readonly">readonly</h3>
+
+<p>Controls whether the widget is editable or readonly.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// get a reference to the dropdownlist widget
+var dropdownlist = $("dropdownlist").data("kendoDropDownList");
+
+// makes dropdownlist readonly
+dropdownlist.readonly();
+
+// makes dropdownlist editable
+dropdownlist.readonly(false);
+</code></pre></div></div>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="readonly-boolean">readonly <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>The argument, which defines whether the datepicker should be readonly or editable.</p>
+
+<h3 id="refresh">refresh</h3>
+
+<p>Refresh the popup by rendering all items again.</p>
+
+<h4 id="example---refresh-the-popup-items">Example - refresh the popup items</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  index: 1
+});
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+dropdownlist.refresh();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="search">search</h3>
+
+<p>Selects an item, which starts with the provided value.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="word-string">word <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The search value.</p>
+
+<h4 id="example---search-the-widget">Example - search the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id"
+});
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+dropdownlist.search("Oranges");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+
+<p>Gets or sets the selected item. Selects the item provided as an argument and updates the value and text of the widget.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="li-jquery--number--function">li <code class="language-plaintext highlighter-rouge">jQuery | Number | Function</code></h5>
+
+<p>A string, DOM element or jQuery object which represents the item to be selected. A string is treated as a jQuery selector.
+A number representing the index of the item or function predicate which returns the correct data item.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> The index of the selected item, if called with no parameters. If a custom value is entered, the returned selected index is <code class="language-plaintext highlighter-rouge">-1</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">undefined</code> If called with a parameter as a setter.</p>
+
+<h4 id="example---select-item-based-on-jquery-object">Example - select item based on jQuery object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id"
+});
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+dropdownlist.select(dropdownlist.ul.children().eq(0));
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---select-item-based-on-index">Example - select item based on index</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id"
+});
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+dropdownlist.select(1);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---select-item-based-on-function-predicate">Example - select item based on function predicate</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id"
+});
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+dropdownlist.select(function(dataItem) {
+    return dataItem.text === "Apples";
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-selected-index-of-the-widget">Example - get selected index of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [
+    { id: 1, name: "Apples" },
+    { id: 2, name: "Oranges" }
+  ],
+  dataTextField: "name",
+  dataValueField: "id",
+  index: 1
+});
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+var selectedIndex = dropdownlist.select();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="setdatasource">setDataSource</h3>
+
+<p>Sets the dataSource of an existing DropDownList and rebinds it.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="datasource-kendodatadatasource-1">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code></h5>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [ "Apples", "Oranges" ]
+});
+var dataSource = new kendo.data.DataSource({
+  data: [ "Bananas", "Cherries" ]
+});
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.setDataSource(dataSource);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="text">text</h3>
+
+<p>Gets or sets the text of the dropdownlist.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="text-string">text <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The text to set.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> The text of the dropdownlist.</p>
+
+<h4 id="example---set-text-of-the-widget">Example - set text of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [ "Apples", "Oranges" ]
+});
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+dropdownlist.text("Apples");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toggle">toggle</h3>
+
+<p>Opens or closes the widget popup.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="toggle-boolean">toggle <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Defines the whether to open/close the drop-down list.</p>
+
+<h4 id="example---set-text-of-the-widget-1">Example - set text of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [ "Apples", "Oranges" ]
+});
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+dropdownlist.toggle();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value">value</h3>
+
+<p>Gets or sets the value of the dropdownlist. The value will not be set if there is no item with such value. If value is undefined, text of the data item is used.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> If the widget is not bound, value method will pre-fetch the data before continue with the value setting.</p>
+</blockquote>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-string">value <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The value to set.</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> The value of the dropdownlist.</p>
+
+<h4 id="example---set-value-of-the-widget">Example - set value of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataSource: [ "Apples", "Oranges" ]
+});
+
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+
+dropdownlist.value("Oranges");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="change">change</h3>
+
+<p>Fired when the value of the widget is changed by the user.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The event is not fired when the value of the widget is changed programmatically. If you need to handle changes made by API, wire the <a href="/api/web/dropdownlist#events-cascade">cascade</a> event.</p>
+</blockquote>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="esender-kendouidropdownlist">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.DropDownList</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-change-event-during-initialization">Example - subscribe to the "change" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  change: function(e) {
+    var value = this.value();
+    // Use the value of the widget
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-change-event-after-initialization">Example - subscribe to the "change" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+function dropdownlist_change(e) {
+  var value = this.value();
+  // Use the value of the widget
+}
+$("#dropdownlist").kendoDropDownList();
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.bind("change", dropdownlist_change);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="close-1">close</h3>
+
+<p>Fired when the popup of the widget is closed.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="esender-kendouidropdownlist-1">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.DropDownList</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-close-event-during-initialization">Example - subscribe to the "close" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  close: function(e) {
+    // handle the event
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-close-event-after-initialization">Example - subscribe to the "close" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+function dropdownlist_close(e) {
+  // handle the event
+}
+$("#dropdownlist").kendoDropDownList();
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.bind("close", dropdownlist_close);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound">dataBound</h3>
+
+<p>Fired when the widget is bound to data from its data source.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="esender-kendouidropdownlist-2">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.DropDownList</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-databound-event-during-initialization">Example - subscribe to the "dataBound" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  dataBound: function(e) {
+      // handle the event
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-databound-event-after-initialization">Example - subscribe to the "dataBound" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+function dropdownlist_dataBound(e) {
+  // handle the event
+}
+$("#dropdownlist").kendoDropDownList();
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.bind("dataBound", dropdownlist_dataBound);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open-1">open</h3>
+
+<p>Fired when the popup of the widget is opened by the user.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="esender-kendouidropdownlist-3">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.DropDownList</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-open-event-during-initialization">Example - subscribe to the "open" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  open: function(e) {
+    // handle the event
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-open-event-after-initialization">Example - subscribe to the "open" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+function dropdownlist_open(e) {
+  // handle the event
+}
+$("#dropdownlist").kendoDropDownList();
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.bind("open", dropdownlist_open);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select-1">select</h3>
+
+<p>Fired when an item from the popup is selected by the user.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The event is not fired when an item is selected programmatically.</p>
+</blockquote>
+
+<h4 id="event-data-4">Event Data</h4>
+
+<h5 id="eitem-jquery">e.item <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The jQuery object which represents the selected item.</p>
+
+<h5 id="esender-kendouidropdownlist-4">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.DropDownList</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-select-event-during-initialization">Example - subscribe to the "select" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  select: function(e) {
+    var item = e.item;
+    var text = item.text();
+    // Use the selected item or its text
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-select-event-after-initialization">Example - subscribe to the "select" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+function dropdownlist_select(e) {
+  var item = e.item;
+  var text = item.text();
+  // Use the selected item or its text
+}
+$("#dropdownlist").kendoDropDownList();
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.bind("select", dropdownlist_select);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="cascade">cascade</h3>
+
+<p>Fired when the value of the widget is changed via API or user interaction.</p>
+
+<h4 id="event-data-5">Event Data</h4>
+
+<h5 id="esender-kendouidropdownlist-5">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.DropDownList</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-select-event-during-initialization-1">Example - subscribe to the "select" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+$("#dropdownlist").kendoDropDownList({
+  cascade: function() {
+    // Handle the event
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-select-event-after-initialization-1">Example - subscribe to the "select" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="dropdownlist" /&gt;
+&lt;script&gt;
+function dropdownlist_cascade(e) {
+    // Handle the event
+}
+$("#dropdownlist").kendoDropDownList();
+var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+dropdownlist.bind("cascade", dropdownlist_cascade);
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

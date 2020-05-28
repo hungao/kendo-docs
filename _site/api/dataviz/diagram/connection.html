@@ -1,0 +1,355 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/dataviz/diagram/connection.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizdiagramconnection">kendo.dataviz.diagram.Connection</h1>
+
+<p>The Connection object is a visual link or connection in the graph or diagram.
+Connections are usually created by calling <a href="/api/dataviz/diagram#methods-connect">connect</a> on a Diagram instance.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="stroke-object">stroke <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Defines the stroke configuration.</p>
+
+<h3 id="strokecolor-string">stroke.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Defines the stroke or line color of the connection.</p>
+
+<h4 id="example---setting-the-stroke-of-a-connection">Example - setting the stroke of a Connection</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="diagram"&gt;&lt;/div&gt;
+&lt;script&gt;
+    var Point = kendo.dataviz.diagram.Point;
+    var diagram = $("#diagram").kendoDiagram({ }).getKendoDiagram();
+    var shapeA = diagram.addShape(new Point(100, 100));
+    var shapeB = diagram.addShape(new Point(400, 100));
+    var connection = diagram.connect(shapeA, shapeB, { stroke: { color: "red" } });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="hover-object">hover <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Defines the hover configuration.</p>
+
+<h3 id="hoverstroke-object">hover.stroke <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Defines the hover stroke configuration.</p>
+
+<h3 id="hoverstrokecolor-string">hover.stroke.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Defines the highlight color when the pointer is hovering over the connection.</p>
+
+<h4 id="example-setting-color-and-hovering-color-of-the-connection">Example setting color and hovering color of the connection</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="diagram"&gt;&lt;/div&gt;
+&lt;script&gt;
+    var Point = kendo.dataviz.diagram.Point;
+    var diagram = $("#diagram").kendoDiagram({ }).getKendoDiagram();
+    var shapeA = diagram.addShape(new Point(100, 100));
+    var shapeB = diagram.addShape(new Point(400, 100));
+    var connection = diagram.connect(shapeA, shapeB, {
+        stroke: { color: "red" },
+        hover: {
+            stroke: {
+                color: "blue"
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="startcap-string-default-filledcircle">startCap <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "FilledCircle")</em></h3>
+
+<p>The start cap (arrow, head or decoration) of the connection:</p>
+
+<ul>
+  <li>"none": no cap</li>
+  <li>"ArrowStart": a filled arrow</li>
+  <li>"FilledCircle": a filled circle</li>
+</ul>
+
+<h3 id="endcap-string-default-arrowend">endCap <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "ArrowEnd")</em></h3>
+
+<p>The start cap (arrow, head or decoration) of the connection:</p>
+
+<ul>
+  <li>"none": no cap</li>
+  <li>"ArrowEnd": a filled arrow</li>
+  <li>"FilledCircle": a filled circle</li>
+</ul>
+
+<p>Note that you can also use the "ArrowStart" for the endCap but its direction will be inversed.</p>
+
+<h3 id="points-array">points <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>Sets the intermediate points (in global coordinates) of the connection.</p>
+
+<h4 id="example---setting-intermediate-connection-points">Example - setting intermediate connection points</h4>
+
+<p><img src="/api/dataviz/diagram/connectionpoints.png" alt="Intermediate connection points." /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="diagram"&gt;&lt;/div&gt;
+&lt;script&gt;
+    var Point = kendo.dataviz.diagram.Point;
+    var diagram = $("#diagram").kendoDiagram({ }).getKendoDiagram();
+    var connection = diagram.connect(new Point(100,100), new Point(300,100), {
+        points: [
+            new Point(150,100),
+            new Point(150,150),
+            new Point(200,150),
+            new Point(200,100)
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pointsx-number">points.x <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>Sets the X coordinate of the point.</p>
+
+<h3 id="pointsy-number">points.y <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>Sets the Y coordinate of the point.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="source">source</h3>
+
+<p>Gets or sets the current source of the connection.</p>
+
+<p>This object can be a Point for a floating endpoint (i.e. not attached to a shape), a Shape or a Connector of a Shape. You can use the Shape.getConnector() method to fetch a Connector on the basis of its name. If a Shape is specified the Connection will attach to the "Auto" connector.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="source-kendodatavizdiagramshapekendodatavizdiagrampointkendodatavizdiagramconnector">source <code class="language-plaintext highlighter-rouge">kendo.dataviz.diagram.Shape|kendo.dataviz.diagram.Point|kendo.dataviz.diagram.Connector</code></h5>
+
+<ul>
+  <li>Point: any Point on the canvas. This creates an unattached floating endpoint.</li>
+  <li>Shape: will bind the endpoint to the"Auto" Connector which will switch between the other connectors to minimize the length of the connection.</li>
+  <li>Connector: the connection"s endpoint will remain fixed attached to the specified Connector.</li>
+</ul>
+
+<p>If no source is specified the method will return the current object to which the Connection"s endpoint is attached.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> the connection source.</p>
+
+<h3 id="sourcepoint">sourcePoint</h3>
+
+<p>Gets the global coordinate of the connection"s start (initial endpoint).
+The method returns a Point independently of the object to which the source is attached.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.diagram.Point</code> the coordinates of the connection source.</p>
+
+<h3 id="target">target</h3>
+
+<p>Gets or set the target of the Connection.</p>
+
+<p>This object can be a Point for a floating endpoint (i.e. not attached to a shape), a Shape or a Connector of a Shape. You can use the Shape.getConnector() method to fetch a Connector on the basis of its name. If a Shape is specified the Connection will attach to the "Auto" connector.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="target-kendodatavizdiagramshapekendodatavizdiagrampointkendodatavizdiagramconnector">target <code class="language-plaintext highlighter-rouge">kendo.dataviz.diagram.Shape|kendo.dataviz.diagram.Point|kendo.dataviz.diagram.Connector</code></h5>
+
+<ul>
+  <li>Point: any Point on the canvas. This creates an unattached floating endpoint.</li>
+  <li>Shape: will bind the endpoint to the"Auto" Connector which will switch between the other connectors to minimize the length of the connection.</li>
+  <li>Connector: the connection"s endpoint will remain fixed attached to the specified Connector.</li>
+</ul>
+
+<p>If no source is specified the method will return the current object to which the Connection"s endpoint is attached.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> the connection target.</p>
+
+<h3 id="targetpoint">targetPoint</h3>
+
+<p>Similar to the sourcePoint, this gets the coordinates of the target of the Connection independently of its endpoint attachement.</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.dataviz.diagram.Point</code> the coordinates of the connection target.</p>
+
+<h3 id="select">select</h3>
+
+<p>Select or deselects the Connection.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-boolean-default-true">value <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h5>
+
+<p>True to select the Connection and <code class="language-plaintext highlighter-rouge">false</code> to deselect it.</p>
+
+<h3 id="type">type</h3>
+
+<p>Gets or sets the (sub-) type of the Connection which defines the way it routes.</p>
+
+<p>The routing of a connection is the way that intermediate points of a Connection defines a route. A route is usually defined on the basis of constraints or behaviors. Currently the framework defines a default polyline route (which simply connects the given intermediate points) and a simple rectangular (aka cascading) route. The cascading type is useful when using tree layout and hierarchies; the routed Connection will in this case enhance the representation of the hierarchy and thus reproduce a classic organization diagram.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-string-default-polyline">value <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Polyline")</em></h5>
+
+<ul>
+  <li>"Polyline" - connects the defined intermediate points. See the points() method.</li>
+  <li>"Cascading" - discards given points and defines a cascading path between the endpoints.</li>
+</ul>
+
+<h3 id="points">points</h3>
+
+<p>Gets the intermediate points of the connection.</p>
+
+<h4 id="returns-4">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> the intermediate points of the connection.</p>
+
+<h3 id="allpoints">allPoints</h3>
+
+<p>Gets all points of the Connection.
+This is the union of the endpoints and the intermediate points.</p>
+
+<h4 id="returns-5">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> all points of the connection.</p>
+
+<h3 id="redraw">redraw</h3>
+
+<p>Redraws the Connection with the given options.</p>
+
+<h5 id="example---changing-the-connection-after-it-has-been-added">Example - changing the Connection after it has been added</h5>
+
+<p><img src="/api/dataviz/diagram/connectionredraw.png" alt="Connection redraw." /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="diagram"&gt;&lt;/div&gt;
+&lt;script&gt;
+    var Point = kendo.dataviz.diagram.Point;
+    var diagram = $("#diagram").kendoDiagram({ }).getKendoDiagram();
+    var connection = diagram.connect(new Point(10,10), new Point(200,70));
+
+    connection.redraw({
+        stroke: {
+            color: "orange"
+        },
+        points:[new Point(200,10)]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

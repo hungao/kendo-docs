@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li class="active">How Do I?</li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/howto.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("howto/howto-use-the-mobile-listview-with-pull-to-refresh.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="how-to-use-the-listview-of-kendo-ui-mobile-with-pull-to-refresh">How-To: Use the ListView of Kendo UI Mobile with pull-to-refresh</h1>
+
+<p>In this how-to, we will examine how to use the <a href="/api/mobile/listview">ListView</a> of Kendo UI Mobile with enabled pull-to-refresh.</p>
+
+<p>The Kendo Mobile ListView widget is used to display flat or grouped list of items. It can be either used in unbound mode by enhancing an HTML ul element, or bound to a DataSource instance.</p>
+
+<p>"Pull to refresh" pattern solves the problem when the developer has to display a data with dynamic character.</p>
+
+<h2 id="create-a-mobile-listview-with-pull-to-refresh">Create a Mobile ListView with pull-to-refresh</h2>
+
+<p>** In order to proceed with this "How-to", you will need to know how to build <a href="/howto/build-apps-with-kendo-ui-mobile">Kendo Mobile application</a>.</p>
+
+<p>Let"s see how the Mobile ListView works by building a simple example that integrates the Twitter API.</p>
+
+<p>First, we"ll define a target HTML element such as a list:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="localListView"&gt;&lt;/ul&gt;
+
+&lt;script id="pull-to-refresh-template" type="text/x-kendo-template"&gt;
+    &lt;div class="tweet"&gt;
+        &lt;img class="pullImage" src="#= profile_image_url #" alt="#= from_user #" /&gt;#= text #
+        &lt;div class="metadata"&gt;
+            &lt;a class="sublink" target="_blank" href="http://twitter.com/\\#!/#= from_user #/status/#= id_str #" rel="nofollow"&gt;#= kendo.toString(new Date(Date.parse(created_at)), "dd MMM HH:mm") #&lt;/a&gt;
+            |
+            &lt;a class="sublink" href="http://twitter.com/#= from_user #" rel="nofollow"&gt;#= from_user #&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Next, we will initialize the Mobile ListView by referring the template and a result set from the Twitter API to be displayed:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var dataSource = new kendo.data.DataSource({
+    serverPaging: true,
+    pageSize: 10,
+    transport: {
+        read: {
+            url: "http://search.twitter.com/search.json", // the remove service url
+            dataType: "jsonp" // JSONP (JSON with padding) is required for cross-domain AJAX
+        },
+        parameterMap: function(options) {
+            return {
+                q: "javascript",
+                page: options.page,
+                rpp: options.pageSize
+            };
+        }
+    },
+    schema: { // describe the result format
+        data: "results" // the data which the data source will be bound to is in the "results" field
+    }
+});
+
+$("#pull-to-refresh-listview").kendoMobileListView({
+    dataSource: dataSource,
+    pullToRefresh: true,
+    appendOnRefresh: true,
+    template: $("#pull-to-refresh-template").text(),
+});
+</code></pre></div></div>
+
+<p>Here"s the live example of the representation (above):</p>
+
+<p><a class="jsbin-embed" href="http://jsbin.com/ukitas/1/embed?live">JS Bin</a><script src="http://static.jsbin.com/js/embed.js"></script></p>
+
+<h2 id="send-additional-parameters">Send additional parameters</h2>
+
+<p>The Mobile ListView provides a way to define <a href="/api/mobile/listview#pullparameters-function">pullParameters</a> function, which will add its result to the data send to the server.
+These data will be available in the DataSource"s <a href="/api/framework/datasource#transportparametermap-function">parameterMap</a> function.</p>
+
+<p>Let"s modify the above example to send <a href="https://dev.twitter.com/docs/api/1.1/get/search/tweets#api-param-since_id">an additional parameter</a> to Twitter service:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#pull-to-refresh-listview").kendoMobileListView({
+    dataSource: dataSource,
+    pullToRefresh: true,
+    appendOnRefresh: true,
+    template: $("#pull-to-refresh-template").text(),
+    pullParameters: function(item) {
+        //item is the first data item in the ListView
+        return {
+            since_id: item.id_str,
+            page: 1
+        };
+    }
+});
+</code></pre></div></div>
+
+<p>Now we can use this additional parameter in the parameterMap function of the DataSource:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var dataSource = new kendo.data.DataSource({
+    serverPaging: true,
+    pageSize: 10,
+    transport: {
+        read: {
+            url: "http://search.twitter.com/search.json", // the remove service url
+            dataType: "jsonp" // JSONP (JSON with padding) is required for cross-domain AJAX
+        },
+        parameterMap: function(options) {
+            return {
+                q: "javascript",
+                page: options.page,
+                rpp: options.pageSize,
+                since_id: options.since_id //additional parameters sent to the remote service
+            };
+        }
+    },
+    schema: { // describe the result format
+        data: "results" // the data which the data source will be bound to is in the "results" field
+    }
+});
+</code></pre></div></div>
+
+<p>Here"s the live example of the above example:</p>
+
+<p><a class="jsbin-embed" href="http://jsbin.com/iloqid/1/embed?live">JS Bin</a><script src="http://static.jsbin.com/js/embed.js"></script></p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

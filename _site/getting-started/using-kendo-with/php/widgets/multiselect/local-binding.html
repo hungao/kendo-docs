@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>How to bind Kendo MultiSelect for PHP to PHP array</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to bind Kendo UI MultiSelect for PHP to array of data">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/php/widgets/multiselect/local-binding.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="local-binding-to-array">Local Binding to Array</h1>
+
+<p>This help topic shows how to bind Kendo MultiSelect for PHP to a PHP <a href="http://php.net/manual/en/language.types.array.php">array</a>. This array
+can be populated from a data base or declared inline (in the page). Local binding means that filtering operation will happen on the client-side.</p>
+
+<h2 id="binding-to-array-returned-by-pdo">Binding to array returned by PDO</h2>
+
+<p>PHP Data Objects (<a href="http://www.php.net/manual/en/intro.pdo.php">PDO</a>) is an interface for accessing various databases in PHP. Here is how to bind Kendo MultiSelect to array
+returned by PDO.</p>
+
+<blockquote>
+  <p>The following demo is using the sample SQLite database shipped with the Telerik UI for PHP** demos (**/wrappers/php/sample.db).</p>
+</blockquote>
+
+<ol>
+  <li>Follow the steps from the <a href="/getting-started/using-kendo-with/php/introduction">introduction</a> - include the autoloader, JavaScript and CSS files.</li>
+  <li>
+    <p>Create a PDO connection</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $db = new PDO('sqlite:../sample.db');
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Retrieve all records from the <code class="language-plaintext highlighter-rouge">Products</code> table</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $statement = $db-&gt;prepare('SELECT * FROM Products');
+ $products = $statement-&gt;fetchAll(PDO::FETCH_ASSOC);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a <a href="/api/wrappers/php/Kendo/Data/DataSource">data source</a> and set its <a href="/api/wrappers/php/Kendo/Data/DataSource#data">data</a> and <a href="/api/wrappers/php/Kendo/Data/DataSource#schema">schema</a>. Setting the schema is required
+to specify the model fields. Those fields are required for filtering.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ // Create the schema model
+ $model = new \Kendo\Data\DataSourceSchemaModel();
+
+ // Create a field for the 'ProductName' column of the 'Products' table
+ $productNameField = new \Kendo\Data\DataSourceSchemaModelField('ProductName');
+ $productNameField-&gt;type('string');
+
+ // Create a field for the 'ProductID' column of the 'Products' table
+ $productIDField = new \Kendo\Data\DataSourceSchemaModelField('ProductID');
+ $productIDField-&gt;type('number');
+
+ $model-&gt;addField($productNameField, $productIDField);
+
+ // Create the schema
+ $schema = new \Kendo\Data\DataSourceSchema();
+
+ // Set its model
+ $schema-&gt;model($model)
+
+ // Create the data source
+ $dataSource = new \Kendo\Data\DataSource();
+
+ // Specify the schema and data
+ $dataSource-&gt;data($products)
+            -&gt;schema($schema);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a <a href="/api/wrappers/php/Kendo/UI/MultiSelect">multiselect</a>, configure its <a href="/api/wrappers/php/Kendo/UI/MultiSelect#datatextfield">dataTextField</a> and
+<a href="/api/wrappers/php/Kendo/UI/MultiSelect#datavaluefield">dataValueField</a> options and set its <a href="/api/wrappers/php/Kendo/UI/MultiSelect#datasource">data source</a>.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $multiSelect = new \Kendo\UI\MultiSelect('MultiSelect');
+ $multiSelect-&gt;dataSource($dataSource);
+ $multiSelect-&gt;dataTextField('ProductName');
+ $multiSelect-&gt;dataValueField('ProductID');
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Output the multiselect by echo-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ echo $multiSelect-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="using-the-datasourceresult-helper">Using the DataSourceResult Helper</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">DataSourceResult</code> class is a helper utility on top of PDO which simplifies common CRUD operations.
+It is distributed with the Telerik UI for PHP** demos and can be found in the <strong>/wrappers/php/lib/</strong> directory of the **Telerik UI for PHP distribution.</p>
+
+<ol>
+  <li>Follow the steps from the <a href="/getting-started/using-kendo-with/php/introduction">introduction</a> - include the autoloader, JavaScript and CSS files.</li>
+  <li>
+    <p>Copy <strong>/wrappers/php/lib/DataSourceResult.php</strong> to your web site root and include it.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php require_once 'lib/DataSourceResult.php'; ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a new instance of the DataSourceResult and use its read method to retrieve data from the database.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ // The constructor accepts the PDO DSN for the target database
+ $result = new DataSourceResult('sqlite:../sample.db');
+
+ // The 'read' method accepts table name and array of columns to select.
+ $data = $result-&gt;read('Products', array('ProductName'));
+ // The result of the 'read' method is an array with two elements 'data' and 'total'.
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Configure a data source and schema.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ // Create the schema model
+ $model = new \Kendo\Data\DataSourceSchemaModel();
+
+ // Create a field for the 'ProductName' column of the 'Products' table
+ $productNameField = new \Kendo\Data\DataSourceSchemaModelField('ProductName');
+ $productNameField-&gt;type('string');
+
+ // Create a field for the 'ProductID' column of the 'Products' table
+ $productIDField = new \Kendo\Data\DataSourceSchemaModelField('ProductID');
+ $productIDField-&gt;type('number');
+
+ $model-&gt;addField($productNameField, $productIDField);
+
+ // Create the schema
+ $schema = new \Kendo\Data\DataSourceSchema();
+
+ // Set its model and describe the data format.
+ $schema-&gt;model($model)
+        -&gt;data('data')
+        -&gt;total('total');
+
+ // Create the data source
+ $dataSource = new \Kendo\Data\DataSource();
+
+ // Specify the schema and data
+ $dataSource-&gt;data($data)
+            -&gt;schema($schema);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create an multiselect, configure its dataTextField, dataValueField and set its data source.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $multiSelect = new \Kendo\UI\MultiSelect('MultiSelect');
+ $multiSelect-&gt;dataSource($dataSource);
+ $multiSelect-&gt;dataTextField('ProductName');
+ $multiSelect-&gt;dataValueField('ProductID');
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Output the multiselect by echo-ing the result of the render method.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ echo $multiSelect-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

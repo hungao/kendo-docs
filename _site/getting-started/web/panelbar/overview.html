@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of PanelBar UI widget documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Read when the initialization of PanelBar UI widget should occur and how to load the content with AJAX.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/panelbar/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="panelbar-overview">PanelBar Overview</h1>
+
+<p>The <strong>PanelBar</strong> displays hierarchical data as a multi-level, expandable widget that is useful for
+constrained areas of a page. Its structure may be defined in HTML or configured dynamically through its API. The
+content for items can also be loaded via AJAX by specifying a content URL.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>A <strong>PanelBar</strong> can be created by targeting the root element of a HTML list. A
+<strong>PanelBar</strong> will utilize this list to define its structure and content.</p>
+
+<h3 id="create-a-list-of-items">Create a list of items</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="panelBar"&gt;
+    &lt;li&gt;
+        Item 1
+            &lt;ul&gt;
+                &lt;li&gt;Sub Item 1&lt;/li&gt;
+                &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;/ul&gt;
+    &lt;li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>Initialization of a <strong>PanelBar</strong> should occur after the DOM is fully loaded. It is recommended
+that initialization the <strong>PanelBar</strong> occur within a handler is provided to $(document).ready().</p>
+
+<h3 id="initialize-the-panelbar-via-an-id-selector">Initialize the PanelBar via an ID selector</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function() {
+    $("#panelBar").kendoPanelBar();
+});
+</code></pre></div></div>
+
+<p><strong>PanelBar</strong> items may contain nested content (including markup) within a <strong>div</strong>
+element. Text content located outside nested content will be used as the title of the item.</p>
+
+<h3 id="create-a-list-of-items-in-html-with-nested-content">Create a list of items in HTML with nested content</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="panelBar"&gt;
+    &lt;li&gt;Item with no content&lt;/li&gt;
+    &lt;li&gt;Item with content
+        &lt;div&gt;This is nested content of a PanelBar item.&lt;/div&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>A <strong>PanelBar</strong> will preserve the content defined within an item.</p>
+
+<h3 id="initialize-the-panelbar-via-an-id-selector-1">Initialize the PanelBar via an ID selector</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var panelBar = $("#panelbar").kendoPanelBar();
+</code></pre></div></div>
+
+<h3 id="initialize-a-panelbar-using-json-data-object">Initialize a PanelBar using JSON data object</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#panelbar").kendoPanelBar({
+    dataSource: [
+        {
+            text: "Item 1",
+            cssClass: "myClass",                            // Add custom CSS class to the item, optional, added 2012 Q3 SP1.
+            url: "http://www.telerik.com/"                  // link URL if navigation is needed (optional)
+        },
+        {
+            text: "&lt;b&gt;Item 2&lt;/b&gt;",
+            encoded: false,                                 // Allows use of HTML for item text
+            content: "text"                                 // content within an item
+        },
+        {
+            text: "Item 3",
+            contentUrl: "partialContent.html"               // content URL to load within an item
+        },
+        {
+            text: "Item 4",
+            imageUrl: "http://www.telerik.com/test.jpg",    // item image URL, optional
+            expanded: true,                                 // item is rendered expanded
+            items: [{                                       // Sub item collection.
+                text: "Sub Item 1"
+            },
+            {
+                text: "Sub Item 2"
+            }]
+        },
+        {
+            text: "Item 5",
+            // item image sprite CSS class, optional
+            spriteCssClass: "imageClass3"
+        }
+    ]
+});
+</code></pre></div></div>
+
+<h2 id="loading-content-with-ajax">Loading Content with AJAX</h2>
+
+<p>While any valid technique for loading AJAX content can be used, the <strong>PanelBar</strong> provides built-in
+support for asynchronously loading content from URLs. These URLs should return HTML fragments that can be
+loaded in the <strong>PanelBar</strong> item content area. Content DIVs should be completely empty for AJAX
+loading to work.</p>
+
+<h3 id="create-a-list-of-items-with-a-target-for-dynamic-content">Create a list of items with a target for dynamic content</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="panelBar"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+    &lt;li&gt;
+        Item with Dynamic Content
+        &lt;div&gt;&lt;/div&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h3 id="load-a-panelbar-item-content-asynchronously-via-ajax">Load a PanelBar item content asynchronously via AJAX</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#panelBar").kendoPanelBar({
+    contentUrls:[
+        null,
+        null,
+        "html-content-snippet.html"
+    ]
+});
+</code></pre></div></div>
+
+<p>When the <strong>PanelBar</strong> loads remote content via AJAX, the server response is cached in-memory so
+that subsequent expand/collapse actions do not trigger subsequent AJAX requests.</p>
+
+<h2 id="customizing-panelbar-animations">Customizing PanelBar Animations</h2>
+
+<p>By default, a <strong>PanelBar</strong> uses animations to expand and reveal sub-items when an item header is
+clicked. These animations can be modified in configuration via the open and close animation properties. A
+<strong>PanelBar</strong> can also be configured to only allow one panel to remain open at a time.</p>
+
+<h3 id="changing-panelbar-animation-and-expandmode-behavior">Changing PanelBar animation and expandMode behavior</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#panelBar").kendoPanelBar({
+    animation: {
+        open : { effects: "fadeIn" }
+    },
+    expandMode: "single"
+});
+</code></pre></div></div>
+
+<h2 id="dynamically-configuring-panelbar-items">Dynamically Configuring PanelBar Items</h2>
+
+<p>The <strong>PanelBar</strong> API provides several methods for dynamically adding or removing Items. To add
+items, provide the new item as a JSON object along with a reference item that will be used to determine its
+placement in the items hierarchy. Note: The reference item is optional when appending.</p>
+
+<p>A reference item is a target <strong>PanelBar</strong> item HTML element that already exists in the PanelBar.
+Any valid selector can be used to obtain a reference to the target item.</p>
+
+<p>Removing an item only requires a reference to the target element that should be removed.</p>
+
+<h3 id="dynamically-adding-a-new-root-panelbar-item">Dynamically adding a new root PanelBar item</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var panelBar = $("#panelBar").kendoPanelBar().data("kendoPanelBar");
+
+panelBar.insertAfter(
+     { text: "New PanelBar Item" },
+     panelBar.element.children("li:last")
+);
+</code></pre></div></div>
+
+<h2 id="accessing-an-existing-panelbar">Accessing an Existing PanelBar</h2>
+
+<p>You can reference an existing <strong>PanelBar</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>. Once a reference has been established, you can
+use the API to control its behavior.</p>
+
+<h3 id="accessing-an-existing-panelbar-instance">Accessing an existing PanelBar instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var panelBar = $("#panelBar").data("kendoPanelBar");
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

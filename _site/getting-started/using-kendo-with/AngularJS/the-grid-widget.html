@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/AngularJS/the-grid-widget.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="the-grid-widget-in-angular-kendo">The Grid widget in Angular-Kendo</h1>
+
+<p>The Grid is one of Kendo"s most complex widgets. On this page we will outline some particularities.</p>
+
+<h2 id="the-k-on-change-attribute">The <code class="language-plaintext highlighter-rouge">k-on-change</code> attribute</h2>
+
+<p>If you assign a <code class="language-plaintext highlighter-rouge">k-on-change</code> event handler, it will be evaluated in a scope containing additional local variables:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">kendoEvent</code> — the "change" event as triggered by Kendo UI;</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">selected</code> — the selected elements (jQuery object);</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">data</code> — the selected data items (array of models);</p>
+  </li>
+</ul>
+
+<p>When the grid is not in multiple selection mode, the <code class="language-plaintext highlighter-rouge">data</code> above will not be an array but a single data item, and that item is also accessible as <code class="language-plaintext highlighter-rouge">dataItem</code>.</p>
+
+<p>When cell selection is allowed, an additional <code class="language-plaintext highlighter-rouge">columns</code> variable will be present. It is an array containing the indexes of the columns where cells are selected.</p>
+
+<p>The following example allows you to choose the grid"s selection mode and then select items in the grid and see what variables are available.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// controller
+function Ctrl1($scope) {
+  var data = new kendo.data.DataSource({
+    data: [
+      { text: "Foo", id: 1 },
+      { text: "Bar", id: 2 },
+      { text: "Baz", id: 3 }
+    ]
+  });
+  $scope.handleChange = function(selected, data, dataItem, columns) {
+    $scope.data = data;
+    $scope.columns = columns;
+    $scope.dataItem = dataItem;
+  };
+  $scope.gridOptions = {
+    dataSource: data,
+    selectable: "row",
+    columns: [
+      { field: "text", title: "Text" },
+      { field: "id", title: "Id" }
+    ]
+  };
+}
+
+&lt;!-- markup --&gt;
+&lt;label&gt;Select mode: &lt;select kendo-dropdownlist ng-model="gridOptions.selectable"&gt;
+  &lt;option value="row"&gt;Row&lt;/option&gt;
+  &lt;option value="cell"&gt;Cell&lt;/option&gt;
+  &lt;option value="multiple, row"&gt;Multiple, row&lt;/option&gt;
+  &lt;option value="multiple, cell"&gt;Multiple, cell&lt;/option&gt;
+&lt;/select&gt;&lt;/label&gt;
+
+&lt;div kendo-grid k-options="gridOptions" k-rebind="gridOptions.selectable"
+     k-on-change="handleChange(selected, data, dataItem, columns)"&gt;&lt;/div&gt;
+
+&lt;pre&gt;
+data: 
+columns: 
+&lt;span ng-show="gridOptions.selectable == 'row' || gridOptions.selectable == 'cell'"
+&gt;dataItem: &lt;/span&gt;
+&lt;/pre&gt;
+</code></pre></div></div>
+
+<h2 id="dynamically-set-columns">Dynamically set columns</h2>
+
+<p>When you need to, say, load columns definition from the server, you need to postpone the widget initialization until the data is available, because the Grid doesn"t support defining columns after the widget is created. For this, the <code class="language-plaintext highlighter-rouge">k-ng-delay</code> attribute comes in handy. Here is an example (using <code class="language-plaintext highlighter-rouge">$timeout</code> to emulate networking — the data is set in scope asynchronously):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// controller
+function Ctrl2($scope, $timeout) {
+  $timeout(function(){
+    $scope.gridOptions = {
+      sortable: true,
+      selectable: true,
+      dataSource: [
+        { text: "Foo", id: 1 },
+        { text: "Bar", id: 2 },
+        { text: "Baz", id: 3 }
+      ],
+      columns: [
+        { field: "text", title: "Text" }
+      ]
+    };
+  }, 500);
+}
+
+&lt;!-- markup --&gt;
+&lt;div kendo-grid k-options="gridOptions" k-ng-delay="gridOptions"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<h2 id="templates">Templates</h2>
+
+<p>The Grid supports a lot of user-customizable templates. You can define the <code class="language-plaintext highlighter-rouge">rowTemplate</code> if you want to completely customize how each row is displayed, or individual cell templates by adding a <code class="language-plaintext highlighter-rouge">template</code> property in your column definitions. The difference versus plain Kendo is that when the Grid is created with the Angular directive the templates can contain live `` bits. Both <code class="language-plaintext highlighter-rouge">rowTemplate</code> and <code class="language-plaintext highlighter-rouge">columns.template</code> are compiled with Angular in a scope containing a <code class="language-plaintext highlighter-rouge">dataItem</code> variable which points to the data model of the current item. Here is an example for <code class="language-plaintext highlighter-rouge">rowTemplate</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// controller
+function Ctrl3($scope) {
+  var data = new kendo.data.DataSource({
+    data: [
+      { text: "Foo", id: 1 },
+      { text: "Bar", id: 2 },
+      { text: "Baz", id: 3 }
+    ]
+  });
+  $scope.gridOptions = {
+    dataSource: data,
+    sortable: true,
+    selectable: true,
+    columns: [
+      { field: "text", title: "Text" },
+      { field: "id", title: "Id" }
+    ],
+    rowTemplate: "&lt;tr data-uid='#: uid #'&gt;&lt;td colspan='2' style='text-align: center'&gt;" +
+      "This is &lt;b&gt;&lt;/b&gt; and has ID=" +
+      "&lt;/td&gt;&lt;/tr&gt;"
+  };
+}
+
+&lt;!-- markup --&gt;
+&lt;p&gt;Select an item to show editor:&lt;/p&gt;
+&lt;div kendo-grid k-options="gridOptions" k-on-change="selectedItem = dataItem"&gt;&lt;/div&gt;
+&lt;div ng-show="selectedItem"&gt;
+  &lt;input ng-model="selectedItem.text" /&gt;
+  &lt;input ng-model="selectedItem.id" /&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>In the above example if you select an item it will display two input fields bound to the selected data model. You can notice that if you edit the data, the text in the grid will be updated seamlessly, thanks to Angular. Grid functions like sorting will still work properly.</p>
+
+<p>The one thing you must be careful about when using <code class="language-plaintext highlighter-rouge">rowTemplate</code> is to include the attribute <code class="language-plaintext highlighter-rouge">data-uid="#: uid #"</code> on the toplevel row element, as described in the Grid documentation. That cannot use an Angular template like <code class="language-plaintext highlighter-rouge">data-uid=""</code>, because that is compiled after the grid was displayed and the widget will not be able to tell which row belongs to which data item.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

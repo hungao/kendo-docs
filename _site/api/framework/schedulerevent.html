@@ -1,0 +1,902 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API Reference for Kendo Data SchedulerEvent</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Documentation how to get started with the SchedulerEvent.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/framework/schedulerevent.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodataschedulerevent">kendo.data.SchedulerEvent</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">kendo.data.SchedulerEvent</code> class represents a data item from the <a href="/api/framework/schedulerdatasource">kendo.data.SchedulerDataSource</a>. Inherits from <a href="/api/framework/model">kendo.data.Model</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="description-string-default-">description <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "")</em></h3>
+
+<p>The optional event description.</p>
+
+<h4 id="example---set-the-description-of-an-event">Example - set the description of an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00"),
+    description: "Lunch with Harry and Steve"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="end-date">end <code class="language-plaintext highlighter-rouge">Date</code></h3>
+
+<p>The date at which the scheduler event ends. The <code class="language-plaintext highlighter-rouge">end</code> date is mandatory.</p>
+
+<h4 id="example---set-the-end-date-of-an-event">Example - set the end date of an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00")
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="endtimezone-string-default-undefined">endTimezone <code class="language-plaintext highlighter-rouge">String</code> <em>(default: undefined)</em></h3>
+
+<p>The timezone of the <code class="language-plaintext highlighter-rouge">end</code> date. If not specified the <a href="/api/web/scheduler#configuration-timezone">timezone</a> will be used.</p>
+
+<p>The complete list of the supported timezones is available in the <a href="http://en.wikipedia.org/wiki/List_of_IANA_time_zones">List of IANA time zones</a> Wikipedia page.</p>
+
+<h4 id="example---set-the-end-timezone-of-an-event">Example - set the end timezone of an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00"),
+    endTimezone: "Europe/Sofia"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="id-stringnumberobject">id <code class="language-plaintext highlighter-rouge">String|Number|Object</code></h3>
+
+<p>The mandatory unique identifier of the event.</p>
+
+<h4 id="example---set-the-identifier-of-an-event">Example - set the identifier of an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00")
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="isallday-boolean-default-false">isAllDay <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the event is "all day". By default events are not all day.</p>
+
+<blockquote>
+  <p><strong>Important</strong>: When <code class="language-plaintext highlighter-rouge">isAllDay</code> is set to <code class="language-plaintext highlighter-rouge">true</code> the <code class="language-plaintext highlighter-rouge">start</code> and <code class="language-plaintext highlighter-rouge">end</code> fields must be set to the same date.</p>
+</blockquote>
+
+<h4 id="example---create-all-day-event">Example - create all day event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Birthday",
+    start: new Date("2013/4/4 00:00"),
+    end: new Date("2013/4/4 00:00"),
+    isAllDay: true
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="recurrenceexception-string-default-undefined">recurrenceException <code class="language-plaintext highlighter-rouge">String</code> <em>(default: undefined)</em></h3>
+
+<p>The recurrence exceptions. A list of semicolon separated dates formatted using the <code class="language-plaintext highlighter-rouge">yyyyMMddTHHmmssZ</code> format string.</p>
+
+<blockquote>
+  <p><strong>Important</strong>: The dates should be encoded in UTC.</p>
+</blockquote>
+
+<h4 id="example---set-recurrence-exceptions">Example - set recurrence exceptions</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    start: new Date("2013/9/2 12:00"),
+    end: new Date("2013/9/2 12:30"),
+    title: "Lunch",
+    recurrenceRule: "FREQ=DAILY",
+    recurrenceException: new Date("2013/9/3 12:00").toISOString()
+});
+var exception =  new kendo.data.SchedulerEvent({
+    id: 2,
+    start: new Date("2013/9/3 12:30"),
+    end: new Date("2013/9/3 13:00"),
+    title: "Lunch",
+    recurrenceId: 1
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="recurrenceid-stringnumberobject-default-undefined">recurrenceId <code class="language-plaintext highlighter-rouge">String|Number|Object</code> <em>(default: undefined)</em></h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">id</code> of the recurrence parent event. Required for events that are recurrence exceptions.</p>
+
+<h4 id="example---set-recurrence-exceptions-1">Example - set recurrence exceptions</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    start: new Date("2013/9/2 12:00"),
+    end: new Date("2013/9/2 12:30"),
+    title: "Lunch",
+    recurrenceRule: "FREQ=DAILY",
+    recurrenceException: new Date("2013/9/3 12:00").toISOString()
+});
+var exception =  new kendo.data.SchedulerEvent({
+    id: 2,
+    start: new Date("2013/9/3 12:30"),
+    end: new Date("2013/9/3 13:00"),
+    title: "Lunch",
+    recurrenceId: 1
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="recurrencerule-string-default-undefined">recurrenceRule <code class="language-plaintext highlighter-rouge">String</code> <em>(default: undefined)</em></h3>
+
+<p>The recurrence rule describing the recurring pattern of the event. The format follows the <a href="http://tools.ietf.org/html/rfc5545">iCal specification</a>.</p>
+
+<h4 id="example---set-the-recurrence-rule">Example - set the recurrence rule</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    start: new Date("2013/9/2 12:00"),
+    end: new Date("2013/9/2 12:30"),
+    title: "Lunch",
+    recurrenceRule: "FREQ=DAILY"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="start-date">start <code class="language-plaintext highlighter-rouge">Date</code></h3>
+
+<p>The date at which the scheduler event starts. The <code class="language-plaintext highlighter-rouge">start</code> date is mandatory.</p>
+
+<h4 id="example---set-the-start-date-of-an-event">Example - set the start date of an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00")
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="starttimezone-string-default-undefined">startTimezone <code class="language-plaintext highlighter-rouge">String</code> <em>(default: undefined)</em></h3>
+
+<p>The timezone of the <code class="language-plaintext highlighter-rouge">start</code> date. If not specified the <a href="/api/web/scheduler#configuration-timezone">timezone</a> will be used.</p>
+
+<p>The complete list of the supported timezones is available in the <a href="http://en.wikipedia.org/wiki/List_of_IANA_time_zones">List of IANA time zones</a> Wikipedia page.</p>
+
+<h4 id="example---set-the-end-timezone-of-an-event-1">Example - set the end timezone of an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    startTimezone: "Europe/Sofia",
+    end: new Date("2013/4/4 13:00")
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="title-string-default-">title <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "")</em></h3>
+
+<p>The title of the event which is displayed by the scheduler widget.</p>
+
+<h4 id="example---set-the-title-of-an-event">Example - set the title of an event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00")
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="description-string">description <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The optional event description.</p>
+
+<h4 id="example---get-the-event-description">Example - get the event description</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00"),
+    description: "Lunch with Harry and Steve"
+});
+console.log(event.description); // outputs "Lunch with Harry and Steve"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="end-date-1">end <code class="language-plaintext highlighter-rouge">Date</code></h3>
+
+<p>The date at which the scheduler event ends.</p>
+
+<h4 id="example---get-the-event-end-date">Example - get the event end date</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00")
+});
+console.log(event.end); // outputs the end date
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="endtimezone-string">endTimezone <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The timezone of the <code class="language-plaintext highlighter-rouge">end</code> date.</p>
+
+<h4 id="example---get-the-event-end-timezone">Example - get the event end timezone</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00"),
+    endTimezone: "Europe/Sofia"
+});
+console.log(event.endTimezone); // outputs "Europe/Sofia"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="id-stringnumberobject-1">id <code class="language-plaintext highlighter-rouge">String|Number|Object</code></h3>
+
+<p>The unique identifier of the event.</p>
+
+<h4 id="example---get-the-event-id">Example - get the event id</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00")
+});
+console.log(event.id); // outputs "1"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="isallday-boolean">isAllDay <code class="language-plaintext highlighter-rouge">Boolean</code></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the event is "all day".</p>
+
+<h4 id="example---get-the-event-isallday-field">Example - get the event isAllDay field</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Birthday",
+    start: new Date("2013/4/4 00:00"),
+    end: new Date("2013/4/4 00:00"),
+    isAllDay: true
+});
+console.log(event.isAllDay); // outputs "true"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="recurrenceexception-string">recurrenceException <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The recurrence exceptions. A list of colon separated dates formatted using the <code class="language-plaintext highlighter-rouge">yyyyMMddTHHmmssZ</code> format string.</p>
+
+<h4 id="example---get-the-event-recurrence-exception-field">Example - get the event recurrence exception field</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    start: new Date("2013/9/2 12:00"),
+    end: new Date("2013/9/2 12:30"),
+    title: "Lunch",
+    recurrenceRule: "FREQ=DAILY",
+    recurrenceException: new Date("2013/9/3 12:00").toISOString()
+});
+console.log(event.recurrenceException); // outputs the recurrence exception
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="recurrenceid-stringnumberobject">recurrenceId <code class="language-plaintext highlighter-rouge">String|Number|Object</code></h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">id</code> of the recurrence parent event.</p>
+
+<h4 id="example---get-the-event-recurrence-parent-id">Example - get the event recurrence parent id</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    start: new Date("2013/9/2 12:00"),
+    end: new Date("2013/9/2 12:30"),
+    title: "Lunch",
+    recurrenceRule: "FREQ=DAILY",
+    recurrenceException: new Date("2013/9/3 12:00").toISOString()
+});
+var exception =  new kendo.data.SchedulerEvent({
+    id: 2,
+    start: new Date("2013/9/3 12:30"),
+    end: new Date("2013/9/3 13:00"),
+    title: "Lunch",
+    recurrenceId: 1
+});
+console.log(exception.recurrenceId); // outputs "1"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="recurrencerule-string">recurrenceRule <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The recurrence rule describing the recurring pattern of the event.</p>
+
+<h4 id="example---get-the-event-recurrence-rule">Example - get the event recurrence rule</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    start: new Date("2013/9/2 12:00"),
+    end: new Date("2013/9/2 12:30"),
+    title: "Lunch",
+    recurrenceRule: "FREQ=DAILY"
+});
+console.log(event.recurrenceRule); // outputs "FREQ=DAILY"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="start-date-1">start <code class="language-plaintext highlighter-rouge">Date</code></h3>
+
+<p>The date at which the scheduler event starts.</p>
+
+<h4 id="example---get-the-event-start-date">Example - get the event start date</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00")
+});
+console.log(event.start); // outputs the end date
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="starttimezone-string">startTimezone <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The timezone of the <code class="language-plaintext highlighter-rouge">start</code> date.</p>
+
+<h4 id="example---get-the-event-start-timezone">Example - get the event start timezone</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    startTimezone: "Europe/Sofia"
+    end: new Date("2013/4/4 13:00")
+});
+console.log(event.startTimezone); // outputs "Europe/Sofia"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="title-string">title <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The title of the event which is displayed by the scheduler widget.</p>
+
+<h4 id="example---get-the-event-title">Example - get the event title</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00")
+});
+console.log(event.title); // outputs "Lunch"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<p>See the <a href="/api/framework/model#methods">Model methods</a> for all inherited methods.</p>
+
+<h3 id="schedulereventdefine">SchedulerEvent.define</h3>
+
+<p>Defines a new <code class="language-plaintext highlighter-rouge">SchedulerEvent</code> type using the provided options.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="options-object">options <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>Describes the configuration options of the new scheduler event class.</p>
+
+<h5 id="optionsid-string">options.id <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the field which acts as an identifier of the scheduler event.
+The identifier is used to determine if a model instance is new or existing one.
+If the value of the field specified is equal to the default value (specified through the <code class="language-plaintext highlighter-rouge">fields</code> configuration) the model is considered as new.</p>
+
+<h5 id="optionsfields-object">options.fields <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>A set of key/value pairs the configure the model fields. The key specifies the name of the field.
+Quote the key if it contains spaces or other symbols which are not valid for a JavaScript identifier.</p>
+
+<h5 id="optionsfieldsfieldnamedefaultvalue">options.fields.fieldName.defaultValue</h5>
+
+<p>Specifies the which will be used for the field when a new model instance is created. Default settings depend on the type of the field. Default for "string" is <code class="language-plaintext highlighter-rouge">""</code>,
+for "number" is <code class="language-plaintext highlighter-rouge">0</code> and for "date" is <code class="language-plaintext highlighter-rouge">new Date()</code> (today).</p>
+
+<h5 id="optionsfieldsfieldnameeditable-boolean">options.fields.fieldName.editable <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Specifies if the field is editable or not. The default value is <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<h5 id="optionsfieldsfieldnamenullable-boolean">options.fields.fieldName.nullable <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Specifies if the <code class="language-plaintext highlighter-rouge">defaultValue</code> setting should be used. The default is <code class="language-plaintext highlighter-rouge">false</code>.</p>
+
+<h5 id="optionsfieldsfieldnameparse-function">options.fields.fieldName.parse <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>Specifies the function which will parse the field value. If not set default parsers will be used.</p>
+
+<h5 id="optionsfieldsfieldnametype-string">options.fields.fieldName.type <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>Specifies the the type of the field. The available options are <code class="language-plaintext highlighter-rouge">"string"</code>, <code class="language-plaintext highlighter-rouge">"number"</code>, <code class="language-plaintext highlighter-rouge">"boolean"</code>, <code class="language-plaintext highlighter-rouge">"date</code>". The default is <code class="language-plaintext highlighter-rouge">"string"</code>.</p>
+
+<h5 id="optionsfieldsfieldnamevalidation-object">options.fields.fieldName.validation <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>Specifies the validation options which will be used by <a href="/api/framework/validator">Kendo Validator</a>.</p>
+
+<h4 id="example---define-custom-scheduler-event">Example - define custom scheduler event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var Task = kendo.data.SchedulerEvent.define({
+    id: "taskId",
+    fields: {
+        taskId: { from: "TaskID", type: "number" },
+        title: { from: "Title", defaultValue: "No title", validation: { required: true } },
+        start: { type: "date", from: "Start" },
+        end: { type: "date", from: "End" },
+        startTimezone: { from: "StartTimezone" },
+        endTimezone: { from: "EndTimezone" },
+        description: { from: "Description" },
+        recurrenceId: { from: "RecurrenceID" },
+        recurrenceRule: { from: "RecurrenceRule" },
+        recurrenceException: { from: "RecurrenceException" },
+        ownerId: { from: "OwnerID", defaultValue: 1 },
+        isAllDay: { type: "boolean", from: "IsAllDay" }
+    }
+});
+</code></pre></div></div>
+
+<h3 id="clone">clone</h3>
+
+<p>Clones the scheduler event.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="options-object-1">options <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>Additional options passed to the SchedulerEvent constructor.</p>
+
+<h5 id="updateuid-booleandefault-false">updateUid <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h5>
+
+<p>If you pass <code class="language-plaintext highlighter-rouge">true</code> the <code class="language-plaintext highlighter-rouge">uid</code> of the event will be <strong>updated</strong>.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.SchedulerEvent</code> the cloned scheduler event.</p>
+
+<h4 id="example---clone-the-scheduler-event">Example - clone the scheduler event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var event = new kendo.data.SchedulerEvent({
+        id: 1,
+        title: "Task1",
+        start: new Date(2013, 10, 11, 12),
+        end: new Date(2013, 10, 11, 14)
+    });
+
+    var clone = event.clone();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---override-start-and-end-dates-of-the-event">Example - override start and end dates of the event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var event = new kendo.data.SchedulerEvent({
+        id: 1,
+        title: "Task1",
+        start: new Date("2013/4/4 12:00"),
+        end: new Date("2013/4/4 14:00")
+    });
+
+    var clone = event.clone({
+        start: new Date("2013/4/4 2:00"),
+        end: new Date("2013/4/4 4:00")
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="duration">duration</h3>
+
+<p>Returns the scheduler event length in milliseconds.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> the length of the event.</p>
+
+<h4 id="example---get-length-of-the-event">Example - get length of the event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var event = new kendo.data.SchedulerEvent({
+        id: 1,
+        title: "Task1",
+        start: new Date("2013/4/4 12:00"),
+        end: new Date("2013/4/4 14:00")
+    });
+
+    console.log(event.duration());
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="expand">expand</h3>
+
+<p>Expands the event for a specific period based on the <code class="language-plaintext highlighter-rouge">recurrenceRule</code> option.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="start-date-2">start <code class="language-plaintext highlighter-rouge">Date</code></h5>
+
+<p>The start date of the occurrence period.</p>
+
+<h5 id="end-date-2">end <code class="language-plaintext highlighter-rouge">Date</code></h5>
+
+<p>The end date of the occurrence period.</p>
+
+<h5 id="timezoneid-string">timeZoneId <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The time zone ID used to convert the recurrence rule dates.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> list of occurrences.</p>
+
+<h4 id="example---get-the-occurrences">Example - get the occurrences</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var event = new kendo.data.SchedulerEvent({
+    id: 1,
+    title: "Lunch",
+    start: new Date("2013/4/4 12:00"),
+    end: new Date("2013/4/4 13:00"),
+    recurrenceRule: "FREQ=DAILY"
+});
+
+var occurrences = event.expand(new Date("2013/4/4"), new Date("2013/5/4"), "Etc/UTC");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="update">update</h3>
+
+<p>Updates the scheduler event.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="eventinfo-object">eventInfo <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The new values, which will be used to update the event.</p>
+
+<h4 id="example---update-the-scheduler-event">Example - update the scheduler event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var event = new kendo.data.SchedulerEvent({
+        id: 1,
+        title: "Task1",
+        start: new Date("2013/4/4 12:00"),
+        end: new Date("2013/4/4 14:00")
+    });
+
+    event.update({
+        start: new Date("2013/4/4 2:00"),
+        end: new Date("2013/4/4 4:00")
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="ismultiday">isMultiDay</h3>
+
+<p>Checks whether the event is equal to or longer then twenty four hours.</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Boolean</code> return <code class="language-plaintext highlighter-rouge">true</code> if event is equal to or longer then 24 hours.</p>
+
+<h4 id="example---check-whether-an-event-is-a-multi-day-event">Example - check whether an event is a multi-day event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var event = new kendo.data.SchedulerEvent({
+        id: 1,
+        title: "Task1",
+        start: new Date("2013/4/4"),
+        end: new Date("2013/4/7")
+    });
+
+    console.log(event.isMultiDay()); //logs 'true'
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="isexception">isException</h3>
+
+<p>Checks whether the event is a recurrence exception.</p>
+
+<h4 id="returns-4">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Boolean</code> return <code class="language-plaintext highlighter-rouge">true</code> if event is a recurrence exception.</p>
+
+<h4 id="example---check-whether-an-event-is-an-exception">Example - check whether an event is an exception</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var event = new kendo.data.SchedulerEvent({
+        id: 2,
+        recurrenceId: 1, //id of the recurrence head event
+        title: "Task1",
+        start: new Date("2013/4/4"),
+        end: new Date("2013/4/4")
+    });
+
+    console.log(event.isException()); //logs 'true'
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="isoccurrence">isOccurrence</h3>
+
+<p>Checks whether the event is an occurrence part of a recurring series.</p>
+
+<h4 id="returns-5">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Boolean</code> return <code class="language-plaintext highlighter-rouge">true</code> if event is an occurrence.</p>
+
+<h4 id="example---check-whether-an-event-is-an-occurrence">Example - check whether an event is an occurrence</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var event = new kendo.data.SchedulerEvent({
+        id: 0, //event has a default id
+        recurrenceId: 1, //id of the recurrence head event
+        title: "Task1",
+        start: new Date("2013/4/4"),
+        end: new Date("2013/4/4")
+    });
+
+    console.log(event.isOccurrence()); //logs 'true'
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="isrecurring">isRecurring</h3>
+
+<p>Checks whether the event is part of a recurring series.</p>
+
+<h4 id="returns-6">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Boolean</code> return <code class="language-plaintext highlighter-rouge">true</code> if event is recurring.</p>
+
+<h4 id="example---check-whether-an-event-is-an-occurrence-1">Example - check whether an event is an occurrence</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var event = new kendo.data.SchedulerEvent({
+        id: 0,
+        recurrenceId: 1, //id of the recurrence head event
+        title: "Task1",
+        start: new Date("2013/4/4"),
+        end: new Date("2013/4/4")
+    });
+
+    var event2 = new kendo.data.SchedulerEvent({
+        id: 1,
+        title: "Task1",
+        start: new Date("2013/4/4"),
+        end: new Date("2013/4/4"),
+        recurrenceRule: "FREQ=DAILY"
+    });
+
+    console.log(event.isRecurring()); //logs 'true'
+    console.log(event2.isRecurring()); //logs 'true'
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="isrecurrencehead">isRecurrenceHead</h3>
+
+<p>Checks whether the event is the head of a recurring series.</p>
+
+<h4 id="returns-7">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Boolean</code> return <code class="language-plaintext highlighter-rouge">true</code> if event is a recurrence head.</p>
+
+<h4 id="example---check-whether-an-event-is-a-recurrence-head">Example - check whether an event is a recurrence head</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var event = new kendo.data.SchedulerEvent({
+        id: 1,
+        title: "Task1",
+        start: new Date("2013/4/4"),
+        end: new Date("2013/4/4"),
+        recurrenceRule: "FREQ=DAILY"
+    });
+
+    console.log(event.isRecurrenceHead()); //logs 'true'
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="tooccurrence">toOccurrence</h3>
+
+<p>Converts the scheduler event to a event occurrence. Method will remove <code class="language-plaintext highlighter-rouge">recurrenceRule</code>, <code class="language-plaintext highlighter-rouge">recurrenceException</code> options, will add a <code class="language-plaintext highlighter-rouge">recurrenceId</code> field and will set <code class="language-plaintext highlighter-rouge">id</code> to the default one.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="options-object-2">options <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>Additional options passed to the SchedulerEvent constructor.</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">uid</code> property of the event will be preserved.</p>
+</blockquote>
+
+<h4 id="returns-8">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.SchedulerEvent</code> the occurrence.</p>
+
+<h4 id="example---create-occurrence-from-a-scheduler-event">Example - create occurrence from a scheduler event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var event = new kendo.data.SchedulerEvent({
+        id: 1,
+        title: "Task1",
+        start: new Date(2013, 10, 11, 12),
+        end: new Date(2013, 10, 11, 14),
+        recurrenceRule: "FREQ=DAILY"
+    });
+
+    var occurrence = event.toOccurrence();
+
+    console.log(occurrence.id); //logs default id
+    console.log(occurrence.recurrenceId); //logs id of the head. In this case '1'
+    console.log(occurrence.recurrenceRule); //logs 'null'
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<p>See the <a href="/api/framework/model#events">Model events</a> for all inherited events.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

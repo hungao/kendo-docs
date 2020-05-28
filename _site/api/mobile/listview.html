@@ -1,0 +1,1196 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Mobile ListView</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to display flat or grouped list of items with Kendo UI Mobile ListView widget and use events to handle button clicks and access dataItem.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/mobile/listview.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomobileuilistview">kendo.mobile.ui.ListView</h1>
+
+<p>Represents the Kendo UI Mobile ListView widget. Inherits from <a href="/api/framework/mobilewidget">kendo.mobile.ui.Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="appendonrefresh-booleandefault-false">appendOnRefresh <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>Used in combination with <code class="language-plaintext highlighter-rouge">pullToRefresh</code>. If set to <code class="language-plaintext highlighter-rouge">true</code>, newly loaded data will be appended on top when refreshing. <strong>Notice:</strong> not applicable if ListView is in a virtual mode.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;ul data-role="listview" data-source="foo" data-pull-to-refresh="true" data-append-on-refresh="true" data-template="foo-template"&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo-template"&gt;
+    #: name # - #: modified #
+&lt;/script&gt;
+
+&lt;script&gt;
+var i = 0;
+
+// datasource below is customized for demo purposes.
+var foo = new kendo.data.DataSource({
+  transport: {
+    read: function(options) {
+      var max = i + 5;
+      var data = [];
+      for (; i &lt; max; i ++) {
+        data.unshift({ name: "record" + i, modified: +new Date() });
+      }
+      // illustration purposes only
+      setTimeout(function() {
+                  options.success(data);
+      }, 1000);
+
+    }
+  }
+});
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="autobind-booleandefault-true">autoBind <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>Indicates whether the listview will call read on the DataSource initially. If set to false, the listview will be bound after the DataSource instance <code class="language-plaintext highlighter-rouge">fetch</code> method is called.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-click="fetchData"&gt;Fetch Data&lt;/a&gt;
+  &lt;ul data-role="listview" data-source="foo" data-auto-bind="false" data-template="foo-template"&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo-template"&gt;
+    #: data #
+&lt;/script&gt;
+
+&lt;script&gt;
+var foo = new kendo.data.DataSource({
+  data: [ 1, 2, 3, 4, 5]
+});
+
+function fetchData() {
+  foo.fetch();
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="datasource-kendodatadatasource--object">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.DataSource | Object</code></h3>
+
+<p>Instance of DataSource or the data that the mobile ListView will be bound to.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;ul data-role="listview" data-source="foo" data-template="foo-template"&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo-template"&gt;
+#: data #
+&lt;/script&gt;
+
+&lt;script&gt;
+var foo = new kendo.data.DataSource({ data: [ 1, 2, 3, 4, 5] });
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="endlessscroll-booleandefault-false">endlessScroll <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code>, the listview gets the next page of data when the user scrolls near the bottom of the view.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;ul data-role="listview" data-source="foo" data-endless-scroll="true" data-template="foo-template"&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo-template"&gt;
+    #: name # - #: modified #
+&lt;/script&gt;
+
+&lt;script&gt;
+var i = 0, pageSize = 100;
+
+// datasource below is customized for demo purposes.
+var foo = new kendo.data.DataSource({
+  transport: {
+    read: function(options) {
+      var max = i + pageSize;
+      var data = [];
+      for (; i &lt; max; i ++) {
+        data.push({ name: "record" + i, modified: +new Date() });
+      }
+
+      options.success(data);
+    }
+  },
+
+  pageSize: pageSize,
+  serverPaging: true,
+  schema: {
+    total: function() { return 500; }
+  }
+});
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="fixedheaders-booleandefault-false">fixedHeaders <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>If set to true, the group headers will persist their position when the user scrolls through the listview.
+Applicable only when the type is set to group, or when binding to grouped DataSource.</p>
+
+<p><strong>Notice:</strong> fixed headers are not supported in virtual mode.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;ul data-role="listview" data-source="groupedData" data-fixed-headers="true" data-template="my-template" data-header-template="header-template"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="my-template"&gt;
+  &lt;h3 class="item-title"&gt;#: name #&lt;/h3&gt;
+  &lt;p class="item-info"&gt;#: description #&lt;/p&gt;
+&lt;/script&gt;
+
+&lt;script type="text/x-kendo-template" id="header-template"&gt;
+    #: value #
+&lt;/script&gt;
+
+&lt;script&gt;
+var groupedData = new kendo.data.DataSource({
+    data: [
+      { name: "Sashimi Salad", description: "Organic greens topped with market fresh sashimi, wasabi soy vinaigrette.",  letter: "S" },
+      { name: "Seaweed Salad", description: "A nice seaweed salad.",  letter: "S" },
+      { name: "Edamame", description: "Boiled soy beans with salt.",  letter: "E" },
+      { name: "Maguro", description: "Tuna pieces.",  letter: "M" },
+      { name: "Tekka Maki", description: "Tuna roll with wasabi.",  letter: "T" },
+      { name: "California Rolls", description: "Crab sticks, avocado and cucumber.",  letter: "C" }
+    ],
+    group: { field: "letter" }
+});
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="headertemplate-stringfunctiondefault-value">headerTemplate <code class="language-plaintext highlighter-rouge">String|Function</code><em>(default: "#:value#")</em></h3>
+
+<p>The header item template (applicable when the type is set to group).</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;ul data-role="listview" data-source="groupedData" data-template="my-template" data-header-template="header-template"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="my-template"&gt;
+  &lt;h3 class="item-title"&gt;#: name #&lt;/h3&gt;
+  &lt;p class="item-info"&gt;#: description #&lt;/p&gt;
+&lt;/script&gt;
+
+&lt;script type="text/x-kendo-template" id="header-template"&gt;
+    my group - #: value #
+&lt;/script&gt;
+
+&lt;script&gt;
+var groupedData = new kendo.data.DataSource({
+  data: [
+    { name: "Sashimi Salad", description: "Organic greens topped with market fresh sashimi, wasabi soy vinaigrette.",  letter: "S" },
+    { name: "Seaweed Salad", description: "A nice seaweed salad.",  letter: "S" },
+    { name: "Edamame", description: "Boiled soy beans with salt.",  letter: "E" },
+    { name: "Maguro", description: "Tuna pieces.",  letter: "M" },
+    { name: "Tekka Maki", description: "Tuna roll with wasabi.",  letter: "T" },
+    { name: "California Rolls", description: "Crab sticks, avocado and cucumber.",  letter: "C" }
+  ],
+  group: { field: "letter" }
+});
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="loadmore-booleandefault-false">loadMore <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code>, a button is rendered at the bottom of the listview. Tapping it fetches and displays the items from the next page of the DataSource.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;ul data-role="listview" data-source="foo" data-load-more="true" data-template="foo-template"&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo-template"&gt;
+    #: name # - #: modified #
+&lt;/script&gt;
+
+&lt;script&gt;
+var i = 0, pageSize = 100;
+
+// datasource below is customized for demo purposes.
+var foo = new kendo.data.DataSource({
+  transport: {
+    read: function(options) {
+      var max = i + pageSize;
+      var data = [];
+      for (; i &lt; max; i ++) {
+        data.push({ name: "record" + i, modified: +new Date() });
+      }
+
+      options.success(data);
+    }
+  },
+
+  pageSize: pageSize,
+  serverPaging: true,
+  schema: {
+    total: function() { return 500; }
+  }
+});
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="loadmoretext-stringdefault-press-to-load-more">loadMoreText <code class="language-plaintext highlighter-rouge">String</code><em>(default: "Press to load more")</em></h3>
+
+<p>The text of the rendered load-more button (applies only if <code class="language-plaintext highlighter-rouge">loadMore</code> is set to true).</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;ul data-role="listview" data-source="foo" data-load-more="true" data-load-more-text="Show more" data-template="foo-template"&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo-template"&gt;
+    #: name # - #: modified #
+&lt;/script&gt;
+
+&lt;script&gt;
+var i = 0, pageSize = 100;
+
+// datasource below is customized for demo purposes.
+var foo = new kendo.data.DataSource({
+  transport: {
+    read: function(options) {
+      var max = i + pageSize;
+      var data = [];
+      for (; i &lt; max; i ++) {
+        data.push({ name: "record" + i, modified: +new Date() });
+      }
+
+      options.success(data);
+    }
+  },
+
+  pageSize: pageSize,
+  serverPaging: true,
+  schema: {
+    total: function() { return 500; }
+  }
+});
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pulltorefresh-booleandefault-false">pullToRefresh <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>If set to true, the listview will reload its data when the user pulls the view over the top limit.</p>
+
+<blockquote>
+  <p>Pull to refresh option is not compatible with native scrolling containers (view with <code class="language-plaintext highlighter-rouge">use-native-scrolling=true</code> or scroller with <code class="language-plaintext highlighter-rouge">use-native=true</code> attributes).</p>
+</blockquote>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;ul data-role="listview" data-source="foo" data-pull-to-refresh="true" data-template="foo-template"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+
+&lt;script type="text/x-kendo-template" id="foo-template"&gt;
+    #: name # - #: modified #
+&lt;/script&gt;
+
+&lt;script&gt;
+var i = 0;
+
+// datasource below is customized for demo purposes.
+var foo = new kendo.data.DataSource({
+  transport: {
+    read: function(options) {
+      var max = i + 5;
+      var data = [];
+      for (; i &lt; max; i ++) {
+        data.unshift({ name: "record" + i, modified: +new Date() });
+      }
+                            options.success(data);
+
+
+    }
+  }
+});
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pullparameters-function">pullParameters <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>A callback function used when the "pullToRefresh" option is enabled. The result of the function will be send as additional parameters to the DataSource"s <code class="language-plaintext highlighter-rouge">next</code> method.</p>
+
+<p><strong>Notice:</strong> When the listview is in a <em>virtual mode</em>, the pull to refresh action <strong>removes</strong> the previously loaded items in the listview (instead of appending new records at the top).
+Previously loaded pages in the DataSource are also discarded.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="initListView"&gt;
+  &lt;ul id="listview"&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var i = 0;
+
+// datasource below is customized for demo purposes.
+var foo = new kendo.data.DataSource({
+  transport: {
+    read: function(options) {
+      console.log(options.data.since_id); // undefined in the first request
+      var max = i + 5;
+      var data = [];
+      for (; i &lt; max; i ++) {
+        data.unshift({ name: "record" + i, modified: +new Date() });
+      }
+      options.success(data);
+    }
+  }
+});
+
+function initListView(e) {
+  $("#listview").kendoMobileListView({
+    dataSource: foo,
+    pullToRefresh: true,
+    template: "#: name # - #: modified #",
+    pullParameters: function(item) {
+      console.log(item); // the last item currently displayed
+      return { since_id: item.name };
+    }
+  });
+
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="item-object">item <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>First dataItem of the ListView // =&gt; listView.dataSource.get(0);</p>
+
+<h3 id="style-string-default-">style <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "")</em></h3>
+
+<p>The style of the widget. Can be either empty string(""), or <code class="language-plaintext highlighter-rouge">inset</code>.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;ul data-role="listview" data-style="inset"&gt;
+    &lt;li&gt;Foo&lt;/li&gt;
+    &lt;li&gt;Bar&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="template-stringfunctiondefault-data">template <code class="language-plaintext highlighter-rouge">String|Function</code><em>(default: "#:data#")</em></h3>
+
+<p>The item template.</p>
+
+<h4 id="example-11">Example:</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+    &lt;ul id="list" data-role="listview" data-source="dataSource" data-template="tmp"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script id="tmp" type="text/x-kendo-template"&gt;
+    &lt;p&gt;#: name # &lt;span&gt;Age: #: age #&lt;/span&gt;&lt;/p&gt;
+&lt;/script&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+var dataSource = new kendo.data.DataSource({
+    data: [
+        { name: "Jane Doe", age: 30 },
+        { name: "John Doe", age: 33 }
+    ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>The ListView automatically wraps the template content in <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> tag. Putting a <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> tag inside the template creates invalid nesting of elements.</p>
+</blockquote>
+
+<h3 id="type-string-default-flat">type <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "flat")</em></h3>
+
+<p>The type of the control. Can be either <code class="language-plaintext highlighter-rouge">flat</code> (default) or group. Determined automatically in databound mode.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+
+  &lt;ul data-role="listview" data-style="inset" data-type="group"&gt;
+    &lt;li&gt;Foo
+      &lt;ul&gt;
+        &lt;li&gt;Foo 1&lt;/li&gt;
+        &lt;li&gt;Foo 2&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Bar
+      &lt;ul&gt;
+        &lt;li&gt;Bar 1&lt;/li&gt;
+        &lt;li&gt;Bar 2&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+
+&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filterable-boolean--objectdefault-false">filterable <code class="language-plaintext highlighter-rouge">Boolean | Object</code><em>(default: false)</em></h3>
+
+<p>Indicates whether the filter input must be visible or not.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> When the filter is applied it will remove all previous filter expressions applied to the DataSource.</p>
+</blockquote>
+
+<h4 id="example---enabled-filtering">Example - enabled filtering</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="viewInit"&gt;
+    &lt;ul id="listView"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function viewInit(e) {
+    e.view.element.find("#listView").kendoMobileListView({
+        dataSource: [ "foo", "bar" ],
+        filterable: true
+    });
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filterableplaceholder-stringdefault-search">filterable.placeholder <code class="language-plaintext highlighter-rouge">String</code><em>(default: "Search…")</em></h3>
+
+<p>Placeholder text for search input.</p>
+
+<h4 id="example---enabled-filtering-with-custom-text-for-the-input-placeholder">Example - enabled filtering with custom text for the input placeholder</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="viewInit"&gt;
+    &lt;ul id="listView"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function viewInit(e) {
+    e.view.element.find("#listView").kendoMobileListView({
+        dataSource: [ "foo", "bar" ],
+        filterable: {
+            placeholder: "Type to search..."
+        }
+    });
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filterableautofilter-booleandefault-true">filterable.autoFilter <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>Indicates whether filtering should be performed on every key up event or when the user press the <code class="language-plaintext highlighter-rouge">Search</code> button of the device keyboard.</p>
+
+<h4 id="example---enabled-filtering-with-auto-filtering-disabled">Example - enabled filtering with auto filtering disabled</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="viewInit"&gt;
+    &lt;ul id="listView"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function viewInit(e) {
+    e.view.element.find("#listView").kendoMobileListView({
+        dataSource: [ "foo", "bar" ],
+        filterable: {
+            autoFilter: false //the user must press `Search` button to trigger filter
+        }
+    });
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filterablefield-string">filterable.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the field which will be used in the filter expression. The default field value is <code class="language-plaintext highlighter-rouge">undefined</code> which is usefull when the list view is bound to a list of primitive types.
+If this is not case the field <em>must</em> be defined.</p>
+
+<h4 id="example---enabled-filtering-with-default-field-configuration">Example - enabled filtering with default field configuration</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="viewInit"&gt;
+    &lt;ul id="listView"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function viewInit(e) {
+    e.view.element.find("#listView").kendoMobileListView({
+        dataSource: [ "foo", "bar" ],
+        filterable:  true
+    });
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---enabled-filtering-with-field-defined">Example - enabled filtering with field defined</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="viewInit"&gt;
+    &lt;ul id="listView"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function viewInit(e) {
+    e.view.element.find("#listView").kendoMobileListView({
+        dataSource: [
+            { id: 1, text: "foo" },
+            { id: 2, text: "bar" }
+        ],
+        template: "id: #: id# with text: #: text#",
+        filterable: {
+            field: "text" //filtering for "text" field
+        }
+    });
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filterableignorecase-booleandefault-false">filterable.ignoreCase <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>Specifies whether the filter expression must be case sensitive or not.</p>
+
+<h4 id="example---enabled-case-insensitive-filtering">Example - enabled case insensitive filtering</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="viewInit"&gt;
+    &lt;ul id="listView"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function viewInit(e) {
+    e.view.element.find("#listView").kendoMobileListView({
+        dataSource: [ "Foo", "bar" ],
+        filterable: {
+            ignoreCase: true // search for "foo" or "Foo" will return same item
+        }
+    });
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filterableoperator-stringdefault-startswith">filterable.operator <code class="language-plaintext highlighter-rouge">String</code><em>(default: "startsWith")</em></h3>
+
+<p>Specifies the comparison operator used in the filter expression. The operator must be one of the available DataSource filter <a href="/api/framework/datasource#configuration-filter.operator">operators</a>.</p>
+
+<h4 id="example---enabled-filtering-with-comparison-operator-defined">Example - enabled filtering with comparison operator defined</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="viewInit"&gt;
+    &lt;ul id="listView"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function viewInit(e) {
+    e.view.element.find("#listView").kendoMobileListView({
+        dataSource: [ "foo", "bar" ],
+        filterable: {
+            operator: "eq" // match the whole word
+        }
+    });
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="append">append</h3>
+
+<p>Appends new items generated by rendering the given data items with the listview template to the bottom of the listview.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="dataitems-array">dataItems <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;a data-role="button" data-click="addItem"&gt;Add item&lt;/a&gt;
+    &lt;ul id="listview" data-role="listview" data-template="foo"&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo"&gt;
+Item #: idx #
+&lt;/script&gt;
+
+&lt;script&gt;
+var i = 0;
+function addItem() {
+  i ++;
+  $("#listview").data("kendoMobileListView").append([ { idx: i } ]);
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="prepend">prepend</h3>
+
+<p>Prepends new items generated by rendering the given data items with the listview template to the top of the listview.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="dataitems-array-1">dataItems <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;a data-role="button" data-click="addItem"&gt;Add item&lt;/a&gt;
+    &lt;ul id="listview" data-role="listview" data-template="foo"&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo"&gt;
+Item #: idx #
+&lt;/script&gt;
+
+&lt;script&gt;
+var i = 0;
+function addItem() {
+  i ++;
+  $("#listview").data("kendoMobileListView").prepend([ { idx: i } ]);
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="replace">replace</h3>
+
+<p>Replaces the contents of the listview with the passed rendered data items.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="dataitems-array-2">dataItems <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;a data-role="button" data-click="replaceItem"&gt;Replace item&lt;/a&gt;
+    &lt;ul id="listview" data-role="listview" data-template="foo"&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo"&gt;
+Item #: idx #
+&lt;/script&gt;
+
+&lt;script&gt;
+var i = 0;
+function replaceItem() {
+  i ++;
+  $("#listview").data("kendoMobileListView").replace([ { idx: i } ]);
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="remove">remove</h3>
+
+<p>Removes the listview items which are rendered with the passed data items.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="dataitems-array-3">dataItems <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;a data-role="button" data-click="removeItem"&gt;Remove item&lt;/a&gt;
+    &lt;ul id="listview" data-role="listview" data-template="foo" data-source="fooDS"&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo"&gt;
+  Item #: name #
+&lt;/script&gt;
+
+&lt;script&gt;
+var fooDS = new kendo.data.DataSource({ data: [ {name: "Foo"}, {name: "Bar"} ] });
+
+function removeItem() {
+  $("#listview").data("kendoMobileListView").remove([ fooDS.data()[1] ]);
+}
+
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="setdataitem">setDataItem</h3>
+
+<p>Re-renders the given listview item with the new dataItem provided. In order for the method to work as expected, the data items should be of type kendo.data.Model.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="item-jquery">item <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The listview item to update</p>
+
+<h5 id="dataitem-kendodatamodel">dataItem <code class="language-plaintext highlighter-rouge">kendo.data.Model</code></h5>
+
+<p>The new dataItem</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="initialItem"&gt;
+    &lt;a data-role="button" data-click="changeItem"&gt;Add item&lt;/a&gt;
+    &lt;ul id="listview" data-role="listview" data-template="foo"&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo"&gt;
+Item #: idx #
+&lt;/script&gt;
+
+&lt;script&gt;
+var dataItem = new kendo.data.Model({ idx: 1 });
+
+function initialItem() {
+  $("#listview").data("kendoMobileListView").append([dataItem]);
+}
+
+function changeItem() {
+  var newItem = new kendo.data.Model({idx: 2});
+  $("#listview").data("kendoMobileListView").setDataItem($("#listview li").eq(0), newItem);
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+
+<p>Prepares the <strong>ListView</strong> for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the ListView element from DOM.</p>
+</blockquote>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+   &lt;a data-role="button" data-click="destroyListView"&gt;Destroy&lt;/a&gt;
+
+  &lt;ul id="listView" data-role="listview" data-style="inset"&gt;
+    &lt;li&gt;Foo&lt;/li&gt;
+    &lt;li&gt;Bar&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+function destroyListView() {
+    var listView = $("#listView").data("kendoMobileListView");
+    // detach events
+    listView.destroy();
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="items">items</h3>
+
+<p>Get the listview DOM element items</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> The listview DOM element items</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-click="getListViewItems"&gt;Get items&lt;/a&gt;
+  &lt;ul id="listView" data-role="listview" data-style="inset"&gt;
+    &lt;li&gt;Foo&lt;/li&gt;
+    &lt;li&gt;Bar&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+function getListViewItems() {
+    console.log($("#listView").data("kendoMobileListView").items());
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="refresh">refresh</h3>
+
+<p>Repaints the listview (works only in databound mode).</p>
+
+<h4 id="example-20">example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-click="refreshListViewItems"&gt;Refresh items&lt;/a&gt;
+  &lt;ul id="listView" data-role="listview" data-style="inset"&gt;
+    &lt;li&gt;Foo&lt;/li&gt;
+    &lt;li&gt;Bar&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+function refreshListViewItems() {
+  $("#listView").data("kendoMobileListView").refresh()
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="setdatasource">setDataSource</h3>
+
+<p>Sets the DataSource of an existing ListView and rebinds it.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="datasource-kendodatadatasource">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code></h5>
+
+<h4 id="example-21">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;a data-role="button" data-click="rebindListView"&gt;Rebind&lt;/a&gt;
+  &lt;ul id="listView" data-role="listview" data-template="foo-template" data-source="foo" data-style="inset"&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script id="foo-template"&gt;
+    #: name #
+&lt;/script&gt;
+
+&lt;script&gt;
+var foo = new kendo.data.DataSource({ data: [ { name: "foo" } ] });
+var bar = new kendo.data.DataSource({ data: [ { name: "bar" } ] });
+
+function rebindListView() {
+    $("#listView").data("kendoMobileListView").setDataSource(bar);
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="click">click</h3>
+
+<p>Fires when item is tapped.</p>
+
+<h4 id="example-22">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+&lt;ul data-role="listview" id="foo" data-click="listViewClick"&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+	&lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+function listViewClick(e) {
+    console.log(e.item); // The clicked item as a jQuery object
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="accessing-dataitem-in-event">Accessing dataItem in event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;ul id="foo"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#foo").kendoMobileListView({
+   dataSource: new kendo.data.DataSource({
+        data: [{title: "foo"}, {title: "bar"}]
+   }),
+
+   click: function(e) {
+        console.log(e.dataItem.title);
+   }
+});
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="eitem-jquery">e.item <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The selected list item.</p>
+
+<h5 id="etarget-jquery">e.target <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The tapped DOM element.</p>
+
+<h5 id="edataitem-object">e.dataItem <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The corresponding dataItem associated with the item (available in databound mode only).
+Note: The dataItem must be from a non-primitive type (Object).</p>
+
+<h5 id="ebutton-kendomobileuibutton">e.button <code class="language-plaintext highlighter-rouge">kendo.mobile.ui.Button</code></h5>
+
+<p>The tapped Kendo mobile Button (if present).</p>
+
+<h3 id="databound">dataBound</h3>
+
+<p>Fires when the ListView has received data from the DataSource.</p>
+
+<h4 id="example-23">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;ul id="foo"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#foo").kendoMobileListView({
+   dataSource: new kendo.data.DataSource({
+        data: [{title: "foo"}, {title: "bar"}]
+   }),
+
+  dataBound: function(e) {
+    console.log(e);
+  }
+});
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databinding">dataBinding</h3>
+
+<p>Fires when the ListView is about to be rendered.</p>
+
+<h4 id="example-24">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;ul id="foo"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#foo").kendoMobileListView({
+   dataSource: new kendo.data.DataSource({
+        data: [{title: "foo"}, {title: "bar"}]
+   }),
+
+  dataBinding: function(e) {
+    console.log(e);
+  }
+});
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="itemchange">itemChange</h3>
+
+<p>Fires when a new item is added to the listview (usually in virtual mode).</p>
+
+<h4 id="example-25">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+  &lt;ul data-role="listview" data-source="foo" data-endless-scroll="true" data-template="foo-template" data-item-change="itemChange"&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-template" id="foo-template"&gt;
+    #: name # - #: modified #
+&lt;/script&gt;
+
+&lt;script&gt;
+var i = 0, pageSize = 100;
+
+// datasource below is customized for demo purposes.
+var foo = new kendo.data.DataSource({
+  transport: {
+    read: function(options) {
+      var max = i + pageSize;
+      var data = [];
+      for (; i &lt; max; i ++) {
+        data.push({ name: "record" + i, modified: +new Date() });
+      }
+
+      options.success(data);
+    }
+  },
+
+  pageSize: pageSize,
+  serverPaging: true,
+  schema: {
+    total: function() { return 500; }
+  }
+});
+
+  function itemChange(e) {
+    console.log(e);
+  }
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

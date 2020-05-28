@@ -1,0 +1,583 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/saleshub/order-page/kendo-saleshub-creating-and-editing-orders.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="creating-and-editing-orders---saleshub">Creating and Editing Orders - SalesHub</h1>
+
+<p>Since there are many similarities between the create and edit views for an Order, we"ll discuss how
+both of them work in this article.</p>
+
+<p><img src="/tutorials/asp.net/saleshub/order-page/images/kendo-saleshub-order-edit-screenshot.png" alt="kendo-saleshub-order-edit-screenshot" /></p>
+
+<h2 id="setting-up-the-partial-view-for-an-order">Setting up the Partial View for an Order</h2>
+
+<p>Since the contents of the Edit and New view for Orders are nearly the same, content-wise, we created
+a MVC partial view which contains the markup that is shared between the views. This partial view
+can be found in <strong>Views/Order/_Order.cshtml</strong>.</p>
+
+<h3 id="setting-up-the-basic-order-fields">Setting up the basic Order fields</h3>
+
+<p><img src="/tutorials/asp.net/saleshub/order-page/images/kendo-saleshub-order-info-screenshot.png" alt="kendo-saleshub-order-info-screenshot" /></p>
+
+<p>The first part of the form is where we declare the fields where the user can set the contract weight/amount,
+date, and the order number for the given order. For the sake of brevity, we"ll only cover the fields which
+use Kendo UI widgets.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div&gt;
+    @Html.LabelFor(m =&gt; m.ContractWeight, "Contract Weight:")
+    @Html.Kendo().NumericTextBoxFor(m =&gt; m.ContractWeight).Decimals(2).Min(1).Deferred()
+    @Html.ValidationMessageFor(m =&gt; m.ContractWeight)
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Here we create a <a href="http://demos.telerik.com/kendo-ui/web/numerictextbox/index.html">Kendo NumericTextBox</a> for the ContractWeight
+property of an Order. The numeric textbox is set up to only support two decimal places and the user must enter a value
+which is greater than or equal to one.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">Deferred()</code> call makes the Kendo UI MVC extensions wait on injecting the necessary JavaScript into the page
+in order to setup the widget. The normal workflow for the extensions is automatically inserting
+a <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tag, which contains the JavaScript needed to setup the element as a Kendo widget, right after the
+element you want to be a Kendo widget. Deferring the creation of this script tag means that you"re in charge of telling
+the extensions when it should generate the JavaScript for the deferred widgets. To make the extensions generate the
+JavaScript for the deferred widgets, you have to call <code class="language-plaintext highlighter-rouge">@Html.Kendo().DeferredScripts()</code>. The standard convention for
+<code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tags is to add them at the end of the <code class="language-plaintext highlighter-rouge">&lt;body&gt;</code>, so this is the recommended place for calling the
+<code class="language-plaintext highlighter-rouge">DeferredScripts</code> function.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div&gt;
+    @Html.LabelFor(m =&gt; m.OrderDate, "Order Date:")
+    @Html.Kendo().DatePickerFor(m =&gt; m.OrderDate).Deferred()
+    @Html.ValidationMessageFor(m =&gt; m.OrderDate)
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Here we set up a <a href="http://demos.telerik.com/kendo-ui/web/datepicker/index.html">Kendo DatePicker</a> for the OrderDate of an Order.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div&gt;
+    @Html.LabelFor(m =&gt; m.CurrencyTypeId, "Invoicing Currency:")
+    @Html.Kendo().DropDownListFor(m =&gt; m.CurrencyTypeId).BindTo(Model.CurrencyTypesSelectList).Deferred()
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>To create the currency dropdown we use a <a href="http://demos.telerik.com/kendo-ui/web/dropdownlist/index.html">Kendo DropDownList</a>,
+which we bind to server-side using the the <code class="language-plaintext highlighter-rouge">BindTo</code> function. The <code class="language-plaintext highlighter-rouge">BindTo</code> function takes <code class="language-plaintext highlighter-rouge">IEnumerable&lt;SelectListItem&gt;</code>
+as a parameter and will cause the extensions to generate the markup for the underlying <code class="language-plaintext highlighter-rouge">&lt;select&gt;</code> server-side.</p>
+
+<h3 id="setting-up-the-tabstrip">Setting up the TabStrip</h3>
+
+<p><img src="/tutorials/asp.net/saleshub/order-page/images/kendo-saleshub-order-tabstrip-screenshot.png" alt="kendo-saleshub-order-tabstrip-screenshot" /></p>
+
+<p>The next part of the Orders view is the <a href="http://demos.telerik.com/kendo-ui/web/tabstrip/index.html">Kendo TabStrip</a>, which contains
+the grids for Order details and notes.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@if (!Model.IsNew)
+{
+    &lt;!-- TabStrip contents --&gt;
+}
+</code></pre></div></div>
+
+<p>The <a href="http://demos.telerik.com/kendo-ui/web/tabstrip/index.html">Kendo TabStrip</a> is only displayed when we"re editing an Order, not
+when we"re creating one.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="detailLinesTabStrip"&gt;
+    &lt;ul&gt;
+        &lt;li class="k-state-active"&gt;Details&lt;/li&gt;
+        &lt;li&gt;Notes&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div&gt;
+        &lt;!-- Order details grid --&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;!-- Order notes grid --&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+@Html.Kendo().TabStrip().Name("detailLinesTabStrip").Deferred()
+</code></pre></div></div>
+
+<p>To setup the <a href="http://demos.telerik.com/kendo-ui/web/tabstrip/index.html">Kendo TabStrip</a> we first have to write some basic HTML markup
+that tells the tabstrip what its tabs are and what content goes into each tab. To do this we declare a <code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code> as the first
+child element of the <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code> that we would like to be a tabstrip.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul&gt;
+    &lt;li class="k-state-active"&gt;Details&lt;/li&gt;
+    &lt;li&gt;Notes&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>This tells the tabstrip that we want one tab to be called "Details" and another tab to be called "Notes". The <strong>class="k-state-active"</strong>
+tells the tabstrip that that is the tab that you would like it to have selected by default.</p>
+
+<blockquote>
+  <p>If you don"t specify a default selected tab, then no tab will be selected when the page loads.</p>
+</blockquote>
+
+<p>Next we have to declare the contents for each tab. This is done by adding <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code>"s with the content you would like in each tab,
+after the <code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code>. The ordering of these <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code>"s is important, as the tabstrip will render them as content for tabs in the
+same order that the tabs appear.</p>
+
+<p>Now that we"ve declared the markup for our tabstrip we can turn it into one.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Html.Kendo().TabStrip().Name("detailLinesTabStrip").Deferred()
+</code></pre></div></div>
+
+<p>Normally the <code class="language-plaintext highlighter-rouge">Name()</code> function call will tell the extensions to generate an HTML element with an <strong>id</strong> as that, but we can also use
+it to tell the extensions to use an existing element element on the page. In our case we point it to the <strong>detailLinesTabStrip</strong> div
+that we declared just above.</p>
+
+<h3 id="setting-up-the-order-details-grid">Setting up the Order details grid</h3>
+
+<p>Order details represent the line items for each Order. The total amount/weight of all of the Order details for an Order should be equal
+to the Contract weight/amount of an Order. The Order details grid allows a user to create/edit Order details using the "PopUp" editor
+mode for a <a href="http://demos.telerik.com/kendo-ui/web/grid/index.html">Kendo Grid</a>. The following snippets will only cover how the Order details grid
+is created using the extensions. If you would like to read more on how the "PopUp" editor is configured for the grid, please read
+<a href="kendo-saleshub-creating-editing-order-details">Creating and Editing Order Details</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;OrderDetailViewModel&gt;()
+    .Name("orderDetailsGrid")
+    .Columns(columns =&gt;
+    {
+        columns.Bound(p =&gt; p.Origin).Title("Origin").Filterable(false);
+        columns.Bound(p =&gt; p.Units).Title("Units").Filterable(false).ClientFooterTemplate("Total units: #= sum #");
+        columns.Bound(p =&gt; p.UnitWeight).Title("Unit Weight").Filterable(false);
+        columns.Bound(p =&gt; p.NetWeight).Title("Net Wt").Filterable(false).ClientFooterTemplate("Total weight: #= kendo.toString(sum, 'n') #");
+        columns.Bound(p =&gt; p.PricePerUnitOfWeight).Title("Price").ClientTemplate("#= kendo.toString(PricePerUnitOfWeight, 'c2') #").Filterable(false);
+        columns.Bound(p =&gt; p.TotalAmount).Title("Amount").ClientTemplate("#= kendo.toString(TotalAmount, 'c2') #").ClientFooterTemplate("Total amount: #= kendo.toString(sum, 'c2') #");
+        columns.Command(command =&gt; { command.Edit(); command.Destroy(); });
+    })
+    .Filterable()
+    .ToolBar(toolbar =&gt; toolbar.Create())
+    .Editable(editable =&gt; editable.Mode(GridEditMode.PopUp))
+    .Selectable(settings =&gt; settings.Mode(GridSelectionMode.Single))
+    .Events(events =&gt; events.Save("window.SalesHub.OrderDetailsGrid_Save"))
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax()
+        .Read(builder =&gt; builder.Url("/api/CustomerOrderDetails/GetOrderDetails/" + Model.OrderId).Type(HttpVerbs.Get))
+        .Create(builder =&gt; builder.Url("/api/CustomerOrderDetails/CreateOrderDetail/" + Model.OrderId).Type(HttpVerbs.Put))
+        .Update(builder =&gt; builder.Url("/api/CustomerOrderDetails/UpdateOrderDetail").Type(HttpVerbs.Post))
+        .Destroy(builder =&gt; builder.Url("/api/CustomerOrderDetails/DeleteOrderDetail").Type(HttpVerbs.Delete))
+        .Model(model =&gt; {
+            model.Id(x =&gt; x.OrderDetailId);
+            model.Field(m =&gt; m.OrderDetailId).DefaultValue(0);
+        })
+        .Events(events =&gt;  events.Error("window.SalesHub.OrderDetails_Error").Change("window.SalesHub.OrderDetails_Change"))
+        .ServerOperation(false)
+        .Aggregates(a =&gt; a.Add(x =&gt; x.Units).Sum())
+        .Aggregates(a =&gt; a.Add(x =&gt; x.NetWeight).Sum())
+        .Aggregates(a =&gt; a.Add(x =&gt; x.TotalAmount).Sum())
+    ).Deferred())
+</code></pre></div></div>
+
+<p>Let"s step through this grid declaration and see what each part does.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;OrderDetailViewModel&gt;()
+    .Name("orderDetailsGrid")
+</code></pre></div></div>
+
+<p>The first part is the standard boilerplate which is used to create any Kendo UI widget using the extensions. The <code class="language-plaintext highlighter-rouge">Grid&lt;OrderDetailViewModel&gt;</code> tells
+the extensions that the grid will be bound against <strong>OrderDetailViewModel</strong>"s.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Columns(columns =&gt;
+{
+    columns.Bound(p =&gt; p.Origin).Title("Origin").Filterable(false);
+    columns.Bound(p =&gt; p.Units).Title("Units").Filterable(false).ClientFooterTemplate("Total units: #= sum #");
+    columns.Bound(p =&gt; p.UnitWeight).Title("Unit Weight").Filterable(false);
+    columns.Bound(p =&gt; p.NetWeight).Title("Net Wt").Filterable(false).ClientFooterTemplate("Total weight: #= kendo.toString(sum, 'n') #");
+    columns.Bound(p =&gt; p.PricePerUnitOfWeight).Title("Price").ClientTemplate("#= kendo.toString(PricePerUnitOfWeight, 'c2') #").Filterable(false);
+    columns.Bound(p =&gt; p.TotalAmount).Title("Amount").ClientTemplate("#= kendo.toString(TotalAmount, 'c2') #").ClientFooterTemplate("Total amount: #= kendo.toString(sum, 'c2') #");
+    columns.Command(command =&gt; { command.Edit(); command.Destroy(); });
+})
+</code></pre></div></div>
+
+<p>Here we set up each column for the Grid. Calling <code class="language-plaintext highlighter-rouge">Filterable(false)</code> allows you to selectively choose when a column cannot be filtered by the user.</p>
+
+<p>Calling <code class="language-plaintext highlighter-rouge">ClientFooterTemplate</code> allows you to specify a footer which is displayed for the specified column. In our case these footer templates
+make use of the <a href="/api/framework/datasource#configuration-aggregate">DataSource aggregates</a> that we set up, later on, in our DataSource. As the
+client footer templates are bound client-side we use <a href="/api/framework/kendo#methods-template">Kendo"s templating syntax</a> to tell it which aggregate
+to display the result of (in our case we only bind against a <strong>sum</strong> aggregate).</p>
+
+<p>The last column is a command column and we use the Grid"s built-in <strong>Edit</strong> and <strong>Destroy</strong> commands.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Filterable()
+.ToolBar(toolbar =&gt; toolbar.Create())
+.Editable(editable =&gt; editable.Mode(GridEditMode.PopUp))
+.Selectable(settings =&gt; settings.Mode(GridSelectionMode.Single))
+.Events(events =&gt; events.Save("window.SalesHub.OrderDetailsGrid_Save"))
+</code></pre></div></div>
+
+<p>Next we specify that the grid is filterable and we have the grid add a "Create new item" to the Toolbar. We also tell the grid to run in <strong>PopUp</strong>
+edit mode and that the user can select a whole row at a time. Lastly, we subscribe to the <strong>Save</strong> event of the grid. We do this because the
+<strong>TotalAmount</strong> for an OrderDetailViewModel is a computed property and we need to update it any time the user updates the order detail.</p>
+
+<p>The event handler for this very simple:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.SalesHub.OrderDetailsGrid_Save = function(e) {
+    e.model.set("TotalAmount", e.model.Units * e.model.PricePerUnitOfWeight);
+};
+</code></pre></div></div>
+
+<p>When the user updates an order detail, we find the modified order detail by accessing the <strong>model</strong> property on the event object
+that our handler receives. Using this, we <strong>set</strong> the new value of <strong>TotalAmount</strong> based on the new values of the <strong>Units</strong> and <strong>PricePerUnitOfWeight</strong>
+properties.</p>
+
+<blockquote>
+  <p>Since the <strong>model</strong> is a Kendo Observable, we need to call the <strong>set</strong> function on it when we update the property, because we want these
+changes to be reflected in the Grid. If we don"t call set, then the data bindings that the grid uses internally to display the data won"t
+be updated.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.DataSource(dataSource =&gt; dataSource
+    .Ajax()
+    .Read(builder =&gt; builder.Url("/api/CustomerOrderDetails/GetOrderDetails/" + Model.OrderId).Type(HttpVerbs.Get))
+    .Create(builder =&gt; builder.Url("/api/CustomerOrderDetails/CreateOrderDetail/" + Model.OrderId).Type(HttpVerbs.Put))
+    .Update(builder =&gt; builder.Url("/api/CustomerOrderDetails/UpdateOrderDetail").Type(HttpVerbs.Post))
+    .Destroy(builder =&gt; builder.Url("/api/CustomerOrderDetails/DeleteOrderDetail").Type(HttpVerbs.Delete))
+    .Model(model =&gt; {
+        model.Id(x =&gt; x.OrderDetailId);
+        model.Field(m =&gt; m.OrderDetailId).DefaultValue(0);
+    })
+    .Events(events =&gt;  events.Error("window.SalesHub.OrderDetails_Error").Change("window.SalesHub.OrderDetails_Change"))
+    .ServerOperation(false)
+    .Aggregates(a =&gt; a.Add(x =&gt; x.Units).Sum())
+    .Aggregates(a =&gt; a.Add(x =&gt; x.NetWeight).Sum())
+    .Aggregates(a =&gt; a.Add(x =&gt; x.TotalAmount).Sum())
+)
+</code></pre></div></div>
+
+<p>Now we set up the <a href="http://demos.telerik.com/kendo-ui/web/datasource/index.html">Kendo DataSource</a> for the Grid. As we"re going to be
+using a remote data service, we need to call <code class="language-plaintext highlighter-rouge">Ajax()</code> first.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Read(builder =&gt; builder.Url("/api/CustomerOrderDetails/GetOrderDetails/" + Model.OrderId).Type(HttpVerbs.Get))
+.Create(builder =&gt; builder.Url("/api/CustomerOrderDetails/CreateOrderDetail/" + Model.OrderId).Type(HttpVerbs.Put))
+.Update(builder =&gt; builder.Url("/api/CustomerOrderDetails/UpdateOrderDetail").Type(HttpVerbs.Post))
+.Destroy(builder =&gt; builder.Url("/api/CustomerOrderDetails/DeleteOrderDetail").Type(HttpVerbs.Delete))
+</code></pre></div></div>
+
+<p>Next we set up where and how the DataSource performs its actions against the remote data service. For the <strong>Read</strong> and <strong>Create</strong>
+methods we inject the <strong>OrderId</strong> into the URL as a path parameter. This is so our data service knows which order details to retrieve
+and so it knows which order the new order detail will apply to. The data service also follows the HTTP Verb conventions of a RESTful service,
+so we change what HTTP verb that datasource should use depending on which CRUD operation it"s performing.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Model(model =&gt; {
+    model.Id(x =&gt; x.OrderDetailId);
+    model.Field(m =&gt; m.OrderDetailId).DefaultValue(0);
+})
+</code></pre></div></div>
+
+<p>Here we tell the datasource which property is the Id for the data it receives from the server. We also tell it what the default
+value for that field is.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Events(events =&gt;  events.Error("window.SalesHub.OrderDetails_Error"))
+</code></pre></div></div>
+
+<p>We also subscribe to the Error event of the datasource. This is so we can handle server-side validation errors when creating/editing
+order details. If you would like to read more on how this works, please read the <a href="kendo-saleshub-creating-editing-order-details">Creating and Editing Order Details</a>
+article.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Aggregates(a =&gt; a.Add(x =&gt; x.Units).Sum())
+.Aggregates(a =&gt; a.Add(x =&gt; x.NetWeight).Sum())
+.Aggregates(a =&gt; a.Add(x =&gt; x.TotalAmount).Sum())
+</code></pre></div></div>
+
+<p>Finally we set up some aggregates for a few of the properties on the model. Adding aggregates works by calling <code class="language-plaintext highlighter-rouge">Add()</code> and specifying a property on the model that the
+grid is being bound against. After you <strong>Add</strong> an aggregate for a property you can then specify the type(s) of the aggregate which can be <strong>Sum</strong>, <strong>Count</strong>, <strong>Min</strong>,
+<strong>Max</strong>, or <strong>Average</strong>. We use these aggregates in the footer templates for each of these that are bound to these properties.</p>
+
+<h3 id="setting-up-the-order-notes-grid">Setting up the Order notes grid</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid&lt;OrderNoteViewModel&gt;()
+    .Name("orderNotesGrid")
+    .Columns(columns =&gt;
+    {
+        columns.Bound(p =&gt; p.PostedDate).Title("Date").ClientTemplate("#= kendo.toString(PostedDate, 'G') #");
+        columns.Bound(p =&gt; p.Author).Title("Author");
+        columns.Bound(p =&gt; p.Note).Title("Note");
+    })
+    .Editable(editable =&gt; editable.Mode(GridEditMode.PopUp))
+    .ToolBar(toolbar =&gt; toolbar.Create())
+    .DataSource(dataSource =&gt; dataSource
+        .Ajax()
+        .Read(builder =&gt; builder.Url("/api/OrderNotes/GetOrderNotesForOrder/" + Model.OrderId).Type(HttpVerbs.Get))
+        .Create(builder =&gt; builder.Url("/api/OrderNotes/CreateOrderNote/" + Model.OrderId).Type(HttpVerbs.Put))
+        .Model(model =&gt;
+        {
+            model.Id("OrderNoteId");
+            model.Field(m =&gt; m.OrderNoteId).DefaultValue(0);
+        })
+        .ServerOperation(false)
+    ).Deferred())
+</code></pre></div></div>
+
+<p>Setting up the Order notes grid is somewhat similar to how we set up the order details grid. Since we"re display a DateTime to the user, we specify
+a ClientTemplate for the <strong>PostedDate</strong> column which makes use of Kendo UI"s <a href="/getting-started/framework/globalization/dateformatting">date formatting</a>
+capabilities. Another difference is that we only support viewing and creating order notes, so we only provide <strong>Read</strong> and <strong>Create</strong> URLs for the
+datasource.</p>
+
+<h2 id="setting-up-the-panel-bar">Setting up the Panel Bar</h2>
+
+<p><img src="/tutorials/asp.net/saleshub/order-page/images/kendo-saleshub-order-panelbar-screenshot.png" alt="kendo-saleshub-order-panelbar-screenshot" /></p>
+
+<p>After the tabstrip containing the order details and order notes grid we have a <a href="http://demos.telerik.com/kendo-ui/web/panelbar/index.html">Kendo PanelBar</a> which contains
+the fields for editing the payment terms of an Order, along with setting invoice comments.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="panelBar"&gt;
+    &lt;li&gt;
+        Payment Terms
+        &lt;!-- Contents for Payment Terms section --&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        Comments
+        &lt;!-- Contents for Comments section --&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+@Html.Kendo().PanelBar().Name("panelBar").Deferred()
+</code></pre></div></div>
+
+<p>We set up the PanelBar by declaring its HTML structure and then telling the extensions to create a PanelBar around it. The PanelBar expects the HTML element it works
+against to be a <code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code>. Where each <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> is a section in the PanelBar and the first text element that appears it the title for that section. So in our case
+"Payment Terms" and "Comments" will be the titles for each PanelBar section. Any element that appears after the title will be included in the contents of that section.</p>
+
+<h3 id="setting-up-the-payment-terms-section">Setting up the Payment Terms Section</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;li&gt;
+    Payment Terms
+    @Html.PartialFor("_OrderPaymentTerm", m =&gt; m.PaymentTerm1)
+    @Html.PartialFor("_OrderPaymentTerm", m =&gt; m.PaymentTerm2)
+    &lt;div&gt;
+        @Html.LabelFor(m =&gt; m.PaymentTermsOverride, "Payment Term Override:")
+        @Html.TextAreaFor(m =&gt; m.PaymentTermsOverride, new { @class = "k-textbox" })
+
+        &lt;input type="button" value="Suggested Value" id="suggestedValueButton" /&gt;
+        @(Html.Kendo().Window()
+            .Name("suggestedValuesWindow")
+            .Visible(false)
+            .Title("Suggested Values")
+            .Width(200)
+            .Modal(true)
+            .Content(@&lt;text&gt;
+                @(Html.Kendo().Grid&lt;SuggestedValue&gt;()
+                .Name("suggestedValuesGrid")
+                .Columns(columns =&gt; columns.Bound(c =&gt; c.Value))
+                .BindTo(Model.SuggestedValues)
+                .DataSource(dataSource =&gt; dataSource
+                    .Server()
+                    .Model(model =&gt; model.Id(m =&gt; m.SuggestedValueId)))
+                .Selectable()
+                .Events(events =&gt; events.Change("window.SalesHub.SuggestedValuesGrid_Changed")))
+            &lt;/text&gt;))
+    &lt;/div&gt;
+&lt;/li&gt;
+</code></pre></div></div>
+
+<p>To prevent having duplicate HTML markup in the payment terms section there"s a Partial view which we render for each payment term that is on an Order. This
+partial view can be found in <strong>Views/Order/_OrderPaymentTerm.cshtml</strong>.</p>
+
+<blockquote>
+  <p>Since standard HTML textboxes do not look like the Kendo UI text widgets it throws off the uniform look and feel widgets on your page. To fix this
+you can add the <strong>k-textbox</strong> class to a standard HTML text field and this will give it some of the textbox styles that Kendo UI applies to its widgets.
+This can be done using MVC by specifying an additional parameter to the text widget you"re creating with the MVC HtmlHelper, which is an anonymous object
+with a property name of <strong>class</strong> and a value of <strong>k-textbox</strong>.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div class="paymentterm"&gt;
+    &lt;div&gt;
+        @Html.LabelFor(m =&gt; m.PaymentTerm.SplitPercentage, "Split:")
+        @Html.Kendo().DropDownListFor(m =&gt; m.PaymentTerm.SplitPercentage).BindTo(Model.SplitPercentages).SelectedIndex(Model.SplitPercentages.FindSelected(Model.PaymentTerm.SplitPercentage.ToString("F1"))).Deferred()
+    &lt;/div&gt;
+    &lt;div&gt;
+        @Html.LabelFor(m =&gt; m.PaymentTerm.PaymentTermType, "Payment Terms:")
+        @Html.Kendo().DropDownListFor(m =&gt; m.PaymentTerm.PaymentTermType.PaymentTermTypeId).BindTo(Model.PaymentTermTypes).SelectedIndex(Model.PaymentTermTypes.FindSelected(Model.PaymentTerm.PaymentTermType.PaymentTermTypeId.ToString())).Deferred()
+    &lt;/div&gt;
+    &lt;div&gt;
+        @Html.LabelFor(m =&gt; m.PaymentTerm.CreditTerms, "Credit Terms:")
+        @Html.Kendo().DropDownListFor(m =&gt; m.PaymentTerm.CreditTerms).BindTo(Model.CreditTermDurations).SelectedIndex(Model.CreditTermDurations.FindSelected(Model.PaymentTerm.CreditTerms.ToString())).Deferred()
+    &lt;/div&gt;
+    &lt;div&gt;
+        @Html.LabelFor(m =&gt; m.PaymentTerm.EstPaymentDays, "Est. Payment Days After Invoice:")
+        @Html.Kendo().NumericTextBoxFor(m =&gt; m.PaymentTerm.EstPaymentDays).Min(0).Max(999).Value(Model.PaymentTerm.EstPaymentDays).Decimals(0).Format("n0").Deferred()
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>The Payment Terms view mostly consists of <a href="http://demos.telerik.com/kendo-ui/web/dropdownlist/index.html">Kendo DropDownLists</a> along with a
+<a href="http://demos.telerik.com/kendo-ui/web/numerictextbox/index.html">Kendo NumericTextBox</a>. The DropDownLists are generated server-side using the
+<code class="language-plaintext highlighter-rouge">BindTo</code> function and we set the selected index by calling the <code class="language-plaintext highlighter-rouge">SelectedIndex</code> function. To find which item in each dropdown needs to be
+selected when the page loads, we use the <code class="language-plaintext highlighter-rouge">FindSelected</code>, which is provided by MVC. This function runs against an Enumerable of SelectListItems
+and finds which SelectListItem has its <strong>Selected</strong> property set to true.</p>
+
+<p>The last part of the Payment terms section is the Payment terms override textarea and the "Suggested Values" window and grid.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Html.TextAreaFor(m =&gt; m.PaymentTermsOverride, new { @class = "k-textbox" })
+
+&lt;input type="button" value="Suggested Value" id="suggestedValueButton" /&gt;
+@(Html.Kendo().Window()
+    .Name("suggestedValuesWindow")
+    .Visible(false)
+    .Title("Suggested Values")
+    .Width(600)
+    .Modal(true)
+    .Content(@&lt;text&gt;
+        @(Html.Kendo().Grid&lt;SuggestedValue&gt;()
+            .Name("suggestedValuesGrid")
+            .Columns(columns =&gt; columns.Bound(c =&gt; c.Value))
+            .BindTo(Model.SuggestedValues)
+            .DataSource(dataSource =&gt; dataSource
+                .Server()
+                .Model(model =&gt; model.Id(m =&gt; m.SuggestedValueId)))
+            .Selectable()
+            .Events(events =&gt; events.Change("window.SalesHub.SuggestedValuesGrid_Changed")))
+    &lt;/text&gt;))
+</code></pre></div></div>
+
+<p>We set up the Suggested Values window to be modal and to have a width of 600px. The contents of the window is a <a href="http://demos.telerik.com/kendo-ui/web/grid/index.html">Kendo Grid</a>
+which displays a list of suggested values that the user can select from. When the user selects a value from the grid, that value is copied into the payment terms override
+textarea and the window is closed. In order to know when the user selects a value, we listen to the <code class="language-plaintext highlighter-rouge">Change</code> event of the Grid.</p>
+
+<p>The event handler for the change event, which can be found in <strong>Scripts/order.js</strong>, is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.SalesHub.SuggestedValuesGrid_Changed = function (e) {
+    var selectedRow = this.select()[0];
+
+    $("#PaymentTermsOverride").val($(selectedRow).find("td").text());
+    $("#suggestedValuesWindow").data("kendoWindow").close();
+};
+</code></pre></div></div>
+
+<p>We first get the selected item in the grid by using the <code class="language-plaintext highlighter-rouge">select()</code> function on the grid (which is the <strong>this</strong> context in our event handler). Since
+the <code class="language-plaintext highlighter-rouge">select</code> function returns an array of selected elements we index into it to get the first selected element. Since we bound the grid server-side,
+the grid on the client-side doesn"t actually have any <code class="language-plaintext highlighter-rouge">dataItem</code>s that we can access. This means we have to find the text of the suggested value by
+using jQuery to find the <code class="language-plaintext highlighter-rouge">&lt;td&gt;</code> that has the text we need. Once this is done, we assign the text we found to the value of the payment terms override textarea. After
+setting the value, we find the suggested values window, using jQuery, and close it.</p>
+
+<h3 id="setting-up-the-comments-section">Setting up the Comments Section</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Comments
+&lt;div&gt;
+    &lt;div&gt;
+        @Html.LabelFor(m =&gt; m.IntentComments, "Intent Comments:")
+        @Html.TextAreaFor(m =&gt; m.IntentComments, new { @class = "k-textbox" })
+    &lt;/div&gt;
+    &lt;div&gt;
+        @Html.LabelFor(m =&gt; m.IntentComments, "Invoice Comments:")
+        @Html.TextAreaFor(m =&gt; m.InvoiceComments, new { @class = "k-textbox" })
+    &lt;/div&gt;
+    &lt;div&gt;
+        @Html.LabelFor(m =&gt; m.HeaderComments, "Header Comments:")
+        @Html.TextAreaFor(m =&gt; m.HeaderComments, new { @class = "k-textbox" })
+    &lt;/div&gt;
+    &lt;div&gt;
+        @Html.LabelFor(m =&gt; m.FooterComments, "Footer Comments:")
+        @Html.TextAreaFor(m =&gt; m.FooterComments, new { @class = "k-textbox" })
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>The comments section is small and simple and contains four standard HTML textareas.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

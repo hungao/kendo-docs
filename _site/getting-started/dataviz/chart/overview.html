@@ -1,0 +1,534 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Documentation for Chart widget in Kendo UI DataViz</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to create a chart, enable the visualization of a series that displays inline data, explore the quick overview of Chart widget major features.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/dataviz/chart/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="chart-overview">Chart Overview</h1>
+
+<h2 id="contents">Contents</h2>
+
+<ul>
+  <li>
+    <p><a href="#getting-started">Getting started</a></p>
+  </li>
+  <li><a href="#categorical-charts">Categorical charts</a>
+    <ul>
+      <li><a href="#category-axis">Category axis</a></li>
+      <li><a href="#value-axis">Value axis</a></li>
+      <li><a href="#multiple-value-axes">Multiple value axes</a></li>
+      <li><a href="#axis-crossing-values">Axis crossing value(s)</a></li>
+    </ul>
+  </li>
+  <li><a href="#scatter-charts">Scatter charts</a>
+    <ul>
+      <li><a href="#multiple-xy-axes">Multiple X/Y axes</a></li>
+      <li><a href="#axis-crossing-values">Axis crossing value(s)</a></li>
+    </ul>
+  </li>
+  <li><a href="#common-features">Common features</a>
+    <ul>
+      <li><a href="#axis-title">Axis title</a></li>
+      <li><a href="#plot-bands">Plot bands</a></li>
+      <li><a href="#global-settings">Global settings</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>The Chart widget uses modern browser technologies to render high-quality data visualizations.
+All graphics are rendered on the client using SVG with a fallback to Canvas and VML.</p>
+
+<p>Kendo UI Chart supports the following series types:</p>
+
+<ul>
+  <li>Bar and Column</li>
+  <li>Line and Vertical Line</li>
+  <li>Area and Vertical Area</li>
+  <li>Bullet</li>
+  <li>Pie and Donut</li>
+  <li>Scatter</li>
+  <li>Scatter Line</li>
+  <li>Bubble</li>
+  <li>Radar and Polar</li>
+</ul>
+
+<p>Please visit the <a href="http://www.telerik.com/support/whats-new/kendo-ui-web/roadmap">Kendo UI Roadmap</a> for additional information about
+new Chart types and features.</p>
+
+<h3 id="creating-a-chart">Creating a Chart</h3>
+
+<p>To create a chart, add an empty div in the HTML and give it an ID.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<p>Optionally, set the width and height of the desired chart inline or with CSS.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart" style="width: 400px; height: 600px"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<p>The chart is rendered by selecting the div with a jQuery selector and calling the kendoChart() function.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#chart").kendoChart();
+</code></pre></div></div>
+
+<p>This will render the chart shown below:</p>
+
+<p><img src="/getting-started/dataviz/chart/chart-empty.png" alt="Empty Chart" />&lt;/img&gt;</p>
+
+<p>The chart can then be given a title by specifying the "text" property of the "title" object in the Kendo Chart.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#chart").kendoChart({
+    title: {
+         text: "Kendo Chart Example"
+    }
+});
+</code></pre></div></div>
+
+<h3 id="data-binding">Data Binding</h3>
+
+<p>The Charts can visualize series bound to both local and remote data.</p>
+
+<p>Start by creating a series that displays inline data.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#chart").kendoChart({
+    title: {
+         text: "Kendo Chart Example"
+    },
+    series: [
+         { name: "Example Series", data: [200, 450, 300, 125] }
+    ]
+});
+</code></pre></div></div>
+
+<p>This will render a column chart by default.</p>
+
+<p><img src="/getting-started/dataviz/chart/chart-column-no-categories.png" alt="Column Chart without categories" />&lt;/img&gt;</p>
+
+<p>You will notice that the columns have no label across the category axis.
+You specify the labeling for the series in the <a href="/api/dataviz/chart#categoryAxis"><code class="language-plaintext highlighter-rouge">categoryAxis</code> property</a>.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#chart").kendoChart({
+    title: {
+         text: "Kendo Chart Example"
+    },
+    series: [
+         { name: "Example Series", data: [200, 450, 300, 125] }
+    ],
+    categoryAxis:{
+         categories: [ 2000, 2001, 2002, 2003 ]
+    }
+});
+</code></pre></div></div>
+
+<p><img src="/getting-started/dataviz/chart/chart-column-categories.png" alt="Column Chart with categories" />&lt;/img&gt;</p>
+
+<h2 id="categorical-charts">Categorical charts</h2>
+
+<p>Categorical charts such as Bar, Column and Line use one category axis and one value axis. The axis orientation (horizontal or vertical) is inferred from the series type.</p>
+
+<h3 id="category-axis">Category axis</h3>
+
+<p>Use the categoryAxis object to set the category names:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#chart").kendoChart({
+    series: [{
+        name: "World",
+        data: [15.7, 16.7, 20, 23.5, 26.6]
+    }],
+    categoryAxis: {
+        categories: [2005, 2006, 2007, 2008, 2009]
+    }
+});
+</code></pre></div></div>
+
+<p>The category name can also be bound to a field of the data item:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var internetUsers = [ {
+    "country": "United States",
+    "year": "2005",
+    "value": 67.96
+    }, {
+    "country": "United States",
+    "year": "2006",
+    "value": 68.93
+}];
+
+$("#chart").kendoChart({
+    dataSource: {
+        data: internetUsers
+    },
+    series: [{
+        field: "value",
+        name: "United States"
+    }],
+    categoryAxis: {
+        field: "year"
+    }
+});
+</code></pre></div></div>
+
+<h3 id="value-axis">Value axis</h3>
+
+<p>The Chart currently supports only Numeric value axes.</p>
+
+<p>Configuration options are accessible through the <a href="/api/dataviz/chart#valueaxis-object"><code class="language-plaintext highlighter-rouge">valueAxis</code> object</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#chart").kendoChart({
+    series: [{
+        name: "World",
+        data: [15.7, 16.7, 20, 23.5, 26.6]
+    }],
+    valueAxis: {
+        min: 0,
+        max: 100
+    },
+    categoryAxis: {
+        categories: [2005, 2006, 2007, 2008, 2009]
+    }
+});
+</code></pre></div></div>
+
+<p>Here we have configured a Numeric axis with a minimum value of 0 and a maximum value of 100.</p>
+
+<h3 id="multiple-value-axes">Multiple value axes</h3>
+
+<p>A chart might have more than one value axis. These additional axes must have unique names. For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#container").kendoChart({
+    title: {
+        text: "Average temperature and humidity"
+    },
+    legend: {
+        position: "bottom"
+    },
+    series: [{
+            name: "Temperature",
+            data: [20, 25, 32],
+            axis: "temperature"
+        }, {
+            name: "Humidity",
+            data: [45, 50, 80],
+            axis: "humidity"
+    }],
+    categoryAxis: {
+        categories: ["Aug", "Sep", "Oct"]
+    },
+    valueAxis: [{
+        name: "temperature",
+        labels: {
+            format: "{0}C"
+        }
+    }, {
+        name: "humidity",
+        labels: {
+            format: "{0}%"
+        }
+    }]
+});
+</code></pre></div></div>
+
+<p><img src="/getting-started/dataviz/chart/chart-multiple-axes.png" alt="Chart with multiple axes" /></p>
+
+<p>In this example we have defined "temperature" and "humidity" axes. Series are associated to a value axis by specifying its name.</p>
+
+<h3 id="axis-crossing-values">Axis crossing value(s)</h3>
+
+<p>You can control the arrangement of the value axes by specifying the values (category indices) at which they cross the category axis. For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>categoryAxis: {
+    categories: ["Aug", "Sep", "Oct"],
+    axisCrossingValue: [0, 3]
+}
+</code></pre></div></div>
+
+<p>The first value axis will cross the category axis at the first category (leftmost). The second value axis will cross it at the last category.</p>
+
+<p><img src="/getting-started/dataviz/chart/chart-axis-crossing-values.png" alt="Bar chart with customized axis crossing values" /></p>
+
+<h2 id="scatter-charts">Scatter Charts</h2>
+
+<p>XY charts such as Scatter and Scatter Line use one or more X and Y axes. These axes are configured through the xAxis and the yAxis objects:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#chart").kendoChart({
+    series: [{
+        type: "scatter",
+        name: "Pentium D 915",
+        data: [[120, 102]]
+    }],
+    xAxis: {
+        max: 1000
+    },
+    yAxis: {
+        min: 80
+    }
+});
+</code></pre></div></div>
+
+<h3 id="multiple-xy-axes">Multiple X/Y axes</h3>
+
+<p>You can define more X and Y axes in addition to the primary axes. These additional axes must have unique names. Series are associated to a X and Y axes by specifying their name.</p>
+
+<p><strong>Note:</strong> Do not specify a name for the primary X and Y axes.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#container").kendoChart({
+    title: {
+        text: "Dyno run results"
+    },
+    legend: {
+        position: "bottom"
+    },
+    seriesDefaults: {
+        type: "scatterLine"
+    },
+    series: [{
+        name: "Power",
+        data: [[1000,  10], [1500, 19], [2000, 30]]
+    }, {
+        name: "Torque",
+        data: [[1000,  50], [1500, 65], [2000, 80]],
+        yAxis: "torque"
+    }],
+    xAxis: {
+        title: "Engine rpm"
+    },
+    yAxis: [{
+        labels: {
+            format: "{0} bhp"
+        }
+    }, {
+        name: "torque",
+        labels: {
+            format: "{0} Nm"
+        }
+    }]
+});
+</code></pre></div></div>
+
+<p>The first series is associated with the default Y axis, as no axis name is specified. The "torque" series will be plotted on the "torque" Y axis.</p>
+
+<p><img src="/getting-started/dataviz/chart/chart-scatter-line-multiple-axes.png" alt="Scatter chart with multiple axes" /></p>
+
+<h3 id="axis-crossing-values-1">Axis crossing value(s)</h3>
+
+<p>You can control the arrangement of the X and Y axes by specifying the values at which they cross the primary axes.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xAxis: {
+    title: "Engine rpm",
+    axisCrossingValue: [0, 2500]
+}
+</code></pre></div></div>
+
+<p>The primary Y axis will cross the X axis at 0 (leftmost). The second, "torque" Y axis will cross the X axis at the 2500 mark or at its right end, whichever is first.</p>
+
+<p><img src="/getting-started/dataviz/chart/chart-scatter-line-axis-crossing-value.png" alt="Scatter line chart with customized axis crossing value" /></p>
+
+<h2 id="common-features">Common features</h2>
+
+<h3 id="axis-title">Axis Title</h3>
+
+<p>A title can be added to clearly indicate the role of the axis.For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#container").kendoChart({
+    title: {
+        text: "Average temperature and humidity"
+    },
+    legend: {
+        position: "bottom"
+    },
+    series: [{
+            name: "Temperature",
+            data: [20, 25, 32],
+            axis: "temperature"
+        }, {
+            name: "Humidity",
+            data: [45, 50, 80],
+            axis: "humidity"
+    }],
+    categoryAxis: {
+        categories: ["Aug", "Sep", "Oct"],
+        axisCrossingValue: [0, 3]
+    },
+    valueAxis: [{
+        name: "temperature",
+        title: {
+            text: "Temperature, Celsius"
+        }
+    }, {
+        name: "humidity",
+        title: {
+            text: "Relative Humidity"
+        }
+    }]
+});
+</code></pre></div></div>
+
+<p><img src="/getting-started/dataviz/chart/chart-axis-titles.png" alt="Chart with axis titles" /></p>
+
+<h3 id="plot-bands">Plot Bands</h3>
+
+<p>Each axis can be configured to display bands with different colors for predefined value ranges.</p>
+
+<p>The category index (zero based) is used as a value for the category axis.</p>
+
+<p>For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>valueAxis: [{
+    name: "temperature",
+    title: {
+        text: "Temperature, Celsius"
+    },
+    plotBands: [{
+        from: 30,
+        to: 40,
+        color: "#f99"
+    }]
+    }, {
+    name: "humidity",
+    title: {
+        text: "Relative Humidity"
+    }
+}]
+</code></pre></div></div>
+
+<p><img src="/getting-started/dataviz/chart/chart-plot-bands.png" alt="Chart with axis plot bands" /></p>
+
+<h2 id="global-settings">Global settings</h2>
+
+<p>Sometimes you need to apply settings to all axes. In this case it is convenient to use the <a href="/api/dataviz/chart#axisdefaults-object"><code class="language-plaintext highlighter-rouge">axisDefaults</code> object</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#chart").kendoChart({
+    series: [{
+        type: "scatter",
+        name: "Pentium D 915",
+        data: [[120, 102]]
+    }],
+    axisDefaults: {
+        labels: {
+            font: "16px Verdana"
+        }
+    }
+});
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

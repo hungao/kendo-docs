@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Using jQuery Mobile button group in Kendo UI Mobile</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Visualize a linear set of grouped buttons in your app by the initialization of Kendo ButtonGroup. Learn how to customize the appearance of the mobile button and set its icons.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/mobile/buttongroup.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="buttongroup">ButtonGroup</h1>
+
+<p>The Kendo mobile ButtonGroup widget presents a linear set of grouped buttons.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The Kendo mobile Application will automatically initialize a mobile ButtonGroup for every element with <code class="language-plaintext highlighter-rouge">role</code> data attribute set to <code class="language-plaintext highlighter-rouge">buttongroup</code>
+present in the views/layouts markup. Alternatively, it can be initialized using jQuery plugin syntax in the containing mobile View <strong>init event handler</strong>. The ButtonGroup element should be <code class="language-plaintext highlighter-rouge">UL</code> element.</p>
+
+<h3 id="initialize-kendo-mobile-buttongroup-based-on-role-data-attribute">Initialize Kendo mobile ButtonGroup based on role data attribute.</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="buttongroup" data-role="buttongroup"&gt;
+    &lt;li&gt;Option 1&lt;/li&gt;
+    &lt;li&gt;Option 2&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-kendo-mobile-buttongroup-using-jquery-plugin-syntax">Initialize Kendo mobile ButtonGroup using jQuery plugin syntax</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var buttongroup = $("#buttongroup").kendoMobileButtonGroup();
+</code></pre></div></div>
+
+<h2 id="customizing-mobile-buttongroup-appearance">Customizing Mobile ButtonGroup Appearance</h2>
+
+<p>Every Kendo Mobile ButtonGroup color can be customized by setting the respective <code class="language-plaintext highlighter-rouge">background-color</code> CSS property inline or with a CSS selector.</p>
+
+<h3 id="green-kendo-mobile-buttongroup">Green Kendo mobile ButtonGroup</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="buttongroup" data-role="buttongroup"&gt;
+    &lt;li style="background-color: green"&gt;Option1&lt;/li&gt;
+    &lt;li style="beckground-color: red"&gt;Option2&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h2 id="button-badges">Button Badges</h2>
+
+<p>Every button can have a badge, which is set using the <code class="language-plaintext highlighter-rouge">badge</code> data attribute of the Button"s <code class="language-plaintext highlighter-rouge">li</code> element.</p>
+
+<h3 id="setting-badges-to-buttongroups-buttons">Setting badges to ButtonGroup"s buttons</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="buttongroup" data-role="buttongroup"&gt;
+    &lt;li data-badge="5"&gt;Option 1&lt;/li&gt;
+    &lt;li data-badge="105"&gt;Option 2&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h2 id="button-icons">Button Icons</h2>
+
+<p>A Button icon can be set in two ways - either by adding an <code class="language-plaintext highlighter-rouge">img</code> element inside the Button <code class="language-plaintext highlighter-rouge">li</code> element,
+or by setting an <code class="language-plaintext highlighter-rouge">icon</code> data attribute to the Button <code class="language-plaintext highlighter-rouge">li</code> element.</p>
+
+<p>KendoUI Mobile ships with several ready to use icons:</p>
+
+<ul class="icon-block">
+    <li><span class="km-icon km-about"></span><br />about</li>
+    <li><span class="km-icon km-action"></span><br />action</li>
+    <li><span class="km-icon km-add"></span><br />add</li>
+    <li><span class="km-icon km-bookmarks"></span><br />bookmarks</li>
+    <li><span class="km-icon km-camera"></span><br />camera</li>
+    <li><span class="km-icon km-cart"></span><br />cart</li>
+    <li><span class="km-icon km-compose"></span><br />compose</li>
+    <li><span class="km-icon km-contacts"></span><br />contacts</li>
+    <li><span class="km-icon km-delete"></span><br />delete</li>
+    <li><span class="km-icon km-details"></span><br />details</li>
+    <li><span class="km-icon km-downloads"></span><br />downloads</li>
+    <li><span class="km-icon km-fastforward"></span><br />fastforward</li>
+    <li><span class="km-icon km-favorites"></span><br />favorites</li>
+    <li><span class="km-icon km-featured"></span><br />featured</li>
+    <li><span class="km-icon km-globe"></span><br />globe</li>
+    <li><span class="km-icon km-history"></span><br />history</li>
+    <li><span class="km-icon km-home"></span><br />home</li>
+    <li><span class="km-icon km-info"></span><br />info</li>
+    <li><span class="km-icon km-more"></span><br />more</li>
+    <li><span class="km-icon km-mostrecent"></span><br />mostrecent</li>
+    <li><span class="km-icon km-mostviewed"></span><br />mostviewed</li>
+    <li><span class="km-icon km-organize"></span><br />organize</li>
+    <li><span class="km-icon km-pause"></span><br />pause</li>
+    <li><span class="km-icon km-play"></span><br />play</li>
+    <li><span class="km-icon km-recents"></span><br />recents</li>
+    <li><span class="km-icon km-refresh"></span><br />refresh</li>
+    <li><span class="km-icon km-reply"></span><br />reply</li>
+    <li><span class="km-icon km-rewind"></span><br />rewind</li>
+    <li><span class="km-icon km-search"></span><br />search</li>
+    <li><span class="km-icon km-settings"></span><br />settings</li>
+    <li><span class="km-icon km-share"></span><br />share</li>
+    <li><span class="km-icon km-sounds"></span><br />sounds</li>
+    <li><span class="km-icon km-stop"></span><br />stop</li>
+    <li><span class="km-icon km-toprated"></span><br />toprated</li>
+    <li><span class="km-icon km-trash"></span><br />trash</li>
+    <li><span class="km-icon km-volume"></span><br />volume</li>
+    <li><span class="km-icon km-wifi"></span><br />wifi</li>
+</ul>
+
+<blockquote>
+  <p><strong>Important:</strong> Check the <a href="./icons">Icons</a> article for more information and how you can use custom icons in Kendo UI Mobile.</p>
+</blockquote>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

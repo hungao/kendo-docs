@@ -1,0 +1,909 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Splitter</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Step by step guide and code examples for successful configuration of Splitter UI widget, supported methods and events types.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/splitter.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouisplitter">kendo.ui.Splitter</h1>
+
+<p>Represents the Kendo UI Splitter widget. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="orientation-string-default-horizontal">orientation <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "horizontal")</em></h3>
+
+<p>Specifies the orientation of the widget. Supported values are <em>"horizontal"</em> and <em>"vertical"</em>.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  orientation: "vertical"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="panes-array">panes <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>An array of pane definitions.</p>
+
+<h3 id="panescollapsed-boolean-default-false">panes.collapsed <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Specifies whether a pane is initially collapsed (<strong>true</strong>) or expanded (<strong>true</strong>).</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ {}, { collapsed: true } ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="panescollapsible-boolean-default-false">panes.collapsible <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Specifies whether a pane is collapsible (<strong>true</strong>) or not collapsible (<strong>false</strong>).</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { collapsible: true }, {} ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="panescontenturl-string">panes.contentUrl <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the URL from which to load the content of a pane.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ {}, { contentUrl: "http://www.telerik.com/" } ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="panesmax-string">panes.max <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the maximum size of a pane defined as pixels (i.e. "200px") or as a percentage (i.e. "50%"). The
+size of a resized pane cannot exceed the defined maximum size.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { max: "200px" }, {} ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="panesmin-string">panes.min <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the minimum size of a pane defined as pixels (i.e. "200px") or as a percentage (i.e. "50%"). The
+size of a resized pane cannot be less than the defined minimum size.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { min: "100px" }, {} ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="panesresizable-boolean-default-true">panes.resizable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Specifies whether a pane is resizable (<strong>true</strong>) or not resizable (<strong>false</strong>).</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { resizable: false }, { resizable: false } ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="panesscrollable-boolean-default-true">panes.scrollable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Specifies whether a pane is scrollable (<strong>true</strong>) or not scrollable (<strong>false</strong>).</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { scrollable: false }, {} ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="panessize-string">panes.size <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the size of a pane defined as pixels (i.e. "200px") or as a percentage (i.e. "50%").
+It is recommended that one pane is left without size in order to compensate for changes in the viewport size.
+Note: This value must not exceed <strong>panes.max</strong> or be less then <strong>panes.min</strong>.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { size: "10%" }, {} ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="ajaxrequest">ajaxRequest</h3>
+
+<p>Loads the content of a pane from a local or remote URL.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="pane-stringelementjquery">pane <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>The targeted pane whose content is to be loaded via a URL.</p>
+
+<h5 id="url-string">url <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>A local or remote URL from which the content of the pane is to be loaded.</p>
+
+<h5 id="data-object--string">data <code class="language-plaintext highlighter-rouge">Object | String</code></h5>
+
+<p>Any data that is necessary to be sent to the server.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div id="pane1"&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter();
+var splitter = $("#splitter").data("kendoSplitter");
+
+// load a complete page in the last pane
+splitter.ajaxRequest(".k-pane:last", "http://www.telerik.com");
+
+// load content into the pane with ID="pane1"
+splitter.ajaxRequest("#pane1", "/customer/profile", { id: 42 });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="append">append</h3>
+
+<p>Appends a new pane. The method returns the pane element, so it can be populated with arbitrary content, if <code class="language-plaintext highlighter-rouge">contentUrl</code> is not set.
+Invoking this method will force the widget to redraw and it will trigger the <code class="language-plaintext highlighter-rouge">resize</code> event.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="config-object-optional">config <code class="language-plaintext highlighter-rouge">Object</code> <em>(optional)</em></h5>
+
+<p>The new pane configuration</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter();
+var splitter = $("#splitter").data("kendoSplitter");
+
+// append a 100px collapsible pane
+var newPane = splitter.append({
+  size: "100px",
+  collapsible: true
+});
+
+// set the content of the new pane to "foo"
+newPane.html("foo");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="collapse">collapse</h3>
+
+<p>Collapses a specified pane. Invoking this method will force the widget to redraw and it will trigger the <code class="language-plaintext highlighter-rouge">resize</code> event.
+Note: Invoking the method will not trigger a collapse event.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="pane-stringelementjquery-1">pane <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>The pane to be collapsed.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { collapsible: true }, {} ]
+});
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.collapse(".k-pane:first");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+
+<p>Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the widget element from DOM.</p>
+</blockquote>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter();
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.destroy();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="expand">expand</h3>
+
+<p>Expands a specified pane. Invoking this method will force the widget to redraw and it will trigger the <code class="language-plaintext highlighter-rouge">resize</code> event.
+Note: Invoking the method will not trigger an expand event.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="pane-stringelementjquery-2">pane <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>The pane to be expanded.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { collapsed: true }, {} ]
+});
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.expand(".k-pane:first");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="insertafter">insertAfter</h3>
+
+<p>Inserts a new pane after the specified one. The method returns the pane element, so it can be populated with arbitrary content, if <code class="language-plaintext highlighter-rouge">contentUrl</code> is not set.
+Invoking this method will force the widget to redraw and it will trigger the <code class="language-plaintext highlighter-rouge">resize</code> event.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="config-object">config <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The new pane configuration.</p>
+
+<h5 id="referencepane-stringelementjquery">referencePane <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>The existing pane after which the new one will be inserted.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter();
+var splitter = $("#splitter").data("kendoSplitter");
+
+// append a 100px collapsible pane after the first pane
+var newPane = splitter.insertAfter({ size: "100px" }, ".k-pane:first");
+
+// set the content of the new pane to "foo"
+newPane.html("foo");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> the pane element.</p>
+
+<h3 id="insertbefore">insertBefore</h3>
+
+<p>Inserts a new pane before the specified one. The method returns the pane element, so it can be populated with arbitrary content, if <code class="language-plaintext highlighter-rouge">contentUrl</code> is not set.
+Invoking this method will force the widget to redraw and it will trigger the <code class="language-plaintext highlighter-rouge">resize</code> event.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="config-object-1">config <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The new pane configuration.</p>
+
+<h5 id="referencepane-stringelementjquery-1">referencePane <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>The existing pane before which the new one will be inserted.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter();
+var splitter = $("#splitter").data("kendoSplitter");
+
+// append a 100px collapsible pane before the last pane
+var newPane = splitter.insertBefore({ size: "100px" }, ".k-pane:last");
+
+// set the content of the new pane to "foo"
+newPane.html("foo");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> the pane element.</p>
+
+<h3 id="max">max</h3>
+
+<p>Sets the maximum size of a pane. Setting this value will not cause the widget to redraw, nor will it trigger any events.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="pane-stringelementjquery-3">pane <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>The pane being targeted for a new minimum size configuration value.</p>
+
+<h5 id="value-string">value <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The maximum size value of the pane defined as pixels (i.e. "200px") or as a percentage (i.e. "50%").</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div id="pane1"&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter();
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.max("#pane1", "300px");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="min">min</h3>
+
+<p>Sets the minimum size of a pane. Setting this value will not cause the widget to redraw, nor will it trigger any events.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="pane-stringelementjquery-4">pane <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>The pane being targeted for a new minimum size configuration value.</p>
+
+<h5 id="value-string-1">value <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The minimum size value of the pane defined as pixels (i.e. "200px") or as a percentage (i.e. "50%").</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div id="pane1"&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter();
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.min("#pane1", "300px");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="remove">remove</h3>
+
+<p>Removes one or more panes. The method returns the Splitter instance.
+Invoking this method will force the widget to redraw and it will trigger the <code class="language-plaintext highlighter-rouge">resize</code> event.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="pane-stringelementjquery-5">pane <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>The pane(s) to be removed.</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter();
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.remove(".k-pane:first");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="size">size</h3>
+
+<p>Set the size of the pane. Setting this value will cause the widget to redraw and it will trigger the <code class="language-plaintext highlighter-rouge">resize</code> event.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="pane-stringelementjquery-6">pane <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>The pane to be resized.</p>
+
+<h5 id="value-string-2">value <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The new size of the pane defined as pixels (i.e. "200px") or as a percentage (i.e. "50%").
+Note: This value must not exceed <strong>panes.max</strong> or be less then <strong>panes.min</strong>.</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter();
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.size(".k-pane:first", "40%");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toggle">toggle</h3>
+
+<p>Toggles the state of a specified pane (i.e. collapsed or expanded).
+Invoking this method will force the widget to redraw and it will trigger the <code class="language-plaintext highlighter-rouge">resize</code> event.
+Note: Invoking the method will not trigger collapse or expand events.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="pane-stringelementjquery-7">pane <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>The pane to be collapsed.</p>
+
+<h5 id="expand-boolean-optional">expand <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(optional)</em></h5>
+
+<p>Represents the desired state of the specified pane; to be expanded (<strong>true</strong>) or collapsed
+(<strong>false</strong>). If undefined, toggle() will collapse the pane if it is expanded or will expand the
+pane if it is collapsed.</p>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div id="pane1"&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { collapsible: true }, { collapsible: true } ]
+});
+var splitter = $("#splitter").data("kendoSplitter");
+
+// toggle the pane with id="pane1"
+splitter.toggle("#pane1");
+
+// expand the pane with id="pane1"
+splitter.toggle("#pane1", true);
+
+// collapse the last pane
+splitter.toggle(".k-pane:last", false);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="collapse-1">collapse</h3>
+
+<p>Triggered when a pane of a Splitter is collapsed.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="epane-element">e.pane <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The collapsing pane of the Splitter.</p>
+
+<h4 id="example---subscribe-to-the-collapse-event-during-initialization">Example - subscribe to the "collapse" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { collapsible: true }, {} ],
+  collapse: function(e) {
+    console.log($(e.pane).html() + " has been collapsed");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-collapse-event-after-initialization">Example - subscribe to the "collapse" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function splitter_collapse(e) {
+  console.log($(e.pane).html() + " has been collapsed");
+}
+$("#splitter").kendoSplitter({
+  panes: [ { collapsible: true }, {} ]
+});
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.bind("collapse", splitter_collapse);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="contentload">contentLoad</h3>
+
+<p>Triggered when the content for a pane has finished loading.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="epane-element-1">e.pane <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The pane whose content has been loaded.</p>
+
+<h4 id="example---subscribe-to-the-contentload-event-during-initialization">Example - subscribe to the "contentLoad" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { content: "/foo" }, {} ],
+  contentLoad: function(e) {
+    console.log($(e.pane).html() + " has been loaded");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-contentload-event-after-initialization">Example - subscribe to the "contentLoad" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function splitter_contentLoad(e) {
+  console.log($(e.pane).html() + " has been loaded");
+}
+$("#splitter").kendoSplitter({
+  panes: [ { content: "/foo" }, {} ]
+});
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.bind("contentLoad", splitter_contentLoad);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="error">error</h3>
+
+<p>Triggered when the AJAX request that fetches a pane content has failed.</p>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="exhr-jqxhr">e.xhr <code class="language-plaintext highlighter-rouge">jqXHR</code></h5>
+
+<p>The XHR request object, as returned from <a href="http://api.jquery.com/jQuery.ajax/">jQuery.ajax</a></p>
+
+<h5 id="estatus-string">e.status <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The status of the request, as returned from <a href="http://api.jquery.com/jQuery.ajax/">jQuery.ajax</a></p>
+
+<h4 id="example---subscribe-to-the-error-event-during-initialization">Example - subscribe to the "error" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  error: function(e) {
+    console.log(
+        "Pane #" + $(e.pane).index() + " could not be loaded from server" +
+        " (status " + e.xhr.status + ")"
+    );
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-error-event-after-initialization">Example - subscribe to the "error" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function splitter_error(e) {
+    console.log(
+        "Pane #" + $(e.pane).index() + " could not be loaded from server" +
+        " (status " + e.xhr.status + ")"
+    );
+}
+$("#splitter").kendoSplitter();
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.bind("error", splitter_error);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="expand-1">expand</h3>
+
+<p>Triggered when a pane of a Splitter is expanded.</p>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="epane-element-2">e.pane <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The expanding pane of the Splitter.</p>
+
+<h4 id="example---subscribe-to-the-expand-event-during-initialization">Example - subscribe to the "expand" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { collapsible: true, collapsed: true}, {} ],
+  expand: function(e) {
+    console.log($(e.pane).html() + " has been expanded");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-expand-event-after-initialization">Example - subscribe to the "expand" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function splitter_expand(e) {
+  console.log($(e.pane).html() + " has been expanded");
+}
+$("#splitter").kendoSplitter({
+  panes: [ { collapsible: true, collapsed: true }, {} ]
+});
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.bind("expand", splitter_expand);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="layoutchange">layoutChange</h3>
+
+<p><strong>This event is now obsolete and will be removed in the future. Please use the <a href="#events-resize"><code class="language-plaintext highlighter-rouge">resize</code></a> event instead.</strong></p>
+
+<p>Fires when the splitter layout has changed</p>
+
+<h4 id="example---subscribe-to-the-layoutchange-event-during-initialization">Example - subscribe to the "layoutChange" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { collapsible: true }, {} ],
+  layoutChange: function(e) {
+    console.log("Splitter layout has changed");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-layoutchange-event-after-initialization">Example - subscribe to the "layoutChange" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function splitter_layoutChange(e) {
+  console.log("Splitter layout has changed");
+}
+$("#splitter").kendoSplitter({
+  panes: [ { collapsible: true }, {} ]
+});
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.bind("layoutChange", splitter_layoutChange);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resize">resize</h3>
+
+<p>Triggered when a pane is resized.</p>
+
+<h4 id="example---subscribe-to-the-resize-event-during-initialization">Example - subscribe to the "resize" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$("#splitter").kendoSplitter({
+  panes: [ { collapsible: true }, {} ],
+  resize: function(e) {
+    console.log("Splitter pane has been resized");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-resize-event-after-initialization">Example - subscribe to the "resize" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="splitter"&gt;
+  &lt;div&gt;Pane A&lt;/div&gt;
+  &lt;div&gt;Pane B&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function splitter_resize(e) {
+  console.log("Splitter pane has been resized");
+}
+$("#splitter").kendoSplitter({
+  panes: [ { collapsible: true }, {} ]
+});
+var splitter = $("#splitter").data("kendoSplitter");
+splitter.bind("resize", splitter_resize);
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

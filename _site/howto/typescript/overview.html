@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li class="active">How Do I?</li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/howto.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("howto/typescript/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-ui-typescript-support">Kendo UI TypeScript Support</h1>
+
+<p>Kendo UI provides a <a href="http://www.typescriptlang.org/">TypeScript</a> definitions file which enables strongly-typed access to the Kendo UI widgets and their configuration.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>Each Kendo UI distribution includes a <em>typescript</em> directory which contains a <code class="language-plaintext highlighter-rouge">.d.ts</code> file i.e. <code class="language-plaintext highlighter-rouge">kendo.all.d.ts</code>. Copy that file in your project.
+In your TypeScript file add a reference to that file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/// &lt;reference path="kendo.all.d.ts" /&gt;
+</code></pre></div></div>
+
+<p>You can optionally include the latest jQuery TypeScript definition file as well:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/// &lt;reference path="jquery-1.8.d.ts" /&gt;
+/// &lt;reference path="kendo.all.d.ts" /&gt;
+</code></pre></div></div>
+
+<h2 id="features">Features</h2>
+
+<h3 id="get-instance-of-existing-kendo-ui-widgets">Get instance of existing Kendo UI widgets</h3>
+
+<p><img src="/howto/typescript/get-instance.png" alt="Get instante of existing Kendo UI widget" /></p>
+
+<h3 id="initialize-and-configure-any-kendo-ui-widget">Initialize and configure any Kendo UI widget</h3>
+
+<p><img src="/howto/typescript/init.png" alt="All Kendo UI widgets" /></p>
+
+<h3 id="initialize-a-kendo-datasource">Initialize a Kendo DataSource</h3>
+
+<p><img src="/howto/typescript/datasource.png" alt="Initialize a Kendo DataSource" /></p>
+
+<h2 id="create-kendo-ui-widget-via-typescript-inheritance">Create Kendo UI widget via TypeScript inheritance</h2>
+
+<p>The following code example shows how to inherit from an existing Kendo UI Widget.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/// &lt;reference path="jquery.d.ts" /&gt;
+/// &lt;reference path="kendo.all.d.ts" /&gt;
+
+module KendoWidgets {
+    // Extend the default widget options (optional)
+    export interface MyDatePickerOptions extends kendo.ui.DatePickerOptions {
+    }
+
+    // Create a class which inherits from the Kendo UI widget
+    export class MyDatePicker extends kendo.ui.DatePicker {
+        constructor(element: Element, options?: MyDatePickerOptions) {
+            super(element, options);
+        }
+        //Override a widget method (optional)
+        open() {
+            // Log to the console (optional)
+            console.log("open");
+
+            // Invoke a base widget method
+
+            super.open();
+        }
+    }
+    // Create an alias of the prototype (required by kendo.ui.plugin)
+    MyDatePicker.fn = MyDatePicker.prototype;
+    // Deep clone the widget default options
+    MyDatePicker.fn.options = $.extend(true, {}, kendo.ui.DatePicker.fn.options);
+    // Specify the name of your Kendo UI widget. Used to create the corresponding jQuery plugin.
+    MyDatePicker.fn.options.name = "MyDatePicker";
+    // Create a jQuery plugin.
+    kendo.ui.plugin(MyDatePicker);
+}
+// Expose the newly created jQuery plugin to TypeScript
+interface JQuery {
+    kendoMyDatePicker(options?: kendo.ui.DatePickerOptions): JQuery;
+}
+$(function () {
+    // Initialize your custom widget
+    $("#datepicker").kendoMyDatePicker();
+    // Get a reference to the widget instance.
+    var myDatePicker = &lt;KendoWidgets.MyDatePicker&gt;$("#datepicker").data("kendoMyDatePicker");
+    // Call a widget method
+    myDatePicker.open();
+});
+</code></pre></div></div>
+
+<h2 id="use-kendo-ui-mvvm-in-typescript">Use Kendo UI MVVM in TypeScript</h2>
+
+<p>When inheriting from <code class="language-plaintext highlighter-rouge">kendo.data.ObservableObject</code> in TypeScript you should call the <code class="language-plaintext highlighter-rouge">super.init</code> method to properly set up dependency tracking.</p>
+
+<p>The following example shows how to use Kendo UI MVVM in TypeScript.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/// &lt;reference path="jquery.d.ts" /&gt;
+/// &lt;reference path="kendo.all.d.ts" /&gt;
+
+class Person extends kendo.data.ObservableObject {
+    name = "John Doe";
+
+    constructor() {
+        super();
+
+        super.init(this);
+    }
+}
+
+class ViewModel extends kendo.data.ObservableObject {
+    person = new Person();
+
+    constructor() {
+        super();
+
+        super.init(this);
+    }
+}
+
+$(function () {
+    var viewModel = new ViewModel();
+
+    kendo.bind(document.body, viewModel);
+
+    viewModel.set("person.name", "Jane Doe");
+});
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

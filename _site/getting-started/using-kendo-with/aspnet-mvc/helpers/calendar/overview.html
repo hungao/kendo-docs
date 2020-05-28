@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Calendar HtmlHelper extension for Kendo UI Calendar widget | Kendo UI documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Getting started with Calendar HtmlHelper extension in quick steps - configure Kendo UI Calendar widget and operate Kendo UI Calendar events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/calendar/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="calendar">Calendar</h1>
+
+<p>The Calendar HtmlHelper extension is a server-side wrapper for the <a href="/api/web/calendar">Kendo UI Calendar</a> widget.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Here is how to configure a simple Kendo Calendar:</p>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create a new action method which renders the view:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    return View();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add a calendar:</p>
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().Calendar()
+      .Name("calendar") //The name of the calendar is mandatory. It specifies the "id" attribute of the widget.
+      .Min(new DateTime(2010, 1, 1, 10, 0, 0)) //Set min time of the calendar
+      .Max(new DateTime(2010, 1, 1, 20, 0, 0)) //Set min date of the calendar
+      .Value(DateTime.Now) //Set the value of the calendar
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().Calendar()
+      .Name("calendar") //The name of the calendar is mandatory. It specifies the "id" attribute of the widget.
+      .Min(new DateTime(2010, 1, 1, 10, 0, 0)) //Set min time of the calendar
+      .Max(new DateTime(2010, 1, 1, 20, 0, 0)) //Set min date of the calendar
+      .Value(DateTime.Now) //Set the value of the calendar
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="accessing-an-existing-calendar">Accessing an Existing Calendar</h2>
+
+<p>You can reference an existing Calendar instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/calendar#methods">API</a> to control its behavior.</p>
+
+<h3 id="accessing-an-existing-calendar-instance">Accessing an existing Calendar instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//Put this after your Kendo Calendar for ASP.NET MVC declaration
+&lt;script&gt;
+$(function() {
+// Notice that the Name() of the calendar is used to get its client-side instance
+var calendar = $("#calendar").data("kendoCalendar");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-kendo-ui-calendar-events">Handling Kendo UI Calendar events</h2>
+
+<p>You can subscribe to all <a href="/api/web/calendar#events">events</a> exposed by Kendo UI Calendar:</p>
+
+<h3 id="webforms---subscribe-by-handler-name">WebForms - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%: Html.Kendo().Calendar()
+    .Name("calendar")
+    .Events(e =&gt; e
+        .Change("calendar_change")
+        .Navigate("calendar_navigate")
+    )
+%&gt;
+&lt;script&gt;
+function calendar_navigate() {
+    //Handle the navigate event
+}
+
+function calendar_change() {
+    //Handle the change event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-handler-name">Razor - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Calendar()
+  .Name("calendar")
+  .Events(e =&gt; e
+        .Change("calendar_change")
+        .Navigate("calendar_navigate")
+  )
+)
+&lt;script&gt;
+function calendar_navigate() {
+    //Handle the navigate event
+}
+
+function calendar_change() {
+    //Handle the change event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-template-delegate">Razor - subscribe by template delegate</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Calendar()
+  .Name("calendar")
+  .Events(e =&gt; e
+      .Change(@&lt;text&gt;
+        function() {
+            //Handle the change event inline
+        }
+      &lt;/text&gt;)
+      .Navigate(@&lt;text&gt;
+        function() {
+            //Handle the navigate event inline
+        }
+        &lt;/text&gt;)
+  )
+)
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

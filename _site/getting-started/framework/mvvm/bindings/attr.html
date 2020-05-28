@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Attr binding in Kendo UI MVVM to populate DOM element attributes</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Populate and update DOM element attributes from View-model fields or methods through attr binding in Kendo UI MVVM.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/mvvm/bindings/attr.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="attr-binding">Attr binding</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">attr</code> binding populates DOM element attributes from View-Model fields or methods. This is useful in many cases - setting the <code class="language-plaintext highlighter-rouge">href</code> and <code class="language-plaintext highlighter-rouge">title</code> of a hyperlink, setting the <code class="language-plaintext highlighter-rouge">src</code> attribute of an image etc. If the View-Model field(s) change the attributes would be updated. The <code class="language-plaintext highlighter-rouge">attr</code> binding is set like this: <code class="language-plaintext highlighter-rouge">attr: { attribute1: field1, attribute2: field2 }</code> where <code class="language-plaintext highlighter-rouge">attribute1</code> and <code class="language-plaintext highlighter-rouge">attribute2</code> are the names of the attributes that would be set and <code class="language-plaintext highlighter-rouge">field1</code> and <code class="language-plaintext highlighter-rouge">field2</code> are the names of the View-Model fields to which those attributes would be bound. </p>
+
+<h2 id="example-of-the-attr-binding">Example of the <code class="language-plaintext highlighter-rouge">attr</code> binding</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;img id="logo" data-bind="attr: { src: imageSource, alt: imageAlt }" /&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    imageSource: "http://www.telerik.com/image/kendo-logo.png",
+    imageAlt: "Kendo Logo"
+});
+
+kendo.bind($("#logo"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>In this example the <code class="language-plaintext highlighter-rouge">src</code> and <code class="language-plaintext highlighter-rouge">alt</code> attributes of the image are bound to the View-Model. After calling <code class="language-plaintext highlighter-rouge">kendo.bind</code> the image would look like this (<code class="language-plaintext highlighter-rouge">data-bind</code> attribute is removed for clarity):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;img id="logo" src="http://www.telerik.com/image/kendo-logo.png" alt="Kendo Logo"" /&gt;
+</code></pre></div></div>
+
+<p>Changing the <code class="language-plaintext highlighter-rouge">imageSource</code> or <code class="language-plaintext highlighter-rouge">imageSource</code> fields would update the <code class="language-plaintext highlighter-rouge">src</code> and <code class="language-plaintext highlighter-rouge">alt</code> attributes respectively.</p>
+
+<h3 id="important-value-and-checked-attribute-binding">Important: value and checked attribute binding</h3>
+
+<p>If you want to set the <code class="language-plaintext highlighter-rouge">value</code> or <code class="language-plaintext highlighter-rouge">checked</code> attributes use the <a href="value">value</a> and <a href="checked">checked</a> bindings instead.</p>
+
+<h3 id="note-data-attributes">Note: data attributes</h3>
+
+<p>You can also set HTML5 data attributes via the <code class="language-plaintext highlighter-rouge">attr</code> binding:</p>
+
+<h4 id="setting-data-attributes-via-the-attr-binding">Setting data attributes via the <code class="language-plaintext highlighter-rouge">attr</code> binding</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-bind="attr: { data-foo: fooValue, data-bar: barValue }"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var viewModel = kendo.observable({
+    fooValue: "foo",
+    barValue: "bar"
+});
+
+kendo.bind($("div"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="widget-support">Widget support</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">attr</code> binding is <strong>not</strong> support by Kendo Widgets.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

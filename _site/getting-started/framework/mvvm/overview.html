@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Kendo UI MVVM pattern, integrated with Kendo UI jQuery-powered framework</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Kendo UI Model View ViewModel is an implementation of the MVVM pattern, integrated with Kendo UI framework.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/mvvm/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-mvvm-overview">Kendo MVVM Overview</h1>
+
+<p>Model View ViewModel (<a href="http://en.wikipedia.org/wiki/Model_View_ViewModel">MVVM</a>) is a design pattern which helps developers separate the Model (the data) from the View (the UI).
+The View-Model part of MVVM is responsible for exposing the data objects from the Model in such a way that those objects are easily consumed in the View.</p>
+
+<p>Kendo MVVM is an implementation of the MVVM pattern which seamlessly integrates with the rest of the Kendo framework (widgets and DataSource).</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>First let"s start by creating a View-Model object. The View-Model is a representation of your data (the Model) which will be displayed in the View.
+To declare your View-Model use the <code class="language-plaintext highlighter-rouge">kendo.observable</code> function and pass it a JavaScript object:</p>
+
+<h3 id="view-model-declaration">View-Model declaration:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var viewModel = kendo.observable({
+    name: "John Doe",
+    displayGreeting: function() {
+        var name = this.get("name");
+        alert("Hello, " + name + "!!!");
+    }
+});
+</code></pre></div></div>
+
+<p>Now, let"s create a View. The View is the UI (a set of HTML elements) which will be bound to the View-Model.</p>
+
+<h3 id="view-declaration">View declaration:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="view"&gt;
+    &lt;input data-bind="value: name" /&gt;
+    &lt;button data-bind="click: displayGreeting"&gt;Display Greeting&lt;/button&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">input</code> value (its text) is bound via the <code class="language-plaintext highlighter-rouge">data-bind</code> attribute to the <code class="language-plaintext highlighter-rouge">name</code> field of the View-Model. When that field changes the <code class="language-plaintext highlighter-rouge">input</code> value will be updated to reflect that change.
+The opposite is also true - when the value of the <code class="language-plaintext highlighter-rouge">input</code> changes the field will be updated.</p>
+
+<p>The click event of the <code class="language-plaintext highlighter-rouge">button</code> is bound via the <code class="language-plaintext highlighter-rouge">data-bind</code> attribute to the <code class="language-plaintext highlighter-rouge">displayGreeting</code> method of the View-Model. That method will be invoked when user clicks the <code class="language-plaintext highlighter-rouge">button</code>.</p>
+
+<p>Finally, let"s bind the View to the View-Model. This is done by calling the <code class="language-plaintext highlighter-rouge">kendo.bind</code> method:</p>
+
+<h3 id="binding-the-view-to-the-view-model">Binding the View to the View-Model:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kendo.bind($("#view"), viewModel);
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Important:</strong> Kendo UI Mobile is not included in the default list of initialized namespaces. You can initialize it explicitly by
+  running <em>kendo.bind(element, viewModel, kendo.mobile.ui);</em></p>
+</blockquote>
+
+<h2 id="bindings">Bindings</h2>
+
+<p>A binding pairs DOM element (or widget) property to a field or method of the View-Model. Bindings are specified via the <code class="language-plaintext highlighter-rouge">data-bind</code> attribute in the form <code class="language-plaintext highlighter-rouge">&lt;binding name&gt;: &lt;view model field or method&gt;</code> e.g. <code class="language-plaintext highlighter-rouge">value: name</code>. Two bindings were used in the aforementioned example - <code class="language-plaintext highlighter-rouge">value</code> and <code class="language-plaintext highlighter-rouge">click</code>.
+Kendo MVVM supports binding to other properties as well: <code class="language-plaintext highlighter-rouge">source, html, attr, visible, enabled</code> etc. The <code class="language-plaintext highlighter-rouge">data-bind</code> may contain a comma-separated list of bindings e.g. <code class="language-plaintext highlighter-rouge">data-bind="value: name, visible: isNameVisible"</code>. Kendo MVVM also supports data binding to nested View-Model fields:</p>
+
+<h3 id="binding-to-nested-fields">Binding to nested fields:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-bind="text: person.name"&gt;
+&lt;/div&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    person: {
+        name: "John Doe"
+    }
+});
+kendo.bind($("div"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="important-bindings-are-not-javascript">Important: bindings are not JavaScript</h3>
+
+<p>Although bindings look like JavaScript code they are not. The following is <strong>NOT</strong> a valid Kendo MVVM binding declaration:
+<code class="language-plaintext highlighter-rouge">&lt;div data-bind="text: person.name.toLowerCase()"&gt;&lt;/div&gt;</code></p>
+
+<p>If a value from the View-Model requires processing before displaying it in the View a method should be created and used instead:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-bind="text: person.lowerCaseName"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var viewModel = kendo.observable({
+    person: {
+        name: "John Doe",
+        lowerCaseName: function() {
+            return this.get("name").toLowerCase();
+        }
+    }
+});
+kendo.bind($("div"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

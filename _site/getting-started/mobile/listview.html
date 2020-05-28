@@ -1,0 +1,461 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>User guide for Kendo UI Mobile ListView Widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Documentation how to use capabilities of Kendo UI Mobile ListVeiw widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/mobile/listview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="listview">ListView</h1>
+
+<p>The Kendo Mobile ListView widget is used to display flat or grouped list of items.
+It can be either used in unbound mode by enhancing an HTML <code class="language-plaintext highlighter-rouge">ul</code> element, or bound to a DataSource instance.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The Kendo mobile Application automatically initializes the mobile ListView for every <code class="language-plaintext highlighter-rouge">ul</code> element with <code class="language-plaintext highlighter-rouge">role</code> data attribute set to
+<code class="language-plaintext highlighter-rouge">listview</code> present in the application Views.
+Alternatively, it can be initialized using jQuery plugin syntax in the containing mobile View <strong>init event handler</strong>.
+The mobile ListView element may contain one or more <code class="language-plaintext highlighter-rouge">li</code> elements.</p>
+
+<h3 id="initialize-mobile-listview-using-a-role-data-attribute">Initialize mobile ListView using a role data attribute</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul data-role="listview"&gt;
+    &lt;li&gt;Foo&lt;/li&gt;
+    &lt;li&gt;Bar&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-mobile-listview-using-jquery-plugin-syntax">Initialize mobile ListView using jQuery plugin syntax</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="initListView"&gt;
+    &lt;ul id="listView"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    function initListView(e) {
+        e.view.element.find("#listView").kendoMobileListView();
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="inset-mobile-listview">Inset Mobile ListView</h2>
+
+<p>In iOS, the mobile ListView appearance can be changed to <strong>inset</strong>, to achieve an effect similar to iOS grouped table views,
+where the list items are padded from the container, and have rounded corners.
+To do so, set the <code class="language-plaintext highlighter-rouge">style</code> data attribute to <code class="language-plaintext highlighter-rouge">inset</code>.
+<strong>Note:</strong> This setting will not affect the appearance of the mobile ListView on Android/Blackberry devices.</p>
+
+<h3 id="create-inset-mobile-listview">Create inset mobile ListView</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul data-role="listview" data-style="inset"&gt;
+  &lt;li&gt;Foo&lt;/li&gt;
+  &lt;li&gt;Bar&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h2 id="grouped-mobile-listview">Grouped mobile ListView</h2>
+
+<p>The mobile ListView can display items in groups, with optional headers. This can be achieved by nesting unordered lists in items,
+and setting the widget"s element <code class="language-plaintext highlighter-rouge">type</code> data attribute to <code class="language-plaintext highlighter-rouge">group</code>.</p>
+
+<h3 id="create-grouped-mobile-listview">Create grouped mobile ListView</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul data-role="listview" data-type="group"&gt;
+    &lt;li&gt;
+        Foo
+        &lt;ul&gt;
+            &lt;li&gt;Bar&lt;/li&gt;
+            &lt;li&gt;Baz&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        Bar
+        &lt;ul&gt;
+            &lt;li&gt;Bar&lt;/li&gt;
+            &lt;li&gt;Qux&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h2 id="binding-to-data">Binding to Data</h2>
+
+<p>The mobile ListView can be bound to both local JavaScript arrays and remote data via the
+<strong>Kendo DataSource component</strong>. Local JavaScript arrays are appropriate for limited value
+options, while remote data binding is better for larger data sets.</p>
+
+<h3 id="bind-mobile-listview-to-a-local-data-source">Bind mobile ListView to a local data source.</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function initListView(e) {
+    e.view.element.find("#listview").kendoMobileListView({
+        dataSource: kendo.data.DataSource.create(["foo", "bar", "baz"])
+     });
+});
+</code></pre></div></div>
+
+<h2 id="customizing-item-templates">Customizing Item Templates</h2>
+
+<p>The mobile ListView leverages Kendo UI high-performance Templates to provide complete control
+over item rendering. For a complete overview of Kendo UI Template capabilities and syntax,
+please review the <a href="/getting-started/framework/templates/overview">Kendo UI Templates</a> documentation.</p>
+
+<blockquote>
+  <p>The ListView automatically wraps the template content in <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> tag. Putting a <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> tag inside the template creates invalid nesting of elements.</p>
+</blockquote>
+
+<h3 id="basic-item-template-customization">Basic item template customization</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="listview"&gt;&lt;/ul&gt;
+
+&lt;script type="text/javascript"&gt;
+    function initListView(e) {
+        e.view.element.find("#listview").kendoMobileListView({
+            template : "&lt;strong&gt;#:data.foo#&lt;/strong&gt;",
+            dataSource: kendo.data.DataSource.create([{foo: "bar"}, {foo: "baz"}])
+        });
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="setting-item-template-via-data-attribute">Setting item template via data attribute</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+    &lt;ul id="list" data-role="listview" data-source="dataSource" data-template="tmp"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script id="tmp" type="text/x-kendo-template"&gt;
+    &lt;p&gt;#: name # &lt;span&gt;Age: #: age #&lt;/span&gt;&lt;/p&gt;
+&lt;/script&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+    var dataSource = new kendo.data.DataSource({
+        data: [
+            { name: "Jane Doe", age: 30 },
+            { name: "John Doe", age: 33 }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="press-to-load-more--endless-scrolling">Press to Load More / Endless Scrolling</h2>
+
+<p>The listview widget supports displaying large amounts of data by appending additional pages of data on demand.
+Loading can happen automatically by enabling <a href="/api/mobile/listview#configuration-endlessScroll">endless scrolling</a>, or by displaying a button at the bottom (<a href="/api/mobile/listview#configuration-loadMore"> press to load more </a>).
+Enabling endless scrolling or press to load more options triggers the <strong>virtual mode</strong> of the ListView.</p>
+
+<p>In order for the listview virtual mode to be working as expected, the listview should be the only widget in the scrolling container. In case more widgets are needed in the view in question, the listview should be wrapped in a mobile scroller container.</p>
+
+<p>The virtual mode interacts and alters the behavior of the containing scroller widget (by default, the view scroller). Native scrolling (view with <code class="language-plaintext highlighter-rouge">use-native-scrolling=true</code> or scroller with <code class="language-plaintext highlighter-rouge">use-native=true</code> attributes) <strong>is not supported</strong>.</p>
+
+<p>In virtual mode, fixed amount of DOM elements is rendered, and then dynamically repositioned and updated when the user scrolls the view. In endless scrolling mode, the next page is automatically prefetched when the user scrolls past two thirds of the current set of items.</p>
+
+<blockquote>
+  <p>The amount of actual DOM elements used in virtual mode is equal to half of the datasource page size option.</p>
+</blockquote>
+
+<p>In order for the scrolling to occur smoothly, the page size should <strong>not be too low</strong>.
+For example, if 5 items are visible on the page, at least 15 physical DOM elements are needed, which means that the DataSource page size should be 30 or greater.</p>
+
+<blockquote>
+  <p>Bigger DataSource page size ensures smooth scrolling, but has adverce effects on view transition performance.</p>
+</blockquote>
+
+<p>Once the listview reaches the amount of items specified by the <a href="/api/framework/datasource#configuration-schema.total">schema.total</a> setting of the datasource, the loadmore button/endless scrolling indicator is hidden.</p>
+
+<blockquote>
+  <p>Currently, certain features (<strong>grouped mode</strong> and <strong>inset styling</strong>) are <strong>not supported</strong> in virtual mode.</p>
+</blockquote>
+
+<h2 id="link-items">Link Items</h2>
+
+<p>The mobile ListView will automatically style items with a single link element inside, adding a details indicator.</p>
+
+<h3 id="listview-with-link-items">ListView with link items</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul data-role="listview"&gt;
+  &lt;li&gt;&lt;a href="#foo"&gt;Foo&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="#bar"&gt;Bar&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h2 id="detail-buttons">Detail Buttons</h2>
+
+<p>Mobile ListView integrates with nested DetailButton widgets. These buttons are best suited when the user should be able to execute more than one action on a given row.
+Detail buttons support 4 default data-styles: <strong>contactadd</strong>, <strong>detaildisclose</strong>, <strong>rowinsert</strong> and <strong>rowdelete</strong>, along custom icons
+through the data-icon attribute. One row can contain both regular links and detail buttons.</p>
+
+<h3 id="listview-with-detail-buttons">ListView with Detail Buttons</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul data-role="listview" data-style="inset" data-type="group"&gt;
+    &lt;li&gt;
+        Default button styles
+        &lt;ul&gt;
+            &lt;li&gt;Contact Add&lt;a data-role="detailbutton" data-style="contactadd"&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;Detail Disclose&lt;a data-role="detailbutton" data-style="detaildisclose"&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;Row Insert&lt;a data-role="detailbutton" data-style="rowinsert"&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;Row Delete&lt;a data-role="detailbutton" data-style="rowdelete"&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        Custom icons
+        &lt;ul&gt;
+            &lt;li&gt;Battery level&lt;a data-role="detailbutton" data-icon="battery"&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        Link Items &amp; Detail Buttons
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a&gt;Row Insert&lt;/a&gt;&lt;a data-role="detailbutton" data-style="rowinsert"&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a&gt;Battery Level&lt;/a&gt;&lt;a data-role="detailbutton" data-icon="battery"&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h2 id="item-icons">Item Icons</h2>
+
+<p>An icon can be set in two ways - either by adding an <code class="language-plaintext highlighter-rouge">img</code> element inside the <code class="language-plaintext highlighter-rouge">li</code> element, or by setting an <code class="language-plaintext highlighter-rouge">icon</code> data attribute to the <code class="language-plaintext highlighter-rouge">li</code> element.
+if data attribute is used then an <code class="language-plaintext highlighter-rouge">a</code> element should be put in the <code class="language-plaintext highlighter-rouge">li</code> element. The icon class will be applied to the <code class="language-plaintext highlighter-rouge">a</code> element.
+Kendo mobile ships with several ready to use icons:</p>
+
+<ul>
+  <li><span class="km-icon km-about"></span>about</li>
+  <li><span class="km-icon km-action"></span>action</li>
+  <li><span class="km-icon km-add"></span>add</li>
+  <li><span class="km-icon km-bookmarks"></span>bookmarks</li>
+  <li><span class="km-icon km-camera"></span>camera</li>
+  <li><span class="km-icon km-cart"></span>cart</li>
+  <li><span class="km-icon km-compose"></span>compose</li>
+  <li><span class="km-icon km-contacts"></span>contacts</li>
+  <li><span class="km-icon km-details"></span>details</li>
+  <li><span class="km-icon km-downloads"></span>downloads</li>
+  <li><span class="km-icon km-fastforward"></span>fastforward</li>
+  <li><span class="km-icon km-favorites"></span>favorites</li>
+  <li><span class="km-icon km-featured"></span>featured</li>
+  <li><span class="km-icon km-toprated"></span>toprated</li>
+  <li><span class="km-icon km-globe"></span>globe</li>
+  <li><span class="km-icon km-history"></span>history</li>
+  <li><span class="km-icon km-home"></span>home</li>
+  <li><span class="km-icon km-info"></span>info</li>
+  <li><span class="km-icon km-more"></span>more</li>
+  <li><span class="km-icon km-mostrecent"></span>mostrecent</li>
+  <li><span class="km-icon km-mostviewed"></span>mostviewed</li>
+  <li><span class="km-icon km-organize"></span>organize</li>
+  <li><span class="km-icon km-pause"></span>pause</li>
+  <li><span class="km-icon km-play"></span>play</li>
+  <li><span class="km-icon km-recents"></span>recents</li>
+  <li><span class="km-icon km-refresh"></span>refresh</li>
+  <li><span class="km-icon km-reply"></span>reply</li>
+  <li><span class="km-icon km-rewind"></span>rewind</li>
+  <li><span class="km-icon km-search"></span>search</li>
+  <li><span class="km-icon km-settings"></span>settings</li>
+  <li><span class="km-icon km-share"></span>share</li>
+  <li><span class="km-icon km-stop"></span>stop</li>
+  <li><span class="km-icon km-trash"></span>trash</li>
+</ul>
+
+<p>Additional icons may be added by defining the respective CSS class.
+If the <code class="language-plaintext highlighter-rouge">icon</code> data attribute is set to <code class="language-plaintext highlighter-rouge">custom</code>, the tab will receive <code class="language-plaintext highlighter-rouge">km-custom</code> CSS class.</p>
+
+<h3 id="creating-custom-icons">Creating Custom Icons</h3>
+
+<p>In order to create colorizable icons like the default ones in Kendo UI Mobile, specify the icon image as a <strong>box mask</strong>
+(either as dataURI or as a separate image). The image should be <strong>PNG8</strong> or <strong>PNG24</strong> with alpha channel (<strong>PNG8+Alpha</strong> is supported by
+only few graphic editors, so <strong>better stick with PNG24</strong>). The image color is not important - it will be used as a mask only.</p>
+
+<p><strong>Note</strong>: <strong>BlackBerry 7.0</strong> has a bug that renders its masks as background-image, so it is recommended to use white in order to support it. The bug is fixed in <strong>7.1</strong>.</p>
+
+<h4 id="define-custom-list-item-icon">Define custom list item icon</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;style&gt;
+    .km-custom {
+      -webkit-mask-box-image: url("foo.png");
+    }
+&lt;/style&gt;
+
+&lt;ul data-role="listview" data-style="inset"&gt;
+  &lt;li data-icon="custom"&gt;
+     &lt;a&gt;Home&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+     Bar
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>In Q3 2012 due to numerous issues with WebKit mask icons, they were deprecated and Kendo UI Mobile introduced font icons. Since the font is not easy editable,
+the previous method for a mask icon can be used, but with some additional styling. Please note that the below example will restyle all font icons.</p>
+
+<h3 id="define-custom-list-item-icon-after-q3-2012">Define custom list item icon after Q3 2012</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;style&gt;
+    /* Remove font icons styling, use .km- + data-icon name if only one should be overridden */
+    .km-root .km-pane .km-view .km-icon {
+        background-size: 100% 100%;
+        -webkit-background-clip: border-box;
+        background-color: currentcolor;
+    }
+
+    .km-custom {
+        -webkit-mask-box-image: url("foo.png");
+        background-color: red;
+    }
+&lt;/style&gt;
+
+&lt;ul data-role="listview" data-style="inset"&gt;
+  &lt;li data-icon="custom"&gt;
+     &lt;a&gt;Home&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+     Bar
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>If you want to add only one or two custom icons, specify them with their respective classes (.km- + data-icon name):</p>
+
+<h3 id="restyle-only-the-added-kendo-ui-mobile-custom-icon">Restyle only the added Kendo UI Mobile custom icon.</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.km-root .km-pane .km-view .km-question {
+    background-size: 100% 100%;
+    -webkit-background-clip: border-box;
+    background-color: currentcolor;
+}
+
+.km-question {
+    -webkit-mask-box-image: url("foo.png");
+    background-color: red;
+}
+</code></pre></div></div>
+
+<p>When custom icons are used and their names are the same as the integrated Kendo UI Mobile icon names, make sure that the font icons are not rendered.</p>
+
+<h3 id="hide-all-kendo-ui-mobile-font-icons">Hide all Kendo UI Mobile font icons.</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* Don't render all internal Kendo UI font icons
+.km-root .km-pane .km-view .km-icon:after,
+.km-root .km-pane .km-view .km-icon:before
+{
+    visibility: hidden;
+}
+</code></pre></div></div>
+
+<p>Again if only several icons should be overridden, specify them with their classes instead:</p>
+
+<h3 id="hide-specific-kendo-ui-mobile-font-icons">Hide specific Kendo UI Mobile font icons.</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.km-root .km-pane .km-view .km-favorites:after,
+.km-root .km-pane .km-view .km-favorites:before
+{
+    visibility: hidden;
+}
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

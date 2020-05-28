@@ -1,0 +1,470 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Working with date series in Kendo UI Javascript Chart widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to handle date series and date grouping in Chart UI widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/dataviz/chart/date-series.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="date-series">Date Series</h1>
+
+<ul>
+  <li>
+    <p><a href="#categorical-date-series">Categorical date series</a></p>
+
+    <ul>
+      <li><a href="#category-binding">Category binding</a></li>
+      <li><a href="#date-grouping">Date grouping</a></li>
+      <li><a href="#aggregates">Aggregates</a></li>
+      <li><a href="#base-units">Base units</a></li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="#scatter-date-series">Scatter date series</a></p>
+  </li>
+</ul>
+
+<h2 id="categorical-date-series">Categorical date series</h2>
+
+<p>Categorical series have built-in support for displaying dates. This includes:</p>
+
+<ul>
+  <li>Automatic selection of granularity/base unit (minutes, hours, days, etc.)</li>
+  <li>Label formatting matched to the granularity</li>
+  <li>Grouping of categories into base units and series aggregates</li>
+</ul>
+
+<p>Specifying categories of type Date will switch the axis to date mode.</p>
+
+<p>The automatic mode selection can be overriden by setting
+<a href="/api/dataviz/chart#configuration-categoryAxis.type">categoryAxis.type</a> to "Date".</p>
+
+<h3 id="category-binding">Category binding</h3>
+
+<p>Date series should be bound using
+<a href="/api/dataviz/chart#configuration-series.categoryField">categoryField</a>.</p>
+
+<p>The categories (dates) for all series will be sorted and merged during data binding.</p>
+
+<h3 id="date-grouping">Date grouping</h3>
+
+<p>If series contain more than one value for a given period (base unit),
+then they"ll be aggregated to display a single value.</p>
+
+<h4 id="example-date-series">Example: Date series</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart" style="width: 350px; height: 250px;"&gt;&lt;/div&gt;
+&lt;script&gt;
+var seriesData = [{
+    date: new Date("2011/12/30"),
+    value: 20
+}, {
+    date: new Date("2011/12/31"),
+    value: 40
+}, {
+    date: new Date("2012/01/01"),
+    value: 45
+}, {
+    date: new Date("2012/01/02"),
+    value: 30
+}, {
+    date: new Date("2012/01/03"),
+    value: 50
+}];
+
+$("#chart").kendoChart({
+    dataSource: {
+        data: seriesData
+    },
+    series: [{
+        type: "column",
+        field: "value",
+        categoryField: "date"
+    }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Note that the dates match the source:</p>
+
+<p><img src="/getting-started/dataviz/chart/chart-category-date-axis.png" alt="Chart with date category axis" /></p>
+
+<h4 id="example-date-series-with-grouping-by-year">Example: Date series with grouping by year</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart" style="width: 350px; height: 250px;"&gt;&lt;/div&gt;
+&lt;script&gt;
+var seriesData = [{
+    date: new Date("2011/12/30"),
+    value: 20
+}, {
+    date: new Date("2011/12/31"),
+    value: 40
+}, {
+    date: new Date("2012/01/01"),
+    value: 45
+}, {
+    date: new Date("2012/01/02"),
+    value: 30
+}, {
+    date: new Date("2012/01/03"),
+    value: 50
+}];
+
+$("#chart").kendoChart({
+    dataSource: {
+        data: seriesData
+    },
+    series: [{
+        type: "column",
+        field: "value",
+        categoryField: "date"
+    }],
+    categoryAxis: {
+        baseUnit: "years"
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Notice how the chart now displays the maximum value for each year:</p>
+
+<p><img src="/getting-started/dataviz/chart/chart-category-date-axis-grouped.png" alt="Chart with grouped date category axis" /></p>
+
+<h3 id="aggregates">Aggregates</h3>
+
+<p>The aggregate type can be set for each series. Available options are:</p>
+
+<ul>
+  <li>min</li>
+  <li>max (default)</li>
+  <li>count</li>
+  <li>sum</li>
+  <li>avg</li>
+  <li>first</li>
+  <li>function (values, series) (Custom aggregate)</li>
+</ul>
+
+<h4 id="example-date-grouping-with-sum-aggregate">Example: Date grouping with "sum" aggregate</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart" style="width: 350px; height: 250px;"&gt;&lt;/div&gt;
+&lt;script&gt;
+var seriesData = [{
+    date: new Date("2011/12/30"),
+    value: 20
+}, {
+    date: new Date("2011/12/31"),
+    value: 40
+}, {
+    date: new Date("2012/01/01"),
+    value: 45
+}, {
+    date: new Date("2012/01/02"),
+    value: 30
+}, {
+    date: new Date("2012/01/03"),
+    value: 50
+}];
+
+$("#chart").kendoChart({
+    dataSource: {
+        data: seriesData
+    },
+    series: [{
+        type: "column",
+        field: "value",
+        categoryField: "date",
+        aggregate: "sum"
+    }],
+    categoryAxis: {
+        baseUnit: "years"
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="base-units">Base units</h3>
+
+<p>The default base unit is determined from the smallest duration between categories.
+For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>categoryAxis: {
+    categories: [new Date(2005, 0, 1), new Date(2006, 0, 1)]
+    // baseUnit is set to "years"
+}
+
+categoryAxis: {
+    categories: [new Date(2005, 1, 1), new Date(2005, 1, 2)]
+    // baseUnit is set to "days"
+}
+</code></pre></div></div>
+
+<p>The <a href="/api/dataviz/chart#configuration-categoryAxis.baseUnit">baseUnit</a> can be specified manually.
+Valid options are:</p>
+
+<ul>
+  <li>seconds</li>
+  <li>minutes</li>
+  <li>hours</li>
+  <li>days</li>
+  <li>weeks</li>
+  <li>months</li>
+  <li>years</li>
+  <li>fit (see <a href="#automatic-fitting">Automatic fitting</a>)</li>
+</ul>
+
+<p>You can also choose to show every n-th base unit by setting the
+<a href="/api/dataviz/chart#configuration-categoryAxis.baseUnitStep">baseUnitStep</a>
+option.</p>
+
+<h4 id="automatic-fitting">Automatic fitting</h4>
+
+<p>Setting <a href="/api/dataviz/chart#configuration-categoryAxis.baseUnit">baseUnit</a>
+to "fit" will constraint the total number of base units to
+<a href="/api/dataviz/chart#configuration-categoryAxis.baseUnit">maxDateGroups</a>.</p>
+
+<p>The baseUnit and baseUnitStep will be chosen according to
+<a href="/api/dataviz/chart#configuration-categoryAxis.autoBaseUnitSteps">autoBaseUnitSteps</a></p>
+
+<h5 id="example-fit-date-series">Example: Fit date series</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart" style="width: 350px; height: 250px;"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+    dataSource: {
+        data: [{
+            value: 1,
+            date: new Date(2012, 1, 1)
+        }, {
+            value: 2,
+            date: new Date(2012, 2, 1)
+        }]
+    },
+    series:[{
+        type: "line",
+        field: "value",
+        categoryField: "date"
+    }],
+    categoryAxis: {
+        baseUnit: "fit",
+
+        // Constraint number of groups to 5
+        maxDateGroups: 5,
+
+        autoBaseUnitSteps: {
+            // Would produce 31 groups
+            // =&gt; Skip to weeks
+            days: [1],
+
+            // Not allowed as no steps are defined
+            // =&gt; Skip to months
+            weeks: [],
+
+            // Results in 2 groups
+            // =&gt; Chosen
+            months: [1]
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h5 id="labels-format">Labels format</h5>
+
+<p>The date category axis supports specifying one format per base unit.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>categoryAxis: {
+    labels: {
+        dateFormats: {
+            days: "M/d"
+        }
+    }
+}
+</code></pre></div></div>
+
+<p>The <a href="/api/dataviz/chart#categoryaxis.labels.format-string"><code class="language-plaintext highlighter-rouge">labels.format</code> property</a> takes priority, if specified.</p>
+
+<p>The global KendoUI culture is used for formatting the dates.
+It can be overriden by setting <code class="language-plaintext highlighter-rouge">labels.culture</code>.</p>
+
+<h2 id="scatter-date-series">Scatter date series</h2>
+
+<p>Scatter series have built-in support for displaying dates.
+This includes:</p>
+
+<ul>
+  <li>Automatic selection of granularity/base unit (minutes, hours, days, etc.)</li>
+  <li>Label formatting matched to the granularity</li>
+</ul>
+
+<p>The X/Y axis will switch to date mode if the series values are of type Date.
+The automatic mode selection can be overriden by specifying <code class="language-plaintext highlighter-rouge">type: "Date"</code></p>
+
+<p>The following options accept dates:</p>
+
+<ul>
+  <li><a href="/api/dataviz/chart#configuration-xAxis.min">min</a></li>
+  <li><a href="/api/dataviz/chart#configuration-xAxis.max">max</a></li>
+  <li><a href="/api/dataviz/chart#configuration-xAxis.axisCrossingValue">axisCrossingValue</a></li>
+</ul>
+
+<p>The following options are expressed in base units:</p>
+
+<ul>
+  <li><a href="/api/dataviz/chart#configuration-xAxis.minorUnit">minorUnit</a></li>
+  <li><a href="/api/dataviz/chart#configuration-xAxis.majorUnit">majorUnit</a></li>
+</ul>
+
+<h3 id="base-units-1">Base Units</h3>
+
+<p>The default base unit is determined from the axis (or series) range.
+For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xAxis: {
+    min: new Date(2005, 0, 1),
+    max: new Date(2006, 0, 1)
+    // baseUnit is set to "years"
+}
+
+xAxis: {
+    min: new Date(2005, 1, 1),
+    max: new Date(2005, 1, 2)
+    // baseUnit is set to "days"
+}
+</code></pre></div></div>
+
+<p>The base unit can also be specified manually. Valid options are:</p>
+
+<ul>
+  <li>seconds</li>
+  <li>minutes</li>
+  <li>hours</li>
+  <li>days</li>
+  <li>weeks</li>
+  <li>months</li>
+  <li>years</li>
+</ul>
+
+<h4 id="labels-format-1">Labels format</h4>
+
+<p>The date axis supports specifying one format per base unit.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xAxis: {
+    labels: {
+        dateFormats: {
+            days: "M/d"
+        }
+    }
+}
+</code></pre></div></div>
+
+<p>The <a href="/api/dataviz/chart#xAxis.labels.format"><code class="language-plaintext highlighter-rouge">labels.format</code> property</a> property takes priority, if specified.</p>
+
+<p>The global KendoUI culture is used for formatting the dates.
+It can be overriden by setting <a href="/api/dataviz/chart#xAxis.labels.culture"><code class="language-plaintext highlighter-rouge">labels.culture</code> property</a>.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

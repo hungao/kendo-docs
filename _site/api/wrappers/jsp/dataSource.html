@@ -1,0 +1,509 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/dataSource.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatasource">&lt;kendo:dataSource&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/framework/datasource">DataSource</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="autosync-boolean">autoSync <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the data source would automatically save any changed data items by calling the sync method. By default changes are not automatically saved.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource autoSync="autoSync"&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="batch-boolean">batch <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the data source will batch CRUD operation requests. For example updating two data items would cause one HTTP request instead of two. By default the data source
+makes a HTTP request for every CRUD operation.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource batch="batch"&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="data-javalangobject">data <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The array of data items which the data source contains. The data source will wrap those items as kendo.data.ObservableObject or kendo.data.Model (if schema.model is set).Can be set to a string value if the schema.type option is set to "xml".</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource data="data"&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="page-float">page <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The page of data which the data source will return when the view method is invoked or request from the remote service.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource page="page"&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="pagesize-float">pageSize <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The number of data items per page.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource pageSize="pageSize"&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="serveraggregates-boolean">serverAggregates <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource serverAggregates="serverAggregates"&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="serverfiltering-boolean">serverFiltering <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the data source will leave the filtering implementation to the remote service. By default the data source performs filtering client-side.By default the filter is sent to the server following jQuery"s conventions.For example the filter { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] } is sent as:Use the parameterMap option to send the filter option in a different format.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource serverFiltering="serverFiltering"&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="servergrouping-boolean">serverGrouping <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the data source will leave the grouping implementation to the remote service. By default the data source performs grouping client-side.By default the group is sent to the server following jQuery"s conventions.For example the group { field: "category", dir: "desc" } is sent as:Use the parameterMap option to send the group option in a different format.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource serverGrouping="serverGrouping"&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="serverpaging-boolean">serverPaging <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the data source will leave the data item paging implementation to the remote service. By default the data source performs paging client-side.The following options are sent to the server when server paging is enabled:Use the parameterMap option to send the paging options in a different format.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource serverPaging="serverPaging"&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="serversorting-boolean">serverSorting <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the data source will leave the data item sorting implementation to the remote service. By default the data source performs sorting client-side.By default the sort is sent to the server following jQuery"s conventions.For example the sort { field: "age", dir: "desc" } is sent as:Use the parameterMap option to send the paging options in a different format.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource serverSorting="serverSorting"&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>If set the data source will use a predefined transport and/or schema.
+The supported values are "odata" which supports the OData v.2 protocol and "signalr".</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource type="type"&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendodatasource-aggregate">kendo:dataSource-aggregate</h3>
+
+<p>The aggregate(s) which are calculated when the data source populates with data. The supported aggregates are "average", "count", "max", "min" and "sum".</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/datasource/aggregate">kendo:dataSource-aggregate</a>.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-aggregate&gt;&lt;/kendo:dataSource-aggregate&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-filter">kendo:dataSource-filter</h3>
+
+<p>The filter(s) which is (are) applied over the data items. By default no filter is applied.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/datasource/filter">kendo:dataSource-filter</a>.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-filter&gt;&lt;/kendo:dataSource-filter&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-group">kendo:dataSource-group</h3>
+
+<p>The grouping configuration of the data source. If set the data items will be grouped when the data source is populated. By default grouping is not applied.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/datasource/group">kendo:dataSource-group</a>.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-group&gt;&lt;/kendo:dataSource-group&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-schema">kendo:dataSource-schema</h3>
+
+<p>The configuration used to parse the remote service response.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/datasource/schema">kendo:dataSource-schema</a>.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-schema&gt;&lt;/kendo:dataSource-schema&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-sort">kendo:dataSource-sort</h3>
+
+<p>The sort order which will be applied over the data items. By default the data items are not sorted.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/datasource/sort">kendo:dataSource-sort</a>.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-sort&gt;&lt;/kendo:dataSource-sort&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-transport">kendo:dataSource-transport</h3>
+
+<p>The configuration used to load and save the data items. A data source is remote or local based on the way of it retrieves data items.Remote data sources load and save data items from and to a remote end-point (a.k.a. remote service or server). The transport option describes the remote service configuration - URL, HTTP verb, HTTP headers etc.
+The transport option can also be used to implement custom data loading and saving.Local data sources are bound to a JavaScript array via the data option.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/datasource/transport">kendo:dataSource-transport</a>.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-transport&gt;&lt;/kendo:dataSource-transport&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="change-string">change <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the data source is populated from a JavaScript array or a remote service, a data item is inserted, updated or removed, the data items are paged, sorted, filtered or grouped.The event handler function context (available via the this keyword) will be set to the data source instance.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-change">change</a> event documentation.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource change="handle_change"&gt;
+&lt;/kendo:dataSource&gt;
+&lt;script&gt;
+    function handle_change(e) {
+        // Code to handle the change event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="error-string">error <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when a request to the remote service fails.The event handler function context (available via the this keyword) will be set to the data source instance.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-error">error</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource error="handle_error"&gt;
+&lt;/kendo:dataSource&gt;
+&lt;script&gt;
+    function handle_error(e) {
+        // Code to handle the error event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="push-string">push <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the data source receives a push notification or the pushCreate, pushUpdate or pushDestroy methods are called.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-push">push</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource push="handle_push"&gt;
+&lt;/kendo:dataSource&gt;
+&lt;script&gt;
+    function handle_push(e) {
+        // Code to handle the push event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="requestend-string">requestEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when a remote service request is finished.The event handler function context (available via the this keyword) will be set to the data source instance.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-requestEnd">requestEnd</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource requestEnd="handle_requestEnd"&gt;
+&lt;/kendo:dataSource&gt;
+&lt;script&gt;
+    function handle_requestEnd(e) {
+        // Code to handle the requestEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="requeststart-string">requestStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the data source makes a remote service request.The event handler function context (available via the this keyword) will be set to the data source instance.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-requestStart">requestStart</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource requestStart="handle_requestStart"&gt;
+&lt;/kendo:dataSource&gt;
+&lt;script&gt;
+    function handle_requestStart(e) {
+        // Code to handle the requestStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="sync-string">sync <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired after the data source saves data item changes. The data source saves the data item changes when the sync method is called.The event handler function context (available via the this keyword) will be set to the data source instance.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-sync">sync</a> event documentation.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource sync="handle_sync"&gt;
+&lt;/kendo:dataSource&gt;
+&lt;script&gt;
+    function handle_sync(e) {
+        // Code to handle the sync event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendodatasource-change">kendo:dataSource-change</h3>
+
+<p>Fired when the data source is populated from a JavaScript array or a remote service, a data item is inserted, updated or removed, the data items are paged, sorted, filtered or grouped.The event handler function context (available via the this keyword) will be set to the data source instance.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-change">change</a> event documentation.</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-change&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the change event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-change&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-error">kendo:dataSource-error</h3>
+
+<p>Fired when a request to the remote service fails.The event handler function context (available via the this keyword) will be set to the data source instance.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-error">error</a> event documentation.</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-error&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the error event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-error&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-push">kendo:dataSource-push</h3>
+
+<p>Fired when the data source receives a push notification or the pushCreate, pushUpdate or pushDestroy methods are called.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-push">push</a> event documentation.</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-push&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the push event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-push&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-requestend">kendo:dataSource-requestEnd</h3>
+
+<p>Fired when a remote service request is finished.The event handler function context (available via the this keyword) will be set to the data source instance.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-requestEnd">requestEnd</a> event documentation.</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-requestEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the requestEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-requestEnd&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-requeststart">kendo:dataSource-requestStart</h3>
+
+<p>Fired when the data source makes a remote service request.The event handler function context (available via the this keyword) will be set to the data source instance.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-requestStart">requestStart</a> event documentation.</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-requestStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the requestStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-requestStart&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+<h3 id="kendodatasource-sync">kendo:dataSource-sync</h3>
+
+<p>Fired after the data source saves data item changes. The data source saves the data item changes when the sync method is called.The event handler function context (available via the this keyword) will be set to the data source instance.</p>
+
+<p>For additional information check the <a href="/api/framework/datasource#events-sync">sync</a> event documentation.</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:dataSource&gt;
+    &lt;kendo:dataSource-sync&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the sync event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:dataSource-sync&gt;
+&lt;/kendo:dataSource&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

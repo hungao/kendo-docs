@@ -1,0 +1,792 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/UI/ComboBox.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouicombobox">\Kendo\UI\ComboBox</h1>
+
+<p>A PHP wrapper for Kendo UI <a href="/api/web/combobox">ComboBox</a>.</p>
+
+<p>Inherits from <a href="/api/wrappers/php/Kendo/UI/Widget">\Kendo\UI\Widget</a>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use ComboBox in a PHP page instantiate a new instance, configure it via the available
+configuration <a href="#methods">methods</a> and output it by <code class="language-plaintext highlighter-rouge">echo</code>-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+<h3 id="using-kendo-combobox">Using Kendo ComboBox</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// Create a new instance of ComboBox and specify its id
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+
+// Configure it
+$comboBox-&gt;autoBind(true)
+
+// Output it
+
+echo $comboBox-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="animation">animation</h3>
+
+<p>Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-kendouicomboboxanimationarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBoxAnimation|array</code></h5>
+
+<h4 id="example---using-kendouicomboboxanimation">Example - using <a href="/api/wrappers/php/Kendo/UI/ComboBoxAnimation">\Kendo\UI\ComboBoxAnimation</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$animation = new \Kendo\UI\ComboBoxAnimation();
+$close = new \Kendo\UI\ComboBoxAnimationClose();
+$animation-&gt;close($close);
+$comboBox-&gt;animation($animation);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$close = new \Kendo\UI\ComboBoxAnimationClose();
+$comboBox-&gt;animation(array('close' =&gt; $close));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="autobind">autoBind</h3>
+<p>Controls whether to bind the widget to the data source on initialization.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;autoBind(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="cascade">cascade</h3>
+<p>Fired when the value of the widget is changed via API or user interaction.
+For additional information check the <a href="/api/web/combobox#events-cascade">cascade</a> event documentation.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;cascade('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onCascade(e) {
+        // handle the cascade event.
+    }
+&lt;/script&gt;
+&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;cascade('onCascade');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;cascade(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="cascadefrom">cascadeFrom</h3>
+<p>Use it to set the Id of the parent ComboBox widget.
+Help topic showing how cascading functionality works</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;cascadeFrom('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="cascadefromfield">cascadeFromField</h3>
+<p>Defines the field to be used to filter the data source. If not defiend the parent"s dataValueField option will be used.
+Help topic showing how cascading functionality works</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;cascadeFromField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="change">change</h3>
+<p>Fired when the value of the widget is changed by the user.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/combobox#events-change">change</a> event documentation.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-1">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;change('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-1">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onChange(e) {
+        // handle the change event.
+    }
+&lt;/script&gt;
+&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;change('onChange');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-1">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;change(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="close">close</h3>
+<p>Fired when the popup of the widget is closed.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/combobox#events-close">close</a> event documentation.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-2">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-2">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;close('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-2">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onClose(e) {
+        // handle the close event.
+    }
+&lt;/script&gt;
+&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;close('onClose');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-2">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;close(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="databound">dataBound</h3>
+<p>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/combobox#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-3">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-3">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;dataBound('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-3">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDataBound(e) {
+        // handle the dataBound event.
+    }
+&lt;/script&gt;
+&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;dataBound('onDataBound');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-3">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;dataBound(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="datasource">dataSource</h3>
+
+<p>Sets the data source of the dataSource.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-kendodatadatasourcearray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource|array</code></h5>
+
+<h4 id="example---using-kendodatadatasource">Example - using <a href="/api/wrappers/php/kendo/data/datasource">\Kendo\Data\DataSource</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$dataSource = new \Kendo\Data\DataSource();
+$comboBox-&gt;dataSource($dataSource);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$schema = new \Kendo\Data\DataSourceSchema();
+$comboBox-&gt;dataSource(array('schema' =&gt; $schema));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="datatextfield">dataTextField</h3>
+<p>The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;dataTextField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="datavaluefield">dataValueField</h3>
+<p>The field of the data item that provides the value of the widget.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-string-3">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;dataValueField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="delay">delay</h3>
+<p>The delay in milliseconds between a keystroke and when the widget displays the popup.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;delay(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="enable">enable</h3>
+<p>If set to false the widget will be disabled and will not allow user input. The widget is enabled by default and allows user input.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;enable(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="filter">filter</h3>
+<p>The filtering method used to determine the suggestions for the current value. Filtration is turned off by default.
+The supported filter values are startswith, endswith and contains.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-string-4">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;filter('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="headertemplate">headerTemplate</h3>
+<p>Specifies a static HTML content, which will be rendered as a header of the popup element.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-4">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example----using-string">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;headerTemplate('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;headerTemplate(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="height">height</h3>
+<p>The height of the suggestion popup in pixels. The default value is 200 pixels.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-float-1">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;height(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="highlightfirst">highlightFirst</h3>
+<p>If set to true the first suggestion will be automatically highlighted.</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-boolean-2">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;highlightFirst(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="ignorecase">ignoreCase</h3>
+<p>If set to false case-sensitive search will be performed to find suggestions. The widget performs case-insensitive searching by default.</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-string-5">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;ignoreCase('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="index">index</h3>
+<p>The index of the initially selected item. The index is 0 based.</p>
+
+<h4 id="returns-18">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="value-float-2">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;index(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="minlength">minLength</h3>
+<p>The minimum number of characters the user must type before a search is performed. Set to higher value than 1 if the search could match a lot of items.</p>
+
+<h4 id="returns-19">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="value-float-3">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;minLength(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="open">open</h3>
+<p>Fired when the popup of the widget is opened by the user.The event handler function context (available via the this keyword) will be set to the widget instance.
+For additional information check the <a href="/api/web/combobox#events-open">open</a> event documentation.</p>
+
+<h4 id="returns-20">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-5">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-4">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;open('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-4">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onOpen(e) {
+        // handle the open event.
+    }
+&lt;/script&gt;
+&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;open('onOpen');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-4">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;open(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="placeholder">placeholder</h3>
+<p>The hint displayed by the widget when it is empty. Not set by default.</p>
+
+<h4 id="returns-21">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="value-string-6">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;placeholder('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+<p>Fired when an item from the popup is selected by the user.
+For additional information check the <a href="/api/web/combobox#events-select">select</a> event documentation.</p>
+
+<h4 id="returns-22">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-6">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-5">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;select('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-5">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSelect(e) {
+        // handle the select event.
+    }
+&lt;/script&gt;
+&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;select('onSelect');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-5">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;select(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="suggest">suggest</h3>
+<p>If set to true the widget will automatically use the first suggestion as its value.</p>
+
+<h4 id="returns-23">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="value-boolean-3">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;suggest(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="template">template</h3>
+<p>The template used to render the items. By default the widget displays only the text of the data item (configured via dataTextField).</p>
+
+<h4 id="returns-24">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-24">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-7">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example----using-string-1">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;template('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction-1">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;template(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="text">text</h3>
+<p>The text of the widget used when the autoBind is set to false.</p>
+
+<h4 id="returns-25">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-25">Parameters</h4>
+
+<h5 id="value-string-7">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;text('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="value">value</h3>
+<p>The value of the widget.</p>
+
+<h4 id="returns-26">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-26">Parameters</h4>
+
+<h5 id="value-string-8">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;value('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="valueprimitive">valuePrimitive</h3>
+<p>Specifies the value binding behavior for the widget when the initial model value is null. If set to true, the View-Model field will be updated with the selected item value field. If set to false, the View-Model field will be updated with the selected item.</p>
+
+<h4 id="returns-27">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\ComboBox</code></p>
+
+<h4 id="parameters-27">Parameters</h4>
+
+<h5 id="value-boolean-4">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$comboBox = new \Kendo\UI\ComboBox('ComboBox');
+$comboBox-&gt;valuePrimitive(true);
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

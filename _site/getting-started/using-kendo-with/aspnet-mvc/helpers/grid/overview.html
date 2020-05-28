@@ -1,0 +1,316 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>How to use the Kendo UI Grid HtmlHelper extension, server-side ASP.NET MVC wrapper for Kendo UI Grid widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to bind Kendo UI Grid for ASP.NET MVC, handle Kendo UI Grid Events, access an existing grid with Grid HtmlHelper extension documentation.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/grid/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="grid">Grid</h1>
+
+<p>The Grid HtmlHelper extension is a server-side wrapper for the <a href="/api/web/grid">Kendo UI Grid</a> widget. It allows you to configure the Kendo UI grid
+from server-side code, helps with data binding and editing.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Kendo UI Grid for ASP.NET MVC supports two ways of data-binding:</p>
+
+<ul>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/server-binding">server</a>- the widget makes HTTP GET requests when binding</li>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/ajax-binding">ajax</a>- the widget will make ajax requests when binding</li>
+</ul>
+
+<p>Here are some of the differences between server and ajax bound modes:</p>
+
+<ul>
+  <li>Templates
+    <ul>
+      <li>In server-bound mode the grid templates use server-side expressions and .NET code (C# or Visual Basic). Templates are executed server-side.</li>
+      <li>In ajax-bound mode the grid uses Kendo UI Templates. Templates are executed client-side and use JavaScript.</li>
+    </ul>
+  </li>
+  <li>Full page updates
+    <ul>
+      <li>In server-bound mode the grid makes HTTP get requests to ASP.NET MVC action methods which cause a full page refresh.</li>
+      <li>In ajax-bound mode the grid makes ajax requests which cause partial page update. The grid retrieves only the data needed for the current page.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>The following tutorial shows how to configure Kendo UI Grid for ASP.NET MVC to do server binding to the Northwind database (the Products table).</p>
+
+<ol>
+  <li>Create a new ASP.NET MVC 4 application (or Telerik UI for ASP.NET MVC application if you have installed the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction#kendo-ui-for-asp.net-mvc-visual-studio-extensions">Telerik UI for ASP.NET MVC Visual Studio Extensions</a>). Name the application "KendoGridServerBinding".
+If you decided not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions followe the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">introduction</a> help topic in order
+to add Telerik UI for ASP.NET MVC to the application.</li>
+  <li>Add a new "Entity Framework Data Model". Right click the <code class="language-plaintext highlighter-rouge">~/Models</code> folder in the solution explorer and pick "Add new item". Choose "Data-&gt;ADO.NET Entity Data Model" in the "Add New Item" dialog.
+Name the model "Northwind.edmx" and click "Next". This will start the "Entity Data Model Wizard".
+<img src="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/images/grid-entity-data-model.png" alt="New entity data model" /></li>
+  <li>Pick the "Generate from database" option and click "Next". Configure a connection to the Northwind database. Click "Next".
+<img src="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/images/grid-entity-data-model.png" alt="Choose the connection" /></li>
+  <li>Choose the "Products" table from the "Which database objects do you want to include in your model?". Leave all other options as they are set by default. Click "Finish".
+<img src="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/images/grid-database-objects.png" alt="Choose the Products table" /></li>
+  <li>
+    <p>Open "HomeController.cs" and modify the <code class="language-plaintext highlighter-rouge">Index</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    ViewBag.Message = "Welcome to ASP.NET MVC!";
+    var northwind = new NorthwindEntities();
+    // Get the Products entities and add them in the ViewBag
+    ViewBag.Products = northwind.Products;
+    return View();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>Add a Kendo UI Grid to the Index view
+    <ul>
+      <li>
+        <p>Index.aspx (ASPX)</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().Grid((IEnumerable&lt;KendoGridServerBinding.Models.Product&gt;)ViewBag.Products) //Bind the grid to ViewBag.Products
+          .Name("grid")
+          .Columns(columns =&gt;
+          {
+              // Create a column bound to the ProductID property
+              columns.Bound(product =&gt; product.ProductID);
+              // Create a column bound to the ProductName property
+              columns.Bound(product =&gt; product.ProductName);
+              // Create a column bound to the UnitsInStock property
+              columns.Bound(product =&gt; product.UnitsInStock);
+          })
+          .Pageable() // Enable paging
+          .Sortable() // Enable sorting
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Index.cshtml (Razor)</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().Grid((IEnumerable&lt;KendoGridServerBinding.Models.Product&gt;)ViewBag.Products) //Bind the grid to ViewBag.Products
+        .Name("grid")
+        .Columns(columns =&gt;
+        {
+            // Create a column bound to the ProductID property
+            columns.Bound(product =&gt; product.ProductID);
+            // Create a column bound to the ProductName property
+            columns.Bound(product =&gt; product.ProductName);
+            // Create a column bound to the UnitsInStock property
+            columns.Bound(product =&gt; product.UnitsInStock);
+        })
+        .Pageable() // Enable paging
+        .Sortable() // Enable sorting
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Build and run the application
+<img src="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/images/grid-bound-grid.png" alt="Final result" /></li>
+</ol>
+
+<h2 id="getting-reference-to-the-kendo-ui-grid-widget">Getting reference to the Kendo UI Grid widget</h2>
+
+<p>To get a reference to a grid instance use the <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a> method and the value specified via the <code class="language-plaintext highlighter-rouge">Name()</code> method.
+Then you can use you can use the JavaScript <a href="/api/web/grid#methods">API</a> of the grid.</p>
+
+<h3 id="example---get-reference-to-a-kendo-ui-grid-instance">Example - get reference to a Kendo UI Grid instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid((IEnumerable&lt;KendoGridServerBinding.Models.Product&gt;)ViewBag.Products)
+      .Name("grid")
+      .Columns(columns =&gt;
+      {
+          columns.Bound(product =&gt; product.ProductID);
+          columns.Bound(product =&gt; product.ProductName);
+          columns.Bound(product =&gt; product.UnitsInStock);
+      })
+)
+&lt;script&gt;
+$(function() {
+    // Notice that the Name() of the grid is used to get its client-side instance
+    var grid = $("#grid").data("kendoGrid");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-kendo-ui-grid-events">Handling Kendo UI Grid events</h2>
+
+<p>You can subscribe to all <a href="/api/web/grid#events">events</a> exposed by the widget:</p>
+
+<h3 id="example---subscribe-to-event-by-handler-name-aspx">Example - subscribe to event by handler name (ASPX)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%: Html.Kendo().Grid(Model)
+        .Name("grid")
+        .Events(e =&gt; e
+            .DataBound("grid_dataBound")
+            .Change("grid_change")
+        )
+%&gt;
+&lt;script&gt;
+function grid_dataBound() {
+    //Handle the dataBound event
+}
+
+function grid_change() {
+    //Handle the change event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="example---subscribe-to-event-by-handler-name-razor">Example - subscribe to event by handler name (Razor)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+      .Name("grid")
+      .Events(e =&gt; e
+          .DataBound("grid_dataBound")
+          .Change("grid_change")
+      )
+)
+&lt;script&gt;
+function grid_dataBound() {
+    //Handle the dataBound event
+}
+
+function grid_change() {
+    //Handle the change event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="example---subscribe-to-event-via-razor-delegate">Example - subscribe to event via Razor delegate</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid(Model)
+      .Name("grid")
+      .Events(e =&gt; e
+          .DataBound(@&lt;text&gt;
+              function() {
+                  //Handle the dataBound event inline
+              }
+          &lt;/text&gt;)
+          .Change(@&lt;text&gt;
+              function() {
+                  //Handle the change event inline
+              }
+          &lt;/text&gt;)
+      )
+)
+</code></pre></div></div>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ol>
+  <li><a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridBuilder">API reference</a></li>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/configuration">Configuration</a></li>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/faq">FAQ</a></li>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/ajax-binding">Ajax Binding</a></li>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/server-binding">Server Binding</a></li>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/troubleshooting">Troubleshooting</a></li>
+</ol>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

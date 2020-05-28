@@ -1,0 +1,676 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/sparkline.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendosparkline">&lt;kendo:sparkline&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/dataviz/sparkline">Sparkline</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="autobind-boolean">autoBind <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Indicates whether the chart will call read on the data source initially.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline autoBind="autoBind"&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="axisdefaults-javalangobject">axisDefaults <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Default options for all chart axes.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline axisDefaults="axisDefaults"&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="data-javalangobject">data <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The data for the default sparkline series.Will be discareded if series are supplied.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline data="data"&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="pointwidth-float">pointWidth <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The width to allocate for each data point.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline pointWidth="pointWidth"&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="renderas-javalangstring">renderAs <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the preferred rendering engine.
+If it is not supported by the browser, the Sparkline will switch to the first available mode.The supported values are:</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline renderAs="renderAs"&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="seriescolors-javalangobject">seriesColors <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The default colors for the chart"s series. When all colors are used, new colors are pulled from the start again.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline seriesColors="seriesColors"&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="theme-javalangstring">theme <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets Chart theme. Available themes: default, blueOpal, black.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline theme="theme"&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="transitions-boolean">transitions <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>A value indicating if transition animations should be played.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline transitions="transitions"&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The default series type.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline type="type"&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendosparkline-categoryaxis">kendo:sparkline-categoryAxis</h3>
+
+<p>The category axis configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/categoryaxis">kendo:sparkline-categoryAxis</a>.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-categoryAxis&gt;&lt;/kendo:sparkline-categoryAxis&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-chartarea">kendo:sparkline-chartArea</h3>
+
+<p>The chart area configuration options.
+This is the entire visible area of the chart.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/chartarea">kendo:sparkline-chartArea</a>.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-chartArea&gt;&lt;/kendo:sparkline-chartArea&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-plotarea">kendo:sparkline-plotArea</h3>
+
+<p>The plot area configuration options. This is the area containing the plotted series.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/plotarea">kendo:sparkline-plotArea</a>.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-plotArea&gt;&lt;/kendo:sparkline-plotArea&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-series">kendo:sparkline-series</h3>
+
+<p>Array of series definitions.The series type is determined by the value of the type field.
+If a type value is missing, the type is assumed to be the one specified in seriesDefaults.Each series type has a different set of options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/series">kendo:sparkline-series</a>.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-series&gt;&lt;/kendo:sparkline-series&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesdefaults">kendo:sparkline-seriesDefaults</h3>
+
+<p>Default values for each series.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/seriesdefaults">kendo:sparkline-seriesDefaults</a>.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-seriesDefaults&gt;&lt;/kendo:sparkline-seriesDefaults&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-tooltip">kendo:sparkline-tooltip</h3>
+
+<p>The data point tooltip configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/tooltip">kendo:sparkline-tooltip</a>.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-tooltip&gt;&lt;/kendo:sparkline-tooltip&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-valueaxis">kendo:sparkline-valueAxis</h3>
+
+<p>The value axis configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/sparkline/valueaxis">kendo:sparkline-valueAxis</a>.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-valueAxis&gt;&lt;/kendo:sparkline-valueAxis&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="axislabelclick-string">axisLabelClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when an axis label is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-axisLabelClick">axisLabelClick</a> event documentation.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline axisLabelClick="handle_axisLabelClick"&gt;
+&lt;/kendo:sparkline&gt;
+&lt;script&gt;
+    function handle_axisLabelClick(e) {
+        // Code to handle the axisLabelClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound-string">dataBound <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the sparkline has received data from the data source
+and is about to render it.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline dataBound="handle_dataBound"&gt;
+&lt;/kendo:sparkline&gt;
+&lt;script&gt;
+    function handle_dataBound(e) {
+        // Code to handle the dataBound event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragstart-string">dragStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user has used the mouse or a swipe gesture to drag the sparkline.The drag operation can be aborted by calling e.preventDefault().</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-dragStart">dragStart</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline dragStart="handle_dragStart"&gt;
+&lt;/kendo:sparkline&gt;
+&lt;script&gt;
+    function handle_dragStart(e) {
+        // Code to handle the dragStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="drag-string">drag <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires as long as the user is dragging the sparkline using the mouse or swipe gestures.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-drag">drag</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline drag="handle_drag"&gt;
+&lt;/kendo:sparkline&gt;
+&lt;script&gt;
+    function handle_drag(e) {
+        // Code to handle the drag event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragend-string">dragEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user stops dragging the sparkline.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-dragEnd">dragEnd</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline dragEnd="handle_dragEnd"&gt;
+&lt;/kendo:sparkline&gt;
+&lt;script&gt;
+    function handle_dragEnd(e) {
+        // Code to handle the dragEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="plotareaclick-string">plotAreaClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when plot area is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-plotAreaClick">plotAreaClick</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline plotAreaClick="handle_plotAreaClick"&gt;
+&lt;/kendo:sparkline&gt;
+&lt;script&gt;
+    function handle_plotAreaClick(e) {
+        // Code to handle the plotAreaClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="seriesclick-string">seriesClick <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when chart series are clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-seriesClick">seriesClick</a> event documentation.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline seriesClick="handle_seriesClick"&gt;
+&lt;/kendo:sparkline&gt;
+&lt;script&gt;
+    function handle_seriesClick(e) {
+        // Code to handle the seriesClick event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="serieshover-string">seriesHover <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when chart series are hovered.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-seriesHover">seriesHover</a> event documentation.</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline seriesHover="handle_seriesHover"&gt;
+&lt;/kendo:sparkline&gt;
+&lt;script&gt;
+    function handle_seriesHover(e) {
+        // Code to handle the seriesHover event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoomstart-string">zoomStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user has used the mousewheel to zoom the chart.The zoom operation can be aborted by calling e.preventDefault().</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-zoomStart">zoomStart</a> event documentation.</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline zoomStart="handle_zoomStart"&gt;
+&lt;/kendo:sparkline&gt;
+&lt;script&gt;
+    function handle_zoomStart(e) {
+        // Code to handle the zoomStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoom-string">zoom <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires as long as the user is zooming the chart using the mousewheel.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-zoom">zoom</a> event documentation.</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline zoom="handle_zoom"&gt;
+&lt;/kendo:sparkline&gt;
+&lt;script&gt;
+    function handle_zoom(e) {
+        // Code to handle the zoom event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoomend-string">zoomEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user stops zooming the chart.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-zoomEnd">zoomEnd</a> event documentation.</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline zoomEnd="handle_zoomEnd"&gt;
+&lt;/kendo:sparkline&gt;
+&lt;script&gt;
+    function handle_zoomEnd(e) {
+        // Code to handle the zoomEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendosparkline-axislabelclick">kendo:sparkline-axisLabelClick</h3>
+
+<p>Fires when an axis label is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-axisLabelClick">axisLabelClick</a> event documentation.</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-axisLabelClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the axisLabelClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-axisLabelClick&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-databound">kendo:sparkline-dataBound</h3>
+
+<p>Fires when the sparkline has received data from the data source
+and is about to render it.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-dataBound&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dataBound event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-dataBound&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-dragstart">kendo:sparkline-dragStart</h3>
+
+<p>Fires when the user has used the mouse or a swipe gesture to drag the sparkline.The drag operation can be aborted by calling e.preventDefault().</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-dragStart">dragStart</a> event documentation.</p>
+
+<h4 id="example-29">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-dragStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dragStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-dragStart&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-drag">kendo:sparkline-drag</h3>
+
+<p>Fires as long as the user is dragging the sparkline using the mouse or swipe gestures.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-drag">drag</a> event documentation.</p>
+
+<h4 id="example-30">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-drag&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the drag event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-drag&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-dragend">kendo:sparkline-dragEnd</h3>
+
+<p>Fires when the user stops dragging the sparkline.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-dragEnd">dragEnd</a> event documentation.</p>
+
+<h4 id="example-31">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-dragEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dragEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-dragEnd&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-plotareaclick">kendo:sparkline-plotAreaClick</h3>
+
+<p>Fires when plot area is clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-plotAreaClick">plotAreaClick</a> event documentation.</p>
+
+<h4 id="example-32">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-plotAreaClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the plotAreaClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-plotAreaClick&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-seriesclick">kendo:sparkline-seriesClick</h3>
+
+<p>Fires when chart series are clicked.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-seriesClick">seriesClick</a> event documentation.</p>
+
+<h4 id="example-33">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-seriesClick&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the seriesClick event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-seriesClick&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-serieshover">kendo:sparkline-seriesHover</h3>
+
+<p>Fires when chart series are hovered.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-seriesHover">seriesHover</a> event documentation.</p>
+
+<h4 id="example-34">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-seriesHover&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the seriesHover event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-seriesHover&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-zoomstart">kendo:sparkline-zoomStart</h3>
+
+<p>Fires when the user has used the mousewheel to zoom the chart.The zoom operation can be aborted by calling e.preventDefault().</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-zoomStart">zoomStart</a> event documentation.</p>
+
+<h4 id="example-35">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-zoomStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the zoomStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-zoomStart&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-zoom">kendo:sparkline-zoom</h3>
+
+<p>Fires as long as the user is zooming the chart using the mousewheel.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-zoom">zoom</a> event documentation.</p>
+
+<h4 id="example-36">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-zoom&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the zoom event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-zoom&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+<h3 id="kendosparkline-zoomend">kendo:sparkline-zoomEnd</h3>
+
+<p>Fires when the user stops zooming the chart.</p>
+
+<p>For additional information check the <a href="/api/dataviz/sparkline#events-zoomEnd">zoomEnd</a> event documentation.</p>
+
+<h4 id="example-37">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sparkline&gt;
+    &lt;kendo:sparkline-zoomEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the zoomEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:sparkline-zoomEnd&gt;
+&lt;/kendo:sparkline&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

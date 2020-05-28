@@ -1,0 +1,333 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Load local and remote templates |Kendo UI Template</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to load templates in large projects, built with Kendo UI. Learn how to remove templates from HTML pages and manage them in external files.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li class="active">How Do I?</li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/howto.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("howto/load-templates-external-files.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="how-to-load-templates-from-external-files">How To: Load Templates from External Files</h1>
+
+<p>In any sufficiently large project built with Kendo UI, there are likely to be many templates used throughout the application to format and present JavaScript data. As templates are added to a project, an important decision must be made: <strong>where will the Kendo UI templates be defined and maintained?</strong></p>
+
+<p>Generally speaking, templates can be definined and maintained in one of two ways:</p>
+
+<ol>
+  <li><strong>Local Templates:</strong> Defined within a project"s HTML files (side-by-side with other markup)</li>
+  <li><strong>Remote Templates:</strong> Defined in external files that only contain the template definition(s)</li>
+</ol>
+
+<p>There are pros and cons to both approachs. Let"s examine.</p>
+
+<h2 id="local-templates">Local Templates</h2>
+<p>This is the most common and simplest approach to defining templates. With this pattern, template definitions are simply defined side-by-side with markup in HTML files. For example, a basic HTML file with a local template might look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;My Page&lt;/title&gt;
+		&lt;!--NOTE: Required links to Kendo UI CSS/JS omitted for demo clarity--&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;!--Container to display a list of RSS feed names--&gt;
+		&lt;ul id="feedItems"&gt;
+		&lt;/ul&gt;
+
+		&lt;!--Define template in the page to render each feed item name as a list item--&gt;
+		&lt;script type="text/x-kendo-template" id="feedItemTemplate"&gt;
+		&lt;# for (var i = 0; i &lt; data.length; i++) { #&gt;
+		    &lt;li&gt;	    
+		    &lt;#= data[i].Name #&gt;	    
+		    &lt;/li&gt;
+		&lt;# } #&gt;
+		&lt;/script&gt;
+	&lt;/body&gt;
+	&lt;/html&gt;
+</code></pre></div></div>
+
+<p>This approach should be familiar. It is a simple Kendo UI Template defined in an HTML page. For more basic Kendo UI Template information, <a href="/getting-started/framework/templates/overview">please review the Getting Started doc</a>.</p>
+
+<h4 id="pros">PROS</h4>
+<ul>
+  <li>Simple, easy to create</li>
+  <li>Great for getting started with JavaScript templates</li>
+  <li>Easy to keep templates associated with page that uses them</li>
+  <li>No need for extra programming to load templates</li>
+</ul>
+
+<h4 id="cons">CONS</h4>
+<ul>
+  <li><strong>No ability to share templates between multiple pages</strong></li>
+  <li>Template syntax clutters other page markup</li>
+  <li>Template definitions are scattered across pages and more difficult to maintain</li>
+</ul>
+
+<p>Clearly, the biggest drawback to embeded local templates is that they cannot be reused or shared between pages that may require the same template definition. That tends to promote "copy/paste" template development, with multiple copies of the same template living in an application. This is clearly not best practice and can become very difficult to maintain over time.</p>
+
+<blockquote>
+  <p>Kendo UI Templates can also be defined in JavaScript using simple strings, but this technique should only be used for very small templates with minimal markup. Templates embedded in JavaScript effectively put UI HTML in JavaScript, which makes it difficult for designers to improve templates and makes an app more difficult to maintain.</p>
+</blockquote>
+
+<h2 id="remote-templates">Remote Templates</h2>
+<p>The basic idea with remote templates is to store Kendo UI Template definitions in a file separate from the rest of the page markup, loading templates using Ajax when they are needed. This makes it possible to share template definitions between multile pages while keeping all template defintions in a centralized project location (rather than being scrattered throughout HTML files).</p>
+
+<h4 id="pros-1">PROS</h4>
+<ul>
+  <li>Templates can be shared between pages in an application</li>
+  <li>Templates are centrally defined, making it easier to locate/maintain template definitions</li>
+  <li>For apps with many templates, delayed template loading can improve app performance</li>
+  <li>Template syntax is remove from HTML pages, improving readability</li>
+</ul>
+
+<h4 id="cons-1">CONS</h4>
+<ul>
+  <li>Extra code is required to load and append templates to pages (not as simple)</li>
+  <li>Multiple files must be maintained (page and template file)</li>
+  <li>Template loading is async, requiring special considerations in app code that works with templates</li>
+</ul>
+
+<h3 id="refactoring-local-templates-to-external">Refactoring Local Templates to External</h3>
+<p>To begin refactoring local templates to external templates, the template defintion needs to be removed from the HTML page (it will be put in a separate file later):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;My Page&lt;/title&gt;
+		&lt;!--NOTE: Required links to Kendo UI CSS/JS omitted for demo clarity--&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;!--Container to display a list of RSS feed names--&gt;
+		&lt;ul id="feedItems"&gt;
+		&lt;/ul&gt;
+
+		&lt;script&gt;
+			//Load the template definition from an external file
+			templateLoader.loadExtTemplate("_feedItemTemplate.tmpl.htm");
+		&lt;/script&gt;
+	&lt;/body&gt;
+	&lt;/html&gt;
+</code></pre></div></div>
+
+<p>In addition to removing the template definition, a new JavaScript block has been added with a call to <code class="language-plaintext highlighter-rouge">templateLoader.loadExtTemplate</code> that accepts a path to a file. Kendo UI does <strong>not</strong> provide a remote temploader, so each application must define its own approach for loading external templates.</p>
+
+<p>There are many ways to create a "template loader," but here is a simple option used in this example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	//Creates a gloabl object called templateLoader with a single method "loadExtTemplate"
+	var templateLoader = (function($,host){
+		//Loads external templates from path and injects in to page DOM
+		return{
+			//Method: loadExtTemplate
+			//Params: (string) path: the relative path to a file that contains template definition(s)
+			loadExtTemplate: function(path){
+				//Use jQuery Ajax to fetch the template file
+				var tmplLoader = $.get(path)
+					.success(function(result){
+						//On success, Add templates to DOM (assumes file only has template definitions)
+						$("body").append(result);
+					})
+					.error(function(result){
+						alert("Error Loading Templates -- TODO: Better Error Handling");
+					})
+					
+				tmplLoader.complete(function(){
+					//Publish an event that indicates when a template is done loading
+					$(host).trigger("TEMPLATE_LOADED", [path]);
+				});
+			}
+		};
+	})(jQuery, document);
+</code></pre></div></div>
+
+<p>This code is <a href="https://gist.github.com/3087987">available as a downloadable Gist</a>. It may look a bit intimidating, but it"s actually quite simple:</p>
+
+<ol>
+  <li>It"s taking a path to a file</li>
+  <li>Grabbing the contents with jQuery Ajax</li>
+  <li>Appending the contents to the body of our document</li>
+  <li>Then notifying the application that the template has loaded</li>
+</ol>
+
+<p>By putting this in a reusable "templateLoader," it can be used by any page in an application that needs to load an external template.</p>
+
+<p>Finally, the template definition needs to be stored in an external file that can be loaded by the template loader. In this example, the "_feedItemTemplate.tmpl.htm" file contents are:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	&lt;!--Template defintion and nothing else in the file--&gt;
+	&lt;script type="text/x-kendo-template" id="feedItemTemplate"&gt;
+		&lt;# for (var i = 0; i &lt; data.length; i++) { #&gt;
+		    &lt;li&gt;	    
+		    &lt;#= data[i].Name #&gt;	    
+		    &lt;/li&gt;
+		&lt;# } #&gt;
+	&lt;/script&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>The template loader shown in this example appends all contents from a template file to a document, making it is possible to store multiple templates in a single template file. It becomes a matter of optimization and template organization to determine how best to store templates in the external files.</p>
+</blockquote>
+
+<h4 id="async-template-loading">Async template loading</h4>
+<p>Since Ajax is async, loading templates is now async. Code that consumes templates in an application must now wait until a template has loaded before executing. To ensure that code does not run before the necessary template is loaded, the template loader in this example publishes a custom "TEMPLATE_LOADED" event (along with the path that was loaded). Application code can subscribe to this event and initialize templates with data after it fires, guaranteeing templates are loaded before they"re used.</p>
+
+<p>Using the template loader previously defined, application code can intitalize templates after they load by binding to the TEMPLATE_LOADED event, like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	&lt;script&gt;
+		templateLoader.loadExtTemplate("_feedItemTemplate.tmpl.htm");
+
+		//Subscribe to event triggered when templates loaded
+		//(Don't load use templates before they are available)
+		$(document).bind("TEMPLATE_LOADED", function(e, path) {
+			console.log('Templates loaded');			
+			
+			//Compile and cache templates
+			_itemTemplate = kendo.template($("#feedItemTemplate").html(),{useWithBlock:false});
+
+			//Using the template (assuming "data" is collection loaded elsewhere)
+			_itemTemplate(data);
+		}
+	&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The template is now ready to go! Now page markup lives in an application"s HTML files, and templates live in their own files.</p>
+
+<h2 id="project-structure-with-remote-templates">Project Structure with Remote Templates</h2>
+<p>Once remote templates are used, it is a good practice to adopt a consistent project folder and naming convention so it is easy to locate and update templates. A file naming convention also helps avoid any confusion about which files are application HTML and which files contain template definitions.</p>
+
+<p>Any consistent convention will work, but here is a sample used by this example:</p>
+
+<p><em>[ROOT]</em><br />
+==<strong>Templates/</strong><br />
+&gt;&gt;»_index.tmpl.htm<br />
+&gt;&gt;»_shared.tmpl.htm<br />
+==<strong>Scripts/</strong><br />
+&gt;&gt;»templateLoader.js<br />
+&gt;&gt;»yourapp.js<br />
+&gt;&gt;»_index.html.js<br />
+==<strong>Styles/</strong><br />
+==<strong>Content/</strong><br />
+==index.html</p>
+
+<p>Key takeaways from this convention specific to templates:</p>
+
+<ul>
+  <li>Template files are prefixed with an underscore "_" to make it very clear that they are not normal project HTML files and should not be loaded directly by the browser.</li>
+  <li>Template files use the ".tmpl.htm" extenion to make it clear they contain template definitions. The ".htm" extension is used last to avoid MIME type problems for servers that do not understand the custom ".tmpl" extension.</li>
+  <li>Templates specific to a view are named "_[viewname].tmpl.htm" to make it easy to find templates used in a specific HTML file. Templates that are common across views are in "_shared.tmpl.htm."</li>
+</ul>
+
+<h2 id="wrapping-up">Wrapping-up</h2>
+<p>This documenat has demonstrated the following:</p>
+
+<ul>
+  <li>How to remove templates from HTML pages and managed them in external files</li>
+  <li>How to load external templates using Ajax</li>
+  <li>How to append loaded templates to a page</li>
+  <li>How to initlize an external template after it has loaded</li>
+  <li>How to name and organize external template files in a project</li>
+</ul>
+
+<p>Following these steps will help create a more maintainable and DRY JavaScript application. The pattern outlined in this document can be seen live in the <a href="http://blogs.telerik.com/kendoui/posts/11-09-29/rss_feed_reader_built_with_kendo_ui_yql_amp_less">Kendo UI Feed Reader demo</a>.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

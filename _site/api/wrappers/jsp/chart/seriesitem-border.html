@@ -1,0 +1,286 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/chart/seriesitem-border.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendochart-seriesitem-border">&lt;kendo:chart-seriesItem-border&gt;</h1>
+
+<p>The border of the chart series.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-border&gt;&lt;/kendo:chart-seriesItem-border&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="color-javalangstring">color <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The color of the border. Accepts a valid CSS color string, including hex and rgb. By default it is set to color of the current series.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border color="color"&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+</code></pre></div></div>
+
+<h3 id="dashtype-javalangstring">dashType <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The dash type of the border.The following dash types are supported:</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border dashType="dashType"&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+</code></pre></div></div>
+
+<h3 id="opacity-float">opacity <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The opacity of the border. By default the border is opaque.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border opacity="opacity"&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+</code></pre></div></div>
+
+<h3 id="width-float">width <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The width of the border in pixels.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border width="width"&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="color-string">color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The color of the border. Accepts a valid CSS color string, including hex and rgb. By default it is set to color of the current series.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border color="handle_color"&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+&lt;script&gt;
+    function handle_color(e) {
+        // Code to handle the color event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dashtype-string">dashType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The dash type of the border.The following dash types are supported:</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border dashType="handle_dashType"&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+&lt;script&gt;
+    function handle_dashType(e) {
+        // Code to handle the dashType event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="opacity-string">opacity <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The opacity of the border. By default the border is opaque.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border opacity="handle_opacity"&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+&lt;script&gt;
+    function handle_opacity(e) {
+        // Code to handle the opacity event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="width-string">width <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The width of the border in pixels.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border width="handle_width"&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+&lt;script&gt;
+    function handle_width(e) {
+        // Code to handle the width event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendochart-seriesitem-border-color">kendo:chart-seriesItem-border-color</h3>
+
+<p>The color of the border. Accepts a valid CSS color string, including hex and rgb. By default it is set to color of the current series.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border&gt;
+    &lt;kendo:chart-seriesItem-border-color&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the color event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-seriesItem-border-color&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-border-dashtype">kendo:chart-seriesItem-border-dashType</h3>
+
+<p>The dash type of the border.The following dash types are supported:</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border&gt;
+    &lt;kendo:chart-seriesItem-border-dashType&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dashType event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-seriesItem-border-dashType&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-border-opacity">kendo:chart-seriesItem-border-opacity</h3>
+
+<p>The opacity of the border. By default the border is opaque.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border&gt;
+    &lt;kendo:chart-seriesItem-border-opacity&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the opacity event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-seriesItem-border-opacity&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-border-width">kendo:chart-seriesItem-border-width</h3>
+
+<p>The width of the border in pixels.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem-border&gt;
+    &lt;kendo:chart-seriesItem-border-width&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the width event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-seriesItem-border-width&gt;
+&lt;/kendo:chart-seriesItem-border&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

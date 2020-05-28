@@ -1,0 +1,338 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/saleshub/kendo-saleshub-search-box.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="creating-the-search-box---saleshub">Creating the Search Box - SalesHub</h1>
+
+<p><img src="/tutorials/asp.net/saleshub/images/kendo-saleshub-search-box-screenshot.png" alt="kendo-saleshub-search-box-screenshot" /></p>
+
+<p>The Search Box in SalesHub allows users to search for Orders based on their Order Number. It is
+implemented using a <a href="http://demos.telerik.com/kendo-ui/web/autocomplete/index.html">Kendo AutoComplete</a>
+that queries a remote service for search results based on what has been typed into the search
+box. The search results displayed in the dropdown are limited to the first 20 results, so
+the user can press enter and it will open a <a href="http://demos.telerik.com/kendo-ui/web/window/index.html">Kendo Window</a>
+that will display all of the search results.</p>
+
+<p><img src="/tutorials/asp.net/saleshub/images/kendo-saleshub-search-results-screenshot.png" alt="kendo-saleshub-search-results-screenshot" /></p>
+
+<h2 id="setting-up-the-autocomplete">Setting up the AutoComplete</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Html.Kendo().AutoComplete().Name("search")
+</code></pre></div></div>
+
+<p>The first part of the declaration tells the Kendo UI MVC extensions that you"re creating an AutoComplete widget and that
+we want its HTML <strong>id</strong> to be "search".</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Filter(FilterType.StartsWith)
+.Placeholder("Search for order...")
+</code></pre></div></div>
+
+<p>Next we tell the AutoComplete to only display results that start with the text that has been entered into the textbox.
+Then we set its placeholder text.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Template("&lt;span data-order-id='${ data.OrderId }'&gt;${ data.OrderNumber }&lt;/span&gt;")
+</code></pre></div></div>
+
+<p>Here we specify the item template that the AutoComplete uses when it generates the dropdown containing the search results.
+In this case we display the "OrderNumber" of each search result. We store the "OrderId" in an HTML data attribute, so that
+we can use it later if the user selects that item from the search results.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.MinLength(3)
+</code></pre></div></div>
+
+<p>Setting a minimum length on the AutoComplete prevents it from querying for search results until at least that many characters
+have been typed into the textbox.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.DataSource(dataSource =&gt; dataSource
+    .Read(read =&gt;
+        read.Url("/api/Search/GetAutoCompleteSearchResults").Type(HttpVerbs.Get)
+    )
+    .ServerFiltering(true)
+)
+</code></pre></div></div>
+
+<p>We set up the DataSource for the AutoComplete to call our search method on the <strong>SearchController</strong> and we tell it to do server-side
+filtering when it queries for data.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.DataTextField("OrderNumber")
+</code></pre></div></div>
+
+<p>Setting the DataTextField to "OrderNumber" tells the AutoComplete to only search against
+the "OrderNumber" property of an Order.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Events(events =&gt; events.Select("window.SalesHub.SearchBox_Select"))
+</code></pre></div></div>
+
+<p>We also subscribe to the <code class="language-plaintext highlighter-rouge">select</code> event of the AutoComplete. This is so we can redirect the user to the edit page for an order
+when they click on a result in the AutoComplete dropdown.</p>
+
+<p>You can find the full markup for the search AutoComplete in <strong>Views/Shared/_Layout.cshtml</strong>.</p>
+
+<h2 id="handling-user-selection-in-the-autocomplete">Handling User Selection in the AutoComplete</h2>
+
+<p>Because we want to redirect the user to the edit page for the order that they select, we need to create an event handler for
+the <code class="language-plaintext highlighter-rouge">select</code> event of the AutoComplete. Since we"ll be redirecting the user to a different page client-side, we also need a way
+of passing the correct URL to our JavaScript. To do this we inject the correct URL, using Razor, in <strong>Views/Shared/_Layout.cshtml</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    window.SalesHub.Search = {
+        settings: {
+            actionUrl: "/Order/Edit"
+        }
+    };
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Now that we have the URL we need, we can declare our event handler.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.SalesHub.SearchBox_Select = function (e) {
+    var actionUrl = window.SalesHub.Search.settings.actionUrl;
+    var orderId = e.item.find("span").data("order-id");
+    window.location.pathname = actionUrl + "/" + orderId;
+};
+</code></pre></div></div>
+
+<p>Our event handler takes one parameter (<code class="language-plaintext highlighter-rouge">e</code>) which is an event object that the AutoComplete passes in. This event object has a
+property called <code class="language-plaintext highlighter-rouge">item</code>, which is a jQuery object that points to the HTML element that the user selected. We use this to find the
+<code class="language-plaintext highlighter-rouge">&lt;span&gt;</code> that we specified in our Template for the AutoComplete and from there we get the "OrderId" off of the <strong>data-order-id</strong>
+attribute we declared on the span.</p>
+
+<p>This event handler can be found in <strong>Scripts/search.js</strong>.</p>
+
+<h2 id="setting-up-the-search-results-window-and-grid">Setting up the Search Results Window and Grid</h2>
+
+<p>Since our AutoComplete only displays the first 20 results, we need a way of efficiently showing the user all of the results.
+To do this we create a <a href="http://demos.telerik.com/kendo-ui/web/window/index.html">Kendo Window</a> that contains a
+<a href="http://demos.telerik.com/kendo-ui/web/grid/index.html">Kendo Grid</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Window()
+    .Name("searchResultWindow")
+    .Title("Search Results")
+    .Modal(true)
+    .Visible(false)
+    .Height(600)
+    .Width(500)
+    .Content(@&lt;text&gt;
+        @(Html.Kendo().Grid&lt;OrderSearchResult&gt;()
+            .Name("searchResultsGrid")
+            .Columns(columns =&gt;
+            {
+                columns.Bound(c =&gt; c.OrderNumber).Title("Order Number");
+                columns.Bound(c =&gt; c.SellingCompany).Title("Selling Co");
+                columns.Bound(c =&gt; c.Customer).Title("Customer");
+            })
+            .DataSource(ds =&gt; ds.Ajax()
+                .Read(read =&gt; read.Action("GetSearchResults", "Search").Type(HttpVerbs.Get))
+                .ServerOperation(true)
+            )
+            .Selectable()
+            .Events(events =&gt; events.Change("window.SalesHub.SearchResultsGrid_Change"))
+        )
+    &lt;/text&gt;)
+    .Events(e =&gt; e.Open("window.SalesHub.SearchResultWindow_Open")))
+</code></pre></div></div>
+
+<p>Let"s break down what this window declaration does.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Title("Search Results")
+.Modal(true)
+.Visible(false)
+.Height(600)
+.Width(500)
+</code></pre></div></div>
+
+<p>Here we set the Title of the window, tell it we want it to be a modal dialog, and that we don"t want it to be visible when
+the page first loads. We also specify the dimensions of the window.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Content(@&lt;text&gt;
+    @(Html.Kendo().Grid&lt;OrderSearchResult&gt;()
+        .Name("searchResultsGrid")
+        .Columns(columns =&gt;
+        {
+            columns.Bound(c =&gt; c.OrderNumber).Title("Order Number");
+            columns.Bound(c =&gt; c.SellingCompany).Title("Selling Co");
+            columns.Bound(c =&gt; c.Customer).Title("Customer");
+        })
+        .DataSource(ds =&gt; ds.Ajax()
+            .Read(read =&gt; read.Action("GetSearchResults", "Search").Type(HttpVerbs.Get))
+            .ServerOperation(true)
+        )
+        .Selectable()
+        .Events(events =&gt; events.Change("window.SalesHub.SearchResultsGrid_Change"))
+    )
+&lt;/text&gt;)
+</code></pre></div></div>
+
+<p>Here we declare the contents of our window. Since we want a <a href="http://demos.telerik.com/kendo-ui/web/grid/index.html">Kendo Grid</a>
+inside of our window to display the search results, we use Razor"s <code class="language-plaintext highlighter-rouge">@&lt;text&gt;</code> syntax to declare our grid. We also
+subscribe to the <code class="language-plaintext highlighter-rouge">change</code> event of a the grid. The <code class="language-plaintext highlighter-rouge">change</code> event is fired when a user selects an item in the grid.
+This will be useful later when we need to redirect the user to the order that they select.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.Events(e =&gt; e.Open("window.SalesHub.SearchResultWindow_Open")))
+</code></pre></div></div>
+
+<p>Finally we supply an event handler for the windows open event. We need this event handler so that we can tell the grid
+what search results it needs to display when the window is opened.</p>
+
+<p>Now that we have the window set up, we need to wire up some event handlers so that it opens when the user presses
+the enter key inside of the search box.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function () {
+    var search = $("#search");
+
+    search.on("keyup", function (e) {
+        if (e.which === 13) {
+            $("#searchResultWindow").data("kendoWindow").center().open();
+        }
+    });
+});
+</code></pre></div></div>
+
+<p>To do this, we wait for the document to load, then we find the search textbox on the page using a jQuery selector. Once we find
+the textbox, we subscribe to its <strong>keyup</strong> event. Since we only want to open the window when the user presses the enter key, we
+check to see which key was pressed. If it was the enter key (<code class="language-plaintext highlighter-rouge">13</code>), we find the window that we create earlier and get the
+<a href="http://demos.telerik.com/kendo-ui/web/window/index.html">Kendo Window</a> object off of it. Using the window object, we tell the window to
+<code class="language-plaintext highlighter-rouge">center</code> itself and to <code class="language-plaintext highlighter-rouge">open</code>.</p>
+
+<p>Now that we"ve told the window to open, our event handler for the open event comes into play.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.SalesHub.SearchResultWindow_Open = function (e) {
+    var searchResultsGrid = $("#searchResultsGrid").data("kendoGrid");
+    var filter = $("#search").data("kendoAutoComplete").dataSource.filter();
+    searchResultsGrid.dataSource.filter(filter);
+    searchResultsGrid.dataSource.read();
+    searchResultsGrid.refresh();
+};
+</code></pre></div></div>
+
+<p>Since we only want to display search results based on what the user has typed into the search box, we get the filter that"s being
+applied to the AutoComplete"s datasource and set it to the grids datasource. Doing this causes the grid"s datasource to hit our
+search service using the same filter as the AutoComplete.</p>
+
+<p>Now that we"ve updated the grid to only display search results based on what the user had typed into the search box, we need
+a way of redirecting the user to an order if they select one in the grid. This is where our event handler for the <code class="language-plaintext highlighter-rouge">change</code> event
+of the grid comes into play.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>window.SalesHub.SearchResultsGrid_Change = function (e) {
+    var actionUrl = window.SalesHub.Search.settings.actionUrl;
+    var selectedItem = this.dataItem(this.select()[0]);
+    window.location.pathname = actionUrl + "/" + selectedItem.OrderId;
+};
+</code></pre></div></div>
+
+<p>The grid sets the <code class="language-plaintext highlighter-rouge">this</code> context of the function to itself when it calls our event handler. This means that we can access all of
+the grid"s properties through the <code class="language-plaintext highlighter-rouge">this</code> variable. To get the selected item in the grid, we call the <code class="language-plaintext highlighter-rouge">select</code> function on it. The
+<code class="language-plaintext highlighter-rouge">select</code> function returns an array of selected elements, but since our grid only supports single item selection we just get the
+first element in the array. We then pass the selected element to the <code class="language-plaintext highlighter-rouge">dataItem</code> function of the grid, which returns the corresponding
+<strong>OrderSearchResult</strong> which we use to get the id of the order. Once we have the <strong>id</strong> of the order we can redirect the user to
+the edit page for that order.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

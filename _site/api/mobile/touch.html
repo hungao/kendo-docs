@@ -1,0 +1,718 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/mobile/touch.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouitouch">kendo.ui.Touch</h1>
+
+<p>The kendo Touch widget exposes a cross-platform compatible API for handling user-initiated touch events, multi-touch gestures and event sequences (drag, swipe, etc.). Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<blockquote>
+  <p>Unlike most mobile widgets, the Touch widget does not need an active mobile application instance.</p>
+</blockquote>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="filter-string">filter <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>jQuery selector that specifies child elements that are touchable if a widget is attached to a container.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="list"&gt;
+    &lt;li class="touch"&gt;Foo&lt;/li&gt;
+    &lt;li&gt;Not selected&lt;/li&gt;
+    &lt;li class="touch"&gt;Foo&lt;/li&gt;
+    &lt;li&gt;Not selected&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+$("#list").kendoTouch({
+    filter: ".touch",
+    drag: function(e) {
+        console.log("you dragged a list item");
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="surface-jquery-default-null">surface <code class="language-plaintext highlighter-rouge">jQuery</code> <em>(default: null)</em></h3>
+
+<p>If specified, the user drags will be tracked within the surface boundaries.
+This option is useful if the widget is instantiated on small DOM elements like buttons, or thin list items.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="list"&gt;
+    &lt;li&gt;Foo&lt;/li&gt;
+    &lt;li&gt;Foo&lt;/li&gt;
+    &lt;li&gt;Foo&lt;/li&gt;
+    &lt;li&gt;Foo&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+$("#list li").kendoTouch({
+    surface: $("#list"),
+    drag: function(e) {
+        console.log("you dragged a list item");
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="multitouch-boolean-default--false">multiTouch <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default:  false)</em></h3>
+
+<p>If set to true, the widget will capture and trigger the <code class="language-plaintext highlighter-rouge">gesturestart</code>, <code class="language-plaintext highlighter-rouge">gesturechange</code>, and <code class="language-plaintext highlighter-rouge">gestureend</code> events when the user touches the element with two fingers.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;
+    Touch me with two fingers
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({
+    multiTouch: true,
+    gesturestart: function (e) {
+        console.log("User touched the element with two fingers");
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enableswipe-boolean-default--false">enableSwipe <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default:  false)</em></h3>
+
+<p>If set to true, the Touch widget will recognize horizontal swipes and trigger the <code class="language-plaintext highlighter-rouge">swipe</code> event.</p>
+
+<p><strong>Notice</strong>: if the <code class="language-plaintext highlighter-rouge">enableSwipe</code> option is set to true, the <code class="language-plaintext highlighter-rouge">dragstart</code>, <code class="language-plaintext highlighter-rouge">drag</code> and <code class="language-plaintext highlighter-rouge">dragend</code> events will not be triggered.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;
+    Swipe me
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({
+    enableSwipe: true,
+    swipe: function (e) {
+        console.log("User swiped the element");
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="minxdelta-number-default--30">minXDelta <code class="language-plaintext highlighter-rouge">Number</code> <em>(default:  30)</em></h3>
+
+<p>The minimum horizontal distance in pixels the user should swipe before the <code class="language-plaintext highlighter-rouge">swipe</code> event is triggered.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;
+    Swipe me
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({
+    enableSwipe: true,
+    minXDelta: 50,
+    swipe: function (e) {
+        console.log("Long swipe");
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="maxydelta-number-default--20">maxYDelta <code class="language-plaintext highlighter-rouge">Number</code> <em>(default:  20)</em></h3>
+
+<p>The maximum vertical deviation in pixels of the swipe event. Swipes with higher deviation are discarded.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;
+    Swipe me
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({
+    enableSwipe: true,
+    maxYDelta: 50,
+    swipe: function (e) {
+        console.log("Loose shaky swipe");
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="maxduration-number-default--1000">maxDuration <code class="language-plaintext highlighter-rouge">Number</code> <em>(default:  1000)</em></h3>
+
+<p>The maximum amount of time in milliseconds the swipe event can last. Slower swipes are discarded.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;
+    Swipe me
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({
+    enableSwipe: true,
+    maxDuration: 500,
+    swipe: function (e) {
+        console.log("fast swipe");
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="minhold-number-default--800">minHold <code class="language-plaintext highlighter-rouge">Number</code> <em>(default:  800)</em></h3>
+
+<p>The timeout in milliseconds before the <code class="language-plaintext highlighter-rouge">hold</code> event is fired.</p>
+
+<p><strong>Notice</strong>: the hold event will be triggered after the time passes, not after the user lifts his/hers finger.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;
+    Press and hold here
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({
+    minHold: 2000,
+    hold: function (e) {
+        console.log("holding for a while.");
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="doubletaptimeout-number-default-400">doubleTapTimeout <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 400)</em></h3>
+
+<p>The maximum period (in milliseconds) between two consecutive taps which will trigger the <code class="language-plaintext highlighter-rouge">doubletap</code> event.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;
+    Double tap here
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({
+    doubleTapTimeout: 2000,
+    doubletap: function (e) {
+        console.log("two taps");
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="cancel">cancel</h3>
+
+<p>Cancels the current touch event sequence. Calling <code class="language-plaintext highlighter-rouge">cancel</code> in a <code class="language-plaintext highlighter-rouge">touchstart</code> or <code class="language-plaintext highlighter-rouge">dragmove</code> will disable subsequent move or tap/end/hold event handlers from being called.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;Touch here&lt;/div&gt;
+
+&lt;script&gt;
+    $("#touch").kendoTouch({
+        touchstart: function(e) {
+            e.sender.cancel(); // e.sender is a reference to the touch widget.
+        },
+        hold: function(e) {
+            // this event handler will not be executed
+            console.log(e);
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+
+<p>Prepares the <strong>Touch</strong> for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the Touch element from DOM.</p>
+</blockquote>
+
+<h2 id="events">Events</h2>
+
+<h3 id="touchstart">touchstart</h3>
+
+<p>Fires when the user presses the element.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;Touch here&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({ touchstart: function (e) { console.log(e); } });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="etouch-touchevent">e.touch <code class="language-plaintext highlighter-rouge">TouchEvent</code></h5>
+
+<p>The touch event instance</p>
+
+<h5 id="eevent-jqueryevent">e.event <code class="language-plaintext highlighter-rouge">jQueryEvent</code></h5>
+
+<p>The jQuery event which triggered the touch event.</p>
+
+<h3 id="dragstart">dragstart</h3>
+
+<p>Fires when the user starts dragging the element.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;Touch here&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({ dragstart: function (e) { console.log(e); } });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="etouch-touchevent-1">e.touch <code class="language-plaintext highlighter-rouge">TouchEvent</code></h5>
+
+<p>The touch event instance</p>
+
+<h5 id="eevent-jqueryevent-1">e.event <code class="language-plaintext highlighter-rouge">jQueryEvent</code></h5>
+
+<p>The jQuery event which triggered the touch event.</p>
+
+<h3 id="drag">drag</h3>
+
+<p>Fires each time the user drags (within the element boundaries).</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;Touch here&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({ drag: function (e) { console.log(e); } });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="etouch-touchevent-2">e.touch <code class="language-plaintext highlighter-rouge">TouchEvent</code></h5>
+
+<p>The touch event instance</p>
+
+<h5 id="eevent-jqueryevent-2">e.event <code class="language-plaintext highlighter-rouge">jQueryEvent</code></h5>
+
+<p>The jQuery event which triggered the touch event.</p>
+
+<h3 id="dragend">dragend</h3>
+
+<p>Fires when the user lifts his/hers finger, or drags outside of the element boundaries.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;Touch here&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({ dragend: function (e) { console.log(e); } });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="etouch-touchevent-3">e.touch <code class="language-plaintext highlighter-rouge">TouchEvent</code></h5>
+
+<p>The touch event instance</p>
+
+<h5 id="eevent-jqueryevent-3">e.event <code class="language-plaintext highlighter-rouge">jQueryEvent</code></h5>
+
+<p>The jQuery event which triggered the touch event.</p>
+
+<h3 id="tap">tap</h3>
+
+<p>Fires when the user taps on the element. A touch sequence is considered a tap if the user does not perform dragging.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;Touch here&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({ tap: function (e) { console.log(e); } });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-4">Event Data</h4>
+
+<h5 id="etouch-touchevent-4">e.touch <code class="language-plaintext highlighter-rouge">TouchEvent</code></h5>
+
+<p>The touch event instance</p>
+
+<h5 id="eevent-jqueryevent-4">e.event <code class="language-plaintext highlighter-rouge">jQueryEvent</code></h5>
+
+<p>The jQuery event which triggered the touch event.</p>
+
+<h3 id="doubletap">doubletap</h3>
+
+<p>Fires when the user quickly taps twice on the element.</p>
+
+<blockquote>
+  <p>The two taps should be at a maximum distance of 3 pixels.</p>
+</blockquote>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;Touch here&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({ doubletap: function (e) { console.log(e); } });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-5">Event Data</h4>
+
+<h5 id="etouch-touchevent-5">e.touch <code class="language-plaintext highlighter-rouge">TouchEvent</code></h5>
+
+<p>The touch event instance</p>
+
+<h5 id="eevent-jqueryevent-5">e.event <code class="language-plaintext highlighter-rouge">jQueryEvent</code></h5>
+
+<p>The jQuery event which triggered the touch event.</p>
+
+<h3 id="hold">hold</h3>
+
+<p>Fires when the user presses and holds  his/hers finger on the element for a minimum amount of time.</p>
+
+<p>The minimum amount can be configured through the <code class="language-plaintext highlighter-rouge">minHold</code> configuration option.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;Touch here&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({ hold: function (e) { console.log(e); } });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-6">Event Data</h4>
+
+<h5 id="etouch-touchevent-6">e.touch <code class="language-plaintext highlighter-rouge">TouchEvent</code></h5>
+
+<p>The touch event instance</p>
+
+<h5 id="eevent-jqueryevent-6">e.event <code class="language-plaintext highlighter-rouge">jQueryEvent</code></h5>
+
+<p>The jQuery event which triggered the touch event.</p>
+
+<h3 id="swipe">swipe</h3>
+
+<p>Fires when the user performs a horizontal swipe on the element.</p>
+
+<p>For this event to be triggered, the <code class="language-plaintext highlighter-rouge">enableSwipe</code> configuration option should be set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">minXDelta</code>, <code class="language-plaintext highlighter-rouge">maxYDelta</code> and <code class="language-plaintext highlighter-rouge">maxDuration</code> configuration options determine when the drag event sequence is considered a swipe.</p>
+</blockquote>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;Touch here&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({ enableSwipe: true, swipe: function (e) { console.log(e); } });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-7">Event Data</h4>
+
+<h5 id="etouch-touchevent-7">e.touch <code class="language-plaintext highlighter-rouge">TouchEvent</code></h5>
+
+<p>The touch event instance</p>
+
+<h5 id="eevent-jqueryevent-7">e.event <code class="language-plaintext highlighter-rouge">jQueryEvent</code></h5>
+
+<p>The jQuery event which triggered the touch event.</p>
+
+<h4 id="edirection-string">e.direction <code class="language-plaintext highlighter-rouge">String</code></h4>
+
+<p>The swipe event direction. Can be either <code class="language-plaintext highlighter-rouge">left</code> or <code class="language-plaintext highlighter-rouge">right</code>.</p>
+
+<h3 id="gesturestart">gesturestart</h3>
+
+<p>Fires when the user presses the element with two fingers (or presses with a second finger while a first finger is still touching the element).</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;
+    Touch me with two fingers
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({
+    multiTouch: true,
+    gesturestart: function (e) {
+        console.log("User touched the element with two fingers");
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-8">Event Data</h4>
+
+<h5 id="etouches-array">e.touches <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>An array containing the active touches.</p>
+
+<h5 id="eevent-jqueryevent-8">e.event <code class="language-plaintext highlighter-rouge">jQueryEvent</code></h5>
+
+<p>The jQuery event which triggered the touch event.</p>
+
+<h5 id="edistance-number">e.distance <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The distance (in pixels) between the two touches.</p>
+
+<h5 id="ecenter-point">e.center <code class="language-plaintext highlighter-rouge">Point</code></h5>
+
+<p>The center point between the two touches. The point has two properties, <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code>, which contain the x and the y coordinate, respectively.</p>
+
+<h3 id="gesturechange">gesturechange</h3>
+
+<p>Fires when the user moves a finger while multiple fingers are touching the element.</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;
+    Touch me with two fingers
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({
+    multiTouch: true,
+    gesturechange: function (e) {
+        console.log(e);
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-9">Event Data</h4>
+
+<h5 id="etouches-array-1">e.touches <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>An array containing the active touches.</p>
+
+<h5 id="eevent-jqueryevent-9">e.event <code class="language-plaintext highlighter-rouge">jQueryEvent</code></h5>
+
+<p>The jQuery event which triggered the touch event.</p>
+
+<h5 id="edistance-number-1">e.distance <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The distance (in pixels) between the two touches</p>
+
+<h5 id="ecenter-point-1">e.center <code class="language-plaintext highlighter-rouge">Point</code></h5>
+
+<p>The center point between the two touches. The point has two properties, <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code>, which contain the x and the y coordinate, respectively.</p>
+
+<h3 id="gestureend">gestureend</h3>
+
+<p>Fires when the user lifts the second finger from the element.
+<strong>Notice</strong>: After the last finger is moved, the <code class="language-plaintext highlighter-rouge">dragend</code> event is fired.</p>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;
+    Touch me with two fingers
+&lt;/div&gt;
+
+&lt;script&gt;
+$("#touch").kendoTouch({
+    multiTouch: true,
+    gestureend: function (e) {
+        console.log(e);
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-10">Event Data</h4>
+
+<h5 id="etouches-array-2">e.touches <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>An array containing the active touches</p>
+
+<h5 id="eevent-jqueryevent-10">e.event <code class="language-plaintext highlighter-rouge">jQueryEvent</code></h5>
+
+<p>The jQuery event which triggered the touch event.</p>
+
+<h5 id="edistance-number-2">e.distance <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The distance (in pixels) between the two touches</p>
+
+<h5 id="ecenter-point-2">e.center <code class="language-plaintext highlighter-rouge">Point</code></h5>
+
+<p>The center point between the two touches. The point has two properties, <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code>, which contain the x and the y coordinate, respectively.</p>
+
+<h2 id="touchevent">TouchEvent</h2>
+
+<p>The touch event object (available in the event handler event object) contains information about an active touch.  The touch event object instance has two properties of type <code class="language-plaintext highlighter-rouge">TouchAxis</code> - <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code>.</p>
+
+<h4 id="example-21">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="touch"&gt;Touch here&lt;/div&gt;
+&lt;script&gt;
+function getEventInfo(e) {
+    var touch = e.touch;
+    var xAxis = touch.x;
+    var yAxis = touch.y;
+
+    console.log(xAxis.location);
+    console.log(yAxis.location);
+}
+
+$("#touch").kendoTouch({ tap: getEventInfo });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="properties">Properties</h3>
+
+<h3 id="target-jquery">target <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+
+<p>The element from which the touch originated.</p>
+
+<h2 id="touchaxis">TouchAxis</h2>
+
+<h3 id="properties-1">Properties</h3>
+
+<h3 id="location-number">location <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The offset of the touch relative to the <em>entire document</em> (pageX/Y);</p>
+
+<h3 id="startlocation-number">startLocation <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The offset of the touch relative to the document when the touch started;</p>
+
+<h3 id="client-number">client <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The offset of the touch relative to the <em>viewport</em> (clientX/Y);</p>
+
+<h3 id="delta-number">delta <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The change from the previous event location</p>
+
+<h3 id="velocity-number">velocity <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The pixels per millisecond speed of the current move. For instance, the mobile ScrollView widget considers a swipe with velocity below 0.8 a slow one, while velocity above 1.6 is a fast one.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

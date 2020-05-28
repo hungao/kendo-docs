@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Kendo UI Grid for ASP.NET MVC Troubleshooting Guide</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to use Kendo UI jQuery Grid component with ASP.NET MVC Helpers and easily handle most common issues.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/grid/troubleshooting.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="grid-troubleshooting">Grid Troubleshooting</h1>
+
+<h2 id="the-grid-performs-http-get-requests-instead-of-post">The grid performs HTTP GET requests instead of POST</h2>
+
+<p>By default Kendo Grid for ASP.NET MVC should make POST requests when configured for <a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/ajax-binding">ajax binding</a>.
+This is implemented by a custom DataSource transport and schema. Those are defined in the <strong>kendo.aspnetmvc.min.js</strong>. Make sure that this file is included <strong>after</strong> the other
+Kendo JavaScript files. More info can be found in the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">introduction help topic</a>.</p>
+
+<h3 id="solution-correct-order-of-javascript-files">Solution: Correct Order Of JavaScript Files</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="/Scripts/kendo.web.min.js"&gt;&lt;/script&gt; &lt;-- or kendo.all.min.js --&gt;
+&lt;script src="/Scripts/kendo.aspnetmvc.min.js"&gt;&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="the-ajax-bound-grid-does-not-populate">The ajax bound grid does not populate</h2>
+
+<p>There are various reasons which may cause this. Follow the troubleshooting instructions.</p>
+
+<h3 id="ajax-binding-troubleshooting">Ajax Binding Troubleshooting</h3>
+
+<ol>
+  <li>Use your browser"s developer console to check for any JavaScript errors. In most browsers pressing <strong>F12</strong> will pop up the developer console. Address all JavaScript errors.
+More info can be found in the <a href="/getting-started/using-kendo-with/aspnet-mvc/troubleshooting">troubleshooting help topic</a>.</li>
+  <li>Check the "Network" (or "Net" in Firebug) tab of the browser developer console. Look for a failed HTTP request for the action method configured via the <code class="language-plaintext highlighter-rouge">DataSource</code> grid setting.
+    <ul>
+      <li>HTTP status code <a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes#401">401</a> indicates that authentication is required and has failed or not yet been provided.</li>
+      <li>HTTP status code <a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes#403">403</a> indicates that request is not authorized. Perhaps the current user does not have
+ the required permissions.</li>
+      <li>HTTP status code <a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes#404">404</a> indicates that requested URL cannot be found.
+ Check if the controller and action names are spelled correctly.</li>
+      <li>HTTP status code <a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes#500">500</a> indicates that a server error occurred while process the request.
+ Check what the server response is. In most cases it will contain the full .NET stacktrace. If the reason for the exception is not clear put a break-point
+ in the action method and break with the debugger. Also check the <a href="#well-known-exceptions">well known exceptions</a></li>
+    </ul>
+  </li>
+  <li>Check if you are using the <code class="language-plaintext highlighter-rouge">ToDataSourceResult</code> extension method. That method returns the data in the JSON format expected by Kendo Grid for ASP.NET MVC. Check the
+<a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/ajax-binding">ajax binding</a> help topic for further instructions.</li>
+</ol>
+
+<h2 id="well-known-exceptions">Well Known Exceptions</h2>
+
+<h3 id="a-circular-reference-was-detected-while-serializing-an-object-of-type">A circular reference was detected while serializing an object of type</h3>
+
+<p>The reason for this error is that the <a href="http://msdn.microsoft.com/en-us/library/system.web.script.serialization.javascriptserializer.aspx">JavaScriptSerializer</a> class used by
+the <a href="http://msdn.microsoft.com/en-us/library/system.web.mvc.controller.json.aspx">Json</a> method cannot serialize object graphs which contain circular references (refer to each other).
+The best solution is to use View Model objects and avoid the serializing the properties which create the circular reference.
+Check the <a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/faq#how-do-i-avoid-circular-reference-exceptions?">"How do I avoid circular reference exceptions"</a> FAQ section for further information.</p>
+
+<h3 id="error-during-serialization-or-deserialization-using-the-json-javascriptserializer">Error during serialization or deserialization using the JSON JavaScriptSerializer</h3>
+
+<p>This exception is raised when the length of the data serialized as JSON exceeds the default <a href="http://msdn.microsoft.com/en-us/library/system.web.script.serialization.javascriptserializer.maxjsonlength.aspx">MaxJsonLength</a>.
+There are a few possible solutions:</p>
+
+<ol>
+  <li>Enable paging by calling the <code class="language-plaintext highlighter-rouge">Pageable</code> method</li>
+  <li><a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/faq#how-do-i-convert-my-models-to-view-model-objects?">Use a View Model</a> to serialize only the required properties of your model.</li>
+  <li>
+    <p>Return a custom action result</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> public ActionResult Read([DataSourceRequest] DataSourceRequest request)
+ {
+     var data = GetData();
+     var serializer = new JavaScriptSerializer();
+     var result = new ContentResult();
+     serializer.MaxJsonLength = Int32.MaxValue; // Whatever max length you want here
+     result.Content = serializer.Serialize(data.ToDataSourceResult(request));
+     result.ContentType = "application/json";
+     return result;
+ }
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="this-request-has-been-blocked-because-sensitive-information-could-be-disclosed-to-third-party-web-sites-when-this-is-used-in-a-get-request">This request has been blocked because sensitive information could be disclosed to third party web sites when this is used in a GET request</h3>
+
+<p>This exception would occur if <strong>kendo.aspnetmvc.min.js</strong> is not included or is included <strong>before</strong> kendo.web.min.js. The other reason is that the developer has explicitly
+specified that the DataSource should make HTTP GET requests via the <code class="language-plaintext highlighter-rouge">Type</code> setting but didn"t tell the <code class="language-plaintext highlighter-rouge">Json</code> method that HTTP GET requests are allowed.</p>
+
+<h4 id="solution-allow-get-requests">Solution: Allow GET Requests</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// View
+
+// omitted for brevity
+.DataSource(dataSource =&gt; dataSource.Ajax()
+    .Read(read =&gt; read.Action("Read", "Home").Type(HttpVerbs.Get)) // tell the DataSource to make GET requests
+// omitted for brevity
+
+// Controller
+public ActionResult Read([DataSourceRequest] DataSourceRequest request)
+{
+    var data = GetData();
+
+    return Json(result.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+}
+</code></pre></div></div>
+
+<h2 id="the-grid-does-not-display-numbers-and-dates-in-the-right-format-for-my-culture">The grid does not display numbers and dates in the right format for my culture</h2>
+
+<p>By default Kendo UI Grid formats dates and numbers using the <strong>en-US</strong> culture. To change the culture include the JavaScript for your culture and then call <code class="language-plaintext highlighter-rouge">kendo.culture</code>.</p>
+
+<h3 id="include-culture-specific-kendo-javascript">Include Culture Specific Kendo JavaScript</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="/Scripts/cultures/kendo.culture.de-DE.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    kendo.culture("de-DE");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="include-javascript-for-the-current-culture-webforms">Include JavaScript For The Current Culture (WebForms)</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
+%&gt;
+&lt;script src="&lt;%= Url.Content("~/Scripts/cultures/kendo.culture." + culture + ".min.js") %&gt;"&gt;&lt;/script&gt;
+&lt;script&gt;
+    kendo.culture("&lt;%= culture %&gt;");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="include-javascript-for-the-current-culture-razor">Include JavaScript For The Current Culture (Razor)</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
+}
+&lt;script src="@Url.Content("~/Scripts/cultures/kendo.culture." + culture + ".min.js")"&gt;&lt;/script&gt;
+&lt;script&gt;
+    kendo.culture("@culture");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="the-grid-fails-to-update-dates-and-numbers-when-the-current-culture-is-not-en-us">The grid fails to update dates and numbers when the current culture is not en-US</h2>
+
+<p>Make sure the JavaScript file for that culture is included. Check the previous item.</p>
+
+<h2 id="a-column-template-is-not-displayed">A column template is not displayed</h2>
+
+<p>This will happen if the server template is set but the grid is configured for ajax binding. Set the <a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/configuration#clienttemplate">ClientTemplate</a> as well.
+This will also happen if only the client template is set but the grid is configured for server binding. Set the <a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/configuration#template">Template</a> as well.</p>
+
+<h2 id="the-grid-cannot-bind-to-webapi-controller">The grid cannot bind to WebAPI controller</h2>
+
+<p>Kendo Grid for ASP.NET MVC does not currently support WebAPI controllers. Cast your vote for in our <a href="http://kendo.uservoice.com/forums/127393-kendo-ui-feedback/suggestions/2667632-make-kendo-datasource-compatible-with-asp-net-mvc-">user voice</a> forum!</p>
+
+<h2 id="the-x-datasource-configuration-option-is-not-available">The "X" DataSource configuration option is not available</h2>
+
+<p>Not all settings of the DataSource are exposed via the <code class="language-plaintext highlighter-rouge">DataSource</code> fluent API. For full control over the DataSource consider using the client-side version of Kendo UI Grid.</p>
+
+<h2 id="client-side-events-are-not-raised-in-server-bound-mode">Client-side events are not raised in server bound mode</h2>
+
+<p>Kendo Grid for ASP.NET MVC will not raise all client-side events when configured for server bound mode.
+Check the <a href="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/server-binding#client-side-events-and-server-binding">server binding</a> help topic for further details.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

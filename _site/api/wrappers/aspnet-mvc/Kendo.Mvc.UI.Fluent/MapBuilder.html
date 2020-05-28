@@ -1,0 +1,246 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/MapBuilder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluentmapbuilder">Kendo.Mvc.UI.Fluent.MapBuilder</h1>
+<p>Defines the fluent API for configuring the Kendo Map for ASP.NET MVC.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="centersystemdoublesystemdouble">Center(System.Double,System.Double)</h3>
+<p>Configures the center of the map.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="latitude-systemdouble">latitude <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The latitude</p>
+
+<h5 id="longtitude-systemdouble">longtitude <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The longtitude</p>
+
+<h3 id="controlssystemactionkendomvcuifluentmapcontrolssettingsbuilder">Controls(System.Action&lt;Kendo.Mvc.UI.Fluent.MapControlsSettingsBuilder&gt;)</h3>
+<p>The configuration of built-in map controls.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentmapcontrolssettingsbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/MapControlsSettingsBuilder">Kendo.Mvc.UI.Fluent.MapControlsSettingsBuilder</a>&gt;</h5>
+<p>The action that configures the controls.</p>
+
+<h3 id="layerdefaultssystemactionkendomvcuifluentmaplayerdefaultssettingsbuilder">LayerDefaults(System.Action&lt;Kendo.Mvc.UI.Fluent.MapLayerDefaultsSettingsBuilder&gt;)</h3>
+<p>The default configuration for map layers by type.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentmaplayerdefaultssettingsbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/MapLayerDefaultsSettingsBuilder">Kendo.Mvc.UI.Fluent.MapLayerDefaultsSettingsBuilder</a>&gt;</h5>
+<p>The action that configures the layerdefaults.</p>
+
+<h3 id="minzoomsystemdouble">MinZoom(System.Double)</h3>
+<p>The minimum zoom level.
+            Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-systemdouble">value <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The value that configures the minzoom.</p>
+
+<h3 id="maxzoomsystemdouble">MaxZoom(System.Double)</h3>
+<p>The maximum zoom level.
+            Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-systemdouble-1">value <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The value that configures the maxzoom.</p>
+
+<h3 id="minsizesystemdouble">MinSize(System.Double)</h3>
+<p>The size of the map in pixels at zoom level 0.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-systemdouble-2">value <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The value that configures the minsize.</p>
+
+<h3 id="pannablesystemboolean">Pannable(System.Boolean)</h3>
+<p>Controls whether the user can pan the map.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-systemboolean">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the pannable.</p>
+
+<h3 id="wraparoundsystemboolean">Wraparound(System.Boolean)</h3>
+<p>Specifies whether the map should wrap around the east-west edges.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-systemboolean-1">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the wraparound.</p>
+
+<h3 id="zoomsystemdouble">Zoom(System.Double)</h3>
+<p>The initial zoom level.Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).The map size is derived from the zoom level and minScale options: size = (2 ^ zoom) * minSize</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-systemdouble-3">value <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The value that configures the zoom.</p>
+
+<h3 id="zoomablesystemboolean">Zoomable(System.Boolean)</h3>
+<p>Controls whether the map zoom level can be changed by the user.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-systemboolean-2">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the zoomable.</p>
+
+<h3 id="layerssystemactionkendomvcuifluentmaplayerfactory">Layers(System.Action&lt;Kendo.Mvc.UI.Fluent.MapLayerFactory&gt;)</h3>
+<p>The configuration of the map layers.
+            The layer type is determined by the value of the type field.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentmaplayerfactory">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/MapLayerFactory">Kendo.Mvc.UI.Fluent.MapLayerFactory</a>&gt;</h5>
+<p>The action that configures the layers.</p>
+
+<h3 id="markerssystemactionkendomvcuifluentmapmarkerfactory">Markers(System.Action&lt;Kendo.Mvc.UI.Fluent.MapMarkerFactory&gt;)</h3>
+<p>The configuration of the map markers.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentmapmarkerfactory">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/MapMarkerFactory">Kendo.Mvc.UI.Fluent.MapMarkerFactory</a>&gt;</h5>
+<p>The action that configures the markers.</p>
+
+<h3 id="markerdefaultssystemactionkendomvcuifluentmapmarkerdefaultssettingsbuilder">MarkerDefaults(System.Action&lt;Kendo.Mvc.UI.Fluent.MapMarkerDefaultsSettingsBuilder&gt;)</h3>
+<p>The default options for all markers.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentmapmarkerdefaultssettingsbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/MapMarkerDefaultsSettingsBuilder">Kendo.Mvc.UI.Fluent.MapMarkerDefaultsSettingsBuilder</a>&gt;</h5>
+<p>The action that configures the markerdefaults.</p>
+
+<h3 id="eventssystemactionkendomvcuifluentmapeventbuilder">Events(System.Action&lt;Kendo.Mvc.UI.Fluent.MapEventBuilder&gt;)</h3>
+<p>Configures the client-side events.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentmapeventbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/MapEventBuilder">Kendo.Mvc.UI.Fluent.MapEventBuilder</a>&gt;</h5>
+<p>The client events action.</p>
+
+<h4 id="example-aspx">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Map()
+.Name("Map")
+.Events(events =&gt; events
+    .Click("onClick")
+)
+%&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Intro tutorial to Javascript Inheritance with Kendo UI</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="This tutorial will help you learn how to use Kendo UI Classes and master the basics of Javascript Inheritance with Kendo UI framework.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/inheritance-with-kendoui.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="tutorial-intro-to-inheritance-with-kendo-ui">Tutorial: Intro To Inheritance With Kendo UI</h1>
+
+<p>In this tutorial, we will examine the basics of doing JavaScript Inheritance With Kendo UI. You will learn the following:</p>
+
+<ul>
+  <li>How to use Kendo UI Classes</li>
+  <li>Some simple inheritance strategies for JavaScript</li>
+</ul>
+
+<p>Kendo UI is more than just great looking widgets with amazing features.  It’s an extremely powerful tool in
+your JavaScript development arsenal.  The fine team working on Kendo UI knows
+their JavaScript and has exposed some of what they implemented for you to use
+as well.</p>
+
+<p>One of the things that tends to happen quickly in JavaScript programming, is
+that those coming from Object Oriented backgrounds get frustrated with
+the quirkiness of JavaScript’s Object Model.  It’s somewhat counter-intuitive
+when it comes to things like simple inheritance strategies and oftentimes we
+give up and just start chaining elements until we’ve built “the monster”.</p>
+
+<p>It’s essential that we take some of the fantastic structure and DRY principals
+from OO and use them in our JavaScript development.  Especially as JavaScript
+plays more and more of a role on the server (Node.js for instance).</p>
+
+<blockquote>
+  <p>Wikipedia describes JavaScript as a:
+<a href="http://en.wikipedia.org/wiki/Prototype-based">“prototype-based</a> <a href="http://en.wikipedia.org/wiki/Scripting_language">scripting language</a> that is <a href="http://en.wikipedia.org/wiki/Dynamic_language">dynamic</a>, <a href="http://en.wikipedia.org/wiki/Weak_typing">weakly
+typed</a> and has <a href="http://en.wikipedia.org/wiki/First-class_functions">first-class functions</a>. It is a <a href="http://en.wikipedia.org/wiki/Multi-paradigm">multi-paradigm</a>
+language, supporting <a href="http://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented</a>,<a href="http://en.wikipedia.org/wiki/Imperative_programming">imperative</a>, and
+<a href="http://en.wikipedia.org/wiki/Functional_programming">functional</a> programming styles.”</p>
+</blockquote>
+
+<p>That’s a lot of ability in one language.  Functional languages are
+powerful, but when you are able to add in OO principals, it get"s really
+beautiful.</p>
+
+<h3 id="inheritance-with-kendo-ui">Inheritance With Kendo UI</h3>
+
+<p>You can create a new object with Kendo UI by calling <strong>kendo.Class.extend</strong> to
+define it.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var person = kendo.Class.extend({});
+</code></pre></div></div>
+
+<p>That creates a new Person object. We can now add some properties to that
+person object, as well as any functions that we want to create. Object literal
+notation is used here, so variables are declared with a : separating them from
+their value instead of an =. Also, we use the "this" keyword to reference
+local variables inside the object. Failure to specify the context will result
+in the variable not being found.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var Person = kendo.Class.extend({
+
+    firstName: 'Not Set',
+
+    lastName: 'Not Set',
+
+    isAPrettyCoolPerson: false,
+
+    sayHello: function() {
+
+        alert("Hello! I'm " + this.firstName + " " + this.lastName);
+
+    }
+
+});
+
+
+var person = new Person();
+
+person.sayHello();
+</code></pre></div></div>
+
+<p>![Capture]<a href="/tutorials/images/8c23-capture.png">19</a></p>
+
+<p>We can also add a constructor for this object by including an "<em>init</em>" method.
+We could then create a new person by newing up a new <strong>Person</strong> object. We’ll
+create a new <a href="http://twitter.com/johnbristowe">John Bristowe</a>.  We’ll also set his “<em>isAPrettyCoolPerson</em>”
+to true.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var Person = kendo.Class.extend({
+
+    firstName: 'Not Set',
+
+    lastName: 'Not Set',
+
+    isAPrettyCoolPerson: false,
+
+    init: function(firstName, lastName) {
+
+        if (firstName) this.firstName = firstName;
+
+        if (lastName) this.lastName = lastName;    
+
+    },
+
+    sayHello: function() {
+
+        alert("Hello! I'm " + this.firstName + " " + this.lastName);
+
+    }
+
+});
+
+
+var person = new Person("John", "Bristowe");
+
+person.isAPrettyCoolPerson = true;
+
+person.sayHello();
+</code></pre></div></div>
+
+<p><img src="/tutorials/images/8c23-nh5.png" alt="nh5" /></p>
+
+<p>Now we can instantiate a new person object of type parent that inherits the
+properties of <strong>Person</strong> by extending the base person object.  Here I’ve
+created an instance of my Dad who is a parent.  My dad’s also a really cool
+person so we’ll toggle that on.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var Parent = Person.extend({
+
+
+    firstName: 'Mark',
+
+
+    lastName: 'Holland'
+
+
+});
+
+
+
+
+var myDad = new Parent();
+
+
+myDad.isAPrettyCoolPerson = true;
+
+
+
+
+myDad.sayHello();
+
+
+alert(myDad.isAPrettyCoolPerson);
+</code></pre></div></div>
+
+<p><img src="/tutorials/images/8c23-nh1_1.png" alt="nh1" /></p>
+
+<p><img src="/tutorials/images/8c23-nh2.png" alt="nh2" /></p>
+
+<p>Now a child would inherit some, but not all properties from their parents. I
+inherit my father"s last name, but I override the first name since I have my
+own. Also, since my dad is a pretty cool person, that"s a trait that I should
+inherit from his as well right?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var Child = Parent.extend({});
+
+
+var me = new Child();
+
+me.firstName = "Burke";
+
+
+me.sayHello();
+
+alert(me.isPrettyCoolPerson);
+</code></pre></div></div>
+
+<p><img src="/tutorials/images/8c23-nh3.png" alt="nh3" /></p>
+
+<p><img src="/tutorials/images/8c23-nh4.png" alt="nh4" /></p>
+
+<h3 id="understanding-parent-objects">Understanding Parent Objects</h3>
+
+<p>Apparently I didn’t inherit that trait.  Actually I did.  I inherited the same
+trait my father did from the person object.  Because “<em>isACoolPerson</em>” was set
+after my dad was created, it is specific to his object instance of <strong>Parent</strong>.
+And by default, parents are not cool people.</p>
+
+<h3 id="next-steps">Next Steps</h3>
+
+<p>Use the Fiddle below to experiment with Inheritance In Kendo UI.</p>
+
+<iframe style="width: 100%; height: 750px;" src="http://jsfiddle.net/burkeholland/FgShb/embedded/js,result" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

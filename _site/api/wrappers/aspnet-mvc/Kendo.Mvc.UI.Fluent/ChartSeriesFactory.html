@@ -1,0 +1,1409 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/ChartSeriesFactory.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluentchartseriesfactory">Kendo.Mvc.UI.Fluent.ChartSeriesFactory</h1>
+<p>Creates series for the 1.</p>
+
+<h2 id="properties">Properties</h2>
+
+<h3 id="container">Container</h3>
+
+<p>The parent Chart</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="barsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">Bar(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound bar series.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h5 id="colorexpression-systemlinqexpressionsexpressionsystemfunctsystemstring">colorExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point color from the chart model</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point category from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="barsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstring">Bar(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound bar series.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-1">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h5 id="colorexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-1">colorExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point color from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-1">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="barsystemstringsystemstringsystemstringsystemstring">Bar(System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound bar series.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="valuemembername-systemstring">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="colormembername-systemstring">colorMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h5 id="categorymembername-systemstring">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="barsystemtypesystemstringsystemstringsystemstringsystemstring">Bar(System.Type,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound bar series.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="membertype-systemtype">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value member.</p>
+
+<h5 id="valuemembername-systemstring-1">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="colormembername-systemstring-1">colorMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h5 id="categorymembername-systemstring-1">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-1">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="barsystemcollectionsienumerable">Bar(System.Collections.IEnumerable)</h3>
+<p>Defines bar series bound to inline data.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to.</p>
+
+<h3 id="columnsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">Column(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound column series.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-2">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h5 id="colorexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-2">colorExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point color from the chart model</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1-1">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point category from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-2">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="columnsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstring">Column(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound column series.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-3">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h5 id="colorexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-3">colorExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point color from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-3">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="columnsystemstringsystemstringsystemstringsystemstring">Column(System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound column series.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="valuemembername-systemstring-2">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="colormembername-systemstring-2">colorMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h5 id="categorymembername-systemstring-2">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-2">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="columnsystemtypesystemstringsystemstringsystemstringsystemstring">Column(System.Type,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound column series.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="membertype-systemtype-1">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value member.</p>
+
+<h5 id="valuemembername-systemstring-3">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="colormembername-systemstring-3">colorMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h5 id="categorymembername-systemstring-3">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-3">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="columnsystemcollectionsienumerable">Column(System.Collections.IEnumerable)</h3>
+<p>Defines column series bound to inline data.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-1">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="linesystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">Line(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound line series.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="expression-systemlinqexpressionsexpressionsystemfunctt1">expression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the value from the chart model.</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1-2">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the category from the chart model.</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-4">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model.</p>
+
+<h3 id="linesystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">Line(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound line series.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="expression-systemlinqexpressionsexpressionsystemfunctt1-1">expression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the value from the chart model.</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-5">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model.</p>
+
+<h3 id="linesystemstringsystemstringsystemstring">Line(System.String,System.String,System.String)</h3>
+<p>Defines bound line series.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="membername-systemstring">memberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-4">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-4">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="linesystemtypesystemstringsystemstringsystemstring">Line(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound line series.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="membertype-systemtype-2">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value member.</p>
+
+<h5 id="membername-systemstring-1">memberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-5">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-5">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="linesystemcollectionsienumerable">Line(System.Collections.IEnumerable)</h3>
+<p>Defines line series bound to inline data.</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-2">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="verticallinesystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">VerticalLine(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound vertical line series.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="expression-systemlinqexpressionsexpressionsystemfunctt1-2">expression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the value from the chart model.</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1-3">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the category from the chart model.</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-6">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model.</p>
+
+<h3 id="verticallinesystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">VerticalLine(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound vertical line series.</p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="expression-systemlinqexpressionsexpressionsystemfunctt1-3">expression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the value from the chart model.</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-7">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model.</p>
+
+<h3 id="verticallinesystemstringsystemstringsystemstring">VerticalLine(System.String,System.String,System.String)</h3>
+<p>Defines bound vertical line series.</p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="membername-systemstring-2">memberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-6">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-6">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="verticallinesystemtypesystemstringsystemstringsystemstring">VerticalLine(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound vertical line series.</p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="membertype-systemtype-3">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value member.</p>
+
+<h5 id="membername-systemstring-3">memberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-7">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-7">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="verticallinesystemcollectionsienumerable">VerticalLine(System.Collections.IEnumerable)</h3>
+<p>Defines vertical line series bound to inline data.</p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-3">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="areasystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">Area(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound area series.</p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="expression-systemlinqexpressionsexpressionsystemfunctt1-4">expression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the value from the chart model.</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-8">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model.</p>
+
+<h3 id="areasystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">Area(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound area series.</p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="expression-systemlinqexpressionsexpressionsystemfunctt1-5">expression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the value from the chart model.</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1-4">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the category from the chart model.</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-9">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model.</p>
+
+<h3 id="areasystemstringsystemstringsystemstring">Area(System.String,System.String,System.String)</h3>
+<p>Defines bound area series.</p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="membername-systemstring-4">memberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-8">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-8">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="areasystemtypesystemstringsystemstringsystemstring">Area(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound area series.</p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="membertype-systemtype-4">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value member.</p>
+
+<h5 id="membername-systemstring-5">memberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-9">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-9">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="areasystemcollectionsienumerable">Area(System.Collections.IEnumerable)</h3>
+<p>Defines area series bound to inline data.</p>
+
+<h4 id="parameters-24">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-4">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="verticalareasystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">VerticalArea(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound vertical area series.</p>
+
+<h4 id="parameters-25">Parameters</h4>
+
+<h5 id="expression-systemlinqexpressionsexpressionsystemfunctt1-6">expression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the value from the chart model.</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1-5">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the category from the chart model.</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-10">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model.</p>
+
+<h3 id="verticalareasystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">VerticalArea(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound vertical area series.</p>
+
+<h4 id="parameters-26">Parameters</h4>
+
+<h5 id="expression-systemlinqexpressionsexpressionsystemfunctt1-7">expression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the value from the chart model.</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-11">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model.</p>
+
+<h3 id="verticalareasystemstringsystemstringsystemstring">VerticalArea(System.String,System.String,System.String)</h3>
+<p>Defines bound vertical area series.</p>
+
+<h4 id="parameters-27">Parameters</h4>
+
+<h5 id="membername-systemstring-6">memberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-10">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-10">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="verticalareasystemtypesystemstringsystemstringsystemstring">VerticalArea(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound vertical area series.</p>
+
+<h4 id="parameters-28">Parameters</h4>
+
+<h5 id="membertype-systemtype-5">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value member.</p>
+
+<h5 id="membername-systemstring-7">memberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-11">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-11">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="verticalareasystemcollectionsienumerable">VerticalArea(System.Collections.IEnumerable)</h3>
+<p>Defines vertical area series bound to inline data.</p>
+
+<h4 id="parameters-29">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-5">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="scattersystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">Scatter(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound scatter series.</p>
+
+<h4 id="parameters-30">Parameters</h4>
+
+<h5 id="xvalueexpression-systemlinqexpressionsexpressionsystemfunctt1">xValueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the X value from the chart model</p>
+
+<h5 id="yvalueexpression-systemlinqexpressionsexpressionsystemfunctt1">yValueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the Y value from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-12">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model</p>
+
+<h3 id="scattersystemstringsystemstringsystemstring">Scatter(System.String,System.String,System.String)</h3>
+<p>Defines bound scatter series.</p>
+
+<h4 id="parameters-31">Parameters</h4>
+
+<h5 id="xmembername-systemstring">xMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the X value member.</p>
+
+<h5 id="ymembername-systemstring">yMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h5 id="notetextmembername-systemstring-12">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="scattersystemtypesystemstringsystemstringsystemstring">Scatter(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound scatter series.</p>
+
+<h4 id="parameters-32">Parameters</h4>
+
+<h5 id="membertype-systemtype-6">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value members.</p>
+
+<h5 id="xmembername-systemstring-1">xMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the X value member.</p>
+
+<h5 id="ymembername-systemstring-1">yMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h5 id="notetextmembername-systemstring-13">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="scattersystemcollectionsienumerable">Scatter(System.Collections.IEnumerable)</h3>
+<p>Defines scatter series bound to inline data.</p>
+
+<h4 id="parameters-33">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-6">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="scatterlinesystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">ScatterLine(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound scatter line series.</p>
+
+<h4 id="parameters-34">Parameters</h4>
+
+<h5 id="xvalueexpression-systemlinqexpressionsexpressionsystemfunctt1-1">xValueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the X value from the chart model</p>
+
+<h5 id="yvalueexpression-systemlinqexpressionsexpressionsystemfunctt1-1">yValueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the Y value from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-13">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the Y value from the chart model</p>
+
+<h3 id="scatterlinesystemstringsystemstringsystemstring">ScatterLine(System.String,System.String,System.String)</h3>
+<p>Defines bound scatter line series.</p>
+
+<h4 id="parameters-35">Parameters</h4>
+
+<h5 id="xmembername-systemstring-2">xMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the X value member.</p>
+
+<h5 id="ymembername-systemstring-2">yMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h5 id="notetextexpression-systemstring">noteTextExpression <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h3 id="scatterlinesystemtypesystemstringsystemstringsystemstring">ScatterLine(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound scatter line series.</p>
+
+<h4 id="parameters-36">Parameters</h4>
+
+<h5 id="membertype-systemtype-7">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value members.</p>
+
+<h5 id="xmembername-systemstring-3">xMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the X value member.</p>
+
+<h5 id="ymembername-systemstring-3">yMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h5 id="notetextexpression-systemstring-1">noteTextExpression <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h3 id="scatterlinesystemcollectionsienumerable">ScatterLine(System.Collections.IEnumerable)</h3>
+<p>Defines scatter line series bound to inline data.</p>
+
+<h4 id="parameters-37">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-7">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="bubblesystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystembooleansystemlinqexpressionsexpressionsystemfunctsystemstring">Bubble(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.Boolean&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound bubble series.</p>
+
+<h3 id="bubblesystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstring">Bubble(System.String,System.String,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound bubble series.</p>
+
+<h3 id="bubblesystemtypesystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstring">Bubble(System.Type,System.String,System.String,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound bubble series.</p>
+
+<h3 id="bubblesystemcollectionsienumerable">Bubble(System.Collections.IEnumerable)</h3>
+<p>Defines bubble series bound to inline data.</p>
+
+<h4 id="parameters-38">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-8">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="piesystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystembooleansystemlinqexpressionsexpressionsystemfunctsystemboolean">Pie(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.Boolean&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.Boolean&gt;&gt;)</h3>
+<p>Defines bound pie series.</p>
+
+<h3 id="piesystemstringsystemstringsystemstringsystemstringsystemstring">Pie(System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound pie series.</p>
+
+<h3 id="piesystemtypesystemstringsystemstringsystemstringsystemstringsystemstring">Pie(System.Type,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound pie series.</p>
+
+<h3 id="piesystemcollectionsienumerable">Pie(System.Collections.IEnumerable)</h3>
+<p>Defines pie series bound to inline data.</p>
+
+<h4 id="parameters-39">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-9">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="funnelsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemboolean">Funnel(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.Boolean&gt;&gt;)</h3>
+<p>Defines bound funnel series.</p>
+
+<h3 id="funnelsystemstringsystemstringsystemstringsystemstring">Funnel(System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound funnel series.</p>
+
+<h3 id="funnelsystemtypesystemstringsystemstringsystemstringsystemstring">Funnel(System.Type,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound funnel series.</p>
+
+<h3 id="funnelsystemcollectionsienumerable">Funnel(System.Collections.IEnumerable)</h3>
+<p>Defines funnel series bound to inline data.</p>
+
+<h4 id="parameters-40">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-10">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="donutsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystembooleansystemlinqexpressionsexpressionsystemfunctsystemboolean">Donut(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.Boolean&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.Boolean&gt;&gt;)</h3>
+<p>Defines bound Donut series.</p>
+
+<h3 id="donutsystemstringsystemstringsystemstringsystemstringsystemstring">Donut(System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound donut series.</p>
+
+<h3 id="donutsystemtypesystemstringsystemstringsystemstringsystemstringsystemstring">Donut(System.Type,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound donut series.</p>
+
+<h3 id="donutsystemcollectionsienumerable">Donut(System.Collections.IEnumerable)</h3>
+<p>Defines donut series bound to inline data.</p>
+
+<h4 id="parameters-41">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-11">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="ohlcsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">OHLC(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound ohlc series.</p>
+
+<h3 id="ohlcsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstring">OHLC(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound ohlc series.</p>
+
+<h3 id="ohlcsystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstring">OHLC(System.String,System.String,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound ohlc series.</p>
+
+<h3 id="ohlcsystemtypesystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstring">OHLC(System.Type,System.String,System.String,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound ohlc series.</p>
+
+<h3 id="ohlcsystemcollectionsienumerable">OHLC(System.Collections.IEnumerable)</h3>
+<p>Defines ohlc series bound to inline data.</p>
+
+<h4 id="parameters-42">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-12">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="candlesticksystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">Candlestick(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound candlestick series.</p>
+
+<h3 id="candlesticksystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstring">Candlestick(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound candlestick series.</p>
+
+<h3 id="candlesticksystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstring">Candlestick(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound candlestick series.</p>
+
+<h3 id="candlesticksystemtypesystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstring">Candlestick(System.Type,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound candlestick series.</p>
+
+<h3 id="candlesticksystemcollectionsienumerable">Candlestick(System.Collections.IEnumerable)</h3>
+<p>Defines candlestick series bound to inline data.</p>
+
+<h4 id="parameters-43">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-13">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="bulletsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">Bullet(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound bullet series.</p>
+
+<h4 id="parameters-44">Parameters</h4>
+
+<h5 id="currentexpression-systemlinqexpressionsexpressionsystemfunctt1">currentExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point current value from the chart model</p>
+
+<h5 id="targetexpression-systemlinqexpressionsexpressionsystemfunctt1">targetExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point target value from the chart model</p>
+
+<h5 id="colorexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-4">colorExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point color from the chart model</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1-6">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point category from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-14">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="bulletsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstring">Bullet(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound bullet series.</p>
+
+<h4 id="parameters-45">Parameters</h4>
+
+<h5 id="currentexpression-systemlinqexpressionsexpressionsystemfunctt1-1">currentExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point current value from the chart model</p>
+
+<h5 id="targetexpression-systemlinqexpressionsexpressionsystemfunctt1-1">targetExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point target value from the chart model</p>
+
+<h5 id="colorexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-5">colorExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point color from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-15">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="bulletsystemstringsystemstringsystemstringsystemstringsystemstring">Bullet(System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound bar series.</p>
+
+<h4 id="parameters-46">Parameters</h4>
+
+<h5 id="currentmembername-systemstring">currentMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the current value member.</p>
+
+<h5 id="targetmembername-systemstring">targetMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the target value member.</p>
+
+<h5 id="colormembername-systemstring-4">colorMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h5 id="notetextmembername-systemstring-14">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="bulletsystemtypesystemstringsystemstringsystemstringsystemstringsystemstring">Bullet(System.Type,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound bullet series.</p>
+
+<h4 id="parameters-47">Parameters</h4>
+
+<h5 id="currentmembertype-systemtype">currentMemberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the current value member.</p>
+
+<h5 id="targetmembername-systemstring-1">targetMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the target value member.</p>
+
+<h5 id="colormembername-systemstring-5">colorMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h5 id="notetextexpression-systemstring-2">noteTextExpression <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="bulletsystemcollectionsienumerable">Bullet(System.Collections.IEnumerable)</h3>
+<p>Defines bar series bound to inline data.</p>
+
+<h4 id="parameters-48">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-14">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to.</p>
+
+<h3 id="verticalbulletsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">VerticalBullet(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound verticalBullet series.</p>
+
+<h4 id="parameters-49">Parameters</h4>
+
+<h5 id="currentexpression-systemlinqexpressionsexpressionsystemfunctt1-2">currentExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point current value from the chart model</p>
+
+<h5 id="targetexpression-systemlinqexpressionsexpressionsystemfunctt1-2">targetExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point target value from the chart model</p>
+
+<h5 id="colorexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-6">colorExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point color from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctt1">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="verticalbulletsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstring">VerticalBullet(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound verticalBullet series.</p>
+
+<h4 id="parameters-50">Parameters</h4>
+
+<h5 id="currentexpression-systemlinqexpressionsexpressionsystemfunctt1-3">currentExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point current value from the chart model</p>
+
+<h5 id="targetexpression-systemlinqexpressionsexpressionsystemfunctt1-3">targetExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point target value from the chart model</p>
+
+<h5 id="colorexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-7">colorExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point color from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-16">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="verticalbulletsystemstringsystemstringsystemstringsystemstringsystemstring">VerticalBullet(System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound verticalBullet series.</p>
+
+<h4 id="parameters-51">Parameters</h4>
+
+<h5 id="currentmembername-systemstring-1">currentMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the current value member.</p>
+
+<h5 id="targetmembername-systemstring-2">targetMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the target value member.</p>
+
+<h5 id="colormembername-systemstring-6">colorMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h5 id="notetextmembername-systemstring-15">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h3 id="verticalbulletsystemtypesystemstringsystemstringsystemstringsystemstringsystemstring">VerticalBullet(System.Type,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound verticalBullet series.</p>
+
+<h4 id="parameters-52">Parameters</h4>
+
+<h5 id="currentmembertype-systemtype-1">currentMemberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the current value member.</p>
+
+<h5 id="targetmembername-systemstring-3">targetMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the target value member.</p>
+
+<h5 id="colormembername-systemstring-7">colorMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h5 id="notetextmembername-systemstring-16">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h3 id="verticalbulletsystemcollectionsienumerable">VerticalBullet(System.Collections.IEnumerable)</h3>
+<p>Defines bar series bound to inline data.</p>
+
+<h4 id="parameters-53">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-15">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="radarareasystemlinqexpressionsexpressionsystemfunctt1">RadarArea(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;)</h3>
+<p>Defines bound radar area series.</p>
+
+<h4 id="parameters-54">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-4">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h3 id="radarareasystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">RadarArea(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound radar area series.</p>
+
+<h4 id="parameters-55">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-5">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1-7">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point category from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-17">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="radarareasystemstringsystemstringsystemstring">RadarArea(System.String,System.String,System.String)</h3>
+<p>Defines bound radar area series.</p>
+
+<h4 id="parameters-56">Parameters</h4>
+
+<h5 id="valuemembername-systemstring-4">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-12">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-17">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="radarareasystemtypesystemstringsystemstringsystemstring">RadarArea(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound radar area series.</p>
+
+<h4 id="parameters-57">Parameters</h4>
+
+<h5 id="membertype-systemtype-8">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value member.</p>
+
+<h5 id="valuemembername-systemstring-5">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-13">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-18">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="radarareasystemcollectionsienumerable">RadarArea(System.Collections.IEnumerable)</h3>
+<p>Defines radar area series bound to inline data.</p>
+
+<h4 id="parameters-58">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-16">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to.</p>
+
+<h3 id="radarcolumnsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">RadarColumn(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound radar column series.</p>
+
+<h4 id="parameters-59">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-6">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h5 id="colorexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-8">colorExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point color from the chart model</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1-8">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point category from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-18">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="radarcolumnsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstring">RadarColumn(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound radar column series.</p>
+
+<h4 id="parameters-60">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-7">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h5 id="colorexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-9">colorExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point color from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-19">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="radarcolumnsystemstringsystemstringsystemstringsystemstring">RadarColumn(System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound radar column series.</p>
+
+<h4 id="parameters-61">Parameters</h4>
+
+<h5 id="valuemembername-systemstring-6">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="colormembername-systemstring-8">colorMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h5 id="categorymembername-systemstring-14">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-19">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="radarcolumnsystemtypesystemstringsystemstringsystemstringsystemstring">RadarColumn(System.Type,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound radar column series.</p>
+
+<h4 id="parameters-62">Parameters</h4>
+
+<h5 id="membertype-systemtype-9">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value member.</p>
+
+<h5 id="valuemembername-systemstring-7">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="colormembername-systemstring-9">colorMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the color member.</p>
+
+<h5 id="categorymembername-systemstring-15">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-20">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="radarcolumnsystemcollectionsienumerable">RadarColumn(System.Collections.IEnumerable)</h3>
+<p>Defines radar column series bound to inline data.</p>
+
+<h4 id="parameters-63">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-17">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to.</p>
+
+<h3 id="radarlinesystemlinqexpressionsexpressionsystemfunctt1">RadarLine(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;)</h3>
+<p>Defines bound radar line series.</p>
+
+<h4 id="parameters-64">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-8">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h3 id="radarlinesystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">RadarLine(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound radar line series.</p>
+
+<h4 id="parameters-65">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-9">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1-9">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point category from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-20">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="radarlinesystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">RadarLine(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound radar line series.</p>
+
+<h4 id="parameters-66">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-10">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-21">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point note text from the chart model</p>
+
+<h3 id="radarlinesystemstringsystemstringsystemstring">RadarLine(System.String,System.String,System.String)</h3>
+<p>Defines bound radar line series.</p>
+
+<h4 id="parameters-67">Parameters</h4>
+
+<h5 id="valuemembername-systemstring-8">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-16">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-21">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h3 id="radarlinesystemtypesystemstringsystemstringsystemstring">RadarLine(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound radar line series.</p>
+
+<h4 id="parameters-68">Parameters</h4>
+
+<h5 id="membertype-systemtype-10">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value member.</p>
+
+<h5 id="valuemembername-systemstring-9">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-17">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="notetextmembername-systemstring-22">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="radarlinesystemcollectionsienumerable">RadarLine(System.Collections.IEnumerable)</h3>
+<p>Defines radar line series bound to inline data.</p>
+
+<h4 id="parameters-69">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-18">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to.</p>
+
+<h3 id="polarareasystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">PolarArea(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound polar area series.</p>
+
+<h4 id="parameters-70">Parameters</h4>
+
+<h5 id="xvalueexpression-systemlinqexpressionsexpressionsystemfunctt1-2">xValueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the X value from the chart model</p>
+
+<h5 id="yvalueexpression-systemlinqexpressionsexpressionsystemfunctt1-2">yValueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the Y value from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-22">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model</p>
+
+<h3 id="polarareasystemstringsystemstringsystemstring">PolarArea(System.String,System.String,System.String)</h3>
+<p>Defines bound polar area series.</p>
+
+<h4 id="parameters-71">Parameters</h4>
+
+<h5 id="xmembername-systemstring-4">xMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the X value member.</p>
+
+<h5 id="ymembername-systemstring-4">yMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h5 id="notetextmembername-systemstring-23">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="polarareasystemtypesystemstringsystemstringsystemstring">PolarArea(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound polar area series.</p>
+
+<h4 id="parameters-72">Parameters</h4>
+
+<h5 id="membertype-systemtype-11">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value members.</p>
+
+<h5 id="xmembername-systemstring-5">xMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the X value member.</p>
+
+<h5 id="ymembername-systemstring-5">yMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h5 id="notetextmembername-systemstring-24">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="polarareasystemcollectionsienumerable">PolarArea(System.Collections.IEnumerable)</h3>
+<p>Defines polar area series bound to inline data.</p>
+
+<h4 id="parameters-73">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-19">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="polarlinesystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">PolarLine(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound polar line series.</p>
+
+<h4 id="parameters-74">Parameters</h4>
+
+<h5 id="xvalueexpression-systemlinqexpressionsexpressionsystemfunctt1-3">xValueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the X value from the chart model</p>
+
+<h5 id="yvalueexpression-systemlinqexpressionsexpressionsystemfunctt1-3">yValueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the Y value from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-23">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model</p>
+
+<h3 id="polarlinesystemstringsystemstringsystemstring">PolarLine(System.String,System.String,System.String)</h3>
+<p>Defines bound polar line series.</p>
+
+<h4 id="parameters-75">Parameters</h4>
+
+<h5 id="xmembername-systemstring-6">xMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the X value member.</p>
+
+<h5 id="ymembername-systemstring-6">yMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h5 id="notetextmembername-systemstring-25">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="polarlinesystemtypesystemstringsystemstringsystemstring">PolarLine(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound polar line series.</p>
+
+<h4 id="parameters-76">Parameters</h4>
+
+<h5 id="membertype-systemtype-12">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value members.</p>
+
+<h5 id="xmembername-systemstring-7">xMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the X value member.</p>
+
+<h5 id="ymembername-systemstring-7">yMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h3 id="polarlinesystemcollectionsienumerable">PolarLine(System.Collections.IEnumerable)</h3>
+<p>Defines polar line series bound to inline data.</p>
+
+<h4 id="parameters-77">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-20">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="polarscattersystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">PolarScatter(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound polar scatter series.</p>
+
+<h4 id="parameters-78">Parameters</h4>
+
+<h5 id="xvalueexpression-systemlinqexpressionsexpressionsystemfunctt1-4">xValueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the X value from the chart model</p>
+
+<h5 id="yvalueexpression-systemlinqexpressionsexpressionsystemfunctt1-4">yValueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the Y value from the chart model</p>
+
+<h5 id="notetextexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-24">noteTextExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the note text from the chart model</p>
+
+<h3 id="polarscattersystemstringsystemstringsystemstring">PolarScatter(System.String,System.String,System.String)</h3>
+<p>Defines bound polar scatter series.</p>
+
+<h4 id="parameters-79">Parameters</h4>
+
+<h5 id="xmembername-systemstring-8">xMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the X value member.</p>
+
+<h5 id="ymembername-systemstring-8">yMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h5 id="notetextmembername-systemstring-26">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="polarscattersystemtypesystemstringsystemstringsystemstring">PolarScatter(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound polar scatter series.</p>
+
+<h4 id="parameters-80">Parameters</h4>
+
+<h5 id="membertype-systemtype-13">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value members.</p>
+
+<h5 id="xmembername-systemstring-9">xMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the X value member.</p>
+
+<h5 id="ymembername-systemstring-9">yMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the Y value member.</p>
+
+<h5 id="notetextmembername-systemstring-27">noteTextMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note text member.</p>
+
+<h3 id="polarscattersystemcollectionsienumerable">PolarScatter(System.Collections.IEnumerable)</h3>
+<p>Defines polar scatter series bound to inline data.</p>
+
+<h4 id="parameters-81">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-21">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="boxplotsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemcollectionsgenericilistt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">BoxPlot(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.Collections.Generic.IList&lt;T1&gt;&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound box plot series.</p>
+
+<h3 id="boxplotsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemcollectionsgenericilistt1systemlinqexpressionsexpressionsystemfunctsystemstringsystemlinqexpressionsexpressionsystemfunctsystemstring">BoxPlot(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.Collections.Generic.IList&lt;T1&gt;&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound box plot series.</p>
+
+<h3 id="boxplotsystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstring">BoxPlot(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound box plot series.</p>
+
+<h3 id="boxplotsystemtypesystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstringsystemstring">BoxPlot(System.Type,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)</h3>
+<p>Defines bound box plot series.</p>
+
+<h3 id="boxplotsystemcollectionsienumerable">BoxPlot(System.Collections.IEnumerable)</h3>
+<p>Defines box plot series bound to inline data.</p>
+
+<h4 id="parameters-82">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-22">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to</p>
+
+<h3 id="waterfallsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">Waterfall(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound waterfall series.</p>
+
+<h4 id="parameters-83">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-11">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1-10">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point category from the chart model</p>
+
+<h5 id="summaryexpression-systemlinqexpressionsexpressionsystemfunctsystemstring">summaryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point summary type from the chart model</p>
+
+<h3 id="waterfallsystemlinqexpressionsexpressionsystemfunctt1">Waterfall(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;)</h3>
+<p>Defines bound waterfall series.</p>
+
+<h4 id="parameters-84">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-12">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h3 id="waterfallsystemstringsystemstringsystemstring">Waterfall(System.String,System.String,System.String)</h3>
+<p>Defines bound waterfall series.</p>
+
+<h4 id="parameters-85">Parameters</h4>
+
+<h5 id="valuemembername-systemstring-10">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-18">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="summarymembername-systemstring">summaryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note summary type member.</p>
+
+<h3 id="waterfallsystemtypesystemstringsystemstringsystemstring">Waterfall(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound waterfall series.</p>
+
+<h4 id="parameters-86">Parameters</h4>
+
+<h5 id="membertype-systemtype-14">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value member.</p>
+
+<h5 id="valuemembername-systemstring-11">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-19">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="summarymembername-systemstring-1">summaryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note summary type member.</p>
+
+<h3 id="waterfallsystemcollectionsienumerable">Waterfall(System.Collections.IEnumerable)</h3>
+<p>Defines waterfall series bound to inline data.</p>
+
+<h4 id="parameters-87">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-23">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to.</p>
+
+<h3 id="horizontalwaterfallsystemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctt1systemlinqexpressionsexpressionsystemfunctsystemstring">HorizontalWaterfall(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;,System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;)</h3>
+<p>Defines bound horizontal waterfall series.</p>
+
+<h4 id="parameters-88">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-13">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h5 id="categoryexpression-systemlinqexpressionsexpressionsystemfunctt1-11">categoryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point category from the chart model</p>
+
+<h5 id="summaryexpression-systemlinqexpressionsexpressionsystemfunctsystemstring-1">summaryExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,System.String&gt;&gt;</code></h5>
+<p>The expression used to extract the point summary type from the chart model</p>
+
+<h3 id="horizontalwaterfallsystemlinqexpressionsexpressionsystemfunctt1">HorizontalWaterfall(System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;)</h3>
+<p>Defines bound horizontal waterfall series.</p>
+
+<h4 id="parameters-89">Parameters</h4>
+
+<h5 id="valueexpression-systemlinqexpressionsexpressionsystemfunctt1-14">valueExpression <code class="language-plaintext highlighter-rouge">System.Linq.Expressions.Expression&lt;System.Func&lt;T,T1&gt;&gt;</code></h5>
+<p>The expression used to extract the point value from the chart model</p>
+
+<h3 id="horizontalwaterfallsystemstringsystemstringsystemstring">HorizontalWaterfall(System.String,System.String,System.String)</h3>
+<p>Defines bound horizontal waterfall series.</p>
+
+<h4 id="parameters-90">Parameters</h4>
+
+<h5 id="valuemembername-systemstring-12">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-20">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="summarymembername-systemstring-2">summaryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note summary type member.</p>
+
+<h3 id="horizontalwaterfallsystemtypesystemstringsystemstringsystemstring">HorizontalWaterfall(System.Type,System.String,System.String,System.String)</h3>
+<p>Defines bound horizontal waterfall series.</p>
+
+<h4 id="parameters-91">Parameters</h4>
+
+<h5 id="membertype-systemtype-15">memberType <code class="language-plaintext highlighter-rouge">System.Type</code></h5>
+<p>The type of the value member.</p>
+
+<h5 id="valuemembername-systemstring-13">valueMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the value member.</p>
+
+<h5 id="categorymembername-systemstring-21">categoryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the category member.</p>
+
+<h5 id="summarymembername-systemstring-3">summaryMemberName <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the note summary type member.</p>
+
+<h3 id="horizontalwaterfallsystemcollectionsienumerable">HorizontalWaterfall(System.Collections.IEnumerable)</h3>
+<p>Defines horizontal waterfall series bound to inline data.</p>
+
+<h4 id="parameters-92">Parameters</h4>
+
+<h5 id="data-systemcollectionsienumerable-24">data <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data to bind to.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

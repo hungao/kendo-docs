@@ -1,0 +1,1462 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI ContextMenu</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to configure all animations in ContextMenu UI widget, enable and disable, remove specified items and use code examples for all methods and events supported.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/contextmenu.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouicontextmenu">kendo.ui.ContextMenu</h1>
+
+<p>Represents the Kendo UI ContextMenu widget. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="aligntoanchor-booleandefault-false">alignToAnchor <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>Specifies that ContextMenu should be shown aligned to the target or the filter element if specified.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        alignToAnchor: true
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animation-object">animation <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>A collection of <strong>Animation</strong> objects, used to change default animations. A value of false will disable all animations in the widget.</p>
+
+<p>Available animations for the <strong>ContextMenu</strong> are listed below.  Each animation has a reverse options which is used for the <strong>close</strong> effect by default, but can be over-ridden
+by setting the <strong>close</strong> animation. Each animation also has a direction which can be set off the animation (i.e. <strong>slideIn:Down</strong>).</p>
+
+<h4 id="slidein"><em>slideIn</em></h4>
+
+<p>ContextMenu content slides in from the top.</p>
+
+<h4 id="fadein"><em>fadeIn</em></h4>
+
+<p>ContextMenu content fades in.</p>
+
+<h4 id="expand"><em>expand</em></h4>
+
+<p>ContextMenu content expands from the top down. Similar to slideIn.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        animation: { 
+            open: { 
+                effects: "fadeIn" 
+            } 
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationclose-object">animation.close <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The animation that will be used when closing sub menus.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        animation: { 
+            close: { 
+                effects: "slideIn:up" 
+            } 
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationcloseeffects-string">animation.close.effects <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Effect to be used when closing the popup.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        animation: { 
+            close: { 
+                effects: "slideIn:up" 
+            } 
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationcloseduration-number">animation.close.duration <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>Defines the close animation duration in milliseconds.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        animation: { 
+            open: {
+                effects: "slideIn:down",
+                duration: 100
+            } 
+        }
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationopen-object">animation.open <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The animation that will be used when opening sub menus.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        animation: { 
+            open: { 
+                effects: "slideIn:down" 
+            } 
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationopeneffects-string">animation.open.effects <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Effect to be used when opening the popup.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        animation: { 
+            open: { 
+                effects: "slideIn:down" 
+            } 
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationopenduration-number">animation.open.duration <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>Defines the open animation duration in milliseconds.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        animation: { 
+            open: {
+                effects: "zoomIn",
+                duration: 100
+            } 
+        }
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="closeonclick-booleandefault-true">closeOnClick <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>Specifies that sub menus should close after item selection (provided they won"t navigate).</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        closeOnClick: false
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="datasource-objectarray">dataSource <code class="language-plaintext highlighter-rouge">Object|Array</code></h3>
+
+<p>The data source of the widget which is used to render its items. Can be a JSON object/Array that contains an item or an Array of items to be rendered.
+Refer to the example below for a list of the supported properties.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $(document).ready(function() {
+        $("#context-menu").kendoContextMenu({
+            target: "#target",
+            dataSource:
+                [{
+                    text: "Item 1",
+                    cssClass: "myClass",                         // Add custom CSS class to the item, optional, added 2012 Q3 SP1.
+                    url: "http://www.kendoui.com"                // Link URL if navigation is needed, optional.
+                },
+                {
+                    text: "&lt;b&gt;Item 2&lt;/b&gt;",
+                    encoded: false,                              // Allows use of HTML for item text
+                    content: "text"                              // content within an item
+                },
+                {
+                    text: "Item 3",
+                    imageUrl: "http://www.kendoui.com/test.jpg", // Item image URL, optional.
+                    items: [{                                    // Sub item collection
+                         text: "Sub Item 1"
+                    },
+                    {
+                         text: "Sub Item 2"
+                    }]
+                },
+                {
+                    text: "Item 4",
+                    spriteCssClass: "imageClass3"                // Item image sprite CSS class, optional.
+                }]
+        })
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="direction-stringdefault-default">direction <code class="language-plaintext highlighter-rouge">String</code><em>(default: "default")</em></h3>
+
+<p>Specifies ContextMenu sub menu opening direction. Can be "top", "bottom", "left", "right".
+The example below will initialize the sub menus to open to the left.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        direction: "left"
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filter-string">filter <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies ContextMenu filter selector - the ContextMenu will only be shown on items that satisfy the provided selector.</p>
+
+<h4 id="show-the-contextmenu-on-some-elements-inside-the-target">Show the ContextMenu on some elements inside the target</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target
+    &lt;div class="box"&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div class="box"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        filter: ".box"
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="hoverdelay-numberdefault-100">hoverDelay <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 100)</em></h3>
+
+<p>Specifies the delay in ms before the sub menus are opened/closed - used to avoid accidental closure on leaving.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        hoverDelay: 200
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="orientation-stringdefault-vertical">orientation <code class="language-plaintext highlighter-rouge">String</code><em>(default: "vertical")</em></h3>
+
+<p>Root menu orientation. Could be horizontal or vertical.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        orientation: "horizontal"
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="popupcollision-string">popupCollision <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies how ContextMenu should adjust to screen boundaries. By default the strategy is <strong>"fit"</strong> for a sub menu with a horizontal parent or the root menu,
+meaning it will move to fit in screen boundaries in all directions, and <strong>"fit flip"</strong> for a sub menu with vertical parent, meaning it will fit vertically and flip over
+its parent horizontally. You can also switch off the screen boundary detection completely if you set the <strong>popupCollision</strong> to false.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        popupCollision: false
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="showon-string">showOn <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the event or events on which ContextMenu should open. By default ContextMenu will show on <em>contextmenu</em> event on desktop and <em>hold</em> event on touch devices.
+Could be any pointer/mouse/touch event, also several, separated by spaces.</p>
+
+<h4 id="show-the-contextmenu-on-left-click">Show the ContextMenu on left click</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        showOn: "click"
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="target-stringjquerydefault-body">target <code class="language-plaintext highlighter-rouge">String|jQuery</code><em>(default: "body")</em></h3>
+
+<p>Specifies the element on which ContextMenu should open. The default element is the document body.</p>
+
+<h4 id="show-the-contextmenu-on-element-with-id-target">Show the ContextMenu on element with ID target</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target"
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="append">append</h3>
+
+<p>Appends an item to a <strong>ContextMenu</strong> in the specified referenceItem"s sub menu (or the root context menu if not specified).</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;&lt;/ul&gt;
+&lt;script&gt;
+    // get a reference to already initialized ContextMenu widget
+    var contextMenu = $("#context-menu").data("kendoContextMenu");
+    //
+    contextMenu.append(
+        [{
+            text: "Item 1",
+            cssClass: "myClass",                         // Add custom CSS class to the item, optional, added 2012 Q3 SP1.
+            url: "http://www.telerik.com"                // Link URL if navigation is needed, optional.
+        },
+        {
+            text: "&lt;b&gt;Item 2&lt;/b&gt;",
+            encoded: false,                              // Allows use of HTML for item text
+            content: "text"                              // content within an item
+        },
+        {
+            text: "Item 3",
+            imageUrl: "http://www.telerik.com/test.jpg", // Item image URL, optional.
+            items: [{                                    // Sub item collection
+                 text: "Sub Item 1"
+            },
+            {
+                 text: "Sub Item 2"
+            }]
+        },
+        {
+            text: "Item 4",
+            spriteCssClass: "imageClass3"                // Item image sprite CSS class, optional.
+        }]
+    );
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="item-objectarray">item <code class="language-plaintext highlighter-rouge">Object|Array</code></h5>
+
+<p>Item to be appended, specified as a JSON object. An array of objects can also be passed.</p>
+
+<h5 id="referenceitem-stringjquery">referenceItem <code class="language-plaintext highlighter-rouge">String|jQuery</code></h5>
+
+<p>A reference item to append the new item in. Root context menu if not specified.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.ContextMenu</code> Returns the ContextMenu object to support chaining.</p>
+
+<h3 id="close">close</h3>
+
+<p>Closes the <strong>ContextMenu</strong>. This method can be prevented to stop the closure.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li id="Item1"&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    // get a reference to the ContextMenu widget
+    var contextMenu = $("#context-menu").data("kendoContextMenu");
+    // close the ContextMenu
+    contextMenu.close(100, 100);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="element-elementjquery">element <code class="language-plaintext highlighter-rouge">Element|jQuery</code></h5>
+
+<p>If called without arguments, will close the ContextMenu. If passed an item, it will be closed (if opened).</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.ContextMenu</code> Returns the ContextMenu object to support chaining.</p>
+
+<h3 id="destroy">destroy</h3>
+<p>Prepares the <strong>ContextMenu</strong> for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the ContextMenu element from DOM.</p>
+</blockquote>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    var contextMenu = $("#context-menu").data("kendoContextMenu");
+
+    // detach events
+    contextMenu.destroy();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable">enable</h3>
+
+<p>Enables or disables an item of a <strong>ContextMenu</strong>. This can optionally be accomplished on
+initialization by setting the <strong>disabled="disabled"</strong> on the desired menu item html element.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li id="secondItem"&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    // get a reference to the ContextMenu widget
+    var contextMenu = $("#context-menu").data("kendoContextMenu");
+    // disable the li menu item with the id "secondItem"
+    contextMenu.enable("#secondItem", false);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="element-stringelementjquery">element <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>Target element</p>
+
+<h5 id="enable-boolean">enable <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Desired state</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.ContextMenu</code> Returns the ContextMenu object to support chaining.</p>
+
+<h3 id="insertafter">insertAfter</h3>
+
+<p>Inserts an item into a <strong>ContextMenu</strong> after the specified referenceItem.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    // get a reference to the ContextMenu widget
+    var contextMenu = $("#context-menu").data("kendoContextMenu");
+    //
+    contextMenu.insertAfter(
+        [{
+            text: "Item 1",
+            url: "http://www.telerik.com"                // Link URL if navigation is needed, optional.
+        },
+        {
+            text: "&lt;b&gt;Item 2&lt;/b&gt;",
+            encoded: false,                                 // Allows use of HTML for item text
+            content: "text"                                 // content within an item
+        },
+        {
+            text: "Item 3",
+            imageUrl: "http://www.telerik.com/test.jpg", // Item image URL, optional.
+            items: [{                                    // Sub item collection
+                 text: "Sub Item 1"
+            },
+            {
+                 text: "Sub Item 2"
+            }]
+        },
+        {
+            text: "Item 4",
+            spriteCssClass: "imageClass3"                // Item image sprite CSS class, optional.
+        }],
+        "li:last-child"
+    );
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="item-stringelementjquery">item <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>Target item, specified as a JSON object. Can also handle an array of such objects.</p>
+
+<h5 id="referenceitem-stringelementjquery">referenceItem <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>A reference item to insert the new item after.</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.ContextMenu</code> Returns the ContextMenu object to support chaining.</p>
+
+<h3 id="insertbefore">insertBefore</h3>
+
+<p>Inserts an item into a <strong>ContextMenu</strong> before the specified referenceItem.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    // get a reference to the ContextMenu widget
+    var contextMenu = $("#context-menu").data("kendoContextMenu");
+    //
+    contextMenu.insertBefore(
+        [{
+            text: "Item 1",
+            url: "http://www.telerik.com"                // Link URL if navigation is needed, optional.
+        },
+        {
+            text: "&lt;b&gt;Item 2&lt;/b&gt;",
+            encoded: false,                                 // Allows use of HTML for item text
+            content: "text"                                 // content within an item
+        },
+        {
+            text: "Item 3",
+            imageUrl: "http://www.telerik.com/test.jpg", // Item image URL, optional.
+            items: [{                                    // Sub item collection
+                 text: "Sub Item 1"
+            },
+            {
+                 text: "Sub Item 2"
+            }]
+        },
+        {
+            text: "Item 4",
+            spriteCssClass: "imageClass3"                // Item image sprite CSS class, optional.
+        }],
+        "li:first-child"
+    );
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="item-stringelementjquery-1">item <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>Target item, specified as a JSON object. Can also handle an array of such objects.</p>
+
+<h5 id="referenceitem-stringelementjquery-1">referenceItem <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>A reference item to insert the new item before</p>
+
+<h4 id="returns-4">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.ContextMenu</code> Returns the ContextMenu object to support chaining.</p>
+
+<h3 id="open">open</h3>
+
+<p>Shows the <strong>ContextMenu</strong> at the specified coordinates in pixels or aligned to the specified anchor. If passed an item, it will be opened. This method can be prevented to stop the ContextMenu from opening.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li id="Item1"&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    // get a reference to the ContextMenu widget
+    var contextMenu = $("#context-menu").data("kendoContextMenu");
+    // open the ContextMenu at 100px, 100px
+    contextMenu.open(100, 100);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="x-numberelementjquery">x <code class="language-plaintext highlighter-rouge">Number|Element|jQuery</code></h5>
+
+<p>X coordinate in pixels or the anchor element to which to align. If passed an item - jQuery object or element - it will be opened.</p>
+
+<h5 id="y-number">y <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>Y coordinate in pixels. If not specified, ContextMenu will assume the first parameter is an anchor element.</p>
+
+<h4 id="returns-5">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.ContextMenu</code> Returns the ContextMenu object to support chaining.</p>
+
+<h3 id="remove">remove</h3>
+
+<p>Removes a specified item(s) from a <strong>ContextMenu</strong>.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li id="Item1"&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    // get a reference to the ContextMenu widget
+    var contextMenu = $("#context-menu").data("kendoContextMenu");
+    // remove the item with the id "Item1"
+    contextMenu.remove("#Item1");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="element-stringelementjquery-1">element <code class="language-plaintext highlighter-rouge">String|Element|jQuery</code></h5>
+
+<p>Target item selector.</p>
+
+<h4 id="returns-6">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.ContextMenu</code> Returns the ContextMenu object to support chaining.</p>
+
+<h2 id="events">Events</h2>
+
+<h3 id="close-1">close</h3>
+
+<p>Fires before a sub menu or the ContextMenu gets closed. You can cancel this event to prevent closure.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="eitem-element">e.item <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The closed item</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+         close: function(e) {
+             // handle event
+         }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="to-set-after-initialization">To set after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+     // get a reference to the ContextMenu widget
+     var contextMenu = $("#context-menu").data("kendoContextMenu");
+     // bind to the close event
+     contextMenu.bind("close", function(e) {
+         // handle event
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open-1">open</h3>
+
+<p>Fires before a sub menu or the ContextMenu gets opened. You can cancel this event to prevent opening the sub menu.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="eitem-element-1">e.item <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The opened item</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        open: function(e) {
+            // handle event
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="to-set-after-initialization-1">To set after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+     // get a reference to the ContextMenu widget
+     var contextMenu = $("#context-menu").data("kendoContextMenu");
+     // bind to the open event
+     contextMenu.bind("open", function(e) {
+         // handle event
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="activate">activate</h3>
+
+<p>Fires when a sub menu or the ContextMenu gets opened and its animation finished.</p>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="eitem-element-2">e.item <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The activated item</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        activate: function(e) {
+            // handle event
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="to-set-after-initialization-2">To set after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+     // get a reference to the ContextMenu widget
+     var contextMenu = $("#context-menu").data("kendoContextMenu");
+     // bind to the activate event
+     contextMenu.bind("activate", function(e) {
+         // handle event
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="deactivate">deactivate</h3>
+
+<p>Fires when a sub menu or the ContextMenu gets closed and its animation finished.</p>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="eitem-element-3">e.item <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The deactivated item</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        deactivate: function(e) {
+            // handle event
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="to-set-after-initialization-3">To set after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+     // get a reference to the ContextMenu widget
+     var contextMenu = $("#context-menu").data("kendoContextMenu");
+     // bind to the deactivate event
+     contextMenu.bind("deactivate", function(e) {
+         // handle event
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+
+<p>Fires when a menu item gets selected.</p>
+
+<h4 id="event-data-4">Event Data</h4>
+
+<h5 id="eitem-element-4">e.item <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The selected item</p>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+    $("#context-menu").kendoContextMenu({
+        target: "#target",
+        select: function(e) {
+            // handle event
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="to-set-after-initialization-4">To set after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Target&lt;/div&gt;
+&lt;ul id="context-menu"&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Item 2
+        &lt;ul&gt;
+            &lt;li&gt;Sub Item 1&lt;/li&gt;
+            &lt;li&gt;Sub Item 2&lt;/li&gt;
+            &lt;li&gt;Sub Item 3&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+     // get a reference to the ContextMenu widget
+     var contextMenu = $("#context-menu").data("kendoContextMenu");
+     // bind to the select event
+     contextMenu.bind("select", function(e) {
+         // handle event
+     });
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

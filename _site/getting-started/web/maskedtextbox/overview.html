@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>MaskedTextBox UI widget - documentation overview</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to create MaskedTextBox widget and deal with proper configuration of its behaviors.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/maskedtextbox/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="maskedtextbox-overview">MaskedTextBox Overview</h1>
+
+<p>The MaskedTextBox widget allows controlled text input based on a specific format.
+It can be defined using the <a href="/api/web/maskedtextbox#configuration-mask">mask</a> option of the widget. Every mask can contain mask rules and
+mask literals. The mask literals will be automatically entered for the user and they cannot be removed.
+Widget also has predefined rules specifying:</p>
+
+<ul>
+  <li>required/optional digit input</li>
+  <li>required/optional letter input</li>
+  <li>required/optional character input (allow any character)</li>
+</ul>
+
+<p>For a complete overview of the MaskedTextBox"s methods and configuration options, <a href="/api/web/maskedtextbox">review the MaskedTextBox API Reference</a>.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="creating-a-maskedtextbox-from-existing-input-element">Creating a MaskedTextBox from existing INPUT element</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="maskedtextbox" /&gt;
+</code></pre></div></div>
+
+<h3 id="maskedtextbox-initialization">MaskedTextBox initialization</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#maskedtextbox").kendoMaskedTextBox({
+        mask: "000000"
+    });
+});
+</code></pre></div></div>
+
+<p>When a <strong>MaskedTextBox</strong> is initialized, it will decorate the input element with a "k-textbox" CSS class.</p>
+
+<blockquote>
+  <p>The default <em>mask</em> is an empty string, which allows any input. If you need to restrict user input, define a mask value.</p>
+</blockquote>
+
+<h3 id="configuring-maskedtextbox-behaviors">Configuring MaskedTextBox behaviors</h3>
+
+<p>The <strong>MaskedTextBox</strong> provides configuration options that can be
+easily set during initialization. Among the properties that can be
+controlled:</p>
+
+<ul>
+  <li>Value of the widget</li>
+  <li>Mask value</li>
+  <li>Define custom mask rules</li>
+  <li>Prompt char</li>
+  <li>Culture name</li>
+</ul>
+
+<p>For a complete overview of the MaskedTextBox"s methods and configuration options, <a href="/api/web/maskedtextbox">review the MaskedTextBox API Reference</a>.</p>
+
+<h3 id="predefined-mask-rules">Predefined Mask Rules</h3>
+
+<p>The following mask rules are available:</p>
+
+<ul>
+  <li><strong>0</strong> - Digit. Accepts any digit between 0 and 9.</li>
+  <li><strong>9</strong> - Digit or space. Accepts any digit between 0 and 9, plus space.</li>
+  <li><strong>#</strong> - Digit or space. Like <strong>9</strong> rule, but allows also (+) and (-) sings.</li>
+  <li><strong>L</strong> - Letter. Restricts input to letters a-z and A-Z. This rule is equivalent to [a-zA-Z] in regular expressions.</li>
+  <li><strong>?</strong> - Letter or space. Restricts input to letters a-z and A-Z. This rule is equivalent to [a-zA-Z] in regular expressions.</li>
+  <li><strong>&amp;</strong> - Character. Accepts any character. The rule is equivalent to <em>\S</em> in regular expressions.</li>
+  <li><strong>C</strong> - Character or space. Accepts any character. The rule is equivalent to <em>.</em> in regular expressions.</li>
+  <li><strong>A</strong> - Alphanumeric. Accepts letters and digits only.</li>
+  <li><strong>a</strong> - Alphanumeric or space. Accepts letters, digits and space only.</li>
+</ul>
+
+<blockquote>
+  <p>Any mask rule can be escaped using the "" character. Escaped rule is turned into a literal.</p>
+</blockquote>
+
+<h3 id="globalized-mask-literals">Globalized mask literals</h3>
+
+<p>The following mask literals will be globalized based on the current culture:</p>
+
+<ul>
+  <li><strong>.</strong> - Decimal placeholder. The decimal separator will be get from the current culture used by Kendo.</li>
+  <li><strong>,</strong> - Thousands placeholder. The display character will be get from the current culture used by Kendo.</li>
+  <li><strong>$</strong> - Currency symbol. The display character will be get from the current culture used by Kendo.</li>
+</ul>
+
+<blockquote>
+  <p>Any of the aforementioned literals can be escaped using the "" character.</p>
+</blockquote>
+
+<h3 id="define-a-custom-mask-rule">Define a custom mask rule</h3>
+
+<p>The <strong>MaskedTextBox</strong> widget provides the ability to define custom mask rules during initialization.
+To accomplish this task define a rule in the <a href="/api/web/maskedtextbox#configuration-rules">rules</a>
+option. Widget supports rules defined as <strong>RegExp</strong> or <strong>Function</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#maskedtextbox").kendoMaskedTextBox({
+        mask: "~^",
+        rules: {
+            "~": /[+-]/,
+            "^": function (char) {
+                return char === "^"; //allow ony "^" symbol
+            }
+        }
+    });
+});
+</code></pre></div></div>
+
+<blockquote>
+  <p>Any of the predefined rules can be overriden through the <a href="/api/web/maskedtextbox#configuration-rules">rules</a> option.</p>
+</blockquote>
+
+<h2 id="accessing-an-existing-maskedtextbox">Accessing an Existing MaskedTextBox</h2>
+
+<p>You can reference an existing <strong>MaskedTextBox</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the API to control
+its behavior.</p>
+
+<h3 id="accessing-an-existing-maskedtextbox-instance">Accessing an existing MaskedTextBox instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var maskedtextbox = $("#maskedtextbox").data("kendoMaskedTextBox");
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

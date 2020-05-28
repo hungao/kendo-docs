@@ -1,0 +1,303 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/MapLayerBuilder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluentmaplayerbuilder">Kendo.Mvc.UI.Fluent.MapLayerBuilder</h1>
+<p>Defines the fluent API for configuring the MapLayer settings.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="datasourcesystemactionkendomvcuifluentmaplayerdatasourcebuilder">DataSource(System.Action&lt;Kendo.Mvc.UI.Fluent.MapLayerDataSourceBuilder&gt;)</h3>
+<p>Configures the data source of the map layer.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentmaplayerdatasourcebuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/MapLayerDataSourceBuilder">Kendo.Mvc.UI.Fluent.MapLayerDataSourceBuilder</a>&gt;</h5>
+<p>The configuration of the data source.</p>
+
+<h4 id="returns">Returns</h4>
+
+<h3 id="subdomainssystemstring">Subdomains(System.String[])</h3>
+<p>Configures of the subdomains.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="subdomains-systemstring">subdomains <code class="language-plaintext highlighter-rouge">System.String[]</code></h5>
+<p>The subdomains</p>
+
+<h3 id="attributionsystemstring">Attribution(System.String)</h3>
+<p>The attribution for the layer. Accepts valid HTML.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-systemstring">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the attribution.</p>
+
+<h3 id="autobindsystemboolean">AutoBind(System.Boolean)</h3>
+<p>If set to false the layer will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+            data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-systemboolean">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the autobind.</p>
+
+<h3 id="extentsystemdouble">Extent(System.Double[])</h3>
+<p>Specifies the extent of the region covered by this layer.
+            The layer will be hidden when the specified area is out of view.Accepts a four-element array that specifies the extent covered by this layer:
+            North-West lat, longitude, South-East latitude, longitude.If not specified, the layer is always visible.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-systemdouble">value <code class="language-plaintext highlighter-rouge">System.Double[]</code></h5>
+<p>The value that configures the extent.</p>
+
+<h3 id="keysystemstring">Key(System.String)</h3>
+<p>The API key for the layer. Currently supported only for Bing (tm) tile layers.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-systemstring-1">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the key.</p>
+
+<h3 id="locationfieldsystemstring">LocationField(System.String)</h3>
+<p>The data item field which contains the marker (symbol) location.
+            The field should be an array with two numbers - latitude and longitude in decimal degrees.Requires the dataSource option to be set.Only applicable to "marker" and "bubble" layers.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-systemstring-2">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the locationfield.</p>
+
+<h3 id="titlefieldsystemstring">TitleField(System.String)</h3>
+<p>The data item field which contains the marker title.
+            Requires the dataSource option to be set.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-systemstring-3">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the titlefield.</p>
+
+<h3 id="maxsizesystemdouble">MaxSize(System.Double)</h3>
+<p>The maximum symbol size for bubble layer symbols.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-systemdouble-1">value <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The value that configures the maxsize.</p>
+
+<h3 id="minsizesystemdouble">MinSize(System.Double)</h3>
+<p>The minimum symbol size for bubble layer symbols.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-systemdouble-2">value <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The value that configures the minsize.</p>
+
+<h3 id="opacitysystemdouble">Opacity(System.Double)</h3>
+<p>The the opacity for the layer.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-systemdouble-3">value <code class="language-plaintext highlighter-rouge">System.Double</code></h5>
+<p>The value that configures the opacity.</p>
+
+<h3 id="stylesystemactionkendomvcuifluentmaplayerstylesettingsbuilder">Style(System.Action&lt;Kendo.Mvc.UI.Fluent.MapLayerStyleSettingsBuilder&gt;)</h3>
+<p>The default style for shapes.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentmaplayerstylesettingsbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/MapLayerStyleSettingsBuilder">Kendo.Mvc.UI.Fluent.MapLayerStyleSettingsBuilder</a>&gt;</h5>
+<p>The action that configures the style.</p>
+
+<h3 id="urltemplateidsystemstring">UrlTemplateId(System.String)</h3>
+<p>The URL template for tile layers. Template variables:</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-systemstring-4">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the urltemplateid.</p>
+
+<h3 id="valuefieldsystemstring">ValueField(System.String)</h3>
+<p>The value field for bubble layer symbols.
+            The data item field should be a number.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-systemstring-5">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the valuefield.</p>
+
+<h3 id="typekendomvcuimaplayertype">Type(Kendo.Mvc.UI.MapLayerType)</h3>
+<p>The layer type. Supported types are "tile", "bing", "shape", "marker" and "bubble".</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-kendomvcuimaplayertype">value <a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/MapLayerType">Kendo.Mvc.UI.MapLayerType</a></h5>
+<p>The value that configures the type.</p>
+
+<h3 id="imagerysetkendomvcuimaplayersimageryset">ImagerySet(Kendo.Mvc.UI.MapLayersImagerySet)</h3>
+<p>The bing map tile types. Possible options.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-kendomvcuimaplayersimageryset">value <a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/MapLayersImagerySet">Kendo.Mvc.UI.MapLayersImagerySet</a></h5>
+<p>The value that configures the imageryset.</p>
+
+<h3 id="shapekendomvcuimapmarkersshape">Shape(Kendo.Mvc.UI.MapMarkersShape)</h3>
+<p>The marker shape. Supported shapes are "pin" and "pinTarget".</p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-kendomvcuimapmarkersshape">value <a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/MapMarkersShape">Kendo.Mvc.UI.MapMarkersShape</a></h5>
+<p>The value that configures the shape.</p>
+
+<h3 id="symbolkendomvcuimapsymbol">Symbol(Kendo.Mvc.UI.MapSymbol)</h3>
+<p>The bubble layer symbol type. Supported symbols are "circle" and "square".</p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-kendomvcuimapsymbol">value <a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/MapSymbol">Kendo.Mvc.UI.MapSymbol</a></h5>
+<p>The value that configures the symbol.</p>
+
+<h3 id="shapesystemstring">Shape(System.String)</h3>
+<p>The marker shape name. The "pin" and "pinTarget" shapes are predefined.</p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="value-systemstring-6">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the shape.</p>
+
+<h3 id="symbolsystemstring">Symbol(System.String)</h3>
+<p>The bubble layer symbol type. The "circle" and "square" symbols are predefined.</p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="value-systemstring-7">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the symbol.</p>
+
+<h3 id="symbolhandlersystemstring">SymbolHandler(System.String)</h3>
+<p>A client-side function to invoke that will draw the symbol.</p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="handler-systemstring">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will draw the symbol.</p>
+
+<h3 id="tooltipsystemactionkendomvcuifluentmapmarkertooltipbuilder">Tooltip(System.Action&lt;Kendo.Mvc.UI.Fluent.MapMarkerTooltipBuilder&gt;)</h3>
+<p>The tooltip options for this marker.</p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentmapmarkertooltipbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/MapMarkerTooltipBuilder">Kendo.Mvc.UI.Fluent.MapMarkerTooltipBuilder</a>&gt;</h5>
+<p>The action that configures the tooltip.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

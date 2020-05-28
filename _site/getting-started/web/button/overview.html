@@ -1,0 +1,373 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Summary of Kendo UI Button functionality</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Find out how to use the Kendo UI Button widget">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/button/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="button-overview">Button Overview</h1>
+
+<p>The <strong>Kendo UI Button</strong> provides a styled clickable UI widget with arbitrary content.
+Apart from consistent Kendo UI styling, the <strong>Button</strong> provides keyboard operability for elements, which natively don"t have it (e.g. <code class="language-plaintext highlighter-rouge">span</code>).</p>
+
+<p>It is assumed that the reader of this page is familiar with the <a href="/getting-started/widgets">fundamental Kendo UI widget concepts</a>.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The <strong>Button</strong> widget can be initialized from any element with any content. However, using <code class="language-plaintext highlighter-rouge">button</code> or <code class="language-plaintext highlighter-rouge">a</code> elements is more reasonable.</p>
+
+<p>The <strong>Button</strong> can include both inline and block elements, but one should take into account web standards, which prohibit placing block elements (e.g. <code class="language-plaintext highlighter-rouge">div</code>, <code class="language-plaintext highlighter-rouge">p</code>) inside inline elements (e.g. <code class="language-plaintext highlighter-rouge">a</code>, <code class="language-plaintext highlighter-rouge">span</code>).</p>
+
+<p>Placing clickable elements with their own special behavior inside the <strong>Button</strong> (e.g. hyperlinks, textboxes, etc) may cause undesired side efects.</p>
+
+<h3 id="button-initialization-example">Button initialization example</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button type="button" id="refreshButton"&gt;Refresh&lt;/button&gt;
+
+&lt;script&gt;
+$(function(){
+	$("#refreshButton").kendoButton();
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="initializing-multiple-buttons">Initializing multiple buttons</h2>
+
+<p>Although each <strong>Button</strong> represents a separate widget instance on the page, multiple Buttons can be initialized simultaneously.
+There are two ways to do this - one is to use a jQuery selector, which returns multiple elements, or via <code class="language-plaintext highlighter-rouge">kendo.init()</code>.</p>
+
+<h3 id="multiple-buttons-initialization-with-a-jquery-selector">Multiple Buttons initialization with a jQuery selector</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button type="button" class="myButton"&gt;Edit&lt;/button&gt;
+&lt;button type="button" class="myButton"&gt;Delete&lt;/button&gt;
+&lt;button type="button" class="myButton"&gt;Add&lt;/button&gt;
+
+&lt;script&gt;
+$(function(){
+	$(".myButton").kendoButton();
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="multiple-buttons-initialization-with-kendoinit">Multiple Buttons initialization with kendo.init</h3>
+
+<p>This approach allows you to initialize multiple <strong>Buttons</strong> at once, but with different configuration options.
+For more information, please refer to <a href="/getting-started/data-attribute-initialization">Data Attribute Initialization</a> and <a href="/api/framework/kendo#methods-init"><code class="language-plaintext highlighter-rouge">kendo.init()</code> method description</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="buttonsContainer"&gt;
+	&lt;span data-role="button" data-sprite-css-class="myEditIcon"&gt;Edit&lt;/span&gt;
+	&lt;span data-role="button" data-enable="false"&gt;Delete&lt;/span&gt;
+	&lt;span data-role="button" data-click="myClickHandler"&gt;Add&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+$(function(){
+	function myClickHandler(e) {
+		// Add Button click handler
+	}
+
+	kendo.init("#buttonsContainer");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="using-icons">Using Icons</h2>
+
+<p>The <strong>Button</strong> can accommodate an icon, which enhances the meaning of the text content.
+The widget provides three ways to add an icon with a classic <code class="language-plaintext highlighter-rouge">img</code> element or with a background image (usually a sprite).
+From web standarts" point of view, using background images is better, because the icon does not represent structural content, but it"s simply a decoration.</p>
+
+<p>There are three properties, which the <strong>Button</strong> provides for configuring icons - <code class="language-plaintext highlighter-rouge">icon</code>, <code class="language-plaintext highlighter-rouge">spriteCssClass</code> and <code class="language-plaintext highlighter-rouge">imageUrl</code>.
+Only one should be used with a particular <strong>Button</strong> instance. If multiple properties are defined, only one will be obeyed, in the order above.</p>
+
+<h3 id="background-icons">Background icons</h3>
+
+<p>Background icons are applied via the <code class="language-plaintext highlighter-rouge">icon</code> or <code class="language-plaintext highlighter-rouge">spriteCssClass</code> property and are displayed as a background of a <code class="language-plaintext highlighter-rouge">span</code> element.
+The <code class="language-plaintext highlighter-rouge">span</code> element can be rendered by the <strong>Button</strong> automatically, or an existing <code class="language-plaintext highlighter-rouge">span</code> element can be used, if it has a <code class="language-plaintext highlighter-rouge">k-sprite</code> CSS class (or <code class="language-plaintext highlighter-rouge">k-icon</code> if the <code class="language-plaintext highlighter-rouge">icon</code> property is used).</p>
+
+<p>The difference between the two properties is that <code class="language-plaintext highlighter-rouge">icon</code> is intended to be used for built-in Kendo UI icons, which are part of the theme sprite.
+For a list of available icon names, please refer to the <a href="http://demos.telerik.com/kendo-ui/web/styling/icons.html">Icons demo</a>.</p>
+
+<h4 id="example---using-icon">Example - using icon</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button type="button" id="editButton"&gt;Edit&lt;/button&gt;
+&lt;button type="button" id="deleteButton"&gt;&lt;span class="k-icon"&gt;&lt;/span&gt;Delete&lt;/button&gt;
+
+&lt;script&gt;
+
+$(function(){
+	$("#editButton").kendoButton({
+		icon: "edit"
+	});
+	
+	$("#deleteButton").kendoButton({
+		icon: "delete"
+	});
+});
+
+&lt;/script&gt;	
+</code></pre></div></div>
+
+<p>The above <code class="language-plaintext highlighter-rouge">icon</code> configuration will produce the following HTML output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button type="button" id="editButton" class="k-button k-button-icontext"&gt;&lt;span class="k-icon k-edit"&gt;&lt;/span&gt;Edit&lt;/button&gt;
+&lt;button type="button" id="deleteButton" class="k-button k-button-icontext"&gt;&lt;span class="k-icon k-delete"&gt;&lt;/span&gt;Delete&lt;/button&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-spritecssclass">Example - using spriteCssClass</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button type="button" id="editButton"&gt;Edit&lt;/button&gt;
+&lt;button type="button" id="deleteButton"&gt;&lt;span class="k-sprite"&gt;&lt;/span&gt;Delete&lt;/button&gt;
+
+&lt;script&gt;
+
+$(function(){
+	$("#editButton").kendoButton({
+		spriteCssClass: "myEditIcon"
+	});
+	
+	$("#deleteButton").kendoButton({
+		spriteCssClass: "myDeleteIcon"
+	});
+});
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Technically, <code class="language-plaintext highlighter-rouge">spriteCssClass</code> can be used to achieve the same result as <code class="language-plaintext highlighter-rouge">icon</code>, but <code class="language-plaintext highlighter-rouge">icon</code> will spare you the need to set two CSS classes at the same time and provides a certain level of abstraction.
+For example, the following two configurations are practically identical. <code class="language-plaintext highlighter-rouge">#button2</code> will also apply a <code class="language-plaintext highlighter-rouge">k-sprite</code> CSS class to the <code class="language-plaintext highlighter-rouge">span</code> element, but it will not change the button appearance.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(function(){
+	$("#button1").kendoButton({
+		icon: "foo"
+	});
+	
+	$("#button2").kendoButton({
+		spriteCssClass: "k-icon k-foo"
+	});
+});
+</code></pre></div></div>
+
+<p>In some cases you may want to use a <strong>Button</strong> with no text and only an icon inside.
+In order to increase the accessibility of the <strong>Button</strong> in this case, a text label can be included inside the sprite <code class="language-plaintext highlighter-rouge">span</code>.</p>
+
+<h4 id="example---using-a-button-with-no-text">Example - using a Button with no text</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button type="button" id="deleteButton"&gt;&lt;span class="k-sprite"&gt;Delete&lt;/span&gt;&lt;/button&gt;
+
+&lt;script&gt;
+
+$(function(){
+	$("#deleteButton").kendoButton({
+		spriteCssClass: "myDeleteIcon"
+	});
+});
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="image-icons">Image icons</h3>
+
+<p>Image icons are applied via the <code class="language-plaintext highlighter-rouge">imageUrl</code> property and are displayed as a <code class="language-plaintext highlighter-rouge">img</code> element.
+This element can be rendered by the <strong>Button</strong> automatically, or an existing <code class="language-plaintext highlighter-rouge">img</code> element can be used, if it has a <code class="language-plaintext highlighter-rouge">k-image</code> CSS class.</p>
+
+<h4 id="example---using-imageurl">Example - using imageUrl</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button type="button" id="editButton"&gt;Edit&lt;/button&gt;
+&lt;button type="button" id="deleteButton"&gt;&lt;img class="k-image" alt="Delete" /&gt;Delete&lt;/button&gt;
+
+&lt;script&gt;
+
+$(function(){
+	$("#editButton").kendoButton({
+		imageUrl: "/images/myEditIcon.gif"
+	});
+	
+	$("#deleteButton").kendoButton({
+		imageUrl: "/images/myDeleteIcon.gif"
+	});
+});
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>In order to increase the accessibility of the <strong>Button</strong> when adding an <code class="language-plaintext highlighter-rouge">img</code> element manually, an <code class="language-plaintext highlighter-rouge">alt</code> attribute is required.</p>
+
+<h2 id="enabled-and-disabled-buttons">Enabled and Disabled buttons</h2>
+
+<p>The business logic of an application often requires a certain button to be temporarily disabled or enabled.
+The <strong>Button</strong> can be configured to be initially disabled via its <code class="language-plaintext highlighter-rouge">enable</code> property or by initializing it from an element, which has a <code class="language-plaintext highlighter-rouge">disabled="disabled"</code> HTML attribute.
+The <strong>Button</strong> can also be disabled or enabled at any time with Javascript by using its <code class="language-plaintext highlighter-rouge">enable()</code> method with a boolean argument.</p>
+
+<h3 id="example---enable-and-disable-the-button">Example - enable and disable the Button</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button type="button" id="editButton"&gt;Edit&lt;/button&gt;
+
+&lt;script&gt;
+
+$(function(){
+	var editButton = $("#editButton").kendoButton({
+		enable: false
+	}).data("kendoButton");
+	
+	// ...
+	
+	// enable button
+	editButton.enable(true);
+});
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>For more information on the <strong>Button</strong> <a href="/api/web/button#configuration-enable"><code class="language-plaintext highlighter-rouge">enable</code> property</a> and the <a href="/api/web/button#methods-enable"><code class="language-plaintext highlighter-rouge">enable</code> method</a>, please refer to the <a href="/api/web/button/">Button API</a>.</p>
+
+<h2 id="accessing-the-button-instance">Accessing the Button instance</h2>
+
+<p>Similar to all other Kendo UI widgets, an existing <strong>Button</strong> instance is accessed via the <code class="language-plaintext highlighter-rouge">.data()</code> jQuery method, executed by the jQuery object of the originating element.</p>
+
+<h3 id="example---accessing-a-button-instance">Example - accessing a Button instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button type="button" id="editButton"&gt;Edit&lt;/button&gt;
+
+&lt;script&gt;
+
+$(function(){
+	$("#editButton").kendoButton();
+	
+	var editButton = $("#editButton").data("kendoButton");
+});
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">kendoButton()</code> method returns the same jQuery object that has been used to execute it.
+That"s why, if the <strong>Button</strong> will be accessed afterwards, it is a good idea to save it at the time of initialization.</p>
+
+<h3 id="example---saving-and-accessing-a-reference-to-a-button-instance">Example - saving and accessing a reference to a Button instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button type="button" id="editButton"&gt;Edit&lt;/button&gt;
+&lt;button type="button" id="deleteButton"&gt;Delete&lt;/button&gt;
+
+&lt;script&gt;
+
+$(function(){
+	// save button element and then the button widget object
+	var editButtonElement = $("#editButton").kendoButton();
+	var editButton = editButtonElement.data("kendoButton");
+	
+	// save the button widget object and then retrieve the DOM element as a jQuery object
+	var deleteButton = $("#editButton").kendoButton().data("kendoButton");
+	var deleteButtonElement = deleteButton.element;
+});
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>For further reading and related information, please refer to the <a href="/api/web/button/">Button API</a>.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

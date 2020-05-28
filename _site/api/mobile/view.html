@@ -1,0 +1,507 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Mobile View</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to configure Kendo UI mobile view widget and use events to create highly interactive mobile applications.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/mobile/view.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomobileuiview">kendo.mobile.ui.View</h1>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="model-string--observableobjectdefault-null">model <code class="language-plaintext highlighter-rouge">String | ObservableObject</code><em>(default: null)</em></h3>
+
+<p>The MVVM model to bind to. If a string is passed, The view will try to resolve a reference to the view model variable in the global scope.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-model="foo"&gt;
+   &lt;span data-bind="text:bar"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var foo = { bar: "baz" }
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="reload-boolean-default-false">reload <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Applicable to remote views only. If set to true, the remote view contents will be reloaded from the server (using Ajax) each time the view is navigated to.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- foo.html --&gt;
+&lt;div data-role="view"&gt;
+    &lt;a data-role="button" href="bar.html"&gt;Go to bar&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;!-- bar.html --&gt;
+&lt;div data-role="view" data-reload="true"&gt;
+  I will be requested from the server every time I am displayed
+  &lt;a href="#" id="link"&gt;Link&lt;/a&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="scroller-object-default-null">scroller <code class="language-plaintext highlighter-rouge">Object</code> <em>(default: null)</em></h3>
+
+<p>Configuration options to be passed to the scroller instance instantiated by the view. For more details, check the scroller <a href="/api/mobile/scroller#configuration">configuration options</a>.</p>
+
+<h4 id="a-view-with-elastic-scrolling-set-to-false">A view with elastic scrolling set to false</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- foo.html --&gt;
+&lt;div data-role="view" data-scroller='{"elastic": false}'&gt;
+    This view will not bounce when scrolled
+&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="stretch-booleandefault-false">stretch <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>If set to true, the view will stretch its child contents to occupy the entire view, while disabling kinetic scrolling.
+Useful if the view contains an image or a map.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-stretch="true"&gt;
+  &lt;div style="background: gray"&gt;This element will be stretched&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="title-string">title <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The text to display in the NavBar title (if present) and the browser title.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-title="foo"&gt;
+  &lt;div data-role="header"&gt;
+    &lt;div data-role="navbar"&gt;
+      &lt;span data-role="view-title"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+ &lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="usenativescrolling-booleandefault-false">useNativeScrolling <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>If set to true, the view will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
+Native scrolling is only enabled on platforms that support it: iOS &gt; 5+, Android &gt; 3+, WP8. BlackBerry devices do support it, but the native scroller is flaky.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-use-native-scrolling="true"&gt;
+  &lt;div style="height: 2000px;"&gt;Tall element - this view has native scrolling&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="zoom-booleandefault-false">zoom <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>If set to true, the user can zoom in/out the contents of the view using the pinch/zoom gesture.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-zoom="true"&gt;
+  &lt;div style="height: 2000px;width:200px;"&gt;Big element - the view can be zoomed with two fingers&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="contentelement">contentElement</h3>
+
+<p>Retrieves the current content holder of the View - this is the content element if the View is stretched or the scroll container otherwise.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> Use this method to get a reference container in order to remove or append contents to the View</p>
+</blockquote>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="myView"&gt;
+    &lt;a data-role="button" data-click="getContentElement"&gt;Tap here&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+function getContentElement() {
+    var view = $("#myView").data("kendoMobileView");
+    console.log(view.contentElement());
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+
+<p>Prepares the <strong>View</strong> for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the View element from DOM.</p>
+</blockquote>
+
+<h3 id="enable">enable</h3>
+
+<p>Enables or disables the user interaction with the view and its contents.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="enable-boolean">enable <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Omitting the parameter or passing <code class="language-plaintext highlighter-rouge">true</code> enables the view. Passing <code class="language-plaintext highlighter-rouge">false</code> disables the view.</p>
+
+<h4 id="example---disable-a-view">Example - disable a view</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="myView"&gt;
+    &lt;a data-role="button" data-click="disableView"&gt;Tap here&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+function disableView() {
+    $("#myView").data("kendoMobileView").enable(false);
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="aftershow">afterShow</h3>
+
+<p>Fires after the mobile View becomes visible. If the view is displayed with transition, the event is triggered after the transition is complete.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;
+    &lt;a href="#bar" data-role="button"&gt;Go to bar&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div data-role="view" id="bar" data-after-show="afterShow"&gt;
+    Bar
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function afterShow(e) {
+    console.log(e.view);
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="eview-kendomobileuiview">e.view <code class="language-plaintext highlighter-rouge">kendo.mobile.ui.View</code></h5>
+
+<p>The mobile view instance</p>
+
+<h3 id="beforehide">beforeHide</h3>
+
+<p>Fires before the mobile View becomes hidden.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo" data-before-hide="beforeHide"&gt;
+    &lt;a href="#bar" data-role="button"&gt;Bar&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div id="bar" data-role="view"&gt;
+    The bar view
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+function beforeHide(e) {
+    console.log('foo hidden');
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="eview-kendomobileuiview-1">e.view <code class="language-plaintext highlighter-rouge">kendo.mobile.ui.View</code></h5>
+
+<p>The mobile view instance</p>
+
+<h3 id="beforeshow">beforeShow</h3>
+
+<p>Fires before the mobile View becomes visible. The event can be prevented by calling the <code class="language-plaintext highlighter-rouge">preventDefault</code> method of the event parameter, in case a redirection should happen.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo"&gt;
+    &lt;a href="#protected" data-role="button"&gt;Go to protected&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div data-role="view" id="protected" data-before-show="redirectBack"&gt;
+    I am a protected view
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function redirectBack(e) {
+    e.preventDefault();
+    app.navigate("#foo");
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="eview-kendomobileuiview-2">e.view <code class="language-plaintext highlighter-rouge">kendo.mobile.ui.View</code></h5>
+
+<p>The mobile view instance</p>
+
+<h3 id="hide">hide</h3>
+
+<p>Fires when the mobile View becomes hidden.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo" data-hide="onHide"&gt;
+    &lt;a href="#bar" data-role="button"&gt;Bar&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div id="bar" data-role="view"&gt;
+    The bar view
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+function onHide(e) {
+    console.log('foo hidden');
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="eview-kendomobileuiview-3">e.view <code class="language-plaintext highlighter-rouge">kendo.mobile.ui.View</code></h5>
+
+<p>The mobile view instance</p>
+
+<h3 id="init">init</h3>
+
+<p>Fires after the mobile View and its child widgets are initialized.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo" data-init="init"&gt;
+    Foo
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function init(e) {
+    console.log('init');
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-4">Event Data</h4>
+
+<h5 id="eview-kendomobileuiview-4">e.view <code class="language-plaintext highlighter-rouge">kendo.mobile.ui.View</code></h5>
+
+<p>The mobile view instance</p>
+
+<h3 id="show">show</h3>
+
+<p>Fires when the mobile View becomes visible.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" id="foo" data-show="show"&gt;
+    Foo
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+function show(e) {
+    console.log('show');
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="event-data-5">Event Data</h4>
+
+<h5 id="eview-kendomobileuiview-5">e.view <code class="language-plaintext highlighter-rouge">kendo.mobile.ui.View</code></h5>
+
+<p>The mobile view instance.</p>
+
+<h3 id="transitionstart">transitionStart</h3>
+
+<p>Fires when the mobile view transition starts.</p>
+
+<h4 id="event-data-6">Event Data</h4>
+
+<h5 id="etype-string">e.type <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The transition type. Can be either <code class="language-plaintext highlighter-rouge">"show"</code> or <code class="language-plaintext highlighter-rouge">"hide"</code></p>
+
+<h3 id="transitionend">transitionEnd</h3>
+
+<p>Fires after the mobile view transition container has its <code class="language-plaintext highlighter-rouge">k-fx-end</code> class set. Setting CSS properties to the view at the event handler will animate them.</p>
+
+<h4 id="event-data-7">Event Data</h4>
+
+<h5 id="etype-string-1">e.type <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The transition type. Can be either <code class="language-plaintext highlighter-rouge">"show"</code> or <code class="language-plaintext highlighter-rouge">"hide"</code></p>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="header-jquery">header <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+
+<p>The <strong>View</strong> (or the applied mobile layout) header DOM element.</p>
+
+<h3 id="footer-jquery">footer <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+
+<p>The <strong>View</strong> (or the applied mobile layout) footer DOM element.</p>
+
+<h3 id="content-jquery">content <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+
+<p>The <strong>View</strong> content DOM element. If there is a scroller in the View, it will become a child of this element. Please use the <code class="language-plaintext highlighter-rouge">contentElement</code> method instead, to always get the correct content element.</p>
+
+<h3 id="scrollercontent-jquery">scrollerContent <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+
+<p>The View mobile scroller container DOM element. Recommended if scrollable mobile View contents need to be manipulated or replaced. If you don"t know if the View has a Scroller initialized, please use the <code class="language-plaintext highlighter-rouge">contentElement</code> method instead.</p>
+
+<h4 id="replace-scrollable-view-contents">Replace scrollable View contents</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-init="replaceContents"&gt; Old content&lt;/div&gt;
+
+&lt;script&gt;
+function replaceContents(e) {
+  e.view.scrollerContent.html("&lt;b&gt;New content&lt;/b&gt;");
+}
+
+new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

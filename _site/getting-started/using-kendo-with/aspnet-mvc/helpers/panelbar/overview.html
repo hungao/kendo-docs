@@ -1,0 +1,410 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PanelBar HtmlHelper extension, server-side wrapper for Kendo UI PanelBar widget | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to define items of the Kendo UI PanelBar for ASP.NET MVC in PanelBar HtmlHelper extension, handle Kendo UI PanelBar events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/panelbar/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="panelbar">PanelBar</h1>
+
+<p>The PanelBar HtmlHelper extension is a server-side wrapper for the <a href="/api/web/panelbar">Kendo UI PanelBar</a> widget.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>There are several ways to define items of the Kendo PanelBar for ASP.NET MVC</p>
+
+<ul>
+  <li>use items builder - manually define the properties of each PanelBar item.</li>
+  <li>sitemap binding - uses a sitemap to create the items of the PanelBar.</li>
+  <li>model binding - uses a collection of objects to create the items of the PanelBar.</li>
+</ul>
+
+<h3 id="define-items-of-the-kendo-panelbar">Define items of the Kendo PanelBar</h3>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create a new action method which renders the view:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    return View();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add a simple panelbar:</p>
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().PanelBar()
+          .Name("panelbar") //The name of the panelbar is mandatory. It specifies the "id" attribute of the widget.
+          .Items(items =&gt;
+          {
+              items.Add().Text("Item 1"); //Add item with text "Item1")
+              items.Add().Text("Item 2"); //Add item with text "Item2")
+          })
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().PanelBar()
+        .Name("panelbar") //The name of the panelbar is mandatory. It specifies the "id" attribute of the widget.
+        .Items(items =&gt;
+        {
+            items.Add().Text("Item 1"); //Add item with text "Item1")
+            items.Add().Text("Item 2"); //Add item with text "Item2")
+        })
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="bind-kendo-panelbar-to-a-sitemap">Bind Kendo PanelBar to a sitemap</h3>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create a simple sitemap with <strong>sample.sitemap</strong> file name at the root of the project:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;siteMap&gt;
+  &lt;siteMapNode title="Home" controller="Home" action="Overview"&gt;
+    &lt;siteMapNode title="Grid"&gt;
+      &lt;siteMapNode controller="grid" action="index" title="First Look (Razor)" area="razor"/&gt;
+      &lt;siteMapNode controller="grid" action="index" title="First Look (ASPX)" area="aspx"/&gt;
+    &lt;/siteMapNode&gt;
+    &lt;siteMapNode title="PanelBar"&gt;
+      &lt;siteMapNode controller="panelbar" action="index" title="First Look (Razor)" area="razor"/&gt;
+      &lt;siteMapNode controller="panelbar" action="index" title="First Look (ASPX)" area="aspx"/&gt;
+    &lt;/siteMapNode&gt;
+  &lt;/siteMapNode&gt;
+&lt;/siteMap&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Load the sitemap using SiteMapManager:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    if (!SiteMapManager.SiteMaps.ContainsKey("sample"))
+    {
+        SiteMapManager.SiteMaps.Register&lt;xmlsitemap&gt;("sample", sitmap =&gt; sitmap.LoadFrom("~/sample.sitemap"));
+    }
+    return View();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add a panelbar:</p>
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().PanelBar()
+          .Name("panelbar") //The name of the panelbar is mandatory. It specifies the "id" attribute of the widget.
+          .BindTo("sample") //bind to sitemap with name "sample"
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().PanelBar()
+        .Name("panelbar") //The name of the panelbar is mandatory. It specifies the "id" attribute of the widget.
+        .BindTo("sample") //bind to sitemap with name "sample"
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="bind-kendo-panelbar-to-a-hierarchical-model">Bind Kendo PanelBar to a hierarchical model</h3>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create a new action method and pass the Categories table as the model. Note that the Categories should have association to the Products table:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    NorthwindDataContext northwind = new NorthwindDataContext();
+
+    return View(northwind.Categories);
+}
+</code></pre></div>    </div>
+  </li>
+  <li>Make your view strongly typed:
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master"
+      Inherits="System.Web.Mvc.ViewPage&lt;IEnumerable&lt;MvcApplication1.Models.Category&gt;&gt;" %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @model IEnumerable&lt;MvcApplication1.Models.Category&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Add a panelbar:
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().PanelBar()
+          .Name("panelbar") //The name of the panelbar is mandatory. It specifies the "id" attribute of the widget.
+          .BindTo(Model, mappings =&gt;
+          {
+              mappings.For&lt;category&gt;(binding =&gt; binding //define first level of panelbar
+                  .ItemDataBound((item, category) =&gt; //define mapping between panelbar item properties and the model properties
+                  {
+                      item.Text = category.CategoryName;
+                  })
+                  .Children(category =&gt; category.Products)); //define which property of the model contains the children
+              mappings.For&lt;product&gt;(binding =&gt; binding
+                  .ItemDataBound((item, product) =&gt;
+                  {
+                      item.Text = product.ProductName;
+                  }));
+          })
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().PanelBar()
+        .Name("panelbar") //The name of the panelbar is mandatory. It specifies the "id" attribute of the widget.
+        .BindTo(Model, mappings =&gt;
+         {
+             mappings.For&lt;category&gt;(binding =&gt; binding //define first level of panelbar
+                 .ItemDataBound((item, category) =&gt; //define mapping between panelbar item properties and the model properties
+                     {
+                     item.Text = category.CategoryName;
+                     })
+                 .Children(category =&gt; category.Products)); //define which property of the model contains the children
+             mappings.For&lt;product&gt;(binding =&gt; binding
+                 .ItemDataBound((item, product) =&gt;
+                     {
+                     item.Text = product.ProductName;
+                     }));
+         })
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="security-trimming">Security trimming</h2>
+
+<p>The Menu widget has built-in security trimming functionality, which is enabled by default. If the URL, which Menu item points to is not authorized then it is hidden.
+Security trimming depends on the <a href="http://www.asp.net/mvc/tutorials/mvc-music-store/mvc-music-store-part-7">ASP.NET MVC Authorization authorization</a>.
+Every Action method decorated with <a href="http://msdn.microsoft.com/en-us/library/system.web.mvc.authorizeattribute.aspx">AuthorizeAttribute</a> will check whether the user is authorized and will allow/forbid the request.
+Check this <a href="http://weblogs.asp.net/jgalloway/archive/2011/04/28/looking-at-how-asp-net-mvc-authorize-interacts-with-asp-net-forms-authorization.aspx">link</a>
+for more information about ASP.NET MVC Authorization. The Menu will hide the menu item if the <a href="http://msdn.microsoft.com/en-us/library/system.web.mvc.authorizeattribute.onauthorization.aspx">OnAuthorization</a> method returns
+<a href="http://msdn.microsoft.com/en-us/library/system.web.mvc.httpunauthorizedresult.aspx">HttpUnauthorizedResult</a>. If you need to use custom AuthorizeAttribute check this
+<a href="https://github.com/telerik/kendo-examples-asp-net-mvc/tree/master/kendo-menu-with-custom-authorization-attribute">link</a>, which shows how to achieve your goal.</p>
+
+<h2 id="accessing-an-existing-panelbar">Accessing an Existing PanelBar</h2>
+
+<p>You can reference an existing PanelBar instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/panelbar#methods">API</a> to control its behavior.</p>
+
+<h3 id="accessing-an-existing-panelbar-instance">Accessing an existing PanelBar instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//Put this after your Kendo PanelBar for ASP.NET MVC declaration
+&lt;script&gt;
+$(function() {
+    // Notice that the Name() of the panelbar is used to get its client-side instance
+    var panelbar = $("#panelbar").data("kendoPanelBar");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-kendo-ui-panelbar-events">Handling Kendo UI PanelBar events</h2>
+
+<p>You can subscribe to all <a href="/api/web/panelbar#events">events</a> exposed by Kendo UI PanelBar:</p>
+
+<h3 id="webforms---subscribe-by-handler-name">WebForms - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%: Html.Kendo().PanelBar()
+        .Name("panelbar")
+        .Events(e =&gt; e
+            .Expand("panelbar_expand")
+            .Collapse("panelbar_collapse")
+        )
+%&gt;
+&lt;script&gt;
+function panelbar_collapse() {
+    //Handle the collapse event
+}
+
+function panelbar_expand() {
+    //Handle the expand event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-handler-name">Razor - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().PanelBar()
+      .Name("panelbar")
+      .Events(e =&gt; e
+            .Expand("panelbar_expand")
+            .Collapse("panelbar_collapse")
+      )
+)
+&lt;script&gt;
+function panelbar_collapse() {
+    //Handle the collapse event
+}
+
+function panelbar_expand() {
+    //Handle the expand event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-template-delegate">Razor - subscribe by template delegate</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().PanelBar()
+      .Name("panelbar")
+      .Events(e =&gt; e
+          .Expand(@&lt;text&gt;
+            function() {
+                //Handle the expand event inline
+            }
+          &lt;/text&gt;)
+          .Collapse(@&lt;text&gt;
+            function() {
+                //Handle the collapse event inline
+            }
+            &lt;/text&gt;)
+      )
+)
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

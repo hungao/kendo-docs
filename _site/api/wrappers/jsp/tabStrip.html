@@ -1,0 +1,418 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/tabStrip.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendotabstrip">&lt;kendo:tabStrip&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/tabstrip">TabStrip</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="animation-boolean">animation <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>A collection of visual animations used when TabStrip tab are selected through
+user interactions. Setting this option to false will disable all animations. Further configuration is available via <a href="#kendo-tabStrip-animation">kendo:tabStrip-animation</a>.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip animation="animation"&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="collapsible-boolean">collapsible <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Specifies whether the TabStrip should be able to collapse completely when clicking an expanded tab.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip collapsible="collapsible"&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="contenturls-javalangobject">contentUrls <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Sets an array with the URLs from which the tabs content to be loaded from. If only specific tabs should be loaded via Ajax, then you should set the URLs to the corresponding positions in the array and set the other elements to null.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip contentUrls="contentUrls"&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="datacontentfield-javalangstring">dataContentField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the field of the data item that provides the text content of
+the tab content element.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip dataContentField="dataContentField"&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="datacontenturlfield-javalangstring">dataContentUrlField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the field of the data item that provides the URL for
+the ajax loaded tab content.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip dataContentUrlField="dataContentUrlField"&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="dataimageurlfield-javalangstring">dataImageUrlField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the field of the data item that provides the image URL of
+the tab.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip dataImageUrlField="dataImageUrlField"&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="dataspritecssclass-javalangstring">dataSpriteCssClass <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the field of the data item that provides the CSS class of
+the tab.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip dataSpriteCssClass="dataSpriteCssClass"&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="datatextfield-javalangstring">dataTextField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the field of the data item that provides the text name of the tab.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip dataTextField="dataTextField"&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="dataurlfield-javalangstring">dataUrlField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Sets the field of the data item that provides the link URL for the
+tab.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip dataUrlField="dataUrlField"&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="navigatable-boolean">navigatable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Specifies whether the TabStrip should be keyboard navigatable.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip navigatable="navigatable"&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendotabstrip-animation">kendo:tabStrip-animation</h3>
+
+<p>A collection of visual animations used when TabStrip tab are selected through
+user interactions. Setting this option to false will disable all animations.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/tabstrip/animation">kendo:tabStrip-animation</a>.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip&gt;
+    &lt;kendo:tabStrip-animation&gt;&lt;/kendo:tabStrip-animation&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="kendotabstrip-items">kendo:tabStrip-items</h3>
+
+<p>Contains the items of the tabstrip widget</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/tabstrip/items">kendo:tabStrip-items</a>.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip&gt;
+    &lt;kendo:tabStrip-items&gt;&lt;/kendo:tabStrip-items&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="activate-string">activate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered after a tab is being made visible and its animation complete. Before Q2 2014 this event was invoked after tab show, but before the end of the animation.</p>
+
+<p>For additional information check the <a href="/api/web/tabstrip#events-activate">activate</a> event documentation.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip activate="handle_activate"&gt;
+&lt;/kendo:tabStrip&gt;
+&lt;script&gt;
+    function handle_activate(e) {
+        // Code to handle the activate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="contentload-string">contentLoad <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when content is fetched from an AJAX request.</p>
+
+<p>For additional information check the <a href="/api/web/tabstrip#events-contentLoad">contentLoad</a> event documentation.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip contentLoad="handle_contentLoad"&gt;
+&lt;/kendo:tabStrip&gt;
+&lt;script&gt;
+    function handle_contentLoad(e) {
+        // Code to handle the contentLoad event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="error-string">error <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when an AJAX request results in an error.</p>
+
+<p>For additional information check the <a href="/api/web/tabstrip#events-error">error</a> event documentation.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip error="handle_error"&gt;
+&lt;/kendo:tabStrip&gt;
+&lt;script&gt;
+    function handle_error(e) {
+        // Code to handle the error event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select-string">select <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered before a tab is selected.</p>
+
+<p>For additional information check the <a href="/api/web/tabstrip#events-select">select</a> event documentation.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip select="handle_select"&gt;
+&lt;/kendo:tabStrip&gt;
+&lt;script&gt;
+    function handle_select(e) {
+        // Code to handle the select event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="show-string">show <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered just after a tab is being made visible, but before the end of the animation. Before Q2 2014 this event was called activate.</p>
+
+<p>For additional information check the <a href="/api/web/tabstrip#events-show">show</a> event documentation.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip show="handle_show"&gt;
+&lt;/kendo:tabStrip&gt;
+&lt;script&gt;
+    function handle_show(e) {
+        // Code to handle the show event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendotabstrip-activate">kendo:tabStrip-activate</h3>
+
+<p>Triggered after a tab is being made visible and its animation complete. Before Q2 2014 this event was invoked after tab show, but before the end of the animation.</p>
+
+<p>For additional information check the <a href="/api/web/tabstrip#events-activate">activate</a> event documentation.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip&gt;
+    &lt;kendo:tabStrip-activate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the activate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:tabStrip-activate&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="kendotabstrip-contentload">kendo:tabStrip-contentLoad</h3>
+
+<p>Triggered when content is fetched from an AJAX request.</p>
+
+<p>For additional information check the <a href="/api/web/tabstrip#events-contentLoad">contentLoad</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip&gt;
+    &lt;kendo:tabStrip-contentLoad&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the contentLoad event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:tabStrip-contentLoad&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="kendotabstrip-error">kendo:tabStrip-error</h3>
+
+<p>Triggered when an AJAX request results in an error.</p>
+
+<p>For additional information check the <a href="/api/web/tabstrip#events-error">error</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip&gt;
+    &lt;kendo:tabStrip-error&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the error event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:tabStrip-error&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="kendotabstrip-select">kendo:tabStrip-select</h3>
+
+<p>Triggered before a tab is selected.</p>
+
+<p>For additional information check the <a href="/api/web/tabstrip#events-select">select</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip&gt;
+    &lt;kendo:tabStrip-select&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the select event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:tabStrip-select&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+<h3 id="kendotabstrip-show">kendo:tabStrip-show</h3>
+
+<p>Triggered just after a tab is being made visible, but before the end of the animation. Before Q2 2014 this event was called activate.</p>
+
+<p>For additional information check the <a href="/api/web/tabstrip#events-show">show</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:tabStrip&gt;
+    &lt;kendo:tabStrip-show&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the show event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:tabStrip-show&gt;
+&lt;/kendo:tabStrip&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

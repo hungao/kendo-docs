@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>User guide to supported and styled Kendo UI Mobile forms</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Detailed steps how to use Kendo UI Mobile Forms in mobile app development.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/mobile/forms.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="mobile-forms-support">Mobile forms support</h1>
+
+<p>Kendo UI Mobile provides automatic platform dependent styling of form elements when they are added to a mobile View. Currently the following form elements are supported and styled:</p>
+
+<ul>
+  <li>Inputs of types <strong>text</strong>, <strong>password</strong>, <strong>search</strong>, <strong>url</strong>, <strong>email</strong>, <strong>number</strong>, <strong>tel</strong>, <strong>file</strong>(not in iOS), <strong>date</strong>, <strong>time</strong> <strong>month</strong> and <strong>datetime</strong>;</li>
+  <li>Single <strong>select</strong> elements or Kendo DropDownList replacements.</li>
+</ul>
+
+<p>The input elements with a picker use the native one from the current platform if it is supported.
+HTML5 form elements are fully functional only on the following platforms: iOS 5.x+, Android 4.x+, BlackBerry 6.x+, BlackBerry Playbook 1.x+.
+The styling will still work on older platforms, but the functionality will be limited to text input only.</p>
+
+<p>Select elements are also automatically styled for each platform and will use the native select dialog or popup.</p>
+
+<h2 id="known-browser-issues-and-possible-workarounds">Known browser issues and possible workarounds:</h2>
+
+<blockquote>
+  <p><strong>Important:</strong> To avoid many Android and WP8 form issues, please use native scroller in all Views that require text entry! Check the example below.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Native scrolling is only enabled on platforms that support it</strong>: iOS &gt; 5+, Android &gt; 3+, WP8. BlackBerry devices do support it, but the native scroller is flaky.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-use-native-scrolling="true"&gt;
+    &lt;form action="./index.html"&gt;
+        &lt;ul data-role="listview" data-style="inset"&gt;
+            &lt;li&gt;
+                &lt;label&gt;Type text
+                    &lt;input type="text" value="Text" /&gt;
+                &lt;/label&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Select element touch target in Android 2.x remains in the same place when a transformation is applied on a parent.
+Select element text can"t be right-aligned in WebKit, which is needed for iOS styling.
+A work around for both is to use the Kendo DropDownList widget.
+It receives platform specific styling when initialized in a Kendo UI Mobile application.
+To do so, include <strong>kendo.dropdownlist.js</strong> and its requirements
+<strong>kendo.list.js</strong> and <strong>kendo.popup.js</strong> in the application.</p>
+  </li>
+  <li>
+    <p>Select element drop down arrow can"t be removed in Firefox.</p>
+  </li>
+  <li>
+    <p>Input with type search shows <strong>reset icon</strong> in Chrome and Safari, which is not present on a mobile device.</p>
+  </li>
+  <li>
+    <p>All input elements in Android 4.x default browser render a fake input when focused.
+This focused input can"t be styled and is not part of the page flow so it won"t scroll
+resulting in 2 identical but differently styled input elements at some point.
+<strong>There is a workaround for this issue integrated in Kendo UI Mobile since Q2 2012, which unfortunately has the following negative effects:</strong></p>
+    <ul>
+      <li>Cyrillic characters can"t be entered in Android 2.x</li>
+      <li>Some keyboards can"t enter long-click characters in Android 2.x (HTC Desire default keyboard for instance)</li>
+      <li>Swype keyboard doesn"t enter characters at all in Android 3.x (maybe in other versions too)</li>
+      <li>Newer input types fall back to text</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Since a number of keyboard features in Android are dependent on the fact that the fake native input rendered on top is visible and on the screen,
+if you encounter such issues and want to work around them, you can disable the integrated workaround by adding this CSS after the Kendo UI Mobile one (or do it for specific input only):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.km-android input
+{
+    -webkit-user-modify: inherit;
+}
+</code></pre></div></div>
+
+<p>As of Q3 2012, the rules needed should have more specificity and different selectors:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.km-root .km-on-android input
+{
+    -webkit-user-modify: inherit;
+}
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Important:</strong> As of Q2 2013, the Android 2 fake input workaround has been removed from the common CSS as it causes multiple issues with phone keyboards. Add this rule to your CSS in order to return it:</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.km-on-android.km-2 .km-list &gt; li,
+.km-on-android.km-3 .km-list &gt; li
+{
+    bottom: 10000px;
+    -webkit-transform: translatey(10000px);
+    transform: translatey(10000px);
+}
+</code></pre></div></div>
+
+<p>Older releases than Q2 2013, will require the following rule to disable the Android 2 workaround:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.km-root .km-on-android .km-list &gt; li
+{
+    bottom: auto;
+    -webkit-transform: none;
+    -moz-transform: none;
+}
+</code></pre></div></div>
+
+<p>and if older than Q3 2012, this rule instead:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.km-android .km-list &gt; li
+{
+    bottom: auto;
+    -webkit-transform: none;
+    -moz-transform: none;
+}
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

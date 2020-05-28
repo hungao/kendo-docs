@@ -1,0 +1,350 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Mobile Switch</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to quickly configure the checked and unchecked state of Mobile Switch widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/mobile/switch.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomobileuiswitch">kendo.mobile.ui.Switch</h1>
+
+<p>Represents the Kendo UI Mobile Switch widget. Inherits from <a href="/api/framework/mobilewidget">kendo.mobile.ui.Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="checked-booleandefault-false">checked <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>The checked state of the widget.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+  &lt;input type="checkbox" data-role="switch" data-checked="false" /&gt;
+  &lt;input type="checkbox" data-role="switch" data-checked="true" /&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable-booleandefault-true">enable <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will be disabled and will not allow the user to change its checked state. The widget is enabled by default.</p>
+
+<h4 id="example---initialize-disabled-switch">Example - initialize disabled switch.</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;input type="checkbox" data-role="switch" data-enable="false" /&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="offlabel-stringdefault-off">offLabel <code class="language-plaintext highlighter-rouge">String</code><em>(default: "OFF")</em></h3>
+
+<p>The OFF label.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+  &lt;input type="checkbox" data-role="switch" data-off-label="No" data-on-label="Yes" /&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="onlabel-stringdefault-on">onLabel <code class="language-plaintext highlighter-rouge">String</code><em>(default: "ON")</em></h3>
+
+<p>The ON label.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+  &lt;input type="checkbox" data-role="switch" data-off-label="No" data-on-label="Yes" /&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="check">check</h3>
+
+<p>Get/Set the checked state of the widget.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="check-boolean">check <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Whether to turn the widget on or off.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Boolean</code> The checked state of the widget.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+  &lt;input id="switch" type="checkbox" data-role="switch" /&gt;
+  &lt;a data-role="button" data-click="onClick"&gt;Change status&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+function onClick() {
+  // get a reference to the switch widget
+  var switchInstance = $("#switch").data("kendoMobileSwitch");
+
+  // get the checked state of the switch.
+  console.log(switchInstance.check());
+  // set the checked state of the switch.
+  switchInstance.check(true);
+  console.log(switchInstance.check());
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+<p>Prepares the <strong>Switch</strong> for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> This method does not remove the Switch element from DOM.</p>
+</blockquote>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+  &lt;input id="switch" type="checkbox" data-role="switch" /&gt;
+  &lt;a data-role="button" data-click="onClick"&gt;Destroy&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function onClick() {
+  var switchInstance = $("#switch").data("kendoMobileSwitch");
+
+  switchInstance.destroy();
+  switchInstance.wrapper.remove();
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable">enable</h3>
+
+<p>Changes the enabled state of the widget.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="enable-boolean">enable <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Whether to enable or disable the widget.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view"&gt;
+    &lt;input id="foo" type="checkbox" data-role="switch" /&gt;
+    &lt;a data-role="button" data-click="disable"&gt;Disable&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    var app = new kendo.mobile.Application();
+    function disable() {
+        $("#foo").data("kendoMobileSwitch").enable(false);
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="refresh">refresh</h3>
+
+<p>Forces the Switch to recalculate its dimensions. Useful when major changes in the interface happen dynamically, like for instance changing the skin.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+  &lt;input id="switch" type="checkbox" data-role="switch" /&gt;
+  &lt;a data-role="button" data-click="changeSkin"&gt;Flat&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+changeSkin = function (e) {
+    if (e.sender.element.text() === "Flat") {
+        e.sender.element.text("Native");
+        mobileSkin = "flat";
+    } else {
+        e.sender.element.text("Flat");
+        mobileSkin = "";
+    }
+
+    app.application.skin(mobileSkin);
+
+    $("#switch").data("kendoMobileSwitch").refresh();
+};
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toggle">toggle</h3>
+
+<p>Toggle the checked state of the widget.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+  &lt;input id="switch" type="checkbox" data-role="switch" /&gt;
+  &lt;a data-role="button" data-click="onClick"&gt;Toggle&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function onClick() {
+  var switchInstance = $("#switch").data("kendoMobileSwitch");
+  // toggle the checked state of the switch.
+  switchInstance.toggle();
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="change">change</h3>
+
+<p>Fires when the state of the widget changes</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="echecked-object">e.checked <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The checked state of the widget.</p>
+
+<h4 id="handle-mobile-switch-change-event">Handle mobile Switch change event</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view"&gt;
+  &lt;input id="switch" type="checkbox" data-role="switch" data-change="onChange" /&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function onChange(e) {
+  console.log(e.checked);//true of false
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

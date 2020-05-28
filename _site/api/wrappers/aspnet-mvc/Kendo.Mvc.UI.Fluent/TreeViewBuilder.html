@@ -1,0 +1,571 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/TreeViewBuilder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluenttreeviewbuilder">Kendo.Mvc.UI.Fluent.TreeViewBuilder</h1>
+<p>Defines the fluent interface for configuring the TreeView component.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="autobindsystemboolean">AutoBind(System.Boolean)</h3>
+<p>Controls whether to bind the widget to the DataSource on initialization.</p>
+
+<h4 id="example-aspx">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.AutoBind(false)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="checkboxtemplatesystemstring">CheckboxTemplate(System.String)</h3>
+<p>Template to be used for rendering the item checkboxes in the treeview.</p>
+
+<h4 id="example-aspx-1">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.CheckboxTemplate("#= data #")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="checkboxtemplateidsystemstring">CheckboxTemplateId(System.String)</h3>
+<p>Id of the template element to be used for rendering the item checkboxes in the treeview.</p>
+
+<h4 id="example-aspx-2">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.CheckboxTemplateId("widgetTemplateId")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="templatesystemstring">Template(System.String)</h3>
+<p>Template to be used for rendering the items in the treeview.</p>
+
+<h4 id="example-aspx-3">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.Template("#= data #")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="templateidsystemstring">TemplateId(System.String)</h3>
+<p>Id of the template element to be used for rendering the items in the treeview.</p>
+
+<h4 id="example-aspx-4">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.TemplateId("widgetTemplateId")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="checkboxessystemboolean">Checkboxes(System.Boolean)</h3>
+<p>Enable/disable rendering of checkboxes in the treeview.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="enabled-systemboolean">enabled <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>Whether checkboxes should be rendered.</p>
+
+<h4 id="example-aspx-5">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.Checkboxes(true)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="checkboxessystemactionkendomvcuifluenttreeviewcheckboxesbuilder">Checkboxes(System.Action&lt;Kendo.Mvc.UI.Fluent.TreeViewCheckboxesBuilder&gt;)</h3>
+<p>Configures rendering of checkboxes in the treeview.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="configure-systemactionkendomvcuifluenttreeviewcheckboxesbuilder">configure System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/TreeViewCheckboxesBuilder">Kendo.Mvc.UI.Fluent.TreeViewCheckboxesBuilder</a>&gt;</h5>
+<p>Builder of the treeview checkboxes configuration.</p>
+
+<h4 id="example-aspx-6">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.Checkboxes(config =&gt; config
+    .CheckChildren(true)
+)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="itemssystemactionkendomvcuifluenttreeviewitemfactory">Items(System.Action&lt;Kendo.Mvc.UI.Fluent.TreeViewItemFactory&gt;)</h3>
+<p>Defines the items in the TreeView</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="addaction-systemactionkendomvcuifluenttreeviewitemfactory">addAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/TreeViewItemFactory">Kendo.Mvc.UI.Fluent.TreeViewItemFactory</a>&gt;</h5>
+<p>The add action.</p>
+
+<h4 id="example-aspx-7">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.Items(items =&gt;
+{
+    items.Add().Text("First Item");
+    items.Add().Text("Second Item");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="eventssystemactionkendomvcuifluenttreevieweventbuilder">Events(System.Action&lt;Kendo.Mvc.UI.Fluent.TreeViewEventBuilder&gt;)</h3>
+<p>Configures the client-side events.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="clienteventsaction-systemactionkendomvcuifluenttreevieweventbuilder">clientEventsAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/TreeViewEventBuilder">Kendo.Mvc.UI.Fluent.TreeViewEventBuilder</a>&gt;</h5>
+<p>The client events action.</p>
+
+<h4 id="example-aspx-8">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.Events(events =&gt;
+    .OnDataBinding("onDataBinding")
+    .OnItemDataBound("onItemDataBound")
+)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemstringsystemactionkendomvcuitreeviewitemkendomvcsitemapnode">BindTo(System.String,System.Action&lt;Kendo.Mvc.UI.TreeViewItem,Kendo.Mvc.SiteMapNode&gt;)</h3>
+<p>Binds the TreeView to a sitemap</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="viewdatakey-systemstring">viewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The view data key.</p>
+
+<h5 id="sitemapaction-systemactionkendomvcuitreeviewitemkendomvcsitemapnode">siteMapAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/TreeViewItem">Kendo.Mvc.UI.TreeViewItem</a>,Kendo.Mvc.SiteMapNode&gt;</h5>
+<p>The action to configure the item.</p>
+
+<h4 id="example-aspx-9">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.BindTo("examples", (item, siteMapNode) =&gt;
+{
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemstring">BindTo(System.String)</h3>
+<p>Binds the TreeView to a sitemap.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="viewdatakey-systemstring-1">viewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The view data key.</p>
+
+<h4 id="example-aspx-10">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.BindTo("examples")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemcollectionsgenericienumerablekendomvcuitreeviewitemmodel">BindTo(System.Collections.Generic.IEnumerable&lt;Kendo.Mvc.UI.TreeViewItemModel&gt;)</h3>
+<p>Binds the TreeView to a list of items.
+            Use if a hierarchy of items is being sent from the controller; to bind the TreeView declaratively, use the Items() method.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="items-systemcollectionsgenericienumerablekendomvcuitreeviewitemmodel">items System.Collections.Generic.IEnumerable&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/TreeViewItemModel">Kendo.Mvc.UI.TreeViewItemModel</a>&gt;</h5>
+<p>The list of items</p>
+
+<h4 id="example-aspx-11">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.BindTo(model)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemcollectionsgenericienumerablet1systemactionkendomvcuitreeviewitemt1">BindTo(System.Collections.Generic.IEnumerable&lt;T1&gt;,System.Action&lt;Kendo.Mvc.UI.TreeViewItem,T1&gt;)</h3>
+<p>Binds the TreeView to a list of objects. The TreeView will be "flat" which means a TreeView item will be created for
+            every item in the data source.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="datasource-systemcollectionsgenericienumerablet1">dataSource <code class="language-plaintext highlighter-rouge">System.Collections.Generic.IEnumerable&lt;T1&gt;</code></h5>
+<p>The data source.</p>
+
+<h5 id="itemdatabound-systemactionkendomvcuitreeviewitemt1">itemDataBound System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/TreeViewItem">Kendo.Mvc.UI.TreeViewItem</a>,T1&gt;</h5>
+<p>The action executed for every data bound item.</p>
+
+<h4 id="example-aspx-12">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.BindTo(new []{"First", "Second"}, (item, value) =&gt;
+{
+    item.Text = value;
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemcollectionsienumerablesystemactionkendomvcuifluentnavigationbindingfactorykendomvcuitreeviewitem">BindTo(System.Collections.IEnumerable,System.Action&lt;Kendo.Mvc.UI.Fluent.NavigationBindingFactory&lt;Kendo.Mvc.UI.TreeViewItem&gt;&gt;)</h3>
+<p>Binds the TreeView to a list of objects. The TreeView will create a hierarchy of items using the specified mappings.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="datasource-systemcollectionsienumerable">dataSource <code class="language-plaintext highlighter-rouge">System.Collections.IEnumerable</code></h5>
+<p>The data source.</p>
+
+<h5 id="factoryaction-systemactionkendomvcuifluentnavigationbindingfactory">factoryAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/NavigationBindingFactory">Kendo.Mvc.UI.Fluent.NavigationBindingFactory</a><Kendo.Mvc.UI.TreeViewItem>&gt;</Kendo.Mvc.UI.TreeViewItem></h5>
+<p>The action which will configure the mappings</p>
+
+<h4 id="example-aspx-13">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.BindTo(Model, mapping =&gt; mapping
+    .For&lt;Customer&gt;(binding =&gt; binding
+        .Children(c =&gt; c.Orders) // The "child" items will be bound to the the "Orders" property
+        .ItemDataBound((item, c) =&gt; item.Text = c.ContactName) // Map "Customer" properties to TreeViewItem properties
+    )
+    .For&lt;Order&lt;(binding =&gt; binding
+        .Children(o =&gt; null) // "Orders" do not have child objects so return "null"
+        .ItemDataBound((item, o) =&gt; item.Text = o.OrderID.ToString()) // Map "Order" properties to TreeViewItem properties
+    )
+)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="itemactionsystemactionkendomvcuitreeviewitem">ItemAction(System.Action&lt;Kendo.Mvc.UI.TreeViewItem&gt;)</h3>
+<p>Callback for each item.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="action-systemactionkendomvcuitreeviewitem">action System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/TreeViewItem">Kendo.Mvc.UI.TreeViewItem</a>&gt;</h5>
+<p>Action, which will be executed for each item.</p>
+
+<h4 id="example-aspx-14">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.ItemAction(item =&gt;
+{
+    item
+    .Text(...)
+    .HtmlAttributes(...);
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="highlightpathsystemboolean">HighlightPath(System.Boolean)</h3>
+<p>Select item depending on the current URL.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-systemboolean">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>If true the item will be highlighted.</p>
+
+<h4 id="example-aspx-15">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.HighlightPath(true)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="animationsystemboolean">Animation(System.Boolean)</h3>
+<p>Use to enable or disable animation of the TreeView.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="enable-systemboolean">enable <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The boolean value.</p>
+
+<h4 id="example-aspx-16">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.Animation(false) //toggle effect
+%&gt;
+</code></pre></div></div>
+
+<h3 id="animationsystemactionkendomvcuifluentexpandableanimationbuilder">Animation(System.Action&lt;Kendo.Mvc.UI.Fluent.ExpandableAnimationBuilder&gt;)</h3>
+<p>Configures the animation effects of the widget.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="animationaction-systemactionkendomvcuifluentexpandableanimationbuilder">animationAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/ExpandableAnimationBuilder">Kendo.Mvc.UI.Fluent.ExpandableAnimationBuilder</a>&gt;</h5>
+<p>The action which configures the animation effects.</p>
+
+<h4 id="example-aspx-17">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.Animation(animation =&gt;
+{
+    animation.Expand(open =&gt;
+    {
+        open.SlideIn(SlideDirection.Down);
+        });
+    })
+%&gt;
+</code></pre></div></div>
+
+<h3 id="expandallsystemboolean">ExpandAll(System.Boolean)</h3>
+<p>Expand all the items.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-systemboolean-1">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>If true all the items will be expanded.</p>
+
+<h4 id="example-aspx-18">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.ExpandAll(true)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="draganddropsystemboolean">DragAndDrop(System.Boolean)</h3>
+<p>Enables drag &amp; drop between treeview nodes.</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-systemboolean-2">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>If true, drag &amp; drop is enabled.</p>
+
+<h4 id="example-aspx-19">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.Items(items =&gt;
+{
+    items.Add().Text("First Item");
+    items.Add().Text("Second Item");
+})
+.DragAndDrop(true)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="securitytrimmingsystemboolean">SecurityTrimming(System.Boolean)</h3>
+<p>Enable/disable security trimming functionality of the component.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-systemboolean-3">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>If true security trimming is enabled.</p>
+
+<h4 id="example-aspx-20">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.SecurityTrimming(false)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="securitytrimmingsystemactionkendomvcuisecuritytrimmingbuilder">SecurityTrimming(System.Action&lt;Kendo.Mvc.UI.SecurityTrimmingBuilder&gt;)</h3>
+<p>Defines the security trimming functionality of the component</p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="securitytrimmingaction-systemactionkendomvcuisecuritytrimmingbuilder">securityTrimmingAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/SecurityTrimmingBuilder">Kendo.Mvc.UI.SecurityTrimmingBuilder</a>&gt;</h5>
+<p>The securityTrimming action.</p>
+
+<h4 id="example-aspx-21">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.SecurityTrimming(builder =&gt;
+{
+    builder.Enabled(true).HideParent(true);
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="datatextfieldsystemstring">DataTextField(System.String)</h3>
+<p>Sets the name of the field that will supply the item text.</p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="field-systemstring">field <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The field name.</p>
+
+<h4 id="example-aspx-22">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.DataTextField("Name")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="dataurlfieldsystemstring">DataUrlField(System.String)</h3>
+<p>Sets the name of the field that will supply the item URL.</p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="field-systemstring-1">field <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The field name.</p>
+
+<h4 id="example-aspx-23">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.DataUrlField("LinksTo")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="dataspritecssclassfieldsystemstring">DataSpriteCssClassField(System.String)</h3>
+<p>Sets the name of the field that will supply the CSS class for the item sprite image.</p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="field-systemstring-2">field <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The field name.</p>
+
+<h4 id="example-aspx-24">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.DataSpriteCssClassField("IconSprite")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="dataimageurlfieldsystemstring">DataImageUrlField(System.String)</h3>
+<p>Sets the name of the field that will supply the URL for the item image.</p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="field-systemstring-3">field <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The field name.</p>
+
+<h4 id="example-aspx-25">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.DataImageUrlField("ImageURL")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="datasourcesystemactionkendomvcuifluenthierarchicaldatasourcebuildersystemobject">DataSource(System.Action&lt;Kendo.Mvc.UI.Fluent.HierarchicalDataSourceBuilder&lt;System.Object&gt;&gt;)</h3>
+<p>Configure the DataSource of the component</p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluenthierarchicaldatasourcebuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/HierarchicalDataSourceBuilder">Kendo.Mvc.UI.Fluent.HierarchicalDataSourceBuilder</a><System.Object>&gt;</System.Object></h5>
+<p>The action that configures the M:Kendo.Mvc.UI.Fluent.TreeViewBuilder.DataSource(System.Action{Kendo.Mvc.UI.Fluent.HierarchicalDataSourceBuilder{System.Object}}).</p>
+
+<h4 id="example-aspx-26">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.DataSource(dataSource =&gt; dataSource
+    .Read(read =&gt; read
+        .Action("Employees", "TreeView")
+    )
+)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="loadondemandsystemboolean">LoadOnDemand(System.Boolean)</h3>
+<p>Allows the treeview to fetch the entire datasource at initialization time.</p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="field-systemboolean">field <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>Whether the datasource should be loaded on demand.</p>
+
+<h4 id="example-aspx-27">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+.Name("TreeView")
+.LoadOnDemand(false)
+%&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

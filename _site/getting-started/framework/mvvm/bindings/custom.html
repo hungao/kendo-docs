@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/mvvm/bindings/custom.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="custom-binding">Custom binding</h1>
+
+<p>Kendo MVVM provides the ability to create custom bindings.</p>
+
+<blockquote>
+  <p><strong>Important:</strong> The custom binding should be registered <strong>before</strong>  <code class="language-plaintext highlighter-rouge">kendo.bind</code> is called.</p>
+</blockquote>
+
+<h2 id="registering-a-custom-binding">Registering a custom binding</h2>
+
+<p>A custom binding is registered by extending the <a href="/api/framework/binder"><code class="language-plaintext highlighter-rouge">kendo.data.Binder</code></a> object.</p>
+
+<h4 id="example-one-way-binding-the-html-element-will-be-updated-when-the-view-model-changes">Example: one-way binding (the HTML element will be updated when the view-model changes)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    kendo.data.binders.slide = kendo.data.Binder.extend({
+        refresh: function() {
+            var value = this.bindings["slide"].get();
+
+            if (value) {
+                $(this.element).slideDown();
+            } else {
+                $(this.element).slideUp();
+            }
+        }
+    });
+
+    var viewModel = kendo.observable({
+        slideValue: true
+    });
+
+    kendo.bind(document.body, viewModel);
+&lt;/script&gt;
+
+&lt;div id="target" data-bind="slide: slideValue"&gt;
+    One Big Orange Square.
+&lt;/div&gt;
+</code></pre></div></div>
+
+<h4 id="example-two-way-binding-both-html-element-and-view-model-will-be-updated">Example: two-way binding (both HTML element and View-Model will be updated)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    kendo.data.binders.numericValue = kendo.data.Binder.extend({
+        init: function(element, bindings, options) {
+            //call the base constructor
+            kendo.data.Binder.fn.init.call(this, element, bindings, options);
+
+            var that = this;
+            //listen for the change event of the element
+            $(that.element).on("change", function() {
+                that.change(); //call the change function
+            });
+        },
+        refresh: function() {
+            var that = this,
+                value = that.bindings["numericValue"].get(); //get the value from the View-Model
+
+            $(that.element).val(value); //update the HTML input element
+        },
+        change: function() {
+            var value = this.element.value;
+            //in this example the View-Model will be updated only if the value of the input is a number
+            if (!isNaN(value)) {
+                this.bindings["numericValue"].set(value); //update the View-Model
+            }
+        }
+    });
+
+    //View-Model source
+    var viewModel = kendo.observable({
+        number: 10
+    });
+
+    kendo.bind(document.body, viewModel);
+&lt;/script&gt;
+
+&lt;!-- View source --&gt;
+&lt;input data-bind="numericValue: number" /&gt;
+Input value: &lt;span data-bind="text: number" /&gt;
+</code></pre></div></div>
+
+<h4 id="example-custom-widget-binding-the-widget-will-be-updated-when-the-view-model-changes">Example: custom widget binding (the widget will be updated when the view-model changes)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//the following example demonstrates how to bind the max value of a NumericTextBox widget
+kendo.data.binders.widget.max = kendo.data.Binder.extend({
+    init: function(widget, bindings, options) {
+        //call the base constructor
+        kendo.data.Binder.fn.init.call(this, widget.element[0], bindings, options);
+    },
+    refresh: function() {
+        var that = this,
+        value = that.bindings["max"].get(); //get the value from the View-Model
+        $(that.element).data("kendoNumericTextBox").max(value); //update the widget
+    }
+});
+
+&lt;!-- View source --&gt;
+&lt;input data-role="numerictextbox" id="numeric" data-bind="value: value, max: max" /&gt;​
+</code></pre></div></div>
+
+<h3 id="init">init</h3>
+
+<p>This is the binding constructor. If this function is overriden the base Binder constructor should be called explicitly.</p>
+
+<h3 id="refresh">refresh</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">refresh</code> handler is responsible for updating the HTML element. It will be executed each time when the value of the bound MVVM field chandes. The bound DOM element and attached MVVM bindings could be retrieved through the context of the function.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>refresh: function() {
+    this.bindings //contains all bindings for the current element
+    this.element //reference the to the DOM element
+}
+</code></pre></div></div>
+
+<h3 id="change">change</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">change</code> handler is responsible for updating the View-Model. It listens for the change event of the bound HTML input element. The View-Model is updated through the <code class="language-plaintext highlighter-rouge">set(value)</code> method of the binding.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>change: function() {
+    this.bindings //contains all bindings for the current element
+    this.element //reference the to the DOM element
+}
+</code></pre></div></div>
+
+<h3 id="bindings---methods">bindings - methods</h3>
+
+<p>Bindings have two important methods - <code class="language-plaintext highlighter-rouge">get()</code> and <code class="language-plaintext highlighter-rouge">set(value)</code>.</p>
+
+<p>The <strong>get</strong> method will return the value from the View-Model.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.bindings["slide"].get() //outputs true
+</code></pre></div></div>
+
+<p>The <strong>set</strong> method accepts one parameter and sets it as a new value of the bound field from the View-Model.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.bindings["slide"].set(false) //sets the slideValue to false
+</code></pre></div></div>
+
+<h2 id="using-the-custom-binding">Using the custom binding</h2>
+
+<p>Custom bindings are set via <code class="language-plaintext highlighter-rouge">data-bind</code> attribute.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target" data-bind="slide: slideValue"&gt;
+    One Big Orange Square.
+&lt;/div&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

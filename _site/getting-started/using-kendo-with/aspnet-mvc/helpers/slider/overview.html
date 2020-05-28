@@ -1,0 +1,250 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Help Guide for Slider HtmlHelper extension | Kendo UI documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Step-by-step instructions how to configure Kendo UI Slider for ASP.NET MVC widget and add Slider HtmlHelper extension.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/slider/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="slider">Slider</h1>
+
+<p>The Slider HtmlHelper extension is a server-side wrapper for the <a href="/api/web/slider">Kendo UI Slider</a> widget.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>There are two types of Slider:</p>
+
+<ul>
+  <li>Kendo Slider for ASP.NET MVC, which presents one thumb and two opposing buttons for selecting a single value</li>
+  <li>Kendo RangeSlider for ASP.NET MVC, which present two thumbs for defining a range of values</li>
+</ul>
+
+<p>Here is how to configure a simple Kendo Slider:</p>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create a new action method which renders the view:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    return View();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add a slider:</p>
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().Slider()
+          .Name("slider") //The name of the slider is mandatory. It specifies the "id" attribute of the widget.
+          .Min(0) //Set min value of the slider
+          .Max(100) //Set min value of the slider
+          .Value(20) //Set the value of the slider
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().Slider()
+        .Name("slider") //The name of the slider is mandatory. It specifies the "id" attribute of the widget.
+        .Min(0) //Set min value of the slider
+        .Max(100) //Set min value of the slider
+        .Value(20) //Set the value of the slider
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="accessing-an-existing-slider">Accessing an Existing Slider</h2>
+
+<p>You can reference an existing slider instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/slider#methods">API</a> to control its behavior.</p>
+
+<h3 id="accessing-an-existing-slider-instance">Accessing an existing slider instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//Put this after your Kendo Slider for ASP.NET MVC declaration
+&lt;script&gt;
+$(function() {
+    // Notice that the Name() of the slider is used to get its client-side instance
+    var slider = $("#slider").data("kendoSlider");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-kendo-ui-slider-events">Handling Kendo UI Slider events</h2>
+
+<p>You can subscribe to all <a href="/api/web/slider#events">events</a> exposed by Kendo UI Slider:</p>
+
+<h3 id="webforms---subscribe-by-handler-name">WebForms - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%: Html.Kendo().Slider()
+        .Name("slider")
+        .Events(e =&gt; e
+            .Change("change")
+            .Slide("slide")
+        )
+%&gt;
+&lt;script&gt;
+function change() {
+    //Handle the change event
+}
+
+function slide() {
+    //Handle the slide event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-handler-name">Razor - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Slider()
+      .Name("slider")
+      .Events(e =&gt; e
+            .Change("change")
+            .Slide("slide")
+      )
+)
+&lt;script&gt;
+function change() {
+    //Handle the change event
+}
+
+function slide() {
+    //Handle the slide event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-template-delegate">Razor - subscribe by template delegate</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Slider()
+      .Name("slider")
+      .Events(e =&gt; e
+          .Change(@&lt;text&gt;
+            function() {
+                //Handle the change event inline
+            }
+          &lt;/text&gt;)
+          .Slide(@&lt;text&gt;
+            function() {
+                //Handle the slide event inline
+            }
+            &lt;/text&gt;)
+      )
+)
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

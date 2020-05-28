@@ -1,0 +1,488 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/Dataviz/UI/MapLayer.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizuimaplayer">\Kendo\Dataviz\UI\MapLayer</h1>
+
+<p>A PHP class representing the layer setting of MapLayers.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="attribution">attribution</h3>
+<p>The attribution for the layer. Accepts valid HTML.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;attribution('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="autobind">autoBind</h3>
+<p>If set to false the layer will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;autoBind(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="datasource">dataSource</h3>
+
+<p>Sets the data source of the dataSource.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-kendodatadatasourcearray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource|array</code></h5>
+
+<h4 id="example---using-kendodatadatasource">Example - using <a href="/api/wrappers/php/kendo/data/datasource">\Kendo\Data\DataSource</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$dataSource = new \Kendo\Data\DataSource();
+$layer-&gt;dataSource($dataSource);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$schema = new \Kendo\Data\DataSourceSchema();
+$layer-&gt;dataSource(array('schema' =&gt; $schema));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="extent">extent</h3>
+<p>Specifies the extent of the region covered by this layer.
+The layer will be hidden when the specified area is out of view.Accepts a four-element array that specifies the extent covered by this layer:
+North-West lat, longitude, South-East latitude, longitude.If not specified, the layer is always visible.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-array">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;extent(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="imageryset">imagerySet</h3>
+<p>The bing map tile types. Possible options.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;imagerySet('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="key">key</h3>
+<p>The API key for the layer. Currently supported only for Bing (tm) tile layers.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;key('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="locationfield">locationField</h3>
+<p>The data item field which contains the marker (symbol) location.
+The field should be an array with two numbers - latitude and longitude in decimal degrees.Requires the dataSource option to be set.Only applicable to "marker" and "bubble" layers.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-string-3">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;locationField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="maxsize">maxSize</h3>
+<p>The maximum symbol size for bubble layer symbols.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;maxSize(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="minsize">minSize</h3>
+<p>The minimum symbol size for bubble layer symbols.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-float-1">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;minSize(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="opacity">opacity</h3>
+<p>The the opacity for the layer.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-float-2">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;opacity(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="shape">shape</h3>
+<p>The marker shape. Supported shapes are "pin" and "pinTarget".</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-string-4">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;shape('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="style">style</h3>
+
+<p>The default style for shapes.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-kendodatavizuimaplayerstylearray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayerStyle|array</code></h5>
+
+<h4 id="example---using-kendodatavizuimaplayerstyle">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/MapLayerStyle">\Kendo\Dataviz\UI\MapLayerStyle</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$style = new \Kendo\Dataviz\UI\MapLayerStyle();
+$fill = new \Kendo\Dataviz\UI\MapLayerStyleFill();
+$style-&gt;fill($fill);
+$layer-&gt;style($style);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$fill = new \Kendo\Dataviz\UI\MapLayerStyleFill();
+$layer-&gt;style(array('fill' =&gt; $fill));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="subdomains">subdomains</h3>
+<p>A list of subdomains to use for loading tiles.
+Alternating between different subdomains allows more requests to be executed in parallel.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-array-1">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;subdomains(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="symbol">symbol</h3>
+<p>The bubble layer symbol type. Supported symbols are "circle" and "square".</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-string-5">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;symbol('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="titlefield">titleField</h3>
+<p>The data item field which contains the marker title.
+Requires the dataSource option to be set.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-string-6">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;titleField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="tooltip">tooltip</h3>
+
+<p>The default Kendo UI Tooltip options for data-bound markers.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-kendodatavizuimaplayertooltiparray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayerTooltip|array</code></h5>
+
+<h4 id="example---using-kendodatavizuimaplayertooltip">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/MapLayerTooltip">\Kendo\Dataviz\UI\MapLayerTooltip</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$tooltip = new \Kendo\Dataviz\UI\MapLayerTooltip();
+$autoHide = true;
+$tooltip-&gt;autoHide($autoHide);
+$layer-&gt;tooltip($tooltip);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$autoHide = true;
+$layer-&gt;tooltip(array('autoHide' =&gt; $autoHide));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="type">type</h3>
+<p>The layer type. Supported types are "tile", "bing", "shape", "marker" and "bubble".</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-string-7">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;type('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="urltemplate">urlTemplate</h3>
+<p>The URL template for tile layers. Template variables:</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-string-8">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;urlTemplate('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="valuefield">valueField</h3>
+<p>The value field for bubble layer symbols.
+The data item field should be a number.</p>
+
+<h4 id="returns-18">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\MapLayer</code></p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="value-string-9">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$layer = new \Kendo\Dataviz\UI\MapLayer();
+$layer-&gt;valueField('value');
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

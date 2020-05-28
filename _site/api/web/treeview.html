@@ -1,0 +1,2042 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI TreeView</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Documentation guide that helps the developer configure TreeView UI widget in a few quick steps, apply methdos and trigger events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/treeview.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouitreeview">kendo.ui.TreeView</h1>
+
+<p>Represents the Kendo UI TreeView. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="animation-booleanobject">animation <code class="language-plaintext highlighter-rouge">Boolean|Object</code></h3>
+
+<p>A collection of visual animations used when items are expanded or collapsed through user interaction.
+Setting this option to <strong>false</strong> will disable all animations.</p>
+
+<h4 id="example---disable-animation-of-subnodes">Example - disable animation of subnodes</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  animation: false,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationcollapse-booleanobject">animation.collapse <code class="language-plaintext highlighter-rouge">Boolean|Object</code></h3>
+
+<p>The animation that will be used when collapsing items.</p>
+
+<h4 id="example---disable-the-collapse-animation">Example - disable the collapse animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  animation: {
+    collapse: false
+  },
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationcollapseduration-number-default-200">animation.collapse.duration <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 200)</em></h3>
+
+<p>The number of milliseconds used for the animation when a node is expanded.</p>
+
+<h4 id="example---specify-a-collapse-animation-duration">Example - specify a collapse animation duration</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  animation: {
+    collapse: {
+      duration: 400
+    }
+  },
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationcollapseeffects-string">animation.collapse.effects <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>A whitespace-delimited string of animation effects that are used when collapsing nodes.
+The supported effects are <strong>fadeOut</strong> and <strong>collapseVertical</strong>.</p>
+
+<h4 id="example---make-sub-levels-fade-out-and-collapse-vertically">Example - make sub-levels fade out and collapse vertically</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  animation: {
+    collapse: {
+      effects: "fadeOut collapseVertical"
+    }
+  },
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationexpand-booleanobject">animation.expand <code class="language-plaintext highlighter-rouge">Boolean|Object</code></h3>
+
+<p>The animation that will be used when expanding items.</p>
+
+<h4 id="example---disable-expand-animation">Example - disable expand animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  animation: {
+    expand: false
+  },
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationexpandduration-number-default-200">animation.expand.duration <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 200)</em></h3>
+
+<p>The number of milliseconds used for the animation when a
+node is expanded.</p>
+
+<h4 id="example---specify-a-slow-expand-animation">Example - specify a slow expand animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  animation: {
+    expand: {
+      duration: 600
+    }
+  },
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationexpandeffects-string-default-expandvertical">animation.expand.effects <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "expandVertical")</em></h3>
+
+<p>A whitespace-delimited string of animation effects that are used when expanding nodes.
+The supported effects are <strong>"expandVertical"</strong> and <strong>"fadeIn"</strong>.</p>
+
+<h4 id="example---make-sub-levels-fade-in-and-expand-vertically">Example - make sub-levels fade in and expand vertically</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  animation: {
+    expand: {
+      effects: "fadeIn expandVertical"
+    }
+  },
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="autobind-boolean-default-true">autoBind <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will not bind to the data source during initialization. In this case data binding will occur when the <a href="/api/framework/datasource#events-change">change</a> event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<blockquote>
+  <p>Setting <code class="language-plaintext highlighter-rouge">autoBind</code> to <code class="language-plaintext highlighter-rouge">false</code> is useful when multiple widgets are bound to the same data source. Disabling automatic binding ensures that the shared data source does not make more than one request to the remote service.</p>
+</blockquote>
+
+<h4 id="example---disable-automatic-binding">Example - disable automatic binding</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+var dataSource = new kendo.data.HierarchicalDataSource({
+  data: [ { text: "Jane Doe" }, { text: "John Doe" }]
+});
+$("#treeview").kendoTreeView({
+  autoBind: false,
+  dataSource: dataSource
+});
+dataSource.read(); // "read()" will fire the "change" event of the dataSource and the widget will be bound
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="checkboxes-booleanobject">checkboxes <code class="language-plaintext highlighter-rouge">Boolean|Object</code></h3>
+
+<p>If <code class="language-plaintext highlighter-rouge">true</code> or an object, renders checkboxes beside each node.</p>
+
+<h4 id="example---show-node-checkboxes">Example - show node checkboxes</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  checkboxes: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="checkboxesname-string">checkboxes.name <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Sets the name attribute of the checkbox inputs. That name will be posted to the server.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  checkboxes: {
+    name: "checkedItems[]"
+  },
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="checkboxescheckchildren-booleandefault-false">checkboxes.checkChildren <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>Indicates whether checkboxes of child items should get checked when the checkbox of a parent item is checked. This
+also enables tri-state checkboxes with an indeterminate state.</p>
+
+<h4 id="example---enable-tri-state-checkboxes-and-propagate-checked-state-to-children">Example - enable tri-state checkboxes and propagate checked state to children</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  checkboxes: {
+    checkChildren: true
+  },
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="checkboxestemplate-stringfunction">checkboxes.template <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The <a href="/api/framework/kendo#methods-template">template</a> which renders the checkboxes. Can be used to allow posting of
+additional information along the treeview checkboxes.</p>
+
+<p>The fields which can be used in the template are:</p>
+
+<ul>
+  <li>item - the data item of the given node</li>
+  <li>treeview - the treeview options</li>
+</ul>
+
+<h4 id="example---specify-a-different-name-for-each-checkbox-bound-to-the-item-id">Example - specify a different name for each checkbox, bound to the item id</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  checkboxes: {
+    template: "&lt;input type='checkbox' name='checkedFiles[#= item.id #]' value='true' /&gt;"
+  },
+  dataSource: [
+    { id: 1, text: "foo", items: [
+      { id: 2, text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dataimageurlfield-string-default-null">dataImageUrlField <code class="language-plaintext highlighter-rouge">String</code> <em>(default: null)</em></h3>
+
+<p>Sets the field of the data item that provides the image URL of the treeview nodes.</p>
+
+<h4 id="example---specify-custom-image-url-field">Example - specify custom image URL field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+var items = [
+  { text: "Mail", image: "http://demos.telerik.com/kendo-ui/content/web/treeview/mail.png" },
+  { text: "Search", image: "http://demos.telerik.com/kendo-ui/content/web/treeview/search.png" }
+];
+$("#treeview").kendoTreeView({
+  dataImageUrlField: "image",
+  dataSource: items
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="datasource-objectarraykendodatahierarchicaldatasource">dataSource <code class="language-plaintext highlighter-rouge">Object|Array|kendo.data.HierarchicalDataSource</code></h3>
+
+<p>The data source of the widget which is used render nodes. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing <a href="/api/framework/hierarchicaldatasource">kendo.data.HierarchicalDataSource</a> instance.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dataSource</code> option is set to a JavaScript object or array the widget will initialize a new <a href="/api/framework/hierarchicaldatasource">kendo.data.HierarchicalDataSource</a> instance using that value as data source configuration.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dataSource</code> option is an existing <a href="/api/framework/hierarchicaldatasource">kendo.data.HierarchicalDataSource</a> instance the widget will use that instance and will <strong>not</strong> initialize a new one.</p>
+
+<h4 id="example---set-datasource-as-a-javascript-object">Example - set dataSource as a JavaScript object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: {
+    data: [
+      { text: "foo", items: [
+        { text: "bar" }
+      ] }
+    ]
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-datasource-as-a-javascript-array">Example - set dataSource as a JavaScript array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-datasource-as-an-existing-kendodatahierarchicaldatasource-instance">Example - set dataSource as an existing kendo.data.HierarchicalDataSource instance</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+var dataSource = new kendo.data.HierarchicalDataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/Employees",
+      dataType: "jsonp"
+    }
+  },
+  schema: {
+    model: {
+      id: "EmployeeId",
+      hasChildren: "HasEmployees"
+    }
+  }
+});
+
+$("#treeview").kendoTreeView({
+  dataSource: dataSource,
+  dataTextField: "FullName"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dataspritecssclassfield-string-default-null">dataSpriteCssClassField <code class="language-plaintext highlighter-rouge">String</code> <em>(default: null)</em></h3>
+
+<p>Sets the field of the data item that provides the sprite CSS class of the nodes.
+If an array, each level uses the field that is at the same index in the array, or the last item in the array.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;style&gt;
+  #treeview .k-sprite {
+    background-image: url("http://demos.telerik.com/kendo-ui/content/web/treeview/coloricons-sprite.png");
+  }
+
+  .folder { background-position: 0 -16px; }
+  .html { background-position: 0 -48px; }
+&lt;/style&gt;
+
+&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+var items = [
+  { text: "assets", sprite: "folder" },
+  { text: "index.html", sprite: "html" }
+];
+$("#treeview").kendoTreeView({
+  dataSpriteCssClassField: "sprite",
+  dataSource: items
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="datatextfield-stringarray-default-null">dataTextField <code class="language-plaintext highlighter-rouge">String|Array</code> <em>(default: null)</em></h3>
+
+<p>Sets the field of the data item that provides the text content of the nodes.
+If an array, each level uses the field that is at the same index in the array, or the last item in the array.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+var items = [
+  { ProductName: "Tea", items: [
+    { ProductName: "Green Tea" },
+    { ProductName: "Black Tea" }
+  ] },
+  { ProductName: "Coffee" }
+];
+$("#treeview").kendoTreeView({
+  dataTextField: "ProductName",
+  dataSource: items
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-different-fields-on-different-levels">Example - using different fields on different levels</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+var items = [
+  { CategoryName: "Tea", items: [
+    { ProductName: "Green Tea" },
+    { ProductName: "Black Tea" }
+  ] },
+  { CategoryName: "Coffee" }
+];
+$("#treeview").kendoTreeView({
+  dataTextField: [ "CategoryName", "ProductName" ],
+  dataSource: items
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dataurlfield-string-default-null">dataUrlField <code class="language-plaintext highlighter-rouge">String</code> <em>(default: null)</em></h3>
+
+<p>Sets the field of the data item that provides the link URL of the nodes.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+var items = [
+  { text: "Tea", LinksTo: "http://tea.example.com" },
+  { text: "Coffee", LinksTo: "http://coffee.example.com" }
+];
+$("#treeview").kendoTreeView({
+  dataUrlField: "LinksTo",
+  dataSource: items
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="draganddrop-boolean-default-false">dragAndDrop <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Disables (<strong>false</strong>) or enables (<strong>true</strong>) drag-and-drop of the nodes.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dragAndDrop: true,
+  dataSource: [
+    { text: "foo" },
+    { text: "bar" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="loadondemand-boolean-default-true">loadOnDemand <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Indicates whether the child datasources should be fetched lazily when parent groups get expanded.
+Setting this to false causes all child dataSources to be loaded at initialization time.
+Note: when initializing the widget from an array (rather than from a HierarchicalDataSource instance), this option defaults to false, rather than true.</p>
+
+<h4 id="example---force-lazy-loading-of-sublevels">Example - force lazy loading of sublevels</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  loadOnDemand: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messages-object">messages <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The text messages displayed in the widget. Use it to customize or localize the messages.</p>
+
+<h4 id="example---customize-treeview-messages">Example - customize treeview messages</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: {
+    transport: {
+      read: function(options) {
+        // request always fails after 1s
+        setTimeout(function() {
+          options.error({});
+        }, 1000);
+      }
+    }
+  },
+  messages: {
+    retry: "Wiederholen",
+    requestFailed: "Anforderung fehlgeschlagen.",
+    loading: "Laden..."
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesloading-string-default-loading">messages.loading <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Loading…")</em></h3>
+
+<p>The text message shown while the root level items are loading.</p>
+
+<h4 id="example---customize-loading-message">Example - customize loading message</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: {
+    transport: {
+      read: function(options) {
+        // request always fails after 1s
+        setTimeout(function() {
+          options.error({});
+        }, 1000);
+      }
+    }
+  },
+  messages: {
+    loading: "Laden..."
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesretry-string-default-retry">messages.retry <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Retry")</em></h3>
+
+<p>The text message shown in the retry button.</p>
+
+<h4 id="example---customize-retry-message">Example - customize retry message</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: {
+    transport: {
+      read: function(options) {
+        // request always fails after 1s
+        setTimeout(function() {
+          options.error({});
+        }, 1000);
+      }
+    }
+  },
+  messages: {
+    retry: "Wiederholen"
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesrequestfailed-string-default-request-failed">messages.requestFailed <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Request failed.")</em></h3>
+
+<p>The text message shown when an error occurs while fetching the content.</p>
+
+<h4 id="example---customize-requestfailed-message">Example - customize requestFailed message</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: {
+    transport: {
+      read: function(options) {
+        // request always fails after 1s
+        setTimeout(function() {
+          options.error({});
+        }, 1000);
+      }
+    }
+  },
+  messages: {
+    requestFailed: "Anforderung fehlgeschlagen."
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="template-stringfunction">template <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>Template for rendering each node.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  template: "#= item.text # (#= item.inStock #)",
+  dataSource: [
+    { text: "foo", inStock: 7, items: [
+      { text: "bar", inStock: 2 },
+      { text: "baz", inStock: 5 }
+    ] }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="append">append</h3>
+
+<p>Appends a node to any level of the treeview. This method may also be used to reorder nodes.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo" }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+// appends a new node to the root level
+treeview.append({ text: "bar" });
+
+// appends a new node to the first treeview item
+treeview.append({ text: "baz" }, $("#treeview .k-item:first"));
+
+// move the item with text "bar" within the item with text "foo"
+treeview.append(treeview.findByText("bar"), treeview.findByText("foo"));
+
+// append two items to the root level
+treeview.append([
+  { text: "qux" },
+  { text: "cat" }
+]);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="nodedata-objectjquery">nodeData <code class="language-plaintext highlighter-rouge">Object|jQuery</code></h5>
+
+<p>A JSON-formatted string or selector that specifies the node to be appended.
+If the argument is a plain JavaScript object, a new item will be created.
+If the argument is a jQuery element that holds a node, the treeview node will be moved.
+If the argument is an array of objects, each item of the array will be appended.</p>
+
+<h5 id="parentnode-jquery-optional">parentNode <code class="language-plaintext highlighter-rouge">jQuery</code> <em>(optional)</em></h5>
+
+<p>The node that will contain the newly appended node. If not specified, the new node will be appended to the
+root group of the TreeView.</p>
+
+<h5 id="success-function-optional">success <code class="language-plaintext highlighter-rouge">Function</code> <em>(optional)</em></h5>
+
+<p>A success callback that will be called once the new node has been appended.
+Useful in the case of remote binding where an item is appended to an unfetched node. The callback is called
+once the siblings have been fetched.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> The inserted <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> element, wrapped in a jQuery object,
+or <code class="language-plaintext highlighter-rouge">null</code> if the new model has not been inserted immediately.</p>
+
+<h3 id="collapse">collapse</h3>
+
+<p>Collapses nodes.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", expanded: true, items: [
+      { text: "bar" }
+    ] },
+    { text: "baz", expanded: true, items: [
+      { text: "qux" }
+    ] }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+// collapse the item with text "foo"
+treeview.collapse(treeview.findByText("foo"));
+
+// collapse all items
+treeview.collapse(".k-item");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="nodes-jqueryelementstring">nodes <code class="language-plaintext highlighter-rouge">jQuery|Element|String</code></h5>
+
+<p>The nodes that will be collapsed.</p>
+
+<h3 id="dataitem">dataItem</h3>
+
+<p>Returns the data item to which the specified node is bound.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="node-jqueryelementstring">node <code class="language-plaintext highlighter-rouge">jQuery|Element|String</code></h5>
+
+<p>A string, DOM element or jQuery object which represents the node. A string is treated as a jQuery selector.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.Node</code> The model of the item that was passed as a parameter.</p>
+
+<h4 id="example---get-the-data-item-of-the-first-node">Example - get the data item of the first node</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { id: 1, text: "foo" },
+    { id: 2, text: "bar" }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+var dataItem = treeview.dataItem(".k-item:first");
+console.log(dataItem.text); // displays "foo"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>See also: <a href="/getting-started/web/treeview/overview#getting-the-node-data-in-the-select-event-handler">getting the node data in the select event handler</a></p>
+
+<h3 id="destroy">destroy</h3>
+
+<p>Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p>This method does not remove the widget element from DOM.</p>
+</blockquote>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { id: 1, text: "foo" },
+    { id: 2, text: "bar" }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.destroy();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="detach">detach</h3>
+
+<p>Removes a node from a TreeView, but keeps its jQuery.data() objects.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="node-jqueryelementstring-1">node <code class="language-plaintext highlighter-rouge">jQuery|Element|String</code></h5>
+
+<p>The node that is to be detached.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> The node that has been detached.</p>
+
+<h4 id="example---remove-the-node-with-id-firstitem">Example - remove the node with ID, firstItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { id: 1, text: "foo" },
+    { id: 2, text: "bar" }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+var item = treeview.findByText("foo");
+item.data("id", "abc");
+treeview.detach(item);
+console.log(item.data("id")); // logs "abc"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable">enable</h3>
+
+<p>Enables or disables nodes.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="nodes-jqueryelementstring-1">nodes <code class="language-plaintext highlighter-rouge">jQuery|Element|String</code></h5>
+
+<p>The nodes that are to be enabled/disabled.</p>
+
+<h5 id="enable-boolean-optional-default-true">enable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(optional, default: true)</em></h5>
+
+<p>Whether the nodes should be enabled or disabled.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", enabled: false },
+    { text: "bar", enabled: false }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+// enable the item with text "foo"
+treeview.enable(treeview.findByText("foo"));
+
+// enable all items
+treeview.enable(".k-item");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="expand">expand</h3>
+
+<p>Expands collapsed nodes.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="nodes-jqueryelementstring-2">nodes <code class="language-plaintext highlighter-rouge">jQuery|Element|String</code></h5>
+
+<p>The nodes that are to be expanded.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] },
+    { text: "baz" }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+// expand the item with text "foo"
+treeview.expand(treeview.findByText("foo"));
+
+// expand all loaded items
+treeview.expand(".k-item");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="expandpath">expandPath</h3>
+
+<p>Expands all nodes to a given element. Nodes may be loaded from a remote end-point.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="path-array">path <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>The IDs of the nodes that need to be expanded.</p>
+
+<h5 id="complete-function">complete <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>Callback function that will be called once the path has been expanded.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { id: 1, text: "foo", items: [
+      { id: 2, text: "bar", items: [
+        { id: 3, text: "baz" }
+      ] }
+    ] }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+
+// expand the path of nodes with IDs 1, 2, and 3
+treeview.expandPath([1, 2, 3]);
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="expandto">expandTo</h3>
+
+<p>Expands all nodes up to a given element. The element needs to be already loaded.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="targetnode-kendodatanodeobject">targetNode <code class="language-plaintext highlighter-rouge">kendo.data.Node|Object</code></h5>
+
+<p>The dataItem of the node up to which to expand. Can also be the node ID</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { id: 1, text: "foo", items: [
+      { id: 2, text: "bar", items: [
+        { id: 3, text: "baz" }
+      ] }
+    ] },
+    { text: "one", items: [
+      { text: "two", items: [
+        { text: "three" }
+      ] }
+    ] }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+
+// expand all nodes up to "baz" (with id = 3)
+treeview.expandTo(3);
+
+
+// expand all nodes up to "three"
+var three = treeview.dataItem(treeview.findByText("three"));
+treeview.expandTo(three);
+
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="findbytext">findByText</h3>
+
+<p>Searches for a node that has specific text.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="text-string">text <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The text that is being searched for.</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> All nodes that have the text.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo" },
+    { text: "bar" }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+// find the node with text "foo"
+var foo = treeview.findByText("foo");
+console.log(foo);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="findbyuid">findByUid</h3>
+
+<p>Searches for a node with the given unique identifier.
+Applicable when the widget is bound to a <a href="/api/framework/hierarchicaldatasource">HierarchicalDataSource</a>.
+If you want to find a node by its <code class="language-plaintext highlighter-rouge">id</code>, use the <a href="/api/framework/datasource#get">dataSource.get()</a> method and supply its uid to the <code class="language-plaintext highlighter-rouge">findByUid</code> method.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="text-string-1">text <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The text that is being searched for.</p>
+
+<h4 id="returns-4">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> All nodes that have the text.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { id: 1, text: "foo" },
+    { id: 2, text: "bar" }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+var barDataItem = treeview.dataSource.get(2);
+var barElement = treeview.findByUid(barDataItem.uid);
+console.log(barElement);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="insertafter">insertAfter</h3>
+
+<p>Inserts a node after a specified node.
+This method may also be used to reorder nodes.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="nodedata-object">nodeData <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>A JSON-formatted string or selector that specifies the node to be inserted.</p>
+
+<h5 id="referencenode-jquery">referenceNode <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The node that will precede the newly-appended node.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo" }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+var foo = treeview.findByText("foo");
+
+// insert "bar" after "foo"
+treeview.insertAfter({ text: "bar" }, foo);
+
+// move the node "foo" after the node "bar"
+treeview.insertAfter(foo, treeview.findByText("bar"));
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="insertbefore">insertBefore</h3>
+
+<p>Inserts a node before another node. This method may also be used to reorder nodes.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="nodedata-object-1">nodeData <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>A JSON-formatted string or selector that specifies the node to be inserted.</p>
+
+<h5 id="referencenode-jquery-1">referenceNode <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The node that follows the inserted node.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo" }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+var foo = treeview.findByText("foo");
+
+// insert "bar" before "foo"
+treeview.insertBefore({ text: "bar" }, foo);
+
+// move the node "foo" before the node "bar"
+treeview.insertBefore(foo, treeview.findByText("bar"));
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="parent">parent</h3>
+
+<p>Gets the parent node of the item</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="node-jqueryelementstring-2">node <code class="language-plaintext highlighter-rouge">jQuery|Element|String</code></h5>
+
+<p>The child node whose parent will be returned.</p>
+
+<h4 id="returns-5">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> The parent node of the given parameter node.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+
+var parent = treeview.parent(treeview.findByText("bar"));
+console.log(treeview.text(parent)); // logs "foo"
+
+parent = treeview.parent(parent);
+console.log(parent.length); // logs 0
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="remove">remove</h3>
+
+<p>Removes a node from the widget.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="node-jqueryelementstring-3">node <code class="language-plaintext highlighter-rouge">jQuery|Element|String</code></h5>
+
+<p>The node that is to be removed.</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+
+var bar = treeview.findByText("bar");
+
+treeview.remove(bar);
+
+console.log($("#treeview").find(".k-item").length); // logs 1
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+
+<p>Gets or sets the selected node.</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="node-jqueryelementstring-optional">node <code class="language-plaintext highlighter-rouge">jQuery|Element|String</code> <em>(optional)</em></h5>
+
+<p>If provided, the node that should be selected.</p>
+
+<h4 id="returns-6">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> The currently selected node.</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+
+var bar = treeview.findByText("bar");
+treeview.select(bar);
+
+console.log(treeview.text(treeview.select())); // logs "bar"
+
+treeview.select($()); // clears selection
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="setdatasource">setDataSource</h3>
+
+<p>Sets and binds a dataSource to the widget.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="datasource-kendodatahierarchicaldatasource">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.HierarchicalDataSource</code></h5>
+
+<p>The new dataSource that the widget will bind to</p>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+
+treeview.setDataSource(new kendo.data.HierarchicalDataSource({
+  data: [
+    { text: "bar", items: [
+      { text: "baz" }
+    ] }
+  ]
+}));
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="text">text</h3>
+
+<p>Gets or sets the text of a node in a TreeView.</p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="node-jqueryelementstring-4">node <code class="language-plaintext highlighter-rouge">jQuery|Element|String</code></h5>
+
+<p>The node of which the text is being retrieved or set.</p>
+
+<h5 id="newtext-string">newText <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>Optional. When passed, sets the node text to the specified string</p>
+
+<h4 id="returns-7">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> The text of a node.</p>
+
+<h4 id="example-21">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+
+var firstItem = treeview.element.find(".k-item:first");
+console.log(treeview.text(firstItem)); // logs "foo"
+
+treeview.text(".k-item:last", "qux"); // sets text to "qux"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toggle">toggle</h3>
+
+<p>Toggles the node of a TreeView between its expanded and collapsed states.</p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="node-jqueryelementstring-5">node <code class="language-plaintext highlighter-rouge">jQuery|Element|String</code></h5>
+
+<p>The node that should be toggled.</p>
+
+<h4 id="example-22">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] },
+    { text: "baz", items: [
+      { text: "qux" }
+    ] }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+
+treeview.toggle(".k-item:first");
+
+var baz = treeview.findByText("baz");
+treeview.toggle(baz);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="updateindeterminate">updateIndeterminate</h3>
+
+<p>Updates the indeterminate state of the treeview checkboxes. Should be used for better performance when checking multiple checkboxes through code.</p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="node-jquery">node <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>Optional. The root of the hierarchy that will be looped through. Allows only a subtree to be processed. The default value is the treeview root.</p>
+
+<h4 id="example-23">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  checkboxes: {
+    checkChildren: true
+  },
+  dataSource: [
+    { text: "foo", expanded: true, items: [
+      { text: "bar" },
+      { text: "baz" },
+      { text: "qux" }
+    ] }
+  ]
+});
+
+$(":checkbox").filter(function() {
+  var text = $(this).parent().next().text();
+  return text != "bar" &amp;&amp; text != "foo";
+}).prop("checked", true);
+
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.updateIndeterminate();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="collapse-1">collapse</h3>
+
+<p>Triggered before a subgroup gets collapsed.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="enode-element">e.node <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The collapsed node</p>
+
+<h4 id="example---subscribe-to-the-collapse-event-during-initialization">Example - subscribe to the "collapse" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ],
+  collapse: function(e) {
+    console.log("Collapsing", e.node);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-collapse-event-after-initialization">Example - subscribe to the "collapse" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+function tree_collapse(e) {
+  console.log("Collapsing", e.node);
+}
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.bind("collapse", tree_collapse);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound">dataBound</h3>
+
+<p>Triggered after the dataSource change event has been processed (adding/removing items);</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="enode-jquery">e.node <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The node whose children have been changed. If the changes have occurred on the root level, this parameter is undefined.</p>
+
+<h4 id="example---subscribe-to-the-databound-event-during-initialization">Example - subscribe to the "dataBound" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ],
+  dataBound: function(e) {
+    console.log("DataBound", e.node);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-databound-event-after-initialization">Example - subscribe to the "dataBound" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+function tree_databound(e) {
+  console.log("DataBound", e.node);
+}
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.bind("dataBound", tree_dataBound);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---show-an-empty-message-when-no-items-have-been-loaded-from-the-server">Example - show an empty message when no items have been loaded from the server</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#treeview").kendoTreeView({
+    dataSource: [],
+    dataBound: function(e) {
+      if (!this.dataSource.data().length) {
+        this.element.append("&lt;p class='no-items'&gt;No items yet.&lt;/p&gt;");
+      } else {
+        this.element.find(".no-items").remove();
+      }
+    }
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="drag">drag</h3>
+
+<p>Triggered while a node is being dragged.</p>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="esourcenode-element">e.sourceNode <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The node that is being dragged.</p>
+
+<h5 id="edroptarget-element">e.dropTarget <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The element that the node is placed over.</p>
+
+<h5 id="epagex-number">e.pageX <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The x coordinate of the mouse.</p>
+
+<h5 id="epagey-number">e.pageY <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The y coordinate of the mouse.</p>
+
+<h5 id="estatusclass-string">e.statusClass <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The status that the drag clue shows.</p>
+
+<h5 id="esetstatusclass-function">e.setStatusClass <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>Allows a custom drag clue status to be set.</p>
+
+<p>Pre-defined status classes are:</p>
+
+<ul>
+  <li><strong>k-insert-top</strong>
+    - Indicates that the item will be inserted on top.</li>
+  <li><strong>k-insert-middle</strong>
+    - Indicates that the item will be inserted in the middle.</li>
+  <li><strong>k-insert-bottom</strong>
+    - Indicates that the item will be inserted at the bottom.</li>
+  <li><strong>k-add</strong>
+    - Indicates that the item will be added/appended.</li>
+  <li><strong>k-denied</strong>
+    - Indicates an invalid operation. Using this class will automatically
+      make the drop operation invalid, so there will be no need to call
+      <code class="language-plaintext highlighter-rouge">setValid(false)</code> in the <code class="language-plaintext highlighter-rouge">drop</code> event.</li>
+</ul>
+
+<h4 id="example---subscribe-to-the-drag-event-during-initialization">Example - subscribe to the "drag" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dragAndDrop: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ],
+  drag: function(e) {
+    console.log("Drag", e.sourceNode, "over", e.dropTarget);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-drag-event-after-initialization">Example - subscribe to the "drag" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+function tree_drag(e) {
+  console.log("Drag", e.sourceNode, "over", e.dropTarget);
+}
+$("#treeview").kendoTreeView({
+  dragAndDrop: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.bind("drag", tree_drag);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---disable-node-reordering">Example - disable node reordering</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dragAndDrop: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" },
+      { text: "baz" }
+    ] }
+  ]
+});
+
+var treeview = $("#treeview").data("kendoTreeView");
+
+treeview.bind("drag", function(e) {
+  // if the current status is "insert-top/middle/bottom"
+  if (e.statusClass.indexOf("insert") &gt;= 0) {
+    // deny the operation
+    e.setStatusClass("k-denied");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragend">dragend</h3>
+
+<p>Triggered after a node has been dropped.</p>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="esourcenode-element-1">e.sourceNode <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The node that is being dropped.</p>
+
+<h5 id="edestinationnode-element">e.destinationNode <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The node that the sourceNode is being dropped upon.</p>
+
+<h5 id="edropposition-string">e.dropPosition <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>Shows where the source has been dropped. One of the values <strong>over</strong>, <strong>before</strong>, or <strong>after</strong>.</p>
+
+<h4 id="example---subscribe-to-the-dragend-event-during-initialization">Example - subscribe to the "dragend" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dragAndDrop: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ],
+  dragend: function(e) {
+    console.log("Drag end", e.sourceNode, e.dropPosition, e.destinationNode);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-dragend-event-after-initialization">Example - subscribe to the "dragend" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+function tree_dragend(e) {
+  console.log("Drag end", e.sourceNode, e.dropPosition, e.destinationNode);
+}
+$("#treeview").kendoTreeView({
+  dragAndDrop: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.bind("dragend", tree_dragend);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragstart">dragstart</h3>
+
+<p>Triggered before the dragging of a node starts.</p>
+
+<h4 id="event-data-4">Event Data</h4>
+
+<h5 id="esourcenode-element-2">e.sourceNode <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The node that will be dragged.</p>
+
+<h4 id="example---subscribe-to-the-dragstart-event-during-initialization">Example - subscribe to the "dragstart" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dragAndDrop: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ],
+  dragstart: function(e) {
+    console.log("Drag start", e.sourceNode);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-dragstart-event-after-initialization">Example - subscribe to the "dragstart" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+function tree_dragstart(e) {
+  console.log("Drag start", e.sourceNode);
+}
+$("#treeview").kendoTreeView({
+  dragAndDrop: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.bind("dragstart", tree_dragstart);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---disable-dragging-of-root-nodes">Example - disable dragging of root nodes</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dragAndDrop: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ],
+  dragstart: function(e) {
+    if ($(e.sourceNode).parentsUntil(".k-treeview", ".k-item").length == 0) {
+      e.preventDefault();
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="drop">drop</h3>
+
+<p>Triggered when a node is being dropped.</p>
+
+<h4 id="event-data-5">Event Data</h4>
+
+<h5 id="esourcenode-element-3">e.sourceNode <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The node that is being dropped.</p>
+
+<h5 id="edestinationnode-element-1">e.destinationNode <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The node that the sourceNode is being dropped upon.</p>
+
+<h5 id="evalid-boolean">e.valid <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Whether this drop operation is permitted.</p>
+
+<h5 id="esetvalid-function">e.setValid <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>Allows the drop to be prevented.</p>
+
+<h5 id="edroptarget-element-1">e.dropTarget <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The element that the node is placed over.</p>
+
+<h5 id="edropposition-string-1">e.dropPosition <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>Shows where the source will be dropped. One of the values <strong>over</strong>, <strong>before</strong>, or <strong>after</strong>.</p>
+
+<h4 id="the-difference-between-esetvalidfalse-and-epreventdefault">The difference between e.setValid(false) and e.preventDefault()</h4>
+
+<p>Both operations cancel the default drag operation, but the indication to the user is different.
+<code class="language-plaintext highlighter-rouge">e.setValid(false)</code> indicates that the operation was unsuccessful by animating the drag clue to its original position.
+<code class="language-plaintext highlighter-rouge">e.preventDefault()</code> simply removes the clue, as if it has been dropped.
+As a general rule, use <code class="language-plaintext highlighter-rouge">preventDefault</code> to manually handle the drag&amp;drop operation, and <code class="language-plaintext highlighter-rouge">setValid(false)</code> to indicate unsuccessful drag&amp;drops.</p>
+
+<h4 id="example---subscribe-to-the-drop-event-during-initialization">Example - subscribe to the "drop" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dragAndDrop: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ],
+  drop: function(e) {
+    console.log("Dropped", e.sourceNode);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-drop-event-after-initialization">Example - subscribe to the "drop" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+function tree_drop(e) {
+  console.log("Dropped", e.sourceNode);
+}
+$("#treeview").kendoTreeView({
+  dragAndDrop: true,
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.bind("drop", tree_drop);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="expand-1">expand</h3>
+
+<p>Triggered before a subgroup gets expanded.</p>
+
+<h4 id="event-data-6">Event Data</h4>
+
+<h5 id="enode-element-1">e.node <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The expanded node</p>
+
+<h4 id="example---subscribe-to-the-expand-event-during-initialization">Example - subscribe to the "expand" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ],
+  expand: function(e) {
+    console.log("Expand", e.node);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-expand-event-after-initialization">Example - subscribe to the "expand" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+function tree_expand(e) {
+  console.log("Expand", e.node);
+}
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.bind("expand", tree_expand);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="change">change</h3>
+
+<p>Triggered when the selection has changed (either by the user or through the <code class="language-plaintext highlighter-rouge">select</code> method).</p>
+
+<h4 id="example---subscribe-to-the-change-event-during-initialization">Example - subscribe to the "change" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ],
+  change: function(e) {
+    console.log("Change", this.select());
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-change-event-after-initialization">Example - subscribe to the "change" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+function tree_change(e) {
+  console.log("Change", this.select());
+}
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.bind("change", tree_change);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select-1">select</h3>
+
+<p>Triggered when a node is being selected by the user. Cancellable.</p>
+
+<h4 id="event-data-7">Event Data</h4>
+
+<h5 id="enode-element-2">e.node <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The selected node</p>
+
+<h4 id="example---subscribe-to-the-select-event-during-initialization">Example - subscribe to the "select" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ],
+  select: function(e) {
+    console.log("Selecting", e.node);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-select-event-after-initialization">Example - subscribe to the "select" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+function tree_select(e) {
+  console.log("select", e.node);
+}
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.bind("Selecting", tree_select);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="navigate">navigate</h3>
+
+<p>Triggered when the user moves the focus on another node</p>
+
+<h4 id="event-data-8">Event Data</h4>
+
+<h5 id="enode-element-3">e.node <code class="language-plaintext highlighter-rouge">Element</code></h5>
+
+<p>The focused node</p>
+
+<h4 id="example---subscribe-to-the-navigate-event-during-initialization">Example - subscribe to the "navigate" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ],
+  navigate: function(e) {
+    console.log("Navigated to", e.node);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-navigate-event-after-initialization">Example - subscribe to the "navigate" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="treeview"&gt;&lt;/div&gt;
+&lt;script&gt;
+function tree_navigate(e) {
+  console.log("Navigating to", e.node);
+}
+$("#treeview").kendoTreeView({
+  dataSource: [
+    { text: "foo", items: [
+      { text: "bar" }
+    ] }
+  ]
+});
+var treeview = $("#treeview").data("kendoTreeView");
+treeview.bind("navigate", tree_navigate);
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

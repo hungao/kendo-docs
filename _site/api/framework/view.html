@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/framework/view.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendoview">kendo.View</h1>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="evaltemplate-booleandefault-false">evalTemplate <code class="language-plaintext highlighter-rouge">Boolean</code><em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code>, the view template will be treated as kendo template and evaluated against the provided model instance.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+&lt;script&gt;
+ var foo = { foo: "foo" }
+ var view = new kendo.View('&lt;span&gt;#: foo #&lt;/span&gt;', { model: foo, evalTemplate: true });
+ view.render($("#app"));
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="model-observableobjectdefault-null">model <code class="language-plaintext highlighter-rouge">ObservableObject</code><em>(default: null)</em></h3>
+
+<p>The MVVM model to bind the element to.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+&lt;script&gt;
+ var foo = { foo: "foo" }
+ var view = new kendo.View('&lt;span data-bind="text:foo"&gt;&lt;/span&gt;', { model: foo });
+ view.render($("#app"));
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="tagname-string-default-div">tagName <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "div")</em></h3>
+
+<p>The tag used for the root element of the view.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var view = new kendo.View("Hi!", { tagName: "span" });
+view.render($("#app"));
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="wrap-boolean-default-true">wrap <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code>, the view will not wrap its contents in a root element. In that case, the view element will point to the root element in the template. If false, the view template should have a <strong>single</strong> root element.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var view = new kendo.View('&lt;div id="foo"&gt;&lt;/div&gt;', { wrap: false });
+view.render($("#app"));
+console.log(view.element.attr('id')) // foo
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="destroy">destroy</h3>
+
+<p>Removes the <strong>View</strong> element from the DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var view = new kendo.View("Hi!", { tagName: "span" });
+view.render($("#app"));
+view.destroy();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="render">render</h3>
+
+<p>Renders the view contents. Accepts a jQuery selector (or jQuery object) to which the contents will be appended.
+Alternatively, the render method can be called without parameters in order to retrieve the View element for manual insertion/further manipulation.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var index = new kendo.View('&lt;span&gt;Hello World!&lt;/span&gt;');
+index.render("#app");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var index = new kendo.View('&lt;span&gt;Hello World!&lt;/span&gt;');
+$("#app").append(index.render());
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="container-jquery">container <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>(optional) the element in which the view element will be appended.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">jQuery</code> the view element.</p>
+
+<h2 id="events">Events</h2>
+
+<h3 id="hide">hide</h3>
+
+<p>Fires when the View is replaced in a layout placeholder.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var foo = new kendo.View("&lt;span&gt;Foo&lt;/span&gt;", { hide: function() { console.log("Foo is hidden now"); });
+var bar = new kendo.View("&lt;span&gt;Bar&lt;/span&gt;");
+
+var layout = new kendo.Layout("&lt;header&gt;Header&lt;/header&gt;&lt;section id="content"&gt;&lt;/section&gt;&lt;footer&gt;&lt;/footer&gt;");
+
+layout.render($("#app"));
+
+layout.showIn("#content", foo);
+layout.showIn("#content", bar);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="init">init</h3>
+
+<p>Fires the first time the view renders.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var view = new kendo.View("Hi!", { init: function() { console.log("View is initiated") } });
+view.render($("#app"));
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="show">show</h3>
+
+<p>Fires after the View is rendered (either by calling <code class="language-plaintext highlighter-rouge">render</code>, or by being rendered from the <strong>Layout</strong> <code class="language-plaintext highlighter-rouge">showIn</code> method).</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var view = new kendo.View("Hi!", { show: function() { console.log("View is rendered") } });
+view.render($("#app"));
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transitionstart">transitionStart</h3>
+
+<p>Fires when the view transition starts. The <code class="language-plaintext highlighter-rouge">type</code> event data is set to either <code class="language-plaintext highlighter-rouge">"show"</code> or <code class="language-plaintext highlighter-rouge">"hide"</code>. For more details on view Transitions check the <a href="layout#methods-showIn">layout showIn</a> method.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var foo = new kendo.View("&lt;span&gt;Foo&lt;/span&gt;");
+var bar = new kendo.View("&lt;span&gt;Bar&lt;/span&gt;", { transitionStart: function() { console.log(e) });
+
+var layout = new kendo.Layout("&lt;header&gt;Header&lt;/header&gt;&lt;section id="content"&gt;&lt;/section&gt;&lt;footer&gt;&lt;/footer&gt;");
+
+layout.render($("#app"));
+
+layout.showIn("#content", foo);
+layout.showIn("#content", bar);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transitionend">transitionEnd</h3>
+
+<p>Fires after the view transition container has its <code class="language-plaintext highlighter-rouge">k-fx-end</code> class set. The <code class="language-plaintext highlighter-rouge">type</code> event data is set to either <code class="language-plaintext highlighter-rouge">"show"</code> or <code class="language-plaintext highlighter-rouge">"hide"</code>. For more details on view Transitions check the <a href="layout#methods-showIn">layout showIn</a> method.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="app"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var foo = new kendo.View("&lt;span&gt;Foo&lt;/span&gt;");
+var bar = new kendo.View("&lt;span&gt;Bar&lt;/span&gt;", { transitionEnd: function() { console.log(e) });
+
+var layout = new kendo.Layout("&lt;header&gt;Header&lt;/header&gt;&lt;section id="content"&gt;&lt;/section&gt;&lt;footer&gt;&lt;/footer&gt;");
+
+layout.render($("#app"));
+
+layout.showIn("#content", foo);
+layout.showIn("#content", bar);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="element-jquery">element <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+
+<p>The element of the <strong>View</strong>. Gets instantiated after the <code class="language-plaintext highlighter-rouge">render</code> method is called.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

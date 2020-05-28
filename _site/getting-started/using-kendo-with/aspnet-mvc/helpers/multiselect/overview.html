@@ -1,0 +1,508 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>How to use MultiSelect HtmlHelper extension | Kendo UI documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="User Guide for server-side wrapper for Kendo UI MultiSelect for ASP.NET MVC widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/multiselect/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="multiselect">MultiSelect</h1>
+
+<p>The MultiSelect HtmlHelper extension is a server-side wrapper for the <a href="/api/web/multiselect">Kendo UI MultiSelect</a> widget.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>There are two ways to bind a Kendo MultiSelect for ASP.NET MVC:</p>
+
+<ul>
+  <li><strong>server</strong> - the data will be serialized to the client. No Ajax requests will be made.</li>
+  <li><strong>ajax</strong> - the multiselect will make ajax request to get the data.</li>
+</ul>
+
+<h3 id="configure-the-kendo-multiselect-for-server-binding">Configure the Kendo MultiSelect for server binding</h3>
+
+<p>Here is how to configure the Kendo MultiSelect for server binding to the Northwind Products table using Linq to SQL:</p>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create a new action method and pass the Products table as the model:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    NorthwindDataContext northwind = new NorthwindDataContext();
+
+    return View(northwind.Products);
+}
+</code></pre></div>    </div>
+  </li>
+  <li>Make your view strongly typed:
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master"
+     Inherits="System.Web.Mvc.ViewPage&lt;IEnumerable&lt;MvcApplication1.Models.Product&gt;&gt;" %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @model IEnumerable&lt;MvcApplication1.Models.Product&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Add a server bound multiselect:
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().MultiSelect()
+      .Name("productMultiSelect") //The name of the multiselect is mandatory. It specifies the "id" attribute of the widget.
+      .DataTextField("ProductName") //Specifies which property of the Product to be used by the multiselect as a text.
+      .DataValueField("ProductID") //Specifies which property of the Product to be used by the multiselect as a value.
+      .BindTo(Model)   //Pass the list of Products to the multiselect.
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().MultiSelect()
+    .Name("productMultiSelect") //The name of the multiselect is mandatory. It specifies the "id" attribute of the widget.
+    .DataTextField("ProductName") //Specifies which property of the Product to be used by the multiselect as a text.
+    .DataValueField("ProductID") //Specifies which property of the Product to be used by the multiselect as a value.
+    .BindTo(Model)   //Pass the list of Products to the multiselect.
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="configure-the-kendo-multiselect-for-ajax-binding">Configure the Kendo MultiSelect for ajax binding</h3>
+
+<p>Here is how to configure the Kendo MultiSelect for ajax binding to the Northwind Products table using Linq to SQL:</p>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create an action method which renders the view:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    return View();
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a new action method and pass the Products table as Json result:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public JsonResult GetProducts()
+{
+    NorthwindDataContext northwind = new NorthwindDataContext();
+
+    return Json(northwind.Products, JsonRequestBehavior.AllowGet);
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add an ajax bound multiselect:</p>
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().MultiSelect()
+      .Name("productMultiSelect") //The name of the multiselect is mandatory. It specifies the "id" attribute of the widget.
+      .DataTextField("ProductName") //Specifies which property of the Product to be used by the multiselect as a text.
+      .DataValueField("ProductID") //Specifies which property of the Product to be used by the multiselect as a value.
+      .Filter(FilterType.Contains)
+      .DataSource(source =&gt;
+      {
+          source.Read(read =&gt;
+          {
+              read.Action("GetProducts", "Home"); //Set the Action and Controller name
+          })
+          .ServerFiltering(true); //If true the DataSource will not filter the data on the client.
+      })
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().MultiSelect()
+      .Name("productMultiSelect") //The name of the multiselect is mandatory. It specifies the "id" attribute of the widget.
+      .DataTextField("ProductName") //Specifies which property of the Product to be used by the multiselect as a text.
+      .DataValueField("ProductID") //Specifies which property of the Product to be used by the multiselect as a value.
+      .Filter(FilterType.Contains)
+      .DataSource(source =&gt;
+      {
+         source.Read(read =&gt;
+         {
+              read.Action("GetProducts", "Home"); //Set the Action and Controller name
+         })
+         .ServerFiltering(true); //If true the DataSource will not filter the data on the client.
+      })
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<blockquote>
+  <p><strong>Important:</strong> <strong>ToDataSourceResult()</strong> extension method will modify structure of the result and the widget will not be able to bind to it. Please return simple array of data in this case.</p>
+</blockquote>
+
+<h3 id="sending-parameters-to-the-server">Sending parameters to the server</h3>
+
+<p>Here is how to configure the Kendo MultiSelect to send parameters to the server:</p>
+
+<ul>
+  <li>
+    <p>WebForms</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().MultiSelect()
+          .Name("productMultiSelect") //The name of the multiselect is mandatory. It specifies the "id" attribute of the widget.
+          .DataTextField("ProductName") //Specifies which property of the Product to be used by the multiselect as a text.
+          .DataValueField("ProductID") //Specifies which property of the Product to be used by the multiselect as a value.
+          .Filter(FilterType.Contains)
+          .DataSource(source =&gt;
+          {
+                 source.Read(read =&gt;
+                 {
+                          read.Action("GetProducts", "Home")
+                              .Data("onAdditionalData");
+                 });
+
+                 source.serverFiltering(true);
+          })
+   %&gt;
+   &lt;script&gt;
+      function onAdditionalData() {
+          return {
+              text: $("#productMultiSelect").data("kendoMultiSelect").input.val()
+          };
+      }
+  &lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Razor</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().MultiSelect()
+        .Name("productMultiSelect") //The name of the multiselect is mandatory. It specifies the "id" attribute of the widget.
+        .DataTextField("ProductName") //Specifies which property of the Product to be used by the multiselect as a text.
+        .DataValueField("ProductID") //Specifies which property of the Product to be used by the multiselect as a value.
+        .Filter(FilterType.Contains)
+        .DataSource(source =&gt;
+        {
+           source.Read(read =&gt;
+           {
+                read.Action("GetProducts", "Home") //Set the Action and Controller name
+                    .Data("onAdditionalData");
+           });
+           source.ServerFiltering(true);
+        })
+  )
+
+  &lt;script&gt;
+      function onAdditionalData() {
+          return {
+              text: $("#productMultiSelect").data("kendoMultiSelect").input.val()
+          };
+      }
+  &lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>Here is how the <strong>GetProducts</strong> method looks like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public JsonResult GetProducts(string text)
+    {
+        var northwind = new SampleEntities();
+
+        var products = northwind.Products.Select(product =&gt; new ProductViewModel
+                {
+                ProductID = product.ProductID,
+                ProductName = product.ProductName,
+                UnitPrice = product.UnitPrice ?? 0,
+                UnitsInStock = product.UnitsInStock ?? 0,
+                UnitsOnOrder = product.UnitsOnOrder ?? 0,
+                Discontinued = product.Discontinued
+                });
+
+        if (!string.IsNullOrEmpty(text))
+        {
+            products = products.Where(p =&gt; p.ProductName.Contains(text));
+        }
+
+        return Json(products, JsonRequestBehavior.AllowGet);
+    }
+</code></pre></div></div>
+
+<blockquote>
+  <p>The Kendo MultiSelect has default event handler for the DataSource"s Data callback. If you do not
+define event handler, it will be used.</p>
+</blockquote>
+
+<p><em>Default event handler for the DataSource"s Data callback</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function requestData(selector) {
+    return { text: $(selector).data("kendoMultiSelect").input.val() };
+}
+</code></pre></div></div>
+
+<p>As you can see the multiselect sends the input"s value only if the end-user starts to type in it.</p>
+
+<h2 id="pre-select-values-on-initial-loading">Pre-select values on initial loading</h2>
+
+<p>When deffered binding (AutoBind: false) is used you will need to specify a list of data items instead of just list of strings.
+This functionality is supported in Q1 SP1 2013 release and later versions of Kendo UI.</p>
+
+<ul>
+  <li>
+    <p>WebForms</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%= Html.Kendo().MultiSelect()
+          .Name("productMultiSelect") //The name of the multiselect is mandatory. It specifies the "id" attribute of the widget.
+          .DataTextField("ProductName") //Specifies which property of the Product to be used by the multiselect as a text.
+          .DataValueField("ProductID") //Specifies which property of the Product to be used by the multiselect as a value.
+          .Filter(FilterType.Contains)
+          .AutoBind(false)
+          .DataSource(source =&gt;
+          {
+             source.Read(read =&gt;
+             {
+                  read.Action("GetProducts", "Home") //Set the Action and Controller name
+                      .Data("onAdditionalData");
+             });
+          })
+          .Value(new List&lt;Product&gt; {
+            new Product { ProductName = "Chai", ProductID = 1 },
+            new Product { ProductName = "Chang", ProductID = 2 }
+          })
+  %&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Razor</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().MultiSelect()
+        .Name("productMultiSelect") //The name of the multiselect is mandatory. It specifies the "id" attribute of the widget.
+        .DataTextField("ProductName") //Specifies which property of the Product to be used by the multiselect as a text.
+        .DataValueField("ProductID") //Specifies which property of the Product to be used by the multiselect as a value.
+        .Filter(FilterType.Contains)
+        .AutoBind(false)
+        .DataSource(source =&gt;
+        {
+           source.Read(read =&gt;
+           {
+                read.Action("GetProducts", "Home") //Set the Action and Controller name
+                    .Data("onAdditionalData");
+           });
+        })
+        .Value(new List&lt;Product&gt; {
+          new Product { ProductName = "Chai", ProductID = 1 },
+          new Product { ProductName = "Chang", ProductID = 2 }
+        })
+  )
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="accessing-an-existing-multiselect">Accessing an Existing MultiSelect</h2>
+
+<p>You can reference an existing MultiSelect instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/multiselect#methods">API</a> to control its behavior.</p>
+
+<h3 id="accessing-an-existing-multiselect-instance">Accessing an existing MultiSelect instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//Put this after your Kendo MultiSelect  for ASP.NET MVC declaration
+&lt;script&gt;
+$(function() {
+// Notice that the Name() of the multiselect is used to get its client-side instance
+var multiselect = $("#productMultiSelect").data("kendoMultiSelect");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-kendo-ui-multiselect-events">Handling Kendo UI MultiSelect events</h2>
+
+<p>You can subscribe to all <a href="/api/web/multiselect#events">events</a> exposed by Kendo UI MultiSelect:</p>
+
+<h3 id="webforms---subscribe-by-handler-name">WebForms - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%: Html.Kendo().MultiSelect()
+    .Name("multiselect")
+    .BindTo(new string[] { "Item1", "Item2", "Item3" })
+    .Events(e =&gt; e
+        .Select("multiselect_select")
+        .Change("multiselect_change")
+    )
+%&gt;
+&lt;script&gt;
+function multiselect_select() {
+    //Handle the select event
+}
+
+function multiselect_change() {
+    //Handle the change event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-handler-name">Razor - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().MultiSelect()
+  .Name("multiselect")
+  .BindTo(new string[] { "Item1", "Item2", "Item3" })
+  .Events(e =&gt; e
+        .Select("multiselect_select")
+        .Change("multiselect_change")
+  )
+)
+&lt;script&gt;
+function multiselect_select() {
+    //Handle the select event
+}
+
+function multiselect_change() {
+    //Handle the change event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-template-delegate">Razor - subscribe by template delegate</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().MultiSelect()
+  .Name("multiselect")
+  .BindTo(new string[] { "Item1", "Item2", "Item3" })
+  .Events(e =&gt; e
+      .Select(@&lt;text&gt;
+        function() {
+            //Handle the select event inline
+        }
+      &lt;/text&gt;)
+      .Change(@&lt;text&gt;
+        function() {
+            //Handle the change event inline
+        }
+        &lt;/text&gt;)
+  )
+)
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

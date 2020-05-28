@@ -1,0 +1,242 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Quick steps for OLAP cube setup</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="A list of steps for OLAP cube setup and HTTP access">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/pivotgrid/olap-cube-setup.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <p>#OLAP Cube setup steps</p>
+
+<p>This topic shows the required steps for the OLAP cube setup using MS <a href="http://technet.microsoft.com/en-us/library/ms175609(v=sql.90).aspx">SSAS</a>.</p>
+
+<h2 id="install-sql-server-analysis-services">Install SQL Server Analysis Services</h2>
+
+<p>To install <a href="http://technet.microsoft.com/en-us/library/ms175609(v=sql.90).aspx">SQL Server Analysis Services</a> follow this <a href="http://msdn.microsoft.com/en-us/library/hh403424(v=sql.110).aspx">MSDN tutorial</a>.</p>
+
+<h2 id="define-an-olap-cube">Define an OLAP Cube</h2>
+<p>Follow the <a href="http://msdn.microsoft.com/en-us/library/ms170208(v=sql.110).aspx">Multidimensional modeling tutorial</a>, which shows how to create, define and deploy OLAP multidimensional cube.</p>
+
+<h2 id="configure-http-access-to-analysis-services">Configure HTTP Access to Analysis Services</h2>
+<p>HTTP access to SQL Server Analysis Services can be enabled using a MSMDPUMP.ddl ISAPI extension. Follow this <a href="http://technet.microsoft.com/en-us/library/gg492140.aspx">tutorial</a>, which shows how to setup the MSMDPUMP.ddl extension. <a href="http://demos.telerik.com/olap/msmdpump.dll">Here</a> you can find an online accessible OLAP service for test purposes.</p>
+
+<h2 id="enable-cross-domain-access-to-the-olap-service">Enable cross-domain access to the OLAP service</h2>
+
+<p>For deeper understanding about <strong>CORS</strong> check this <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">article</a>.</p>
+
+<blockquote>
+  <p>This step is <strong>not</strong> required if the cube will <strong>not</strong> be requested from different domains.</p>
+</blockquote>
+
+<p>If you want to allow cross-domain requests to the OLAP service, then you will need to enable CORS behavior of your server.</p>
+
+<p><em>This topic will examine how to enable CORS of <a href="http://www.iis.net/">IIS</a></em> server.</p>
+
+<p>Cross-domain access requires to specify:</p>
+
+<ul>
+  <li><em>Domains</em> that will perform the data requests</li>
+  <li><em><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html">HTTP method</a></em> through which the data will be transferred</li>
+  <li><em>HTTP Headers</em> that can be used in the requests</li>
+  <li><em>User credentials</em>,  required if an authenticated access needs to be used</li>
+  <li>The server response to the <em>OPTIONS method</em> requests</li>
+</ul>
+
+<p>The above points can be combined in two general steps:</p>
+
+<ol>
+  <li>Configure HTTP Response Headers (point 1 to 4)</li>
+  <li>Configure OPTIONS method server response (point 5)</li>
+</ol>
+
+<h3 id="configure-http-response-headers">Configure HTTP Response Headers</h3>
+
+<p>The following list of HTTP Response Headers shows the settings required to enable the IIS CORS behavior:</p>
+
+<table>
+    <tbody>
+        <tr>
+            <th>
+                <p>Header Name</p>
+            </th>
+            <th>
+                <p>Value</p>
+            </th>
+            <th>
+                <p>Details</p>
+            </th>
+        </tr>
+        <tr>
+            <td><em>Access-Control-Allow-Headers</em></td>
+            <td><em>Origin, Content-Type, Accept</em></td>
+            <td>
+                <p>These are the names of the fields required to be used in the actual request. Values should be comma separated.</p>
+                <ul>
+                    <li><em>Origin</em> – this field indicates where the cross-origin or preflight request originates from. This setting tells the server that the origin, which performs the request is a known one.</li>
+                    <li><em>Content-Type</em> – this field indicates the content (MIME) type of the entity body sent to the recipient. The actual content type used in the communication between **OLAP service** and **Kendo UI PivotDataSource** is <em>text/xml</em>.</li>
+                    <li><em>Accept</em> – this field specifies the media types which are acceptable for the response.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><em>Access-Control-Allow-Origin</em></td>
+            <td>
+                <p>The URI names that may access the resource. When an asterisk (*) is defined all domains are allowed.</p>
+            </td>
+            <td>
+                <p>The names of the allowed domains should separed by comma (,).</p>
+            </td>
+        </tr>
+        <tr>
+            <td><em>Access-Control-Request-Method</em></td>
+            <td><em>POST</em></td>
+            <td>
+                <p>The name of the HTTP method to be used in the actual request.</p>
+                <p>XMLA protocol specify a HTTP POST method.</p>
+            </td>
+        </tr>
+        <tr>
+            <td><em>Access-Control-Allow-Credentials</em><em>(Authenticated access only)</em></td>
+            <td><em>true</em></td>
+            <td>
+                <p>The allowed values are:</p>
+                <ul>
+                    <li><em>true</em> – allows suppliying of credentials with the request.</li>
+                    <li><em>false</em> – disable supplying of credentials with the request. Equal to missing the header at all.</li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="configure-options-method-server-response">Configure OPTIONS method server response</h3>
+
+<p>In IIS OPTIONS method behavior should be configured via <strong>OPTIONSVerbHandler</strong> mapping settings. Here is the list of settings that should be applied:</p>
+
+<table>
+    <tbody>
+        <tr>
+            <th>HTTP handler name</th>
+            <th>Required Access Level</th>
+            <th>Details</th>
+        </tr>
+        <tr>
+            <td><em>OPTIONSVerbHandler</em></td>
+            <td><em>Read</em></td>
+            <td>
+                <p>Specifies that the handler requires READ access to the requests.</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="next-steps">Next steps:</h2>
+<ul>
+  <li><a href="/getting-started/web/pivotgrid/overview">Getting started</a></li>
+</ul>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

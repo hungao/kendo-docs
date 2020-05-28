@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/colorpicker/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="colorpicker-overview">ColorPicker Overview</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">ColorPicker</code> is a drop-down widget for selecting colors.  It"s
+designed to replace a HTML5 <code class="language-plaintext highlighter-rouge">&lt;input type="color"&gt;</code> field, which is not
+yet widely supported in browsers, with a user-friendly interface.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The HTML part:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="color" id="myColorField" /&gt;
+</code></pre></div></div>
+
+<p>To initialize we need to call <code class="language-plaintext highlighter-rouge">kendoColorPicker</code> on it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#myColorField").kendoColorPicker();
+});
+</code></pre></div></div>
+
+<p>The original <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> element is kept in the DOM, and its <code class="language-plaintext highlighter-rouge">value</code>
+attributed will be updated as the user selects a color, so that
+regular <code class="language-plaintext highlighter-rouge">&lt;form&gt;</code>-s will work.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>When calling <code class="language-plaintext highlighter-rouge">kendoColorPicker</code> you can pass one argument with
+configuration options.  The default drop-down is a HSV (hue /
+saturation / value) selector and looks like this:</p>
+
+<p><img src="/getting-started/web/colorpicker/hsv-dropdown.png" alt="HSV picker" /></p>
+
+<h3 id="get-a-simple-color-picker">Get a simple color picker</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#myColorField").kendoColorPicker({ palette: "basic" });
+});
+</code></pre></div></div>
+
+<p>Will render a very simple picker containing 20 colors:</p>
+
+<p><img src="/getting-started/web/colorpicker/simple-basic.png" alt="Simple picker with basic palette" /></p>
+
+<h3 id="get-the-web-safe-color-palette">Get the "web-safe" color palette</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#myColorField").kendoColorPicker({ palette: "websafe" });
+});
+</code></pre></div></div>
+
+<p>This will display the 216 colors "web-safe" palette that would look
+like this:</p>
+
+<p><img src="/getting-started/web/colorpicker/simple-web.png" alt="Simple picker with web-safe palette" /></p>
+
+<h3 id="custom-colors-for-the-simple-picker">Custom colors for the simple picker</h3>
+
+<p>You can also get the simple picker to display a custom list of colors,
+by just passing them in the <code class="language-plaintext highlighter-rouge">palette</code> argument, for example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#myColorField").kendoColorPicker({
+        palette: "#fff,#000,#f00"
+    });
+});
+</code></pre></div></div>
+
+<p>This would display only white, black and red.  Pass any colors you
+want joined with a comma, in either short (3 digits) or long (6
+digits) hex notation.  The <code class="language-plaintext highlighter-rouge">#</code> signs can be missing.</p>
+
+<h3 id="more-options">More options</h3>
+
+<p>For more options please see the <a href="../../../api/web/color">API page</a>.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

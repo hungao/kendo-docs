@@ -1,0 +1,382 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/accessibility/five-tips-for-accessible-charts-with-dataviz.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="tutorial-tips-for-creating-accessible-charts-with-kendo-ui-dataviz">Tutorial: Tips for Creating Accessible Charts with Kendo UI DataViz</h1>
+
+<p><strong>Summary</strong>: In this article, we"ll look at five practical tips (with code samples and illustrative videos) for making Kendo UI DataViz charts and graphs more accessible. These are things you can quickly and easily do in your own apps today to make it easier for disabled users to use assistive technologies to interact with your content.</p>
+
+<h2 id="the-case-for-accessible-charts">The Case for Accessible Charts</h2>
+
+<p>In the realm of Accessibility, the most oft-mentioned guidelines and regulations are WAI_ARIA, Section 508 and the W3C’s own Web Content Accessibility Guidelines (WCAG) 2.0. Section 508 makes up the law that governs the creation of accessible software (for government entities) in the United States, while WCAG (along with WAI-ARIA) contains a comprehensive set of guidelines for creating accessible sites and web applications.</p>
+
+<p>Both Section 508 and the WCAG 2.0 guidelines have something to say that, we believe, applies to Kendo UI DataViz. Here"s the first rule in Section 508:</p>
+
+<p><strong>(a) A text equivalent for every non-text element shall be provided (e.g., via “alt”, “longdesc”, or in element content).</strong></p>
+
+<p>and WCAG Guideline 1.1:</p>
+
+<p><strong>Guideline 1.1 Text Alternatives: Provide text alternatives for any non-text content so that it can be changed into other forms people need, such as large print, braille, speech, symbols or simpler language.</strong></p>
+
+<p>Providing text equivalents to non-text content is a key tenant of accessibility. Content like images, animations, video and audio are great, but these are impossible for screen readers and other assistive technologies to parse. And if they can’t be parsed by these technologies, they can’t be enjoyed by disabled users. Thus, Section 508 and WCAG both require that all, non-decorative non-text content be made accessible to assistive technologies.</p>
+
+<h2 id="accessibility-and-kendo-ui-dataviz">Accessibility and Kendo UI DataViz</h2>
+
+<p>Kendo UI DataViz charts and graphs definitely fit the bill of “non-text content.” By definition, Kendo UI DataViz allows you to create visual charts and graphs that enhance textual or tabular data. These can’t possibly be accessible, out-of-the-box, right?</p>
+
+<p>Actually, they can be. And with a little bit of work as you add charts and graphs to your apps, they can be made even more accessible.</p>
+
+<p>First, let’s take a look at the out-of-the-box experience with Kendo UI DataViz. In the <a href="http://www.youtube.com/watch?v=lymGnquNxBg&amp;feature=youtu.be">video below</a>, I used the popular VoiceOver screen reader on Apple OS X to navigate a Donut chart.</p>
+
+<iframe width="853" height="480" src="http://www.youtube.com/embed/lymGnquNxBg" frameborder="0" allowfullscreen=""></iframe>
+
+<p>As you can see from the video, I’m able to use a screen reader to hear both the title of the chart, as well as the values in the legend. Because Kendo UI DataViz creates charts using inline SVG elements, and SVG is just markup, VoiceOver is able to drill into the chart and piece together a reasonable representation of the content. Had we instead used a Canvas element to create the chart, we’d be out of luck. Score one for SVG!</p>
+
+<p>Of course, if you watched the video, you may have also noticed that the screen reader didn’t select my chart exactly, it just started reading the title. What’s more, while I’m happy that the reader can access and read legend values, I feel like I can do more to make this chart even more consumable, and accessible, for disabled users.</p>
+
+<p>In the next section, we"ll look at five steps you can take to improve the accessibility of your charts. Each takes only minutes to add to your apps, and you can adopt any or all of these as they make sense. You might also find that, not only do these steps make your charts more accessible to disabled users, but that the improvements enhance the value of your content for all of your users, regardless of ability.</p>
+
+<h2 id="five-tips-for-accessible-dataviz-charts">Five Tips for Accessible DataViz Charts</h2>
+
+<ol>
+  <li>
+    <p><strong>Provide a text description of the chart</strong></p>
+
+    <p>The simplest thing you can do is to add a pure-text description of your chart to the page. Here"s an example of the markup for such a chart:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;figure&gt;
+     &lt;div id="chart" role="img" title="Sources of Electricity Produced in Spain, 2008"&gt;&lt;/div&gt;
+     &lt;figcaption&gt;
+     	In 2008, Spain produced electricity for its residents in four ways.
+         Chief among these was Nuclear power, which accounted for approximately 49% of production.
+         Next were Wind and Hydro-electric power, which produced
+         27% and 22% of the nation's electricity, respectively.
+         In a distant fourth was solor power,
+         which accounted for only 2% of all electricity produced by the country.
+     &lt;/figcaption&gt;
+ &lt;/figure&gt;
+</code></pre></div>    </div>
+
+    <p>And I"ll create the chart with the following JavaScript:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> function createChart() {
+     $("#chart").kendoChart({
+       title: {
+         text: "Sources of Electricity Produced in Spain, 2008"
+       },
+       legend: {
+         position: "bottom",
+         labels: {
+           template: "#= text # (#= value #%)"
+         }
+       },
+       seriesDefaults: {
+         labels: {
+           visible: true,
+           position: "outsideEnd",
+           format: "{0}%"
+         }
+       },
+       series: [{
+         type: "donut",
+         data: [{
+           category: "Hydro",
+           value: 22
+         }, {
+           category: "Solar",
+           value: 2
+         }, {
+           category: "Nuclear",
+           value: 49
+         }, {
+           category: "Wind",
+           value: 27
+         }]
+     }],
+     tooltip: {
+       visible: true,
+       format: "{0}%"
+     }
+   });
+ }
+
+ createChart();
+</code></pre></div>    </div>
+
+    <p>If you take a look at the above HTML, you’ll see that I wrapped my chart <code class="language-plaintext highlighter-rouge">div</code> in a <code class="language-plaintext highlighter-rouge">figure</code> element, and then added a <code class="language-plaintext highlighter-rouge">figcaption</code> that explains the chart in detail. You can also visit <a href="http://jsbin.com/odowud/9/edit">jsbin.com/odowud/9</a> for a complete, working example.</p>
+
+    <p>Here’s a <a href="http://www.youtube.com/watch?v=QyB3sTVRd3E&amp;feature=youtu.be">brief video</a> of VoiceOver interacting with the <code class="language-plaintext highlighter-rouge">figcaption</code> element:</p>
+
+    <iframe width="853" height="480" src="http://www.youtube.com/embed/QyB3sTVRd3E" frameborder="0" allowfullscreen=""></iframe>
+
+    <p>In this example, my description is detailed, but yours need not be. The goal is to provide disabled users with the key information found in your chart, which will vary, depending on the data.</p>
+  </li>
+  <li>
+    <p><strong>Add <code class="language-plaintext highlighter-rouge">role</code> and <code class="language-plaintext highlighter-rouge">title</code> attributes to the chart div</strong></p>
+
+    <p>Another simple step you can take is to add an WAI-ARIA role and a title to the div that contains your chart. This can be as simple as doing the following:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;div id="chart" role="img" title="Sources of Electricity Produced in Spain, 2008"&gt;&lt;/div&gt;
+</code></pre></div>    </div>
+
+    <p>In the first video, even though VoiceOver could read the chart title and legend to it, it couldn’t “select” the container, or even tell me I was interacting with an HTML element. By adding a role of “img” and a title, VoiceOver can do both, which you can see in the first 15 seconds of the video for step #1.</p>
+  </li>
+  <li>
+    <p><strong>Add <code class="language-plaintext highlighter-rouge">title</code> and <code class="language-plaintext highlighter-rouge">desc</code> elements to the root of the <code class="language-plaintext highlighter-rouge">svg</code> element</strong></p>
+
+    <p>The next step we can take is to manually add title and description elements to the SVG element created by Kendo UI DataViz. These elements can be leveraged by screen readers as fallback content to be read to disabled users.</p>
+
+    <p>First, I"ll create a template script block for the <code class="language-plaintext highlighter-rouge">&lt;title&gt;</code> and <code class="language-plaintext highlighter-rouge">&lt;desc&gt;</code> fields:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;script id="chartTmpl" type="text/x-kendo-tmpl"&gt;
+ 	&lt;title&gt;#= title #&lt;/title&gt;
+		&lt;desc&gt;#= description #&lt;/desc&gt;
+   	&lt;/script&gt;
+</code></pre></div>    </div>
+
+    <p>Then, I load the html for that block into a <code class="language-plaintext highlighter-rouge">kendo.template</code> and render the template using a chartDetails object. Finally, I’ll use jQuery to select the <code class="language-plaintext highlighter-rouge">&lt;svg&gt;</code> element inside of my chart <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code> and prepend the title and description to the beginning of that element.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> var chartDetails = {
+   title: "Sources of Electricity Produced in Spain, 2008",
+   description: "Graphic illustrating, by percentage, the four primary electricity sources for Spain in 2008."
+ };
+
+ function createChart() { ... }
+
+ function makeChartAccessible() {
+   var template = kendo.template($("#chartTmpl").html());
+	    
+   $('#chart svg').prepend(template(chartDetails));
+ }
+
+ createChart();
+ makeChartAccessible();
+</code></pre></div>    </div>
+
+    <p>For a complete working sample, check out <a href="http://jsbin.com/odowud/19/edit">jsbin.com/odowud/19</a>.</p>
+
+    <p>At the time of this writing, VoiceOver (as well as all of the other major screen readers, AFAIK) doesn’t do anything with the title and desc elements, but since this technique is explicitly called out in the W3C’s <a href="http://www.w3.org/TR/SVG-access/">guidelines for accessible SVG</a>, I still recommend this step, even if as a future-proofing technique.</p>
+  </li>
+  <li>
+    <p><strong>Generate an accessible data table from the DataSource</strong></p>
+
+    <p>The last two steps deal with creating a data table to serve as an alternative or supplement to the chart or graph. Assuming I’m using a DataSource to populate my chart, I can use the same DataSource and Kendo Templates to create a tabular representation of the same data.</p>
+
+    <p>First, I create a template script block for my table.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;script id="tableScript" type="text/x-kendo-tmpl"&gt;
+     &lt;table id="chartTable"&gt;
+       &lt;caption&gt;Sources of Electricity Produced in Spain, 2008&lt;/caption&gt;
+       &lt;tr&gt;
+         &lt;th scope="col"&gt;Category&lt;/th&gt;
+         &lt;th scope="col"&gt;Percentage&lt;/th&gt;
+       &lt;/tr&gt;
+       # for(var i = 0, len = data.length; i &lt; len; i++) { #
+         &lt;tr&gt;
+           &lt;th scope="row"&gt;#= data[i].category #&lt;/th&gt;
+           &lt;td&gt;#= data[i].value #%&lt;/td&gt;
+         &lt;/tr&gt;
+        # } #
+     &lt;/table&gt;
+ &lt;/script&gt;
+</code></pre></div>    </div>
+
+    <p>Next, I"ll declare a createTable function, where I’ll pass my template script into a Kendo template, render it with the DataSource and then add the table to the page.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> var chartData = new kendo.data.DataSource({
+   data: [{
+     category: "Hydro",
+     value: 22
+   }, {
+     category: "Solar",
+     value: 2
+   }, {
+     category: "Nuclear",
+     value: 49
+   }, {
+     category: "Wind",
+     value: 27
+   }]
+ });
+
+ function createTable() {
+   var template = kendo.template($("#tableScript").html());
+    $("body").prepend(template(chartData.data()));
+ }
+</code></pre></div>    </div>
+
+    <p>The result is a simple, accessible table based on the same data as the chart itself. Here’s a <a href="http://www.youtube.com/watch?v=0xdrBjwiFVA&amp;feature=plcp">quick video</a> of how VoiceOver allows me to interact with the table:</p>
+
+    <iframe width="853" height="480" src="http://www.youtube.com/embed/0xdrBjwiFVA" frameborder="0" allowfullscreen=""></iframe>
+
+    <p>For a complete, working sample of this example, see <a href="http://jsbin.com/odowud/15/edit">http://jsbin.com/odowud/15</a>.</p>
+  </li>
+  <li>
+    <p><strong>Create an off-screen table, or allow the table and chart to be swapped on-screen</strong></p>
+
+    <p>Generating a data table is nice, but you may not want to display the raw data on-screen with the chart for all users. In that case, you have two options. You can either: 1) place the table off-screen, invisible to sighted users, but available to screen readers; or, 2) provide all users with the ability to switch between the chart and table.</p>
+
+    <p>To make the first option work, I can start by creating a CSS class called <code class="language-plaintext highlighter-rouge">hidden,</code> which positions any element 10000px to the left, and off-screen.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> .hidden {
+   position:absolute;
+   left:-10000px;
+   top:auto;
+   width:1px;
+   height:1px;
+   overflow:hidden;
+ }
+</code></pre></div>    </div>
+
+    <p>Now, my data table is no longer on the screen, but is accessible to screen readers, as shown in the <a href="http://www.youtube.com/watch?v=0xdrBjwiFVA&amp;feature=youtu.be">following video</a>:</p>
+
+    <iframe width="853" height="480" src="http://www.youtube.com/embed/0xdrBjwiFVA" frameborder="0" allowfullscreen=""></iframe>
+
+    <p>For a complete, working sample of this example, see <a href="http://jsbin.com/odowud/20/edit">http://jsbin.com/odowud/20</a>.</p>
+
+    <p>For an alternate approach, I can place a link or button on the screen that allows the user to swap between the table and the chart. The advantage of this approach is that it enhances the experience for all users by giving them a choice as to which presentation of the data they prefer.</p>
+
+    <p>In this case, I’ll place a “Show Table” link on the screen. When the user clicks this link, the chart is hidden, the table is displayed and the link text changes to “Show Chart.”</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> var toggle = $('#toggle'); // HTML Link Element ID
+ toggle.on('click', function() {
+   if (chartTable.hasClass('hidden')) {
+     chart.addClass('hidden');
+     chartTable.removeClass('hidden');		    
+     toggle.text("Show Chart");
+   } else {
+     chartTable.addClass('hidden');
+     chart.removeClass('hidden');		    
+     toggle.text("Show Table");
+   }  
+ });
+</code></pre></div>    </div>
+
+    <p>VoiceOver users can now choose which representation they wish to interact with, As depicted in the <a href="http://www.youtube.com/watch?v=kZNz1H2Zp3U&amp;feature=relmfu">following video</a>:</p>
+
+    <iframe width="853" height="480" src="http://www.youtube.com/embed/kZNz1H2Zp3U" frameborder="0" allowfullscreen=""></iframe>
+
+    <p>For a complete, working sample of this example, see <a href="http://jsbin.com/odowud/21/edit">http://jsbin.com/odowud/21</a>.</p>
+
+    <p>SVG, the technology used to power Kendo UI DataViz Charts, is pretty accessible out of the box, but the tips above can help you make your charts and graphs even more consumable, and thus more accessible, to disabled users. Better still, following these tips, and having an accessible mindset as you build your sites and applications, can help you create content that is more accessible to all of your users.</p>
+  </li>
+</ol>
+
+<h3 id="resources">Resources</h3>
+
+<ul>
+  <li><a href="http://section508.gov/">Section 508</a></li>
+  <li><a href="http://www.w3.org/TR/WCAG20/">WCAG 2.0</a></li>
+  <li><a href="http://www.w3.org/TR/SVG-access/">W3C SVG Accessibility Guidelines</a></li>
+  <li><a href="http://www.paciellogroup.com/blog/2011/08/html5-accessibility-chops-interactive-image-example/">HTML5 Accessibility: SVG Text (Paciello Group Blog Post)</a></li>
+</ul>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

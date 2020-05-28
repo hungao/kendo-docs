@@ -1,0 +1,609 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Changes and Backward Compatibility in Kendo UI</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Find all changes which are effective in Kendo UI 2012 Q2 from previous releases">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/changes-and-backward-compatibility.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-ui-framework-changes-and-backwards-compatibility">Kendo UI Framework Changes and Backwards Compatibility</h1>
+
+<h2 id="kendo-ui-2014-q2">Kendo UI 2014 Q2</h2>
+
+<h3 id="changes-from-2014-q1-sp2-20141528">Changes from 2014 Q1 SP2 (2014.1.528)</h3>
+
+<h4 id="breaking-changes">Breaking changes</h4>
+
+<p><strong>TreeView</strong>: The deprecated <code class="language-plaintext highlighter-rouge">checkboxTemplate</code> configuration option has been removed.
+If you don"t need a highly specific checkbox template, consider using the default one (using checkboxes: true).
+If you need any custom checkbox rendering, use the checkboxes.template option:</p>
+
+<p>-Old:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#tree").kendoTreeView({
+    checkboxTemplate: "..."
+});
+</code></pre></div></div>
+
+<p>-New:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#tree").kendoTreeView({
+    checkboxes: {
+        template: "..."
+    }
+});
+</code></pre></div></div>
+
+<p><strong>Editor</strong>: The deprecated <strong>formatBlock</strong> and <strong>style</strong> tools have been removed. See the 2013 Q2 release notes below on how to migrate to the <strong>formatting</strong> tool.</p>
+
+<h2 id="kendo-ui-2014-q1-sp2-20141528">Kendo UI 2014 Q1 SP2 (2014.1.528)</h2>
+
+<h3 id="changes-from-2014-q1-sp1-20141416">Changes from 2014 Q1 SP1 (2014.1.416)</h3>
+
+<h4 id="breaking-changes-1">Breaking changes</h4>
+
+<ul>
+  <li><strong>Grid</strong>: Clicking on an input, link or button no longer triggers the selection.</li>
+  <li><strong>ListView</strong>: Clicking on an input, link or button no longer triggers the selection.</li>
+</ul>
+
+<h2 id="kendo-ui-2014-q1">Kendo UI 2014 Q1</h2>
+
+<h3 id="changes-from-2013-q3-sp2-201331324">Changes from 2013 Q3 SP2 (2013.3.1324)</h3>
+
+<h4 id="breaking-changes-2">Breaking changes</h4>
+
+<ul>
+  <li><strong>Flat Theme</strong>: Button background is now gray. The previous outcome can be achieved using <strong>.k-primary</strong> class.</li>
+  <li><strong>Kendo UI Web mobile skins</strong>: The new skins for the mobile widgets in Kendo UI Web are <strong>not compatible</strong> with the Kendo UI Mobile platform themes and shouldn"t be used together. However,
+you can style your app with them if you don"t include any of the Kendo UI Mobile styling (even the common CSS) - <strong>kendo.[skin-name].mobile.min.css</strong> includes everything needed.</li>
+</ul>
+
+<h3 id="changes-from-2013-q3-sp1-201331316">Changes from 2013 Q3 SP1 (2013.3.1316)</h3>
+
+<h4 id="breaking-changes-3">Breaking changes</h4>
+
+<p><strong>DatePicker</strong>: The DatePicker widget now uses a single calendar instance. The calendar will be created on first popup opening.</p>
+
+<p>If you need to get a reference to the calendar you will need to get in the <a href="kendo-ui/api/web/datepicker#events-open">open</a> event handler:</p>
+
+<p>-Old:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var datepicker = $("#datepicker").kendoDatePicker();
+var calendar = datepicker.dateView.calendar;
+</code></pre></div></div>
+
+<p>-New:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#datepicker").kendoDatePicker({
+    open: function() {
+        var calendar = this.dateView.calendar;
+    }
+});
+</code></pre></div></div>
+
+<p><strong>DateTimePicker</strong>: The DateTimePicker widget now uses a single calendar instance. The calendar will be created on first date popup opening.</p>
+
+<p>If you need to get a reference to the calendar you will need to get in the <a href="kendo-ui/api/web/datetimepicker#events-open">open</a> event handler:</p>
+
+<p>-Old:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var datetimepicker = $("#datetimepicker").kendoDateTimePicker();
+var calendar = datetimepicker.dateView.calendar;
+</code></pre></div></div>
+
+<p>-New:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#datetimepicker").kendoDateTimePicker({
+    open: function() {
+        var calendar = this.dateView.calendar;
+    }
+});
+</code></pre></div></div>
+
+<h3 id="changes-from-2013-q3-201331119">Changes from 2013 Q3 (2013.3.1119)</h3>
+
+<h4 id="breaking-changes-4">Breaking changes</h4>
+
+<ul>
+  <li><strong>Supporting libs</strong>: Kendo UI LESS fork is now updated to LESS 1.6.0. Kendo UI CSS files are built with it (no breaking changes in the LESS files themselves, except that they rely on
+the new default import once functionality of @import directive).</li>
+</ul>
+
+<h2 id="kendo-ui-2013-q3">Kendo UI 2013 Q3</h2>
+
+<h3 id="changes-from-2013-q2-sp1-20132918">Changes from 2013 Q2 SP1 (2013.2.918)</h3>
+
+<h4 id="breaking-changes-5">Breaking changes</h4>
+
+<ul>
+  <li><strong>Core</strong>: kendo.support.pointers now only shows support for IE11 pointer events - kendo.support.msPointers was added to indicate that IE10 pointer events are supported too.</li>
+  <li><strong>Splitter</strong>: the internal method <code class="language-plaintext highlighter-rouge">trigger("resize")</code>, which has been provided as a workaround in certain scenarios, no longer works.
+It has been replaced with a <a href="/getting-started/using-kendo-with/using-kendo-in-responsive-web-pages">public API method <code class="language-plaintext highlighter-rouge">resize()</code></a>, which now all Kendo UI widgets have.
+Also see <a href="/api/framework/kendo/#methods-resize"><code class="language-plaintext highlighter-rouge">kendo.resize()</code></a>.</li>
+  <li><strong>Splitter</strong>: the <code class="language-plaintext highlighter-rouge">layoutChange</code> event is now obsolete and will be removed in the future. Please use the <code class="language-plaintext highlighter-rouge">resize</code> event instead.</li>
+  <li><strong>Kendo UI Scheduler for ASP.NET MVC</strong>: "ISchedulerEvent" interface now includes two additional fields - "StartTimezone" and "EndTimezone" which stores the timezone information of the event.</li>
+  <li><strong>Scheduler</strong>: Changes in <code class="language-plaintext highlighter-rouge">recurrenceEditor</code> messages:</li>
+  <li><code class="language-plaintext highlighter-rouge">daily.days</code> becomes <code class="language-plaintext highlighter-rouge">daily.interval</code></li>
+  <li><code class="language-plaintext highlighter-rouge">weekly.weeks</code> becomes <code class="language-plaintext highlighter-rouge">weekly.interval</code></li>
+  <li><code class="language-plaintext highlighter-rouge">monthly.months</code> becomes <code class="language-plaintext highlighter-rouge">monthly.interval</code></li>
+  <li><code class="language-plaintext highlighter-rouge">yearly.years</code> becomes <code class="language-plaintext highlighter-rouge">yearly.interval</code></li>
+  <li><code class="language-plaintext highlighter-rouge">end.endLabel</code> becomes <code class="language-plaintext highlighter-rouge">end.label</code></li>
+  <li><code class="language-plaintext highlighter-rouge">end.endNever</code> becomes <code class="language-plaintext highlighter-rouge">end.never</code></li>
+  <li><code class="language-plaintext highlighter-rouge">end.endCountAfter</code> becomes <code class="language-plaintext highlighter-rouge">end.after</code></li>
+  <li><code class="language-plaintext highlighter-rouge">end.endCountOccurrence</code> becomes <code class="language-plaintext highlighter-rouge">end.occurrence</code></li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">end.endUntilOn</code> becomes <code class="language-plaintext highlighter-rouge">end.on</code></p>
+  </li>
+  <li><strong>MVC DataSource</strong>: The MVC DataSource transport now serializes numbers based on the used Kendo culture. As a result, if you are using an invariant culture number model binder, the numbers will not be parsed correctly. You should either use the the same culture to parse the numbers in the model binder or remove the model binder in order for numbers with a decimal separator to be parsed correctly.</li>
+  <li><strong>ModalView</strong>: The ModalView now supports autosizing when its content changes and when no height is set. Unfortunately we were able to implement this at the expense of 
+the possibility to set the ModalView size in a CSS stylesheet. As a workaround please use the ModalView width and height options or set them through inline CSS instead.</li>
+</ul>
+
+<h2 id="kendo-ui-2013-q2">Kendo UI 2013 Q2</h2>
+
+<h3 id="changes-from-2013-q1-sp1-20131514">Changes from 2013 Q1 SP1 (2013.1.514)</h3>
+
+<h4 id="breaking-changes-6">Breaking changes</h4>
+
+<ul>
+  <li><strong>themes</strong>: The icons in the sprite image have been rearranged to include more icons in two different sizes.</li>
+  <li><strong>Editor</strong>: The default tool set now includes the newly introduced table editing. Toolbar tools are now grouped, so their dimensions have been increased by 2px. On the other hand,
+the "Font name" and "Font size" tools no longer appear by default. The idea is to encourage developers (and users respectively) to use the formatting dropdown, which provides a predefined (and customizable) set of options.
+This will ultimately lead to better structured, formatted and consistent rich text documents, compared to the case when the user has the ability to apply arbitrary font styles.</li>
+</ul>
+
+<p>If you need the old tool set, use the configuration below.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $("#editor").kendoEditor({
+        tools: [
+            "bold", "italic", "underline", "strikethrough",
+            "fontName", "fontSize", "foreColor", "backColor",
+            "justifyLeft", "justifyCenter", "justifyRight", "justifyFull",
+            "insertUnorderedList", "insertOrderedList",
+            "indent", "outdent",
+            "formatBlock",
+            "createLink", "unlink", "insertImage"
+        ]
+    });
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>Editor</strong>: Initializing the editor from a <code class="language-plaintext highlighter-rouge">div</code> element triggers the <a href="http://demos.telerik.com/kendo-ui/web/editor/inline-editing.html">inline editing mode</a>. If you need to revert to the old behavior, initialize it from a <code class="language-plaintext highlighter-rouge">&lt;textarea&gt;</code> element.</p>
+  </li>
+  <li>
+    <p><strong>Mobile ListView</strong>:</p>
+  </li>
+</ul>
+
+<p>Enabling endless scrolling or press to load more configuration options now puts the listview in a virtual mode, which has different behavior than Q1 2013 and previous releases.</p>
+
+<ol>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">endlessScrollParameters</code> and <code class="language-plaintext highlighter-rouge">loadMoreParameters</code> configuration options are not available anymore. Endless scrolling uses on the dataSource paging configuration to issue subsequent requests.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">scrollTreshold</code> option is not available anymore. The listvew automatically prefetches the next page when 2/3 of the current page is reached.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">stopEndlessScrolling</code> and <code class="language-plaintext highlighter-rouge">stopLoadMore</code> methods are no longer available. The listview automatically hides the button and loading indicator when the items loaded reach the number returned by the <code class="language-plaintext highlighter-rouge">schema.total</code> method of the bound DataSource.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">lastPageReached</code> event is no longer triggered, due to the same reasons.</p>
+  </li>
+</ol>
+
+<h4 id="deprecated-functionality">Deprecated functionality</h4>
+
+<ul>
+  <li><strong>Editor</strong>: The <strong>formatBlock</strong> and <strong>style</strong> tools have been deprecated in favor of the unified <strong>formatting</strong> tool. The new tool supports the functionality of both old tools, as well as new styling options. If you need to keep the styles and block formats in different drop-downs, you can use two formatting tools in paralel. The old tool declarations work, yielding a console.warn about the deprecation, and will be removed with a future official release.
+    <ul>
+      <li>
+        <p>Old</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $("#editor").kendoEditor({
+      tools: [
+          { name: "style", items: [
+              // applies class "foo"
+              { text: "foo", value: "foo" }
+          ] },
+
+          { name: "formatBlock", items: [
+              // changes wrapping block to paragraph
+              { text: "paragraph", value: "p" }
+          ] }
+      ]
+  });
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>New</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $("#editor").kendoEditor({
+      tools: [
+          { name: "formatting", items: [
+              // applies class "foo"
+              { text: "foo", value: ".foo" },
+
+              // changes wrapping block to paragraph
+              { text: "paragraph", value: "p" },
+
+              // changes wrapping block to paragraph with class "fine-print"
+              { text: "fine print", value: "p.fine-print" }
+          ] }
+      ]
+  });
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="kendo-ui-2013-q1">Kendo UI 2013 Q1</h2>
+
+<h3 id="changes-from-2012-q3-sp1-201231315">Changes from 2012 Q3 SP1 (2012.3.1315)</h3>
+
+<h4 id="breaking-changes-7">Breaking changes</h4>
+
+<ul>
+  <li>jQuery is updated to 1.9.1.</li>
+  <li><strong>Mobile:</strong> Rename scrollTreshold option of the ListView to <strong>scrollThreshold</strong>.</li>
+  <li><strong>AutoComplete/ComboBox/DropDownList:</strong> Rename enable option to <strong>enabled</strong>.</li>
+  <li><strong>TreeView/HierarchicalDataSource/Node:</strong> The <code class="language-plaintext highlighter-rouge">children</code> field is initialized depending on the <code class="language-plaintext highlighter-rouge">hasChildren</code> field, as previously documented. Use the <code class="language-plaintext highlighter-rouge">append</code> and <code class="language-plaintext highlighter-rouge">load</code> methods to initialize it, and if accessing the children field directly, verify if it is present.</li>
+</ul>
+
+<h4 id="aspnet-mvc">ASP.NET MVC</h4>
+
+<p>Some ASP.NET MVC applications may be broken if using other libraries incompatible with jQuery 1.9.1. Further details available in the <a href="/getting-started/using-kendo-with/aspnet-mvc/troubleshooting#javascript-error-that-live-method-is-unavailable,-undefined-or-unsupported">troubleshooting guide</a></p>
+
+<h2 id="kendo-ui-2012-q3-sp1">Kendo UI 2012 Q3 SP1</h2>
+
+<h3 id="changes-from-2012-q3-201131114">Changes from 2012 Q3 (2011.3.1114)</h3>
+
+<h4 id="breaking-changes-8">Breaking changes</h4>
+
+<ul>
+  <li>
+    <p><strong>Cascading ComboBoxes/DropDownLists:</strong> The parameterMap of the child widget"s dataSource is called before the change event of the parent widget.
+Use <a href="/api/web/combobox#cascade">cascade</a> event instead of change event.</p>
+  </li>
+  <li>
+    <p>Telerik UI for ASP.NET MVC: Remove Slide effect. Use SlideIn instead.</p>
+  </li>
+</ul>
+
+<h2 id="kendo-ui-2012-q3">Kendo UI 2012 Q3</h2>
+
+<h3 id="changes-from-2012-q2-sp1-20112913">Changes from 2012 Q2 SP1 (2011.2.913)</h3>
+
+<h4 id="breaking-changes-9">Breaking changes</h4>
+
+<ul>
+  <li>
+    <p><strong>Mobile:</strong> the kendoMobileSwipe plugin is obsolete - replace its usage with the <strong>touch</strong> widget.</p>
+  </li>
+  <li>
+    <p><strong>Mobile:</strong> WebKit mask icons are now deprecated and font icons are used instead. If you have custom icons, they might break after the upgrade.
+Add the following CSS rule to fix them /if you have data-icon="custom" on them, or use .km-icon to remove all non-custom icons/:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  .km-root .km-pane .km-view .km-custom {
+      background-size: 100% 100%;
+      -webkit-background-clip: border-box;
+      background-color: currentcolor;
+  }
+
+  .km-root .km-pane .km-view .km-custom:after,
+  .km-root .km-pane .km-view .km-custom:before
+  {
+      visibility: hidden;
+  }
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>Additionally it should be noted that the mask icons used <strong>background-color</strong> for colorization, while the font ones use <strong>color</strong>
+and custom colorization (but not on custom icons) <strong>should be updated</strong> after the upgrade. For example a rule like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    .km-ios .km-tabstrip .km-icon {
+        background-color: rgb(20, 30, 40);
+    }
+</code></pre></div></div>
+
+<p>should be changed to this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    .km-ios .km-tabstrip .km-icon {
+        color: rgb(20, 30, 40);
+    }
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>DataViz:</strong> Widgets now require theme-specific stylesheets. For example:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;link href="styles/kendo.dataviz.min.css" rel="stylesheet" /&gt;
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>if using the Default skin, should be updated to:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;link href="styles/kendo.dataviz.min.css" rel="stylesheet" /&gt;
+    &lt;link href="styles/kendo.dataviz.default.min.css" rel="stylesheet" /&gt;
+</code></pre></div></div>
+
+<ul>
+  <li><strong>DataViz:</strong> missingValues defaults to "zero" for area, stacked area and stacked line series. The previous default was "gap" which can lead to incorrect results.</li>
+</ul>
+
+<h2 id="kendo-ui-2012-q2">Kendo UI 2012 Q2</h2>
+
+<h3 id="changes-from-2012-q1-sp1-20121322">Changes from 2012 Q1 SP1 (2012.1.322)</h3>
+
+<h4 id="breaking-changes-10">Breaking changes</h4>
+
+<ul>
+  <li>
+    <p><strong>All Widgets:</strong> All arrows have been renamed to better reflect their direction and size. For instance:</p>
+
+    <ul>
+      <li>
+        <p>Old</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  .k-arrow-up
+  .k-arrow-next
+  .k-arrow-down
+  .k-arrow-prev
+  .k-arrow-first
+  .k-arrow-last
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>New</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  .k-i-arrow-n
+  .k-i-arrow-e
+  .k-i-arrow-s
+  .k-i-arrow-w
+  .k-i-seek-w
+  .k-i-seek-e  for more information check the [Styling Icons demo](http://demos.telerik.com/kendo-ui/web/styling/icons.html).
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Popup:</strong> Popup based widgets nested in other Popup based widgets create their Popup container inside the Popup parent. This means that a DropDownList created inside an already
+ initialized Menu will create its list inside the Menu item"s parent Popup.</li>
+  <li><strong>TreeView:</strong> The TreeView widget now depends on kendo.data.js</li>
+  <li>
+    <p><strong>TreeView:</strong> Using the API methods will re-create the HTML of the nodes. In order to get the new reference to the nodes, use the return value of the methods.</p>
+
+    <ul>
+      <li>
+        <p>Old</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  var foo = treeviewObject.findByText("foo");
+  treeviewObject.append(foo);
+  // starting with 2012 Q2, foo will point to a DOM node that is removed from the document
+  foo.text("bar: foo");
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>New</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  var foo = treeviewObject.findByText("foo");
+  foo = treeviewObject.append(foo);
+  foo.text("bar: foo");
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>DataViz:</strong> Refresh() no longer invokes Read() of the DataSource.</p>
+
+    <ul>
+      <li>
+        <p>Old</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  var chart = $("#chart").data("kendoChart");
+  chart.refresh();
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>New</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  var chart = $("#chart").data("kendoChart");
+  chart.dataSource.read();
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="kendo-ui-2012-q1-20121322">Kendo UI 2012 Q1 (2012.1.322)</h2>
+
+<h3 id="changes-from-2011-q3-sp1-201131407">Changes from 2011 Q3 SP1 (2011.3.1407)</h3>
+
+<h4 id="breaking-changes-11">Breaking changes</h4>
+
+<blockquote>
+  <p>The combined JavaScript file kendo.all.js is available only in the Kendo Complete package. The corresponding file in Kendo Web is called kendo.web.js. Use it instead of kendo.all.js.</p>
+</blockquote>
+
+<ul>
+  <li><strong>Data:</strong> kendo.model.js file has been removed. The content of kendo.model.js file has been consolidated with the kendo.data.js content.</li>
+  <li><strong>Data:</strong> <code class="language-plaintext highlighter-rouge">Model.id</code> is no longer a function. It is a field.
+    <ul>
+      <li>
+        <p>Old</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  var model = dataSource.get(42);
+  var modelId = model.id(); //42
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>New</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  var model = dataSource.get(42);
+  var modelId = model.id; //42
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Data:</strong> The <code class="language-plaintext highlighter-rouge">DataSource</code> contains ObservableObject instances instead of raw JavaScript objects.</p>
+  </li>
+  <li><strong>Grid:</strong> The Grid widget is now using the <code class="language-plaintext highlighter-rouge">uid</code> field of the Model instead of the <code class="language-plaintext highlighter-rouge">id</code>. A new uid field is introduced to the DataSource"s Model,
+ which represents its unique id. The Grid row data attribute has been changed to use this field.
+ Note that in order to retrieve Model instance by its uid, DataSource"s <code class="language-plaintext highlighter-rouge">getByUid</code> method should be used.
+    <ul>
+      <li>
+        <p>Old</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;tr data-id="42"&gt;&lt;!--...--&gt;&lt;/tr&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>New</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;tr data-uid=”aaaaa-bbbbb-ddddd-gggg”&gt;&lt;!--...--&gt;&lt;/tr&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><strong>DataViz:</strong> The kendo.chart(.min).js file is replaced by kendo.dataviz(.min).js</li>
+  <li><strong>DataViz:</strong> The axis orientation property deprecated in favor of dedicated verticalLine and verticalArea chart types</li>
+  <li><strong>DataViz:</strong> The suite now requires kendo.dataviz.css to be included</li>
+  <li><strong>DataViz:</strong> The Chart widget is now in the kendo.dataviz.ui namespace. Previously it was part of kendo.ui</li>
+  <li><strong>Other:</strong> <code class="language-plaintext highlighter-rouge">dataValueField</code> and <code class="language-plaintext highlighter-rouge">dataTextField</code> of DropDownList, ComboBox and AutoComplete, are set to empty string by default. In order to get your old code working, you will need to list the fields manually, like this:
+    <ul>
+      <li>
+        <p>Old</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $("#combobox").kendoComboBox([
+      {text: "Item 1", value: "item1"},
+      {text: "Item 2", value: "item2"}
+  ]);
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>New</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $("#combobox").kendoComboBox({
+      dataTextField: "text",
+      dataValueField: "value",
+      dataSource: [
+          {text: "Item 1", value: "item1"},
+          {text: "Item 2", value: "item2"}
+      ]
+  });
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

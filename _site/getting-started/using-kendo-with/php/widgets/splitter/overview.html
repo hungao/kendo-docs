@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Code and examples how to use Kendo UI Splitter for PHP | Kendo UI documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Easy to follow steps to explore the capabilities of Splitter class for Kendo UI Splitter for PHP.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/php/widgets/splitter/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="splitter">Splitter</h1>
+
+<p>Kendo Splitter for PHP is a server-side wrapper for the <a href="/api/web/splitter">Kendo UI Splitter</a> widget.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Here is how to configure a simple Kendo Splitter:</p>
+
+<ol>
+  <li>Follow the steps from the <a href="/getting-started/using-kendo-with/php/introduction">introduction</a> - include the autoloader, JavaScript and CSS files.</li>
+  <li>
+    <p>Add a simple splitter:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// create inner splitter
+$inner = new \Kendo\UI\Splitter('horizontal');
+$inner-&gt;attr("style", "height: 100%; width: 100%;");
+	
+$leftPane = new \Kendo\UI\SplitterPane();
+$leftPane-&gt;attr("id", "left-pane")
+     -&gt;collapsible(true)
+     -&gt;size(220)
+     -&gt;startContent();
+?&gt;
+
+&lt;div class="pane-content"&gt;
+    &lt;h3&gt;Inner splitter / left pane&lt;/h3&gt;
+    &lt;p&gt;Resizable and collapsible.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;?php
+$leftPane-&gt;endContent();
+$inner-&gt;addPane($leftPane);
+	
+$centerPane = new \Kendo\UI\SplitterPane();
+$centerPane-&gt;attr("id", "center-pane")
+     -&gt;collapsible(false)
+     -&gt;startContent();
+?&gt;
+
+&lt;div class="pane-content"&gt;
+    &lt;h3&gt;Inner splitter / center pane&lt;/h3&gt;
+    &lt;p&gt;Resizable only.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;?php
+$centerPane-&gt;endContent();
+$inner-&gt;addPane($centerPane);
+	
+$rightPane = new \Kendo\UI\SplitterPane();
+$rightPane-&gt;attr("id", "center-pane")
+     -&gt;collapsible(true)
+     -&gt;size(220)
+     -&gt;startContent();
+?&gt;
+
+&lt;div class="pane-content"&gt;
+    &lt;h3&gt;Inner splitter / right pane&lt;/h3&gt;
+    &lt;p&gt;Resizable and collapsible.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;?php
+$rightPane-&gt;endContent();
+$inner-&gt;addPane($rightPane);					
+	
+$topPane = new \Kendo\UI\SplitterPane();
+$topPane-&gt;attr("id", "top-pane")
+    -&gt;collapsible(false)
+    -&gt;content($inner-&gt;render());
+	
+$middlePane = new \Kendo\UI\SplitterPane();
+$middlePane-&gt;attr("id", "middle-pane")
+       -&gt;collapsible(false)
+       -&gt;size(100)
+       -&gt;startContent();
+?&gt;
+
+&lt;div class="pane-content"&gt;
+    &lt;h3&gt;Outer splitter / middle pane&lt;/h3&gt;
+    &lt;p&gt;Resizable only.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;?php
+$middlePane-&gt;endContent();
+	
+$bottomPane = new \Kendo\UI\SplitterPane();
+$bottomPane-&gt;attr("id", "bottom-pane")
+       -&gt;collapsible(false)
+       -&gt;resizable(false)
+       -&gt;size(100)
+       -&gt;startContent();
+?&gt;
+
+&lt;div class="pane-content"&gt;
+    &lt;h3&gt;Outer splitter / bottom pane&lt;/h3&gt;
+    &lt;p&gt;Non-resizable and non-collapsible.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;?php
+$bottomPane-&gt;endContent();
+	
+// create outer splitter
+$splitter = new \Kendo\UI\Splitter('splitter');
+$splitter-&gt;orientation("vertical");
+$splitter-&gt;addPane($topPane, $middlePane, $bottomPane);
+?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Output the splitter by echo-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ echo $splitter-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="accessing-an-existing-splitter">Accessing an Existing Splitter</h2>
+
+<p>You can reference an existing Splitter instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/splitter#methods">API</a> to control its behavior.</p>
+
+<h3 id="accessing-an-existing-splitter-instance">Accessing an existing Splitter instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//Put this after your Kendo Splitter for PHP declaration
+&lt;script&gt;
+$(function() {
+    // Notice that the Name() of the splitter is used to get its client-side instance
+    var splitter = $("#splitter").data("kendoSplitter");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-kendo-ui-splitter-events">Handling Kendo UI Splitter events</h2>
+
+<p>You can subscribe to all <a href="/api/web/splitter#events">events</a> exposed by Kendo UI Splitter:</p>
+
+<h3 id="example---subscribing-by-specifying-javascript-function-name">Example - subscribing by specifying JavaScript function name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$splitter = new \Kendo\UI\Splitter('splitter');
+
+// The 'resize_dataBound' JavaScript function will handle the 'dataBound' event of the splitter
+$splitter-&gt;resize('splitter_resize');
+
+echo $splitter-&gt;render();
+?&gt;
+&lt;script&gt;
+function splitter_resize() {
+    // Handle the resize event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="example---providing-inline-javascript-code">Example - providing inline JavaScript code</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$splitter = new \Kendo\UI\Splitter('splitter');
+
+// Provide inline JavaScript code that will handle the 'dataBound' event of the splitter
+$splitter-&gt;resize('function() { /* Handle the resize event */ }');
+
+echo $splitter-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

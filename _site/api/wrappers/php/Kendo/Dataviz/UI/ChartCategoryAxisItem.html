@@ -1,0 +1,822 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItem.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizuichartcategoryaxisitem">\Kendo\Dataviz\UI\ChartCategoryAxisItem</h1>
+
+<p>A PHP class representing the categoryAxisItem setting of ChartCategoryAxis.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="autobaseunitsteps">autoBaseUnitSteps</h3>
+
+<p>The discrete categoryAxis.baseUnitStep values when
+either categoryAxis.baseUnit is set to "fit" or
+categoryAxis.baseUnitStep is set to "auto".</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartcategoryaxisitemautobaseunitstepsarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemAutoBaseUnitSteps|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemautobaseunitsteps">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItemAutoBaseUnitSteps">\Kendo\Dataviz\UI\ChartCategoryAxisItemAutoBaseUnitSteps</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$autoBaseUnitSteps = new \Kendo\Dataviz\UI\ChartCategoryAxisItemAutoBaseUnitSteps();
+$days = new array();
+$autoBaseUnitSteps-&gt;days($days);
+$categoryAxisItem-&gt;autoBaseUnitSteps($autoBaseUnitSteps);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$days = new array();
+$categoryAxisItem-&gt;autoBaseUnitSteps(array('days' =&gt; $days));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="axiscrossingvalue">axisCrossingValue</h3>
+<p>Category index at which the first value axis crosses this axis (when set as an object).Category indices at which the value axes cross the category axis (when set as an array).</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-datearray">$value <code class="language-plaintext highlighter-rouge">|date|array</code></h5>
+
+<h4 id="example----using">Example  - using</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;axisCrossingValue(new ());
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-date">Example  - using date</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;axisCrossingValue(new date());
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-array">Example  - using array</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;axisCrossingValue(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="background">background</h3>
+<p>The background color of the axis.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;background('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="baseunit">baseUnit</h3>
+<p>The base time interval for the date axis. The default base unit is determined automatically from the minimum difference
+between subsequent categories.The supported values are:Setting baseUnit to "fit" will set such base unit and categoryAxis.baseUnitStep
+that the total number of categories does not exceed categoryAxis.maxDateGroups.Series data is aggregated for the specified base unit using the series.aggregate function.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;baseUnit('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="baseunitstep">baseUnitStep</h3>
+<p>The step (interval) between categories in base units. Setting it to "auto" will set the step to such value
+that the total number of categories does not exceed categoryAxis.maxDateGroups.This option is ignored if categoryAxis.baseUnit is set to "fit".</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-">$value ``</h5>
+
+<h3 id="categories">categories</h3>
+<p>The category names. The chart will create a category for every item of the array.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-array">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;categories(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="color">color</h3>
+<p>The color to apply to all axis elements. Accepts a valid CSS color string, including hex and rgb. Can be overridden by categoryAxis.labels.color and
+categoryAxis.line.color.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;color('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="crosshair">crosshair</h3>
+
+<p>The crosshair configuration options.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartcategoryaxisitemcrosshairarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemCrosshair|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemcrosshair">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItemCrosshair">\Kendo\Dataviz\UI\ChartCategoryAxisItemCrosshair</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$crosshair = new \Kendo\Dataviz\UI\ChartCategoryAxisItemCrosshair();
+$color = 'value';
+$crosshair-&gt;color($color);
+$categoryAxisItem-&gt;crosshair($crosshair);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$color = 'value';
+$categoryAxisItem-&gt;crosshair(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="field">field</h3>
+<p>The data item field which contains the category name. Requires the dataSource option to be set.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-string-3">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;field('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="justified">justified</h3>
+<p>If set to true the chart will position categories and series points on major ticks. This removes the empty space before and after the series.The default value is false except for "area" and "verticalArea".</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;justified(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="labels">labels</h3>
+
+<p>The axis labels configuration.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartcategoryaxisitemlabelsarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemLabels|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemlabels">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItemLabels">\Kendo\Dataviz\UI\ChartCategoryAxisItemLabels</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$labels = new \Kendo\Dataviz\UI\ChartCategoryAxisItemLabels();
+$background = 'value';
+$labels-&gt;background($background);
+$categoryAxisItem-&gt;labels($labels);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$background = 'value';
+$categoryAxisItem-&gt;labels(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="line">line</h3>
+
+<p>The configuration of the axis lines. Also affects the major and minor ticks, but not the grid lines.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartcategoryaxisitemlinearray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemLine|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemline">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItemLine">\Kendo\Dataviz\UI\ChartCategoryAxisItemLine</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$line = new \Kendo\Dataviz\UI\ChartCategoryAxisItemLine();
+$color = 'value';
+$line-&gt;color($color);
+$categoryAxisItem-&gt;line($line);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-3">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$color = 'value';
+$categoryAxisItem-&gt;line(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="majorgridlines">majorGridLines</h3>
+
+<p>The configuration of the major grid lines. These are the lines that are an extension of the major ticks through the
+body of the chart.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartcategoryaxisitemmajorgridlinesarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemMajorGridLines|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemmajorgridlines">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItemMajorGridLines">\Kendo\Dataviz\UI\ChartCategoryAxisItemMajorGridLines</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$majorGridLines = new \Kendo\Dataviz\UI\ChartCategoryAxisItemMajorGridLines();
+$color = 'value';
+$majorGridLines-&gt;color($color);
+$categoryAxisItem-&gt;majorGridLines($majorGridLines);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-4">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$color = 'value';
+$categoryAxisItem-&gt;majorGridLines(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="majorticks">majorTicks</h3>
+
+<p>The configuration of the category axis major ticks.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartcategoryaxisitemmajorticksarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemMajorTicks|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemmajorticks">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItemMajorTicks">\Kendo\Dataviz\UI\ChartCategoryAxisItemMajorTicks</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$majorTicks = new \Kendo\Dataviz\UI\ChartCategoryAxisItemMajorTicks();
+$color = 'value';
+$majorTicks-&gt;color($color);
+$categoryAxisItem-&gt;majorTicks($majorTicks);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-5">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$color = 'value';
+$categoryAxisItem-&gt;majorTicks(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="max">max</h3>
+<p>The last date displayed on the category date axis. By default, the minimum date is the same as the last category.
+This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to
+set up a fixed date range.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value--1">$value ``</h5>
+
+<h3 id="maxdategroups">maxDateGroups</h3>
+<p>The maximum number of groups (categories) to display when
+categoryAxis.baseUnit is set to "fit" or
+categoryAxis.baseUnitStep is set to "auto".</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;maxDateGroups(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="min">min</h3>
+<p>The first date displayed on the category date axis. By default, the minimum date is the same as the first category.
+This is often used in combination with the categoryAxis.min and categoryAxis.roundToBaseUnit options to
+set up a fixed date range.</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value--2">$value ``</h5>
+
+<h3 id="minorgridlines">minorGridLines</h3>
+
+<p>The configuration of the minor grid lines. These are the lines that are an extension of the minor ticks through the
+body of the chart.</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartcategoryaxisitemminorgridlinesarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemMinorGridLines|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemminorgridlines">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItemMinorGridLines">\Kendo\Dataviz\UI\ChartCategoryAxisItemMinorGridLines</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$minorGridLines = new \Kendo\Dataviz\UI\ChartCategoryAxisItemMinorGridLines();
+$color = 'value';
+$minorGridLines-&gt;color($color);
+$categoryAxisItem-&gt;minorGridLines($minorGridLines);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-6">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$color = 'value';
+$categoryAxisItem-&gt;minorGridLines(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="minorticks">minorTicks</h3>
+
+<p>The configuration of the category axis minor ticks.</p>
+
+<h4 id="returns-18">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartcategoryaxisitemminorticksarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemMinorTicks|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemminorticks">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItemMinorTicks">\Kendo\Dataviz\UI\ChartCategoryAxisItemMinorTicks</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$minorTicks = new \Kendo\Dataviz\UI\ChartCategoryAxisItemMinorTicks();
+$color = 'value';
+$minorTicks-&gt;color($color);
+$categoryAxisItem-&gt;minorTicks($minorTicks);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-7">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$color = 'value';
+$categoryAxisItem-&gt;minorTicks(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="name">name</h3>
+<p>The unique axis name. Used to associate a series with a category axis using the series.categoryAxis option.</p>
+
+<h4 id="returns-19">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="value-string-4">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;name('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="notes">notes</h3>
+
+<p>The category axis notes configuration.</p>
+
+<h4 id="returns-20">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartcategoryaxisitemnotesarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemNotes|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemnotes">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItemNotes">\Kendo\Dataviz\UI\ChartCategoryAxisItemNotes</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$notes = new \Kendo\Dataviz\UI\ChartCategoryAxisItemNotes();
+$position = 'value';
+$notes-&gt;position($position);
+$categoryAxisItem-&gt;notes($notes);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-8">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$position = 'value';
+$categoryAxisItem-&gt;notes(array('position' =&gt; $position));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="pane">pane</h3>
+<p>The name of the pane that the category axis should be rendered in.
+The axis will be rendered in the first (default) pane if not set.</p>
+
+<h4 id="returns-21">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="value-string-5">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;pane('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addplotband">addPlotBand</h3>
+
+<p>Adds one or more ChartCategoryAxisItemPlotBand to the ChartCategoryAxisItem.</p>
+
+<h4 id="returns-22">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuichartcategoryaxisitemplotbandarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemPlotBand|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemplotband">Example - using \Kendo\Dataviz\UI\ChartCategoryAxisItemPlotBand</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$plotBand = new \Kendo\Dataviz\UI\ChartCategoryAxisItemPlotBand();
+$color = 'value';
+$plotBand-&gt;color($color);
+$categoryAxisItem-&gt;addPlotBand($plotBand);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-9">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$color = 'value';
+$categoryAxisItem-&gt;addPlotBand(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-chartcategoryaxisitemplotband">Example - adding more than one ChartCategoryAxisItemPlotBand</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$first  = new \Kendo\Dataviz\UI\ChartCategoryAxisItemPlotBand();
+$second = new \Kendo\Dataviz\UI\ChartCategoryAxisItemPlotBand();
+$categoryAxisItem-&gt;addPlotBand($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="reverse">reverse</h3>
+<p>If set to true the category axis direction will be reversed. By default categories are listed from left to right and from bottom to top.</p>
+
+<h4 id="returns-23">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;reverse(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="roundtobaseunit">roundToBaseUnit</h3>
+<p>If set to true the chart will round the first and last date to the nearest base unit.The roundToBaseUnit option will be ignored if series.type is set to "bar", "column", "boxPlot", "ohlc", "candlestick" or "waterfall".</p>
+
+<h4 id="returns-24">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-24">Parameters</h4>
+
+<h5 id="value-boolean-2">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;roundToBaseUnit(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+
+<p>The selected axis range. If set, axis selection will be enabled.The range units are:</p>
+
+<h4 id="returns-25">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-25">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartcategoryaxisitemselectarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemSelect|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemselect">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItemSelect">\Kendo\Dataviz\UI\ChartCategoryAxisItemSelect</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$select = new \Kendo\Dataviz\UI\ChartCategoryAxisItemSelect();
+$from = new ();
+$select-&gt;from($from);
+$categoryAxisItem-&gt;select($select);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-10">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$from = new ();
+$categoryAxisItem-&gt;select(array('from' =&gt; $from));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="startangle">startAngle</h3>
+<p>The angle (degrees) of the first category on the axis.Angles increase clockwise and zero is to the left. Negative values are acceptable.</p>
+
+<h4 id="returns-26">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-26">Parameters</h4>
+
+<h5 id="value-float-1">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;startAngle(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="title">title</h3>
+
+<p>The title configuration of the category axis.</p>
+
+<h4 id="returns-27">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-27">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartcategoryaxisitemtitlearray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItemTitle|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartcategoryaxisitemtitle">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartCategoryAxisItemTitle">\Kendo\Dataviz\UI\ChartCategoryAxisItemTitle</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$title = new \Kendo\Dataviz\UI\ChartCategoryAxisItemTitle();
+$background = 'value';
+$title-&gt;background($background);
+$categoryAxisItem-&gt;title($title);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-11">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$background = 'value';
+$categoryAxisItem-&gt;title(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="type">type</h3>
+<p>The category axis type.The supported values are:</p>
+
+<h4 id="returns-28">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-28">Parameters</h4>
+
+<h5 id="value-string-6">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;type('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="visible">visible</h3>
+<p>If set to true the chart will display the category axis. By default the category axis is visible.</p>
+
+<h4 id="returns-29">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-29">Parameters</h4>
+
+<h5 id="value-boolean-3">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;visible(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="weekstartday">weekStartDay</h3>
+<p>The week start day when categoryAxis.baseUnit is set to "weeks".The supported values are:</p>
+
+<h4 id="returns-30">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartCategoryAxisItem</code></p>
+
+<h4 id="parameters-30">Parameters</h4>
+
+<h5 id="value-float-2">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$categoryAxisItem = new \Kendo\Dataviz\UI\ChartCategoryAxisItem();
+$categoryAxisItem-&gt;weekStartDay(1);
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

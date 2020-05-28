@@ -1,0 +1,499 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, fields, methods and events of Kendo UI ProgressBar</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to configure and control Kendo UI ProgressBar widget">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/progressbar.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouiprogressbar">kendo.ui.ProgressBar</h1>
+
+<p>Represents the Kendo UI ProgressBar widget. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="animation-object">animation <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Configures the progress animation. Currently only the duration of the animation could be set.</p>
+
+<h4 id="example---specify-the-duration-of-the-progress-animation">Example - specify the duration of the progress animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    animation: {
+      duration: 500  
+    }
+  });  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---disable-the-progress-animation">Example - disable the progress animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    animation: false
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationduration-number-default-400">animation.duration <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 400)</em></h3>
+
+<p>The duration of each progress animation in milliseconds.</p>
+
+<h4 id="example---specify-the-duration-of-the-progress-animation-1">Example - specify the duration of the progress animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    animation: {
+      duration: 800  
+    }
+  });  
+&lt;/script&gt;	
+</code></pre></div></div>
+
+<h3 id="chunkcount-number-default-5">chunkCount <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 5)</em></h3>
+
+<p>Specifies the number of chunks.</p>
+
+<blockquote>
+  <p><strong>Important</strong> This property is applicable only when the type of the <strong>ProgressBar</strong> is set to <strong>chunk</strong>.</p>
+</blockquote>
+
+<h4 id="example---specify-the-number-of-chunks">Example - specify the number of chunks</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    type: "chunk",
+	chunkCount: 10
+  });  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="enable-boolean-default-true">enable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will be disabled. It will still allow changing the value. The widget is enabled by default.</p>
+
+<h4 id="example---disable-the-widget-on-initialization">Example - disable the widget on initialization.</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    enable: false
+  });  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="max-number-default-100">max <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 100)</em></h3>
+
+<p>The maximum value of the <strong>ProgressBar</strong>.</p>
+
+<h4 id="example---specify-the-maximum-value-of-the-widget">Example - specify the maximum value of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    max: 10,
+    value: 5
+  });  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="min-number-default-0">min <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 0)</em></h3>
+
+<p>The minimum value of the <strong>ProgressBar</strong>.</p>
+
+<h4 id="example---specify-the-minimum-value-of-the-widget">Example - specify the minimum value of the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    min: 10    
+    max: 50
+  });  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="orientation-string-default-horizontal">orientation <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "horizontal")</em></h3>
+
+<p>The orientation of the <strong>ProgressBar</strong>. Possible values are <strong>horizontal</strong> and <strong>vertical</strong>.</p>
+
+<h4 id="example---specify-vertical-orientation-for-the-progressbar">Example - specify vertical orientation for the ProgressBar</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    orientation: "vertical"
+  });  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="reverse-boolean-default-false">reverse <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Specifies if the progress direction will be reversed.</p>
+
+<h4 id="example---specify-reversed-progress-direction">Example - specify reversed progress direction</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    reverse: true
+  });  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="showstatus-boolean-default-true">showStatus <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Specifies if the progress status will be shown.</p>
+
+<h4 id="example---hide-the-status-of-the-progressbar">Example - hide the status of the ProgressBar</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    showStatus: false
+  });  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="type-string-default-value">type <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "value")</em></h3>
+
+<p>Specifies the type of the <strong>ProgressBar</strong>. The supported types are <strong>value</strong>, <strong>percent</strong> and <strong>chunk</strong>.</p>
+
+<blockquote>
+  <p><strong>Important</strong> The <strong>chunk</strong> progress type is not supported in Internet Explorer 7.</p>
+</blockquote>
+
+<h4 id="example---set-the-type-of-the-progressbar">Example - set the type of the ProgressBar</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    type: "percent"
+  });  
+&lt;/script&gt;	
+</code></pre></div></div>
+
+<h3 id="value-number">value <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The underlying value of the <strong>ProgressBar</strong>.</p>
+
+<h4 id="example---set-the-initial-progressbar-value">Example - set the initial ProgressBar value</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    min: 10,
+    max: 20,
+    value: 15
+  });  
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="progressstatus-jquery">progressStatus <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+
+<p>The jQuery object which represents the progress status fields. This object could be empty if no progress status fields are currently existing in the DOM.</p>
+
+<h4 id="example---set-custom-progress-status">Example - set custom progress status</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    change: function(e) {
+      this.progressStatus.text("Custom status");
+    }
+  });
+
+  $("#progressbar").data("kendoProgressBar").value(10);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="progresswrapper-jquery">progressWrapper <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+
+<p>The jQuery object which represents the progress wrapper. This object could be empty if the progress has not started yet and the value is equal to the minimum value.</p>
+
+<h4 id="example---set-custom-styles-to-the-progress-wrapper">Example - set custom styles to the progress wrapper</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    change: function(e) {
+      this.progressWrapper.css({
+        "background-color": "#EE9F05",
+        "border-color": "#EE9F05"
+      });
+    }
+  });
+
+  $("#progressbar").data("kendoProgressBar").value(10);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="enable">enable</h3>
+
+<p>Enables/Disables the <strong>ProgressBar</strong> widget.</p>
+
+<h4 id="example---enable-the-widget">Example - enable the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    enable: false
+  });
+
+  $(function() {
+    var pb = $("#progressbar").data("kendoProgressBar");
+    pb.enable();
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="enable-boolean">enable <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>The argument, which defines whether to enable/disable the <strong>ProgressBar</strong>. If no argument is passed, the widget will be enabled.</p>
+
+<h3 id="value">value</h3>
+
+<p>Gets or sets the value of the <strong>ProgressBar</strong>. It accepts a number, a string or <code class="language-plaintext highlighter-rouge">false</code> as a parameter. Setting the value to <code class="language-plaintext highlighter-rouge">false</code> will set the state of the <strong>ProgressBar</strong> to indeterminate. If no parameter is passed, it returns the underlying value.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-number-1">value <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The value to be set.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> the value of the widget.</p>
+
+<h4 id="example---getting-the-current-progressbar-value">Example - getting the current ProgressBar value</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    min: 10,
+    max: 20,
+    value: 15
+  });
+
+  $(function() {
+    var pb = $("#progressbar").data("kendoProgressBar");
+    alert("The current value is " + pb.value());
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---setting-the-value-of-the-progressbar">Example - setting the value of the ProgressBar</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    min: 10,
+    max: 20,
+    value: 15
+  });
+
+  $(function() {
+    var pb = $("#progressbar").data("kendoProgressBar");
+    pb.value(20);
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="change">change</h3>
+
+<p>Fired when the value of the <strong>ProgressBar</strong> has changed. If the progress animation is enabled, the event will be fired after the animation has completed (does not applies to chunk <strong>ProgressBar</strong>).</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="evalue-number">e.value <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The current value of the <strong>ProgressBar</strong>.</p>
+
+<h4 id="example---subscribe-to-the-change-event-during-initialization">Example - subscribe to the "change" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    change: function(e) {
+      console.log("Value is " + e.value);
+    }
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-change-event-after-initialization">Example - subscribe to the "change" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  function onChange(e) {
+    console.log("Value is " + e.value);
+  }
+
+  $("#progressbar").kendoProgressBar();
+
+  var progressbar = $("#progressbar").data("kendoProgressBar");
+  progressbar.bind("change", onChange);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="complete">complete</h3>
+
+<p>Fired when the value of the <strong>ProgressBar</strong> reaches the maximum value.</p>
+
+<blockquote>
+  <p><strong>Important</strong> The event is not fired during the initialization of the widget, even when the initial value is equal to the maximum value.</p>
+</blockquote>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="evalue-number-1">e.value <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The current value of the <strong>ProgressBar</strong>.</p>
+
+<h4 id="example---subscribe-to-the-complete-event-during-initialization">Example - subscribe to the "complete" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  $("#progressbar").kendoProgressBar({
+    complete: function(e) {
+      console.log("Value is " + e.value);
+    }
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-complete-event-after-initialization">Example - subscribe to the "complete" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="progressbar"&gt;&lt;/div&gt;
+&lt;script&gt;
+  function onComplete(e) {
+    console.log("Value is " + e.value);
+  }
+
+  $("#progressbar").kendoProgressBar();
+
+  var progressbar = $("#progressbar").data("kendoProgressBar");
+  progressbar.bind("complete", onComplete);
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

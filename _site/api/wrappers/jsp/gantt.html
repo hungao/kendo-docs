@@ -1,0 +1,813 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/gantt.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendogantt">&lt;kendo:gantt&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/gantt">Gantt</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="autobind-boolean">autoBind <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt autoBind="autoBind"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="dependencies-javalangobject">dependencies <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The data source of the widget which contains the dependencies. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.GanttDependencyDataSource
+instance.If the dependencies option is set to a JavaScript object or array the widget will initialize a new kendo.data.GanttDependencyDataSource instance using that value as data source configuration.If the dependencies option is an existing kendo.data.GanttDependencyDataSource instance the widget will use that instance and will not initialize a new one.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt dependencies="dependencies"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="editable-boolean">editable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the user won"t be able to create, modify or delete tasks and dependencies.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt editable="editable"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="height-javalangobject">height <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The height of the widget. Numeric values are treated as pixels.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt height="height"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="hourspan-float">hourSpan <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The span of an hour slot.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt hourSpan="hourSpan"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="listwidth-javalangobject">listWidth <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The width of the task list. Numeric values are treated as pixels.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt listWidth="listWidth"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="navigatable-boolean">navigatable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the user could navigate the widget using the keyboard. By default keyboard navigation is disabled.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt navigatable="navigatable"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="selectable-boolean">selectable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false the user won"t be able to select tasks in the gantt. By default selection is enabled and triggers the change event.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt selectable="selectable"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="showworkdays-boolean">showWorkDays <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false, gantt views will show all days of the week. By default the views display only business days.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt showWorkDays="showWorkDays"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="showworkhours-boolean">showWorkHours <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to false, the day view will show all hours of the day. By default the view displays only business hours.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt showWorkHours="showWorkHours"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="snap-boolean">snap <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>If set to true the gantt will snap tasks to the nearest slot during dragging (resizing or moving). Set it to false to allow free moving and resizing of tasks.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt snap="snap"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="workdayend-javautildate">workDayEnd <code class="language-plaintext highlighter-rouge">java.util.Date</code></h3>
+
+<p>Sets the end of the work day.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt workDayEnd="workDayEnd"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="workdaystart-javautildate">workDayStart <code class="language-plaintext highlighter-rouge">java.util.Date</code></h3>
+
+<p>Sets the start of the work day.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt workDayStart="workDayStart"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="workweekend-float">workWeekEnd <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The end of working week (index based).</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt workWeekEnd="workWeekEnd"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="workweekstart-float">workWeekStart <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The start of working week (index based).</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt workWeekStart="workWeekStart"&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendogantt-columns">kendo:gantt-columns</h3>
+
+<p>The configuration of the gantt columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+field to which the column is bound. The gantt will create a column for every item of the array.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/gantt/columns">kendo:gantt-columns</a>.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-columns&gt;&lt;/kendo:gantt-columns&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-messages">kendo:gantt-messages</h3>
+
+<p>The configuration of the gantt messages. Use this option to customize or localize the gantt messages.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/gantt/messages">kendo:gantt-messages</a>.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-messages&gt;&lt;/kendo:gantt-messages&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-views">kendo:gantt-views</h3>
+
+<p>The views displayed by the gantt and their configuration. The array items can be either objects specifying the view configuration or strings representing the view types (assuming default configuration).
+By default the Kendo UI Gantt widget displays all three ("day", "week", and "month") views.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/gantt/views">kendo:gantt-views</a>.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-views&gt;&lt;/kendo:gantt-views&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="databinding-string">dataBinding <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired before the widget binds to its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-dataBinding">dataBinding</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt dataBinding="handle_dataBinding"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_dataBinding(e) {
+        // Code to handle the dataBinding event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound-string">dataBound <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt dataBound="handle_dataBound"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_dataBound(e) {
+        // Code to handle the dataBound event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="add-string">add <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when a new task or a new dependency is about to be added.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-add">add</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt add="handle_add"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_add(e) {
+        // Code to handle the add event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="edit-string">edit <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user starts task edit upon double click on a cell.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-edit">edit</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt edit="handle_edit"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_edit(e) {
+        // Code to handle the edit event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="remove-string">remove <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when a task or a dependency is about to be removed.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-remove">remove</a> event documentation.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt remove="handle_remove"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_remove(e) {
+        // Code to handle the remove event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="cancel-string">cancel <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user cancels tasks"s cell editing by pressing the "Esc" key.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt cancel="handle_cancel"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_cancel(e) {
+        // Code to handle the cancel event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="save-string">save <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when a task field is updated upon user interaction.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-save">save</a> event documentation.</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt save="handle_save"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_save(e) {
+        // Code to handle the save event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="change-string">change <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user selects a task in the gantt.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-change">change</a> event documentation.</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt change="handle_change"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_change(e) {
+        // Code to handle the change event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="navigate-string">navigate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user changes the selected view of the gantt.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-navigate">navigate</a> event documentation.</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt navigate="handle_navigate"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_navigate(e) {
+        // Code to handle the navigate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="movestart-string">moveStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user starts to drag a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-moveStart">moveStart</a> event documentation.</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt moveStart="handle_moveStart"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_moveStart(e) {
+        // Code to handle the moveStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="move-string">move <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user is moving a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-move">move</a> event documentation.</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt move="handle_move"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_move(e) {
+        // Code to handle the move event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="moveend-string">moveEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user stops moving a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-moveEnd">moveEnd</a> event documentation.</p>
+
+<h4 id="example-29">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt moveEnd="handle_moveEnd"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_moveEnd(e) {
+        // Code to handle the moveEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resizestart-string">resizeStart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user starts to resize a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-resizeStart">resizeStart</a> event documentation.</p>
+
+<h4 id="example-30">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt resizeStart="handle_resizeStart"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_resizeStart(e) {
+        // Code to handle the resizeStart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resize-string">resize <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user is resizing a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-resize">resize</a> event documentation.</p>
+
+<h4 id="example-31">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt resize="handle_resize"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_resize(e) {
+        // Code to handle the resize event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resizeend-string">resizeEnd <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fired when the user releases the mouse after resizing a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-resizeEnd">resizeEnd</a> event documentation.</p>
+
+<h4 id="example-32">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt resizeEnd="handle_resizeEnd"&gt;
+&lt;/kendo:gantt&gt;
+&lt;script&gt;
+    function handle_resizeEnd(e) {
+        // Code to handle the resizeEnd event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendogantt-databinding">kendo:gantt-dataBinding</h3>
+
+<p>Fired before the widget binds to its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-dataBinding">dataBinding</a> event documentation.</p>
+
+<h4 id="example-33">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-dataBinding&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dataBinding event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-dataBinding&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-databound">kendo:gantt-dataBound</h3>
+
+<p>Fired when the widget is bound to data from its data source.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="example-34">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-dataBound&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dataBound event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-dataBound&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-add">kendo:gantt-add</h3>
+
+<p>Fired when a new task or a new dependency is about to be added.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-add">add</a> event documentation.</p>
+
+<h4 id="example-35">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-add&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the add event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-add&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-edit">kendo:gantt-edit</h3>
+
+<p>Fired when the user starts task edit upon double click on a cell.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-edit">edit</a> event documentation.</p>
+
+<h4 id="example-36">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-edit&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the edit event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-edit&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-remove">kendo:gantt-remove</h3>
+
+<p>Fired when a task or a dependency is about to be removed.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-remove">remove</a> event documentation.</p>
+
+<h4 id="example-37">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-remove&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the remove event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-remove&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-cancel">kendo:gantt-cancel</h3>
+
+<p>Fired when the user cancels tasks"s cell editing by pressing the "Esc" key.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="example-38">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-cancel&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the cancel event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-cancel&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-save">kendo:gantt-save</h3>
+
+<p>Fired when a task field is updated upon user interaction.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-save">save</a> event documentation.</p>
+
+<h4 id="example-39">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-save&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the save event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-save&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-change">kendo:gantt-change</h3>
+
+<p>Fired when the user selects a task in the gantt.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-change">change</a> event documentation.</p>
+
+<h4 id="example-40">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-change&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the change event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-change&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-navigate">kendo:gantt-navigate</h3>
+
+<p>Fired when the user changes the selected view of the gantt.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-navigate">navigate</a> event documentation.</p>
+
+<h4 id="example-41">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-navigate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the navigate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-navigate&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-movestart">kendo:gantt-moveStart</h3>
+
+<p>Fired when the user starts to drag a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-moveStart">moveStart</a> event documentation.</p>
+
+<h4 id="example-42">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-moveStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the moveStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-moveStart&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-move">kendo:gantt-move</h3>
+
+<p>Fired when the user is moving a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-move">move</a> event documentation.</p>
+
+<h4 id="example-43">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-move&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the move event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-move&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-moveend">kendo:gantt-moveEnd</h3>
+
+<p>Fired when the user stops moving a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-moveEnd">moveEnd</a> event documentation.</p>
+
+<h4 id="example-44">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-moveEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the moveEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-moveEnd&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-resizestart">kendo:gantt-resizeStart</h3>
+
+<p>Fired when the user starts to resize a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-resizeStart">resizeStart</a> event documentation.</p>
+
+<h4 id="example-45">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-resizeStart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the resizeStart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-resizeStart&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-resize">kendo:gantt-resize</h3>
+
+<p>Fired when the user is resizing a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-resize">resize</a> event documentation.</p>
+
+<h4 id="example-46">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-resize&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the resize event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-resize&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+<h3 id="kendogantt-resizeend">kendo:gantt-resizeEnd</h3>
+
+<p>Fired when the user releases the mouse after resizing a task.The event handler function context (available via the this keyword) will be set to the widget instance.</p>
+
+<p>For additional information check the <a href="/api/web/gantt#events-resizeEnd">resizeEnd</a> event documentation.</p>
+
+<h4 id="example-47">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:gantt&gt;
+    &lt;kendo:gantt-resizeEnd&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the resizeEnd event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:gantt-resizeEnd&gt;
+&lt;/kendo:gantt&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

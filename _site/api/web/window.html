@@ -1,0 +1,1195 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Window</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to initialize a Window UI widget and configure its behaviors, center a window, set its content and toggle the state of the UI widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/window.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouiwindow">kendo.ui.Window</h1>
+
+<p>Represents the Kendo UI Window. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="actions-array-default-close">actions <code class="language-plaintext highlighter-rouge">Array</code> <em>(default: ["Close"])</em></h3>
+
+<p>The buttons for interacting with the window. Predefined array values are "Close", "Refresh", "Minimize",
+and "Maximize".</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  actions: [ "Minimize", "Maximize" ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animation-object">animation <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>A collection of {Animation} objects, used to change default animations. A value of <strong>false</strong>
+will disable all animations in the widget.</p>
+
+<h4 id="example---disable-animation">Example - disable animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  animation: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationclose-object">animation.close <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The animation that will be used when a Window closes.</p>
+
+<h4 id="example---disable-close-animation">Example - disable close animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  animation: {
+    close: false
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationcloseeffects-string">animation.close.effects <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Effect to be used for closing of the popup.</p>
+
+<h4 id="example---use-only-fade-out-animation-when-closing-window">Example - use only fade out animation when closing window</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  animation: {
+    close: {
+      effects: "fade:out"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationcloseduration-number">animation.close.duration <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>Defines the close animation duration.</p>
+
+<h4 id="example---make-the-close-animation-2-seconds-long">Example - make the close animation 2 seconds long</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  animation: {
+    close: {
+      duration: 2000
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationopen-object">animation.open <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The animation that will be used when a Window opens.</p>
+
+<h4 id="example---disable-open-animation">Example - disable open animation</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  animation: {
+    open: false
+  },
+  visible: false
+});
+$("#dialog").data("kendoWindow").open();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationopeneffects-string">animation.open.effects <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Effect to be used for opening of the popup.</p>
+
+<h4 id="example---use-only-fade-animation-when-opening-window">Example - use only fade animation when opening window</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  animation: {
+    open: {
+      effects: "fade:in"
+    }
+  },
+  visible: false
+});
+$("#dialog").data("kendoWindow").open();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="animationopenduration-number">animation.open.duration <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>Defines the open animation duration.</p>
+
+<h4 id="example---make-the-open-animation-100-milliseconds-long">Example - make the open animation 100 milliseconds long</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  animation: {
+    open: {
+      duration: 100
+    }
+  },
+  visible: false
+});
+$("#dialog").data("kendoWindow").open();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="appendto-objectstring-default-documentbody">appendTo <code class="language-plaintext highlighter-rouge">Object|String</code> <em>(default: document.body)</em></h3>
+
+<p>The element that the Window will be appended to. Beneficial if the <a href="/getting-started/web/window/overview#using-kendo-ui-window-with-a-form">Window is used together with a form</a>.
+Note that this <em>does not</em> constrain the window dragging within the given element.</p>
+
+<h4 id="example---set-the-window-container-to-be-the-form-with-idmainform">Example - set the window container to be the form with id="mainForm"</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  appendTo: "form#mainForm"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="content-objectstring">content <code class="language-plaintext highlighter-rouge">Object|String</code></h3>
+
+<p>Specifies a URL or request options that the window should load its content from.</p>
+
+<p>Note: For URLs starting with a protocol (e.g. http://),
+a container iframe element is automatically created. This behavior may change in future
+versions, so it is advisable to always use the <a href="#iframe">iframe configuration option</a>.</p>
+
+<h4 id="example---fetch-content-from-the-server">Example - fetch content from the server</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  content: "/details"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="contenttemplate-string">content.template <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Template for the content of a <strong>Window</strong>. Returned data from the server will be given as the <code class="language-plaintext highlighter-rouge">data</code> of this template.
+Note that if the returned data is JSON, the <a href="http://api.jquery.com/jQuery.ajax/"><code class="language-plaintext highlighter-rouge">dataType</code> parameter</a> should be passed, so that the data gets parsed by jQuery.</p>
+
+<h4 id="example---fetch-json-and-display-it-through-a-template">Example - fetch JSON and display it through a template</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  content: {
+    url: "/userDetails",
+    dataType: "json",
+    template: "User name: #= data.username #"
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="draggable-boolean-default-true">draggable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Enables (<strong>true</strong>) or disables (<strong>false</strong>) the ability for users to move/drag the widget.</p>
+
+<h4 id="example---disable-window-dragging">Example - disable window dragging</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  draggable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="iframe-boolean">iframe <code class="language-plaintext highlighter-rouge">Boolean</code></h3>
+
+<p>Explicitly states whether content iframe should be created.</p>
+
+<h4 id="example---load-full-page">Example - load full page</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  content: "http://www.telerik.com/",
+  iframe: true
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="maxheight-number-default-infinity">maxHeight <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: Infinity)</em></h3>
+
+<p>The maximum height (in pixels) that may be achieved by resizing the window.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  maxHeight: 300
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="maxwidth-number-default-infinity">maxWidth <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: Infinity)</em></h3>
+
+<p>The maximum width (in pixels) that may be achieved by resizing the window.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  maxWidth: 300
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="minheight-number-default-50">minHeight <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 50)</em></h3>
+
+<p>The minimum height (in pixels) that may be achieved by resizing the window.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  minHeight: 100
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="minwidth-number-default-50">minWidth <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 50)</em></h3>
+
+<p>The minimum width (in pixels) that may be achieved by resizing the window.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  minWidth: 100
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="modal-boolean-default-false">modal <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Specifies whether the window should show a modal overlay over the page.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  modal: true
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pinned-boolean-default-false">pinned <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Specifies whether the window should be pinned, i.e. it will not move together with the page content during scrolling.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div style="height: 5000px;"&gt;&lt;/div&gt;
+&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  pinned: true,
+  position: { top: 100 }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="position-object">position <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>A collection of one or two members, which define the initial Window"s top and/or left position on the page.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  position: {
+    top: 100,
+    left: 200
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="positiontop-number">position.top <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>Specifies the initial top position of the window.</p>
+
+<h3 id="positionleft-number">position.left <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>Specifies the initial left position of the window.</p>
+
+<h3 id="resizable-boolean-default-true">resizable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Enables (<strong>true</strong>) or disables (<strong>false</strong>) the ability for users to resize a <strong>Window</strong>.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  resizable: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="title-stringboolean-default-">title <code class="language-plaintext highlighter-rouge">String|Boolean</code> <em>default: ""</em></h3>
+
+<p>The text in the window title bar. If <code class="language-plaintext highlighter-rouge">false</code>, the window will be displayed without a title bar. Note that this will prevent the window from being dragged, and the window titlebar buttons will not be shown.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  title: "Customer details"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---create-a-window-without-a-title">Example - create a window without a title</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  title: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="visible-boolean-default-true">visible <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Specifies whether the window will be initially visible.</p>
+
+<h4 id="example---show-a-dialog-after-one-second-delay">Example - show a dialog after one second delay</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  visible: false
+});
+setTimeout(function() {
+  $("#dialog").data("kendoWindow").open();
+}, 1000);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="width-number--string">width <code class="language-plaintext highlighter-rouge">Number | String</code></h3>
+
+<p>Specifies width of the window.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  width: 400
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-window-width-in-percent">Example - specify window width in percent</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  width: "50%"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="height-number--string">height <code class="language-plaintext highlighter-rouge">Number | String</code></h3>
+
+<p>Specifies height of the window.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  height: 400
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-window-height-in-percent">Example - specify window height in percent</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  height: "50%"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="center">center</h3>
+
+<p>Centers the window within the viewport.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.Window</code> Returns the window object to support chaining.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.center();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="close">close</h3>
+
+<p>Closes a Window.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.Window</code> Returns the window object to support chaining.</p>
+
+<h4 id="example---close-a-window-after-one-second">Example - close a window after one second</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+setTimeout(function() {
+  dialog.close();
+}, 1000);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="content">content</h3>
+
+<p>Gets or set the content of a window.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="content-string-optional">content <code class="language-plaintext highlighter-rouge">String</code> <em>(optional)</em></h5>
+
+<p>The content of the Window.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.Window</code> If the content parameter is provided, this method will return the widget object to support chaining. Otherwise, it will return the current content of the widget.</p>
+
+<h4 id="example---get-the-window-content">Example - get the window content</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;foo&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+console.log(dialog.content()); // logs "foo"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example--set-the-window-content">Example = set the window content</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.content("Kendo UI all the things!");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="destroy">destroy</h3>
+
+<p>Destroys the window and its modal overlay, if necessary. Removes the widget HTML elements from the DOM.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.destroy();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="maximize">maximize</h3>
+
+<p>Maximizes a Window to the entire viewing area of the user agent. Triggers the resize event.</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.Window</code> Returns the window object to support chaining.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.maximize();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="minimize">minimize</h3>
+
+<p>Maximizes a Window to its title bar.</p>
+
+<h4 id="returns-4">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.Window</code> Returns the window object to support chaining.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.minimize();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open">open</h3>
+
+<p>Opens a Window.</p>
+
+<h4 id="returns-5">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.Window</code> Returns the window object to support chaining.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  visible: false
+});
+var dialog = $("#dialog").data("kendoWindow");
+dialog.open();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pin">pin</h3>
+
+<p>Pins the Window at its current position with a position:fixed style, i.e. the widget stops moving together with the other page content when the page is scrolled.
+The user will still be able to move the Window with the mouse or keyboard.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div style="height: 5000px;"&gt;&lt;/div&gt;
+&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  position: { top: 100 }
+});
+var dialog = $("#dialog").data("kendoWindow");
+dialog.pin();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="refresh">refresh</h3>
+
+<p>Refreshes the content of a Window from a remote URL or the initially defined <a href="/api/web/window#configuration-content.template">content template</a>.
+<strong>Note that passing <code class="language-plaintext highlighter-rouge">data</code> and non-GET requests cannot be sent to an iframe</strong>, as they require a form with a target attribute.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="options-objectstring">options <code class="language-plaintext highlighter-rouge">Object|String</code></h5>
+
+<p>Options for requesting data from the server.
+If omitted, the window uses the <code class="language-plaintext highlighter-rouge">content</code> property
+that was supplied when the window was created.
+Any options specified here are passed to jQuery.ajax().</p>
+
+<h5 id="optionsurl-string">options.url <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The server URL that will be requested.</p>
+
+<h5 id="optionsdata-object">options.data <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>A JSON object containing the data that will be passed to the server.</p>
+
+<h5 id="optionstype-string">options.type <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The HTTP request method ("GET", "POST").</p>
+
+<h5 id="optionstemplate-string">options.template <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>A template to be used for displaying the requested data.</p>
+
+<h5 id="optionsiframe-boolean">options.iframe <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Indicates whether the content should be fetched within an iframe, or with AJAX and rendered in the same page.</p>
+
+<h4 id="returns-6">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.Window</code> Returns the window object to support chaining.</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.refresh("/feedbackForm");
+
+dialog.refresh({
+    url: "/feedbackForm",
+    data: { userId: 42 }
+});
+
+dialog.refresh({
+    url: "/userInfo",
+    data: { userId: 42 },
+    template: "Hello, #= firstName # #= lastName #"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="restore">restore</h3>
+
+<p>Restores a maximized or minimized Window to its previous state. Triggers the resize event.</p>
+
+<h4 id="returns-7">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.Window</code> Returns the window object to support chaining.</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+
+// maximize the window
+dialog.maximize();
+
+setTimeout(function() {
+  // restore its original size
+  dialog.restore();
+}, 1000);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="setoptions">setOptions</h3>
+
+<p>Allows the window to be configured with new options.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="options-object">options <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The configuration options to be set.</p>
+
+<h4 id="example---set-new-dimensions-to-the-window">Example - set new dimensions to the window</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.setOptions({
+  width: 180,
+  height: 225
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="title">title</h3>
+
+<p>Gets or set the title of a <strong>Window</strong>.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="text-string-optional">text <code class="language-plaintext highlighter-rouge">String</code> <em>(optional)</em></h5>
+
+<p>The title of the Window.</p>
+
+<h4 id="returns-8">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.Window</code> If a title is provided, this method will return the window object to support chaining. Otherwise, it will return the current title of the window.</p>
+
+<h4 id="example---get-the-title-of-the-window">Example - get the title of the window</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+var title = dialog.title();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-the-title-of-a-window">Example - set the title of a window</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.title("Hello");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="tofront">toFront</h3>
+
+<p>Brings forward a Window to the top of the z-index.</p>
+
+<h4 id="returns-9">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.Window</code> Returns the window object to support chaining.</p>
+
+<h4 id="example-20">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.toFront();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="togglemaximization">toggleMaximization</h3>
+
+<p>Toggles a Window between a maximized and restored state. Triggers the resize event.</p>
+
+<h4 id="returns-10">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.ui.Window</code> Returns the window object to support chaining.</p>
+
+<h4 id="example-21">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.toggleMaximization();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="unpin">unpin</h3>
+
+<p>Disables the Window"s pinned state, so that the widget will move together with the other page content when the page is scrolled.</p>
+
+<h4 id="example-22">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div style="height: 5000px;"&gt;&lt;/div&gt;
+&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  pinned: true,
+  position: { top: 100 }
+});
+var dialog = $("#dialog").data("kendoWindow");
+dialog.unpin();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="activate">activate</h3>
+
+<p>Triggered when a Window has finished its opening animation.</p>
+
+<h4 id="example---subscribe-to-the-activate-event-during-initialization">Example - subscribe to the "activate" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  activate: function() {
+    // open animation has finished playing
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-activate-event-after-initialization">Example - subscribe to the "activate" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+function window_activate() {
+  // open animation has finished playing
+}
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.bind("activate", window_activate);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="close-1">close</h3>
+
+<p>Triggered when a Window is closed (by a user or through the close() method).</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="eusertriggered-boolean">e.userTriggered <code class="language-plaintext highlighter-rouge">Boolean</code></h5>
+
+<p>Indicates whether the close action has been triggered by the user (by clicking the close button or hitting the escape key). When the close method has been called, this field is <strong>false</strong>.</p>
+
+<h4 id="example---subscribe-to-the-close-event-during-initialization">Example - subscribe to the "close" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  close: function(e) {
+    // close animation has finished playing
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-close-event-after-initialization">Example - subscribe to the "close" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+function window_close(e) {
+  // close animation has finished playing
+}
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.bind("close", window_close);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="deactivate">deactivate</h3>
+
+<p>Triggered when a Window has finished its closing animation.</p>
+
+<h4 id="example---subscribe-to-the-deactivate-event-during-initialization">Example - subscribe to the "deactivate" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  deactivate: function() {
+    // close animation will start soon
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-deactivate-event-after-initialization">Example - subscribe to the "deactivate" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+function window_deactivate() {
+  // close animation will start soon
+}
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.bind("deactivate", window_deactivate);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragend">dragend</h3>
+
+<p>Triggered when a Window has been moved by a user.</p>
+
+<h4 id="example---subscribe-to-the-dragend-event-during-initialization">Example - subscribe to the "dragend" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  dragend: function() {
+    // user has released the window after dragging
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-dragend-event-after-initialization">Example - subscribe to the "dragend" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+function window_dragend() {
+  // user has released the window after dragging
+}
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.bind("dragend", window_dragend);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragstart">dragstart</h3>
+
+<p>Triggered when the user starts to move the window.</p>
+
+<h4 id="example---subscribe-to-the-dragstart-event-during-initialization">Example - subscribe to the "dragstart" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  dragstart: function() {
+    // user has started dragging the window
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-dragstart-event-after-initialization">Example - subscribe to the "dragstart" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+function window_dragstart() {
+  // user has started dragging the window
+}
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.bind("dragstart", window_dragstart);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="error">error</h3>
+
+<p>Triggered when an AJAX request for content fails.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="exhr-jqxhr">e.xhr <code class="language-plaintext highlighter-rouge">jqXHR</code></h5>
+
+<p>The XHR request object, as returned from <a href="http://api.jquery.com/jQuery.ajax/">jQuery.ajax</a></p>
+
+<h5 id="estatus-string">e.status <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The status of the request, as returned from <a href="http://api.jquery.com/jQuery.ajax/">jQuery.ajax</a></p>
+
+<h4 id="example---subscribe-to-the-error-event-during-initialization">Example - subscribe to the "error" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  error: function(e) {
+    console.log("Request failed with status " + e.status)
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-error-event-after-initialization">Example - subscribe to the "error" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+function window_error(e) {
+  console.log("Request failed with status " + e.status)
+}
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.bind("error", window_error);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open-1">open</h3>
+
+<p>Triggered when a Window is opened (i.e. the open() method is called).</p>
+
+<h4 id="example---subscribe-to-the-open-event-during-initialization">Example - subscribe to the "open" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  open: function() {
+    // open animation will start soon
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-open-event-after-initialization">Example - subscribe to the "open" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+function window_open() {
+  // open animation will start soon
+}
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.bind("open", window_open);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="refresh-1">refresh</h3>
+
+<p>Triggered when the content of a Window has finished loading via AJAX,
+when the window iframe has finished loading, or when the refresh button
+has been clicked on a window with static content.</p>
+
+<h4 id="example---subscribe-to-the-refresh-event-during-initialization">Example - subscribe to the "refresh" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  refresh: function() {
+    // new content has been fetched
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-refresh-event-after-initialization">Example - subscribe to the "refresh" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+function window_refresh() {
+  // new content has been fetched
+}
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.bind("refresh", window_refresh);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resize">resize</h3>
+
+<p>Triggered when a window has been resized by a user.</p>
+
+<h4 id="example---subscribe-to-the-resize-event-during-initialization">Example - subscribe to the "resize" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#dialog").kendoWindow({
+  resize: function() {
+    // user has finished resizing the window
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-resize-event-after-initialization">Example - subscribe to the "resize" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="dialog"&gt;&lt;/div&gt;
+&lt;script&gt;
+function window_resize() {
+  // user has finished resizing the window
+}
+$("#dialog").kendoWindow();
+var dialog = $("#dialog").data("kendoWindow");
+dialog.bind("resize", window_resize);
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

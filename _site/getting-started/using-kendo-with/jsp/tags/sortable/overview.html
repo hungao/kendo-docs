@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/jsp/tags/sortable/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="sortable">Sortable</h1>
+
+<p>The Sortable JSP tag is a server-side wrapper for the <a href="/api/web/sortable">Kendo UI Sortable</a> widget.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Unlike most of the server side wrapper the Sortable one does not render HTML mark-up. <strong>The Sortable should be initialized for already existing DOM element.</strong></p>
+
+<p>Here is how to configure a Kendo Sortable:</p>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/jsp/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create a new action method which renders the view:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@RequestMapping(value = {"index"}, method = RequestMethod.GET)
+public String index() {
+    return "web/sortable/index";
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add kendo taglib mapping to the page</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;%@taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags"%&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add a sortable tag (use the element with <code class="language-plaintext highlighter-rouge">sortable-basic</code> id and initialize Sortable instance for it):</p>
+
+    <kendo:sortable name="#sortable-basic" hint="hint" placeholder="placeholder">
+ </kendo:sortable>
+  </li>
+  <li>
+    <p>Add the HTML markup from which the widget will be initialized and define the hint/placeholder functions.</p>
+
+    <ul id="sortable-basic">
+     <li>Item 1</li>
+     <li>Item 2</li>
+     <li>Item 3</li>
+ </ul>
+
+    <script>
+     function hint(element) {
+         return element.clone().addClass("hint");
+     }
+    
+     function placeholder(element) {
+         return element.clone().addClass("placeholder").text("drop here");
+     }
+ </script>
+  </li>
+</ol>
+
+<h2 id="accessing-an-existing-sortable">Accessing an Existing Sortable</h2>
+
+<p>You can reference an existing Sortable instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/sortable#methods">API</a> to control its behavior.</p>
+
+<h3 id="accessing-an-existing-sortable-instance">Accessing an existing Sortable instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Put this after your Kendo Sortable tag declaration
+&lt;script&gt;
+$(function() {
+    // Notice that the name attribute of the sortable is used to get its client-side instance
+    var sortable = $("#sortable-basic").data("kendoSortable");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-kendo-ui-sortable-events">Handling Kendo UI Sortable events</h2>
+
+<p>You can subscribe to all <a href="/api/web/sortable#events">events</a> exposed by Kendo UI Sortable:</p>
+
+<h3 id="subscribe-by-handler-name">Subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sortable name="#sortable-basic" start="onStart" change="onChange"&gt;
+&lt;/kendo:sortable&gt;
+
+&lt;ul id="sortable-basic"&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+    &lt;li&gt;Item 3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    function onStart(e) {
+        //handle event
+    }
+
+    function onChange(e) {
+        //handle event
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="disabling-the-hint">Disabling the hint</h2>
+
+<p>The Sortable widget can operate without hint. To disable the hint you should set it to an empty function (<a href="http://api.jquery.com/jQuery.noop/">jQuery.noop</a>).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:sortable name="#sortable-basic" hint="noHint"&gt;
+&lt;/kendo:sortable&gt;
+
+&lt;script&gt;
+    var noHint = $.noop;
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

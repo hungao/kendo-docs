@@ -1,0 +1,335 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of templates component in Kendo UI framework</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to use HTML encoding and compilation in Templates component in Kendo UI framework.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/templates/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendo-ui-templates-overview">Kendo UI Templates Overview</h1>
+<p>Kendo UI Templates provide a simple to use, high-performance JavaScript templating engine in the Kendo UI Framework. Templates offer a way to create HTML chunks that can be automatially merged with JavaScript data. They are a substituate for traditional "HTML string building" in JavaScript.</p>
+
+<h2 id="template-basics">Template Basics</h2>
+<p>Kendo UI templates focus on providing essential templating features needed for common UI rendering scenarios, with a heavy emphasis on performance over feature glut. Kendo UI Templates will trade convenient "syntax sugar" for improved performance, which distinguishes from other JavaScript templating libraries.</p>
+
+<h3 id="template-syntax">Template Syntax</h3>
+<p>Kendo UI Templates use a simple templating syntax we call "hash templates." With this syntax, the "#" (or hash) symbol is used to mark areas in a template that should be replaced with data when the template is executed.</p>
+
+<p>There are three ways to use the hash syntax:</p>
+
+<ol>
+  <li>Render values as HTML: #= #</li>
+  <li>Uses HTML encoding to display values: #: #</li>
+  <li>Execute arbitrary JavaScript code: # if(…){# … #}#</li>
+</ol>
+
+<blockquote>
+  <p>If your template includes a "#" that is not part of a binding expression, <strong>you must</strong> escape that value or it will cause a template compliation error (this is common in Kendo UI Mobile where # is often used for view navigation). You can escape any literal "#" in JavaScript strings using "\\#" and in HTML script templates using "\#".</p>
+</blockquote>
+
+<p>Let"s take a closer look at how each of these Kendo UI Template syntaxes can be used in context.</p>
+
+<h4 id="rendering-raw-values">Rendering Raw Values</h4>
+<p>One of the most basic templating tasks is rendering a value as-is in a template. With Kendo UI templates, this is done with the following code:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    var template = kendo.template("&lt;div id='box'&gt;#= firstName #&lt;/div&gt;");
+</code></pre></div></div>
+
+<p>This approach will create a "compiled" in-line template that"s ready for rendering with data. Consuming the template in an application looks like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;div id="example"&gt;&lt;/div&gt;
+    &lt;script&gt;
+        var template = kendo.template("&lt;div id='box'&gt;#= firstName #&lt;/div&gt;");
+        var data = { firstName: "Todd" }; //A value in JavaScript/JSON
+        var result = template(data); /Pass the data to the compiled template
+        $("#example").html(result); //display the result
+    &lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="rendering-html-encoded-values">Rendering HTML-Encoded Values</h4>
+<p>If you want to render an encoded HTML value in a template, Kendo UI templates can automatically handle the encoding. To do that, use a slightly different syntax:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    var template = kendo.template("&lt;div id='box'&gt;#: firstName #&lt;/div&gt;");
+</code></pre></div></div>
+
+<p>Now, when the template is consumed, assuming there are HTML characters in the data, the following output will be produced:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;div id="example"&gt;&lt;/div&gt;
+    &lt;script&gt;
+        var template = kendo.template("&lt;div id='box'&gt;#: firstName #&lt;/div&gt;");
+        var data = { firstName: "&lt;b&gt;Todd&lt;/b&gt;" }; //Data with HTML tags
+        var result = template(data); //Pass the data to the compiled template
+        $("#example").html(result); // display the following string result ("&lt;b&gt;Todd&lt;/b&gt;")
+    &lt;/script&gt;
+</code></pre></div></div>
+
+<p>If the HTML encoding is not used the output will be:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;div id="example"&gt;&lt;/div&gt;
+    &lt;script&gt;
+        var template = kendo.template("&lt;div id='box'&gt;#= firstName #&lt;/div&gt;");
+        var data = { firstName: "&lt;b&gt;Todd&lt;/b&gt;" }; //Data with HTML tags
+        var result = template(data); //Pass the data to the compiled template
+        $("#example").html(result); //display "Todd" in a bold font weight 
+    &lt;/script&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>HTML encoding is useful when you want to avoid rendering HTML tags in your templates. It will escape the HTML tags in your data and render the tags as a string. You should use HTML encoding when working with data from unknown sources (such as user submitted values) in case users have included HTML markup in the content that could break the layout of your page.</p>
+</blockquote>
+
+<h4 id="external-templates-and-expressions">External Templates and Expressions</h4>
+<p>It"s common for templates to include expressions. Some templating frameworks invent their own re-implementation of JavaScript to provide expression sugar (at the cost of performance), but Kendo UI templates opt to simply allow the execution of "normal" JavaScript inside of templates, again favoring performance over expensive syntax sugar.</p>
+
+<p>For example, to display a list of items using JavaScript and Kendo UI templates, we use the following syntax:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;script id="javascriptTemplate" type="text/x-kendo-template"&gt;
+        &lt;ul&gt;
+        # for (var i = 0; i &lt; data.length; i++) { #
+            &lt;li&gt;#= data[i] #&lt;/li&gt;
+        # } #
+        &lt;/ul&gt;
+    &lt;/script&gt;
+</code></pre></div></div>
+
+<p>To then consume this external template with an expression, we simply need to initialize a template that uses this definition and receives an array of values:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;div id="example"&gt;&lt;/div&gt;
+
+    &lt;script id="javascriptTemplate" type="text/x-kendo-template"&gt;
+        &lt;ul&gt;
+        # for (var i = 0; i &lt; data.length; i++) { #
+            &lt;li&gt;#= data[i] #&lt;/li&gt;
+        # } #
+        &lt;/ul&gt;
+    &lt;/script&gt;
+    
+    &lt;script type="text/javascript"&gt;
+        //Get the external template definition using a jQuery selector
+        var template = kendo.template($("#javascriptTemplate").html());
+
+        //Create some dummy data
+        var data = ["Todd", "Steve", "Burke"];
+
+        var result = template(data); //Execute the template
+        $("#example").html(result); //Append the result
+    &lt;/script&gt;
+</code></pre></div></div>
+
+<p>As you can see, the JavaScript executes a <code class="language-plaintext highlighter-rouge">for</code> loop inside of the template and produces a HTML list item for each name.</p>
+
+<p>Custom variables can be defined inside a template expression and then output in the same fashion as data fields:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;script id="javascriptTemplate" type="text/x-kendo-template"&gt;
+        # var myCustomVariable = "foo"; #
+		&lt;p&gt;
+			#= myCustomVariable #
+		&lt;/p&gt;
+    &lt;/script&gt;
+</code></pre></div></div>
+
+<p>Keep in mind that expressions even within HTML comments will be executed
+e.g.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- #alert('it is executed!')# --&gt;
+</code></pre></div></div>
+
+<h3 id="internal-vs-external-templates">Internal vs. External Templates</h3>
+<p>Kendo UI Templates can be defined in one of two ways:</p>
+
+<ul>
+  <li><strong>Inline</strong> using JavaScript strings</li>
+  <li><strong>External</strong> using HTML script blocks</li>
+</ul>
+
+<p>Inline templates are good for small templates, but most larger templates that include logic or HTML markup should use external templates. Since external templates live in the HTML instead of JavaScript, this also makes them easier for designers to create and modify.</p>
+
+<h4 id="creating-an-inline-template">Creating an inline template</h4>
+<p>As you"ve already seen on this page, creating an inline template is as simple as creating a JavaScript string:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    var templateString = "Your name is #: myName #";
+    var template = kendo.template(templateString);
+</code></pre></div></div>
+
+<p>As long as the data passed-in to the template contains a variable called "myName," this template will work. If a inline template contains a literal "#", it should be escaped like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    var templateString = '&lt;a href="\\#index"&gt;#: myName #&lt;/a&gt;';
+</code></pre></div></div>
+
+<p>This will produce an anchor tag displayed on the page:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;div id="example"&gt;&lt;/div&gt;
+    
+    &lt;script type="text/javascript"&gt;
+        var templateString = '&lt;a href="\\#index"&gt;#: myName #&lt;/a&gt;';
+        var template = kendo.template(templateString);
+
+        $("#example").html(template({ myName: "Todd" }));
+    &lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="creating-an-external-template">Creating an external template</h4>
+<p>Extnernal templates do not live in JavaScript, but instead in special blocks in HTML. To define an external template, create a script block in your HTML with the type <code class="language-plaintext highlighter-rouge">text/x-kendo-template</code>, like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;script type="text/x-kendo-template" id="myTemplate"&gt;
+        &lt;!--Template content here--&gt;
+    &lt;/script&gt;
+</code></pre></div></div>
+
+<p>External templates should always have an ID, too, so that you can select the template content when initalizign in JavaScript:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    //extract the template content from script tag
+    var templateContent = $("#myTemplate").html(); 
+    //compile a template
+    var template = kendo.template(templateContent);
+</code></pre></div></div>
+
+<p>Within an external template, you can add any HTML and JavaScript, as long as the JavaScript is properly formatted with the Kendo UI template syntax. For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;script type="text/x-kendo-template" id="myTemplate"&gt;
+        #if(isAdmin){#
+            &lt;li&gt;#: name # is Admin&lt;/li&gt;
+        #}else{#
+            &lt;li&gt;#: name # is User&lt;/li&gt;
+        #}#
+    &lt;/script&gt;
+</code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;ul id="users"&gt;&lt;/ul&gt;
+
+    &lt;script type="text/x-kendo-template" id="myTemplate"&gt;
+        #if(isAdmin){#
+            &lt;li&gt;#: name # is Admin&lt;/li&gt;
+        #}else{#
+            &lt;li&gt;#: name # is User&lt;/li&gt;
+        #}#
+    &lt;/script&gt;
+    
+    &lt;script type="text/javascript"&gt;
+        var templateContent = $("#myTemplate").html();
+        var template = kendo.template(templateContent);
+
+        //Create some dummy data
+        var data = [
+            { name: "John", isAdmin: false },
+            { name: "Alex", isAdmin: true }
+        ];
+        
+        var result = kendo.render(template, data); //render the template
+
+        $("#users").html(result); //append the result to the page
+    &lt;/script&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>Why doesn"t Kendo UI provide helper syntax for things like loops? Other templating libraries include shorthand like . Kendo UI opts to use normal JavaScript instead of custom syntax sugar because it"s much faster and it"s easy for anyone familiar with JavaScript to use. If you know JavaScript, you know Kendo UI templates!</p>
+</blockquote>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

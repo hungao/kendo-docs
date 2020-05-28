@@ -1,0 +1,617 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Summary of Kendo UI ToolBar functionality</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Find out how to use the Kendo UI ToolBar widget">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/toolbar/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="toolbar-overview">ToolBar Overview</h1>
+
+<p>The ToolBar widget is designed to hold different types of controls such as buttons, button groups, toggle buttons, split buttons or other custom defined elements.
+The widget consists of a three main areas - ToolBar wrapper, overflow anchor and command overflow popup.
+The TollBar wrapper holds all commands that can be placed within the available container width, those ones for which there is not enough space are moved to the command overflow popup.</p>
+
+<p><img src="/getting-started/web/toolbar/toolbar-areas.png" alt="ToolBar areas" /></p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="example---initialization-and-basic-usage">Example - initialization and basic usage</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            //regular button
+            {
+                type: "button",
+                text: "Button",
+                icon: "note",
+                showIcon: "toolbar"
+            },
+
+            //toggle button
+            {
+                type: "button",
+                togglable: true,
+                text: "Toggle Button",
+                icon: "tick",
+                selected: true
+            },
+
+            //split button
+            {
+                type: "splitButton",
+                text: "Split Button",
+                items: [
+                    { id: "option1", text: "Option 1" },
+                    { id: "option2", text: "Option 2" },
+                    { id: "option3", text: "Option 3" }
+                ]
+            },
+
+            //button group
+            {
+                type: "buttonGroup",
+                items: [
+                    { text: "left",   showText: "overflow", icon: "justifyLeft",   showIcon: "toolbar" },
+                    { text: "center", showText: "overflow", icon: "justifyCenter", showIcon: "toolbar" },
+                    { text: "right",  showText: "overflow", icon: "justifyRight",  showIcon: "toolbar" }
+                ]
+            },
+
+            //separator
+            {
+                type: "separator"
+            },
+
+            //custom template
+            {
+                template: "&lt;label&gt;Custom template: &lt;input type='text' id='textbox' /&gt;&lt;/label&gt;",
+                overflowTemplate: "&lt;span&gt;&lt;/span&gt;"
+            }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="command-types">Command Types</h2>
+
+<h3 id="button">Button</h3>
+
+<p>Each button item can have the following properties:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#toolbar").kendoToolBar({
+    items: [
+        {
+            //**mandatory** specifies the command type
+            type: "button",
+
+            //sets the text
+            text: "MyButton",
+
+            //specifies where the text will be displayed. Possible values are: "toolbar", "overflow" or "both" (default).
+            showText: "both",
+
+            //sets icon for the item. The icon should be one of the existing in the Kendo UI theme sprite.
+            icon: "folder-add",
+
+            //if set, the ToolBar will render an image with the specified URL in the button.
+            imageUrl: "../content/btnImage.png"
+
+            //defines a CSS class (or multiple classes separated by spaces) which will be used for button icon.
+            spriteCssClass: "myIcon"
+
+            //specifies where the button icon will be displayed. Possible values are: "toolbar", "overflow" or "both" (default).
+            showIcon: "toolbar",
+
+            //specifies the ID of the button.
+            id: "myButton",
+
+            //specifies whether the control is initially enabled or disabled. Default value is "true".
+            enable: true,
+
+            //specifies whether the button is primary. Primary buttons receive different styling.
+            primary: false,
+
+            //specifies how the button behaves when the ToolBar is resized. Possible values are: "always", "never" or "auto" (default).
+            overflow: "auto",
+
+            //specifies if the button is togglable, e.g. has a selected and unselected state.
+            togglable: true,
+
+            //specifies if the toggle button is initially selected. Applicable only for buttons with toggle: true.
+            selected: true,
+
+            //assigns the button to a group. Applicable only for buttons with toggle: true.
+            group: "myGroup",
+
+            //specifies the click event handler
+            click: function(e) {
+                //handle click event
+            },
+
+            //specifies the toggle event handler (for buttons with togglable: true)
+            toggle: function(e) {
+                //handle toggle event
+            }
+        }
+    ]
+});
+</code></pre></div></div>
+
+<p><strong>When resizing is enabled the control will be rendered two times</strong> - once in the ToolBar and once in the command overflow popup.
+If the button has an ID set, it will be assigned to the element in the ToolBar wrapper. The corresponding element in the command overflow popup will receive the same ID with an "_overflow" suffix.
+For example, a button with <code class="language-plaintext highlighter-rouge">id: "foo"</code> and <code class="language-plaintext highlighter-rouge">overflow: "auto"</code> will render an element with id="foo" in the ToolBar and another element with an id="foo_overflow" in the ToolBar command overflow popup.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">overflow</code> property accepts the following values:</p>
+
+<ul>
+  <li>"always" - the button will be rendered and displayed only in the command overflow popup.</li>
+  <li>"never" - the button will be rendered and displayed only in the ToolBar wrapper.</li>
+  <li>"both" - the button will be rendered both in the ToolBar wrapper and in the command overflow popup. It will be displayed in only one of the locations depending on the available space in the ToolBar wrapper.</li>
+</ul>
+
+<h4 id="button-appearance">Button appearance:</h4>
+
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">icon</code> property defines a name of an existing icon from the Kendo UI theme sprite. The icon will be applied as background image of a <code class="language-plaintext highlighter-rouge">span</code> element rendered inside the Button. For a list of available icon names, refer to the <a href="http://demos.telerik.com/kendo-ui/styling/icons">Icons demo</a>.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">imageUrl</code> property defines an URL which will be used for an <code class="language-plaintext highlighter-rouge">img</code> element inside the Button. The <code class="language-plaintext highlighter-rouge">img</code> element will be rendered automatically by the widget.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">spriteCssClass</code> property defines a one or more CSS classes separated by spaces, which will be used for applying a background image to a <code class="language-plaintext highlighter-rouge">span</code> element inside the Button. In case you want to use an icon from the Kendo UI theme sprite background image, it is easier to use the icon property.</li>
+</ul>
+
+<h5 id="example---using-icons">Example - using icons</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            { type: "button", text: "Button 1", icon: "folder-add" },
+            { type: "Button", text: "Button 2", imageUrl: "/images/edit-icon.gif" },
+            { type: "button", text: "Button 3", spriteCssClass: "myEditIcon" }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">showIcon</code> property accepts the following values:</p>
+
+<ul>
+  <li>"toolbar" - the icon will be displayed only when the button is visible in the ToolBar wrapper. The same button will appear with no icon in the command overflow popup.</li>
+  <li>"overflow" - the icon will be displayed only when the button is visible in the command overflow popup. The same button will appear with no icon in the ToolBar wrapper.</li>
+  <li>"both" - the icon will be displayed for both buttons. This is the default setting.</li>
+</ul>
+
+<p>The <code class="language-plaintext highlighter-rouge">showText</code> property accepts the following values:</p>
+
+<ul>
+  <li>"toolbar" - only the button located in the ToolBar wrapper will have a text.</li>
+  <li>"overflow" - only the button located in the command overflow container will have a text.</li>
+  <li>"both" - both buttons will have a text. This is the default setting.</li>
+</ul>
+
+<h5 id="example---define-a-button-that-will-be-displayed-only-as-an-icon-in-the-toolbar-wrapper-and-will-have-only-text-in-the-command-overflow-container">Example - define a button that will be displayed only as an icon in the ToolBar wrapper and will have only text in the command overflow container</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            {
+                type: "button",
+                text: "Add new folder",
+                icon: "folder-add",
+                showText: "overflow",
+                showIcon: "toolbar"
+            }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toggle-button">Toggle Button</h3>
+
+<p>The Toggle Button allows the user to change a setting between two states. To define a Toggle Button, set the button <code class="language-plaintext highlighter-rouge">togglable</code> property to <code class="language-plaintext highlighter-rouge">true</code>. The Toggle Button supports the same configuration options as the standard button.</p>
+
+<blockquote>
+  <p>Clicking on a Toggle Button triggers the <code class="language-plaintext highlighter-rouge">toggle</code> event. Clicking on a Toggle Button does <strong>not</strong> trigger the <code class="language-plaintext highlighter-rouge">click</code> event.</p>
+</blockquote>
+
+<h5 id="example---define-a-toggle-button">Example - define a Toggle Button</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            {
+                type: "button",
+                togglable: true,
+                text: "My Toggle Button",
+                spriteCssClass: "myIcon",
+                showIcon: "toolbar",
+                selected: true
+            }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="toggle-button-groups">Toggle Button groups</h4>
+
+<p>Only a one Button from a group may be selected at a time. This is useful if you want to create a group of mutually exclusive Toggle Buttons.</p>
+
+<h5 id="example---define-a-group-of-mutually-exclusive-toggle-buttons">Example - define a group of mutually exclusive Toggle Buttons</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            { type: "button", text: "foo", togglable: true, group: "controlGroup" },
+            { type: "button", text: "bar", togglable: true, group: "controlGroup" },
+            { type: "button", text: "baz", togglable: true, group: "controlGroup" }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="split-button">Split Button</h3>
+
+<p>The Split Button is a composite control which has a primary (main) button and alternative options displayed in a drop-down list bound to a secondary button.</p>
+
+<p>In the command overflow popup the Split Button is rendered as flat list of commands. The first is the primary (main) button followed by the drop-down items in the order they are defined.</p>
+
+<h5 id="example---define-a-split-button">Example - define a Split Button</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            {
+                type: "splitButton", //setting the command type is **mandatory**
+                text: "Split Button", //define the text of the primary button
+                icon: "folter-add", //set icon of the primary button
+                items: [ //define the drop-down options
+                    { id: "option1", text: "Option 1" },
+                    { id: "option2", text: "Option 2" },
+                    { id: "option3", text: "Option 3" },
+                    { id: "option4", text: "Option 4" }
+                ]
+            }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="button-group">Button Group</h3>
+
+<p>The Button Group consists of multiple button elements that are visually separated in a group.</p>
+
+<p>In the command overflow popup the Button Group is rendered as list of commands.</p>
+
+<h5 id="example---define-a-button-group">Example - define a Button Group</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            {
+                type: "buttonGroup",
+                id: "btnGroup",
+                //ButtonGroup's items accept the same appearance configuration options as the button item
+                items: [
+                    { text: "prev", icon: "arrow-w" },
+                    { text: "next", icon: "arrow-e" }
+                ]
+            }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h5 id="example---define-a-button-group-with-a-mutually-exclusive-options">Example - define a Button Group with a mutually exclusive options</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            {
+                type: "buttonGroup",
+                id: "btnGroup",
+                //ButtonGroup's items accept the same appearance configration optinos as the button control
+                items: [
+                    { text: "foo", togglable: true, group: "controlGroup" },
+                    { text: "bar", togglable: true, group: "controlGroup" },
+                    { text: "baz", togglable: true, group: "controlGroup" }
+                ]
+            }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="separator">Separator</h3>
+
+<p>The separator can act as a delimiter between the ToolBar commands.</p>
+
+<h5 id="example---define-a-separator">Example - define a separator</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            { type: "button", text: "Button 1" },
+            { type: "separator" },
+            { type: "button", text: "Button 2" }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="custom-templates">Custom Templates</h3>
+
+<p>The ToolBar widget allows the developer to define custom items.</p>
+
+<p>Unlike all other commands the template command does not need a type set.
+If a template is provided the type property will be ignored.
+By default, you should define both <code class="language-plaintext highlighter-rouge">template</code> and <code class="language-plaintext highlighter-rouge">overflowTemplate</code> in order to specify how the command will be rendered in the command overflow popup.
+If the command should not appear in the command overflow popup its <code class="language-plaintext highlighter-rouge">overflow</code> property should be set to <code class="language-plaintext highlighter-rouge">"never"</code>.</p>
+
+<blockquote>
+  <p>By default a custom template command without overflowTemplate will not be shown in the command overflow popup e.g. it will be considered as <code class="language-plaintext highlighter-rouge">overflow: never</code>.</p>
+</blockquote>
+
+<h5 id="example---add-a-template-command">Example - add a template command</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            {
+                //specifies what element will be added in the ToolBar wrapper
+                template: '&lt;img class="mail-icon" src="gmail.png" alt="gmail" /&gt;',
+
+                //specifies what element will be added in the command overflow popup
+                overflowTemplate: '&lt;img class="mail-overflow-icon" src="gmail-overflow.png" alt="gmail" /&gt;
+            }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h5 id="example---add-a-template-command-that-will-appear-only-in-the-toolbar-wrapper">Example - add a template command that will appear only in the ToolBar wrapper</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            {
+                //specifies what element will be added in the ToolBar wrapper
+                template: '&lt;img class="mail-icon" src="gmail.png" alt="gmail" /&gt;',
+                overflow: "never"
+            }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Custom template commands allows the developer to add other Kendo UI widgets in the ToolBar.</p>
+
+<h5 id="example---add-dropdownlist-widget-in-the-toolbar">Example - add DropDownList widget in the ToolBar</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            //add the DropDownList element in the ToolBar via template
+            { template: '&lt;input id="dropdownlist" /&gt;', overflow: "never" }
+        ]
+    });
+
+    //initialze the DropDownList after ToolBar
+    $("#dropdownlist").kendoDropDownList({
+        dataSource: [{ item: "Item 1", value: 1 }, { item: "Item 2", value: 2 }],
+        dataTextField: "item",
+        dataValueField: "value"
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="resizing">Resizing</h2>
+
+<p>By design the widget will detect changes in the viewport width and hide the overflowing controls in the command overflow popup. This feature may be disabled by setting <code class="language-plaintext highlighter-rouge">resizable</code> option to <code class="language-plaintext highlighter-rouge">false</code>.</p>
+
+<p>The developer can control how a given command will behave on resizing with its <code class="language-plaintext highlighter-rouge">overflow</code> property.</p>
+
+<blockquote>
+  <p>Commands with <code class="language-plaintext highlighter-rouge">overflow: "never"</code> should be declared first followed by those with <code class="language-plaintext highlighter-rouge">overflow: "auto"</code>. Commands with <code class="language-plaintext highlighter-rouge">overflow: "always"</code> should be declared last.</p>
+</blockquote>
+
+<blockquote>
+  <p>Setting the min-width of the ToolBar"s element is mandatory if the developer wants to prevent the widget from resizing below a given width.</p>
+</blockquote>
+
+<h5 id="example---using-the-overflow-property">Example - using the overflow property</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar" style="min-width: 240px;"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            { overflow: "never", template: '&lt;input id="search" /&gt;' },
+            { overflow: "never", type: "button", text: "Never" },
+            { overflow: "auto", type: "button", text: "Auto 1" },
+            { overflow: "auto", type: "button", text: "Auto 2" },
+            { overflow: "always", type: "button", text: "Always" }
+        ]
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="mobile-rendering">Mobile rendering</h2>
+
+<p>Widget provides a mobile specific stylization when placed in header or footer of a mobile View. For more information please check the <a href="http://demos.telerik.com/kendo-ui/navbar/adaptive-toolbar">"ToolBar as ActionBar" demo page</a>.</p>
+
+<h2 id="event-handling">Event handling</h2>
+
+<p>The ToolBar widget exposes the following events:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">click</code> - fires when button is clicked.</li>
+  <li><code class="language-plaintext highlighter-rouge">toggle</code> - fires when the selected state of Toggle button is changed.</li>
+  <li><code class="language-plaintext highlighter-rouge">open</code> - fires when the drop down container of a SplitButton opens.</li>
+  <li><code class="language-plaintext highlighter-rouge">close</code> - fires when the drop down container of a SplitButton closes.</li>
+  <li><code class="language-plaintext highlighter-rouge">overflowOpen</code> - fires when the command overflow popup of the ToolBar opens.</li>
+  <li><code class="language-plaintext highlighter-rouge">overflowClose</code> - fires when the command overflow popup of the ToolBar closes.</li>
+</ul>
+
+<p>In addition the developer has ability to attach <code class="language-plaintext highlighter-rouge">click</code> and <code class="language-plaintext highlighter-rouge">toggle</code> event handlers to the buttons through the config options.</p>
+
+<h5 id="example---using-events">Example - using events</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="toolbar"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+    $("#toolbar").kendoToolBar({
+        items: [
+            {
+                type: "button",
+                text: "Button 1",
+                click: function(e) {
+                    //this click event handler will fire first
+                }
+            },
+            {
+                type: "button",
+                togglable: true,
+                text: "Toggle Button",
+                toggle: function(e) {
+                    //this toggle event handler will fire first
+                }
+            }
+        ],
+        click: function(e) {
+            //this click event handler will fire second
+        },
+        toggle: function(e) {
+            //this toggle event handler will fire second
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

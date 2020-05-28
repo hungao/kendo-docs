@@ -1,0 +1,483 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Server-side API documentation for Kendo UI jQuery ComboBox with ASP.NET MVC</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Documentation and explanations about binding to List Collection and Ajax binding in the server-side API of Kendo UI ComboBox with ASP.NET MVC.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/migration/widgets/combobox.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="server-side-api">Server-Side API</h1>
+
+<h2 id="databinding">DataBinding</h2>
+
+<p>Binding to **List<Selectlistitem>** Collection:</Selectlistitem></p>
+
+<h4 id="old">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Telerik().ComboBox()
+    .Name(“Combo”)
+    .BindTo(new SelectList(Model.Products, "ProductID", "ProductName"))
+</code></pre></div></div>
+
+<h4 id="new">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox()
+    .Name(“Combo”)
+    .BindTo(new SelectList(Model.Products, "ProductID", "ProductName"))
+    .DataTextField(“Text”)
+    .DataValueField(“Value”)
+</code></pre></div></div>
+
+<p>Manually creating items:</p>
+
+<h4 id="old-1">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Telerik().ComboBox()
+.Name(“Combo”)
+. Items( items =&gt; items.Add().Text("Item1").Value("1"))
+</code></pre></div></div>
+
+<h4 id="new-1">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox()
+    .Name(“Combo”)
+    .Items( items =&gt; items.Add().Text("Item1").Value("1"))
+    .DataTextField(“Text”)
+    .DataValueField(“Value”)
+</code></pre></div></div>
+
+<p>Ajax binding:</p>
+
+<h4 id="old-2">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Telerik().ComboBox()
+    .Name(“Combo”)
+    .DataBinding(binding =&gt; binding.Ajax().Select(“_Select”, “Combo”))
+</code></pre></div></div>
+
+<h4 id="new-2">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name(“Combo”)
+    .DataSource(source =&gt; {
+        source.Read(read =&gt;
+        {
+            read.Action("GetProducts", "Home");
+        })
+        .ServerFiltering(true);
+    })
+    .DataTextField(“Text”)
+    .DataValueField(“Value”)
+</code></pre></div></div>
+
+<p>Defining <strong>Delay</strong>:</p>
+
+<h4 id="old-3">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Telerik().ComboBox()
+    .Name(“Combo”)
+    .DataBinding(binding =&gt; binding.Ajax().Delay(300))
+</code></pre></div></div>
+
+<h4 id="new-3">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox()
+    .Name(“Combo”)
+    .Delay(300)
+</code></pre></div></div>
+
+<p>Defining <strong>ServerFiltering</strong>:</p>
+
+<h4 id="old-4">Old</h4>
+
+<p>Not supported</p>
+
+<h4 id="new-4">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name(“Combo”)
+    .DataSource(source =&gt; {
+        source.Read(read =&gt;
+        {
+            read.Action("GetProducts", "Home");
+        }).ServerFiltering(true);
+    })
+    .DataTextField(“Text”)
+    .DataValueField(“Value”)
+</code></pre></div></div>
+
+<p>Sending Parameters to the server:</p>
+
+<h4 id="old-5">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Telerik().ComboBox()
+    .Name("AjaxComboBox")
+    …
+    .ClientEvents(events =&gt; events.OnDataBinding("onComboBoxDataBinding"))
+%&gt;
+
+&lt;script type="text/javascript"&gt;       
+    function onComboBoxDataBinding(e) {
+        e.data = $.extend({}, e.data, { filterMode: $('#ComboBoxAttributes_FilterMode').data('tDropDownList').value() });
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="new-5">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name(“Combo”)
+    .DataSource(source =&gt; {
+        source.Read(read =&gt;
+        {
+            read.Action("GetProducts", "Home")
+                .Data(“addData”);
+        })     
+    })
+    .DataTextField(“Text”)
+    .DataValueField(“Value”)
+  
+&lt;script type="text/javascript"&gt;
+    function addData() {
+        return { text : “Chai” }
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Binding to a collection which is not a **List<Selectlistitem>**:</Selectlistitem></p>
+
+<h4 id="old-6">Old</h4>
+
+<p>Not supported</p>
+
+<h4 id="new-6">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name(“Combo”)
+    .DataTextField(“CompanyName”)
+    .DataValueField(“CompanyID”)
+    .BindTo(List&lt;Company&gt;);
+})
+</code></pre></div></div>
+
+<h2 id="other-options">Other Options</h2>
+
+<p>Filter:</p>
+
+<h4 id="old-7">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Telerik().ComboBox()
+    .Name("AjaxComboBox")
+    .Filterable(filtering =&gt;
+    {
+        filtering.FilterMode(AutoCompleteFilterMode.Contains);                             
+    })
+</code></pre></div></div>
+
+<h4 id="new-7">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().ComboBox()
+    .Name("fabric")
+    .Filter(FilterType.StartsWith)
+)
+</code></pre></div></div>
+
+<p>Minimum characters:</p>
+
+<h4 id="old-8">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Telerik().ComboBox()
+    .Name("AjaxComboBox")
+    .Filterable(filtering =&gt;
+    {
+        filtering.MinimumChars(2);
+    })
+</code></pre></div></div>
+
+<h4 id="new-8">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().ComboBox()
+    .Name("fabric")
+    .MinLength (2)
+)
+</code></pre></div></div>
+
+<p>Define suggestion (Autofill) of the ComboBox:</p>
+
+<h4 id="old-9">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Telerik().ComboBox().Name("AjaxComboBox").AutoFill(true)
+</code></pre></div></div>
+
+<h4 id="new-9">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name("AjaxComboBox").Suggest(true)
+</code></pre></div></div>
+
+<p>Setting the placeholder:</p>
+
+<h4 id="old-10">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//Create item with text  “Select…” and value “”
+Html.Telerik().ComboBox().Name("AjaxComboBox").Placeholder(“Select…”)
+</code></pre></div></div>
+
+<h4 id="new-10">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//Html5 placeholder
+Html.Kendo().ComboBox().Name("AjaxComboBox"). Placeholder (“2”)
+</code></pre></div></div>
+
+<p>Defining the animations:</p>
+
+<h4 id="old-11">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Telerik().ComboBox().Name("AjaxComboBox").Effects(effects =&gt; effects.Slide())
+</code></pre></div></div>
+
+<h4 id="new-11">New</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name("AjaxComboBox") .Animation(animation =&gt; animation.Open(open =&gt; open.FadeIn(FadeDirection.Down))
+</code></pre></div></div>
+
+<p>Setting <strong>AutoBind</strong>:</p>
+
+<h4 id="old-12">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Not supported (when Ajax binding always autoBind: false)
+</code></pre></div></div>
+
+<h4 id="new-12">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name("Combo").AutoBind(false)
+</code></pre></div></div>
+
+<p>Setting <strong>SelectedText</strong> when <strong>AutoBind</strong> is false:</p>
+
+<h4 id="old-13">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Telerik().ComboBox().Name("Combo")
+    .DataBinding(binding =&gt; binding.Ajax().Select(“”, “”))
+    .InputHtmlAttribute(new { value = “Chai” })
+</code></pre></div></div>
+
+<h4 id="new-13">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name("Combo").AutoBind(false).Text(“Chai”)
+</code></pre></div></div>
+
+<p>Highlighting the first item:</p>
+
+<h4 id="old-14">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HighlightFirstMatch(true)
+</code></pre></div></div>
+
+<h4 id="new-14">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HighlightFirst (true)
+</code></pre></div></div>
+
+<p>Kendo does not support action syntax - “() =&gt; {}”.  all widgets do not have <strong>Onload</strong> event:</p>
+
+<h4 id="old-15">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Telerik().ComboBox().Name("Combo").ClientEvents( events =&gt; events.OnChange(“change”))
+</code></pre></div></div>
+
+<h4 id="new-15">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name("Combo").Events( events =&gt; events.Change(“change”))
+</code></pre></div></div>
+
+<p>Defining templates:</p>
+
+<h4 id="old-16">Old</h4>
+
+<p>Not supported</p>
+
+<h4 id="new-16">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name("Combo").Template(“#= data.CompanyName #”)
+</code></pre></div></div>
+
+<p>Defining the height of the popup element:</p>
+
+<h4 id="old-17">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Telerik().ComboBox().Name("Combo").DropDownHtmlAttributes( new style { height = “300px” })
+</code></pre></div></div>
+
+<h4 id="new-17">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name("Combo").Height(300)
+</code></pre></div></div>
+
+<p>Cascading functionality:</p>
+
+<h4 id="old-18">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Telerik().ComboBox().Name("Combo").CascadeTo(“Id of the child ComboBox”)
+</code></pre></div></div>
+
+<h4 id="new-18">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Html.Kendo().ComboBox().Name("Combo").CascadeFrom(“Id of the parent ComboBox”)
+</code></pre></div></div>
+
+<p>Encode:</p>
+
+<h4 id="old-19">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Encode(false)
+</code></pre></div></div>
+
+<h4 id="new-19">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Template(“ #= data.Text #”)
+</code></pre></div></div>
+
+<h3 id="client-side-api">Client-Side API</h3>
+
+<h4 id="mvc---kendo">MVC -&gt; Kendo</h4>
+
+<h5 id="value">value</h5>
+
+<p>value</p>
+
+<h5 id="open">open</h5>
+
+<p>open</p>
+
+<h5 id="close">close</h5>
+
+<p>close</p>
+
+<h5 id="highlight">highlight</h5>
+
+<p>None</p>
+
+<h5 id="text">text</h5>
+
+<p>text</p>
+
+<h5 id="select">select</h5>
+
+<p>select</p>
+
+<h5 id="enable">enable</h5>
+
+<p>enable</p>
+
+<h5 id="disable">disable</h5>
+
+<p>enable(false)</p>
+
+<h5 id="databind">dataBind</h5>
+
+<p>dataSource.data(data)</p>
+
+<h5 id="reload">reload</h5>
+
+<p>dataSource.read()</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

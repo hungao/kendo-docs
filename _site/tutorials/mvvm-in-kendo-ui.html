@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Tutorial for building HTML5 apps with Kendo UI MVVM</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="This in-depth tutorial will guide you in the process of creating apps and mobile websites with Kendo UI framework MVVM features.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/mvvm-in-kendo-ui.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="mvvm-in-kendo-ui-walkthrough">MVVM in Kendo UI Walkthrough</h1>
+
+<p>This document provides an in-depth look on creating Kendo UI apps that use <a href="/getting-started/framework/mvvm/overview">framework MVVM features</a>. For those not familiar with the term <strong>MVVM</strong>, we"ll start by setting some context.</p>
+
+<h2 id="a-brief-mvvm-primer">A Brief MVVM Primer</h2>
+
+<h3 id="the-problem">The Problem</h3>
+
+<p>We’ve seen an unprecedented increase in the amount of devices and operating systems in the past few years. We have desktops, laptops, tablets, phones, netbooks and even devices that connect right to your TV (i.e. the Roku and Apple TV). The only way that you can deliver content on all of these platforms, without writing dozens of applications, is to write a web application. And these web applications are becoming more and more complex on the client side. AJAX is an important part of modern web applications and there is an increasing need to model data in the client as well as on the server.</p>
+
+<p>You may be familiar with the phrase “Single Page Application”, or <strong>SPA.</strong> The best example of an SPA is probably <a href="http://gmail.google.com">Gmail</a>. The idea is that when you visit the application and click on an action, only the relevant portion of the UI is changed, as opposed to the entire page being sent to the server and back. This is done by making background requests for data to the server and then updating the UI. As useful as this pattern is, it can make for very complex scenarios in a UI as you try and keep up with changes that are happening with your data on the server, the data as its changed in the UI, and the overall state of the application.</p>
+
+<h3 id="the-solution">The Solution</h3>
+
+<p>By and large, developers are dealing with these complex applications with different architecture patterns in their front-ends, like <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter">MVP</a>, <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC</a> or <a href="http://en.wikipedia.org/wiki/Model_View_ViewModel">MVVM</a>. You may be familiar with <a href="http://documentcloud.github.com/backbone/">BackboneJS</a>, <a href="http://knockoutjs.com/">KnockoutJS</a> or <a href="http://emberjs.com/">EmberJS</a>. These are all implementations of various patterns which attempt to help you organize and manage your UI while alleviating the need for you to manually keep track of all the changes.</p>
+
+<p>Of the patterns listed above, Model View View-Model, or MVVM, is the most popular. And though there are several great MVVM libraries available to front-end devs, Kendo UI also has a full MVVM framework baked right into its core. Let"s take a look at how MVVM works seamlessly with Kendo UI.</p>
+
+<blockquote>
+  <p>If you have been using MVVM and Knockout for some time and have questions about why we decided to make MVVM part of the Kendo UI core, please read <a href="http://blogs.telerik.com/kendoui/posts/12-02-16/kendo_ui_mvvm_and_knockoutjs">this post</a>.</p>
+</blockquote>
+
+<h2 id="mvvm-in-kendo-ui">MVVM In Kendo UI</h2>
+
+<p>Before we dive right into MVVM, let"s look at a simple scenario built without MVVM, and then back up and re-engineer it with the MVVM pattern.</p>
+
+<h3 id="an-example-of-developing-without-mvvm">An Example of Developing Without MVVM</h3>
+
+<p>The following is an example of how one might build a simple list application without MVVM (click the JavaScript and HTML tabs of the embedded fiddle to view the code).</p>
+
+<iframe frameborder="0" allowfullscreen="allowfullscreen" src="http://jsfiddle.net/NqSuS/embedded/result,js,html" style="width: 100%; height: 300px;"></iframe>
+
+<p>This is typical on the web today, and has been for some time. We bind the button to an event handler, select the DOM elements, update the table with a new row and then clear the DOM elements back out. All manually. The only way we could make this easier is by doing some templating instead of creating the row dynamically with HTML in the JavaScript.</p>
+
+<p>But MVVM makes all of this not only easier, but more maintainable.</p>
+
+<h3 id="developing-with-mvvm">Developing With MVVM</h3>
+
+<p>To starting using the MVVM pattern, we need to create a <strong>view model.</strong> A view model is an observable object. This object has properties and methods. Each property will be bound to something in the HTML. In MVVM, this binding is two way, meaning that if the binding changes on the UI, the model changes, and vice versa.</p>
+
+<h4 id="the-viewmodel">The ViewModel</h4>
+
+<p>Here is what the <strong>ViewModel</strong> looks like.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>viewModel = kendo.observable({
+    
+    // the expenses array will hold the grid values
+	expenses: [],
+    
+    // type array populates the drop down
+	type: [
+		{ name: "Food", value: "food"}, 
+		{ name: "Merchant", value: "merchant"}, 
+		{ name: "Bills", value: "bills" }
+	],
+	
+	// expenseType holds the currently selected value of the dropdown list
+ 	expenseType: "food", 
+
+ 	// the values are bound to the merchant and amount fields
+ 	merchant: null,
+ 	amount: null,
+
+ 	// event to execute on click of add button
+ 	create: function(e) {
+
+        // add the items to the array of expenses 
+        this.get("expenses").push({Type: this.get("expenseType"), 
+                                   Merchant: this.get("merchant"), 
+                                   Amount: this.get("amount")});
+
+        // reset the form 
+        this.set("expenseType", "food");
+        this.set("merchant", "");
+        this.set("amount", "");
+	}
+});
+
+// apply the bindings
+kendo.bind(document.body.children, viewModel);
+</code></pre></div></div>
+
+<p>You can see from the comments in-line that we have moved some things out of the markup and into the view model. Let"s walk through each section:</p>
+
+<ul>
+  <li>
+    <p><strong>expenses</strong>: Instead of using a plain HTML table to display the values from our input form, we are going to use a Kendo UI Grid. The **expenses **array holds the values that the grid will use as is source.</p>
+  </li>
+  <li>
+    <p><strong>type:</strong> Remember the select element? Instead of defining the items inline with options in the HTML, we are going to bind the element to this array. We’ll also apply some Kendo UI magic to this boring dropdown.</p>
+  </li>
+  <li>
+    <p><strong>expenseType:</strong> This variable will be bound to whatever value is currently selected in the above mentioned dropdown.</p>
+  </li>
+  <li>
+    <p><strong>merchant:</strong> Bound to the value of the <strong>merchant</strong> input box.</p>
+  </li>
+  <li>
+    <p><strong>amount:</strong> Bound to the value of <strong>amount</strong> input box.</p>
+  </li>
+  <li>
+    <p><strong>create:</strong> This is the event that will be fired by the <strong>Add</strong> button. Inside the event, we are going to do following: add the item to the expenses array and reset the form.</p>
+  </li>
+  <li>
+    <p><strong>kendo.bind(document.body.children, viewModel):</strong> The statement that initializes the binding between the view model and the relevant HTML.</p>
+  </li>
+</ul>
+
+<h4 id="the-view-markup">The View (Markup)</h4>
+
+<p>We additionally need to make some changes in our markup. Lets take it element by element and examine the bindings:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select data-role="dropdownlist" data-bind="source: type, value: expenseType" data-text-field="name" data-value-field="value"&gt;
+&lt;/select&gt;
+</code></pre></div></div>
+
+<p>The <strong>select</strong> element now has no options. Instead, it has some new <strong>data</strong> attributes.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;dt&gt;Merchant&lt;/dt&gt;
+&lt;dd&gt;
+	&lt;input id="merchant" type="text" class='k-textbox' data-bind="value: merchant" /&gt;
+&lt;/dd&gt;
+</code></pre></div></div>
+
+<p>The <strong>merchant</strong> input has a new binding. The <strong>data-bind=”value: merchant”</strong> says that we want to bind the value of this input to the <strong>merchant</strong> variable in the view model. I also added a “<strong>k-textbox</strong>” css class to it to style it using <a href="/getting-started/ui-widgets/appearance-styling">Kendo UI styles</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;dt&gt;Amount&lt;/dt&gt; 
+&lt;dd&gt;
+	&lt;input data-role="numerictextbox" data-bind="value: amount" id="amount" type="text" /&gt;
+&lt;/dd&gt;
+</code></pre></div></div>
+
+<p>The <strong>amount</strong> input has two new bindings: <strong>data-role</strong> sets the input to a <a href="/getting-started/web/numerictextbox/overview">Kendo UI NumericTextBox</a> and <strong>data-bind</strong> which binds the value to our <strong>amount</strong> variable.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button id="create" data-bind="click: create" class="k-button"&gt;Add&lt;/button&gt;
+</code></pre></div></div>
+
+<p>The <strong>Add</strong> button has only one new change. It now has a <strong>data-bind=”click: create”</strong>. This binds its click event to the <strong>create</strong> function in the view model. It’s crazy how easy this is.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="grid" data-sortable="true" data-bind="source: expenses"
+	 data-columns='["Type", "Merchant", "Amount"]' &gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<p>This last one is the grid. Yes, this one line creates a <a href="/getting-started/ui-widgets/grid/walkthrough">Kendo UI Grid</a>.</p>
+
+<h3 id="the-final-result">The Final Result</h3>
+
+<p>Here is the finished product. Kendo UI bindings are keeping the UI and the model in sync as changes are made.</p>
+
+<iframe frameborder="0" allowfullscreen="allowfullscreen" src="http://jsfiddle.net/burkeholland/NqSuS/6/embedded/result,js,html" style="width: 100%; height: 450px;"></iframe>
+
+<p>Not only does MVVM keep you from having to worry about many of the manual details, it also dramatically simplifies your code so that in your JavaScript you are only working with model objects. The DOM simply reflects the changes that you make to the model.</p>
+
+<p>To explore Kendo UI MVVM Features more, visit the <a href="/getting-started/framework/mvvm/overview">MVVM Overview Page</a> and related docs.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

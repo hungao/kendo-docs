@@ -1,0 +1,929 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/SchedulerEventBuilder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluentschedulereventbuilder">Kendo.Mvc.UI.Fluent.SchedulerEventBuilder</h1>
+<p>The fluent API for subscribing to Kendo UI Scheduler events.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="removesystemfuncsystemobjectsystemobject">Remove(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the remove event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-remove">remove</a> event documentation.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.Remove(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="removesystemstring">Remove(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the remove event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-remove">remove</a> event documentation.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="handler-systemstring">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-1">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler()
+    .Name("Scheduler")
+    .Events(events =&gt; events.Remove("remove"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="addsystemfuncsystemobjectsystemobject">Add(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the add event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-add">add</a> event documentation.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-1">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-2">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.Add(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="addsystemstring">Add(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the add event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-add">add</a> event documentation.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="handler-systemstring-1">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-3">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.Add("add"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="editsystemfuncsystemobjectsystemobject">Edit(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the edit event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-edit">edit</a> event documentation.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-2">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-4">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.Edit(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="editsystemstring">Edit(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the edit event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-edit">edit</a> event documentation.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="handler-systemstring-2">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-5">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.Edit("edit"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="cancelsystemfuncsystemobjectsystemobject">Cancel(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the cancel event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-3">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-6">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.Cancel(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="cancelsystemstring">Cancel(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the cancel event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="handler-systemstring-3">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-7">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.Cancel("cancel"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="changesystemfuncsystemobjectsystemobject">Change(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the change event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-change">change</a> event documentation.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-4">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-8">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.Change(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="changesystemstring">Change(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the change event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-change">change</a> event documentation.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="handler-systemstring-4">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-9">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.Change("change"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="savesystemfuncsystemobjectsystemobject">Save(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the save event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-save">save</a> event documentation.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-5">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-10">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.Save(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+                .DataSource(d =&gt; d
+                    .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+                    .Read("Read", "Scheduler")
+                    .Create("Create", "Scheduler")
+                    .Destroy("Destroy", "Scheduler")
+                    .Update("Update", "Scheduler")
+                )
+            )
+</code></pre></div></div>
+
+<h3 id="savesystemstring">Save(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the save event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-save">save</a> event documentation.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="handler-systemstring-5">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-11">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.Save("save"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="databoundsystemfuncsystemobjectsystemobject">DataBound(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the dataBound event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-6">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-12">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.DataBound(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="databoundsystemstring">DataBound(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the dataBound event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="handler-systemstring-6">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-13">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.DataBound("dataBound"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="databindingsystemfuncsystemobjectsystemobject">DataBinding(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the dataBinding event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-dataBinding">dataBinding</a> event documentation.</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-7">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-14">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.DataBinding(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="databindingsystemstring">DataBinding(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the dataBinding event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-dataBinding">dataBinding</a> event documentation.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="handler-systemstring-7">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-15">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.DataBinding("dataBinding"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="movestartsystemfuncsystemobjectsystemobject">MoveStart(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the moveStart event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-moveStart">moveStart</a> event documentation.</p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-8">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-16">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.MoveStart(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="movestartsystemstring">MoveStart(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the moveStart event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-moveStart">moveStart</a> event documentation.</p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="handler-systemstring-8">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-17">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.MoveStart("moveStart"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="movesystemfuncsystemobjectsystemobject">Move(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the move event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-move">move</a> event documentation.</p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-9">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-18">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.Move(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="movesystemstring">Move(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the move event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-move">move</a> event documentation.</p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="handler-systemstring-9">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-19">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.Move("move"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="moveendsystemfuncsystemobjectsystemobject">MoveEnd(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the moveEnd event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-moveEnd">moveEnd</a> event documentation.</p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-10">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-20">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.MoveEnd(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="moveendsystemstring">MoveEnd(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the moveEnd event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-moveEnd">moveEnd</a> event documentation.</p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="handler-systemstring-10">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-21">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.MoveEnd("moveEnd"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="resizestartsystemfuncsystemobjectsystemobject">ResizeStart(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the resizeStart event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resizeStart">resizeStart</a> event documentation.</p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-11">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-22">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.ResizeStart(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="resizestartsystemstring">ResizeStart(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the resizeStart event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resizeStart">resizeStart</a> event documentation.</p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="handler-systemstring-11">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-23">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.ResizeStart("resizeStart"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="resizesystemfuncsystemobjectsystemobject">Resize(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the resize event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resize">resize</a> event documentation.</p>
+
+<h4 id="parameters-24">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-12">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-24">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.Resize(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="resizesystemstring">Resize(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the resize event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resize">resize</a> event documentation.</p>
+
+<h4 id="parameters-25">Parameters</h4>
+
+<h5 id="handler-systemstring-12">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-25">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.Resize("resize"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="resizeendsystemfuncsystemobjectsystemobject">ResizeEnd(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the resizeEnd event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resizeEnd">resizeEnd</a> event documentation.</p>
+
+<h4 id="parameters-26">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-13">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-26">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.ResizeEnd(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="resizeendsystemstring">ResizeEnd(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the resizeEnd event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-resizeEnd">resizeEnd</a> event documentation.</p>
+
+<h4 id="parameters-27">Parameters</h4>
+
+<h5 id="handler-systemstring-13">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-27">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.ResizeEnd("resizeEnd"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="navigatesystemfuncsystemobjectsystemobject">Navigate(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the inline handler of the navigate event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-navigate">navigate</a> event documentation.</p>
+
+<h4 id="parameters-28">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-14">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-razor-28">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+    .Events(events =&gt; events.Navigate(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="navigatesystemstring">Navigate(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the navigate event.</p>
+
+<p>For additional information check the <a href="/api/web/scheduler#events-navigate">navigate</a> event documentation.</p>
+
+<h4 id="parameters-29">Parameters</h4>
+
+<h5 id="handler-systemstring-14">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-razor-29">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Events(events =&gt; events.Navigate("navigate"))
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,278 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Chart HtmlHelper extension | Kendo UI documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Configuration of Kendo UI Chart widget for server binding in quick steps, add Chart HtmlHelper extension, manipulate Kendo UI chart events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/chart/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="chart">Chart</h1>
+
+<p>The Chart HtmlHelper extension is a server-side wrapper for the <a href="/api/dataviz/chart">Kendo UI Chart</a> widget.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>There are two ways to bind a Kendo Chart for ASP.NET MVC:</p>
+
+<ul>
+  <li>server - the chart will bind to a supplied model</li>
+  <li>ajax - the chart will make ajax requests when binding</li>
+</ul>
+
+<p>Here is how to configure the Kendo Chart for server binding to the list of InternetUsers:</p>
+
+<ol>
+  <li>
+    <p>Make sure you have followed all the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">Introduction</a> help topic.</p>
+  </li>
+  <li>
+    <p>Create a new action method and pass the InternetUsers list as the model:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Index()
+{
+    return View(ChartDataRepository.InternetUsers());
+}
+</code></pre></div>    </div>
+  </li>
+  <li>Make your view strongly typed:
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master"
+     Inherits="System.Web.Mvc.ViewPage&lt;IEnumerable&lt;MvcApplication1.Models.InternetUsers&gt;&gt;" %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @model IEnumerable&lt;MvcApplication1.Models.InternetUsers&gt;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Add a server bound chart:
+    <ul>
+      <li>
+        <p>WebForms</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().Chart(Model) // The chart will be bound to the Model which is the InternetUsers list
+          .Name("internetUsersChart") // The name of the chart is mandatory. It specifies the "id" attribute of the widget.
+          .Title("Internet Users")
+          .Series(series =&gt; {
+              series.Bar(model =&gt; model.Value) // Create a bar chart series bound to the "Value" property
+                    .Name("United States");
+          })
+          .CategoryAxis(axis =&gt; axis
+              .Categories(model =&gt; model.Year)
+          )
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Razor</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().Chart(Model) // The chart will be bound to the Model which is the InternetUsers list
+        .Name("internetUsersChart") // The name of the chart is mandatory. It specifies the "id" attribute of the widget.
+        .Title("Internet Users")
+        .Series(series =&gt; {
+            series.Bar(model =&gt; model.Value) // Create a bar chart series bound to the "Value" property
+                  .Name("United States");
+        })
+        .CategoryAxis(axis =&gt; axis
+            .Categories(model =&gt; model.Year)
+        )
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="accessing-an-existing-chart">Accessing an Existing Chart</h2>
+
+<p>You can reference an existing chart instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/dataviz/chart#methods">API</a> to control its behavior.</p>
+
+<h3 id="accessing-an-existing-chart-instance">Accessing an existing Chart instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Put this after your Kendo Chart for ASP.NET MVC declaration
+&lt;script&gt;
+    $(function() {
+        // Notice that the Name() of the chart is used to get its client-side instance
+        var chart = $("#internetUsersChart").data("kendoChart");
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-kendo-ui-chart-events">Handling Kendo UI Chart events</h2>
+
+<p>You can subscribe to all <a href="/api/dataviz/chart#events">events</a> exposed by Kendo UI Chart:</p>
+
+<h3 id="webforms---subscribe-by-handler-name">WebForms - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%: Html.Kendo().Chart(Model)
+        .Name("internetUsersChart")
+        .Events(e =&gt; e
+            .DataBound("internetUsersChart_dataBound")
+            .SeriesClick("internetUsersChart_seriesClick")
+        )
+%&gt;
+
+&lt;script&gt;
+    function internetUsersChart_dataBound() {
+        // Handle the dataBound event
+    }
+
+    function internetUsersChart_seriesClick() {
+        // Handle the series click event
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-handler-name">Razor - subscribe by handler name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Chart(Model)
+      .Name("internetUsersChart")
+      .Events(e =&gt; e
+          .DataBound("internetUsersChart_dataBound")
+          .SeriesClick("internetUsersChart_seriesClick")
+      )
+)
+
+&lt;script&gt;
+    function internetUsersChart_dataBound() {
+        // Handle the dataBound event
+    }
+
+    function internetUsersChart_seriesClick() {
+        // Handle the seriesClick event
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="razor---subscribe-by-template-delegate">Razor - subscribe by template delegate</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Chart(Model)
+      .Name("internetUsersChart")
+      .Events(e =&gt; e
+          .DataBound(@&lt;text&gt;
+               function() {
+                   // Handle the dataBound event inline
+               }
+          &lt;/text&gt;)
+          .SeriesClick(@&lt;text&gt;
+               function() {
+                   // Handle the seriesClick event inline
+               }
+          &lt;/text&gt;)
+      )
+)
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

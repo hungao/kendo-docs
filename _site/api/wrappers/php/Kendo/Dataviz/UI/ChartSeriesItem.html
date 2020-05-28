@@ -1,0 +1,1667 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItem.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizuichartseriesitem">\Kendo\Dataviz\UI\ChartSeriesItem</h1>
+
+<p>A PHP class representing the seriesItem setting of ChartSeries.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="aggregate">aggregate</h3>
+<p>The aggregate function to apply for date series.This function is used when a category (an year, month, etc.) contains two or more points.
+The function return value is displayed instead of the individual points.The supported values are:</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;aggregate('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="axis">axis</h3>
+<p>The name of the value axis to use.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;axis('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="border">border</h3>
+
+<p>The border of the chart series.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemborderarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemBorder|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemborder">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemBorder">\Kendo\Dataviz\UI\ChartSeriesItemBorder</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$border = new \Kendo\Dataviz\UI\ChartSeriesItemBorder();
+$color = 'value';
+$border-&gt;color($color);
+$seriesItem-&gt;border($border);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$color = 'value';
+$seriesItem-&gt;border(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="categoryfield">categoryField</h3>
+<p>The data item field which contains the category name or date.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;categoryField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="closefield">closeField</h3>
+<p>The data field containing the close value.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-string-3">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;closeField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="color">color</h3>
+<p>The series base color. The supported values are:</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example----using-string">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;color('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;color(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="colorfield">colorField</h3>
+<p>The data item field which contains the series color.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-string-4">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;colorField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="connectors">connectors</h3>
+
+<p>The label connectors options.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemconnectorsarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemConnectors|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemconnectors">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemConnectors">\Kendo\Dataviz\UI\ChartSeriesItemConnectors</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$connectors = new \Kendo\Dataviz\UI\ChartSeriesItemConnectors();
+$color = 'value';
+$connectors-&gt;color($color);
+$seriesItem-&gt;connectors($connectors);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$color = 'value';
+$seriesItem-&gt;connectors(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="currentfield">currentField</h3>
+<p>The data item field containing the current value.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-string-5">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;currentField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dashtype">dashType</h3>
+<p>The dash type of line chart.The following dash types are supported:</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-string-6">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;dashType('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="data">data</h3>
+<p>The array of data items which represent the series data.Can be set to :</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-array">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;data(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="downcolor">downColor</h3>
+<p>The series color when the open value is greater than the close value.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example----using-string-1">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;downColor('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-kendojavascriptfunction-1">Example  - using \Kendo\JavaScriptFunction</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;downColor(new \Kendo\JavaScriptFunction('function() { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="downcolorfield">downColorField</h3>
+<p>The data field containing the color applied when the open value is greater than the close value.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-string-7">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;downColorField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dynamicheight">dynamicHeight</h3>
+<p>When set to false all segments become with the same height, otherwise the height of each segment is based on its value.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;dynamicHeight(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dynamicslope">dynamicSlope</h3>
+<p>When set to true the ratio of the bases of each segment is calculated based on the ratio of currentDataItem.value/nextDataItem.value
+The last element is always created like a rectangle since there is no following element.</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;dynamicSlope(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="errorbars">errorBars</h3>
+
+<p>The error bars of the chart series.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemerrorbarsarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemErrorBars|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemerrorbars">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemErrorBars">\Kendo\Dataviz\UI\ChartSeriesItemErrorBars</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$errorBars = new \Kendo\Dataviz\UI\ChartSeriesItemErrorBars();
+$color = 'value';
+$errorBars-&gt;color($color);
+$seriesItem-&gt;errorBars($errorBars);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$color = 'value';
+$seriesItem-&gt;errorBars(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="errorhighfield">errorHighField</h3>
+<p>The data item field which contains the series.errorBars high value.</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-string-8">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;errorHighField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="errorlowfield">errorLowField</h3>
+<p>The data item field which contains the series.errorBars low value.</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-string-9">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;errorLowField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="explodefield">explodeField</h3>
+<p>The data item field which contains a boolean value indicating whether the sector is exploded.</p>
+
+<h4 id="returns-18">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="value-string-10">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;explodeField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="extremes">extremes</h3>
+
+<p>The chart series extremes configuration.</p>
+
+<h4 id="returns-19">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemextremesarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemExtremes|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemextremes">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemExtremes">\Kendo\Dataviz\UI\ChartSeriesItemExtremes</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$extremes = new \Kendo\Dataviz\UI\ChartSeriesItemExtremes();
+$background = 'value';
+$extremes-&gt;background($background);
+$seriesItem-&gt;extremes($extremes);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-3">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$background = 'value';
+$seriesItem-&gt;extremes(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="field">field</h3>
+<p>The data item field which contains the series value.</p>
+
+<h4 id="returns-20">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="value-string-11">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;field('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="fromfield">fromField</h3>
+<p>The data item field which contains the series from value.</p>
+
+<h4 id="returns-21">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="value-string-12">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;fromField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="gap">gap</h3>
+<p>The distance between the category clusters.</p>
+
+<h4 id="returns-22">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;gap(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="highfield">highField</h3>
+<p>The data field containing the high value.</p>
+
+<h4 id="returns-23">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="value-string-13">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;highField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="highlight">highlight</h3>
+
+<p>The chart series highlighting configuration options.</p>
+
+<h4 id="returns-24">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-24">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemhighlightarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemHighlight|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemhighlight">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemHighlight">\Kendo\Dataviz\UI\ChartSeriesItemHighlight</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$highlight = new \Kendo\Dataviz\UI\ChartSeriesItemHighlight();
+$color = 'value';
+$highlight-&gt;color($color);
+$seriesItem-&gt;highlight($highlight);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-4">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$color = 'value';
+$seriesItem-&gt;highlight(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="holesize">holeSize</h3>
+<p>The diameter of the donut hole in pixels.</p>
+
+<h4 id="returns-25">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-25">Parameters</h4>
+
+<h5 id="value-float-1">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;holeSize(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="labels">labels</h3>
+
+<p>The chart series label configuration.</p>
+
+<h4 id="returns-26">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-26">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemlabelsarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemLabels|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemlabels">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemLabels">\Kendo\Dataviz\UI\ChartSeriesItemLabels</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$labels = new \Kendo\Dataviz\UI\ChartSeriesItemLabels();
+$align = 'value';
+$labels-&gt;align($align);
+$seriesItem-&gt;labels($labels);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-5">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$align = 'value';
+$seriesItem-&gt;labels(array('align' =&gt; $align));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="line">line</h3>
+
+<p>The chart line configuration options.</p>
+
+<h4 id="returns-27">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-27">Parameters</h4>
+
+<h5 id="value-stringkendodatavizuichartseriesitemlinearray">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\Dataviz\UI\ChartSeriesItemLine|array</code></h5>
+
+<h4 id="example----using-string-2">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;line('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatavizuichartseriesitemline">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemLine">\Kendo\Dataviz\UI\ChartSeriesItemLine</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$line = new \Kendo\Dataviz\UI\ChartSeriesItemLine();
+$color = 'value';
+$line-&gt;color($color);
+$seriesItem-&gt;line($line);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-6">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$color = 'value';
+$seriesItem-&gt;line(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="lowfield">lowField</h3>
+<p>The data field containing the low value.</p>
+
+<h4 id="returns-28">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-28">Parameters</h4>
+
+<h5 id="value-string-14">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;lowField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="lowerfield">lowerField</h3>
+<p>The data item field which contains the series lower value.</p>
+
+<h4 id="returns-29">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-29">Parameters</h4>
+
+<h5 id="value-string-15">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;lowerField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="margin">margin</h3>
+
+<p>The margin around each donut series (ring). A numeric value will set all margins.</p>
+
+<h4 id="returns-30">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-30">Parameters</h4>
+
+<h5 id="value-floatkendodatavizuichartseriesitemmarginarray">$value <code class="language-plaintext highlighter-rouge">float|\Kendo\Dataviz\UI\ChartSeriesItemMargin|array</code></h5>
+
+<h4 id="example----using-float">Example  - using float</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;margin(1);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatavizuichartseriesitemmargin">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemMargin">\Kendo\Dataviz\UI\ChartSeriesItemMargin</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$margin = new \Kendo\Dataviz\UI\ChartSeriesItemMargin();
+$bottom = 1;
+$margin-&gt;bottom($bottom);
+$seriesItem-&gt;margin($margin);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-7">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$bottom = 1;
+$seriesItem-&gt;margin(array('bottom' =&gt; $bottom));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="markers">markers</h3>
+
+<p>The chart series marker configuration.</p>
+
+<h4 id="returns-31">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-31">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemmarkersarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemMarkers|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemmarkers">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemMarkers">\Kendo\Dataviz\UI\ChartSeriesItemMarkers</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$markers = new \Kendo\Dataviz\UI\ChartSeriesItemMarkers();
+$background = 'value';
+$markers-&gt;background($background);
+$seriesItem-&gt;markers($markers);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-8">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$background = 'value';
+$seriesItem-&gt;markers(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="maxsize">maxSize</h3>
+<p>The maximum size of the chart bubble series marker.</p>
+
+<h4 id="returns-32">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-32">Parameters</h4>
+
+<h5 id="value-float-2">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;maxSize(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="meanfield">meanField</h3>
+<p>The data item field which contains the series mean value.</p>
+
+<h4 id="returns-33">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-33">Parameters</h4>
+
+<h5 id="value-string-16">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;meanField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="medianfield">medianField</h3>
+<p>The data item field which contains the series median value.</p>
+
+<h4 id="returns-34">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-34">Parameters</h4>
+
+<h5 id="value-string-17">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;medianField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="minsize">minSize</h3>
+<p>The minimum size of the chart bubble series marker.</p>
+
+<h4 id="returns-35">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-35">Parameters</h4>
+
+<h5 id="value-float-3">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;minSize(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="missingvalues">missingValues</h3>
+<p>The behavior for handling missing values. The supported values are:</p>
+
+<h4 id="returns-36">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-36">Parameters</h4>
+
+<h5 id="value-string-18">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;missingValues('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="name">name</h3>
+<p>The name of the chart series which is visible in the legend.</p>
+
+<h4 id="returns-37">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-37">Parameters</h4>
+
+<h5 id="value-string-19">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;name('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="neckratio">neckRatio</h3>
+<p>specifies the ratio top-base/bottom-base of the whole chart. neckRatio set to three means the top base is three times smaller than the bottom base.</p>
+
+<h4 id="returns-38">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-38">Parameters</h4>
+
+<h5 id="value-float-4">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;neckRatio(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="negativecolor">negativeColor</h3>
+<p>The color to use for bar, column or waterfall series with negative values. Accepts a valid CSS color string, including hex and rgb.</p>
+
+<h4 id="returns-39">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-39">Parameters</h4>
+
+<h5 id="value-string-20">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;negativeColor('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="negativevalues">negativeValues</h3>
+
+<p>The options for displaying the chart negative bubble values.</p>
+
+<h4 id="returns-40">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-40">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemnegativevaluesarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemNegativeValues|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemnegativevalues">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemNegativeValues">\Kendo\Dataviz\UI\ChartSeriesItemNegativeValues</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$negativeValues = new \Kendo\Dataviz\UI\ChartSeriesItemNegativeValues();
+$color = 'value';
+$negativeValues-&gt;color($color);
+$seriesItem-&gt;negativeValues($negativeValues);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-9">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$color = 'value';
+$seriesItem-&gt;negativeValues(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="notetextfield">noteTextField</h3>
+<p>The data item field which contains the series note text.</p>
+
+<h4 id="returns-41">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-41">Parameters</h4>
+
+<h5 id="value-string-21">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-29">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;noteTextField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="notes">notes</h3>
+
+<p>The series notes configuration.</p>
+
+<h4 id="returns-42">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-42">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemnotesarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemNotes|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemnotes">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemNotes">\Kendo\Dataviz\UI\ChartSeriesItemNotes</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$notes = new \Kendo\Dataviz\UI\ChartSeriesItemNotes();
+$position = 'value';
+$notes-&gt;position($position);
+$seriesItem-&gt;notes($notes);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-10">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$position = 'value';
+$seriesItem-&gt;notes(array('position' =&gt; $position));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="opacity">opacity</h3>
+<p>The series opacity. By default the series are opaque.</p>
+
+<h4 id="returns-43">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-43">Parameters</h4>
+
+<h5 id="value-float-5">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-30">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;opacity(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="openfield">openField</h3>
+<p>The data field containing the open value.</p>
+
+<h4 id="returns-44">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-44">Parameters</h4>
+
+<h5 id="value-string-22">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-31">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;openField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="outliers">outliers</h3>
+
+<p>The chart series outliers configuration.</p>
+
+<h4 id="returns-45">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-45">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemoutliersarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemOutliers|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemoutliers">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemOutliers">\Kendo\Dataviz\UI\ChartSeriesItemOutliers</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$outliers = new \Kendo\Dataviz\UI\ChartSeriesItemOutliers();
+$background = 'value';
+$outliers-&gt;background($background);
+$seriesItem-&gt;outliers($outliers);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-11">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$background = 'value';
+$seriesItem-&gt;outliers(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="outliersfield">outliersField</h3>
+<p>The data item field which contains the series outliers value.</p>
+
+<h4 id="returns-46">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-46">Parameters</h4>
+
+<h5 id="value-string-23">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-32">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;outliersField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="overlay">overlay</h3>
+
+<p>The chart series overlay options.</p>
+
+<h4 id="returns-47">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-47">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemoverlayarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemOverlay|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemoverlay">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemOverlay">\Kendo\Dataviz\UI\ChartSeriesItemOverlay</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$overlay = new \Kendo\Dataviz\UI\ChartSeriesItemOverlay();
+$gradient = 'value';
+$overlay-&gt;gradient($gradient);
+$seriesItem-&gt;overlay($overlay);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-12">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$gradient = 'value';
+$seriesItem-&gt;overlay(array('gradient' =&gt; $gradient));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="padding">padding</h3>
+<p>The padding around the chart (equal on all sides).</p>
+
+<h4 id="returns-48">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-48">Parameters</h4>
+
+<h5 id="value-float-6">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-33">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;padding(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="q1field">q1Field</h3>
+<p>The data item field which contains the series q1 value.</p>
+
+<h4 id="returns-49">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-49">Parameters</h4>
+
+<h5 id="value-string-24">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-34">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;q1Field('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="q3field">q3Field</h3>
+<p>The data item field which contains the series q3 value.</p>
+
+<h4 id="returns-50">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-50">Parameters</h4>
+
+<h5 id="value-string-25">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-35">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;q3Field('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="segmentspacing">segmentSpacing</h3>
+<p>The space in pixels between the different segments of the funnel chart.</p>
+
+<h4 id="returns-51">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-51">Parameters</h4>
+
+<h5 id="value-float-7">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-36">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;segmentSpacing(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="size">size</h3>
+<p>The or radius of the chart donut series in pixels. If not set, the available space is split evenly between the series.</p>
+
+<h4 id="returns-52">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-52">Parameters</h4>
+
+<h5 id="value-float-8">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-37">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;size(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="sizefield">sizeField</h3>
+<p>The data field containing the bubble size value.</p>
+
+<h4 id="returns-53">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-53">Parameters</h4>
+
+<h5 id="value-string-26">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-38">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;sizeField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="spacing">spacing</h3>
+<p>The space between the chart series as proportion of the series width.</p>
+
+<h4 id="returns-54">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-54">Parameters</h4>
+
+<h5 id="value-float-9">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-39">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;spacing(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="stack">stack</h3>
+
+<p>A boolean value indicating if the series should be stacked.
+A string value is interpreted as series.stack.group.</p>
+
+<h4 id="returns-55">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-55">Parameters</h4>
+
+<h5 id="value-booleanstringkendodatavizuichartseriesitemstackarray">$value <code class="language-plaintext highlighter-rouge">boolean|string|\Kendo\Dataviz\UI\ChartSeriesItemStack|array</code></h5>
+
+<h4 id="example----using-boolean">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;stack(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-string-3">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;stack('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatavizuichartseriesitemstack">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemStack">\Kendo\Dataviz\UI\ChartSeriesItemStack</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$stack = new \Kendo\Dataviz\UI\ChartSeriesItemStack();
+$group = 'value';
+$stack-&gt;group($group);
+$seriesItem-&gt;stack($stack);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-13">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$group = 'value';
+$seriesItem-&gt;stack(array('group' =&gt; $group));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="startangle">startAngle</h3>
+<p>The start angle (degrees) of the first donut or pie segment.Angles increase clockwise and zero is to the left. Negative values are acceptable.</p>
+
+<h4 id="returns-56">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-56">Parameters</h4>
+
+<h5 id="value-float-10">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-40">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;startAngle(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="style">style</h3>
+<p>The supported values are:</p>
+
+<h4 id="returns-57">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-57">Parameters</h4>
+
+<h5 id="value-string-27">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-41">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;style('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="summaryfield">summaryField</h3>
+<p>The data item field which contains the summary type for waterfall series.
+Summary columns are optional and can be one of two types:</p>
+
+<h4 id="returns-58">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-58">Parameters</h4>
+
+<h5 id="value-string-28">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-42">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;summaryField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="target">target</h3>
+
+<p>The configuration options of the target</p>
+
+<h4 id="returns-59">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-59">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemtargetarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemTarget|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemtarget">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemTarget">\Kendo\Dataviz\UI\ChartSeriesItemTarget</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$target = new \Kendo\Dataviz\UI\ChartSeriesItemTarget();
+$color = 'value';
+$target-&gt;color($color);
+$seriesItem-&gt;target($target);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-14">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$color = 'value';
+$seriesItem-&gt;target(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="targetfield">targetField</h3>
+<p>The data item field containing the target value.</p>
+
+<h4 id="returns-60">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-60">Parameters</h4>
+
+<h5 id="value-string-29">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-43">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;targetField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="tofield">toField</h3>
+<p>The data item field which contains the series to value.</p>
+
+<h4 id="returns-61">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-61">Parameters</h4>
+
+<h5 id="value-string-30">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-44">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;toField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="tooltip">tooltip</h3>
+
+<p>The chart series tooltip configuration options.</p>
+
+<h4 id="returns-62">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-62">Parameters</h4>
+
+<h5 id="value-kendodatavizuichartseriesitemtooltiparray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItemTooltip|array</code></h5>
+
+<h4 id="example---using-kendodatavizuichartseriesitemtooltip">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/ChartSeriesItemTooltip">\Kendo\Dataviz\UI\ChartSeriesItemTooltip</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$tooltip = new \Kendo\Dataviz\UI\ChartSeriesItemTooltip();
+$background = 'value';
+$tooltip-&gt;background($background);
+$seriesItem-&gt;tooltip($tooltip);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-15">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$background = 'value';
+$seriesItem-&gt;tooltip(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="type">type</h3>
+<p>The type of the series.The supported values are:</p>
+
+<h4 id="returns-63">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-63">Parameters</h4>
+
+<h5 id="value-string-31">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-45">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;type('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="upperfield">upperField</h3>
+<p>The data item field which contains the series upper value.</p>
+
+<h4 id="returns-64">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-64">Parameters</h4>
+
+<h5 id="value-string-32">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-46">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;upperField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="visibleinlegend">visibleInLegend</h3>
+<p>A value indicating whether to show the point category name (for bubble, donut and pie series)
+or series name (for other available series types) in the legend.</p>
+
+<h4 id="returns-65">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-65">Parameters</h4>
+
+<h5 id="value-boolean-2">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-47">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;visibleInLegend(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="visibleinlegendfield">visibleInLegendField</h3>
+<p>The data item field which indicates whether to show the point category name in the legend.</p>
+
+<h4 id="returns-66">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-66">Parameters</h4>
+
+<h5 id="value-string-33">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-48">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;visibleInLegendField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="width">width</h3>
+<p>The line width.</p>
+
+<h4 id="returns-67">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-67">Parameters</h4>
+
+<h5 id="value-float-11">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-49">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;width(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="xaxis">xAxis</h3>
+<p>The name of the X axis to use.For polar series the xAxis range is expressed in degrees.</p>
+
+<h4 id="returns-68">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-68">Parameters</h4>
+
+<h5 id="value-string-34">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-50">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;xAxis('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="xerrorhighfield">xErrorHighField</h3>
+<p>The data item field which contains the series.errorBars xAxis high value.</p>
+
+<h4 id="returns-69">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-69">Parameters</h4>
+
+<h5 id="value-string-35">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-51">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;xErrorHighField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="xerrorlowfield">xErrorLowField</h3>
+<p>The data item field which contains the series.errorBars xAxis low value.</p>
+
+<h4 id="returns-70">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-70">Parameters</h4>
+
+<h5 id="value-string-36">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-52">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;xErrorLowField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="xfield">xField</h3>
+<p>The data item field containing the X value.</p>
+
+<h4 id="returns-71">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-71">Parameters</h4>
+
+<h5 id="value-string-37">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-53">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;xField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="yaxis">yAxis</h3>
+<p>The name of the Y axis to use.** Available for bubble, scatter, scatterLine and polar series. **</p>
+
+<h4 id="returns-72">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-72">Parameters</h4>
+
+<h5 id="value-string-38">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-54">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;yAxis('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="yerrorhighfield">yErrorHighField</h3>
+<p>The data item field which contains the series.errorBars yAxis high value.</p>
+
+<h4 id="returns-73">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-73">Parameters</h4>
+
+<h5 id="value-string-39">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-55">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;yErrorHighField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="yerrorlowfield">yErrorLowField</h3>
+<p>The data item field which contains the series.errorBars yAxis low value.</p>
+
+<h4 id="returns-74">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-74">Parameters</h4>
+
+<h5 id="value-string-40">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-56">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;yErrorLowField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="yfield">yField</h3>
+<p>The data item field containing the Y value.</p>
+
+<h4 id="returns-75">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\ChartSeriesItem</code></p>
+
+<h4 id="parameters-75">Parameters</h4>
+
+<h5 id="value-string-41">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-57">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\ChartSeriesItem();
+$seriesItem-&gt;yField('value');
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

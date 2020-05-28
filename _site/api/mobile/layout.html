@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI Mobile Layout</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Layout configuration in Kendo UI mobile JavaScript framework, supported methods to control behavior, events that hide and initialize child widgets.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/mobile/layout.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomobileuilayout">kendo.mobile.ui.Layout</h1>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="id-stringdefault-null">id <code class="language-plaintext highlighter-rouge">String</code><em>(default: null)</em></h3>
+
+<p>The id of the layout. <strong>Required</strong></p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-layout="default"&gt;
+  Foo view
+&lt;/div&gt;
+
+&lt;div data-role="layout" data-id="default"&gt;
+  &lt;header data-role="header"&gt;&lt;p&gt;the header&lt;/p&gt;&lt;/header&gt;
+
+  &lt;div data-role="footer"&gt;&lt;p&gt;the footer&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+
+&lt;style&gt;
+  .km-view .km-header,
+  .km-view .km-footer {
+    color: red;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="platform-string">platform <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The specific platform this layout targets. By default, layouts are displayed
+on all platforms.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-role="view" data-layout="default"&gt;
+  Foo view
+&lt;/div&gt;
+
+&lt;div data-role="layout" data-id="default" data-platform="ios"&gt;
+  &lt;header data-role="header"&gt;&lt;p&gt;iOS header&lt;/p&gt;&lt;/header&gt;
+
+  &lt;div data-role="footer"&gt;&lt;p&gt;iOS footer&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div data-role="layout" data-id="default" data-platform="android"&gt;
+  &lt;header data-role="header"&gt;&lt;p&gt;Android header&lt;/p&gt;&lt;/header&gt;
+
+  &lt;div data-role="footer"&gt;&lt;p&gt;Android footer&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+&lt;/script&gt;
+
+&lt;style&gt;
+  .km-view .km-header, .km-view .km-footer {
+      color: red;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="hide">hide</h3>
+
+<p>Fires when a mobile View using the layout becomes hidden.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="elayout-jquery">e.layout <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The mobile layout instance</p>
+
+<h5 id="eview-jquery">e.view <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The mobile view instance</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view" data-layout="default"&gt;
+  Foo view
+&lt;/div&gt;
+
+&lt;div id="bar" data-role="view" data-layout="default" data-hide="onHide"&gt;
+  Bar view
+&lt;/div&gt;
+
+&lt;div data-role="layout" data-id="default"&gt;
+  &lt;div data-role="footer"&gt;
+    &lt;div data-role="tabstrip"&gt;
+      &lt;a href="#foo" data-icon="contacts"&gt;foo&lt;/a&gt;
+      &lt;a href="#bar" data-icon="history"&gt;bar&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function onHide(e) {
+    console.log(e.view.id + " view hidden");
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="init">init</h3>
+
+<p>Fires after a mobile Layout and its child widgets is initialized.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="elayout-jquery-1">e.layout <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The mobile layout instance</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view" data-layout="default" data-init="onInit"&gt;
+  Foo view
+&lt;/div&gt;
+
+&lt;div data-role="layout" data-id="default"&gt;
+  &lt;header data-role="header"&gt;
+    &lt;div data-role="navbar"&gt;
+      &lt;span data-role="view-title"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function onInit(e) {
+    console.log("init");
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="show">show</h3>
+
+<p>Fires when a mobile View using the layout becomes visible.</p>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="elayout-jquery-2">e.layout <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The mobile layout instance</p>
+
+<h5 id="eview-jquery-1">e.view <code class="language-plaintext highlighter-rouge">jQuery</code></h5>
+
+<p>The mobile view instance</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="foo" data-role="view" data-layout="default" data-show="onShow"&gt;
+  Foo view
+&lt;/div&gt;
+
+&lt;div id="bar" data-role="view" data-layout="default"&gt;
+  Bar view
+&lt;/div&gt;
+
+&lt;div data-role="layout" data-id="default"&gt;
+  &lt;div data-role="footer"&gt;
+    &lt;div data-role="tabstrip"&gt;
+      &lt;a href="#foo" data-icon="contacts"&gt;foo&lt;/a&gt;
+      &lt;a href="#bar" data-icon="history"&gt;bar&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var app = new kendo.mobile.Application();
+
+function onShow(e) {
+  console.log("show");
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/asp.net/kendo-music-store/music-store-web/kendo-music-store-web-checkout.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="creating-the-checkout-page---kendo-music-store">Creating the Checkout Page - Kendo Music Store</h1>
+
+<p><img src="/tutorials/asp.net/kendo-music-store/music-store-web/images/kendo-checkout-screenshot.png" alt="kendo-checkout-screenshot" /></p>
+
+<p>The Checkout page is navigated to when the user hovers over the Shopping Cart Menu and clicks the "Checkout" button.
+It provides the user with a chance to review the items in their cart.
+The user can change quantities or remove items from the cart and review the subtotal.</p>
+
+<h2 id="create-the-grid">Create the Grid</h2>
+
+<p>We are using an MVVM bound <a href="http://demos.telerik.com/kendo-ui/web/grid/index.html">Kendo Grid</a> widget to render the shopping cart contents on the checkout page.
+This is done by defining a &lt;div&gt; element and specifying <strong>data-role="grid"</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="cart-grid"
+    data-role="grid"
+    data-bind="source: cartItems"
+    data-row-template="rowTemplate"
+    data-scrollable="false"
+    data-columns="[
+        'Item',
+        { title: 'Price', width: '100px' },
+        { title: 'Quantity', width: '100px' },
+        { title: 'Remove', width: '100px' },
+        { title: 'Total', width: '100px' }
+    ]"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<p>The <strong>data-bind="source: cartItems"</strong> attribute indicates that the grid will be bound to the view model"s cartItems property.</p>
+
+<p>The <strong>data-scrollable="false"</strong> attribute tells the grid to display its entire contents and not create a smaller scroll box if the height gets too large.</p>
+
+<p>The <strong>data-columns</strong> attribute contains a JSON formatted array. Each item in the array represents a column.</p>
+
+<p>The <strong>data-row-template="rowTemplate"</strong> attribute specifies a custom "row template" to use for each item.
+We used a row template because we wanted to customize the layout of each row to show the album art and always show the editor for the quantity.
+The template is then defined as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script id="rowTemplate" type="text/x-kendo-tmpl"&gt;
+    &lt;tr&gt;
+        &lt;td class="album-wide"&gt;
+            &lt;img data-bind="attr: {src: Album.AlbumArtUrl }" /&gt;
+            &lt;div&gt;
+                &lt;span data-bind="text: Album.Title"&gt;&lt;/span&gt;
+                &lt;span data-bind="text: Album.Artist.Name"&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/td&gt;
+        &lt;td data-bind="textFormatted: Album.Price" data-format="c"&gt;&lt;/td&gt;
+        &lt;td&gt;
+            &lt;input type="number" value="1" min="1" max="100" data-role="numerictextbox" data-decimals="0" data-format="n0" data-bind="value: Quantity, events: { spin: updateQty }" /&gt;&lt;/div&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+            &lt;span class="k-button" data-bind="click: remove"&gt;Remove&lt;/span&gt;
+        &lt;/td&gt;
+        &lt;td data-bind="textFormatted: Total" data-format="c"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Finally, on page load the page is bound to the view model:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(function ($, kendo, store) {
+    var cartDataSource = store.cart.getCart();
+
+    var viewModel = kendo.observable({
+        cartItems: cartDataSource,
+        updateQty: function (e) {
+            e.data.set("Quantity", e.sender.value());
+        },
+        remove: function (e) {
+            this.cartItems.remove(e.data);
+        },
+        total: 0
+    });
+
+    kendo.bind($("#body"), viewModel);
+})(jQuery, kendo, store);
+</code></pre></div></div>
+
+<h2 id="removing-items-from-the-cart">Removing Items from the Cart.</h2>
+
+<p>When a "remove" button is clicked, the <strong>remove()</strong> function on the view model is called:
+The data record that is bound to that grid row is located in <strong>e.data</strong> and is used to remove it from the data source.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    remove: function (e) {
+        this.cartItems.remove(e.data);
+    },
+</code></pre></div></div>
+
+<h2 id="recalculating-the-total">Recalculating the total.</h2>
+
+<p>In the HTML at the bottom of the checkout page, we include an element to display the subtotal
+and bind it to the <strong>total</strong> property on the view model:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;td data-bind="textFormatted: Total" data-format="c"&gt;&lt;/td&gt;
+</code></pre></div></div>
+
+<p>This is using a custom binder named <strong>textFormatted</strong> to format the number as a currency.
+This custom binder is located in the file: <strong>Scripts\App\kendo-custom-bindings.js</strong></p>
+
+<p>When the checkout page was loaded we included a <strong>calcTotal()</strong> function and bound it to the "change" event on the data source:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var cartDataSource = store.cart.getCart();
+
+var viewModel = kendo.observable({
+    // ... rest of view model omitted ...
+    total: 0
+});
+
+var calcTotal = function (e) {
+    viewModel.set("total", store.cart.getTotalPrice());
+};
+
+cartDataSource.bind("change", calcTotal);
+</code></pre></div></div>
+
+<p>For any item in the cart, if the quantity changes or it is removed, the <strong>calcTotal()</strong> function is called.
+This then calls <strong>viewModel.set("total", store.cart.getTotalPrice());</strong> which updates the <strong>total</strong> property on
+the view model to the sum of all the items.
+The MVVM framework then updates the element"s text to show the total amount.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

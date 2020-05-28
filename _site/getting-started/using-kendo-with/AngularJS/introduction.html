@@ -1,0 +1,367 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/AngularJS/introduction.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="using-kendo-with-angularjs">Using Kendo with AngularJS</h1>
+
+<p>Kendo UI can be used seamlessly with AngularJS.  The two frameworks have some overlapping features though; if you are using AngularJS then you probably want to use Angular"s own routing mechanism and data binding.  Do not mix that with Kendo MVVM.</p>
+
+<h2 id="using-angular-kendo-bindings">Using Angular-Kendo bindings</h2>
+
+<p>The Angular bindings are now integrated into Kendo UI.  If you"re using one of the bundles (such as <code class="language-plaintext highlighter-rouge">kendo.all.min.js</code>) then the required code is already there.  If you load individual Kendo UI files, you need to also load <code class="language-plaintext highlighter-rouge">kendo.angular.js</code> (or <code class="language-plaintext highlighter-rouge">kendo.angular.min.js</code>).  It must be loaded after <code class="language-plaintext highlighter-rouge">kendo.core</code>.</p>
+
+<p>In order for the Angular bindings to be activated, you must load <code class="language-plaintext highlighter-rouge">angular.js</code> <em>before</em> Kendo.</p>
+
+<p>Therefore, load the scripts in this order:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="jquery.js"&gt;&lt;/script&gt;
+&lt;script src="angular.js"&gt;&lt;/script&gt;
+&lt;script src="kendo.all.js"&gt;&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Don"t forget to load the Kendo UI stylesheets too.</p>
+
+<p>Next, when creating your AngularJS application you must declare dependency on "kendo.directives":</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var app = angular.module("your-angular-app", [ "kendo.directives" ]);
+</code></pre></div></div>
+
+<h3 id="creating-widgets-the-angular-way">Creating widgets the Angular way</h3>
+
+<p>The directives kick in on attributes like <code class="language-plaintext highlighter-rouge">kendo-widget-name</code>.  For example to get a <code class="language-plaintext highlighter-rouge">DatePicker</code> widget, you"d write the following:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;label&gt;Birthday: &lt;input kendo-date-picker /&gt;&lt;/label&gt;
+</code></pre></div></div>
+
+<p>When AngularJS compiles the HTML, the Kendo UI directive will turn the <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> field into a nice date picker widget.</p>
+
+<p>As a shortcut, you can discard the dashes after <code class="language-plaintext highlighter-rouge">kendo-</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input kendo-numerictextbox /&gt;
+</code></pre></div></div>
+
+<h3 id="scope-bindings-ng-model">Scope bindings (<code class="language-plaintext highlighter-rouge">ng-model</code>)</h3>
+
+<p>For all widgets which provide a <code class="language-plaintext highlighter-rouge">value()</code> method you can use the standard <code class="language-plaintext highlighter-rouge">ng-model</code> directive to bind their value into the AngularJS scope.  Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;label&gt;Birthday: &lt;input kendo-date-picker ng-model="birthday" /&gt;&lt;/label&gt;
+&lt;p&gt;
+  Your selection: 
+&lt;/p&gt;
+</code></pre></div></div>
+
+<p>The input field is now bound to the scope variable.  When you select a date, the <code class="language-plaintext highlighter-rouge">birthday</code> variable will be set to the input field"s value (as a string).</p>
+
+<h3 id="scope-bindings-k-ng-model">Scope bindings (<code class="language-plaintext highlighter-rouge">k-ng-model</code>)</h3>
+
+<p>If your element is a form field like <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> or <code class="language-plaintext highlighter-rouge">&lt;textarea&gt;</code> (which has a text value), the <code class="language-plaintext highlighter-rouge">ng-model</code> will bind the field contents, which is what most AngularJS users would expect.  So for the DatePicker example above, you would get a string date, instead of a JavaScript Date object, in the scope.</p>
+
+<p>If you need to get the actual <code class="language-plaintext highlighter-rouge">widget.value()</code> you can use <code class="language-plaintext highlighter-rouge">k-ng-model</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input kendo-date-picker k-ng-model="birthday" /&gt;
+</code></pre></div></div>
+
+<p>The directive will update the <code class="language-plaintext highlighter-rouge">birthday</code> variable with the selected <code class="language-plaintext highlighter-rouge">Date</code> object whenever the <code class="language-plaintext highlighter-rouge">change</code> event occurs on the widget.</p>
+
+<h3 id="widget-configuration-in-markup">Widget configuration in markup</h3>
+
+<p>Kendo UI widgets provide tons of configuration options.  When using the Kendo API you pass those options in widget constructors, e.g.:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#birthday").kendoDatePicker({
+  format : "dddd MMMM d, yyyy"
+});
+</code></pre></div></div>
+
+<p>To do the same with AngularJS bindings, you can use attributes prefixed with <code class="language-plaintext highlighter-rouge">k-</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;label&gt;
+  Birthday:
+  &lt;input kendo-date-picker k-format="'dddd MMMM d, yyyy'" /&gt;
+&lt;/label&gt;
+</code></pre></div></div>
+
+<p>Note that we had to "quote" the string attribute.  This is because the <code class="language-plaintext highlighter-rouge">k-</code> attributes are evaluated against the AngularJS scope.  If you need to store the date format as a scope variable you can do:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// in your controller:
+$scope.dateFormat = "dddd MMMM d, yyyy";
+
+&lt;!-- in HTML: --&gt;
+&lt;input kendo-date-picker k-format="dateFormat" /&gt;
+</code></pre></div></div>
+
+<p>You can use declarative binding for array and object configuration options, too.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;textarea kendo-editor k-tools="[ 'bold', 'italic', 'undeline' ]"&gt;&lt;/textarea&gt;
+</code></pre></div></div>
+
+<h3 id="widget-configuration-in-controller">Widget configuration in controller</h3>
+
+<p>If you"d like to store all widget configuration in the controller, you can use the special <code class="language-plaintext highlighter-rouge">k-options</code> attribute:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// in controller:
+$scope.monthPickerConfig = {
+  start  : "year",
+  depth  : "year",
+  format : "MMMM yyyy"
+};
+
+&lt;!-- in HTML: --&gt;
+&lt;input kendo-date-picker k-options="monthPickerConfig" /&gt;
+</code></pre></div></div>
+
+<h3 id="event-handlers">Event handlers</h3>
+
+<p>If you store the whole configuration in the controller, like above, then adding an event handler is done the same you would do with plain Kendo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// in controller:
+$scope.monthPickerConfig = {
+  start  : "year",
+  depth  : "year",
+  format : "MMMM yyyy",
+  change : function(e) {
+    var datePicker = e.sender;
+    console.log(datePicker.value());
+    $scope.selected = true;
+    $scope.$digest();
+  }
+};
+
+&lt;!-- in HTML: --&gt;
+&lt;input kendo-date-picker k-options="monthPickerConfig" /&gt;
+&lt;p ng-show="selected"&gt;A month was picked&lt;/p&gt;
+</code></pre></div></div>
+
+<p>The sample above includes a paragraph that"s using Angular"s <code class="language-plaintext highlighter-rouge">ng-show</code> directive and will be displayed only after a month was picked.  Notice in the event handler that we had to call <code class="language-plaintext highlighter-rouge">$scope.$digest()</code> in order for this trick to work.</p>
+
+<p>It is possible to specify event handlers using attributes as well. They require the <code class="language-plaintext highlighter-rouge">k-on-</code> prefix:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// in controller:
+$scope.onDateSelected = function(e) {
+  var datePicker = e.sender;
+  console.log(datePicker.value());
+  $scope.selected = true;
+};
+
+&lt;!-- in HTML: --&gt;
+&lt;input kendo-date-picker k-on-change="onDateSelected(kendoEvent)" /&gt;
+&lt;p ng-show="selected"&gt;A month was picked&lt;/p&gt;
+</code></pre></div></div>
+
+<p>Notice that the <code class="language-plaintext highlighter-rouge">kendoEvent</code> variable will be defined in scope and we must pass it to the event handler.  If we are using the <code class="language-plaintext highlighter-rouge">k-on-</code> attributes, there is no need to call <code class="language-plaintext highlighter-rouge">$digest()</code> on the scope (it"s taken care of by our bindings).</p>
+
+<h4 id="special-change-event-on-certain-widgets">Special <code class="language-plaintext highlighter-rouge">"change"</code> event on certain widgets</h4>
+
+<p>The Grid, TreeView and ListView widgets will evaluate handlers defined with <code class="language-plaintext highlighter-rouge">k-on-change</code> in a scope containing additional information about the selected item(s), as local variables.  The following locals are defined:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">selected</code> (jQuery object) – the selected elements</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">data</code> (array or data item) – the selected data model(s).  It will be an array when multiple selection is enabled, or a single item otherwise.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">dataItem</code> – when multiple selection is not enabled, this is provided for consistency and will be the same item as <code class="language-plaintext highlighter-rouge">data</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">columns</code> – for the Grid, when cell selection is enabled, it will be an array with zero-based column indexes for the selected columns. Also in this case the <code class="language-plaintext highlighter-rouge">selected</code> object will contain the respective <code class="language-plaintext highlighter-rouge">&lt;td&gt;</code> elements, instead of <code class="language-plaintext highlighter-rouge">&lt;tr&gt;</code>-s.</p>
+  </li>
+</ul>
+
+<p>The <code class="language-plaintext highlighter-rouge">kendoEvent</code> is available as well.</p>
+
+<h3 id="updating-widgets-when-options-change">Updating widgets when options change</h3>
+
+<p>You can use the special <code class="language-plaintext highlighter-rouge">k-rebind</code> attribute to create a widget which automatically updates when some scope variable changes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// in controller:
+$scope.orientation = "horizontal";
+
+&lt;!-- in HTML: --&gt;
+&lt;ul kendo-menu k-orientation="orientation" k-rebind="orientation"&gt;
+  &lt;li&gt;Item 1&lt;/li&gt;
+  &lt;li&gt;Item 2&lt;/li&gt;
+  &lt;li&gt;Item 3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;select kendo-drop-down-list k-ng-model="orientation"&gt;
+  &lt;option&gt;horizontal&lt;/option&gt;
+  &lt;option&gt;vertical&lt;/option&gt;
+&lt;/select&gt;
+</code></pre></div></div>
+
+<p>To watch multiple options for change, just use <code class="language-plaintext highlighter-rouge">k-options</code> and pass the same variable to <code class="language-plaintext highlighter-rouge">k-rebind</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul kendo-menu k-options="menuOptions" k-rebind="menuOptions"&gt; ... &lt;/ul&gt;
+</code></pre></div></div>
+
+<h3 id="delaying-widget-initialization">Delaying widget initialization</h3>
+
+<p>It"s sometimes useful to postpone creating a widget until after some asynchronously-loaded data is available.  For example you would need this to initialize a Grid widget when you load the column definitions from server (as the Grid does not support re-defining the columns after the widget is instantiated).</p>
+
+<p>You can use the special <code class="language-plaintext highlighter-rouge">k-ng-delay</code> attribute for this.  Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// in controller
+$http({ method: "GET", url: "customers.json" })
+  .success(function(result){
+    var dataSource = new kendo.data.DataSource({
+      data: result.data
+    });
+    $scope.gridOptions = {
+      dataSource: data,
+      columns: result.columns,
+      ...
+    };
+  });
+
+&lt;!-- in HTML: --&gt;
+&lt;div kendo-grid k-options="gridOptions" k-ng-delay="gridOptions"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<p>The grid will be created only when the <code class="language-plaintext highlighter-rouge">gridOptions</code> variable becomes available.</p>
+
+<h3 id="getting-widget-references">Getting widget references</h3>
+
+<p>Sometimes you might need a reference to the widgets in order to call methods on it from your controller.  To get one, just assign a name to the <code class="language-plaintext highlighter-rouge">kendo-widget-name</code> attribute, for example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// in controller:
+$scope.onChange = function() {
+  // $scope.datePicker will be initialized by the directive
+  alert($scope.datePicker.value());
+};
+
+&lt;!-- in HTML: --&gt;
+&lt;input kendo-date-picker="datePicker" k-on-change="onChange()" /&gt;
+</code></pre></div></div>
+
+<h3 id="global-angular-events-emitted-by-the-kendo-bindings">Global Angular events emitted by the Kendo bindings</h3>
+
+<h4 id="kendowidgetcreated"><code class="language-plaintext highlighter-rouge">kendoWidgetCreated</code></h4>
+
+<p>This event is emitted when a Kendo widget has been created.  You can hook on it from your Angular controller like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// in controller
+$scope.$on("kendoWidgetCreated", function(ev, widget){
+  // in widget you have a reference to the event
+  if (widget === $scope.myGrid) {
+    // the Grid defined below has just been created
+  }
+});
+
+&lt;!-- in HTML: --&gt;
+&lt;div kendo-grid="myGrid" ...&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<h4 id="kendorendered"><code class="language-plaintext highlighter-rouge">kendoRendered</code></h4>
+
+<p>This event is emitted when all Kendo widgets defined in the page have been created.  It"s sometimes useful to be able to intercept this event, since widgets are created asynchronously.  For example you can initially display a "Loading…" overlay in the page, and hide it from a handler on this event.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

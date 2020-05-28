@@ -1,0 +1,359 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/diagram/shapedefaults.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodiagram-shapedefaults">&lt;kendo:diagram-shapeDefaults&gt;</h1>
+
+<p>Defines the shape options.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram&gt;
+    &lt;kendo:diagram-shapeDefaults&gt;&lt;/kendo:diagram-shapeDefaults&gt;
+&lt;/kendo:diagram&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="editable-boolean">editable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Defines the shape editable options. Further configuration is available via <a href="#kendo-diagram-shapeDefaults-editable">kendo:diagram-shapeDefaults-editable</a>.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults editable="editable"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="fill-javalangstring">fill <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Defines the fill options of the shape. Further configuration is available via <a href="#kendo-diagram-shapeDefaults-fill">kendo:diagram-shapeDefaults-fill</a>.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults fill="fill"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="height-float">height <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Defines the height of the shape when added to the diagram.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults height="height"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="minheight-float">minHeight <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Defines the minimum height the shape should have, i.e. it cannot be resized to a value smaller than the given one.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults minHeight="minHeight"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="minwidth-float">minWidth <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Defines the minimum width the shape should have, i.e. it cannot be resized to a value smaller than the given one.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults minWidth="minWidth"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="path-javalangstring">path <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The path option of a Shape is a description of a custom geometry. The format follows the standard SVG format (http://www.w3.org/TR/SVG/paths.html#PathData "SVG Path data.").</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults path="path"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="source-javalangstring">source <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The source of the shape image. Applicable when the type is set to "image".</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults source="source"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Specifies the type of the Shape using any of the built-in shape type.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults type="type"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="visual-javalangstring">visual <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>A function returning a visual element to render for a given shape. The following primitives can be used to construct a composite visual:</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults visual="visual"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="width-float">width <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Defines the width of the shape when added to the diagram.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults width="width"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="x-float">x <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Defines the x-coordinate of the shape when added to the diagram.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults x="x"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="y-float">y <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>Defines the y-coordinate of the shape when added to the diagram.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults y="y"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendodiagram-shapedefaults-connectors">kendo:diagram-shapeDefaults-connectors</h3>
+
+<p>Defines the connectors the shape owns.You can easily define your own custom connectors or mix-match with the above defined custom connectors.Example - custom shape with custom connectorsThe following defines a custom shape with connectors adapted to the shape"s outline. Note in particular the various helpful methods (right(), left(), top()) to define positions relative to the shape.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/shapedefaults-connectors">kendo:diagram-shapeDefaults-connectors</a>.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults&gt;
+    &lt;kendo:diagram-shapeDefaults-connectors&gt;&lt;/kendo:diagram-shapeDefaults-connectors&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-shapedefaults-content">kendo:diagram-shapeDefaults-content</h3>
+
+<p>Defines the shapes content settings.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/shapedefaults-content">kendo:diagram-shapeDefaults-content</a>.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults&gt;
+    &lt;kendo:diagram-shapeDefaults-content&gt;&lt;/kendo:diagram-shapeDefaults-content&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-shapedefaults-editable">kendo:diagram-shapeDefaults-editable</h3>
+
+<p>Defines the shape editable options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/shapedefaults-editable">kendo:diagram-shapeDefaults-editable</a>.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults&gt;
+    &lt;kendo:diagram-shapeDefaults-editable&gt;&lt;/kendo:diagram-shapeDefaults-editable&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-shapedefaults-fill">kendo:diagram-shapeDefaults-fill</h3>
+
+<p>Defines the fill options of the shape.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/shapedefaults-fill">kendo:diagram-shapeDefaults-fill</a>.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults&gt;
+    &lt;kendo:diagram-shapeDefaults-fill&gt;&lt;/kendo:diagram-shapeDefaults-fill&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-shapedefaults-hover">kendo:diagram-shapeDefaults-hover</h3>
+
+<p>Defines the hover configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/shapedefaults-hover">kendo:diagram-shapeDefaults-hover</a>.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults&gt;
+    &lt;kendo:diagram-shapeDefaults-hover&gt;&lt;/kendo:diagram-shapeDefaults-hover&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-shapedefaults-rotation">kendo:diagram-shapeDefaults-rotation</h3>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/shapedefaults-rotation">kendo:diagram-shapeDefaults-rotation</a>.</p>
+
+<h4 id="example-18">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults&gt;
+    &lt;kendo:diagram-shapeDefaults-rotation&gt;&lt;/kendo:diagram-shapeDefaults-rotation&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h3 id="kendodiagram-shapedefaults-stroke">kendo:diagram-shapeDefaults-stroke</h3>
+
+<p>Defines the stroke configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/diagram/shapedefaults-stroke">kendo:diagram-shapeDefaults-stroke</a>.</p>
+
+<h4 id="example-19">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults&gt;
+    &lt;kendo:diagram-shapeDefaults-stroke&gt;&lt;/kendo:diagram-shapeDefaults-stroke&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="visual-string">visual <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>A function returning a visual element to render for a given shape. The following primitives can be used to construct a composite visual:</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults visual="handle_visual"&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+&lt;script&gt;
+    function handle_visual(e) {
+        // Code to handle the visual event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendodiagram-shapedefaults-visual">kendo:diagram-shapeDefaults-visual</h3>
+
+<p>A function returning a visual element to render for a given shape. The following primitives can be used to construct a composite visual:</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:diagram-shapeDefaults&gt;
+    &lt;kendo:diagram-shapeDefaults-visual&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the visual event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:diagram-shapeDefaults-visual&gt;
+&lt;/kendo:diagram-shapeDefaults&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

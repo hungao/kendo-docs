@@ -1,0 +1,710 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Second tutorial for Kendo UI PHP app development</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="This tutorial demonstrates the next steps you take for building your Kendo UI PHP application.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li class="active">Tutorials</li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/tutorials.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("tutorials/PHP/build-apps-with-kendo-ui-and-php-2.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="tutorial-intro-to-building-apps-with-kendo-ui-and-php---part-2">Tutorial: Intro To Building Apps With Kendo UI And PHP - Part 2</h1>
+
+<p>In Part 1 of this two part tutorial, we went over how to get up
+and running with PHP, how to choose and IDE, and how to get some
+fake data if you need it.</p>
+
+<p><a href="/tutorials/PHP/build-apps-with-kendo-ui-and-php">Read Part 1</a></p>
+
+<p>We built a simple SPA (single page application) which displays a list of sales
+employees and each employee can be expanded to show the territories they are
+responsible for.  In this tutorial, we are going to extend that application to allow a
+user to create, update and delete data.</p>
+
+<h3 id="business-requirements">Business Requirements</h3>
+
+<p>The requirements are as follows:</p>
+
+<p><strong>Requirement 1:</strong> Users should be able to update an employee’s last name, but
+not their first name.  This is because first names don’t change, but last
+names sometimes do.</p>
+
+<ul>
+  <li>Last name cannot be null</li>
+  <li>Add save and cancel buttons</li>
+</ul>
+
+<p><strong>Requirement 2:</strong> Users should be able to add new territories to a sales
+employee.</p>
+
+<p>Not terribly complex requirements to implement, but this will allow us to work
+through how we can use the <strong>DataSource</strong> and <strong>models</strong> along with editable
+grids.</p>
+
+<h3 id="requirement-1-update-the-last-name">Requirement 1: Update The Last Name</h3>
+
+<p>The first thing that we should do is tell the grid of employees that it is
+editable.  This is done by setting <strong>editable: true.</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#grid").kendoGrid({
+    dataSource: {
+        transport: {
+            read: "data/employees.php"
+        },
+        schema: {
+            data: "data"
+        }
+    },
+    columns: [{ field: "FirstName" }, { field: "LastName" }],
+    detailTemplate: kendo.template($("#template").html()),
+    detailInit: detailInit,
+    editable: true
+});
+</code></pre></div></div>
+
+<p>Setting <strong>editable: true</strong> is not enough to make the grid editable because the
+grid doesn’t have nearly enough information to know how to handle the editing
+process.  We want the last name to be editable but not the first.
+Additionally, we don’t want people to be able to null out the last name.</p>
+
+<p>The grid will get this information from the DataSource, but we need to define
+the “model” property of the schema which will tell the DataSource the exact
+structure of the data, as well as allowing us to specify validation rules for
+the data.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#grid").kendoGrid({
+    dataSource: {
+        transport: {
+            read: "data/employees.php"
+        },
+        schema: {
+            data: "data",
+            model: {
+                id: "EmployeeID",
+                fields: {
+                    FirstName: { editable: false },
+                    LastName: { validation: { required: true} }
+                }
+            }
+        }
+    },
+    columns: [{ field: "FirstName" }, { field: "LastName" }],
+    detailTemplate: kendo.template($("#template").html()),
+    detailInit: detailInit,
+    editable: true
+});
+</code></pre></div></div>
+
+<p>The above <strong>schema</strong> property has been modified.  It now contains a <strong>model</strong>
+object.  That model defines the primary key for the employee data, which is of
+course the EmployeeID.  This is the field that helps the model know how to
+distinguish unique objects.  The <strong>fields **property designates the rest of
+the fields in the data source that we are using.  In our case, it’s the first
+and last name.  Each **field</strong> property has some additional information with
+it.</p>
+
+<p><strong>FirstName:</strong> We decided first names don’t change so we don’t want people
+editing this field.  This is accomplished by setting **editable: false **for
+the FirstName.</p>
+
+<p><strong>LastName:</strong> This field is editable, but we don’t want users blanking it out,
+so we can make it required by setting the <strong>validation</strong> object.</p>
+
+<p>The grid now has enough information to make the grid editable.  If you run the
+project, you will notice that you can click on the Last Name and it will
+become and editable textbox.  However, if you click on the First Name, nothing
+happens because you can’t edit it.  Go ahead and try to blank out the Last
+Name and press enter.  You get a validation message.</p>
+
+<p><img src="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/php-1-Part-_7E9D-9_2.png" alt="Validation Message" /></p>
+
+<p>For more information on all the things you can do with
+validation rules, make sure you check out the Kendo UI Validation Demos.</p>
+
+<p>Before we can go any further with this, we need to create an endpoint for
+updating the last name.</p>
+
+<p><strong>Update Endpoint</strong></p>
+
+<p>So far, we have all our endpoints in a data folder.  Each endpoint is named
+for the table which it theoretically represents in the database.  We could do
+this one of two ways.</p>
+
+<ol>
+  <li>
+    <p>We could create subfolders for the endpoints and then have read, create,
+update and delete methods in each one.</p>
+  </li>
+  <li>
+    <p>Listen for the HTTP verb type and respond appropriately.</p>
+  </li>
+</ol>
+
+<p>Number 2 is more RESTful than 1, so we will implement it that way. REST is wonderful and you should
+learn much more about it, but there isn’t space to fully cover that and the
+current topic in this tutorial.</p>
+
+<p>What is meant by the HTTP verb is that if the request is a GET, we will treat it
+as a read.  If it is a POST, we treat it as an update.  Additionally, if we
+were doing create or delete we would use the PUT for create and the DELETE for
+delete.</p>
+
+<p>Inside the <strong>employees.php</strong> file in the <strong>data</strong> folder, we need to write
+scenarios for the different request types.  I did this by determining what the
+verb was using the $.SERVER[“REQUEST_TYPE”] method and responding
+appropriately.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+
+	$link = mysql_pconnect("localhost", "root", "root") or die("Unable To Connect To Database Server");
+
+	mysql_select_db("northwind") or die("Unable To Connect To Northwind");
+
+	// add the header line to specify that the content type is JSON
+	header("Content-type: application/json");
+
+	// determine the request type
+	$verb = $_SERVER["REQUEST_METHOD"];
+
+	// handle a GET 
+	if ($verb == "GET") {
+		$arr = array();
+
+		$rs = mysql_query("SELECT EmployeeID, LastName, FirstName FROM Employees");
+
+		while($obj = mysql_fetch_object($rs)) {
+
+			$arr[] = $obj;
+
+		}
+		echo "{\"data\":" .json_encode($arr). "}";
+	}
+
+	// handle a POST  
+	if ($verb == "POST") {
+
+		// DISCLAIMER: It is better to use PHP prepared statements to communicate with the database. 
+		//             this provides better protection against SQL injection.
+		//             [http://php.net/manual/en/pdo.prepared-statements.php][4]
+		// get the parameters from the post. escape them to protect against sql injection.
+
+        $lastName = mysql_real_escape_string($_POST["LastName"]);
+        $employeeId = mysql_real_escape_string($_POST["EmployeeID"]);
+
+        $rs = mysql_query("UPDATE Employees SET LastName = '" .$lastName ."' WHERE EmployeeID = " .$employeeId);
+
+        echo json_encode($rs);
+    }
+
+?&gt;
+</code></pre></div></div>
+
+<p><strong>A Few Things Of Note</strong></p>
+
+<p>The <strong>header</strong> call was moved to the top because we need it no matter what.  The
+next thing we did was determine the verb and set the <strong>$verb</strong> variable.  The
+first <strong>if</strong> handles the GET or the read, and the second handles the POST or
+update.</p>
+
+<p>In the POST method, we pulled the <strong>LastName</strong> value and <strong>EmployeeID</strong> off the
+request, since the Kendo UI DataSource sent them as parameters.  It’s then
+just a matter of executing a simple update statement.  When doing a CRUD
+operation like this, the <strong>mysql_query</strong> will return a simple <strong>true</strong> if the
+statement executed and a <strong>false</strong> if it did not.  The only thing the
+DataSource is looking for is a 200 from the server, so it really doesn’t
+matter what you return, as long as it’s JSON.</p>
+
+<p><strong>Add The Endpoint To The DataSource</strong></p>
+
+<p>The DataSource needs to know about the update endpoint and that we want a
+POST.  This is done by specifying the <strong>update</strong> object on the <strong>transport</strong>.</p>
+
+<p>The other changes that were made to the grid were to make it navigable, which enables
+us to exit the cell be edited by using the “enter” key, and also add “Save”
+and “Cancel” buttons in the toolbar.  All of this is trivial with the grid.
+The grid code now looks like this.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#grid").kendoGrid({
+    dataSource: {
+        transport: {
+            read: "data/employees.php",
+            update: {
+                url: "data/employees.php",
+                type: "POST"
+            }
+        },
+        schema: {
+            data: "data",
+            model: {
+                id: "EmployeeID",
+                fields: {
+                    FirstName: { editable: false },
+                    LastName: { validation: { required: true} }
+                }
+            }
+        }
+    },
+    columns: [{ field: "FirstName" }, { field: "LastName" }],
+    detailTemplate: kendo.template($("#template").html()),
+    detailInit: detailInit,
+    editable: true,
+    navigable: true,  // enables keyboard navigation in the grid
+    toolbar: [ "save", "cancel" ]  // adds save and cancel buttons
+});
+</code></pre></div></div>
+
+<h3 id="failed-request">Failed Request</h3>
+
+<p>PHP is going to return a 200, even if the SQL statement doesn’t execute.  We
+don’t want this.  Then the grid thinks the data update happened, but in
+reality, it failed.  The UI is now out of sync with the database.</p>
+
+<p>We need for PHP to return a server error.  To do this, we just need to add the
+header.  Our POST function now looks like this…</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// handle a POST
+if ($verb == "POST") {
+
+	// DISCLAIMER: It is better to use PHP prepared statements to communicate with the database.
+    //             this provides better protection against SQL injection.
+    //             [http://php.net/manual/en/pdo.prepared-statements.php][4]
+
+	// get the parameters from the post. escape them to protect against sql injection.
+
+    $lastName = mysql_real_escape_string($_POST["LastName"]);
+    $employeeId = mysql_real_escape_string($_POST["EmployeeID"]);
+
+    $rs = mysql_query("UPDATE Employees SET LastName = '" .$lastName ."' WHERE EmployeeID = " .$employeeId);
+
+    if ($rs) {
+        echo json_encode($rs);
+    }
+    else {
+        header("HTTP/1.1 500 Internal Server Error");
+        echo "Update failed for EmployeeID: " .$employeeId;
+    }
+}
+</code></pre></div></div>
+
+<p>If the update succeeds, a “true” is returned.  If the update fails, a 500
+server error is returned and the grid will not reflect that the update has
+been made.  If you want to provide additional information on the error, you
+can listen to the <strong>error</strong> event on the DataSource <strong>update</strong> method.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#grid").kendoGrid({
+    dataSource: {
+        transport: {
+            read: "data/employees.php",
+            update: {
+                url: "data/employee.php",
+                type: "POST"
+            }
+        },
+        error: function(e) {
+            alert(e.responseText);
+        }
+        schema: {
+            data: "data",
+            model: {
+                id: "EmployeeID",
+                fields: {
+                    FirstName: { editable: false },
+                    LastName: { validation: { required: true} }
+                }
+            }
+        }
+    },
+    columns: [{ field: "FirstName" }, { field: "LastName" }],
+    detailTemplate: kendo.template($("#template").html()),
+    detailInit: detailInit,
+    editable: true,
+    navigable: true,  // enables keyboard navigation in the grid
+    toolbar: [ "save", "cancel" ]  // adds save and cancel buttons
+});
+</code></pre></div></div>
+
+<h4 id="sample-failure">Sample Failure…</h4>
+
+<p><img src="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/php-1-Part-_7E9D-10_2.png" alt="Sample Failure" /></p>
+
+<h3 id="requirement-2-add-sales-territories">Requirement 2: Add Sales Territories</h3>
+
+<p>In order to enable our users to add sales territories, we need to give the
+details grid a model as well and specify it’s structure.  We also need to
+specify the endpoint for a create.  In our RESTful style, we will use a “PUT”
+HTTP verb as the type and specify the <strong>create</strong> method of the <strong>transport</strong>.
+We also moved the DataSource out of the grid declaration and into a variable
+that we can access later.</p>
+
+<p>In JavaScript, if you don’t put **var **in front of your variable, it becomes
+a global variable.  This is generally considered bad practice, but in the name
+of simple demonstration, it is being done here.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>employeeTerritoriesDS = new kendo.data.DataSource({
+    transport: {
+        read: "data/territories.php",
+        create: {
+            url: "data/employeeTerritories.php",
+            type: "PUT"
+        },
+    },
+    schema: {
+        data: "data",
+        model: {
+            id: TerritoryID,
+        }
+    },
+    serverFiltering: true,
+    filter: { field: "EmployeeID", operator: "eq", value: e.data.EmployeeID }
+});
+
+
+// create a subgrid for the current detail row, getting territory data for this employee
+detailRow.find(".subgrid").kendoGrid({
+    dataSource: employeeTerritoriesDS,
+    columns: [{ title: "Territories", field: "TerritoryDescription" }],
+    toolbar: [ "save" ]
+});
+</code></pre></div></div>
+
+<p>We also added a <strong>save</strong> button on the toolbar like we did in the parent grid.</p>
+
+<p>At this point, we need to add a way for users to add a new territory to a
+user.  There is a catch here though.  We can’t just let them enter free text.
+We have a table of Territories and a table of Employees and they are related
+via a Lookup Table called <strong>EmployeeTerritories</strong>.  If we let the user enter
+free text, we then have to create the territory, get it’s newly created ID and
+update the <strong>EmployeeTerritories</strong> table.  Beyond that, the user could enter a
+value that is already in the <strong>Territories</strong> table.  That defeats the purpose
+of our lookup.  What we really need, is a list of choices.</p>
+
+<h4 id="enter-the-combobox">Enter The ComboBox</h4>
+
+<p>It was mentioned earlier that our details template was simple, but
+we could expand on it?  We’re going to do that now.  Our new template will
+contain an input which we can turn into a ComboBox and a button on which we
+can handle the click and add the item to the grid.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script type="text/x-kendo-template" id="template"&gt;
+    &lt;div&gt;
+        &lt;div style="margin-bottom: 10px;"&gt;
+            &lt;input id="territory_#= data.EmployeeID #" class="comboBox" /&gt;
+            &lt;button class="k-button add-territory" data-employee-id="#= data.EmployeeID #"
+                           onclick="addTerritory(this)" &gt;Add&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="subgrid"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>So we added an input and a button.  But what is this funky #= syntax?</p>
+
+<p>This is a Kendo UI Template syntax. It’s going to replace <strong>data.EmployeeID</strong>
+with the actual <strong>EmployeeID</strong>.  The <strong>e</strong> argument that goes into the
+<strong>detailInit(e)</strong> function also gets passed to our template.  <strong>EmployeeID</strong> is found on the <strong>data</strong> object off the <strong>e</strong> parameter.  We are dynamically
+composing an ID that will help us grab that ComboBox later much easier.  We
+are also adding the <strong>EmployeeID</strong> as a data attribute on the button so we can
+get the <strong>EmployeeID **back much easier and thusly get the instance of the
+ComboBox much easier.  I also added an **onlick</strong> event to the button and
+passed in the button itself as a parameter.  This <strong>addTerritory</strong> event is
+where we will actually add the item to the grid.</p>
+
+<p>On the <strong>detailInit()</strong> we need to define a DataSource for our ComboBox and
+create the widget.  We are going to need an additional file in the <strong>data</strong> folder.  At this point, it makes more sense for our current
+<strong>territories.php</strong> file to be renamed to <strong>employeeTerritories.php</strong> because
+that’s really what it represents.  I renamed that and updated the DataSource
+instance with the right endpoints on the <strong>transport</strong>.</p>
+
+<p>Now create a new php file in <strong>data,</strong> and call it <strong>territories.php</strong>.  This
+file will get us a list of Territories our users can pick from.  But we don’t
+want the user assigning duplicate territories so we need to filter those out.
+We will select everything that is not currently assigned to them.  You will
+notice below in the transport that I add the <strong>EmployeeID **on to the end of
+the **read</strong> so it gets passed as a query string variable.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// create the datasource
+territoriesDS = new kendo.data.DataSource({
+    transport: {
+        read: "data/territories.php?EmployeeID=" + e.data.EmployeeID
+    },
+    schema: {
+        data: "data",
+        model: {
+            id: "TerritoryID"
+        }
+    }
+
+});
+</code></pre></div></div>
+
+<p>And the <strong>territories.php</strong> endpoint:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+
+    $link = mysql_pconnect("localhost", "root", "root") or die("Could not connect");
+
+    mysql_select_db("northwind") or die("Could not select database");
+
+    $arr = array();
+
+    // DISCLAIMER: It is better to use PHP prepared statements to communicate with the database.
+    //             this provides better protection against SQL injection.
+    //             [http://php.net/manual/en/pdo.prepared-statements.php][4]
+
+    // get the parameters from the get. escape them to protect against sql injection.
+    $employeeId = mysql_real_escape_string($_REQUEST["EmployeeID"]);
+
+    $rs = mysql_query("SELECT t.TerritoryID, TRIM(t.TerritoryDescription) AS TerritoryDescription
+                       FROM EmployeeTerritories et
+                       INNER JOIN Territories t ON et.TerritoryID = t.TerritoryID
+                       WHERE et.EmployeeID != " .$employeeId
+                       . " ORDER BY t.TerritoryDescription ASC");
+
+    while($obj = mysql_fetch_object($rs)) {
+
+        $arr[] = $obj;
+
+    }
+
+
+    header("Content-type: application/json");
+
+    echo "{\"data\":" .json_encode($arr). "}";
+
+?&gt;
+</code></pre></div></div>
+
+<p>The DataSource and endpoint are all configured so we are set to turn this
+input from the template into a ComboBox.  To do this,.we select the item and
+call <strong>kendoComboBox()</strong>, passing in the DataSource and defining what the text
+and value fields are.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// create the autocomplete
+detailRow.find(".comboBox").kendoComboBox({
+    dataSource: territoriesDS,
+    dataTextField: "TerritoryDescription",
+    dataValueField: "TerritoryID"
+});
+</code></pre></div></div>
+
+<p>Now if you view the page, we have a nifty drop down you can either type in, or
+select from.  Oh, and we also switched the theme to <strong>default</strong> just for fun!</p>
+
+<p><img src="https://raw.github.com/telerik/kendo-docs/production/tutorials/PHP/images/php-1-Part-_7E9D-11_4.png" alt="Nifty Drop Down" /></p>
+
+<p>Now we have a ComboBox that returns only the territories that
+are not currently assigned to this person.  Now let’s add the event for
+handling the button click.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var addTerritory = function(sender) {
+
+    // get the employee id off the data-employee-id attribute of the button
+    var employeeId = $(sender).data("employee-id");
+
+    // get a reference to the combobox which contains the selected item
+    var comboBox = $("#territory_" + employeeId).data("kendoComboBox");
+
+    // add the item to the datasource - it is thusly added to the grid
+    employeeTerritoriesDS.add({ EmployeeID: employeeId, TerritoryDescription: comboBox.text(),  TerritoryID: comboBox.value() });
+
+    // remove the current item from the combobox - it's no longer a valid selection
+    territoriesDS.remove(comboBox.value());
+
+    // clear the text of the combobox
+    comboBox.text("");
+}
+</code></pre></div></div>
+
+<p>The first line gets the <strong>EmployeeID</strong> off the data attribute on the button.</p>
+
+<p>The second line gets the ComboBox by building the dynamic ID and getting a
+reference to an instance of the ComboBox.</p>
+
+<p><strong><em>Kendo UI Widgets are always referenced by data(“kendoWidgetName”) after
+initialization.</em></strong></p>
+
+<p>The third line actually adds an item to the <strong>employeeTerritoriesDS</strong>.  This
+is the power of the DataSource.  We aren’t going to interact with the remote
+data, only the local model.  The DataSource will take care of sending it to
+the database after we click the save button.</p>
+
+<p>The last two lines remove the item we just added from the ComboBox, because it
+is no longer available and then clear the text of the ComboBox box.</p>
+
+<h4 id="no-delete-or-put-in-php">No DELETE or PUT in PHP</h4>
+
+<p>Let’s add the <strong>PUT</strong> method to the <strong>employeeTerritories.php</strong> file.  Unlike
+the GET and POST, PHP does not contain a global container for PUT or DELETE.</p>
+
+<p>In any case, we can read in the input, assign it to an array and then access
+the variables we send over the wire as part of the form values.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if ($verb == "PUT") {
+    $request_vars = Array();
+    parse_str(file_get_contents('php://input'), $request_vars );
+
+	// DISCLAIMER: It is better to use PHP prepared statements to communicate with the database.
+	//             this provides better protection against SQL injection.
+	//             [http://php.net/manual/en/pdo.prepared-statements.php][4]
+	
+    // get the parameters from the get. escape them to protect against sql injection.
+
+    $territoryId = mysql_real_escape_string($request_vars["TerritoryID"]);
+
+    $employeeID = mysql_real_escape_string($request_vars["EmployeeID"]);
+
+    $sql = "INSERT INTO EmployeeTerritories (EmployeeID, TerritoryID) VALUES (" .$employeeID ."," .$territoryId .")";
+
+    $rs = mysql_query($sql);
+
+    if ($rs) {
+        echo true;
+    }
+    else {
+        header("HTTP/1.1 500 Internal Server Error");
+        echo false;
+    }
+}
+</code></pre></div></div>
+
+<p>Now run the application and you can add new items to the grid.  Once you click
+the <strong>Save</strong> button in the grid toolbar, the inserts will be sent to the
+server.  However, <strong>TerritoryID</strong> will be empty.  Why is this?  This is
+actually because we didn’t assign a <strong>TerritoryID</strong> when we added the model
+object to the DataSource on the subgrid.  The <strong>TerritoryID</strong> is currently the
+primary key.  The DataSource will not recognize the object as being a newly
+created object if you assign a value to it’s primary key and thusly nothing
+will get sent to the server on create.</p>
+
+<p>The real issue here is that the primary key for the subgrid is really a
+compound key.  It’s the <strong>EmployeeID</strong> and the <strong>TerritoryID</strong> together which
+define a unique record.  Let’s go back and do some trickery in the SQL to make
+that appear to be the case.  We can concatenate the <strong>EmployeeID **and
+**TerritoryID</strong> to make our own compound key.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$rs = mysql_query("SELECT CONCAT(et.EmployeeID, et.TerritoryID) AS EmployeeTerritoryID, t.TerritoryID, e.EmployeeID,
+                   TRIM(t.TerritoryDescription) AS TerritoryDescription
+                   FROM Territories t
+                   INNER JOIN EmployeeTerritories et ON t.TerritoryID = et.TerritoryID
+                   INNER JOIN Employees e ON et.EmployeeID = e.EmployeeID
+                   WHERE e.EmployeeID = " .$employeeID);
+</code></pre></div></div>
+
+<p>And the model for the DataSource now becomes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>model: {
+    id: "EmployeeTerritoryID"
+}
+</code></pre></div></div>
+
+<p>No need to add the <strong>EmployeeID</strong> or <strong>TerritoryID</strong> to the model definition.
+It’s smart enough to pick those up on its own!</p>
+
+<p>It is highly recommended that you use some sort of MVC framework with your PHP.
+<a href="http://www.zend.com/en/">Zend</a> is popular and <a href="http://codeigniter.com/">CodeIgniter</a> looks promising. It really takes some of the headache out of the manual things
+that we did here.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

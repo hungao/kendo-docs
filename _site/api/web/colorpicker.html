@@ -1,0 +1,581 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI ColorPicker</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/colorpicker.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouicolorpicker">kendo.ui.ColorPicker</h1>
+
+<p>A drop-down color picker widget.</p>
+
+<p>This widget can be used as a replacement for the browser"s built-in color
+picker widget - <code class="language-plaintext highlighter-rouge">&lt;input type="color"&gt;</code> in HTML5.  It can be
+instantiated from such an element and by default it will replace it in
+the DOM.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="buttons-boolean-default-true">buttons <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Specifies whether the widget should display the Apply / Cancel buttons.</p>
+
+<p>Applicable only for the HSV selector, when a <a href="#configuration-palette"><code class="language-plaintext highlighter-rouge">pallete</code></a> is not specified.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  buttons: false
+})
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columns-number">columns <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The number of columns to show in the color dropdown when a <a href="#configuration-palette"><code class="language-plaintext highlighter-rouge">pallete</code></a> is specified.
+This is automatically initialized for the "basic" and "websafe" palettes.
+If you use a custom palette then you can set this to some value that makes sense for your colors.</p>
+
+<h4 id="example---wrap-list-of-colors-on-two-rows-with-3-columns">Example - wrap list of colors on two rows with 3 columns</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  palette: [ "#000", "#333", "#666", "#999", "#ccc", "#fff" ],
+  columns: 3
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="tilesize-numberobject-default-14">tileSize <code class="language-plaintext highlighter-rouge">Number|Object</code> <em>(default: 14)</em></h3>
+
+<p>The size of a color cell.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  palette: "basic",
+  tileSize: 32
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="tilesizewidth-number-default-14">tileSize.width <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 14)</em></h3>
+
+<p>The width of the color cell.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  palette: "basic",
+  tileSize: { width: 40 }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="tilesizeheight-number-default-14">tileSize.height <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 14)</em></h3>
+
+<p>The height of the color cell.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  palette: "basic",
+  tileSize: { height: 40 }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messages-object">messages <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Allows customization of "Apply" / "Cancel" labels.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  messages: {
+    apply: "Update",
+    cancel: "Discard"
+  }
+})
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="palette-stringarray-default-null">palette <code class="language-plaintext highlighter-rouge">String|Array</code> <em>(default: null)</em></h3>
+
+<p>When a non-null <code class="language-plaintext highlighter-rouge">palette</code> argument is supplied, the drop-down will be
+a simple color picker that lists the colors. The following are supported:</p>
+
+<ul>
+  <li>
+    <p>"basic" – displays 20 basic colors</p>
+  </li>
+  <li>
+    <p>"websafe" – display the "web-safe" color palette</p>
+  </li>
+  <li>
+    <p>otherwise, pass a string with colors in HEX representation separated with
+commas, or an array of colors, and it will display that palette instead.
+If you pass an array it can contain strings supported by <a href="../framework/kendo#parseColor">parseColor</a> or
+<a href="../framework/kendo#Color">Color</a> objects.</p>
+  </li>
+</ul>
+
+<p>If <code class="language-plaintext highlighter-rouge">palette</code> is missing or <code class="language-plaintext highlighter-rouge">null</code>, the widget will display the HSV
+selector.</p>
+
+<h4 id="example---use-websafe-palette">Example - use "websafe" palette</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  palette: "websafe"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---use-list-of-colors">Example - use list of colors</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  palette: [ "#000", "#333", "#666", "#999", "#ccc", "#fff" ],
+  columns: 6
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="opacity-boolean-default-false">opacity <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Only for the HSV selector.  If <code class="language-plaintext highlighter-rouge">true</code>, the widget will display the opacity slider.
+Note that currently in HTML5 the <code class="language-plaintext highlighter-rouge">&lt;input type="color"&gt;</code> does not support opacity.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  opacity: true
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="preview-boolean-default-true">preview <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>Only applicable for the HSV selector.</p>
+
+<p>Displays the color preview element, along with an input field where the end user can paste a color in a CSS-supported notation.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  preview: false
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toolicon-string-default-null">toolIcon <code class="language-plaintext highlighter-rouge">String</code> <em>(default: null)</em></h3>
+
+<p>A CSS class name to display an icon in the color picker button.  If
+specified, the HTML for the element will look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span class="k-tool-icon ${toolIcon}"&gt;
+  &lt;span class="k-selected-color"&gt;&lt;/span&gt;
+&lt;/span&gt;
+</code></pre></div></div>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  toolIcon: "k-foreColor"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value-stringcolor-default-null">value <code class="language-plaintext highlighter-rouge">String|Color</code> <em>(default: null)</em></h3>
+
+<p>The initially selected color.
+Note that when initializing the widget from an <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> element, the initial color will be decided by the field instead.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="colorpicker"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  value: "#b72bba"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="close">close</h3>
+
+<p>Closes the popup.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker();
+var colorpicker = $("#colorpicker").data("kendoColorPicker");
+colorpicker.open();
+
+setTimeout(function() {
+    colorpicker.close();
+}, 1000);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open">open</h3>
+
+<p>Opens the popup element with the color selector.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker();
+var colorpicker = $("#colorpicker").data("kendoColorPicker");
+colorpicker.open();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="toggle">toggle</h3>
+
+<p>Toggles the popup.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input id="colorpicker" type="color" /&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker();
+var colorpicker = $("#colorpicker").data("kendoColorPicker");
+colorpicker.toggle();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value-stringcolor-default-null-1">value <code class="language-plaintext highlighter-rouge">String|Color</code> <em>(default: null)</em></h3>
+
+<p>Get or set the selected color. If no argument is given, this returns the
+currently selected color as a string in format #FFFFFF when the <code class="language-plaintext highlighter-rouge">opacity</code>
+option is off, or rgba(255, 255, 255, 1) when <code class="language-plaintext highlighter-rouge">opacity</code> is requested.</p>
+
+<p>If one argument is given, it selects the new color and updates the UI.  The
+argument can be a string in hex, rgb or rgba format, or a <a href="../framework/kendo#Color">Color</a> object.
+This does not trigger the "change" event.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="color-string-optional">color <code class="language-plaintext highlighter-rouge">String</code> <em>(optional)</em></h5>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> the string representation of the current color.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="colorpicker"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker();
+var colorpicker = $("#colorpicker").data("kendoColorPicker");
+
+// set picker value
+colorpicker.value("#ccc");
+
+// get picker value
+var value = colorpicker.value();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="color">color</h3>
+
+<p>Get or set the selected color. If no argument is given, this returns the currently selected color as a <a href="/api/framework/color"><code class="language-plaintext highlighter-rouge">kendo.Color</code> object</a>.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="color-kendocolor-optional">color <code class="language-plaintext highlighter-rouge">kendo.Color</code> <em>(optional)</em></h5>
+
+<p>The color that should be set as the current value</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.Color</code> the current value</p>
+
+<h3 id="enable">enable</h3>
+
+<p>Enables or disables the widget.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="enable-boolean-optional">enable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(optional)</em></h5>
+
+<p>Whether the widget should be enabled (<code class="language-plaintext highlighter-rouge">true</code>) or disabled (<code class="language-plaintext highlighter-rouge">false</code>). If not specified, the method will enable the widget.</p>
+
+<h4 id="example---disable-the-color-picker">Example - disable the color picker</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="colorpicker"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker();
+var colorpicker = $("#colorpicker").data("kendoColorPicker");
+colorpicker.enable(false);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="change">change</h3>
+
+<p>Fires when a color was selected, either by clicking on it (in the
+simple picker), by clicking ENTER or by pressing "Apply" in the HSV
+picker.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="evalue-string">e.value <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The value of the colorpicker.</p>
+
+<h4 id="example---subscribe-to-the-change-event-during-initialization">Example - subscribe to the "change" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="colorpicker"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  change: function(e) {
+    console.log("The picked color is ", e.value);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-change-event-after-initialization">Example - subscribe to the "change" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="colorpicker"&gt;&lt;/div&gt;
+&lt;script&gt;
+function picker_change(e) {
+  console.log("The picked color is ", e.value);
+}
+$("#colorpicker").kendoColorPicker();
+var colorpicker = $("#colorpicker").data("kendoColorPicker");
+colorpicker.bind("change", picker_change);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select">select</h3>
+
+<p>Fires as a new color is displayed in the drop-down picker.  This is
+not necessarily the "final" value; for example this event triggers
+when the sliders in the HSV selector are dragged, but then pressing
+ESC would cancel the selection and the color will revert to the
+original value.</p>
+
+<h5 id="evalue-string-1">e.value <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The value of the colorpicker.</p>
+
+<h4 id="example---subscribe-to-the-select-event-during-initialization">Example - subscribe to the "select" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="colorpicker"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  select: function(e) {
+    console.log("The selected color is ", e.value);
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-select-event-after-initialization">Example - subscribe to the "select" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="colorpicker"&gt;&lt;/div&gt;
+&lt;script&gt;
+function picker_select(e) {
+  console.log("The selected color is ", e.value);
+}
+$("#colorpicker").kendoColorPicker();
+var colorpicker = $("#colorpicker").data("kendoColorPicker");
+colorpicker.bind("select", picker_select);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open-1">open</h3>
+
+<p>Fires when the picker popup is opening.</p>
+
+<h4 id="example---subscribe-to-the-open-event-during-initialization">Example - subscribe to the "open" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="colorpicker"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  open: function() {
+    console.log("Picker popup opened");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-open-event-after-initialization">Example - subscribe to the "open" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="colorpicker"&gt;&lt;/div&gt;
+&lt;script&gt;
+function picker_open() {
+  console.log("Picker popup opened");
+}
+$("#colorpicker").kendoColorPicker();
+var colorpicker = $("#colorpicker").data("kendoColorPicker");
+colorpicker.bind("open", picker_open);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="close-1">close</h3>
+
+<p>Fires when the picker popup is closing.</p>
+
+<h4 id="example---subscribe-to-the-close-event-during-initialization">Example - subscribe to the "close" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="colorpicker"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#colorpicker").kendoColorPicker({
+  close: function() {
+    console.log("Picker popup closed");
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-close-event-after-initialization">Example - subscribe to the "close" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="colorpicker"&gt;&lt;/div&gt;
+&lt;script&gt;
+function picker_close() {
+  console.log("Picker popup closed");
+}
+$("#colorpicker").kendoColorPicker();
+var colorpicker = $("#colorpicker").data("kendoColorPicker");
+colorpicker.bind("close", picker_close);
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

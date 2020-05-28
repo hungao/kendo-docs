@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Documentation guide for using metadata in File Upload UI widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to send metadata to the save handler and receive metadata in Kendo UI Upload widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/upload/metadata.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <p>Asynchronous uploading usually means that you lose the association betwen the files and the context that they originate from.</p>
+
+<p>Take an e-mail application for example. The save handler must associate the uploaded files to a particular message.</p>
+
+<p>The message and the file even might be processed on different servers in a load balancing or cloud computing scenario.</p>
+
+<h2 id="sending-metadata-to-the-save-handler">Sending metadata to the save handler</h2>
+
+<ol>
+  <li>
+    <p>Add an input field for description. We will send its value to the save handler.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;input type="text" id="fileDescription" /&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Declare a handler for the upload event and attach a data object to the passed event.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> function onUpload(e) {
+     e.data = {
+         fileDescription: $("#fileDescription").val()
+     };
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Attach the <code class="language-plaintext highlighter-rouge">upload</code> event handler.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $("#photos").kendoUpload({
+     async: {
+         saveUrl: "saveHandler.php",
+         removeUrl: "removeHandler.php"
+     },
+     upload: onUpload
+ });
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Process the file and the associated description</p>
+  </li>
+</ol>
+
+<p>The description, and any other fields of the <code class="language-plaintext highlighter-rouge">e.data</code> object, will be serialized in the POST request.</p>
+
+<p>Please consult the documentation of your server-side platform for instructions on how to read posted form fields.</p>
+
+<h2 id="receiving-metadata-from-the-save-handler">Receiving metadata from the save handler</h2>
+
+<p>The save handler can sometimes produce a result that needs to be routed back to the page.</p>
+
+<p>The Upload requires the response to be in JSON format with Content-Type set to "text/plain". Any non-empty response that is not JSON will be treated as a server error.</p>
+
+<ol>
+  <li>
+    <p>Build the response</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+
+     header('Content-Type: text/plain;');
+
+     $data = array('foo' =&gt; 'bar', 'status' =&gt; 'ok');
+
+     echo json_encode($data);
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Declare a handler for the <a href="/api/web/upload/events.aspx#success">success event</a> and process the response</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> function onSuccess(e) {
+     alert("Status: " + e.response.status);
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Attach the event handler</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $("#photos").kendoUpload({
+     async: {
+         saveUrl: "saveHandler.php",
+         removeUrl: "removeHandler.php"
+     },
+     success: onSuccess
+ });
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<blockquote>
+  <p>The same approach of sending and receiving metadata is applicable for the <strong>remove</strong> handler as well.</p>
+</blockquote>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

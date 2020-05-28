@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Checked binding in Kendo UI MVVM | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Based on the value from the View-model, checked binding in Kendo UI MVVM changes the behaviour of a checkbox or a radio button.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/mvvm/bindings/checked.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="checked-binding">Checked binding</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">checked</code> binding checks or unchecks a checkbox (<code class="language-plaintext highlighter-rouge">&lt;input type="checkbox" /&gt;</code>) or
+radio button (<code class="language-plaintext highlighter-rouge">&lt;input type="radio" /&gt;</code>) based on a value from the View-Model.</p>
+
+<h2 id="note-the-checked-binding-supports-only-checkable-dom-elements-and-widgets">Note: the checked binding supports only checkable DOM elements and widgets</h2>
+
+<p>To set the value of other input elements use the <code class="language-plaintext highlighter-rouge">value</code> binding.</p>
+
+<h2 id="checkbox-checked-binding">Checkbox checked binding</h2>
+
+<p>Kendo MVVM will display a bound checkbox in checked state if the value from the View-Model is <code class="language-plaintext highlighter-rouge">true</code>.
+If the checkbox is checked by the end-user the value from the View-Model will be set to <code class="language-plaintext highlighter-rouge">true</code>.
+Unchecking the checkbox will set the value from the View-Model to <code class="language-plaintext highlighter-rouge">false</code>. Setting the value from
+the View-Model via code will check or uncheck the checkbox depending on the new value.</p>
+
+<h3 id="using-the-checked-binding-with-a-checkbox">Using the <code class="language-plaintext highlighter-rouge">checked</code> binding with a checkbox</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="checkbox" data-bind="checked: isChecked" /&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    isChecked: false
+});
+
+kendo.bind($("input"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>In this example the checkbox is initially displayed as unchecked because the value of the <code class="language-plaintext highlighter-rouge">isChecked</code> field is <code class="language-plaintext highlighter-rouge">false</code>.
+If the user checks the checkbox the <code class="language-plaintext highlighter-rouge">isChecked</code> field will be set to <code class="language-plaintext highlighter-rouge">true</code>. Setting
+<code class="language-plaintext highlighter-rouge">isChecked</code> to <code class="language-plaintext highlighter-rouge">true</code> from code will check the checkbox. Setting <code class="language-plaintext highlighter-rouge">isChecked</code> to <code class="language-plaintext highlighter-rouge">false</code> unchecks it.</p>
+
+<h3 id="binding-a-list-of-checkboxes-to-array">Binding a list of checkboxes to array</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">checked</code> binding also supports binding a list of checkboxes to a View-Model value of array type.
+Checking a checkbox from the list will append its <code class="language-plaintext highlighter-rouge">value</code> attribute to the array specified by the <code class="language-plaintext highlighter-rouge">checked</code> binding.
+Unchecking a checkbox will remove its <code class="language-plaintext highlighter-rouge">value</code> attribute from the array. Here is an example:</p>
+
+<h4 id="using-the-checked-binding-with-a-list-of-checkboxes">Using the <code class="language-plaintext highlighter-rouge">checked</code> binding with a list of checkboxes</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="checkbox" value="Red"   data-bind="checked: colors" /&gt;
+&lt;input type="checkbox" value="Green" data-bind="checked: colors" /&gt;
+&lt;input type="checkbox" value="Blue"  data-bind="checked: colors" /&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    colors: ["Red"]
+});
+
+kendo.bind($("input"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>In this example the first checkbox would be checked after calling <code class="language-plaintext highlighter-rouge">kendo.bind</code> because its <code class="language-plaintext highlighter-rouge">value</code>
+attribute ("Red") is present in the <code class="language-plaintext highlighter-rouge">colors</code> array specified by the <code class="language-plaintext highlighter-rouge">checked</code> binding. Checking another
+checkbox from the list (e.g. "Blue") would append its <code class="language-plaintext highlighter-rouge">value</code> attribute ("Blue") to the <code class="language-plaintext highlighter-rouge">colors</code> array.
+Unchecking a checkbox from the list would remove its <code class="language-plaintext highlighter-rouge">value</code> attribute from the <code class="language-plaintext highlighter-rouge">colors</code> array.</p>
+
+<h2 id="radio-button-checked-binding">Radio button checked binding</h2>
+
+<p>Kendo MVVM will display a radio button in checked state only if its <code class="language-plaintext highlighter-rouge">value</code> attribute is equal to
+the value from the View-Model. If the user checks a radio button its <code class="language-plaintext highlighter-rouge">value</code> attribute would update the
+corresponding value from the View-Model. Updating the value from the View-Model via code would check the radio button whose <code class="language-plaintext highlighter-rouge">value</code>
+attribute is equal to the new value.</p>
+
+<h3 id="using-the-checked-binding-with-a-group-of-radio-buttons">Using the <code class="language-plaintext highlighter-rouge">checked</code> binding with a group of radio buttons</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input type="radio" value="Red"   name="color" data-bind="checked: selectedColor" /&gt;
+&lt;input type="radio" value="Green" name="color" data-bind="checked: selectedColor" /&gt;
+&lt;input type="radio" value="Blue"  name="color" data-bind="checked: selectedColor" /&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    selectedColor: "Green"
+});
+
+kendo.bind($("input"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>In this example the second radio button would be checked after calling <code class="language-plaintext highlighter-rouge">kendo.bind</code> because its <code class="language-plaintext highlighter-rouge">value</code> attribute
+("Green") is equal to the value of <code class="language-plaintext highlighter-rouge">selectedColor</code>. Checking another radio button (i.e. "Blue") will update
+<code class="language-plaintext highlighter-rouge">selectedColor</code> (to "Blue"). Note that the <code class="language-plaintext highlighter-rouge">name</code> attribute of all radio buttons is the same.</p>
+
+<h3 id="important-a-group-of-radio-buttons-should-have-the-same-name-attribute">Important: a group of radio buttons should have the same name attribute</h3>
+
+<p>All radio buttons acting as a group should have the same <code class="language-plaintext highlighter-rouge">name</code> attribute. Only then checking a radio button from the group will uncheck the previously checked one.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

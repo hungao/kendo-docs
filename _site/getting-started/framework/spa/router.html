@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/spa/router.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="router-overview">Router Overview</h1>
+
+<p>The <strong>Router</strong> class is responsible for tracking the application state and navigating between the application states.
+The router integrates into the browser history using the fragment part of the url (<code class="language-plaintext highlighter-rouge">#page</code>), making the application states bookmarkable and linkable.
+It is also used for programmatic navigation to a given state. A change event is exposed, suitable for authorization hooks.</p>
+
+<h2 id="router-with-a-root-route-callback">Router with a root route callback</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var router = new kendo.Router();
+
+    router.route("/", function() {
+        console.log("/ url was loaded");
+    });
+
+    $(function() {
+        router.start();
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>By default, if the URL fragment is empty (or not present), the "/" route callback will be executed. The <code class="language-plaintext highlighter-rouge">init</code> event handler will be executed regardless of the initial URL.</p>
+
+<h2 id="parameters">Parameters</h2>
+
+<p>The router implements most of the <a href="http://guides.rubyonrails.org/routing.html#non-resourceful-routes">Ruby on Rails</a> routing formats, supporting <strong>bound parameters</strong>, <strong>optional segments</strong>, and <strong>route globbing</strong>.
+The parsed parts of the URL are passed as parameters to the route callback.</p>
+
+<h3 id="parameter-parsing">Parameter Parsing</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var router = new kendo.Router();
+
+    router.route("/items/:category/:id", function(category, id) {
+        console.log(category, "item with", id, " was requested");
+    });
+
+    $(function() {
+        router.start();
+
+        // ...
+
+        router.navigate("/items/books/59");
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="optional-segments">Optional Segments</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var router = new kendo.Router();
+
+    router.route("/items(/:category)(/:id)", function(category, id) {
+        console.log(category, "item with", id, " was requested");
+    });
+
+    $(function() {
+        router.start();
+
+        // ...
+        router.navigate("/items/books/59");
+
+        // ...
+        router.navigate("/items");
+
+        // ...
+        router.navigate("/items/books");
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="route-globbing">Route Globbing</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    var router = new kendo.Router();
+
+    router.route("/items/*suffix", function(suffix) {
+        console.log(suffix);
+    });
+
+    $(function() {
+        router.start();
+
+        // ...
+        router.navigate("/items/books/59");
+
+        // ...
+        router.navigate("/items/accessories");
+
+        // ...
+        router.navigate("/items/books");
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="navigation">Navigation</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">navigate</code> method can be used to navigate to another application. The respective route (if present) is triggered. The navigate method is modifying the url fragment part.
+Clicking on anchor links will also trigger the respective route - a link with <code class="language-plaintext highlighter-rouge">href="#/foo"</code> will also trigger the "/foo" route callback.</p>
+
+<h3 id="route-navigation">Route Navigation</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a href="#/foo"&gt;Foo&lt;/a&gt;
+
+&lt;script&gt;
+    var router = new kendo.Router();
+
+    router.route("/foo", function() {
+        console.log("welcome to foo");
+    });
+
+    $(function() {
+        router.start();
+        router.navigate("/foo");
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="missing-routes-intercepting-navigation">Missing Routes, Intercepting Navigation</h2>
+
+<p>If no route match is found, the router will trigger a <code class="language-plaintext highlighter-rouge">routeMissing</code> event, passing the url in the event handler.</p>
+
+<h3 id="missing-route-handling">Missing Route Handling</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var router = new kendo.Router({ routeMissing: function(e) { console.log(e.url) } });
+
+$(function() {
+    router.start();
+    router.navigate("/foo");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Each time the url fragment changes, the router triggers a <code class="language-plaintext highlighter-rouge">change</code> event. calling the <code class="language-plaintext highlighter-rouge">preventDefault</code> method on the event object will revert the url to the previous state.</p>
+
+<h3 id="intercepting-navigation">Intercepting Navigation</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var router = new kendo.Router({
+    change: function(e) {
+        console.log(url);
+        e.preventDefault();
+    }
+});
+
+$(function() {
+    router.start();
+    router.navigate("/foo");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

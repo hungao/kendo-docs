@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>How to use the Sortable PHP class, server-side wrapper for Kendo UI Sortable widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to create Kendo UI Sortable for PHP, handle Kendo UI Sortable Events, access an existing sortable.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/php/widgets/sortable/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="sortable">Sortable</h1>
+
+<p>The Kendo Sortable for PHP is a server-side wrapper for the <a href="/api/web/sortable">Kendo UI Sortable</a> widget.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Unlike most of the server side wrapper the Sortable one does not render HTML mark-up. <strong>The Sortable should be initialized for already existing DOM element.</strong></p>
+
+<p>Here is how to configure a simple Kendo Sortable:</p>
+
+<ol>
+  <li>Follow the steps from the <a href="/getting-started/using-kendo-with/php/introduction">introduction</a> - include the autoloader, JavaScript and CSS files.</li>
+  <li>
+    <p>Create a <a href="/api/wrappers/php/Kendo/UI/Sortable">sortable</a>, set its container and customize the hint and placeholder of the widget</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ $sortable = new \Kendo\UI\Sortable('#sortable-basic'); // select the container for the Sortable
+ $sortable-&gt;hint(new \Kendo\JavaScriptFunction('hint'))
+          -&gt;placeholder(new \Kendo\JavaScriptFunction('placeholder'));
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Output the sortable by echo-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ echo $sortable-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Define the HTML mark-up and hint/placeholder JavaScript functions</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;ul id="sortable-basic"&gt;
+     &lt;li class="sortable"&gt;Papercut &lt;span&gt;3:04&lt;/span&gt;&lt;/li&gt;
+     &lt;li class="sortable"&gt;One Step Closer &lt;span&gt;2:35&lt;/span&gt;&lt;/li&gt;
+     &lt;li class="sortable"&gt;With You &lt;span&gt;3:23&lt;/span&gt;&lt;/li&gt;
+ &lt;/ul&gt;
+ &lt;script&gt;
+     function hint(element) {
+         return element.clone().addClass("hint");
+     }
+
+     function placeholder(element) {
+         return element.clone().addClass("placeholder").text("drop here");
+     }
+ &lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="getting-client-side-reference">Getting Client-side Reference</h2>
+
+<p>You can reference the client-side Kendo Sortable instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/sortable#methods">API</a> to control its behavior.</p>
+
+<h3 id="example">Example</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('#sortable');
+echo $sortable-&gt;render();
+?&gt;
+&lt;script&gt;
+$(function() {
+    // The constructor parameter is used as a selector for getting sortable's element
+    var sortable = $("#sortable").data("kendoSortable");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-events">Handling Events</h2>
+
+<p>You can subscribe to all sortable <a href="/api/web/sortable#events">events</a>.</p>
+
+<h3 id="example---subscribing-by-specifying-javascript-function-name">Example - subscribing by specifying JavaScript function name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('#sortable');
+
+// The 'onChange' JavaScript function will handle the 'change' event of the sortable
+$sortable-&gt;change('onChange');
+
+echo $sortable-&gt;render();
+?&gt;
+&lt;script&gt;
+function onChange(e) {
+    // Handle the show event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="example---providing-inline-javascript-code">Example - providing inline JavaScript code</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sortable = new \Kendo\UI\Sortable('#sortable');
+
+// Provide inline JavaScript code that will handle the 'change' event of the sortable
+$sortable-&gt;change('function(e) { /* Handle the change event */ }');
+
+echo $sortable-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<h2 id="disabling-the-hint">Disabling the hint</h2>
+
+<p>The Sortable widget can operate without hint. To disable the hint you should set it to an empty function (<a href="http://api.jquery.com/jQuery.noop/">jQuery.noop</a>).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+    $sortable = new \Kendo\UI\Sortable('#sortable-basic'); // select the container for the Sortable
+    $sortable-&gt;hint(new \Kendo\JavaScriptFunction('noHint'));
+?&gt;
+
+&lt;script&gt;
+    var noHint = $.noop;
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,1205 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Javascript Dependencies</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="A list of scripts that Kendo UI widgets require to work, detailed explanation about all JavaScript files">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/javascript-dependencies.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="javascript-files-used-by-kendo-ui">JavaScript files used by Kendo UI</h1>
+
+<p>Every Kendo UI widget needs its JavaScript files to be included in order to work properly. This help topic lists the JavaScript files required by each widget.</p>
+
+<h2 id="combined-scripts">Combined Scripts</h2>
+
+<p>The following combined scripts are provided in order to simplify development and deployment.</p>
+
+<ul>
+  <li><strong>kendo.all.min.js</strong> contains a minified version of all scripts (Web, DataViz and Mobile).</li>
+</ul>
+
+<blockquote>
+  <p><strong>Important</strong>: kendo.all.min.js is available in the Kendo UI Complete, Telerik UI for ASP.NET MVC<strong>, **Telerik UI for JSP</strong> and <strong>Telerik UI for PHP distributions. The contents of
+**kendo.aspnetmvc.min.js</strong> are <strong>not</strong> included in kendo.all.min.js - you need to include kendo.aspnetmvc.min.js in addition to kendo.all.min.js or use the
+<a href="http://www.telerik.com/download/custom-download">custom download builder tool</a>.</p>
+</blockquote>
+
+<ul>
+  <li><strong>kendo.web.min.js</strong> contains a minified version of all scripts from Kendo UI Web.</li>
+  <li><strong>kendo.dataviz.min.js</strong> contains a minified version of all scripts from Kendo UI DataViz.</li>
+  <li><strong>kendo.mobile.min.js</strong> contains a minified version of all scripts from Kendo UI Mobile.</li>
+</ul>
+
+<blockquote>
+  <p><strong>Important:</strong> Only one of the <strong>web</strong>, <strong>dataviz</strong>, <strong>mobile</strong> and <strong>all</strong> combined JavaScript files can be included at a time, because they contain some shared scripts. If widgets from
+different Kendo UI suites will be used simultaneously, one should either use <strong>kendo.all.min.js</strong> or create a custom combined JavaSript file via the <a href="http://www.telerik.com/download/custom-download">custom download builder tool</a>.
+In addition, each of the combined script files should not be registered together with an individual widget script from the same suite. For example, <code class="language-plaintext highlighter-rouge">kendo.grid.js</code> should not be registered together with
+<code class="language-plaintext highlighter-rouge">kendo.web.js</code> or <code class="language-plaintext highlighter-rouge">kendo.all.js</code>, because they already include the Grid scripts. <strong>Registering duplicate scripts may cause Javascript errors and unexpected behavior.</strong></p>
+</blockquote>
+
+<h2 id="custom-combined-scripts">Custom Combined Scripts</h2>
+
+<p>Users who own a commercial license can use the <a href="http://www.telerik.com/download/custom-download">custom download builder tool</a>
+to create a single JavaScript file which contains only the required widgets and features.</p>
+
+<h2 id="cdn">CDN</h2>
+
+<p>The Kendo UI CDN is hosted on Amazon CloudFront. The minified versions of all JavaScript files are available via the following URLs:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://cdn.kendostatic.com/&lt;version&gt;/js/&lt;filename&gt;.min.js
+http://cdn.kendostatic.com/&lt;version&gt;/styles/&lt;filename&gt;.min.css
+</code></pre></div></div>
+
+<p>For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js
+http://cdn.kendostatic.com/2014.1.318/styles/kendo.common.min.css
+</code></pre></div></div>
+
+<p>To access the combined minified javascript for Kendo UI Core (available since Q1 2014 SP1), use the following url:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://cdn.kendostatic.com/2014.1.416/js/kendo.ui.core.min.js
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Important:</strong> in order to use HTTPS, you need to directly access the CloudFront CDN as shown below, or use your own domain and SSL certificate as depicted here: http://aws.amazon.com/cloudfront/custom-ssl-domains/</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://da7xgjtj801h2.cloudfront.net/&lt;version&gt;/js/&lt;filename&gt;.min.js
+https://da7xgjtj801h2.cloudfront.net/&lt;version&gt;/styles/&lt;filename&gt;.min.css
+</code></pre></div></div>
+
+<h3 id="cdn-fallback-and-troubleshooting">CDN Fallback and Troubleshooting</h3>
+
+<p>Although the Amazon cloud service provides a very reliable level of uptime, disruptions or connection problems are theoretically possible.
+You can check the systems" status at <a href="http://status.aws.amazon.com/">http://status.aws.amazon.com/</a>. If the CDN status is reported as healthy and operating normally, but you still have connection problems,
+then possible reasons may include:</p>
+
+<ul>
+  <li>Internet/network connectivity problems, DNS problems</li>
+  <li>Firewalls, antivirus or other security software, which incorrectly filters out the CDN scripts or modifies (breaks) them on-the-fly.</li>
+  <li><strong>Kendo UI internal builds are not uploaded on CDN</strong>, because they are intended only for clients with a commercial license. Only major releases and service packs are uploaded on the Kendo UI CDN.
+For internal builds, please use a private CDN.</li>
+  <li>The scripts and stylesheets" URLs are different when using HTTPS - see above.</li>
+</ul>
+
+<p>Since we are unable to investigate connection problems remotely, please contact your system administrators if needed.</p>
+
+<p>When using any kind of CDN, it is recommended to implement a local fallback.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+    &lt;link rel="stylesheet" href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.common.min.css" /&gt;
+    &lt;link rel="stylesheet" href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.blueopal.min.css" /&gt;
+    
+    &lt;script src="http://cdn.kendostatic.com/2014.1.318/js/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        if (typeof jQuery == "undefined") {
+            // fallback to local jQuery
+            document.write(decodeURIComponent('%3Cscript src="/path/to/local/jquery.min.js" %3E%3C/script%3E'));
+        }
+    &lt;/script&gt;
+
+    &lt;script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        if (typeof kendo == "undefined") {
+            // checking for loaded CSS files is cumbersome,
+            // that's why we assume that if the scripts have failed, so have the stylesheets
+            
+            // fallback to local Kendo UI stylesheets
+            document.write(decodeURIComponent('%3Clink rel="stylesheet" href="/path/to/local/kendo.common.min.css" %3C/%3E'));
+            document.write(decodeURIComponent('%3Clink rel="stylesheet" href="/path/to/local/kendo.blueopal.min.css" %3C/%3E'));
+            
+            // fallback to local Kendo UI scripts
+            document.write(decodeURIComponent('%3Cscript src="/path/to/local/kendo.all.min.js" %3E%3C/script%3E'));
+            // also add kendo.aspnetmvc.min.js or kendo.timezones.min.js, if needed
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+</code></pre></div></div>
+
+<p>More information is available at <a href="http://www.hanselman.com/blog/CDNsFailButYourScriptsDontHaveToFallbackFromCDNToLocalJQuery.aspx">Scott HanselMann - Fallback from CDN to Local Scripts</a>.</p>
+
+<h2 id="jquery-version">jQuery version</h2>
+
+<p>The current official version of Kendo UI requires <strong>jQuery 1.9.1</strong>. There are occasions in which a new jQuery version is released, which introduces breaking changes and is not compatible with existing Kendo UI versions.
+In such cases we recommend using the previous jQuery version until the next official Kendo UI release that resolves the problems. We normally do not change the jQuery version that is shipped
+with Kendo UI service packs. We can do this for major releases. The following list provides compatibility information about previous major Kendo UI releases (and their corresponding service packs):</p>
+
+<ul>
+  <li>Kendo UI 2014.1.318 (Q1 2014) - jQuery 1.9.1 (also works with 1.10.x and 2.0.x)</li>
+  <li>Kendo UI 2013.3.1119 (Q3 2013) - jQuery 1.9.1 (also works with 1.10.x and 2.0.x)</li>
+  <li>Kendo UI 2013.2.716 (Q2 2013) - jQuery 1.9.1</li>
+  <li>Kendo UI 2013.1.319 (Q1 2013) - jQuery 1.9.1</li>
+  <li>Kendo UI 2012.3.1114 (Q3 2012) - jQuery 1.8.2</li>
+  <li>Kendo UI 2012.2.710 (Q2 2012) - jQuery 1.7.1</li>
+  <li>Kendo UI 2012.1.322 (Q1 2012) - jQuery 1.7.1</li>
+  <li>Kendo UI 2011.3.1129 (Q3 2011) - jQuery 1.7.1</li>
+</ul>
+
+<p>There should be no problem to use another minor jQuery version instead of the specified above, e.g. 1.7.2 instead of 1.7.1.</p>
+
+<blockquote>
+  <p>Registering a new jQuery instance after the Kendo UI script files will delete all Kendo UI jQuery plugins and Javascript errors will occur.
+For more information, please refer to the <a href="/getting-started/troubleshooting#javascript-error-that-jquery-is-unavailable-or-undefined">Troubleshooting page</a>.</p>
+</blockquote>
+
+<h3 id="using-kendo-ui-and-the-discontinued-telerik-mvc-extensions-on-the-same-page">Using Kendo UI and the discontinued Telerik MVC Extensions on the same page</h3>
+
+<p><strong>Kendo UI</strong> and the old <strong>Telerik MVC Extensions</strong> have different APIs, Javascript namespaces and CSS classes, so they can be used together with no danger of script or style conflicts.
+The only thing to consider is the <strong>jQuery version</strong>. The newest jQuery version that the Telerik MVC Extensions support is <strong>1.7.2</strong>, while new Kendo UI versions require newer jQuery versions. There are two options:</p>
+
+<ul>
+  <li>Use the Telerik MVC Extensions with jQuery <strong>1.7.2</strong> and an <strong>old</strong> Kendo UI version (e.g. Q2 2012 SP1).</li>
+  <li>Use the Telerik MVC Extensions with a <strong>new</strong> jQuery version, <strong><a href="https://github.com/jquery/jquery-migrate/">jquery-migrate</a></strong>, and a <strong>new</strong> Kendo UI version.</li>
+</ul>
+
+<h2 id="script-tag-placement">Script tag placement</h2>
+
+<p>There is a general recommendation to place <code class="language-plaintext highlighter-rouge">script</code> tags before the closing <code class="language-plaintext highlighter-rouge">body</code> tag, so that the scripts are loaded and executed after the HTML markup. The Kendo UI widget
+initialization statements are executed in the document.ready event via a jQuery handler. This means that the jQuery must be registered before any Kendo UI initialization statements. When using
+the pure client-side-only Kendo UI widgets one can control the initialization statements" placement, so the jQuery script file can be registered at the bottom of the page. The Kendo UI widgets"
+server wrappers are self-initialized, which means that each initialization script is rendered right after the widget"s HTML markup. In this case the Kendo UI scripts can still be registered
+at the end of the page, but the jQuery script must be registered in the <code class="language-plaintext highlighter-rouge">body</code> before the first Kendo UI widget on the page, or in the page <code class="language-plaintext highlighter-rouge">head</code>.</p>
+
+<h2 id="individual-scripts">Individual scripts</h2>
+
+<p>If more granular control is required, the following script files, either minified or not,
+can be included on a per-widget basis.</p>
+
+<h2 id="framework">Framework</h2>
+
+<p>Shared components providing behaviors, data access and other services</p>
+
+<h3 id="mvvm">MVVM</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+</ol>
+
+<h3 id="core">Core</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+</ol>
+
+<h3 id="data-source">Data source</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.odata.js (OData feature)</li>
+  <li>kendo.data.xml.js (XML feature)</li>
+  <li>kendo.data.js</li>
+</ol>
+
+<h3 id="drag--drop">Drag &amp; drop</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+</ol>
+
+<h3 id="effects">Effects</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.fx.js</li>
+</ol>
+
+<h3 id="router">Router</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.router.js</li>
+</ol>
+
+<h3 id="sortable">Sortable</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.sortable.js</li>
+</ol>
+
+<h3 id="view">View</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.view.js</li>
+</ol>
+
+<h2 id="web">Web</h2>
+
+<p>Desktop UI Widgets for mobile-ready Web Sites and Applications</p>
+<h3 id="autocomplete">AutoComplete</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.list.js</li>
+  <li>kendo.fx.js (Mobile scroller feature)</li>
+  <li>kendo.userevents.js (Mobile scroller feature)</li>
+  <li>kendo.draganddrop.js (Mobile scroller feature)</li>
+  <li>kendo.mobile.scroller.js (Mobile scroller feature)</li>
+  <li>kendo.autocomplete.js</li>
+</ol>
+
+<h3 id="button">Button</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.button.js</li>
+</ol>
+
+<h3 id="calendar">Calendar</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.calendar.js</li>
+</ol>
+
+<h3 id="color-tools">Color tools</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.slider.js</li>
+  <li>kendo.colorpicker.js</li>
+</ol>
+
+<h3 id="combobox">ComboBox</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.list.js</li>
+  <li>kendo.fx.js (Mobile scroller feature)</li>
+  <li>kendo.userevents.js (Mobile scroller feature)</li>
+  <li>kendo.draganddrop.js (Mobile scroller feature)</li>
+  <li>kendo.mobile.scroller.js (Mobile scroller feature)</li>
+  <li>kendo.combobox.js</li>
+</ol>
+
+<h3 id="datepicker">DatePicker</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.calendar.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.datepicker.js</li>
+</ol>
+
+<h3 id="datetimepicker">DateTimePicker</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.calendar.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.datepicker.js</li>
+  <li>kendo.timepicker.js</li>
+  <li>kendo.datetimepicker.js</li>
+</ol>
+
+<h3 id="dropdownlist">DropDownList</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.list.js</li>
+  <li>kendo.fx.js (Mobile scroller feature)</li>
+  <li>kendo.userevents.js (Mobile scroller feature)</li>
+  <li>kendo.draganddrop.js (Mobile scroller feature)</li>
+  <li>kendo.mobile.scroller.js (Mobile scroller feature)</li>
+  <li>kendo.dropdownlist.js</li>
+</ol>
+
+<h3 id="editor">Editor</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.list.js</li>
+  <li>kendo.combobox.js</li>
+  <li>kendo.dropdownlist.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.window.js</li>
+  <li>kendo.slider.js</li>
+  <li>kendo.colorpicker.js</li>
+  <li>kendo.listview.js (Image Browser feature)</li>
+  <li>kendo.upload.js (Image Browser feature)</li>
+  <li>kendo.filebrowser.js (Image Browser feature)</li>
+  <li>kendo.imagebrowser.js (Image Browser feature)</li>
+  <li>kendo.editor.js</li>
+</ol>
+
+<h3 id="gantt">Gantt</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.resizable.js</li>
+  <li>kendo.dom.js</li>
+  <li>kendo.touch.js</li>
+  <li>kendo.columnsorter.js</li>
+  <li>kendo.calendar.js</li>
+  <li>kendo.datepicker.js</li>
+  <li>kendo.timepicker.js</li>
+  <li>kendo.datetimepicker.js</li>
+  <li>kendo.numerictextbox.js</li>
+  <li>kendo.validator.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.editable.js</li>
+  <li>kendo.gantt.list.js</li>
+  <li>kendo.gantt.timeline.js</li>
+  <li>kendo.gantt.js</li>
+</ol>
+
+<h3 id="grid">Grid</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.columnsorter.js</li>
+  <li>kendo.calendar.js (Editing feature)</li>
+  <li>kendo.popup.js (Editing feature)</li>
+  <li>kendo.datepicker.js (Editing feature)</li>
+  <li>kendo.userevents.js (Editing feature)</li>
+  <li>kendo.numerictextbox.js (Editing feature)</li>
+  <li>kendo.validator.js (Editing feature)</li>
+  <li>kendo.binder.js (Editing feature)</li>
+  <li>kendo.editable.js (Editing feature)</li>
+  <li>kendo.draganddrop.js (Editing feature)</li>
+  <li>kendo.window.js (Editing feature)</li>
+  <li>kendo.calendar.js (Filtering feature)</li>
+  <li>kendo.popup.js (Filtering feature)</li>
+  <li>kendo.datepicker.js (Filtering feature)</li>
+  <li>kendo.userevents.js (Filtering feature)</li>
+  <li>kendo.numerictextbox.js (Filtering feature)</li>
+  <li>kendo.list.js (Filtering feature)</li>
+  <li>kendo.dropdownlist.js (Filtering feature)</li>
+  <li>kendo.filtermenu.js (Filtering feature)</li>
+  <li>kendo.popup.js (Column menu feature)</li>
+  <li>kendo.calendar.js (Column menu feature)</li>
+  <li>kendo.datepicker.js (Column menu feature)</li>
+  <li>kendo.userevents.js (Column menu feature)</li>
+  <li>kendo.numerictextbox.js (Column menu feature)</li>
+  <li>kendo.list.js (Column menu feature)</li>
+  <li>kendo.dropdownlist.js (Column menu feature)</li>
+  <li>kendo.filtermenu.js (Column menu feature)</li>
+  <li>kendo.menu.js (Column menu feature)</li>
+  <li>kendo.columnmenu.js (Column menu feature)</li>
+  <li>kendo.userevents.js (Grouping feature)</li>
+  <li>kendo.draganddrop.js (Grouping feature)</li>
+  <li>kendo.groupable.js (Grouping feature)</li>
+  <li>kendo.popup.js (Row filter feature)</li>
+  <li>kendo.list.js (Row filter feature)</li>
+  <li>kendo.autocomplete.js (Row filter feature)</li>
+  <li>kendo.filtercell.js (Row filter feature)</li>
+  <li>kendo.pager.js (Paging feature)</li>
+  <li>kendo.userevents.js (Selection feature)</li>
+  <li>kendo.selectable.js (Selection feature)</li>
+  <li>kendo.userevents.js (Column reordering feature)</li>
+  <li>kendo.draganddrop.js (Column reordering feature)</li>
+  <li>kendo.reorderable.js (Column reordering feature)</li>
+  <li>kendo.userevents.js (Column resizing feature)</li>
+  <li>kendo.draganddrop.js (Column resizing feature)</li>
+  <li>kendo.resizable.js (Column resizing feature)</li>
+  <li>kendo.popup.js (Grid adaptive rendering feature)</li>
+  <li>kendo.fx.js (Grid adaptive rendering feature)</li>
+  <li>kendo.userevents.js (Grid adaptive rendering feature)</li>
+  <li>kendo.draganddrop.js (Grid adaptive rendering feature)</li>
+  <li>kendo.mobile.scroller.js (Grid adaptive rendering feature)</li>
+  <li>kendo.binder.js (Grid adaptive rendering feature)</li>
+  <li>kendo.view.js (Grid adaptive rendering feature)</li>
+  <li>kendo.mobile.view.js (Grid adaptive rendering feature)</li>
+  <li>kendo.mobile.loader.js (Grid adaptive rendering feature)</li>
+  <li>kendo.mobile.pane.js (Grid adaptive rendering feature)</li>
+  <li>kendo.router.js (Grid adaptive rendering feature)</li>
+  <li>kendo.mobile.application.js (Grid adaptive rendering feature)</li>
+  <li>kendo.mobile.popover.js (Grid adaptive rendering feature)</li>
+  <li>kendo.mobile.shim.js (Grid adaptive rendering feature)</li>
+  <li>kendo.mobile.actionsheet.js (Grid adaptive rendering feature)</li>
+  <li>kendo.grid.js</li>
+</ol>
+
+<h3 id="listview">ListView</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.calendar.js (Editing feature)</li>
+  <li>kendo.popup.js (Editing feature)</li>
+  <li>kendo.datepicker.js (Editing feature)</li>
+  <li>kendo.userevents.js (Editing feature)</li>
+  <li>kendo.numerictextbox.js (Editing feature)</li>
+  <li>kendo.validator.js (Editing feature)</li>
+  <li>kendo.binder.js (Editing feature)</li>
+  <li>kendo.editable.js (Editing feature)</li>
+  <li>kendo.userevents.js (Selection feature)</li>
+  <li>kendo.selectable.js (Selection feature)</li>
+  <li>kendo.listview.js</li>
+</ol>
+
+<h3 id="maskedtextbox">MaskedTextBox</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.maskedtextbox.js</li>
+</ol>
+
+<h3 id="menu">Menu</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.menu.js</li>
+</ol>
+
+<h3 id="multiselect">MultiSelect</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.list.js</li>
+  <li>kendo.fx.js (Mobile scroller feature)</li>
+  <li>kendo.userevents.js (Mobile scroller feature)</li>
+  <li>kendo.draganddrop.js (Mobile scroller feature)</li>
+  <li>kendo.mobile.scroller.js (Mobile scroller feature)</li>
+  <li>kendo.multiselect.js</li>
+</ol>
+
+<h3 id="notification">Notification</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.notification.js</li>
+</ol>
+
+<h3 id="numerictextbox">NumericTextBox</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.numerictextbox.js</li>
+</ol>
+
+<h3 id="panelbar">PanelBar</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.panelbar.js</li>
+</ol>
+
+<h3 id="pivotconfigurator">PivotConfigurator</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.dom.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.sortable.js</li>
+  <li>kendo.pivotgrid.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.list.js</li>
+  <li>kendo.dropdownlist.js</li>
+  <li>kendo.treeview.js</li>
+  <li>kendo.pivotgrid.configurator.js</li>
+</ol>
+
+<h3 id="pivotgrid">PivotGrid</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.dom.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.sortable.js</li>
+  <li>kendo.pivotgrid.js</li>
+</ol>
+
+<h3 id="progressbar">ProgressBar</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.progressbar.js</li>
+</ol>
+
+<h3 id="scheduler">Scheduler</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.list.js</li>
+  <li>kendo.dropdownlist.js</li>
+  <li>kendo.calendar.js</li>
+  <li>kendo.datepicker.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.numerictextbox.js</li>
+  <li>kendo.validator.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.editable.js</li>
+  <li>kendo.multiselect.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.window.js</li>
+  <li>kendo.scheduler.recurrence.js</li>
+  <li>kendo.scheduler.view.js</li>
+  <li>kendo.scheduler.dayview.js (Scheduler Day View feature)</li>
+  <li>kendo.scheduler.agendaview.js (Scheduler Agenda View feature)</li>
+  <li>kendo.scheduler.monthview.js (Scheduler Month View feature)</li>
+  <li>kendo.fx.js (Scheduler adaptive rendering feature)</li>
+  <li>kendo.mobile.scroller.js (Scheduler adaptive rendering feature)</li>
+  <li>kendo.view.js (Scheduler adaptive rendering feature)</li>
+  <li>kendo.mobile.view.js (Scheduler adaptive rendering feature)</li>
+  <li>kendo.mobile.loader.js (Scheduler adaptive rendering feature)</li>
+  <li>kendo.mobile.pane.js (Scheduler adaptive rendering feature)</li>
+  <li>kendo.router.js (Scheduler adaptive rendering feature)</li>
+  <li>kendo.mobile.application.js (Scheduler adaptive rendering feature)</li>
+  <li>kendo.mobile.popover.js (Scheduler adaptive rendering feature)</li>
+  <li>kendo.mobile.shim.js (Scheduler adaptive rendering feature)</li>
+  <li>kendo.mobile.actionsheet.js (Scheduler adaptive rendering feature)</li>
+  <li>kendo.scheduler.js</li>
+</ol>
+
+<h3 id="slider">Slider</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.slider.js</li>
+</ol>
+
+<h3 id="splitter">Splitter</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.resizable.js</li>
+  <li>kendo.splitter.js</li>
+</ol>
+
+<h3 id="tabstrip">TabStrip</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.tabstrip.js</li>
+</ol>
+
+<h3 id="timepicker">TimePicker</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.timepicker.js</li>
+</ol>
+
+<h3 id="toolbar">ToolBar</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.toolbar.js</li>
+</ol>
+
+<h3 id="tooltip">Tooltip</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.tooltip.js</li>
+</ol>
+
+<h3 id="treeview">TreeView</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.treeview.js</li>
+</ol>
+
+<h3 id="upload">Upload</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.upload.js</li>
+</ol>
+
+<h3 id="validator">Validator</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.validator.js</li>
+</ol>
+
+<h3 id="window">Window</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.window.js</li>
+</ol>
+
+<h2 id="dataviz">DataViz</h2>
+
+<p>Data Visualization Widgets for Desktop and Mobile web apps</p>
+<h3 id="barcode">Barcode</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.svg.js</li>
+  <li>kendo.dataviz.canvas.js</li>
+  <li>kendo.dataviz.barcode.js</li>
+</ol>
+
+<h3 id="output-canvas">Output: Canvas</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.canvas.js</li>
+</ol>
+
+<h3 id="chart">Chart</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.svg.js</li>
+  <li>kendo.dataviz.themes.js</li>
+  <li>kendo.dataviz.chart.js (Polar &amp; Radar feature)</li>
+  <li>kendo.dataviz.chart.polar.js (Polar &amp; Radar feature)</li>
+  <li>kendo.dataviz.chart.js (Funnel chart feature)</li>
+  <li>kendo.dataviz.chart.funnel.js (Funnel chart feature)</li>
+  <li>kendo.dataviz.chart.js</li>
+</ol>
+
+<h3 id="diagram">Diagram</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.diagram.js</li>
+</ol>
+
+<h3 id="drawing-api">Drawing API</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.drawing.js</li>
+</ol>
+
+<h3 id="gauge">Gauge</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.svg.js</li>
+  <li>kendo.dataviz.themes.js</li>
+  <li>kendo.dataviz.gauge.js</li>
+</ol>
+
+<h3 id="map">Map</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.tooltip.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.drawing.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.dataviz.map.js</li>
+</ol>
+
+<h3 id="qrcode">QRCode</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.svg.js</li>
+  <li>kendo.dataviz.canvas.js</li>
+  <li>kendo.dataviz.qrcode.js</li>
+</ol>
+
+<h3 id="sparkline">Sparkline</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.svg.js</li>
+  <li>kendo.dataviz.themes.js</li>
+  <li>kendo.dataviz.chart.js</li>
+  <li>kendo.dataviz.sparkline.js</li>
+</ol>
+
+<h3 id="stockchart">StockChart</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.svg.js</li>
+  <li>kendo.dataviz.themes.js</li>
+  <li>kendo.dataviz.chart.js</li>
+  <li>kendo.dataviz.stockchart.js</li>
+</ol>
+
+<h3 id="output-svg">Output: SVG</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.svg.js</li>
+</ol>
+
+<h3 id="treemap">TreeMap</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.treeMap.js</li>
+</ol>
+
+<h3 id="output-vml">Output: VML</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.dataviz.core.js</li>
+  <li>kendo.dataviz.vml.js</li>
+</ol>
+
+<h2 id="mobile">Mobile</h2>
+
+<p>Framework and Widgets for Mobile Applications</p>
+<h3 id="actionsheet">ActionSheet</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+  <li>kendo.mobile.popover.js</li>
+  <li>kendo.mobile.shim.js</li>
+  <li>kendo.mobile.actionsheet.js</li>
+</ol>
+
+<h3 id="application">Application</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+</ol>
+
+<h3 id="button-1">Button</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+  <li>kendo.mobile.button.js</li>
+</ol>
+
+<h3 id="buttongroup">ButtonGroup</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+  <li>kendo.mobile.buttongroup.js</li>
+</ol>
+
+<h3 id="drawer">Drawer</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.drawer.js</li>
+</ol>
+
+<h3 id="listview-1">ListView</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+  <li>kendo.mobile.listview.js</li>
+</ol>
+
+<h3 id="modalview">ModalView</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.mobile.shim.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+  <li>kendo.mobile.modalview.js</li>
+</ol>
+
+<h3 id="navbar">NavBar</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+  <li>kendo.mobile.navbar.js</li>
+</ol>
+
+<h3 id="popover">PopOver</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+  <li>kendo.mobile.popover.js</li>
+</ol>
+
+<h3 id="scroller">Scroller</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+</ol>
+
+<h3 id="scrollview">ScrollView</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+  <li>kendo.mobile.scrollview.js</li>
+</ol>
+
+<h3 id="splitview">SplitView</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+  <li>kendo.mobile.splitview.js</li>
+</ol>
+
+<h3 id="switch">Switch</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+  <li>kendo.mobile.switch.js</li>
+</ol>
+
+<h3 id="tabstrip-1">TabStrip</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.fx.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.draganddrop.js</li>
+  <li>kendo.mobile.scroller.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.binder.js</li>
+  <li>kendo.view.js</li>
+  <li>kendo.mobile.view.js</li>
+  <li>kendo.mobile.loader.js</li>
+  <li>kendo.mobile.pane.js</li>
+  <li>kendo.router.js</li>
+  <li>kendo.mobile.application.js</li>
+  <li>kendo.mobile.tabstrip.js</li>
+</ol>
+
+<h3 id="touch">Touch</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.userevents.js</li>
+  <li>kendo.touch.js</li>
+</ol>
+
+<h2 id="server-wrappers">Server Wrappers</h2>
+
+<p>Supplementary scripts for integration with server-side technologies</p>
+<h3 id="aspnet-mvc">ASP.NET MVC</h3>
+<ol>
+  <li>jquery.js</li>
+  <li>kendo.core.js</li>
+  <li>kendo.data.js</li>
+  <li>kendo.popup.js</li>
+  <li>kendo.list.js</li>
+  <li>kendo.combobox.js</li>
+  <li>kendo.multiselect.js</li>
+  <li>kendo.validator.js</li>
+  <li>kendo.aspnetmvc.js</li>
+</ol>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

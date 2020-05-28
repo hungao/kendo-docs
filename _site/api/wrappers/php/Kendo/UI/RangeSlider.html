@@ -1,0 +1,391 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/UI/RangeSlider.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouirangeslider">\Kendo\UI\RangeSlider</h1>
+
+<p>A PHP wrapper for Kendo UI <a href="/api/web/rangeslider">RangeSlider</a>.</p>
+
+<p>Inherits from <a href="/api/wrappers/php/Kendo/UI/Widget">\Kendo\UI\Widget</a>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use RangeSlider in a PHP page instantiate a new instance, configure it via the available
+configuration <a href="#methods">methods</a> and output it by <code class="language-plaintext highlighter-rouge">echo</code>-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+<h3 id="using-kendo-rangeslider">Using Kendo RangeSlider</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// Create a new instance of RangeSlider and specify its id
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+
+// Configure it
+$rangeSlider-&gt;largeStep(1)
+
+// Output it
+
+echo $rangeSlider-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="change">change</h3>
+<p>Fires when the rangeSlider value changes as a result of selecting a new value with one of the drag handles or the keyboard.
+For additional information check the <a href="/api/web/rangeslider#events-change">change</a> event documentation.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSlider</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;change('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onChange(e) {
+        // handle the change event.
+    }
+&lt;/script&gt;
+&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;change('onChange');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;change(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="largestep">largeStep</h3>
+<p>The delta with which the value will change when the user presses the Page Up or Page Down key (the drag
+handle must be focused). Note: The allied largeStep will also set large tick for every large step.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSlider</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;largeStep(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="max">max</h3>
+<p>The maximum value of the RangeSlider.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSlider</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-float-1">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;max(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="min">min</h3>
+<p>The minimum value of the RangeSlider.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSlider</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-float-2">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;min(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="orientation">orientation</h3>
+<p>F
+The orientation of a RangeSlider; "horizontal" or
+"vertical".</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSlider</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;orientation('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="selectionend">selectionEnd</h3>
+<p>The selection end value of the RangeSlider.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSlider</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-float-3">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;selectionEnd(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="selectionstart">selectionStart</h3>
+<p>The selection start value of the RangeSlider.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSlider</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-float-4">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;selectionStart(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="slide">slide</h3>
+<p>Fires when the user drags the drag handle to a new position.
+For additional information check the <a href="/api/web/rangeslider#events-slide">slide</a> event documentation.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSlider</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-1">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;slide('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-1">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSlide(e) {
+        // handle the slide event.
+    }
+&lt;/script&gt;
+&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;slide('onSlide');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-1">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;slide(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="smallstep">smallStep</h3>
+<p>The small step value of the RangeSlider. The underlying value will be changed when the end
+user (1) clicks on the increase or decrease buttons of the RangeSlider, (2) presses the
+arrow keys (the drag handle must be focused), or (3) drags the drag handle.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSlider</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-float-5">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;smallStep(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="tickplacement">tickPlacement</h3>
+<p>Denotes the location of the tick marks in the RangeSlider. The available options are:</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSlider</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$rangeSlider-&gt;tickPlacement('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="tooltip">tooltip</h3>
+
+<p>Configuration of the RangeSlider tooltip.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSlider</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-kendouirangeslidertooltiparray">$value <code class="language-plaintext highlighter-rouge">\Kendo\UI\RangeSliderTooltip|array</code></h5>
+
+<h4 id="example---using-kendouirangeslidertooltip">Example - using <a href="/api/wrappers/php/Kendo/UI/RangeSliderTooltip">\Kendo\UI\RangeSliderTooltip</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$tooltip = new \Kendo\UI\RangeSliderTooltip();
+$enabled = true;
+$tooltip-&gt;enabled($enabled);
+$rangeSlider-&gt;tooltip($tooltip);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$rangeSlider = new \Kendo\UI\RangeSlider('RangeSlider');
+$enabled = true;
+$rangeSlider-&gt;tooltip(array('enabled' =&gt; $enabled));
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

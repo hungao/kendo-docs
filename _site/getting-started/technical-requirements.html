@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Technical Requirements for using Kendo UI JavaScript framework</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Check browser and platform support and prerequisites for best performance when working with Kendo UI.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/technical-requirements.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <style scoped="">
+    .stripes
+    {
+        border: 1px solid #E15613;
+        border-collapse: collapse;
+    }
+    .stripes th
+    {
+        background: #E15613;
+        color: #fff;
+    }
+    .stripes tr:nth-child(2n+1) td
+    {
+        background: #fed;
+    }
+    .stripes td:nth-child(n+2)
+    {
+        text-align: center;
+    }
+    .stripes th,
+    .stripes td
+    {
+        padding: 3px 5px;
+    }
+</style>
+
+<h1 id="technical-requirements-for-using-kendo-ui">Technical Requirements for using Kendo UI</h1>
+
+<p>Below are the system requirements for the Kendo UI Framework.</p>
+
+<h3 id="supported-desktop-browsers">Supported Desktop Browsers</h3>
+<table class="devices-platforms stripes" style="margin-top: 1.2em;">
+   <tbody>
+        <tr>
+            <th class="browsers" style="width: 120px"></th>
+            <th class="browsers" style="width: 220px">Kendo UI Core</th>
+            <th class="browsers" style="width: 220px">Kendo UI Professional</th>
+        </tr>
+        <tr>
+           <td><span class="ie"></span>Internet Explorer</td>
+           <td>7+<br />10+ (for mobile widgets)</td>
+           <td>7+<br />10+ (for mobile widgets)</td>
+        </tr>
+        <tr>
+            <td><span class="firefox"></span>Firefox</td>
+            <td><a href="http://www.mozilla.org/en-US/firefox/organizations/">ESR</a> +<br />*not supported by mobile widgets</td>
+            <td><a href="http://www.mozilla.org/en-US/firefox/organizations/">ESR</a> +<br />*not supported by mobile widgets</td>
+        </tr>
+        <tr>
+            <td><span class="chrome"></span>Chrome</td>
+            <td>Yes</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td><span class="opera"></span>Opera</td>
+            <td>15.0 +</td>
+            <td>15.0 +</td>
+        </tr>
+        <tr>
+            <td><span class="safari"></span>Safari 5+ (OS X)</td>
+            <td>Yes</td>
+            <td>Yes</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>NOTES:</strong></p>
+
+<ul>
+  <li>Browsers in beta stage are not supported.</li>
+  <li><a href="http://www.quirksmode.org/css/quirksmode.html">Quirks mode</a> is not supported. Always specify a <a href="http://reference.sitepoint.com/html/doctypes">DOCTYPE</a>! Supported DOCTYPES include <code class="language-plaintext highlighter-rouge">HTML5</code>, <code class="language-plaintext highlighter-rouge">XHTML 1.1</code>, <code class="language-plaintext highlighter-rouge">XHTML 1.0</code> (<code class="language-plaintext highlighter-rouge">Transitional</code> or <code class="language-plaintext highlighter-rouge">Strict</code>) and <code class="language-plaintext highlighter-rouge">HTML4 Strict</code>.
+Note that <code class="language-plaintext highlighter-rouge">HTML4 Transitional</code> triggers quirks mode.</li>
+  <li>
+    <p>Internet Explorer compatibility modes are not supported. These modes can exhibit different behavior and rendering bugs, compared to the browser versions they emulate.
+It is highly recommended to use IE"s <a href="http://blogs.msdn.com/b/ie/archive/2010/06/16/ie-s-compatibility-features-for-site-developers.aspx">Edge mode</a> via META tag or HTTP header.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;meta http-equiv="X-UA-Compatible" content="IE=edge" /&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>Kendo UI uses progressive enhancement for its CSS styling. As a result, old and obsolete browsers may ignore CSS3 styles, such as rounded corners and linear gradients.</li>
+</ul>
+
+<h3 id="kendo-ui-platform-support">Kendo UI Platform support</h3>
+
+<table class="devices-platforms stripes" style="margin-top: 1.2em;">
+    <tr>
+        <th class="platform">Platform</th>
+        <th class="platform-version">Version</th>
+    </tr>
+    <tr>
+        <td style="width: 150px;"><span class="windows"></span>Windows</td>
+        <td>XP +, Server 2003 +</td>
+    </tr>
+    <tr>
+        <td><span class="mac"></span> Mac OS</td>
+        <td>OS X +</td>
+    </tr>
+    <tr>
+        <td><span class="android"></span> Android</td>
+        <td>2.3 +</td>
+    </tr>
+    <tr>
+        <td><span class="ios"></span> iOS</td>
+        <td>6.0 +</td>
+    </tr>
+    <tr>
+        <td><span class="blackberry"></span>BlackBerry</td>
+        <td>10.0+</td>
+    </tr>
+    <tr>
+        <td><span class="winphone"></span>Windows Phone</td>
+        <td>8.0+</td>
+    </tr>
+     <tr>
+        <td><span class="chrome"></span>Chrome for Android</td>
+        <td>Yes</td>
+    </tr>
+</table>
+
+<p><strong>NOTES:</strong></p>
+
+<ul>
+  <li>In Android 2.3 dataviz widgets support only Canvas rendering mode.</li>
+  <li>Hybrid mouse and touch devices are supported (for instance IE10, Chrome and Firefox on Windows 8).</li>
+</ul>
+
+<h2 id="prerequisites">Prerequisites:</h2>
+
+<ul>
+  <li>JavaScript must be enabled on all browsers</li>
+</ul>
+
+<p>For best performance:</p>
+
+<ul>
+  <li>"Disable script debugging" in the browser"s config options must be checked</li>
+  <li>Caching on Internet Explorer must be activated</li>
+</ul>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

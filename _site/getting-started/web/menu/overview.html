@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Overview of Menu UI widget | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Steps that help you initialize the Menu widget using JSON data object and customize animation.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/menu/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="menu-overview">Menu Overview</h1>
+
+<p>The <strong>Menu</strong> displays hierarchical data as a multi-level menu. It provides rich styling for unordered lists
+of items, and can be used for both navigation and executing JavaScript commands. Items can be defined and
+initialized from HTML, or the API can be used to add and remove items.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="create-a-html-hierarchical-list-of-items">Create a HTML hierarchical list of items</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="menu"&gt;
+    &lt;li&gt;Normal Item
+        &lt;ul&gt;
+            &lt;li&gt;&lt;span class="k-sprite icon-class"&gt;&lt;/span&gt;Item with a Sprite&lt;/li&gt;
+            &lt;li&gt;&lt;img src="Icons/contacts.gif" /&gt;Item with an Icon&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href="http://www.google.com"&gt;Navigation Item&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="k-state-active"&gt;Active Item&lt;/li&gt;
+    &lt;li&gt;Template Item
+        &lt;div class="k-group k-content"&gt;
+            Test button - &lt;a class="k-button"&gt;Button&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>Initialization of a <strong>Menu</strong> should occur after the DOM is fully loaded. It is recommended that
+initialization the <strong>Menu</strong> occur within a handler is provided to $(document).ready().</p>
+
+<h3 id="initialize-a-menu-using-a-selector-within-documentready">Initialize a Menu using a selector within $(document).ready()</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function() {
+    $("#menu").kendoMenu();
+});
+</code></pre></div></div>
+
+<h3 id="initialize-the-menu-using-json-data-object">Initialize the Menu using JSON data object</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function() {
+ $("#menu").kendoMenu({
+  dataSource:
+    [{
+        text: "Item 1",
+        cssClass: "myClass",                         // Add custom CSS class to the item, optional, added 2012 Q3 SP1.
+        url: "http://www.telerik.com"                // Link URL if navigation is needed, optional.
+    },
+    {
+        text: "&lt;b&gt;Item 2&lt;/b&gt;",
+        encoded: false,                              // Allows use of HTML for item text
+        content: "text"                              // content within an item
+    },
+    {
+        text: "Item 3",
+        imageUrl: "http://www.telerik.com/test.jpg", // Item image URL, optional.
+        items: [{                                    // Sub item collection
+             text: "Sub Item 1"
+        },
+        {
+             text: "Sub Item 2"
+        }]
+    },
+    {
+        text: "Item 4",
+        spriteCssClass: "imageClass3"                // Item image sprite CSS class, optional.
+    }]
+ })
+});
+</code></pre></div></div>
+
+<h2 id="customizing-menu-animations">Customizing Menu Animations</h2>
+
+<p>By default, the <strong>Menu</strong> uses a slide animation to expand and
+reveal sub-items as the mouse hovers. Animations can be easily
+customized using configuration properties, changing the animation
+style and delay. Menu items can also be configured to open on click
+instead of on hover.</p>
+
+<h3 id="changing-menu-animation-and-open-behavior">Changing Menu animation and open behavior</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#menu").kendoMenu({
+    animation: {
+        open: { effects: "fadeIn" },
+        duration: 500
+    },
+    openOnClick: true
+});
+</code></pre></div></div>
+
+<h2 id="dynamically-configuring-menu-items">Dynamically configuring Menu items</h2>
+
+<p>The <strong>Menu</strong> API provides several methods for dynamically adding
+or removing Items. To add items, provide the new item as a JSON
+object along with a reference item that will be used to determine the
+placement in the hierarchy.</p>
+
+<p>A reference item is simply a target Menu Item HTML element that
+already exists in the Menu. Any valid jQuery selector can be used to
+obtain a reference to the target item. For examples, see the
+<a href="http://demos.telerik.com/kendo-ui/web/menu/api.html">Menu API demos</a>.
+Removing an item only requires a reference to the target element that
+should be removed.</p>
+
+<h3 id="dynamically-add-a-new-root-menu-item">Dynamically add a new root Menu item</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var menu = $("#menu").kendoMenu().data("kendoMenu");
+menu.insertAfter(
+    { text: "New Menu Item" },
+    menu.element.children("li:last")
+);
+</code></pre></div></div>
+
+<h2 id="accessing-an-existing-menu">Accessing an Existing Menu</h2>
+
+<p>You can reference an existing <strong>Menu</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the API to control
+its behavior.</p>
+
+<h3 id="accessing-an-existing-menu-instance">Accessing an existing Menu instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var menu = $("#menu").data("kendoMenu");
+</code></pre></div></div>
+
+<h2 id="keyboard-navigation">Keyboard Navigation</h2>
+
+<p>The Menu provides keyboard navigation once it gains focus (either programmatically or as a result of a user click). Initially, the first root item is activated.
+The following keys and user actions are supported:</p>
+
+<ul>
+  <li>Left and right arrow keys move the active item left and right on the root level of horizontal Menus.</li>
+  <li>Up and down arrow keys move the active item up and down of vertical Menu item groups.</li>
+  <li>Down arrow opens an item group a horizontal Menu.</li>
+  <li>Right arrow opens an item group of a vertical Menu.</li>
+  <li>Left arrow closes an item group.</li>
+  <li>Right arrow moves the active state to the next root item of a horizontal Menu, if the previous active item has been inside an item group.</li>
+  <li>Escape closes an item group.</li>
+  <li>(Shift+) Tab blurs the Menu and moves focus to the next (previous) focusable page element.</li>
+</ul>
+
+<h2 id="shrink-the-menu-to-exactly-fit-the-root-items">Shrink the Menu to exactly fit the root items</h2>
+
+<p>The Menu renders as an <code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code>, which is a <a href="http://quirksmode.org/css/css2/display.html">block element</a> and expands horizontally by default.
+If a horizontal Menu is wider than then total width of its root items, a blank space will remain visible on the right. In order to remove this space, you can use CSS:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#menu-id /* for a specific menu instance */
+,
+.k-menu-horizontal /* for all horizontal menus */
+{
+   display: inline-block;
+}
+</code></pre></div></div>
+
+<p>Shrinking the horizontal Menu will make the last root item"s border touch the Menu"s right border (in left-to-right layouts). The last item border can be removed with:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#menu-id &gt; .k-last /* for a specific menu instance */
+,
+.k-menu-horizontal &gt; .k-last /* for all horizontal menus */
+{
+   border-width: 0;
+}
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

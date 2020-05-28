@@ -1,0 +1,423 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/Dataviz/UI/RadialGaugeScale.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizuiradialgaugescale">\Kendo\Dataviz\UI\RadialGaugeScale</h1>
+
+<p>A PHP class representing the scale setting of RadialGauge.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="endangle">endAngle</h3>
+<p>The end angle of the gauge.
+The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinat system)</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$scale-&gt;endAngle(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="labels">labels</h3>
+
+<p>Configures the scale labels.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-kendodatavizuiradialgaugescalelabelsarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScaleLabels|array</code></h5>
+
+<h4 id="example---using-kendodatavizuiradialgaugescalelabels">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/RadialGaugeScaleLabels">\Kendo\Dataviz\UI\RadialGaugeScaleLabels</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$labels = new \Kendo\Dataviz\UI\RadialGaugeScaleLabels();
+$background = 'value';
+$labels-&gt;background($background);
+$scale-&gt;labels($labels);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$background = 'value';
+$scale-&gt;labels(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="majorticks">majorTicks</h3>
+
+<p>Configures the scale major ticks.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-kendodatavizuiradialgaugescalemajorticksarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScaleMajorTicks|array</code></h5>
+
+<h4 id="example---using-kendodatavizuiradialgaugescalemajorticks">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/RadialGaugeScaleMajorTicks">\Kendo\Dataviz\UI\RadialGaugeScaleMajorTicks</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$majorTicks = new \Kendo\Dataviz\UI\RadialGaugeScaleMajorTicks();
+$color = 'value';
+$majorTicks-&gt;color($color);
+$scale-&gt;majorTicks($majorTicks);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$color = 'value';
+$scale-&gt;majorTicks(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="majorunit">majorUnit</h3>
+<p>The interval between major divisions.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-float-1">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$scale-&gt;majorUnit(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="max">max</h3>
+<p>The maximum value of the scale.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-float-2">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$scale-&gt;max(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="min">min</h3>
+<p>The minimum value of the scale.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-float-3">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$scale-&gt;min(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="minorticks">minorTicks</h3>
+
+<p>Configures the scale minor ticks.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-kendodatavizuiradialgaugescaleminorticksarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScaleMinorTicks|array</code></h5>
+
+<h4 id="example---using-kendodatavizuiradialgaugescaleminorticks">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/RadialGaugeScaleMinorTicks">\Kendo\Dataviz\UI\RadialGaugeScaleMinorTicks</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$minorTicks = new \Kendo\Dataviz\UI\RadialGaugeScaleMinorTicks();
+$color = 'value';
+$minorTicks-&gt;color($color);
+$scale-&gt;minorTicks($minorTicks);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$color = 'value';
+$scale-&gt;minorTicks(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="minorunit">minorUnit</h3>
+<p>The interval between minor divisions.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-float-4">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$scale-&gt;minorUnit(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="rangedistance">rangeDistance</h3>
+<p>The distance from the range indicators to the ticks.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-float-5">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$scale-&gt;rangeDistance(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="rangeplaceholdercolor">rangePlaceholderColor</h3>
+<p>The default color for the ranges.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$scale-&gt;rangePlaceholderColor('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="rangesize">rangeSize</h3>
+<p>The width of the range indicators.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-float-6">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$scale-&gt;rangeSize(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addrange">addRange</h3>
+
+<p>Adds one or more RadialGaugeScaleRange to the RadialGaugeScale.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuiradialgaugescalerangearray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScaleRange|array</code></h5>
+
+<h4 id="example---using-kendodatavizuiradialgaugescalerange">Example - using \Kendo\Dataviz\UI\RadialGaugeScaleRange</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$range = new \Kendo\Dataviz\UI\RadialGaugeScaleRange();
+$color = 'value';
+$range-&gt;color($color);
+$scale-&gt;addRange($range);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-3">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$color = 'value';
+$scale-&gt;addRange(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-radialgaugescalerange">Example - adding more than one RadialGaugeScaleRange</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$first  = new \Kendo\Dataviz\UI\RadialGaugeScaleRange();
+$second = new \Kendo\Dataviz\UI\RadialGaugeScaleRange();
+$scale-&gt;addRange($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="reverse">reverse</h3>
+<p>Reverses the scale direction - values are increase anticlockwise.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$scale-&gt;reverse(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="startangle">startAngle</h3>
+<p>The start angle of the gauge.
+The gauge is rendered clockwise(0 degrees are the 180 degrees in the polar coordinat system)</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\RadialGaugeScale</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-float-7">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$scale = new \Kendo\Dataviz\UI\RadialGaugeScale();
+$scale-&gt;startAngle(1);
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

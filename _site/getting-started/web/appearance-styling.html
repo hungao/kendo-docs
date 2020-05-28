@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Appearance and Styling of Kendo UI HTML5 widgets</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Define CSS classes of Kendo UI Widgets to change their appearance. Learn how to easily customize Kendo components by overriding the styling of a given widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/appearance-styling.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="appearance-and-styling">Appearance and Styling</h1>
+<p>The appearance of the <strong>Kendo UI</strong> widgets depends entirely on styles defined by the applied CSS classes. No inline styles are used, except for some very specific cases in which these styles must be set with Javascript, depending on the browser or configuration.</p>
+
+<h2 id="common-and-theme-stylesheets">Common and theme StyleSheets</h2>
+<p>Kendo UI requires two stylesheets: <strong>kendo.common.css</strong> and <strong>kendo.[theme].css</strong>.
+ The common (base) stylesheet applies styles related to positioning and size, but which are not related to the color scheme and are always required for the widget to
+ look correct and function properly. The theme stylesheet applies theme-specific styles like colors and backgrounds.</p>
+
+<blockquote>
+  <p>Be sure to include the common CSS file before the theme CSS file. In some cases, the theme CSS file may override base styles as it uses selectors with the same specificity.</p>
+</blockquote>
+
+<h2 id="primitives">Primitives</h2>
+
+<p>Kendo UI widgets use primitives, meaning that different HTML elements in different widgets use the same CSS classes to provide a level of abstraction and allow common styling.</p>
+
+<p>Commonly-used CSS classes include:</p>
+
+<ul>
+  <li><strong>k-widget</strong> - applied to the widget wrapper to set a border, text and background color. In addition to t-widget, every widget has its own specific CSS class, for example <strong>k-menu</strong>, <strong>k-panelbar</strong>, <strong>k-tabstrip</strong>, etc.</li>
+  <li><strong>k-header</strong> - applied to Grid headers, Menu top level items, PanelBar top level items, TabStrip items, DropDownLists, to set a background image and a background color</li>
+  <li><strong>k-link</strong> - applied to hyperlinks and clickable text items to set a text color</li>
+  <li><strong>k-button</strong> - applied to elements that should look like push buttons. The class sets a text color, background color, background image and hover styling. This is the <strong>recommended **class for styling **form buttons</strong></li>
+  <li><strong>k-input</strong> - applied to textboxes inside input widgets like ComboBox and AutoComplete to set border, text and background color</li>
+  <li><strong>k-textbox</strong> - same as k-input, but used for standalone (generic) input elements that are not part of widget. This is the <strong>recommended **class for styling user</strong> form input elements** as it provides the same look, height and vertical alignment as the Kendo UI input widgets</li>
+  <li><strong>k-checkbox</strong> - applied to checkboxes inside the treeview widget, when checkboxes are enabled for it.</li>
+  <li><strong>k-group</strong> and <strong>k-content</strong> - applied to various containers to set a background and border color</li>
+  <li><strong>k-popup</strong> - applied to popup containers that are detached from their opener component and are placed in the <code class="language-plaintext highlighter-rouge">body</code> element</li>
+  <li><strong>k-icon</strong> and <strong>k-sprite</strong> - applied to elements that display part of a sprite image as background to init their dimensions</li>
+  <li><strong>k-image</strong> - applied to inline images to set their dimensions</li>
+  <li><strong>k-item</strong> - applied to various repeating widget items, e.g. in the Menu, TabStrip, TreeView, PanelBar, ComboBox, DropDownList, etc. This CSS class does not apply any particular global styles and sports display: block.</li>
+  <li><strong>k-first</strong> and <strong>k-last</strong> - set on first and last k-item respectively, where special styling is needed - rounded corners, removing borders</li>
+</ul>
+
+<p>The appearance of a component may also depend on its state, which is also tied to CSS classes:</p>
+
+<ul>
+  <li><strong>k-state-default</strong> - this class is applied on items to set their default appearance background and colors</li>
+  <li><strong>k-state-hover</strong> - this class is set to items when they are hovered to apply their hovered look</li>
+  <li><strong>k-state-focused</strong> - this class is applied on focused mostly input elements (plus DropDownList)</li>
+  <li><strong>k-state-active</strong> - a class set on activated <strong>k-link</strong> elements</li>
+  <li><strong>k-state-selected</strong> - selected items receive this class to apply their selected look, like in PanelBar and TabStrip</li>
+  <li><strong>k-state-disabled</strong> - this class is set on disabled items</li>
+</ul>
+
+<h2 id="less-structure">LESS structure</h2>
+
+<p><strong>The following LESS-related information is applicable only to the case when you want to modify the Kendo UI CSS source code.</strong></p>
+
+<p>In Q1 2014 we split the Kendo UI Web common LESS file to separate LESS files for each widget. We also split all Kendo UI Mobile platform themes to file per widget.
+The LESS command-line compiler can be used to build source LESS files to CSS skins and themes. The LESS files that can be passed to the compiler are located in the first level folders inside styles/ folder -
+styles/web/ and styles/mobile/. Kendo UI Mobile files are self explanatory - except meego.less, which is deprecated, the rest of the files can be built with <a href="https://github.com/telerik/less.js">our fork of LESS, located in GitHub</a>
+and produce all platform themes and several special use CSS files (including kendo.mobile.all.css).
+The Kendo UI Web LESS files" naming is listed below:</p>
+
+<ul>
+  <li><strong>kendo.[skin-name].less</strong> - skin variables file, builds with compiler - produces the skin;</li>
+  <li><strong>kendo.[skin-name].mobile.less</strong> - mobile widgets styling for the corresponding skin, references the variables file above, builds - produces the mobile skin;</li>
+  <li><strong>kendo.common.core.less</strong> - core Common LESS file, references only the common core, builds - produces the common core CSS;</li>
+  <li><strong>kendo.common.less</strong> - full Common LESS file, builds - produces the common Web CSS;</li>
+  <li><strong>kendo.common-bootstrap.core.less</strong> - core Bootstrap common, builds - produces the core common Bootstrap CSS;</li>
+  <li><strong>kendo.common-bootstrap.less</strong> - full Bootstrap common, builds - produces the common Bootstrap CSS;</li>
+  <li><strong>kendo.rtl.css</strong> - RTL styles, CSS only;</li>
+  <li><strong>kendo.winjs.less</strong> - WinJS specific styles, builds;</li>
+  <li><strong>theme-template.less</strong> - common skin template, referenced by all skins, doesn"t build;</li>
+  <li><strong>type-metro.less</strong> - common metro skin template, referenced by all metro skins, doesn"t build;</li>
+</ul>
+
+<p>The Kendo UI Web LESS files (including the Kendo UI Web mobile widgets styling) can be built using the upstream LESS, version 1.5.0 or newer.</p>
+
+<h2 id="customizing-appearance">Customizing Appearance</h2>
+
+<p>Usually, a CSS property defined by a primitive class is used by all widgets that use that class, unless overridden by a higher specificity selector. For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.k-link
+{
+    color: blue;
+}
+</code></pre></div></div>
+
+<p>will not affect</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.k-panelbar .k-link
+{
+    color: red;
+}
+</code></pre></div></div>
+
+<p>because the latter uses a descendant selector and thus, is more specific (20 versus 10, to be precise).</p>
+
+<p>For more information about CSS specificity, check out <a href="http://www.smashingmagazine.com/2007/07/27/css-specificity-things-you-should-know/">this excellent article in Smashing Magazine</a>.</p>
+
+<p>If you want to override the styling for a given <strong>widget type</strong>, you can use a CSS selector with the widget"s own CSS class:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.k-menu .k-link
+{
+    color: red;
+}
+</code></pre></div></div>
+
+<p>When you do this, make sure to register the custom rules after the respective theme CSS files. Otherwise you will need to use higher specificity and longer complex CSS selectors.</p>
+
+<p>In order to customize the appearance of a <strong>particular widget instance</strong>, you will need a custom CSS class or ID, and include it in the CSS selectors. For example the following Menu…</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul id="menu1" class="k-widget k-menu"&gt;
+	&lt;!-- menu items here --&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>can be styled by using its ID:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#menu1 .k-link
+{
+	color: red;
+}
+</code></pre></div></div>
+
+<p>The above CSS rule will not affect any other widget instances, which are outside <code class="language-plaintext highlighter-rouge">#menu1</code>.</p>
+
+<h2 id="browser-specific-css">Browser-specific CSS</h2>
+
+<p>While most of the CSS code is cross-browser compatible, some layouts require different styles for different browsers. Kendo UI targets specific browsers by adding browser-specific classes to the document root element instead of relying on CSS parsing hacks. You can take advantage of these classes in the following manner:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.k-ie { /* styles to be applied to all versions of Internet Explorer */ }
+.k-ie7 { /* styles to be applied to IE7 only */ }
+.k-ff { /* styles to be applied to all versions of Firefox */ }
+</code></pre></div></div>
+
+<p>The syntax of the generated classes is <code class="language-plaintext highlighter-rouge">k-[browser] k-[browser][majorVersion]</code>.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

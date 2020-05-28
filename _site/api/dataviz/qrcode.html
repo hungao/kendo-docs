@@ -1,0 +1,460 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI DataViz QRCode</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn the configuration options for QRCode widget, set its options, use methods properly.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/dataviz/qrcode.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizuiqrcode">kendo.dataviz.ui.QRCode</h1>
+
+<p>Represents the Kendo UI QRCode widget. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="example---render-as-svg-if-supported">Example - Render as SVG, if supported</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrCode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrCode").kendoQRCode({
+  value: "http://demos.telerik.com/kendo-ui/dataviz/overview/index.html",
+  renderAs: "svg"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="background-string-default-fff">background <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "#fff")</em></h3>
+
+<p>The background color of the QR code. Accepts a valid CSS color string, including hex and rgb.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrCode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrCode").kendoQRCode({
+  value: "http://demos.telerik.com/kendo-ui/dataviz/overview/index.html",
+  background: "red"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="border-object">border <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The border of the QR code.</p>
+
+<h3 id="bordercolor-string">border.color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The color of the border. Accepts a valid CSS color string, including hex and rgb.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrCode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrCode").kendoQRCode({
+  value: "http://demos.telerik.com/kendo-ui/dataviz/overview/index.html",
+  border: {
+    color: "#FF321C",
+    width: 2
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="borderwidth-number">border.width <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The width of the border in pixels. By default the border width is set to zero which means that the border will not appear.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrCode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrCode").kendoQRCode({
+  value: "http://demos.telerik.com/kendo-ui/dataviz/overview/index.html",
+  border: {
+    width: 5,
+    color: "#FF7D05"
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="color-string-default-000">color <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "#000")</em></h3>
+
+<p>The color of the QR code. Accepts a valid CSS color string, including hex and rgb.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrCode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrCode").kendoQRCode({
+  value: "http://demos.telerik.com/kendo-ui/dataviz/overview/index.html",
+  color: "#aa00bb"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="encoding-string-default-iso_8859_1">encoding <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "ISO_8859_1")</em></h3>
+
+<p>The encoding mode used to encode the value.</p>
+
+<p>The possible values are:</p>
+
+<ul>
+  <li>"ISO_8859_1" - supports all characters from the <a href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO/IEC 8859-1</a> character set.</li>
+  <li>"UTF_8" - supports all <a href="http://en.wikipedia.org/wiki/List_of_Unicode_characters">Unicode</a> characters.</li>
+</ul>
+
+<blockquote>
+  <p><em>Important:</em> The UTF-8 encoding is not included in the specifications and is not supported by all readers.</p>
+</blockquote>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrCode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrCode").kendoQRCode({
+  value: "丠",
+  encoding: "UTF_8"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="errorcorrection-string-default-l">errorCorrection <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "L")</em></h3>
+
+<p>The error correction level used to encode the value.</p>
+
+<p>The possible values are:</p>
+
+<ul>
+  <li>"L" - approximately 7% of the codewords can be restored.</li>
+  <li>"M" - approximately 15% of the codewords can be restored.</li>
+  <li>"Q" - approximately 25% of the codewords can be restored.</li>
+  <li>"H" - approximately 30% of the codewords can be restored.</li>
+</ul>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrCode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrCode").kendoQRCode({
+  value: "http://demos.telerik.com/kendo-ui/dataviz/overview/index.html",
+  errorCorrection: "H"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="padding-number-default-0">padding <code class="language-plaintext highlighter-rouge">Number</code> <em>(default: 0)</em></h3>
+
+<p>Sets the minimum distance in pixels that should be left between the border and the QR modules.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrCode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrCode").kendoQRCode({
+  value: "http://demos.telerik.com/kendo-ui/dataviz/overview/index.html",
+  size: 240,
+  padding: 10
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="renderas-string-default-canvas">renderAs <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "canvas")</em></h3>
+
+<p>Sets the preferred rendering engine.
+If it is not supported by the browser, the QRCode will switch to the first available mode.</p>
+
+<p>The supported values are:</p>
+
+<ul>
+  <li>"canvas" - renders the widget as a Canvas element, if available.</li>
+  <li>"svg" - renders the widget as inline SVG document, if available</li>
+  <li>"vml" - renders the widget as VML, if available</li>
+</ul>
+
+<blockquote>
+  <p>Using Canvas rendering disables most interactive features.</p>
+</blockquote>
+
+<h3 id="size-numberstring">size <code class="language-plaintext highlighter-rouge">Number|String</code></h3>
+
+<p>Specifies the size of a QR code in pixels (i.e. "200px"). Numeric values are treated as pixels. If no size is specified, it will be determined from the element width and height. In case the element does not have width or height bigger than zero, a default value of 200 pixels will be used.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrCode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrCode").kendoQRCode({
+  value: "http://demos.telerik.com/kendo-ui/dataviz/overview/index.html",
+  size: 300
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrCode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrCode").kendoQRCode({
+  value: "http://demos.telerik.com/kendo-ui/dataviz/overview/index.html",
+  size: "300px"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value-numberstring">value <code class="language-plaintext highlighter-rouge">Number|String</code></h3>
+
+<p>The value of the QRCode.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrCode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrCode").kendoQRCode({
+  value: "http://demos.telerik.com/kendo-ui/dataviz/overview/index.html"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="destroy">destroy</h3>
+
+<p>Prepares the QRCode for safe removal from the DOM.</p>
+
+<p>Removes data entries in order to avoid memory leaks.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var qrCode = $("#qrCode").data("kendoQRCode");
+qrCode.destroy();
+</code></pre></div></div>
+
+<h3 id="imagedataurl">imageDataURL</h3>
+
+<p>Returns a PNG image of the qrcode encoded as a <a href="https://developer.mozilla.org/en-US/docs/data_URIs">Data URL</a>.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> A data URL with <code class="language-plaintext highlighter-rouge">image/png</code> MIME type. Will be <code class="language-plaintext highlighter-rouge">null</code> if the browser does not support the <code class="language-plaintext highlighter-rouge">canvas</code> element.</p>
+
+<h4 id="example---show-a-snapshot-of-the-qrcode">Example - show a snapshot of the QRCode</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrcode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrcode").kendoQRCode({
+  value: "Some text"
+});
+var qrcode = $("#qrcode").data("kendoQRCode");
+var image = qrcode.imageDataURL();
+if (!window.open(image)) {
+    document.location.href = image;
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="redraw">redraw</h3>
+
+<p>Redraws the QR code using the current value and options.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var qrCode = $("#qrCode").data("kendoQRCode");
+qrCode.redraw();
+</code></pre></div></div>
+
+<h3 id="resize">resize</h3>
+
+<p>Adjusts the widget layout to match the size of the container.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrcode" style="width: 150px; height: 150px;"&gt;&lt;/div&gt;
+&lt;script&gt;
+    $("#qrcode").kendoQRCode({
+      value: "FOO"
+    });
+
+    $("#qrcode")
+       .css({ width: "600px", height: "300px" })
+       .data("kendoQRCode").resize();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="force-boolean-optional">force <code class="language-plaintext highlighter-rouge">Boolean</code> <em>optional</em></h5>
+
+<p>Defines whether the widget should proceed with resizing even if the element dimensions have not changed.</p>
+
+<h3 id="setoptions">setOptions</h3>
+
+<p>Sets new options to the QRCode and redraws it.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="options-object">options <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>An object with the new options. All <a href="qrcode#configuration">configuration</a> options can be set.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var qrCode = $("#qrCode").data("kendoQRCode");
+
+qrCode.setOptions({
+  errorCorrection: "H",
+  size: 300,
+  background: "#FFB821",
+  border: {
+    width: 5,
+    color: "#FF7D05"
+  }
+});
+</code></pre></div></div>
+
+<h3 id="svg">svg</h3>
+
+<p>Returns the <a href="http://www.w3.org/Graphics/SVG/">SVG</a> representation of the qrcode. The returned string is a self-contained SVG document that can be used as is or converted to other formats using tools like <a href="http://inkscape.org/">Inkscape</a> and
+<a href="http://www.imagemagick.org/">ImageMagick</a>. Both programs provide command-line interface suitable for server-side processing.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> the SVG representation of the qrcode.</p>
+
+<h4 id="example---get-the-svg-representation-of-the-qrcode">Example - get the SVG representation of the qrcode</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="qrcode"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#qrcode").kendoQRCode({
+  value:"Some value"
+});
+var qrcode = $("#qrcode").data("kendoQRCode");
+var svg = qrcode.svg();
+console.log(svg); // displays the SVG string
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value">value</h3>
+
+<p>Change the value of the QR code.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="options-stringnumber">options <code class="language-plaintext highlighter-rouge">String|Number</code></h5>
+
+<p>The new value to be set.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var qrCode = $("#qrCode").data("kendoQRCode");
+qrCode.value("Hello");
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

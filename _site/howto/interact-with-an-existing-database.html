@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Interact with an existing database |Kendo UI DataSource Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to interact with an existing database via the DataSource, included in Kendo UI framework.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li class="active">How Do I?</li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/howto.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("howto/interact-with-an-existing-database.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="how-to-interact-with-an-existing-database">How-To: Interact With An Existing Database</h1>
+
+<p>In this how-to, we"ll examine how to interact with an existing database via the DataSource of Kendo UI.</p>
+
+<h2 id="introduction-to-the-datasource">Introduction to the DataSource</h2>
+
+<p>The DataSource plays a central role in the applications and sites built with Kendo UI. Fundamentally, it is an abstraction over local or remote data. However, it has many other responsibilities as well, including:</p>
+
+<ul>
+  <li>retrieving data from a remote endpoint;</li>
+  <li>maintaining the structure and type of the data it represents (schema);</li>
+  <li>processing serialization formats to/from a remote endpoint;</li>
+  <li>synchronizing updates (i.e. create, update, delete) to/from a remote endpoint;</li>
+  <li>maintaining an in-memory cache of data (including changes) for a batch update to a remote endpoint;</li>
+  <li>calculating and maintaining aggregates, sorting order, and page sizes;</li>
+  <li>and, providing a query mechanism via filter expressions.</li>
+</ul>
+
+<blockquote>
+  <p>To learn more about the capabilities of the DataSource, make sure to check out its <a href="/api/framework/datasource">API reference</a> or <a href="http://demos.telerik.com/kendo-ui/web/datasource/index.html">demos</a>.</p>
+</blockquote>
+
+<h2 id="exposing-data-via-https">Exposing Data via HTTP(S)</h2>
+
+<p>Many modern databases support the ability to expose data via Internet-friendly protocols like HTTP(S). However, it is strongly recommended to implement a service layer to expose this data instead. Doing so will provide a number of benefits to the producers and consumers of this data. These benefits include:</p>
+
+<ul>
+  <li>improved useability through APIs and (optionally) denormalization;</li>
+  <li>reduced exposure of (potentially) sensitive data;</li>
+  <li>and/or, abstraction layer for additional architectural concerns (i.e. service throttling).</li>
+</ul>
+
+<p>There are many frameworks that support the creation of service endpoints like <a href="http://www.asp.net/web-api">ASP.NET Web API</a>.</p>
+
+<h2 id="accessing-remote-data">Accessing Remote Data</h2>
+
+<p>The DataSource may query a remote endpoint that provides data stored in a remote database (SQL Server, Oracle, MySQL, CouchDB, etc.) via HTTP(S). Operations conducted by the DataSource against this remote endpoint are done so via <a href="http://api.jquery.com/jQuery.ajax/">jQuery.ajax()</a> and therefore, subject to the same security constraints enforced by the user agent. Additional security constraints also apply to XHRs made across different domains. The DataSource may query remote endpoints from different domains via <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a>. This is accomplished by setting the <code class="language-plaintext highlighter-rouge">dataType</code> configuration property:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var remoteDataSource = new kendo.data.DataSource({
+	transport: {
+		read: {
+			url: "http://search.twitter.com/search.json",
+			dataType: "jsonp",
+			data: {
+				q: function() {
+					return $("#searchFor").val();
+				}
+			}
+		}
+	}
+});
+</code></pre></div></div>
+
+<p>In this example, the DataSource is initialized to represent an in-memory cache of tweets from the search service for Twitter. Setting the <code class="language-plaintext highlighter-rouge">dataType</code> configuration property is required to instruct the DataSource to access the endpoint.</p>
+
+<blockquote>
+  <p>Refer to the how-to article entitled, <a href="/howto/use-cors-with-all-modern-browsers">How To: Use CORS with All (Modern) Browsers</a> for more information about Cross-Origin Resource Sharing (CORS).</p>
+</blockquote>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,757 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/Dataviz/UI/StockChartNavigatorSeriesItem.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizuistockchartnavigatorseriesitem">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</h1>
+
+<p>A PHP class representing the seriesItem setting of StockChartNavigatorSeries.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="aggregate">aggregate</h3>
+<p>The aggregate function to apply for date series.This function is used when a category (an year, month, etc.) contains two or more points.
+The function return value is displayed instead of the individual points.The supported values are:</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;aggregate('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="axis">axis</h3>
+<p>The name of the value axis to use.** Applicable to area, column, line, ohlc and candlestick series **</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;axis('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="border">border</h3>
+
+<p>The border of the points.** Applicable to column, ohlc and candlestick series **</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-kendodatavizuistockchartnavigatorseriesitemborderarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemBorder|array</code></h5>
+
+<h4 id="example---using-kendodatavizuistockchartnavigatorseriesitemborder">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/StockChartNavigatorSeriesItemBorder">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemBorder</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$border = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItemBorder();
+$color = 'value';
+$border-&gt;color($color);
+$seriesItem-&gt;border($border);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$color = 'value';
+$seriesItem-&gt;border(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="categoryfield">categoryField</h3>
+<p>The data item field which contains the category name or date.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;categoryField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="closefield">closeField</h3>
+<p>The data field containing the close value.** Available for candlestick and ohlc series only **</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-string-3">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;closeField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="color">color</h3>
+<p>The series base color. The supported values are:</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-string-4">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;color('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="colorfield">colorField</h3>
+<p>The data field containing the point color.** Applicable for column, candlestick and ohlc series. **</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-string-5">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;colorField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dashtype">dashType</h3>
+<p>The dash type of line chart.The following dash types are supported:</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-string-6">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;dashType('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="data">data</h3>
+<p>Array of data items. The data item type can be either a:</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-array">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;data(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="downcolor">downColor</h3>
+<p>The series color when open value is smoller then close value.** Available for candlestick series only **</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-string-7">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;downColor('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="downcolorfield">downColorField</h3>
+<p>The data field containing the body color.** Available for candlestick series only **</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-string-8">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;downColorField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="field">field</h3>
+<p>The data field containing the series value.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-string-9">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;field('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="gap">gap</h3>
+<p>The distance between category clusters.** Applicable for column, candlestick and ohlc series. **</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;gap(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="highfield">highField</h3>
+<p>The data field containing the high value.** Available for candlestick and ohlc series only **</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-string-10">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;highField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="highlight">highlight</h3>
+
+<p>Configures the appearance of highlighted points.** Applicable to candlestick and ohlc series. **</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-kendodatavizuistockchartnavigatorseriesitemhighlightarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemHighlight|array</code></h5>
+
+<h4 id="example---using-kendodatavizuistockchartnavigatorseriesitemhighlight">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/StockChartNavigatorSeriesItemHighlight">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemHighlight</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$highlight = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItemHighlight();
+$color = 'value';
+$highlight-&gt;color($color);
+$seriesItem-&gt;highlight($highlight);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$color = 'value';
+$seriesItem-&gt;highlight(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="labels">labels</h3>
+
+<p>Configures the series data labels.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-kendodatavizuistockchartnavigatorseriesitemlabelsarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemLabels|array</code></h5>
+
+<h4 id="example---using-kendodatavizuistockchartnavigatorseriesitemlabels">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/StockChartNavigatorSeriesItemLabels">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemLabels</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$labels = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItemLabels();
+$background = 'value';
+$labels-&gt;background($background);
+$seriesItem-&gt;labels($labels);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$background = 'value';
+$seriesItem-&gt;labels(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="line">line</h3>
+
+<p>Line options.** Applicable to area, candlestick and ohlc series. **</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-stringkendodatavizuistockchartnavigatorseriesitemlinearray">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemLine|array</code></h5>
+
+<h4 id="example----using-string">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;line('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatavizuistockchartnavigatorseriesitemline">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/StockChartNavigatorSeriesItemLine">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemLine</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$line = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItemLine();
+$color = 'value';
+$line-&gt;color($color);
+$seriesItem-&gt;line($line);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-3">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$color = 'value';
+$seriesItem-&gt;line(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="lowfield">lowField</h3>
+<p>The data field containing the low value.** Available for candlestick and ohlc series **</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-string-11">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;lowField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="markers">markers</h3>
+
+<p>Marker options.** Applicable for area and line series. **</p>
+
+<h4 id="returns-18">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="value-kendodatavizuistockchartnavigatorseriesitemmarkersarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemMarkers|array</code></h5>
+
+<h4 id="example---using-kendodatavizuistockchartnavigatorseriesitemmarkers">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/StockChartNavigatorSeriesItemMarkers">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemMarkers</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$markers = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItemMarkers();
+$background = 'value';
+$markers-&gt;background($background);
+$seriesItem-&gt;markers($markers);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-4">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$background = 'value';
+$seriesItem-&gt;markers(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="missingvalues">missingValues</h3>
+<p>The behavior for handling missing values. The supported values are:</p>
+
+<h4 id="returns-19">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="value-string-12">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;missingValues('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="name">name</h3>
+<p>The navigator series name.</p>
+
+<h4 id="returns-20">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="value-string-13">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;name('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="opacity">opacity</h3>
+<p>The series opacity.</p>
+
+<h4 id="returns-21">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="value-float-1">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;opacity(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="openfield">openField</h3>
+<p>The data field containing the open value.** Available for candlestick and ohlc series **</p>
+
+<h4 id="returns-22">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="value-string-14">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;openField('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="overlay">overlay</h3>
+
+<p>The effects overlay.</p>
+
+<h4 id="returns-23">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="value-kendodatavizuistockchartnavigatorseriesitemoverlayarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemOverlay|array</code></h5>
+
+<h4 id="example---using-kendodatavizuistockchartnavigatorseriesitemoverlay">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/StockChartNavigatorSeriesItemOverlay">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemOverlay</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$overlay = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItemOverlay();
+$gradient = 'value';
+$overlay-&gt;gradient($gradient);
+$seriesItem-&gt;overlay($overlay);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-5">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$gradient = 'value';
+$seriesItem-&gt;overlay(array('gradient' =&gt; $gradient));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="spacing">spacing</h3>
+<p>Space between points as proportion of the point width.Available for column, candlestick and ohlc series.</p>
+
+<h4 id="returns-24">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-24">Parameters</h4>
+
+<h5 id="value-float-2">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;spacing(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="stack">stack</h3>
+
+<p>A boolean value indicating if the series should be stacked.
+A string value is interpreted as navigator.series.stack.group.</p>
+
+<h4 id="returns-25">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-25">Parameters</h4>
+
+<h5 id="value-booleanstringkendodatavizuistockchartnavigatorseriesitemstackarray">$value <code class="language-plaintext highlighter-rouge">boolean|string|\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemStack|array</code></h5>
+
+<h4 id="example----using-boolean">Example  - using boolean</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;stack(true);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example----using-string-1">Example  - using string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;stack('value');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendodatavizuistockchartnavigatorseriesitemstack">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/StockChartNavigatorSeriesItemStack">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemStack</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$stack = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItemStack();
+$group = 'value';
+$stack-&gt;group($group);
+$seriesItem-&gt;stack($stack);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-6">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$group = 'value';
+$seriesItem-&gt;stack(array('group' =&gt; $group));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="style">style</h3>
+<p>The supported values are:</p>
+
+<h4 id="returns-26">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-26">Parameters</h4>
+
+<h5 id="value-string-15">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;style('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="tooltip">tooltip</h3>
+
+<p>The data point tooltip configuration options.</p>
+
+<h4 id="returns-27">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-27">Parameters</h4>
+
+<h5 id="value-kendodatavizuistockchartnavigatorseriesitemtooltiparray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemTooltip|array</code></h5>
+
+<h4 id="example---using-kendodatavizuistockchartnavigatorseriesitemtooltip">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/StockChartNavigatorSeriesItemTooltip">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItemTooltip</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$tooltip = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItemTooltip();
+$background = 'value';
+$tooltip-&gt;background($background);
+$seriesItem-&gt;tooltip($tooltip);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-7">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$background = 'value';
+$seriesItem-&gt;tooltip(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="type">type</h3>
+<p>The type of the series. Available types:</p>
+
+<h4 id="returns-28">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-28">Parameters</h4>
+
+<h5 id="value-string-16">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;type('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="width">width</h3>
+<p>The line width.** Applicable for line series. **</p>
+
+<h4 id="returns-29">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\StockChartNavigatorSeriesItem</code></p>
+
+<h4 id="parameters-29">Parameters</h4>
+
+<h5 id="value-float-3">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$seriesItem = new \Kendo\Dataviz\UI\StockChartNavigatorSeriesItem();
+$seriesItem-&gt;width(1);
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

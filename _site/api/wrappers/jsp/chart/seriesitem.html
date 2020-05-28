@@ -1,0 +1,974 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/chart/seriesitem.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendochart-seriesitem">&lt;kendo:chart-seriesItem&gt;</h1>
+
+<p>The configuration of the chart series.The series type is determined by the value of the type field.
+If a type value is missing, the type is assumed to be the one specified in seriesDefaults.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-series&gt;
+    &lt;kendo:chart-seriesItem&gt;&lt;/kendo:chart-seriesItem&gt;
+&lt;/kendo:chart-series&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="aggregate-javalangstring">aggregate <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The aggregate function to apply for date series.This function is used when a category (an year, month, etc.) contains two or more points.
+The function return value is displayed instead of the individual points.The supported values are:</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem aggregate="aggregate"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="axis-javalangstring">axis <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The name of the value axis to use.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem axis="axis"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="categoryfield-javalangstring">categoryField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the category name or date.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem categoryField="categoryField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="closefield-javalangstring">closeField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the close value.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem closeField="closeField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="color-javalangstring">color <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The series base color. The supported values are:</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem color="color"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="colorfield-javalangstring">colorField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series color.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem colorField="colorField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="currentfield-javalangstring">currentField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field containing the current value.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem currentField="currentField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="dashtype-javalangstring">dashType <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The dash type of line chart.The following dash types are supported:</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem dashType="dashType"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="data-javalangobject">data <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The array of data items which represent the series data.Can be set to :</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem data="data"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="downcolor-javalangstring">downColor <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The series color when the open value is greater than the close value.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem downColor="downColor"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="downcolorfield-javalangstring">downColorField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the color applied when the open value is greater than the close value.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem downColorField="downColorField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="dynamicheight-boolean">dynamicHeight <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>When set to false all segments become with the same height, otherwise the height of each segment is based on its value.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem dynamicHeight="dynamicHeight"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="dynamicslope-boolean">dynamicSlope <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>When set to true the ratio of the bases of each segment is calculated based on the ratio of currentDataItem.value/nextDataItem.value
+The last element is always created like a rectangle since there is no following element.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem dynamicSlope="dynamicSlope"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="errorhighfield-javalangstring">errorHighField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series.errorBars high value.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem errorHighField="errorHighField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="errorlowfield-javalangstring">errorLowField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series.errorBars low value.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem errorLowField="errorLowField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="explodefield-javalangstring">explodeField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains a boolean value indicating whether the sector is exploded.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem explodeField="explodeField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="field-javalangstring">field <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series value.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem field="field"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="fromfield-javalangstring">fromField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series from value.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem fromField="fromField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="gap-float">gap <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The distance between the category clusters.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem gap="gap"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="highfield-javalangstring">highField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the high value.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem highField="highField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="holesize-float">holeSize <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The diameter of the donut hole in pixels.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem holeSize="holeSize"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="line-javalangstring">line <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The chart line configuration options. Further configuration is available via <a href="#kendo-chart-seriesItem-line">kendo:chart-seriesItem-line</a>.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem line="line"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="lowfield-javalangstring">lowField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the low value.</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem lowField="lowField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="lowerfield-javalangstring">lowerField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series lower value.</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem lowerField="lowerField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="margin-float">margin <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The margin around each donut series (ring). A numeric value will set all margins. Further configuration is available via <a href="#kendo-chart-seriesItem-margin">kendo:chart-seriesItem-margin</a>.</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem margin="margin"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="maxsize-float">maxSize <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The maximum size of the chart bubble series marker.</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem maxSize="maxSize"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="meanfield-javalangstring">meanField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series mean value.</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem meanField="meanField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="medianfield-javalangstring">medianField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series median value.</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem medianField="medianField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="minsize-float">minSize <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The minimum size of the chart bubble series marker.</p>
+
+<h4 id="example-29">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem minSize="minSize"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="missingvalues-javalangstring">missingValues <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The behavior for handling missing values. The supported values are:</p>
+
+<h4 id="example-30">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem missingValues="missingValues"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="name-javalangstring">name <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The name of the chart series which is visible in the legend.</p>
+
+<h4 id="example-31">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem name="name"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="neckratio-float">neckRatio <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>specifies the ratio top-base/bottom-base of the whole chart. neckRatio set to three means the top base is three times smaller than the bottom base.</p>
+
+<h4 id="example-32">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem neckRatio="neckRatio"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="negativecolor-javalangstring">negativeColor <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The color to use for bar, column or waterfall series with negative values. Accepts a valid CSS color string, including hex and rgb.</p>
+
+<h4 id="example-33">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem negativeColor="negativeColor"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="notetextfield-javalangstring">noteTextField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series note text.</p>
+
+<h4 id="example-34">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem noteTextField="noteTextField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="opacity-float">opacity <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The series opacity. By default the series are opaque.</p>
+
+<h4 id="example-35">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem opacity="opacity"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="openfield-javalangstring">openField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the open value.</p>
+
+<h4 id="example-36">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem openField="openField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="outliersfield-javalangstring">outliersField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series outliers value.</p>
+
+<h4 id="example-37">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem outliersField="outliersField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="padding-float">padding <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The padding around the chart (equal on all sides).</p>
+
+<h4 id="example-38">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem padding="padding"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="q1field-javalangstring">q1Field <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series q1 value.</p>
+
+<h4 id="example-39">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem q1Field="q1Field"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="q3field-javalangstring">q3Field <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series q3 value.</p>
+
+<h4 id="example-40">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem q3Field="q3Field"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="segmentspacing-float">segmentSpacing <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The space in pixels between the different segments of the funnel chart.</p>
+
+<h4 id="example-41">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem segmentSpacing="segmentSpacing"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="size-float">size <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The or radius of the chart donut series in pixels. If not set, the available space is split evenly between the series.</p>
+
+<h4 id="example-42">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem size="size"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="sizefield-javalangstring">sizeField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data field containing the bubble size value.</p>
+
+<h4 id="example-43">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem sizeField="sizeField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="spacing-float">spacing <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The space between the chart series as proportion of the series width.</p>
+
+<h4 id="example-44">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem spacing="spacing"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="stack-javalangobject">stack <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>A boolean value indicating if the series should be stacked.
+A string value is interpreted as series.stack.group. Further configuration is available via <a href="#kendo-chart-seriesItem-stack">kendo:chart-seriesItem-stack</a>.</p>
+
+<h4 id="example-45">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem stack="stack"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="startangle-float">startAngle <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The start angle (degrees) of the first donut or pie segment.Angles increase clockwise and zero is to the left. Negative values are acceptable.</p>
+
+<h4 id="example-46">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem startAngle="startAngle"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="style-javalangstring">style <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The supported values are:</p>
+
+<h4 id="example-47">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem style="style"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="summaryfield-javalangstring">summaryField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the summary type for waterfall series.
+Summary columns are optional and can be one of two types:</p>
+
+<h4 id="example-48">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem summaryField="summaryField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="targetfield-javalangstring">targetField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field containing the target value.</p>
+
+<h4 id="example-49">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem targetField="targetField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="tofield-javalangstring">toField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series to value.</p>
+
+<h4 id="example-50">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem toField="toField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="type-javalangstring">type <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The type of the series.The supported values are:</p>
+
+<h4 id="example-51">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem type="type"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="upperfield-javalangstring">upperField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series upper value.</p>
+
+<h4 id="example-52">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem upperField="upperField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="visibleinlegend-boolean">visibleInLegend <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>A value indicating whether to show the point category name (for bubble, donut and pie series)
+or series name (for other available series types) in the legend.</p>
+
+<h4 id="example-53">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem visibleInLegend="visibleInLegend"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="visibleinlegendfield-javalangstring">visibleInLegendField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which indicates whether to show the point category name in the legend.</p>
+
+<h4 id="example-54">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem visibleInLegendField="visibleInLegendField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="width-float">width <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The line width.</p>
+
+<h4 id="example-55">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem width="width"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="xaxis-javalangstring">xAxis <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The name of the X axis to use.For polar series the xAxis range is expressed in degrees.</p>
+
+<h4 id="example-56">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem xAxis="xAxis"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="xerrorhighfield-javalangstring">xErrorHighField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series.errorBars xAxis high value.</p>
+
+<h4 id="example-57">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem xErrorHighField="xErrorHighField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="xerrorlowfield-javalangstring">xErrorLowField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series.errorBars xAxis low value.</p>
+
+<h4 id="example-58">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem xErrorLowField="xErrorLowField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="xfield-javalangstring">xField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field containing the X value.</p>
+
+<h4 id="example-59">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem xField="xField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="yaxis-javalangstring">yAxis <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The name of the Y axis to use.** Available for bubble, scatter, scatterLine and polar series. **</p>
+
+<h4 id="example-60">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem yAxis="yAxis"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="yerrorhighfield-javalangstring">yErrorHighField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series.errorBars yAxis high value.</p>
+
+<h4 id="example-61">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem yErrorHighField="yErrorHighField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="yerrorlowfield-javalangstring">yErrorLowField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field which contains the series.errorBars yAxis low value.</p>
+
+<h4 id="example-62">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem yErrorLowField="yErrorLowField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="yfield-javalangstring">yField <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The data item field containing the Y value.</p>
+
+<h4 id="example-63">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem yField="yField"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendochart-seriesitem-border">kendo:chart-seriesItem-border</h3>
+
+<p>The border of the chart series.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-border">kendo:chart-seriesItem-border</a>.</p>
+
+<h4 id="example-64">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-border&gt;&lt;/kendo:chart-seriesItem-border&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-connectors">kendo:chart-seriesItem-connectors</h3>
+
+<p>The label connectors options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-connectors">kendo:chart-seriesItem-connectors</a>.</p>
+
+<h4 id="example-65">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-connectors&gt;&lt;/kendo:chart-seriesItem-connectors&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-errorbars">kendo:chart-seriesItem-errorBars</h3>
+
+<p>The error bars of the chart series.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-errorbars">kendo:chart-seriesItem-errorBars</a>.</p>
+
+<h4 id="example-66">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-errorBars&gt;&lt;/kendo:chart-seriesItem-errorBars&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-extremes">kendo:chart-seriesItem-extremes</h3>
+
+<p>The chart series extremes configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-extremes">kendo:chart-seriesItem-extremes</a>.</p>
+
+<h4 id="example-67">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-extremes&gt;&lt;/kendo:chart-seriesItem-extremes&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-highlight">kendo:chart-seriesItem-highlight</h3>
+
+<p>The chart series highlighting configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-highlight">kendo:chart-seriesItem-highlight</a>.</p>
+
+<h4 id="example-68">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-highlight&gt;&lt;/kendo:chart-seriesItem-highlight&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-labels">kendo:chart-seriesItem-labels</h3>
+
+<p>The chart series label configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-labels">kendo:chart-seriesItem-labels</a>.</p>
+
+<h4 id="example-69">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-labels&gt;&lt;/kendo:chart-seriesItem-labels&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-line">kendo:chart-seriesItem-line</h3>
+
+<p>The chart line configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-line">kendo:chart-seriesItem-line</a>.</p>
+
+<h4 id="example-70">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-line&gt;&lt;/kendo:chart-seriesItem-line&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-margin">kendo:chart-seriesItem-margin</h3>
+
+<p>The margin around each donut series (ring). A numeric value will set all margins.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-margin">kendo:chart-seriesItem-margin</a>.</p>
+
+<h4 id="example-71">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-margin&gt;&lt;/kendo:chart-seriesItem-margin&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-markers">kendo:chart-seriesItem-markers</h3>
+
+<p>The chart series marker configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-markers">kendo:chart-seriesItem-markers</a>.</p>
+
+<h4 id="example-72">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-markers&gt;&lt;/kendo:chart-seriesItem-markers&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-negativevalues">kendo:chart-seriesItem-negativeValues</h3>
+
+<p>The options for displaying the chart negative bubble values.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-negativevalues">kendo:chart-seriesItem-negativeValues</a>.</p>
+
+<h4 id="example-73">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-negativeValues&gt;&lt;/kendo:chart-seriesItem-negativeValues&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-notes">kendo:chart-seriesItem-notes</h3>
+
+<p>The series notes configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-notes">kendo:chart-seriesItem-notes</a>.</p>
+
+<h4 id="example-74">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-notes&gt;&lt;/kendo:chart-seriesItem-notes&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-outliers">kendo:chart-seriesItem-outliers</h3>
+
+<p>The chart series outliers configuration.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-outliers">kendo:chart-seriesItem-outliers</a>.</p>
+
+<h4 id="example-75">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-outliers&gt;&lt;/kendo:chart-seriesItem-outliers&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-overlay">kendo:chart-seriesItem-overlay</h3>
+
+<p>The chart series overlay options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-overlay">kendo:chart-seriesItem-overlay</a>.</p>
+
+<h4 id="example-76">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-overlay&gt;&lt;/kendo:chart-seriesItem-overlay&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-stack">kendo:chart-seriesItem-stack</h3>
+
+<p>A boolean value indicating if the series should be stacked.
+A string value is interpreted as series.stack.group.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-stack">kendo:chart-seriesItem-stack</a>.</p>
+
+<h4 id="example-77">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-stack&gt;&lt;/kendo:chart-seriesItem-stack&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-target">kendo:chart-seriesItem-target</h3>
+
+<p>The configuration options of the target</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-target">kendo:chart-seriesItem-target</a>.</p>
+
+<h4 id="example-78">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-target&gt;&lt;/kendo:chart-seriesItem-target&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-tooltip">kendo:chart-seriesItem-tooltip</h3>
+
+<p>The chart series tooltip configuration options.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/chart/seriesitem-tooltip">kendo:chart-seriesItem-tooltip</a>.</p>
+
+<h4 id="example-79">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-tooltip&gt;&lt;/kendo:chart-seriesItem-tooltip&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="color-string">color <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The series base color. The supported values are:</p>
+
+<h4 id="example-80">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem color="handle_color"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+&lt;script&gt;
+    function handle_color(e) {
+        // Code to handle the color event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="downcolor-string">downColor <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The series color when the open value is greater than the close value.</p>
+
+<h4 id="example-81">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem downColor="handle_downColor"&gt;
+&lt;/kendo:chart-seriesItem&gt;
+&lt;script&gt;
+    function handle_downColor(e) {
+        // Code to handle the downColor event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendochart-seriesitem-color">kendo:chart-seriesItem-color</h3>
+
+<p>The series base color. The supported values are:</p>
+
+<h4 id="example-82">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-color&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the color event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-seriesItem-color&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+<h3 id="kendochart-seriesitem-downcolor">kendo:chart-seriesItem-downColor</h3>
+
+<p>The series color when the open value is greater than the close value.</p>
+
+<h4 id="example-83">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:chart-seriesItem&gt;
+    &lt;kendo:chart-seriesItem-downColor&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the downColor event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:chart-seriesItem-downColor&gt;
+&lt;/kendo:chart-seriesItem&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

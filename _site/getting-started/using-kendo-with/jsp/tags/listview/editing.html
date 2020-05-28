@@ -1,0 +1,329 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/jsp/tags/listview/editing.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="editing">Editing</h1>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>To configure Kendo ListView for JSP for editing follow these steps:</p>
+
+<ol>
+  <li>
+    <p>Define item template:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script type="text/x-kendo-tmpl" id="template"&gt;
+    &lt;div class="product-view"&gt;
+        &lt;dl&gt;
+            &lt;dt&gt;Product Name&lt;/dt&gt;
+            &lt;dd&gt;#=productName#&lt;/dd&gt;
+            &lt;dt&gt;Unit Price&lt;/dt&gt;
+            &lt;dd&gt;#=kendo.toString(unitPrice, "c")#&lt;/dd&gt;
+            &lt;dt&gt;Units In Stock&lt;/dt&gt;
+            &lt;dd&gt;#=unitsInStock#&lt;/dd&gt;
+            &lt;dt&gt;Discontinued&lt;/dt&gt;
+            &lt;dd&gt;#=discontinued#&lt;/dd&gt;
+        &lt;/dl&gt;
+        &lt;div class="edit-buttons"&gt;
+            &lt;a class="k-button k-button-icontext k-edit-button" href="\\#"&gt;&lt;span class="k-icon k-edit"&gt;&lt;/span&gt;Edit&lt;/a&gt;
+            &lt;a class="k-button k-button-icontext k-delete-button" href="\\#"&gt;&lt;span class="k-icon k-delete"&gt;&lt;/span&gt;Delete&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/script&gt;
+</code></pre></div>    </div>
+
+    <p><strong>Note:</strong> Click events for elements with class name <strong>k-edit-button</strong> and <strong>k-delete-button</strong> will be automatically handled and treated by Kendo ListView as <strong>edit</strong> and <strong>delete</strong> actions.</p>
+  </li>
+  <li>
+    <p>Define edit template:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script type="text/x-kendo-tmpl" id="editTemplate"&gt;
+    &lt;div class="product-view"&gt;
+        &lt;dl&gt;
+            &lt;dt&gt;Product Name&lt;/dt&gt;
+            &lt;dd&gt;
+                &lt;input type="text" data-bind="value:productName" name="productName" required="required" validationMessage="required" /&gt;
+                &lt;span data-for="productName" class="k-invalid-msg"&gt;&lt;/span&gt;
+            &lt;/dd&gt;
+            &lt;dt&gt;Unit Price&lt;/dt&gt;
+            &lt;dd&gt;
+                &lt;input type="text" data-bind="value:unitPrice" data-role="numerictextbox" data-type="number" name="unitPrice" required="required" min="1" validationMessage="required" /&gt;
+                &lt;span data-for="unitPrice" class="k-invalid-msg"&gt;&lt;/span&gt;
+            &lt;/dd&gt;
+            &lt;dt&gt;Units In Stock&lt;/dt&gt;
+            &lt;dd&gt;
+                &lt;input type="text" data-bind="value:unitsInStock" data-role="numerictextbox" name="unitsInStock" required="required" data-type="number" min="0" validationMessage="required" /&gt;
+                &lt;span data-for="unitsInStock" class="k-invalid-msg"&gt;&lt;/span&gt;
+            &lt;/dd&gt;
+            &lt;dt&gt;Discontinued&lt;/dt&gt;
+            &lt;dd&gt;&lt;input type="checkbox" name="discontinued" data-bind="checked:discontinued"&gt;&lt;/dd&gt;
+        &lt;/dl&gt;
+        &lt;div class="edit-buttons"&gt;
+            &lt;a class="k-button k-button-icontext k-update-button" href="\\#"&gt;&lt;span class="k-icon k-update"&gt;&lt;/span&gt;Save&lt;/a&gt;
+            &lt;a class="k-button k-button-icontext k-cancel-button" href="\\#"&gt;&lt;span class="k-icon k-cancel"&gt;&lt;/span&gt;Cancel&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/script&gt;
+</code></pre></div>    </div>
+
+    <p><strong>Note:</strong> Click events for elements with class name <strong>k-update-button</strong> and <strong>k-cancel-button</strong> will be automatically handled and treated by Kendo ListView as <strong>save</strong> and <strong>cancel</strong> actions.</p>
+  </li>
+  <li>
+    <p>Define the interface for creating new items:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div class="k-toolbar k-grid-toolbar"&gt;
+    &lt;a class="k-button k-button-icontext k-add-button" href="#"&gt;
+        &lt;span class="k-icon k-add"&gt;&lt;/span&gt;Add new record
+    &lt;/a&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    $(function() {
+        var listView = $("#listView").data("kendoListView");
+        $(".k-add-button").click(function(e) {
+            listView.add();
+            e.preventDefault();
+        });
+    });
+&lt;/script&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Specify the parameterMap and the action methods which will handle the Create, Update and Destroy operations:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView name="listView" template="template" pageable="true"
+    editTemplate="editTemplate"&gt;
+    &lt;kendo:dataSource pageSize="4" serverPaging="true"&gt;
+        &lt;kendo:dataSource-transport&gt;
+            &lt;kendo:dataSource-transport-create url="${createUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+                &lt;kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json"/&gt;
+                &lt;kendo:dataSource-transport-update url="${updateUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+                &lt;kendo:dataSource-transport-destroy url="${destroyUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+                &lt;kendo:dataSource-transport-parameterMap&gt;
+                    &lt;script&gt;
+                        function parameterMap(options,type) {
+                            return JSON.stringify(options);
+                        }
+                    &lt;/script&gt;
+                &lt;/kendo:dataSource-transport-parameterMap&gt;
+        &lt;/kendo:dataSource-transport&gt;
+        &lt;kendo:dataSource-schema data="data" total="total"&gt;
+        &lt;/kendo:dataSource-schema&gt;
+    &lt;/kendo:dataSource&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Specify the properties of the model as well as the unique identifier (primary key):</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:listView name="listView" template="template" pageable="true"
+    editTemplate="editTemplate"&gt;
+    &lt;kendo:dataSource pageSize="4" serverPaging="true"&gt;
+        &lt;kendo:dataSource-transport&gt;
+            &lt;kendo:dataSource-transport-create url="${createUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+                &lt;kendo:dataSource-transport-read url="${readUrl}" dataType="json" type="POST" contentType="application/json"/&gt;
+                &lt;kendo:dataSource-transport-update url="${updateUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+                &lt;kendo:dataSource-transport-destroy url="${destroyUrl}" dataType="json" type="POST" contentType="application/json" /&gt;
+        &lt;/kendo:dataSource-transport&gt;
+        &lt;kendo:dataSource-schema data="data" total="total"&gt;
+            &lt;kendo:dataSource-schema-model id="productId"&gt;
+                &lt;kendo:dataSource-schema-model-fields&gt;
+                    &lt;kendo:dataSource-schema-model-field name="productId"
+                        editable="false" nullable="true"&gt;
+                    &lt;/kendo:dataSource-schema-model-field&gt;
+                    &lt;kendo:dataSource-schema-model-field name="productName"&gt;
+                    &lt;/kendo:dataSource-schema-model-field&gt;
+                    &lt;kendo:dataSource-schema-model-field name="unitPrice" type="number"&gt;
+                    &lt;/kendo:dataSource-schema-model-field&gt;
+                    &lt;kendo:dataSource-schema-model-field name="discontinued"
+                        type="boolean"&gt;
+                    &lt;/kendo:dataSource-schema-model-field&gt;
+                    &lt;kendo:dataSource-schema-model-field name="unitsInStock"
+                        type="number"&gt;
+                    &lt;/kendo:dataSource-schema-model-field&gt;
+                &lt;/kendo:dataSource-schema-model-fields&gt;
+            &lt;/kendo:dataSource-schema-model&gt;
+        &lt;/kendo:dataSource-schema&gt;
+    &lt;/kendo:dataSource&gt;
+&lt;/kendo:listView&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Read</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Autowired
+private ProductDao product;
+
+@RequestMapping(value = "/editing/read", method = RequestMethod.POST)
+public @ResponseBody DataSourceResult read(@RequestBody DataSourceRequest request) {
+
+    return product.getList(request);
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Create</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@SuppressWarnings("serial")
+@RequestMapping(value = "/editing/create", method = RequestMethod.POST)
+public @ResponseBody Map&lt;String,Object&gt; create(@RequestBody Map&lt;String, Object&gt; model) {
+    final Product target = new Product();
+
+    target.setProductName((String)model.get("productName"));
+    target.setUnitPrice(Double.parseDouble(model.get("unitPrice").toString()));
+    target.setUnitsInStock((int)model.get("unitsInStock"));
+    target.setDiscontinued((boolean)model.get("discontinued"));
+
+    product.saveOrUpdate(target);
+
+    return new HashMap&lt;String, Object&gt;() \{\{
+        put("data", target);
+    }};
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Update</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@RequestMapping(value = "/editing/update", method = RequestMethod.POST)
+public @ResponseBody Product update(@RequestBody Map&lt;String, Object&gt; model) {
+    Product target = new Product();
+
+    target.setProductId((int)model.get("productId"));
+    target.setProductName((String)model.get("productName"));
+    target.setUnitPrice(Double.parseDouble(model.get("unitPrice").toString()));
+    target.setUnitsInStock((int)model.get("unitsInStock"));
+    target.setDiscontinued((boolean)model.get("discontinued"));
+
+    product.saveOrUpdate(target);
+
+    return target;
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Destroy</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@RequestMapping(value = "/editing/destroy", method = RequestMethod.POST)
+public @ResponseBody Product destroy(@RequestBody Map&lt;String, Object&gt; model) {
+    Product target = new Product();
+
+    target.setProductId((int)model.get("productId"));
+
+    product.delete(target);
+
+    return target;
+}
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

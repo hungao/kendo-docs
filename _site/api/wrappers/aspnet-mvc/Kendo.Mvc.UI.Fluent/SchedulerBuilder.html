@@ -1,0 +1,911 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/SchedulerBuilder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluentschedulerbuilder">Kendo.Mvc.UI.Fluent.SchedulerBuilder</h1>
+<p>Defines the fluent interface for configuring the 1.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="datesystemdatetime">Date(System.DateTime)</h3>
+<p>The current date of the scheduler. Used to determine the period which is displayed by the widget.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="date-systemdatetime">date <code class="language-plaintext highlighter-rouge">System.DateTime</code></h5>
+<p>The Date</p>
+
+<h4 id="example-razor">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="mobile">Mobile</h3>
+<p>Enables the adaptive rendering when viewed on mobile browser</p>
+
+<h3 id="mobilekendomvcuimobilemode">Mobile(Kendo.Mvc.UI.MobileMode)</h3>
+<p>Used to determine if adaptive rendering should be used when viewed on mobile browser</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="type-kendomvcuimobilemode">type <a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/MobileMode">Kendo.Mvc.UI.MobileMode</a></h5>
+
+<h3 id="starttimesystemdatetime">StartTime(System.DateTime)</h3>
+<p>The start time of the week and day views. The scheduler will display events starting after the startTime.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="starttime-systemdatetime">startTime <code class="language-plaintext highlighter-rouge">System.DateTime</code></h5>
+<p>The startTime.</p>
+
+<h4 id="example-razor-1">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .StartTime(new DateTime(2013, 6, 13, 10, 00, 00))
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="starttimesystemint32systemint32systemint32">StartTime(System.Int32,System.Int32,System.Int32)</h3>
+<p>The start time of the week and day views. The scheduler will display events starting after the startTime.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="hours-systemint32">hours <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The hours</p>
+
+<h5 id="minutes-systemint32">minutes <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The minutes</p>
+
+<h5 id="seconds-systemint32">seconds <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The seconds</p>
+
+<h4 id="example-razor-2">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .StartTime(10, 0, 0)
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="endtimesystemdatetime">EndTime(System.DateTime)</h3>
+<p>The end time of the week and day views. The scheduler will display events ending before the endTime.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="endtime-systemdatetime">endTime <code class="language-plaintext highlighter-rouge">System.DateTime</code></h5>
+<p>The endTime.</p>
+
+<h4 id="example-razor-3">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .EndTime(new DateTime(2013, 6, 13, 23, 00, 00))
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="endtimesystemint32systemint32systemint32">EndTime(System.Int32,System.Int32,System.Int32)</h3>
+<p>The end time of the week and day views. The scheduler will display events ending before the endTime.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="hours-systemint32-1">hours <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The hours</p>
+
+<h5 id="minutes-systemint32-1">minutes <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The minutes</p>
+
+<h5 id="seconds-systemint32-1">seconds <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The seconds</p>
+
+<h4 id="example-razor-4">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .EndTime(10,0,0)
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="workdaystartsystemdatetime">WorkDayStart(System.DateTime)</h3>
+<p>The start time of the business day. The scheduler will display events starting after the workDayStart when the "Show Business Hours" button is pressed.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="workdaystart-systemdatetime">workDayStart <code class="language-plaintext highlighter-rouge">System.DateTime</code></h5>
+<p>The workDayStart.</p>
+
+<h4 id="example-razor-5">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .WorkDayStart(new DateTime(2013, 6, 13, 10, 00, 00))
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="workdaystartsystemint32systemint32systemint32">WorkDayStart(System.Int32,System.Int32,System.Int32)</h3>
+<p>The start time of the business day. The scheduler will display events starting after the workDayStart when the "Show Business Hours" button is pressed.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="hours-systemint32-2">hours <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The hours</p>
+
+<h5 id="minutes-systemint32-2">minutes <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The minutes</p>
+
+<h5 id="seconds-systemint32-2">seconds <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The seconds</p>
+
+<h4 id="example-razor-6">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .WorkDayStart(10, 0, 0)
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="workdayendsystemdatetime">WorkDayEnd(System.DateTime)</h3>
+<p>The end time of the business day. The scheduler will display events ending before the workDayEnd when the "Show Business Hours" button is pressed.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="workdayend-systemdatetime">workDayEnd <code class="language-plaintext highlighter-rouge">System.DateTime</code></h5>
+<p>The workDayEnd.</p>
+
+<h4 id="example-razor-7">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .WorkDayEnd(new DateTime(2013, 6, 13, 10, 00, 00))
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="workdayendsystemint32systemint32systemint32">WorkDayEnd(System.Int32,System.Int32,System.Int32)</h3>
+<p>The end time of the business day. The scheduler will display events ending before the workDayEnd when the "Show Business Hours" button is pressed.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="hours-systemint32-3">hours <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The hours</p>
+
+<h5 id="minutes-systemint32-3">minutes <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The minutes</p>
+
+<h5 id="seconds-systemint32-3">seconds <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The seconds</p>
+
+<h4 id="example-razor-8">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .WorkDayEnd(16,0,0)
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="heightsystemint32">Height(System.Int32)</h3>
+<p>The height of the widget.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="height-systemint32">height <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The height.</p>
+
+<h4 id="example-razor-9">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .Height(600)
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="eventtemplatesystemstring">EventTemplate(System.String)</h3>
+<p>The template used to render the scheduler events.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="eventtemplate-systemstring">eventTemplate <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The eventTemplate.</p>
+
+<h4 id="example-razor-10">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .StartTime(new DateTime(2013, 6, 13, 10, 00, 00))
+    .EndTime(new DateTime(2013, 6, 13, 23, 00, 00))
+    .Height(600)
+    .EventTemplate(
+        "&lt;div style='color:white'&gt;" +
+        "&lt;img src='" + Url.Content("~/Content/web/scheduler/") + "#= Image #' style='float:left'&gt;" +
+        "&lt;p&gt;" +
+        "#: kendo.toString(Start, 'hh:mm') # - #: kendo.toString(End, 'hh:mm') #" +
+        "&lt;/p&gt;" +
+        "&lt;h3&gt;#: title #&lt;/h3&gt;" +
+        "&lt;a href='#= Imdb #' style='color:white'&gt;Movie in IMDB&lt;/a&gt;" +
+        "&lt;/div&gt;")
+        .Views(views =&gt;
+        {
+            views.DayView();
+            views.AgendaView();
+        })
+        .BindTo(Model)
+    )
+</code></pre></div></div>
+
+<h3 id="eventtemplateidsystemstring">EventTemplateId(System.String)</h3>
+<p>The Id of the template used to render the scheduler events.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="eventtemplateid-systemstring">eventTemplateId <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The eventTemplateId</p>
+
+<h4 id="example-razor-11">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .StartTime(new DateTime(2013, 6, 13, 10, 00, 00))
+    .EndTime(new DateTime(2013, 6, 13, 23, 00, 00))
+    .Height(600)
+    .EventTemplateId("customEventTemplate")
+    .Views(views =&gt;
+    {
+        views.DayView();
+        views.AgendaView();
+    })
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="alldayeventtemplatesystemstring">AllDayEventTemplate(System.String)</h3>
+<p>The template used to render the "all day" scheduler events.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="alldayeventtemplate-systemstring">allDayEventTemplate <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The allDayEventTemplate</p>
+
+<h3 id="alldayeventtemplateidsystemstring">AllDayEventTemplateId(System.String)</h3>
+<p>The Id of the template used to render the "all day" scheduler events.</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="alldayeventtemplateid-systemstring">allDayEventTemplateId <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The allDayEventTemplateId</p>
+
+<h3 id="alldayslotsystemboolean">AllDaySlot(System.Boolean)</h3>
+<p>If set to true the scheduler will display a slot for "all day" events.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="alldayslot-systemboolean">allDaySlot <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The allDaySlot.</p>
+
+<h3 id="showworkhourssystemboolean">ShowWorkHours(System.Boolean)</h3>
+<p>If set to true day and week views will be initially shown in business hours mode.</p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-systemboolean">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+
+<h3 id="showworkhours">ShowWorkHours</h3>
+<p>If set day and week views will be initially shown in business hours mode.</p>
+
+<h3 id="selectablesystemboolean">Selectable(System.Boolean)</h3>
+<p>If set to true the scheduler will enable the selection</p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="selectable-systemboolean">selectable <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The selectable.</p>
+
+<h3 id="dateheadertemplatesystemstring">DateHeaderTemplate(System.String)</h3>
+<p>The template used to render the date header cells.</p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="dateheadertemplate-systemstring">dateHeaderTemplate <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The dateHeaderTemplate</p>
+
+<h3 id="dateheadertemplateidsystemstring">DateHeaderTemplateId(System.String)</h3>
+<p>The Id of the template used to render the date header cells.</p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="dateheadertemplateid-systemstring">dateHeaderTemplateId <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The dateHeaderTemplateId</p>
+
+<h4 id="example-razor-12">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .StartTime(new DateTime(2013, 6, 13, 10, 00, 00))
+    .EndTime(new DateTime(2013, 6, 13, 23, 00, 00))
+    .Height(600)
+    .AllDayEventTemplateId("customAllDayTemplate")
+    .Views(views =&gt;
+    {
+        views.DayView();
+        views.AgendaView();
+    })
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="majorticksystemint32">MajorTick(System.Int32)</h3>
+<p>The number of minutes represented by a major tick.</p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="majortick-systemint32">majorTick <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The majorTick</p>
+
+<h4 id="example-razor-13">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .Height(600)
+    .MajorTick(120)
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="majortimeheadertemplatesystemstring">MajorTimeHeaderTemplate(System.String)</h3>
+<p>The template used to render the major ticks.</p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="majortimeheadertemplate-systemstring">majorTimeHeaderTemplate <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The majorTimeHeaderTemplate</p>
+
+<h3 id="majortimeheadertemplateidsystemstring">MajorTimeHeaderTemplateId(System.String)</h3>
+<p>The Id of the template used to render the major ticks.</p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="majortimeheadertemplateid-systemstring">majorTimeHeaderTemplateId <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The majorTimeHeaderTemplateId</p>
+
+<h3 id="minortickcountsystemint32">MinorTickCount(System.Int32)</h3>
+<p>The number of time slots to display per major tick.</p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="minortickcount-systemint32">minorTickCount <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The minorTickCount</p>
+
+<h4 id="example-razor-14">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Screening&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 7, 23))
+    .Height(400)
+    .MinorTickCount(1)
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="minortimeheadertemplatesystemstring">MinorTimeHeaderTemplate(System.String)</h3>
+<p>The template used to render the minor ticks.</p>
+
+<h4 id="parameters-24">Parameters</h4>
+
+<h5 id="minortimeheadertemplate-systemstring">minorTimeHeaderTemplate <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The minorTimeHeaderTemplate</p>
+
+<h3 id="minortimeheadertemplateidsystemstring">MinorTimeHeaderTemplateId(System.String)</h3>
+<p>The Id of the template used to render the minor ticks.</p>
+
+<h4 id="parameters-25">Parameters</h4>
+
+<h5 id="minortimeheadertemplateid-systemstring">minorTimeHeaderTemplateId <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The minorTimeHeaderTemplateId</p>
+
+<h3 id="timezonesystemstring">Timezone(System.String)</h3>
+<p>The timezone which the scheduler will use to display the scheduler appointment dates. By default the current system timezone is used. This is an acceptable default when the scheduler widget is bound to local array of events. It is advisable to specify a timezone if the scheduler is bound to a remote service. That way all users would see the same dates and times no matter their configured system timezone.
+            The complete list of the supported timezones is available in the List of IANA time zones Wikipedia page.</p>
+
+<h4 id="parameters-26">Parameters</h4>
+
+<h5 id="timezone-systemstring">timezone <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The timezone</p>
+
+<h4 id="example-razor-15">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .Timezone("Europe/London")
+    .Height(600)
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="widthsystemint32">Width(System.Int32)</h3>
+<p>The width of the widget.</p>
+
+<h4 id="parameters-27">Parameters</h4>
+
+<h5 id="width-systemint32">width <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The width</p>
+
+<h4 id="example-razor-16">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .Width(800)
+    .Height(600)
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="snapsystemboolean">Snap(System.Boolean)</h3>
+<p>If set to false the events would not snap events to the nearest slot during dragging (resizing or moving). Set it to false to allow free moving and resizing of events.</p>
+
+<h4 id="parameters-28">Parameters</h4>
+
+<h5 id="issnapable-systemboolean">isSnapable <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The isSnapable</p>
+
+<h4 id="example-razor-17">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .Snap(false)
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="autobindsystemboolean">AutoBind(System.Boolean)</h3>
+<p>If set to false the initial binding will be prevented.</p>
+
+<h4 id="parameters-29">Parameters</h4>
+
+<h5 id="autobind-systemboolean">autoBind <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The autoBind</p>
+
+<h4 id="example-razor-18">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .AutoBind(false)
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="workweekstartsystemint32">WorkWeekStart(System.Int32)</h3>
+<p>Sets the start day of work week by index.</p>
+
+<h4 id="parameters-30">Parameters</h4>
+
+<h5 id="workweekstartday-systemint32">workWeekStartDay <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The workWeekStartDay</p>
+
+<h4 id="example-razor-19">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .WorkWeekStart(2)
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="workweekendsystemint32">WorkWeekEnd(System.Int32)</h3>
+<p>Sets the end day of work week by index.</p>
+
+<h4 id="parameters-31">Parameters</h4>
+
+<h5 id="workweekendday-systemint32">workWeekEndDay <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The workWeekEndDay</p>
+
+<h4 id="example-razor-20">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .WorkWeekEnd(2)
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="editablesystemactionkendomvcuifluentschedulereditablesettingsbuildert">Editable(System.Action&lt;Kendo.Mvc.UI.Fluent.SchedulerEditableSettingsBuilder&lt;T&gt;&gt;)</h3>
+<p>Sets the editing configuration of the scheduler.</p>
+
+<h4 id="parameters-32">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentschedulereditablesettingsbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/SchedulerEditableSettingsBuilder">Kendo.Mvc.UI.Fluent.SchedulerEditableSettingsBuilder</a><T>&gt;</T></h5>
+<p>The lambda which configures the editing</p>
+
+<h4 id="example-razor-21">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .Editable(editable =&gt;
+    {
+        editable.Confirmation(false);
+        editable.TemplateId("customEditTemplate");
+    })
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="editablesystemboolean">Editable(System.Boolean)</h3>
+<p>If set to false the user would not be able to create new scheduler events and modify or delete existing ones.</p>
+
+<h4 id="parameters-33">Parameters</h4>
+
+<h5 id="iseditable-systemboolean">isEditable <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The isEditable</p>
+
+<h4 id="example-razor-22">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .Editable(false)
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="minsystemdatetime">Min(System.DateTime)</h3>
+<p>Constraints the minimum date which can be selected via the scheduler navigation.</p>
+
+<h4 id="parameters-34">Parameters</h4>
+
+<h5 id="date-systemdatetime-1">date <code class="language-plaintext highlighter-rouge">System.DateTime</code></h5>
+<p>The min date</p>
+
+<h3 id="maxsystemdatetime">Max(System.DateTime)</h3>
+<p>Constraints the maximum date which can be selected via the scheduler navigation.</p>
+
+<h4 id="parameters-35">Parameters</h4>
+
+<h5 id="date-systemdatetime-2">date <code class="language-plaintext highlighter-rouge">System.DateTime</code></h5>
+<p>The max date</p>
+
+<h3 id="groupsystemactionkendomvcuifluentschedulergroupbuilder">Group(System.Action&lt;Kendo.Mvc.UI.Fluent.SchedulerGroupBuilder&gt;)</h3>
+<p>Sets the resources grouping configuration of the scheduler.</p>
+
+<h4 id="parameters-36">Parameters</h4>
+
+<h5 id="configuration-systemactionkendomvcuifluentschedulergroupbuilder">configuration System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/SchedulerGroupBuilder">Kendo.Mvc.UI.Fluent.SchedulerGroupBuilder</a>&gt;</h5>
+<p>The lambda which configures the scheduler grouping</p>
+
+<h4 id="example-razor-23">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Resources(resource =&gt;
+    {
+        resource.Add(m =&gt; m.TaskID)
+        .Title("Color")
+        .Multiple(true)
+        .DataTextField("Text")
+        .DataValueField("Value")
+        .DataSource(d =&gt; d.Read("Attendies", "Scheduler"));
+    })
+    .DataSource(dataSource =&gt; dataSource
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        ))
+</code></pre></div></div>
+
+<h3 id="resourcessystemactionkendomvcuifluentschedulerresourcefactoryt">Resources(System.Action&lt;Kendo.Mvc.UI.Fluent.SchedulerResourceFactory&lt;T&gt;&gt;)</h3>
+<p>Sets the resources configuration of the scheduler.</p>
+
+<h4 id="parameters-37">Parameters</h4>
+
+<h5 id="addresourceaction-systemactionkendomvcuifluentschedulerresourcefactory">addResourceAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/SchedulerResourceFactory">Kendo.Mvc.UI.Fluent.SchedulerResourceFactory</a><T>&gt;</T></h5>
+<p>The lambda which configures the scheduler resources</p>
+
+<h4 id="example-razor-24">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .Resources(resource =&gt;
+    {
+        resource.Add(m =&gt; m.TaskID)
+        .Title("Color")
+        .Multiple(true)
+        .DataTextField("Text")
+        .DataValueField("Value")
+        .DataSource(d =&gt; d.Read("Attendies", "Scheduler"));
+    })
+    .DataSource(dataSource =&gt; dataSource
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        ))
+</code></pre></div></div>
+
+<h3 id="viewssystemactionkendomvcuifluentschedulerviewfactoryt">Views(System.Action&lt;Kendo.Mvc.UI.Fluent.SchedulerViewFactory&lt;T&gt;&gt;)</h3>
+<p>Sets the views configuration of the scheduler.</p>
+
+<h4 id="parameters-38">Parameters</h4>
+
+<h5 id="addviewaction-systemactionkendomvcuifluentschedulerviewfactory">addViewAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/SchedulerViewFactory">Kendo.Mvc.UI.Fluent.SchedulerViewFactory</a><T>&gt;</T></h5>
+<p>The lambda which configures the scheduler views</p>
+
+<h4 id="example-razor-25">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .Views(views =&gt; {
+        views.DayView();
+        views.AgendaView();
+    })
+    .BindTo(Model)
+)
+</code></pre></div></div>
+
+<h3 id="messagessystemactionkendomvcuifluentschedulermessagesbuilder">Messages(System.Action&lt;Kendo.Mvc.UI.Fluent.SchedulerMessagesBuilder&gt;)</h3>
+<p>Sets the messages of the scheduler.</p>
+
+<h4 id="parameters-39">Parameters</h4>
+
+<h5 id="addviewaction-systemactionkendomvcuifluentschedulermessagesbuilder">addViewAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/SchedulerMessagesBuilder">Kendo.Mvc.UI.Fluent.SchedulerMessagesBuilder</a>&gt;</h5>
+<p>The lambda which configures the scheduler messages</p>
+
+<h3 id="eventssystemactionkendomvcuifluentschedulereventbuilder">Events(System.Action&lt;Kendo.Mvc.UI.Fluent.SchedulerEventBuilder&gt;)</h3>
+<p>Sets the events configuration of the scheduler.</p>
+
+<h4 id="parameters-40">Parameters</h4>
+
+<h5 id="clienteventsaction-systemactionkendomvcuifluentschedulereventbuilder">clientEventsAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/SchedulerEventBuilder">Kendo.Mvc.UI.Fluent.SchedulerEventBuilder</a>&gt;</h5>
+<p>The lambda which configures the scheduler events</p>
+
+<h4 id="example-razor-26">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Scheduler&lt;Task&gt;()
+.Name("Scheduler")
+.Events(events =&gt;
+    events.Remove("remove")
+)
+.BindTo(Model)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemcollectionsgenericienumerablet">BindTo(System.Collections.Generic.IEnumerable&lt;T&gt;)</h3>
+<p>Binds the scheduler to a list of objects</p>
+
+<h4 id="parameters-41">Parameters</h4>
+
+<h5 id="datasource-systemcollectionsgenericienumerablet">dataSource <code class="language-plaintext highlighter-rouge">System.Collections.Generic.IEnumerable&lt;T&gt;</code></h5>
+<p>The data source.</p>
+
+<h4 id="example-aspx">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@model IEnumerable&lt;Task&gt;
+&lt;%@Page Inherits="System.Web.Mvc.ViewPage&lt;IEnumerable&lt;Task&gt;&gt;" %&gt;
+&lt;: Html.Kendo().Scheduler&lt;Task&gt;()
+.Name("Scheduler")
+.BindTo(Model)
+.DataSource(dataSource =&gt; dataSource
+    .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+    )&gt;
+</code></pre></div></div>
+
+<h4 id="example-razor-27">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@model IEnumerable&lt;Task&gt;
+@(Html.Kendo().Scheduler&lt;Task&gt;()
+    .Name("Scheduler")
+    .BindTo(Model)
+    .DataSource(dataSource =&gt; dataSource
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        ))
+</code></pre></div></div>
+
+<h3 id="datasourcesystemactionkendomvcuifluentschedulerajaxdatasourcebuildert">DataSource(System.Action&lt;Kendo.Mvc.UI.Fluent.SchedulerAjaxDataSourceBuilder&lt;T&gt;&gt;)</h3>
+<p>Configures the DataSource options.</p>
+
+<h4 id="parameters-42">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentschedulerajaxdatasourcebuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/SchedulerAjaxDataSourceBuilder">Kendo.Mvc.UI.Fluent.SchedulerAjaxDataSourceBuilder</a><T>&gt;</T></h5>
+<p>The DataSource configurator action.</p>
+
+<h4 id="example-aspx-1">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().Scheduler&lt;Task&gt;()
+.Name("Scheduler")
+.DataSource(source =&gt;
+{
+    source.Read(read =&gt;
+    {
+        read.Action("Read", "Scheduler");
+        });
+    })
+%&gt;
+</code></pre></div></div>
+
+<h3 id="currenttimemarkersystemactionkendomvcuifluentschedulercurrenttimemarkersettingsbuilder">CurrentTimeMarker(System.Action&lt;Kendo.Mvc.UI.Fluent.SchedulerCurrentTimeMarkerSettingsBuilder&gt;)</h3>
+<p>Sets the currentTimeMarker configuration of the scheduler.</p>
+
+<h4 id="parameters-43">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluentschedulercurrenttimemarkersettingsbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/SchedulerCurrentTimeMarkerSettingsBuilder">Kendo.Mvc.UI.Fluent.SchedulerCurrentTimeMarkerSettingsBuilder</a>&gt;</h5>
+<p>The lambda which configures the currentTimeMarker</p>
+
+<h4 id="example-razor-28">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .CurrentTimeMarker(marker =&gt;
+    {
+        marker.UpdateInterval(100);
+        marker.UseLocalTimezone(false);
+    })
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+        .Create("Create", "Scheduler")
+        .Destroy("Destroy", "Scheduler")
+        .Update("Update", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+<h3 id="currenttimemarkersystemboolean">CurrentTimeMarker(System.Boolean)</h3>
+<p>If set to false the "current time" marker would be disabled.</p>
+
+<h4 id="parameters-44">Parameters</h4>
+
+<h5 id="enabled-systemboolean">enabled <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The enabled</p>
+
+<h4 id="example-razor-29">Example (Razor)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Scheduler&lt;Kendo.Mvc.Examples.Models.Scheduler.Task&gt;()
+    .Name("scheduler")
+    .Date(new DateTime(2013, 6, 13))
+    .CurrentTimeMarker(false)
+    .DataSource(d =&gt; d
+        .Model(m =&gt; m.Id(f =&gt; f.TaskID))
+        .Read("Read", "Scheduler")
+    )
+)
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

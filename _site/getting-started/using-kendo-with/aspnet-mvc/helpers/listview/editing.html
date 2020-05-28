@@ -1,0 +1,305 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Editing of Kendo jQuery ListView for ASP.NET MVC</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Find which steps to follow in order to configure Kendo UI ListView for ASP.NET MVC for editing.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/listview/editing.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="editing">Editing</h1>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>To configure Kendo ListView for ASP.NET MVC for editing follow these steps:</p>
+
+<ol>
+  <li>
+    <p>Define item template for listview:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- The following markup contains the `Add new record` button --&gt;
+&lt;div class="k-toolbar k-grid-toolbar"&gt;
+    &lt;a class="k-button k-button-icontext k-add-button" href="#"&gt;&lt;span class="k-icon k-add"&gt;&lt;/span&gt;Add new record&lt;/a&gt;
+&lt;/div&gt;
+	
+&lt;!-- ListView item template --&gt;
+&lt;script id="list-view-template" type="text/x-kendo-template"&gt;
+    &lt;div class="product-view"&gt;
+            &lt;dl&gt;
+                &lt;dt&gt;Product Name&lt;/dt&gt;
+                &lt;dd&gt;${ProductName}&lt;/dd&gt;
+                &lt;dt&gt;Unit Price&lt;/dt&gt;
+                &lt;dd&gt;${kendo.toString(UnitPrice, "c")}&lt;/dd&gt;
+                &lt;dt&gt;Units In Stock&lt;/dt&gt;
+                &lt;dd&gt;${UnitsInStock}&lt;/dd&gt;
+                &lt;dt&gt;Discontinued&lt;/dt&gt;
+                &lt;dd&gt;${Discontinued}&lt;/dd&gt;
+            &lt;/dl&gt;
+            &lt;div class="edit-buttons"&gt;
+                &lt;a class="k-button k-button-icontext k-edit-button" href="\\#"&gt;&lt;span class="k-icon k-edit"&gt;&lt;/span&gt;Edit&lt;/a&gt;
+                &lt;a class="k-button k-button-icontext k-delete-button" href="\\#"&gt;&lt;span class="k-icon k-delete"&gt;&lt;/span&gt;Delete&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+&lt;/script&gt;
+</code></pre></div>    </div>
+
+    <p><strong>Note:</strong> Click events for elements with class name <strong>k-edit-button</strong> and <strong>k-delete-button</strong> will be automatically handled and treated by Kendo ListView as <strong>edit</strong> and <strong>delete</strong> actions.</p>
+  </li>
+  <li>
+    <p>Define <code class="language-plaintext highlighter-rouge">EditorTemplate</code> for the model:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@model Kendo.Mvc.Examples.Models.ProductViewModel		
+&lt;div class="product-view"&gt;
+    &lt;dl&gt;
+        &lt;dt&gt;Product Name&lt;/dt&gt;
+        &lt;dd&gt;
+            @(Html.EditorFor(p=&gt;p.ProductName))
+            &lt;!-- ProductName validation message placeholder --&gt;
+            &lt;span data-for="ProductName" class="k-invalid-msg"&gt;&lt;/span&gt;
+        &lt;/dd&gt;
+        &lt;dt&gt;Unit Price&lt;/dt&gt;
+        &lt;dd&gt;
+            @(Html.EditorFor(p=&gt;p.UnitPrice))
+            &lt;!-- UnitPrice validation message placeholder --&gt;
+            &lt;span data-for="UnitPrice" class="k-invalid-msg"&gt;&lt;/span&gt;
+        &lt;/dd&gt;
+        &lt;dt&gt;Units In Stock&lt;/dt&gt;
+        &lt;dd&gt;
+            @(Html.EditorFor(p=&gt;p.UnitsInStock))
+            &lt;!-- UnitsInStock validation message placeholder --&gt;
+            &lt;span data-for="UnitsInStock" class="k-invalid-msg"&gt;&lt;/span&gt;
+        &lt;/dd&gt;
+        &lt;dt&gt;Discontinued&lt;/dt&gt;
+        &lt;dd&gt;@(Html.EditorFor(p=&gt;p.Discontinued))&lt;/dd&gt;
+    &lt;/dl&gt;
+    &lt;div class="edit-buttons"&gt;
+        &lt;a class="k-button k-button-icontext k-update-button" href="\\#"&gt;&lt;span class="k-icon k-update"&gt;&lt;/span&gt;Save&lt;/a&gt;
+        &lt;a class="k-button k-button-icontext k-cancel-button" href="\\#"&gt;&lt;span class="k-icon k-cancel"&gt;&lt;/span&gt;Cancel&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>    </div>
+
+    <p><strong>Note:</strong> Click events for elements with class name <strong>k-update-button</strong> and <strong>k-cancel-button</strong> will be automatically handled and treated by Kendo ListView as <strong>save</strong> and <strong>cancel</strong> actions.</p>
+  </li>
+  <li>
+    <p>Enable listview editing:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().ListView&lt;Kendo.Mvc.Examples.Models.ProductViewModel&gt;()
+    .Name("listView")
+    .TagName("div")
+    .ClientTemplateId("list-view-template")		    
+    .Editable() // &lt;-- Enable editing
+)
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Specify the action methods which will handle the Create, Update and Destroy operations:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().ListView&lt;Kendo.Mvc.Examples.Models.ProductViewModel&gt;(Model)
+    .Name("listView")
+    .TagName("div")
+    .ClientTemplateId("list-view-template")
+    .Editable()
+    .DataSource(dataSource =&gt; dataSource
+        // Configure CRUD --&gt;		        
+        .Create(create =&gt; create.Action("Editing_Create", "ListView"))
+        .Read(read =&gt; read.Action("Editing_Read", "ListView"))
+        .Update(update =&gt; update.Action("Editing_Update", "ListView"))
+        .Destroy(destroy =&gt; destroy.Action("Editing_Destroy", "ListView"))
+        // &lt;-- Configure CRUD
+    )		    
+)
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Specify the property of the model which is the unique identifier (primary key):</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().ListView&lt;Kendo.Mvc.Examples.Models.ProductViewModel&gt;(Model)
+    .Name("listView")
+    .TagName("div")
+    .ClientTemplateId("list-view-template")
+    .Editable()
+    .DataSource(dataSource =&gt; dataSource
+        // Specify that the ProductID property is the unique identifier of the model
+        .Model(model =&gt; model.Id("ProductID"))		        
+        .Create(create =&gt; create.Action("Editing_Create", "ListView"))
+        .Read(read =&gt; read.Action("Editing_Read", "ListView"))
+        .Update(update =&gt; update.Action("Editing_Update", "ListView"))
+        .Destroy(destroy =&gt; destroy.Action("Editing_Destroy", "ListView"))
+    )		    		    
+)
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Read</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
+{
+    return Json(ProductRepository.All().ToDataSourceResult(request));
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Create</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Editing_Create([DataSourceRequest] DataSourceRequest request, Product product)
+{
+    if (product != null &amp;&amp; ModelState.IsValid)
+    {
+        ProductRepository.Insert(product);
+    }
+
+    //Return any validation errors if any
+    return Json(new [] { product }.ToDataSourceResult(request, ModelState));
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Update</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Editing_Update([DataSourceRequest] DataSourceRequest request, Product product)
+{
+    if (product != null &amp;&amp; ModelState.IsValid)
+    {
+        var target = ProductRepository.One(p =&gt; p.ProductID == product.ProductID);
+        if (target != null)
+        {
+            target.ProductName = product.ProductName;
+            target.UnitPrice = product.UnitPrice;
+            target.UnitsInStock = product.UnitsInStock;
+            target.LastSupply = product.LastSupply;
+            target.Discontinued = product.Discontinued;
+            ProductRepository.Update(target);
+        }
+    }
+
+    //Return any validation errors if any
+    return Json(ModelState.ToDataSourceResult());
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Implement the <code class="language-plaintext highlighter-rouge">Destroy</code> action method:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[AcceptVerbs(HttpVerbs.Post)]
+public ActionResult Editing_Destroy([DataSourceRequest] DataSourceRequest request, Product product)
+{
+    if (product != null)
+    {
+        ProductRepository.Delete(product);
+    }
+
+    //Return any validation errors if any
+    return Json(ModelState.ToDataSourceResult());
+}
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

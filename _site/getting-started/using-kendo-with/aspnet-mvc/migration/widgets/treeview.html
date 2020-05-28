@@ -1,0 +1,357 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API documentation for Kendo UI jQuery TreeView widget for ASP.NET MVC</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="This documentation guides you how to load data on demand in the server-side API of Kendo UI TreeView for ASP.NET MVC and serialize JSON format data from the server.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/migration/widgets/treeview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="server-side-api">Server-side API</h1>
+
+<h3 id="remote-data-binding-load-on-demand">Remote data binding (Load On Demand)</h3>
+
+<h4 id="old">Old</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Telerik().TreeView()
+     .Name("TreeView")
+     .DataBinding(dataBinding =&gt; dataBinding
+         .Ajax().Select("_AjaxLoading", "TreeView")
+     )
+ %&gt;
+</code></pre></div></div>
+
+<h4 id="new">New</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Telerik().TreeView()
+     .Name("TreeView")
+     .DataSource(source =&gt; {
+           source.Read(read =&gt;
+           {
+               read.Action("_AjaxLoading ", "TreeView");
+           });
+     })
+ %&gt;
+</code></pre></div></div>
+
+<h3 id="serializing-data">Serializing Data</h3>
+
+<p>Data from the server should be serialized in the following JSON format:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+	id: String,
+	text: String,
+	url: String,
+	imageUrl: String,
+	spriteCssClass: String,
+	hasChildren: Boolean
+}
+</code></pre></div></div>
+
+<p>All fields are optional (skipping the text field will show the item with the text “undefined”). The text/url/imageUrl/spriteCssClass field names can be changed through the DataTextField/DataUrlField/DataImageUrlField/DataSpriteCssClassField fluent methods:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+     .Name("TreeView")
+     .DataTextField("text")
+     .DataSource(source =&gt; {
+           source.Read(read =&gt;
+           {
+               read.Action("_AjaxLoading ", "TreeView");
+           });
+     })
+ %&gt;
+</code></pre></div></div>
+
+<p>The above code allows the items to be serialized in the following form:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    id: 2,
+    text: "Andrew",
+    hasChildren: true
+}
+</code></pre></div></div>
+
+<h3 id="changing-the-field-that-posts-the-item-id">Changing The Field That Posts The Item ID</h3>
+
+<p>By default, the <strong>id</strong> field will be posted to the server. To change the parameter name, you can use the Data handler:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeView()
+    .Name("TreeView")
+    .DataSource(dataSource =&gt; dataSource
+        .Read(read =&gt; read
+            .Action("Employees", "TreeView")
+            .Data("addData")
+        )
+    )
+%&gt;
+
+&lt;script&gt;
+    function addData(data) {
+        return { employeeId: data.id };
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="value-field">Value Field</h3>
+
+<p>The value field is removed.  Depending on your use case, you can either:</p>
+
+<ul>
+  <li>
+    <p>If the value was used for load on demand, use the <strong>id</strong> field.  The id will be inferred in the client-side datasource and will be used when making requests for more data.</p>
+  </li>
+  <li>
+    <p>If the value was used to store arbitrary data, serialize it in a data-* attribute through the item HtmlAttributes, or if a DataSource is used, access the additional data through the <strong>dataItem</strong> client-side method.</p>
+  </li>
+</ul>
+
+<h3 id="checkbox-support">CheckBox Support</h3>
+
+<h4 id="20122913-release">2012.2.913 release</h4>
+
+<p>This service pack introduces a simplified checkboxes configuration, along with tri-state checkboxes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().TreeView()
+    .Name("TreeView")
+    .Checkboxes(true)  // simple check boxes, posting an array of IDs
+)
+
+@(Html.Kendo().TreeView()
+    .Name("TreeView")
+    .Checkboxes(settings =&gt; settings
+        .CheckChildren(true) // enables tri-state checkboxes, which check sub-nodes
+    )
+)
+</code></pre></div></div>
+
+<h4 id="20122710-release">2012.2.710 release</h4>
+
+<p>The checkbox support is limited to the functionality shown in the <a href="http://demos.telerik.com/kendo-ui/web/treeview/templates.html">templates demo</a> (i.e. rendering only). Any data that needs to be passed to the server needs to be added in hidden fields with JavaScript, using the proper naming. The snippet below shows a possible approach for this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().TreeView()
+    .Name("TreeView")
+    .DataTextField("text")
+    .DataSource(dataSource =&gt; dataSource
+        .Read(read =&gt; read
+            .Action("Employees", "TreeView")
+        )
+    )
+    .CheckboxTemplate("&lt;input type='checkbox' /&gt;")
+)
+
+&lt;script id="itemInfoTemplate" type="text/kendo-ui-template"&gt;
+    # var name = "checkedEmployees"; /* modify this to change the argument name */ #
+    # var arrayItem = name + "[" + index + "]"; #
+    &lt;input type="hidden" name="#= name #.Index" value="#= index #" /&gt;
+    &lt;input type="hidden" name="#= arrayItem #.Id" value="#= item.id #" /&gt;
+    &lt;input type="hidden" name="#= arrayItem #.Name" value="#= item.Name #" /&gt;
+&lt;/script&gt;
+
+&lt;script&gt;
+    function getNodeIndex(node) {
+        return node.parentsUntil(".k-treeview", ".k-item").map(function() {
+            return $(this).index();
+        }).toArray().reverse().join(":");
+    }
+
+    var itemInfoTemplate = kendo.template($("#itemInfoTemplate").html());
+
+    var treeview = $("#treeview");
+
+    treeview.on("change", ":checkbox", function(e) {
+        var checkbox = $(this),
+            dataItem = treeview.data("kendoTreeView").dataItem(checkbox.closest(".k-item")),
+            index = getNodeIndex(checkbox);
+
+        checkbox.nextAll().remove();
+
+        if (checkbox.is(":checked")) {
+            checkbox.after(itemInfoTemplate({
+                item: dataItem,
+                index: index
+            }));
+        }
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="per-item-checkboxes">Per-Item CheckBoxes</h3>
+
+<h1 id="client-side-api-changes">Client-Side API Changes</h1>
+
+<h4 id="mvc---kendo">MVC -&gt; Kendo</h4>
+
+<h5 id="ajaxrequest">ajaxRequest</h5>
+
+<p>Removed. Use <strong>dataItem.children.read()</strong> (after obtaining the dataItem through <strong>treeview.dataItem(node)</strong>)</p>
+
+<h5 id="databind">dataBind</h5>
+
+<p>Removed. Use <strong>treeview.dataSource.read()</strong></p>
+
+<h5 id="disable">disable</h5>
+
+<p>Removed. Use <strong>treeview.enable(node, false)</strong></p>
+
+<h5 id="getitemtext">getItemText</h5>
+
+<p>Renamed. Use <strong>treeview.text(node)</strong></p>
+
+<h5 id="getitemvalue">getItemValue</h5>
+
+<p>Removed. See the <a href="#value-field-is-removed">Value Field Is Removed</a> section of this document.</p>
+
+<h5 id="findbyvalue">findByValue</h5>
+
+<p>Removed. See the <a href="#value-field-is-removed">Value Field Is Removed</a> section of this document. An alternative is to use <strong>treeview.findByUid</strong> and access additional data in the related dataItem.</p>
+
+<h5 id="nodecheck">nodeCheck</h5>
+
+<p>Removed. See the <a href="#checkbox-support">Checkbox Support</a> section of this document.</p>
+
+<h2 id="client-side-events-changes">Client-Side Events Changes</h2>
+
+<p>Apart from changing the event builders, the following changes have been introduced:</p>
+
+<h4 id="mvc---kendo-1">MVC -&gt; Kendo</h4>
+
+<h5 id="onload">OnLoad</h5>
+
+<p>Removed. Use <strong>$(document).ready()</strong></p>
+
+<h5 id="onchecked">OnChecked</h5>
+
+<p>Removed. See the <a href="#checkbox-support">Checkbox Support</a> section of this document.</p>
+
+<h5 id="ondatabinding">OnDataBinding</h5>
+
+<p>Removed. Use the DataSource events</p>
+
+<h5 id="ondatabound">OnDataBound</h5>
+
+<p>Removed. Use the DataSource events</p>
+
+<h5 id="onerror">OnError</h5>
+
+<p>Removed. Use the DataSource events</p>
+
+<h5 id="onnodedragstart">OnNodeDragStart</h5>
+
+<p>Renamed. Use the <strong>DragStart</strong> event</p>
+
+<h5 id="onnodedragging">OnNodeDragging</h5>
+
+<p>Renamed. Use the <strong>Drag</strong> event</p>
+
+<h5 id="onnodedrop">OnNodeDrop</h5>
+
+<p>Renamed. Use the <strong>Drop</strong> event</p>
+
+<h5 id="onnodedropped">OnNodeDropped</h5>
+
+<p>Renamed. Use the <strong>DragEnd</strong> event</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

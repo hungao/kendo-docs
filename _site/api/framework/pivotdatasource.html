@@ -1,0 +1,1611 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API Reference for Kendo UI PivotDataSource</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn more about the configuration of Kendo UI PivotDataSource, methods and events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/framework/pivotdatasource.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatapivotdatasource">kendo.data.PivotDataSource</h1>
+
+<p>The data source used by the <a href="/api/web/pivotgrid">kendo.ui.PivotGrid</a> widget.
+Inherits from <a href="/api/framework/datasource">kendo.data.DataSource</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>See the <a href="/api/framework/datasource#configuration">DataSource configuration</a> for all inherited configuration options.</p>
+
+<h3 id="columns-array">columns <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>The configuration of columns axis members. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column descriptors. Strings are interpreted as the hierarchal name of the member.</p>
+
+<h4 id="example---set-the-columns">Example - set the columns</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  columns: ["[Date].[Calendar]"],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columnsexpand-boolean">columns.expand <code class="language-plaintext highlighter-rouge">Boolean</code></h3>
+
+<p>If set to true the member will be exapnded.</p>
+
+<h4 id="example---set-the-column-as-expanded">Example - set the column as expanded</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  columns: [{ name: "[Date].[Calendar]", expand: true }],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columnsname-string">columns.name <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The hierarchal name of the column</p>
+
+<h4 id="example---set-the-column-name">Example - set the column name</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  columns: [{ name: "[Date].[Calendar]", expand: false }],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="measures-arrayobejct">measures <code class="language-plaintext highlighter-rouge">Array|Obejct</code></h3>
+
+<p>The configuration of measures. An string array which values are interpreted as the name of the measures to be loaded.</p>
+
+<h4 id="example---set-the-measures">Example - set the measures</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  measures: ["[Measures].[Internet Order Lines Count]"],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="measuresvalues-array">measures.values <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>An string array which values are interpreted as the name of the measures to be loaded.</p>
+
+<h4 id="example---set-the-measures-1">Example - set the measures</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  measures: {
+      values: ["[Measures].[Internet Order Lines Count]"]
+  },
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="measuresaxis-string-default-columns">measures.axis <code class="language-plaintext highlighter-rouge">String</code> <em>(default: columns)</em></h3>
+
+<p>The name of the axis on which the measures will be displayed. Supported values are rows or columns. This option is applicable if multiple measures are used.</p>
+
+<h4 id="example---set-the-measures-axis">Example - set the measures axis</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  measures: {
+      values: ["[Measures].[Internet Order Lines Count]", "[Measures].[Days Current Quarter to Date]"],
+      axis: "rows"
+  },
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="rows-array">rows <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>The configuration of rows axis members. An array of JavaScript objects or strings. A JavaScript objects are interpreted as rows descriptors. Strings are interpreted as the hierarchal name of the member.</p>
+
+<h4 id="example---set-the-columns-1">Example - set the columns</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  rows: ["[Date].[Calendar]"],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="rowsexpand-boolean">rows.expand <code class="language-plaintext highlighter-rouge">Boolean</code></h3>
+
+<p>If set to true the member will be exapnded.</p>
+
+<h4 id="example---set-the-rows-as-expanded">Example - set the rows as expanded</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  columns: [{ name: "[Date].[Calendar]", expand: true }],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="rowsname-string">rows.name <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The hierarchal name of the rows</p>
+
+<h4 id="example---set-the-rows-name">Example - set the rows name</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  rows: [{ name: "[Date].[Calendar]", expand: false }],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transport-object">transport <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The configuration used to load data items and discover schema information.</p>
+
+<h3 id="transportdiscover-objectstringfunction">transport.discover <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h3>
+
+<p>The configuration used when the data source discovers schema information about the current cube.</p>
+
+<blockquote>
+  <p>The data source uses <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> to make a HTTP request to the remote service. The value configured via <code class="language-plaintext highlighter-rouge">transport.discover</code> is passed to <code class="language-plaintext highlighter-rouge">jQuery.ajax</code>. This means that you can set
+all options supported by <code class="language-plaintext highlighter-rouge">jQuery.ajax</code> via <code class="language-plaintext highlighter-rouge">transport.read</code> except the <code class="language-plaintext highlighter-rouge">success</code> and <code class="language-plaintext highlighter-rouge">error</code> callback functions which are used by the transport.</p>
+</blockquote>
+
+<p>If the value of <code class="language-plaintext highlighter-rouge">transport.discover</code> is a function, the data source invokes that function instead of <code class="language-plaintext highlighter-rouge">jQuery.ajax</code>.</p>
+
+<p>If the value of <code class="language-plaintext highlighter-rouge">transport.discover</code> is a string the data source uses this string as the URL of the remote service.</p>
+
+<p>If the value of <code class="language-plaintext highlighter-rouge">transport.discover</code> is ommited the data source uses <code class="language-plaintext highlighter-rouge">transport.read</code> for schema discover.</p>
+
+<h4 id="example---set-the-discover-remote-service">Example - set the discover remote service</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    discover: "http://demos.telerik.com/olap/msmdpump.dll",
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+dataSource.schemaDimensions().done(function(dimensions) {
+  console.log(dimensions.length);
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportconnection-object">transport.connection <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The configuration used for setting connection options.</p>
+
+<h3 id="transportconnectioncatalog-string">transport.connection.catalog <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The catalog name.</p>
+
+<h4 id="example---set-the-connection-catalog-name">Example - set the connection catalog name</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll",
+  },
+  schema: {
+    type: "xmla"
+  }
+
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportconnectioncube-string">transport.connection.cube <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The cube name in the current data source.</p>
+
+<h4 id="example---set-the-cube-catalog-name">Example - set the cube catalog name</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll",
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schema-object">schema <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The schema configuration of the PivotDataSource.</p>
+
+<h3 id="schemaaxes-functionstring">schema.axes <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the server response which contains the columns and rows axes data. Can be set to a function which is called to
+return the columns and rows axes data for the response.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> The columns and rows axes data from the response.</p>
+
+<p>The result should have the following format and attributes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    columns:{ // columns axis data
+        tuples:[{
+                members:[{
+                    children:[],
+                    caption:"All",
+                    name:"[Date].[Calendar].[All]",
+                    levelName:"[Date].[Calendar].[(All)]",
+                    levelNum:"0",
+                    hasChildren:true,
+                    hierarchy:"[Date].[Calendar]"
+                }, /*..other tuple members..*/]
+            }
+            /*..other tuples..*/
+        ]
+    },
+    rows:{ //rows axis data
+        tuples:[{
+                members:[{
+                    children:[],
+                    caption:"All",
+                    name:"[Customer].[Commute Distance].[All]",
+                    levelName:"[Customer].[Commute Distance].[(All)]",
+                    levelNum:"0",
+                    hasChildren:true,
+                    hierarchy:"[Customer].[Commute Distance]"
+                }, /*..other tuple members..*/]
+            },
+            /*..other tuples..*/
+        ]
+    }
+}
+</code></pre></div></div>
+
+<h4 id="example---specify-the-field-which-contains-columns-and-rows-axes-as-a-string">Example - specify the field which contains columns and rows axes as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    axes: "axes" // axes are returned in the "axes" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-columns-and-rows-axes-data-as-a-function">Example - set columns and rows axes data as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    axes: function(response) {
+      return response.axes; // axes are returned in the "axes" field of the response
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemacatalogs-functionstring">schema.catalogs <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the server response which contains the list of catalogs available on the server. Can be set to a function which is called to
+return the catalogs schema information for the response. It is executed during the schema discover.</p>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> The catalogs schema from the response.</p>
+
+<p>The result should have the following format and attributes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{
+    "name":"Adventure Works Internet Sales Model"
+}]
+</code></pre></div></div>
+
+<h4 id="example---specify-the-field-which-contains-catalogs-schema-information-as-a-string">Example - specify the field which contains catalogs schema information as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    catalogs: "catalogs" // catalogs information is returned in the "catalogs" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-cubes-schema-information-as-a-function">Example - set cubes schema information as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    catalogs: function(response) {
+      return response.catalogs; // catalogs information are returned in the "catalogs" field of the response
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemacubes-functionstring">schema.cubes <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the server response which contains the list of cubes available in the catalog. Can be set to a function which is called to
+return the cubes schema information for the response. It is executed during the schema discover.</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> The cubes schema from the response.</p>
+
+<p>The result should have the following format and attributes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{
+    name:"Adventure Works Internet Sales Model",
+    caption:"Adventure Works Internet Sales Model",
+    type:"CUBE"
+ },{
+    name:"Internet Sales",
+    caption:"Internet Sales",
+    type:"CUBE"
+ }]
+</code></pre></div></div>
+
+<h4 id="example---specify-the-field-which-contains-cubes-schema-information-as-a-string">Example - specify the field which contains cubes schema information as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    cubes: "cubes" // cubes information is returned in the "cubes" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-cubes-schema-information-as-a-function-1">Example - set cubes schema information as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    cubes: function(response) {
+      return response.cubes; // cubes information are returned in the "cubes" field of the response
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemacube-object">schema.cube <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The cube declaration. If configured this option will enable the client cube processing, usefull for binding to flat data. Note: This is only applicable if client cube processing is used.</p>
+
+<h4 id="schemacubedimensions-object">schema.cube.dimensions <code class="language-plaintext highlighter-rouge">Object</code></h4>
+
+<p>A set of key/value pairs which specify the field-dimension mapping for the available for processing dimensions. The key specifies the name of the field to which the dimension will be mapped. Note: The key should match the column name used in the columns definition.</p>
+
+<h5 id="example---define-cube-dimentions">Example - define cube dimentions</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+  var dataSource = new kendo.data.PivotDataSource({
+    columns: ["ProductName" ],
+    rows: ["Category"],
+    data: [{ ProductName: "Chai", UnitPrice: 42, Cateogry: "Beverages" } ],
+    schema: {
+      cube: {
+        dimensions: {
+          ProductName: { caption: "All Products" },
+          Category: { caption: "All Cateogries" }
+        }
+      }
+    }
+  });
+
+  dataSource.fetch(function() {
+    console.log(dataSource.data(), dataSource.axes());
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h5 id="schemacubedimensionsdimensionname-string">schema.cube.dimensions.dimensionName <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the field which map to the dimension.</p>
+
+<h5 id="schemacubedimensionsdimensionnamecaption-string">schema.cube.dimensions.dimensionName.caption <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>A user-friendly name of the dimension.</p>
+
+<h4 id="schemacubemeasures-object">schema.cube.measures <code class="language-plaintext highlighter-rouge">Object</code></h4>
+
+<p>A set of key/value pairs which specify the available measures. The key specifies the name of measure.Note: The key should match the measure name used in the measures definition of the PivotDataSource</p>
+
+<h4 id="example---define-cube-measures-which-calculates-the-sum-of-products-price">Example - define cube measures which calculates the sum of products price</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+  var dataSource = new kendo.data.PivotDataSource({
+    columns: ["ProductName" ],
+    rows: ["Category"],
+    measures: ["Sum"],
+    data: [{ ProductName: "Chai", UnitPrice: 42, Cateogry: "Beverages" } ],
+    schema: {
+      cube: {
+        dimensions: {
+          ProductName: { caption: "All Products" },
+          Category: { caption: "All Cateogries" }
+        },
+        measures: {
+          "Sum": { field: "UnitPrice", format: "{0:c}", aggregate: function(value, state) { return value + state; } }
+        }
+      }
+    }
+  });
+
+  dataSource.fetch(function() {
+    console.log(dataSource.data(), dataSource.axes());
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h5 id="schemacubemeasuresmeasurenamefield-string">schema.cube.measures.measureName.field <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The field name which value is used to calculations.</p>
+
+<h5 id="schemacubemeasuresmeasurenameformat-string">schema.cube.measures.measureName.format <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The format which to be applied on the calcualted measure value.</p>
+
+<h5 id="schemacubemeasuresmeasurenameaggregate-function">schema.cube.measures.measureName.aggregate <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>The function used to aggregate the measure value.</p>
+
+<h6 id="returns-3">Returns</h6>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> The result of the calculation</p>
+
+<h6 id="parameters">Parameters</h6>
+
+<p>####### value <code class="language-plaintext highlighter-rouge">Object</code></p>
+
+<p>The value of the specified field of the current processed record.</p>
+
+<p>####### state <code class="language-plaintext highlighter-rouge">Object</code></p>
+
+<p>The current aggregated result of the function for already processed records.</p>
+
+<h3 id="schemadata-functionstring">schema.data <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the server response which contains the cells data. Can be set to a function which is called to
+return the cells data for the response.</p>
+
+<h4 id="returns-4">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> The cells data from the response.</p>
+
+<p>The result should have the following format and attributes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{
+    value:"1",
+    fmtValue:"1",
+    ordinal:0
+},{
+    value:"42",
+    fmtValue:"$42.00",
+    ordinal:1
+}, /*..*/]
+</code></pre></div></div>
+
+<h4 id="example---specify-the-field-which-contains-cells-data-as-a-string">Example - specify the field which contains cells data as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    data: "data" // cells data are returned in the "data" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-cells-data-as-a-function">Example - set cells data as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    data: function(response) {
+      return response.data; // cells data are returned in the "data" field of the response
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemadimensions-functionstring">schema.dimensions <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the server response which contains the dimensions schema information. Can be set to a function which is called to
+return the dimensions schema information for the response. It is executed during the schema discover.</p>
+
+<h4 id="returns-5">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> The dimensions schema from the response.</p>
+
+<p>The result should have the following format and attributes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[
+  {
+     "name":"Customer",
+     "caption":"Customer",
+     "uniqueName":"[Customer]",
+     "defaultHierarchy":"[Customer].[Commute Distance]",
+     "type":"3"
+  },
+  {
+     "name":"Date",
+     "caption":"Date",
+     "uniqueName":"[Date]",
+     "defaultHierarchy":"[Date].[Calendar]",
+     "type":"1"
+  }, /*..*/    ]
+</code></pre></div></div>
+
+<h4 id="example---specify-the-field-which-contains-dimensions-schema-information-as-a-string">Example - specify the field which contains dimensions schema information as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    dimensions: "dimensions" // dimensions information is returned in the "dimensions" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-dimensions-schema-information-as-a-function">Example - set dimensions schema information as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    dimensions: function(response) {
+      return response.dimensions; // dimensions information are returned in the "dimensions" field of the response
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemahierarchies-functionstring">schema.hierarchies <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the server response which contains the hierarchies schema information. Can be set to a function which is called to
+return the hierarchies schema information for the response. It is executed during the schema discover requests.</p>
+
+<h4 id="returns-6">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> The cube hierarchies schema from the response.</p>
+
+<p>The result should have the following format and attributes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[
+    {
+        "name":"Address Line 1",
+        "caption":"Address Line 1",
+        "uniqueName":"[Customer].[Address Line 1]",
+        "dimensionUniqueName":"[Customer]",
+        "origin":"2",
+        "defaultMember":"[Customer].[Address Line 1].[All]"
+    },
+    {
+        "name":"Address Line 2",
+        "caption":"Address Line 2",
+        "uniqueName":"[Customer].[Address Line 2]",
+        "dimensionUniqueName":"[Customer]",
+        "origin":"2",
+        "defaultMember":"[Customer].[Address Line 2].[All]"
+    },
+    /*..*/
+]
+</code></pre></div></div>
+
+<h4 id="example---specify-the-field-which-contains-hierarchies-schema-information-as-a-string">Example - specify the field which contains hierarchies schema information as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    hierarchies: "hierarchies" // hierarchies schema information is returned in the "hierarchies" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-hierarchies-schema-information-as-a-function">Example - set hierarchies schema information as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    hierarchies: function(response) {
+      return response.hierarchies; // hierarchies information are returned in the "hierarchies" field of the response
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemalevels-functionstring">schema.levels <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the server response which contains the levels schema information. Can be set to a function which is called to
+return the levels schema information for the response. It is executed during the schema discover.</p>
+
+<h4 id="returns-7">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> The levels schema from the response.</p>
+
+<p>The result should have the following format and attributes:</p>
+
+<p>[
+      {
+         "name":"(all)",
+         "caption":"(all)",
+         "uniquename":"[customer].[address line 1].[(all)]",
+         "dimensionuniquename":"[customer]",
+         "orderingproperty":"(all)",
+         "origin":"2",
+         "hierarchyuniquename":"[customer].[address line 1]"
+      },
+      {
+         "name":"address line 1",
+         "caption":"address line 1",
+         "uniquename":"[customer].[address line 1].[address line 1]",
+         "dimensionuniquename":"[customer]",
+         "orderingproperty":"address line 1",
+         "origin":"2",
+         "hierarchyuniquename":"[customer].[address line 1]"
+      }, /<em>..</em>/
+   ]</p>
+
+<h4 id="example---specify-the-field-which-contains-levels-schema-information-as-a-string">Example - specify the field which contains levels schema information as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    levels: "levels" // levels information is returned in the "levels" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-levels-schema-information-as-a-function">Example - set levels schema information as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    levels: function(response) {
+      return response.levels; // levels information are returned in the "levels" field of the response
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemameasures-functionstring">schema.measures <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the server response which contains the measures schema information. Can be set to a function which is called to
+return the measures schema information for the response. It is executed during the schema discover.</p>
+
+<h4 id="returns-8">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> The measures schema from the response.</p>
+
+<p>The result should have the following format:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[
+    {
+        "name":"Days Current Quarter to Date",
+        "caption":"Days Current Quarter to Date",
+        "uniqueName":"[Measures].[Days Current Quarter to Date]",
+        "aggregator":"0",
+        "groupName":"Date"
+    },
+    {
+        "name":"Days in Current Quarter",
+        "caption":"Days in Current Quarter",
+        "uniqueName":"[Measures].[Days in Current Quarter]",
+        "aggregator":"0",
+        "groupName":"Date"
+    },
+    /*..*/
+]
+</code></pre></div></div>
+
+<h4 id="example---specify-the-field-which-contains-measures-schema-information-as-a-string">Example - specify the field which contains measures schema information as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    measures: "measures" // measures information is returned in the "measures" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-measures-schema-information-as-a-function">Example - set measures schema information as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+  transport: {
+    /* transport configuration */
+  }
+  schema: {
+    measures: function(response) {
+      return response.measures; // measures information are returned in the "measures" field of the response
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<p>See the <a href="/api/framework/datasource#methods">DataSource methods</a> for all inherited methods.</p>
+
+<h3 id="axes">axes</h3>
+
+<p>Get the parsed axes data</p>
+
+<h4 id="returns-9">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> the parsed axes data</p>
+
+<h4 id="example---get-the-axes-data">Example - get the axes data</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  columns: ["[Date].[Calendar]"],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+dataSource.fetch();
+
+var axes = dataSource.axes();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="catalog">catalog</h3>
+
+<p>Get or sets the current catalog name.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="name-string">name <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the catalog.</p>
+
+<h4 id="returns-10">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> the current catalog name.</p>
+
+<h4 id="example---set-the-catalog">Example - set the catalog</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  columns: ["[Date].[Calendar]"],
+  transport: {
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+dataSource.catalog("Adventure Works DW 2008R2");
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-catalog-name">Example - get the catalog name</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  columns: ["[Date].[Calendar]"],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+var catalogName = dataSource.catalog();
+console.log(catalogName);// prints "Adventure Works DW 2008R2"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columns">columns</h3>
+
+<p>Get or sets the columns configuration.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="val-array">val <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>The columns configuration. Accepts the same values as the <a href="#configuration-columns">columns</a> option.</p>
+
+<h4 id="returns-11">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> the current columns configuration.</p>
+
+<h4 id="example---set-the-columns-2">Example - set the columns</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+dataSource.columns(["[Date].[Calendar]"]);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-columns-name">Example - get the columns name</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  columns: ["[Date].[Calendar]"],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+var columns = dataSource.columns();
+console.log(columns);// ["[Date].[Calendar]"]
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="cube">cube</h3>
+
+<p>Get or sets the current cube name.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="name-string-1">name <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the cube.</p>
+
+<h4 id="returns-12">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> the current cube name.</p>
+
+<h4 id="example---set-the-cube">Example - set the cube</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  columns: ["[Date].[Calendar]"],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+dataSource.cube("Adventure Works");
+
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-cube-name">Example - get the cube name</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  columns: ["[Date].[Calendar]"],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+var cubeName = dataSource.cube();
+console.log(cubeName);// prints "Adventure Works"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="discover">discover</h3>
+
+<p>Starts discover request with given options.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="options-string">options <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The options of the discover request</p>
+
+<h4 id="returns-13">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> Deferred object</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+dataSource.discover({
+    data: {
+      command: "schemaMeasures",
+      restrictions: {
+        catalogName: dataSource.catalog(),
+        cubeName: dataSource.cube()
+      }
+    }).done(function(response) {
+        console.log(response);
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="measures">measures</h3>
+
+<p>Get or sets the measures configuration.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="val-array-1">val <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>The measures configuration. Accepts the same values as the <a href="#configuration-measures-values">measures</a> option.</p>
+
+<h4 id="returns-14">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> the current measures configuration.</p>
+
+<h4 id="example---set-the-measures-2">Example - set the measures</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+dataSource.measures(["[Measures].[Internet Order Lines Count]"]);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-measures">Example - get the measures</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  measures: ["[Measures].[Internet Order Lines Count]"],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+var measures = dataSource.measures();
+console.log(measures);// ["[Measures].[Internet Order Lines Count]"]
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="measuresaxis">measuresAxis</h3>
+
+<p>Get the name of the axis on which measures are displayed.</p>
+
+<h4 id="returns-15">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">String</code> the axis name.</p>
+
+<h4 id="example---set-the-measures-3">Example - set the measures</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  measures: {
+      values: ["[Measures].[Internet Order Lines Count]", "[Measures].[Days Current Quarter to Date]"],
+      axis: "rows"
+  },
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+var axis = dataSource.measuresAxis();
+console.log(axis); // "rows"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="rows">rows</h3>
+
+<p>Get or sets the rows configuration.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="val-array-2">val <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>The rows configuration. Accepts the same values as the <a href="#configuration-rows">row</a> option.</p>
+
+<h4 id="returns-16">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> the current rows configuration.</p>
+
+<h4 id="example---set-the-rows">Example - set the rows</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2",
+        cube: "Adventure Works"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+dataSource.rows(["[Date].[Calendar]"]);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-rows-name">Example - get the rows name</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  rows: ["[Date].[Calendar]"],
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+var rows = dataSource.rows();
+console.log(rows);// ["[Date].[Calendar]"]
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemacatalogs">schemaCatalogs</h3>
+
+<p>Request catalogs information.</p>
+
+<h4 id="returns-17">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> Deferred object</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+dataSource.schemaCatalogs()
+    .done(function(catalogs) {
+        console.log(catalogs);
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemacubes">schemaCubes</h3>
+
+<p>Request cubes schema information.</p>
+
+<h4 id="returns-18">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> Deferred object</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+dataSource.schemaCubes()
+    .done(function(cubes) {
+        console.log(cubes);
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemadimensions">schemaDimensions</h3>
+
+<p>Request dimensions schema information.</p>
+
+<h4 id="returns-19">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> Deferred object</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+dataSource.schemaDimensions()
+    .done(function(dimensions) {
+        console.log(dimensions);
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemahierarchies">schemaHierarchies</h3>
+
+<p>Request hierarchies schema information.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="dimensionname-string">dimensionName <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the dimensions which is "owner" of the hierarchy.</p>
+
+<h4 id="returns-20">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> Deferred object</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+var dimensionName = "[Customer]";
+
+dataSource.schemaHierarchies(dimensionName)
+    .done(function(dimensions) {
+        console.log(dimensions);
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemalevels">schemaLevels</h3>
+
+<p>Request levels schema information.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="hierarchyname-string">hierarchyName <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The name of the hierarchy which is "owner" of the level.</p>
+
+<h4 id="returns-21">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> Deferred object</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+var hierarchyName = "[Georgaphy].[City]";
+
+dataSource.schemaLevels(hierarchyName)
+    .done(function(levels) {
+        console.log(levels);
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemameasures">schemaMeasures</h3>
+
+<p>Request measures schema information.</p>
+
+<h4 id="returns-22">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> Deferred object</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  type: "xmla",
+  transport: {
+    connection: {
+        catalog: "Adventure Works DW 2008R2"
+    },
+    read: "http://demos.telerik.com/olap/msmdpump.dll"
+  },
+  schema: {
+    type: "xmla"
+  }
+});
+
+dataSource.schemaMeasures()
+    .done(function(measures) {
+        console.log(measures);
+    });
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

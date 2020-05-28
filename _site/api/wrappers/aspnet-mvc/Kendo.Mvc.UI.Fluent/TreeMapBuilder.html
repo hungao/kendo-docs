@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/TreeMapBuilder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluenttreemapbuilder">Kendo.Mvc.UI.Fluent.TreeMapBuilder</h1>
+<p>Defines the fluent API for configuring the Kendo TreeMap for ASP.NET MVC.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="autobindsystemboolean">AutoBind(System.Boolean)</h3>
+<p>If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+            data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-systemboolean">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>The value that configures the autobind.</p>
+
+<h3 id="valuefieldsystemstring">ValueField(System.String)</h3>
+<p>The data item field which contains the tile value.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-systemstring">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the valuefield.</p>
+
+<h3 id="colorfieldsystemstring">ColorField(System.String)</h3>
+<p>The data item field which contains the tile color.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-systemstring-1">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the colorfield.</p>
+
+<h3 id="textfieldsystemstring">TextField(System.String)</h3>
+<p>The data item field which contains the tile title.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-systemstring-2">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the textfield.</p>
+
+<h3 id="templatesystemstring">Template(System.String)</h3>
+<p>The template which renders the treeMap tile content.The fields which can be used in the template are:</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-systemstring-3">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the template.</p>
+
+<h3 id="templateidsystemstring">TemplateId(System.String)</h3>
+<p>The template which renders the treeMap tile content.The fields which can be used in the template are:</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-systemstring-4">value <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The value that configures the template.</p>
+
+<h3 id="colorssystemstring">Colors(System.String[])</h3>
+<p>The default colors for the treemap tiles. When all colors are used, new colors are pulled from the start again.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-systemstring-5">value <code class="language-plaintext highlighter-rouge">System.String[]</code></h5>
+<p>The value that configures the colors.</p>
+
+<h3 id="datasourcesystemactionkendomvcuifluenthierarchicaldatasourcebuildersystemobject">DataSource(System.Action&lt;Kendo.Mvc.UI.Fluent.HierarchicalDataSourceBuilder&lt;System.Object&gt;&gt;)</h3>
+<p>Configure the DataSource of the component</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluenthierarchicaldatasourcebuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/HierarchicalDataSourceBuilder">Kendo.Mvc.UI.Fluent.HierarchicalDataSourceBuilder</a><System.Object>&gt;</System.Object></h5>
+<p>The action that configures the M:Kendo.Mvc.UI.Fluent.TreeMapBuilder.DataSource(System.Action{Kendo.Mvc.UI.Fluent.HierarchicalDataSourceBuilder{System.Object}}).</p>
+
+<h4 id="example-aspx">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeMap()
+.Name("treeMap")
+.DataSource(dataSource =&gt; dataSource
+    .Read(read =&gt; read
+        .Action("_PopulationUS", "TreeMap")
+    )
+)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="eventssystemactionkendomvcuifluenttreemapeventbuilder">Events(System.Action&lt;Kendo.Mvc.UI.Fluent.TreeMapEventBuilder&gt;)</h3>
+<p>Configures the client-side events.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluenttreemapeventbuilder">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/TreeMapEventBuilder">Kendo.Mvc.UI.Fluent.TreeMapEventBuilder</a>&gt;</h5>
+<p>The client events action.</p>
+
+<h4 id="example-aspx-1">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TreeMap()
+.Name("TreeMap")
+.Events(events =&gt; events
+    .DataBound("onDataBound")
+)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="colorssystemactionkendomvcuifluenttreemapcolorrangefactory">Colors(System.Action&lt;Kendo.Mvc.UI.Fluent.TreeMapColorRangeFactory&gt;)</h3>
+<p>The default colors for the treemap tiles. When all colors are used, new colors are pulled from the start again.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="configurator-systemactionkendomvcuifluenttreemapcolorrangefactory">configurator System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/TreeMapColorRangeFactory">Kendo.Mvc.UI.Fluent.TreeMapColorRangeFactory</a>&gt;</h5>
+<p>The add action.</p>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

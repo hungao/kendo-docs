@@ -1,0 +1,324 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/TabStripBuilder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluenttabstripbuilder">Kendo.Mvc.UI.Fluent.TabStripBuilder</h1>
+<p>Defines the fluent interface for configuring the TabStrip component.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="itemssystemactionkendomvcuifluenttabstripitemfactory">Items(System.Action&lt;Kendo.Mvc.UI.Fluent.TabStripItemFactory&gt;)</h3>
+<p>Defines the items in the tabstrip</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="addaction-systemactionkendomvcuifluenttabstripitemfactory">addAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/TabStripItemFactory">Kendo.Mvc.UI.Fluent.TabStripItemFactory</a>&gt;</h5>
+<p>The add action.</p>
+
+<h4 id="example-aspx">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("TabStrip")
+.Items(items =&gt;
+{
+    items.Add().Text("First Item");
+    items.Add().Text("Second Item");
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="eventssystemactionkendomvcuifluenttabstripeventbuilder">Events(System.Action&lt;Kendo.Mvc.UI.Fluent.TabStripEventBuilder&gt;)</h3>
+<p>Configures the client-side events.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="clienteventsaction-systemactionkendomvcuifluenttabstripeventbuilder">clientEventsAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/TabStripEventBuilder">Kendo.Mvc.UI.Fluent.TabStripEventBuilder</a>&gt;</h5>
+<p>The client events action.</p>
+
+<h4 id="example-aspx-1">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("TabStrip")
+.Events(events =&gt;
+    events.Select("onSelect").OnLoad("onLoad")
+)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="animationsystemboolean">Animation(System.Boolean)</h3>
+<p>Configures the animation effects of the tabstrip.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="enable-systemboolean">enable <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>Whether the component animation is enabled.</p>
+
+<h4 id="example-aspx-2">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("PanelBar")
+.Animation(false)
+</code></pre></div></div>
+
+<h3 id="animationsystemactionkendomvcuifluentpopupanimationbuilder">Animation(System.Action&lt;Kendo.Mvc.UI.Fluent.PopupAnimationBuilder&gt;)</h3>
+<p>Configures the animation effects of the tabstrip.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="animationaction-systemactionkendomvcuifluentpopupanimationbuilder">animationAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/PopupAnimationBuilder">Kendo.Mvc.UI.Fluent.PopupAnimationBuilder</a>&gt;</h5>
+<p>The action that configures the animation.</p>
+
+<h4 id="example-aspx-3">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("PanelBar")
+.Animation(animation =&gt; animation.Open(config =&gt; config.Fade(FadeDirection.In)))
+</code></pre></div></div>
+
+<h3 id="bindtosystemstringsystemactionkendomvcuitabstripitemkendomvcsitemapnode">BindTo(System.String,System.Action&lt;Kendo.Mvc.UI.TabStripItem,Kendo.Mvc.SiteMapNode&gt;)</h3>
+<p>Binds the tabstrip to a sitemap</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="viewdatakey-systemstring">viewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The view data key.</p>
+
+<h5 id="sitemapaction-systemactionkendomvcuitabstripitemkendomvcsitemapnode">siteMapAction System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/TabStripItem">Kendo.Mvc.UI.TabStripItem</a>,Kendo.Mvc.SiteMapNode&gt;</h5>
+<p>The action to configure the item.</p>
+
+<h4 id="example-aspx-4">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("TabStrip")
+.BindTo("examples", (item, siteMapNode) =&gt;
+{
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemstring">BindTo(System.String)</h3>
+<p>Binds the tabstrip to a sitemap.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="viewdatakey-systemstring-1">viewDataKey <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The view data key.</p>
+
+<h4 id="example-aspx-5">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("TabStrip")
+.BindTo("examples")
+%&gt;
+</code></pre></div></div>
+
+<h3 id="bindtosystemcollectionsgenericienumerablet1systemactionkendomvcuitabstripitemt1">BindTo(System.Collections.Generic.IEnumerable&lt;T1&gt;,System.Action&lt;Kendo.Mvc.UI.TabStripItem,T1&gt;)</h3>
+<p>Binds the tabstrip to a list of objects</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="datasource-systemcollectionsgenericienumerablet1">dataSource <code class="language-plaintext highlighter-rouge">System.Collections.Generic.IEnumerable&lt;T1&gt;</code></h5>
+<p>The data source.</p>
+
+<h5 id="itemdatabound-systemactionkendomvcuitabstripitemt1">itemDataBound System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/TabStripItem">Kendo.Mvc.UI.TabStripItem</a>,T1&gt;</h5>
+<p>The action executed for every data bound item.</p>
+
+<h4 id="example-aspx-6">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("TabStrip")
+.BindTo(new []{"First", "Second"}, (item, value) =&gt;
+{
+    item.Text = value;
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="selectedindexsystemint32">SelectedIndex(System.Int32)</h3>
+<p>Selects the item at the specified index.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="index-systemint32">index <code class="language-plaintext highlighter-rouge">System.Int32</code></h5>
+<p>The index.</p>
+
+<h4 id="example-aspx-7">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("TabStrip")
+.Items(items =&gt;
+{
+    items.Add().Text("First Item");
+    items.Add().Text("Second Item");
+})
+.SelectedIndex(1)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="itemactionsystemactionkendomvcuitabstripitem">ItemAction(System.Action&lt;Kendo.Mvc.UI.TabStripItem&gt;)</h3>
+<p>Callback for each item.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="action-systemactionkendomvcuitabstripitem">action System.Action&lt;<a href="/api/wrappers/aspnet-mvc/Kendo.Mvc.UI/TabStripItem">Kendo.Mvc.UI.TabStripItem</a>&gt;</h5>
+<p>Action, which will be executed for each item.</p>
+
+<h4 id="example-aspx-8">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("TabStrip")
+.ItemAction(item =&gt;
+{
+    item
+    .Text(...)
+    .HtmlAttributes(...);
+})
+%&gt;
+</code></pre></div></div>
+
+<h3 id="highlightpathsystemboolean">HighlightPath(System.Boolean)</h3>
+<p>Select item depending on the current URL.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-systemboolean">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>If true the item will be highlighted.</p>
+
+<h4 id="example-aspx-9">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("TabStrip")
+.HighlightPath(true)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="navigatablesystemboolean">Navigatable(System.Boolean)</h3>
+<p>Enable/disable TabStrip keyboard navigation.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-systemboolean-1">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>If true the TabStrip will have keyboard navigation.</p>
+
+<h4 id="example-aspx-10">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("TabStrip")
+.Navigatable(false)
+%&gt;
+</code></pre></div></div>
+
+<h3 id="securitytrimmingsystemboolean">SecurityTrimming(System.Boolean)</h3>
+<p>Enable/disable security trimming functionality of the component.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-systemboolean-2">value <code class="language-plaintext highlighter-rouge">System.Boolean</code></h5>
+<p>If true security trimming is enabled.</p>
+
+<h4 id="example-aspx-11">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= Html.Kendo().TabStrip()
+.Name("TabStrip")
+.SecurityTrimming(false)
+%&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

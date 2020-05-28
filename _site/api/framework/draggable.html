@@ -1,0 +1,647 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Draggable UI Widget | Kendo UI API Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Configuration steps and types of events which are triggered in Kendo UI Draggable.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/framework/draggable.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouidraggable">kendo.ui.Draggable</h1>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="axis-stringdefault-null">axis <code class="language-plaintext highlighter-rouge">String</code><em>(default: null)</em></h3>
+
+<p>Constrains the hint movement to either the horizontal (x) or vertical (y) axis. Can be set to either "x" or "y".</p>
+
+<h4 id="example---initialize-horizontally-draggable-element">Example - initialize horizontally draggable element</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    hint: function(element) {
+      return element.clone();
+    },
+    axis: "x"
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="container-jquery">container <code class="language-plaintext highlighter-rouge">jQuery</code></h3>
+
+<p>If set, the hint movement is constrained to the container boundaries.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="container"&gt;
+  &lt;div id="draggable"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    hint: function(element) {
+      return element.clone();
+    },
+    container: $("#container")
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  #container {
+    width: 200px;
+    height: 200px;
+    border: 1px dashed red;
+  }
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="cursoroffset-objectdefault-null">cursorOffset <code class="language-plaintext highlighter-rouge">Object</code><em>(default: null)</em></h3>
+
+<p>If set, specifies the offset of the hint relative to the mouse cursor/finger.
+By default, the hint is initially positioned on top of the draggable source offset. The option accepts an object with two keys: <code class="language-plaintext highlighter-rouge">top</code> and <code class="language-plaintext highlighter-rouge">left</code>.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    hint: function(element) {
+      return element.clone();
+    },
+    cursorOffset: { top: 30, left: 100 }
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="distance-numberdefault-5">distance <code class="language-plaintext highlighter-rouge">Number</code><em>(default: 5)</em></h3>
+
+<p>The required distance that the mouse should travel in order to initiate a drag.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    hint: function(element) {
+      return element.clone();
+    },
+    distance: 50
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="filter-selector">filter <code class="language-plaintext highlighter-rouge">Selector</code></h3>
+
+<p>Selects child elements that are draggable if a widget is attached to a container.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="container"&gt;
+  &lt;div class="draggable"&gt;&lt;/div&gt;
+  &lt;div class="static"&gt;&lt;/div&gt;
+  &lt;div class="static"&gt;&lt;/div&gt;
+  &lt;div class="static"&gt;&lt;/div&gt;
+  &lt;div class="draggable"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  $("#container").kendoDraggable({
+    filter: ".draggable",
+    hint: function(element) {
+      return element.clone();
+    }
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  .draggable, .static {
+    width: 50px;
+    height: 50px;
+    border: 2px solid green;
+    margin: 5px;
+  }
+  .draggable { background-color: orange; }
+  .static{ background-color: purple; }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="group-stringdefault-default">group <code class="language-plaintext highlighter-rouge">String</code><em>(default: "default")</em></h3>
+
+<p>Used to group sets of draggable and drop targets. A draggable with the same group value as a drop target will be accepted by the drop target.</p>
+
+<h4 id="example---grouping-draggable-elements">Example - grouping draggable elements</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div class="orange"&gt;&lt;/div&gt;
+&lt;div class="orange"&gt;&lt;/div&gt;
+&lt;div class="purple"&gt;&lt;/div&gt;
+&lt;div class="purple"&gt;&lt;/div&gt;
+&lt;div id="orangeArea"&gt;&lt;/div&gt;
+&lt;div id="purpleArea"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $(".orange").kendoDraggable({
+    group: "orangeGroup",
+    hint: function(element) {
+      return element.clone();
+    }
+  });
+
+  $(".purple").kendoDraggable({
+    group: "purpleGroup",
+    hint: function(element) {
+      return element.clone();
+    }
+  });
+
+  $("#orangeArea").kendoDropTarget({ group: "orangeGroup", drop: onDrop });
+  $("#purpleArea").kendoDropTarget({ group: "purpleGroup", drop: onDrop });
+
+  function onDrop(e) {
+    e.draggable.destroy();
+    e.draggable.element.remove();
+  }
+&lt;/script&gt;
+&lt;style&gt;
+  .orange, .purple{
+    width: 50px;
+    height: 50px;
+    border: 2px solid green;
+    margin: 5px;
+  }
+  #orangeArea, #purpleArea {
+    width: 200px;
+    height: 200px;
+    border: 2px solid green;
+    margin: 5px;
+  }
+  .orange, #orangeArea { background-color: orange; }
+  .purple, #purpleArea { background-color: purple; }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="hint-function--jquery">hint <code class="language-plaintext highlighter-rouge">Function | jQuery</code></h3>
+
+<p>Provides a way for customization of the drag indicator. If a function is supplied, it receives one argument - the draggable element"s jQuery object.</p>
+
+<h4 id="example---customizing-draggable-tooltip">Example - customizing draggable tooltip</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    hint: function(element) {
+      var hintElement = $("&lt;div id='hint'&gt;&lt;/div&gt;");
+      hintElement.css({
+        "background-image": "url('http://www.telerik.com/image/kendo-logo.png')",
+        "width": "230px",
+        "height": "80px"
+      });
+      return hintElement;
+    }
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="holdtodrag-boolean-default-false">holdToDrag <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to <code class="language-plaintext highlighter-rouge">true</code>, the widget will be activated after the user taps and holds the finger on the element for a short amount of time.</p>
+
+<p>The <em>draggable</em> will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately. The activated mode can be canceled by calling <code class="language-plaintext highlighter-rouge">cancelHold</code>.</p>
+
+<h4 id="example---hold-to-drag">Example - hold to drag</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    holdToDrag: true,
+    hold: function(e) {
+        $("draggable").css("background", "red");
+    },
+    hint: function(element) {
+      var hintElement = $("&lt;div id='hint'&gt;&lt;/div&gt;");
+      hintElement.css({
+        "background-image": "url('http://www.telerik.com/image/kendo-logo.png')",
+        "width": "230px",
+        "height": "80px"
+      });
+      return hintElement;
+    }
+  });
+&lt;/script&gt;
+
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="ignore-selector">ignore <code class="language-plaintext highlighter-rouge">Selector</code></h3>
+
+<p>Specifies child elements for which the drag will not be initialized. Useful if the draggable contains input elements.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="container"&gt;
+    &lt;input type="text" /&gt;
+    &lt;div&gt;Foo&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  $("#container").kendoDraggable({
+    ignore: "input",
+    hint: function(element) {
+      return element.clone();
+    }
+  });
+&lt;/script&gt;
+&lt;style&gt;
+    #container {
+        width: 50px;
+        height: 50px;
+        border: 2px solid green;
+        margin: 5px;
+    }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="cancelhold">cancelHold</h3>
+
+<p>Has effect only when <code class="language-plaintext highlighter-rouge">holdToDrag</code> is set to <code class="language-plaintext highlighter-rouge">true</code>. Cancels the activated state of the widget, caused by pressing and holding.</p>
+
+<h4 id="example---cancel-activated-draggable">Example - cancel activated draggable</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;a id="cancel"&gt;Cancel Draggable activated state&lt;/a&gt;
+
+&lt;script&gt;
+  $("#cancel").click(function() {
+      $("#draggable").data("kendoDraggable").cancelHold();
+  });
+
+  $("#draggable").kendoDraggable({
+    holdToDrag: true,
+    hold: function(e) {
+        $("draggable").css("background", "red");
+    },
+    hint: function(element) {
+      var hintElement = $("&lt;div id='hint'&gt;&lt;/div&gt;");
+      hintElement.css({
+        "background-image": "url('http://www.telerik.com/image/kendo-logo.png')",
+        "width": "230px",
+        "height": "80px"
+      });
+      return hintElement;
+    }
+  });
+&lt;/script&gt;
+
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="drag">drag</h3>
+
+<p>Fires while dragging.</p>
+
+<h4 id="example---bind-during-the-initialization">Example - bind during the initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    hint: function(element) {
+      return element.clone();
+    },
+    drag: function(e) {
+      console.log("x: ", e.screenX, "y: ", e.screenY);
+    }
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h4 id="example---hook-up-to-the-event-via-bind-method-after-initialization">Example - hook up to the event via bind method after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    hint: function(element) {
+      return element.clone();
+    }
+  });
+
+  $("#draggable").data("kendoDraggable").bind("drag", function(e) {
+    console.log("x: ", e.screenX, "y: ", e.screenY);
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="edroptarget-droptarget">e.dropTarget <code class="language-plaintext highlighter-rouge">DropTarget</code></h5>
+
+<p>The current draggable drop target (if any).</p>
+
+<h3 id="dragcancel">dragcancel</h3>
+
+<p>Fires when item drag is canceled by pressing the Escape key.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    hint: function(element) {
+      return element.clone();
+    },
+    dragcancel: function(e) {
+      console.log("'Esc' key pressed! Dragging is cancelled.");
+    }
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="dragend">dragend</h3>
+
+<p>Fires when item drag ends.</p>
+
+<h4 id="example---show-draggable-element-on-dragend">Example - show draggable element on dragend</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    hint: function(element) {
+      return element.clone();
+    },
+    dragstart: function(e) {
+      e.currentTarget.hide();
+    },
+    dragend: function(e) {
+      e.currentTarget.show();
+    }
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="dragstart">dragstart</h3>
+
+<p>Fires when item drag starts.</p>
+
+<h4 id="example---hide-draggable-element-on-dragend">Example - hide draggable element on dragend</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    hint: function(element) {
+      return element.clone();
+    },
+    dragstart: function(e) {
+      e.currentTarget.hide();
+    },
+    dragend: function(e) {
+      e.currentTarget.show();
+    }
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+<h3 id="hold">hold</h3>
+
+<p>Triggered only when <code class="language-plaintext highlighter-rouge">holdToDrag</code> is set to <code class="language-plaintext highlighter-rouge">true</code>. Fires before the <code class="language-plaintext highlighter-rouge">dragStart</code> event.</p>
+
+<h4 id="example---hold-to-drag-1">Example - hold to drag</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="draggable"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  $("#draggable").kendoDraggable({
+    holdToDrag: true,
+    hold: function(e) {
+        $("draggable").css("background", "red");
+    },
+    hint: function(element) {
+      var hintElement = $("&lt;div id='hint'&gt;&lt;/div&gt;");
+      hintElement.css({
+        "background-image": "url('http://www.telerik.com/image/kendo-logo.png')",
+        "width": "230px",
+        "height": "80px"
+      });
+      return hintElement;
+    }
+  });
+&lt;/script&gt;
+
+&lt;style&gt;
+  #draggable {
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    border: 2px solid green;
+  }
+&lt;/style&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

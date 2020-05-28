@@ -1,0 +1,4398 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of the Kendo DataSource component.</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Easy to follow steps for DataSource component configuration, examples of supported methods and executed events.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/framework/datasource.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatadatasource">kendo.data.DataSource</h1>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="aggregate-array">aggregate <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>The aggregate(s) which are calculated when the data source populates with data. The supported aggregates are "average", "count", "max", "min" and "sum".</p>
+
+<blockquote>
+  <p>The data source calculates aggregates client-side unless the <a href="#configuration-serverAggregates">serverAggregates</a> option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<h4 id="example---specify-aggregates">Example - specify aggregates</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ],
+  aggregate: [
+    { field: "age", aggregate: "sum" },
+    { field: "age", aggregate: "min" },
+    { field: "age", aggregate: "max" }
+  ]
+});
+dataSource.fetch(function(){
+  var results = dataSource.aggregates().age;
+  console.log(results.sum, results.min, results.max); // displays "63 30 33"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="aggregateaggregate-string">aggregate.aggregate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The name of the aggregate function. The supported aggregates are "average", "count", "max", "min" and "sum".</p>
+
+<h4 id="example---specify-aggregate-function">Example - specify aggregate function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ],
+  aggregate: [
+    { field: "age", aggregate: "sum" }
+  ]
+});
+dataSource.fetch(function(){
+  var results = dataSource.aggregates().age;
+  console.log(results.sum); // displays "63"
+});
+</code></pre></div></div>
+
+<h3 id="aggregatefield-string">aggregate.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The data item field which will be used to calculate the aggregates.</p>
+
+<h4 id="example---specify-aggregate-field">Example - specify aggregate field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ],
+  aggregate: [
+    { field: "age", aggregate: "sum" }
+  ]
+});
+dataSource.fetch(function(){
+  var results = dataSource.aggregates().age;
+  console.log(results.sum); // displays "63"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="autosync-boolean-default-false">autoSync <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the data source would automatically save any changed data items by calling the <a href="#methods-sync">sync</a> method. By default changes are not automatically saved.</p>
+
+<h4 id="example---enable-auto-sync">Example - enable auto sync</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  autoSync: true,
+  transport: {
+    read:  {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    update: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/update",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  },
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.fetch(function() {
+  var product = dataSource.at(0);
+  product.set("UnitPrice", 20); // auto-syncs and makes request to http://demos.telerik.com/kendo-ui/service/products/update
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="batch-boolean-default-false">batch <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the data source will batch CRUD operation requests. For example updating two data items would cause one HTTP request instead of two. By default the data source
+makes a HTTP request for every CRUD operation.</p>
+
+<blockquote>
+  <p>The changed data items are sent by default as <code class="language-plaintext highlighter-rouge">models</code>. This can be changed via the <a href="#configuration-transport.parameterMap">parameterMap</a> option.</p>
+</blockquote>
+
+<h4 id="example---enable-batch-mode">Example - enable batch mode</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  batch: true,
+  transport: {
+    read:  {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    update: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/update",
+      dataType: "jsonp" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  },
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.fetch(function() {
+  var product = dataSource.at(0);
+  product.set("UnitPrice", 20);
+  var anotherProduct = dataSource.at(1);
+  anotherProduct.set("UnitPrice", 20);
+  dataSource.sync(); // causes only one request to "http://demos.telerik.com/kendo-ui/service/products/update"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="data-arraystring">data <code class="language-plaintext highlighter-rouge">Array|String</code></h3>
+
+<p>The array of data items which the data source contains. The data source will wrap those items as <a href="/api/framework/observableobject">kendo.data.ObservableObject</a> or <a href="/api/framework/model">kendo.data.Model</a> (if <a href="#configuration-schema-model">schema.model</a> is set).</p>
+
+<p>Can be set to a string value if the <a href="#configuration-schema.type">schema.type</a> option is set to "xml".</p>
+
+<h4 id="example---set-the-data-items-of-a-data-source">Example - set the data items of a data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ]
+});
+dataSource.fetch(function(){
+  var janeDoe = dataSource.at(0);
+  console.log(janeDoe.name); // displays "Jane Doe"
+});
+</code></pre></div></div>
+
+<h4 id="example---set-the-data-items-as-an-xml-string">Example - set the data items as an XML string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: '&lt;books&gt;&lt;book id="1"&gt;&lt;title&gt;Secrets of the JavaScript Ninja&lt;/title&gt;&lt;/book&gt;&lt;/books&gt;',
+  schema: {
+    // specify the the schema is XML
+    type: "xml",
+    // the XML element which represents a single data record
+    data: "/books/book",
+    // define the model - the object which will represent a single data record
+    model: {
+      // configure the fields of the object
+      fields: {
+        // the "title" field is mapped to the text of the "title" XML element
+        title: "title/text()",
+        // the "id" field is mapped to the "id" attribute of the "book" XML element
+        id: "@id"
+      }
+    }
+  }
+});
+dataSource.fetch(function() {
+  var books = dataSource.data();
+  console.log(books[0].title); // displays "Secrets of the JavaScript Ninja"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filter-arrayobject">filter <code class="language-plaintext highlighter-rouge">Array|Object</code></h3>
+
+<p>The filter(s) which is (are) applied over the data items. By default no filter is applied.</p>
+
+<blockquote>
+  <p>The data source filters the data items client-side unless the <a href="#configuration-serverFiltering">serverFiltering</a> option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<h4 id="example---set-a-single-filter">Example - set a single filter</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" },
+    { name: "John Doe" }
+  ],
+  filter: { field: "name", operator: "startswith", value: "Jane" }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "1"
+  console.log(view[0].name); // displays "Jane Doe"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-filter-as-conjunction-and">Example - set filter as conjunction (and)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  filter: [
+    // leave data items which are "Beverage" and not "Coffee"
+    { field: "category", operator: "eq", value: "Beverages" },
+    { field: "name", operator: "neq", value: "Coffee" }
+  ]
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "1"
+  console.log(view[0].name); // displays "Tea"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-filter-as-disjunction-or">Example - set filter as disjunction (or)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  filter: {
+    // leave data items which are "Food" or "Tea"
+    logic: "or",
+    filters: [
+      { field: "category", operator: "eq", value: "Food" },
+      { field: "name", operator: "eq", value: "Tea" }
+    ]
+  }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "2"
+  console.log(view[0].name); // displays "Tea"
+  console.log(view[1].name); // displays "Ham"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filterfield-string">filter.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The data item field to which the filter operator is applied.</p>
+
+<h4 id="example---set-the-filter-field">Example - set the filter field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" },
+    { name: "John Doe" }
+  ],
+  filter: { field: "name", operator: "startswith", value: "Jane" }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "1"
+  console.log(view[0].name); // displays "Jane Doe"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filterfilters-array">filter.filters <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>The nested filter expressions. Suppor the same options as <a href="#configuration-filter">filter</a>. Filters can be nested indefinitely.</p>
+
+<h4 id="example---nested-filters">Example - nested filters</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  filter: {
+    // leave data items which are "Food" or "Tea"
+    logic: "or",
+    filters: [
+      { field: "category", operator: "eq", value: "Food" },
+      { field: "name", operator: "eq", value: "Tea" }
+    ]
+  }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "2"
+  console.log(view[0].name); // displays "Tea"
+  console.log(view[1].name); // displays "Ham"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filterlogic-string">filter.logic <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The logical operation to use when the <code class="language-plaintext highlighter-rouge">filter.filters</code> option is set. The supported values are "and" and "or".</p>
+
+<h4 id="example---set-the-filter-logic">Example - set the filter logic</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  filter: {
+    // leave data items which are "Food" or "Tea"
+    logic: "or",
+    filters: [
+      { field: "category", operator: "eq", value: "Food" },
+      { field: "name", operator: "eq", value: "Tea" }
+    ]
+  }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "2"
+  console.log(view[0].name); // displays "Tea"
+  console.log(view[1].name); // displays "Ham"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filteroperator-string">filter.operator <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The filter operator (comparison). The supported operators are: "eq" (equal to), "neq" (not equal to), "lt" (less than), "lte" (less than or equal to), "gt" (greater than), "gte" (greater than or equal to),
+"startswith", "endswith", "contains". The last three are supported only for string fields.</p>
+
+<h4 id="example---set-the-filter-operator">Example - set the filter operator</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" },
+    { name: "John Doe" }
+  ],
+  filter: { field: "name", operator: "startswith", value: "Jane" }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "1"
+  console.log(view[0].name); // displays "Jane Doe"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filtervalue-object">filter.value <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The value to which the <a href="#configuration-filter.field">field</a> is compared. The value must be from the same type as the field.</p>
+
+<h4 id="example---specify-the-filter-value">Example - specify the filter value</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", birthday: new Date(1983, 1, 1) },
+    { name: "John Doe", birthday: new Date(1980, 1, 1)}
+  ],
+  filter: { field: "birthday", operator: "gt", value: new Date(1980, 1, 1) }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "1"
+  console.log(view[0].name); // displays "Jane Doe"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="group-arrayobject">group <code class="language-plaintext highlighter-rouge">Array|Object</code></h3>
+
+<p>The grouping configuration of the data source. If set the data items will be grouped when the data source is populated. By default grouping is not applied.</p>
+
+<blockquote>
+  <p>The data source groups the data items client-side unless the <a href="#configuration-serverGrouping">serverGrouping</a> option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<h4 id="example---set-group-as-an-object">Example - set group as an object</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  // group by the "category" field
+  group: { field: "category" }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "2"
+  var beverages = view[0];
+  console.log(beverages.value); // displays "Beverages"
+  console.log(beverages.items[0].name); // displays "Tea"
+  console.log(beverages.items[1].name); // displays "Coffee"
+  var food = view[1];
+  console.log(food.value); // displays "Food"
+  console.log(food.items[0].name); // displays "Ham"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-group-as-an-array-subgroups">Example - set group as an array (subgroups)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Pork", category: "Food", subcategory: "Meat" },
+    { name: "Pepper", category: "Food", subcategory: "Vegetables" },
+    { name: "Beef", category: "Food", subcategory: "Meat" }
+  ],
+  group: [
+    // group by "category" and then by "subcategory"
+    { field: "category" },
+    { field: "subcategory" },
+  ]
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "1"
+  var food = view[0];
+  console.log(food.value); // displays "Food"
+  var meat = food.items[0];
+  console.log(meat.value); // displays "Meat"
+  console.log(meat.items.length); // displays "2"
+  console.log(meat.items[0].name); // displays "Pork"
+  console.log(meat.items[1].name); // displays "Beef"
+  var vegetables = food.items[1];
+  console.log(vegetables.value); // displays "Vegetables"
+  console.log(vegetables.items.length); // displays "1"
+  console.log(vegetables.items[0].name); // displays "Pepper"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="groupaggregates-array">group.aggregates <code class="language-plaintext highlighter-rouge">Array</code></h3>
+
+<p>The aggregate(s) which are calculated during grouping. The supported aggregates are "average", "count", "max", "min" and "sum".</p>
+
+<h4 id="example---set-group-aggregates">Example - set group aggregates</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages", price: 1 },
+    { name: "Coffee", category: "Beverages", price: 2 },
+    { name: "Ham", category: "Food", price: 3 },
+  ],
+  group: {
+    field: "category",
+    aggregates: [
+      { field: "price", aggregate: "max" },
+      { field: "price", aggregate: "min" }
+    ]
+  }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  var beverages = view[0];
+  console.log(beverages.aggregates.price.max); // displays "2"
+  console.log(beverages.aggregates.price.min); // displays "1"
+  var food = view[1];
+  console.log(food.aggregates.price.max); // displays "3"
+  console.log(food.aggregates.price.min); // displays "3"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="groupaggregatesaggregate-string">group.aggregates.aggregate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The name of the aggregate function. Specifies the aggregate function. The supported aggregates are "average", "count", "max", "min" and "sum".</p>
+
+<h4 id="example---specify-aggregate-function-1">Example - specify aggregate function</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages", price: 1 },
+    { name: "Coffee", category: "Beverages", price: 2 },
+    { name: "Ham", category: "Food", price: 3 }
+  ],
+  group: {
+    field: "category",
+    aggregates: [
+      // calculate max price
+      { field: "price", aggregate: "max" }
+    ]
+  }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  var beverages = view[0];
+  console.log(beverages.aggregates.price.max); // displays "2"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="groupaggregatesfield-string">group.aggregates.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The data item field which will be used to calculate the aggregates.</p>
+
+<h4 id="example---specify-aggregate-field-1">Example - specify aggregate field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages", price: 1 },
+    { name: "Coffee", category: "Beverages", price: 2 },
+    { name: "Ham", category: "Food", price: 3 }
+  ],
+  group: {
+    field: "category",
+    aggregates: [
+      // calculate max price
+      { field: "price", aggregate: "max" }
+    ]
+  }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  var beverages = view[0];
+  console.log(beverages.aggregates.price.max); // displays "2"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="groupdir-string-default-asc">group.dir <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "asc")</em></h3>
+
+<p>The sort order of the group. The supported values are "asc" (ascending order) and "desc" (descending order). The default sort order is ascending.</p>
+
+<h4 id="example---sort-the-groups-in-descending-order">Example - sort the groups in descending order</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages"},
+    { name: "Ham", category: "Food"},
+  ],
+  // group by "category" in descending order
+  group: { field: "category", dir: "desc" }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  var food = view[0];
+  console.log(food.value); // displays "Food"
+  var beverages = view[1];
+  console.log(beverages.value); // displays "Beverages"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="groupfield-string">group.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The data item field to group by.</p>
+
+<h4 id="example---set-the-field">Example - set the field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  // group by the "category" field
+  group: { field: "category" }
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  var beverages = view[0];
+  console.log(beverages.items[0].name); // displays "Tea"
+  console.log(beverages.items[1].name); // displays "Coffee"
+  var food = view[1];
+  console.log(food.items[0].name); // displays "Ham"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="page-number">page <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The page of data which the data source will return when the <a href="#methods-view">view</a> method is invoked or request from the remote service.</p>
+
+<blockquote>
+  <p>The data source will page the data items client-side unless the <a href="#configuration-serverPaging">serverPaging</a> option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<h4 id="example---set-the-current-page">Example - set the current page</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  // set the second page as the current page
+  page: 2,
+  pageSize: 2
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "1"
+  console.log(view[0].name); // displays "Ham"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pagesize-number">pageSize <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The number of data items per page.</p>
+
+<blockquote>
+  <p>The data source will page the data items client-side unless the <a href="#configuration-serverPaging">serverPaging</a> option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<h4 id="example---set-the-page-size">Example - set the page size</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  page: 1,
+  // a page of data contains two data items
+  pageSize: 2
+});
+dataSource.fetch(function(){
+  var view = dataSource.view();
+  console.log(view.length); // displays "2"
+  console.log(view[0].name); // displays "Tea"
+  console.log(view[1].name); // displays "Coffee"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schema-object">schema <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The configuration used to parse the remote service response.</p>
+
+<h4 id="example---specify-the-schema-of-the-remote-service">Example - specify the schema of the remote service</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/twitter/search",
+      dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+      data: { q: "html5" } // search for tweets that contain "html5"
+    }
+  },
+  schema: {
+    data: function(response) {
+      return response.results; // twitter's response is { "results": [ /* results */ ] }
+    }
+  }
+});
+dataSource.fetch(function(){
+  var data = this.data();
+  console.log(data.length);
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemaaggregates-functionstring">schema.aggregates <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the response which contains the aggregate results. Can be set to a function which is called to
+return the aggregate results from the response.</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">aggregates</code> option is used only when the <a href="#configuration-serverAggregates">serverAggregates</a> option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<p>The result of the function should be a JavaScript object which contains the aggregate results for every fields in the following format:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  FIEL1DNAME: {
+    FUNCTON1NAME: FUNCTION1VALUE,
+    FUNCTON2NAME: FUNCTION2VALUE
+  },
+  FIELD2NAME: {
+    FUNCTON1NAME: FUNCTION1VALUE
+  }
+}
+</code></pre></div></div>
+
+<p>For example if the data source is configured like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  }
+  serverAggregates: true,
+  aggregate: [
+    { field: "unitPrice", aggregate: "max" },
+    { field: "unitPrice", aggregate: "min" },
+    { field: "ProductName", aggregate: "count" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The aggregate results should have the following format:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  unitPrice: {
+      max: 100,
+      min: 1
+  },
+  productName: {
+      count: 42
+  }
+}
+</code></pre></div></div>
+
+<h4 id="example---set-aggregates-as-a-string">Example - set aggregates as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  }
+  serverAggregates: true,
+  schema: {
+    aggregates: "aggregates" // aggregate results are returned in the "aggregates" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-aggregates-as-a-function">Example - set aggregates as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  }
+  serverAggregates: true,
+  schema: {
+    aggregates: function(response) {
+      return response.aggregates;
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemadata-functionstring">schema.data <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the server response which contains the data items. Can be set to a function which is called to
+return the data items for the response.</p>
+
+<h4 id="returns">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> The data items from the response.</p>
+
+<h4 id="example---specify-the-field-which-contains-the-data-items-as-a-string">Example - specify the field which contains the data items as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/twitter/search",
+      dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+      data: { q: "html5" } // search for tweets that contain "html5"
+    }
+  },
+  schema: {
+    data: "results" // twitter's response is { "results": [ /* results */ ] }
+  }
+});
+dataSource.fetch(function(){
+  var data = this.data();
+  console.log(data.length);
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-the-field-which-contains-the-data-items-as-a-function">Example - specify the field which contains the data items as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/twitter/search",
+      dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+      data: { q: "html5" } // search for tweets that contain "html5"
+    }
+  },
+  schema: {
+    data: function(response) {
+      return response.results; // twitter's response is { "results": [ /* results */ ] }
+    }
+  }
+});
+dataSource.fetch(function(){
+  var data = this.data();
+  console.log(data.length);
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemaerrors-functionstring-default-errors">schema.errors <code class="language-plaintext highlighter-rouge">Function|String</code> <em>(default: "errors")</em></h3>
+
+<p>The field from the server response which contains server-side errors. Can be set to a function which is called to
+return the errors for response. If there are any errors the <a href="#events-error">error</a> event will be fired.</p>
+
+<h4 id="example---specify-the-error-field-as-a-string">Example - specify the error field as a string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/twitter/search",
+      dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+      data: { q: "#" }
+    }
+  },
+  schema: {
+    errors: "error" // twitter's response is { "error": "Invalid query" }
+  },
+  error: function(e) {
+    console.log(e.errors); // displays "Invalid query"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-the-error-field-as-a-function">Example - specify the error field as a function</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/twitter/search",
+      dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+      data: { q: "#" }
+    }
+  },
+  schema: {
+    errors: function(response) {
+      return response.error; // twitter's response is { "error": "Invalid query" }
+    }
+  },
+  error: function(e) {
+    console.log(e.errors); // displays "Invalid query"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemagroups-functionstring">schema.groups <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the server response which contains the groups. Can be set to a function which is called to
+return the groups from the response.</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">groups</code> option is used only when the <a href="#configuration-serverGrouping">serverGrouping</a> option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<p>The result should have the following format:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{
+  aggregates: {
+    FIEL1DNAME: {
+      FUNCTON1NAME: FUNCTION1VALUE,
+      FUNCTON2NAME: FUNCTION2VALUE
+    },
+    FIELD2NAME: {
+      FUNCTON1NAME: FUNCTION1VALUE
+    }
+  },
+  field: FIELDNAME, // the field by which the data items are grouped
+  hasSubgroups: true, // true if there are subgroups
+  items: [
+    // either the subgroups or the data items
+    {
+      aggregates: {
+        //nested group aggregates
+      },
+      field: NESTEDGROUPFIELDNAME,
+      hasSubgroups: false,
+      items: [
+      // data records
+      ],
+      value: NESTEDGROUPVALUE
+    },
+    //nestedgroup2, nestedgroup3, etc.
+  ],
+  value: VALUE // the group key
+} /* other groups */
+]
+</code></pre></div></div>
+
+<h4 id="example---set-groups-as-a-string">Example - set groups as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  }
+  serverGrouping: true,
+  schema: {
+    groups: "groups" // groups are returned in the "groups" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-groups-as-a-function">Example - set groups as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  }
+  serverGrouping: true,
+  schema: {
+    groups: function(response) {
+      return response.groups; // groups are returned in the "groups" field of the response
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemamodel-objectkendodatamodel">schema.model <code class="language-plaintext highlighter-rouge">Object|kendo.data.Model</code></h3>
+
+<p>The data item (model) configuration.</p>
+
+<p>If set to an object the <a href="/api/framework/model#model.define">Model.define</a> method will be used to initialize the data source model.</p>
+
+<p>If set to an existing <a href="/api/framework/model">kendo.data.Model</a> instance the data source will use that instance and will <strong>not</strong> initialize a new one.</p>
+
+<h4 id="example---set-the-model-as-a-javascript-object">Example - set the model as a JavaScript object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  schema: {
+    model: {
+      id: "ProductID",
+      fields: {
+        ProductID: {
+          //this field will not be editable (default value is true)
+          editable: false,
+          // a defaultValue will not be assigned (default value is false)
+          nullable: true
+        },
+        ProductName: {
+          //set validation rules
+          validation: { required: true }
+        },
+        UnitPrice: {
+          //data type of the field {Number|String|Boolean|Date} default is String
+          type: "number",
+          // used when new model is created
+          defaultValue: 42,
+          validation: { required: true, min: 1 }
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-the-model-as-an-existing-kendodatamodel-instance">Example - set the model as an existing kendo.data.Model instance</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var Product = kendo.model.define({
+  id: "ProductID",
+  fields: {
+    ProductID: {
+      //this field will not be editable (default value is true)
+      editable: false,
+      // a defaultValue will not be assigned (default value is false)
+      nullable: true
+    },
+    ProductName: {
+      //set validation rules
+      validation: { required: true }
+    },
+    UnitPrice: {
+      //data type of the field {Number|String|Boolean|Date} default is String
+      type: "number",
+      // used when new model is created
+      defaultValue: 42,
+      validation: { required: true, min: 1 }
+    }
+  }
+});
+var dataSource = new kendo.data.DataSource({
+  schema: {
+    model: Product
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schemaparse-function">schema.parse <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>Executed before the server response is used. Use it to preprocess or parse the server response.</p>
+
+<h4 id="example---data-projection">Example - data projection</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp"
+    }
+  },
+  schema: {
+    parse: function(response) {
+      var products = [];
+      for (var i = 0; i &lt; response.length; i++) {
+        var product = {
+          id: response[i].ProductID,
+          name: response[i].ProductName
+        };
+        products.push(product);
+      }
+      return products;
+    }
+  }
+});
+dataSource.fetch(function(){
+  var data = dataSource.data();
+  var product = data[0];
+  console.log(product.name); // displays "Chai"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schematotal-functionstring">schema.total <code class="language-plaintext highlighter-rouge">Function|String</code></h3>
+
+<p>The field from the server response which contains the total number of data items. Can be set to a function which is called to
+return the total number of data items for the response.</p>
+
+<blockquote>
+  <p>If <code class="language-plaintext highlighter-rouge">schema.total</code> is not specified the <code class="language-plaintext highlighter-rouge">length</code> of the <code class="language-plaintext highlighter-rouge">Array</code> returned by <a href="#configuration-schema.data">schema.data</a> will be used.</p>
+</blockquote>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">schema.total</code> option must be set if the <a href="#configuration-serverPaging">serverPaging</a> option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<h4 id="returns-1">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> The total number of data items.</p>
+
+<h4 id="example-set-total-as-a-string">Example: set total as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  }
+  serverGrouping: true,
+  schema: {
+    total: "total" // total is returned in the "total" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example-set-total-as-a-function">Example: set total as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  }
+  serverGrouping: true,
+  schema: {
+    total: function(response) {
+      return response.total; // total is returned in the "total" field of the response
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="schematype-string-default-json">schema.type <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "json")</em></h3>
+
+<p>The type of the response. The supported values are "xml" and "json". By default the schema interprets the server response as JSON.</p>
+
+<h4 id="example---use-xml-data">Example - use XML data</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: '&lt;books&gt;&lt;book id="1"&gt;&lt;title&gt;Secrets of the JavaScript Ninja&lt;/title&gt;&lt;/book&gt;&lt;/books&gt;',
+  schema: {
+    // specify the the schema is XML
+    type: "xml",
+    // the XML element which represents a single data record
+    data: "/books/book",
+    // define the model - the object which will represent a single data record
+    model: {
+      // configure the fields of the object
+      fields: {
+        // the "title" field is mapped to the text of the "title" XML element
+        title: "title/text()",
+        // the "id" field is mapped to the "id" attribute of the "book" XML element
+        id: "@cover"
+      }
+    }
+  }
+});
+dataSource.fetch(function() {
+  var books = dataSource.data();
+  console.log(books[0].title); // displays "Secrets of the JavaScript Ninja"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="serveraggregates-boolean-default-false">serverAggregates <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.</p>
+
+<blockquote>
+  <p>Don"t forget to set <a href="#configuration-schema.aggregates">schema.aggreagates</a> if you set <code class="language-plaintext highlighter-rouge">serverAggregates</code> to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<h4 id="example---enable-server-aggregates">Example - enable server aggregates</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  },
+  serverAggregates: true,
+  aggregate: [
+    { field: "age", aggregate: "sum" }
+  ],
+  schema: {
+    aggregates: "aggregates" // aggregate results are returned in the "aggregates" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="serverfiltering-boolean-default-false">serverFiltering <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the data source will leave the filtering implementation to the remote service. By default the data source performs filtering client-side.</p>
+
+<p>By default the <a href="#configuration-filter">filter</a> is sent to the server following jQuery"s <a href="http://api.jquery.com/jQuery.param/">conventions</a>.</p>
+
+<p>For example the filter <code class="language-plaintext highlighter-rouge">{ logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] }</code> is sent as:</p>
+
+<ul>
+  <li>filter[logic]: and</li>
+  <li>filter[filters][0][field]: name</li>
+  <li>filter[filters][0][operator]: startswith</li>
+  <li>filter[filters][0][value]: Jane</li>
+</ul>
+
+<p>Use the <a href="#configuration-transport.parameterMap">parameterMap</a> option to send the filter option in a different format.</p>
+
+<h4 id="example---enable-server-filtering">Example - enable server filtering</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  },
+  serverFiltering: true,
+  filter: { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="servergrouping-boolean-default-false">serverGrouping <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the data source will leave the grouping implementation to the remote service. By default the data source performs grouping client-side.</p>
+
+<p>By default the <a href="#configuration-group">group</a> is sent to the server following jQuery"s <a href="http://api.jquery.com/jQuery.param/">conventions</a>.</p>
+
+<p>For example the group <code class="language-plaintext highlighter-rouge">{ field: "category", dir: "desc" }</code> is sent as:</p>
+
+<ul>
+  <li>group[0][field]: category</li>
+  <li>group[0][dir]: desc</li>
+</ul>
+
+<p>Use the <a href="#configuration-transport.parameterMap">parameterMap</a> option to send the group option in a different format.</p>
+
+<h4 id="example---enable-server-grouping">Example - enable server grouping</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  },
+  serverGrouping: true,
+  group: { field: "category", dir: "desc" }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="serverpaging-boolean-default-false">serverPaging <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the data source will leave the data item paging implementation to the remote service. By default the data source performs paging client-side.</p>
+
+<blockquote>
+  <p>Don"t forget to set <a href="#configuration-schema.total">schema.total</a> if you set <code class="language-plaintext highlighter-rouge">serverPaging</code> to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<p>The following options are sent to the server when server paging is enabled:</p>
+
+<ul>
+  <li>page - the page of data item to return (<code class="language-plaintext highlighter-rouge">1</code> means the first page)</li>
+  <li>pageSize - the number of items to return</li>
+  <li>skip - how many data items to skip</li>
+  <li>take - the number of data items to return (the same as <code class="language-plaintext highlighter-rouge">pageSize</code>)</li>
+</ul>
+
+<p>Use the <a href="#configuration-transport.parameterMap">parameterMap</a> option to send the paging options in a different format.</p>
+
+<h4 id="example---enable-server-paging">Example - enable server paging</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  },
+  serverPaging: true,
+  schema: {
+    total: "total" // total is returned in the "total" field of the response
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="serversorting-boolean-default-false">serverSorting <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the data source will leave the data item sorting implementation to the remote service. By default the data source performs sorting client-side.</p>
+
+<p>By default the <a href="#configuration-sort">sort</a> is sent to the server following jQuery"s <a href="http://api.jquery.com/jQuery.param/">conventions</a>.</p>
+
+<p>For example the sort <code class="language-plaintext highlighter-rouge">{ field: "age", dir: "desc" }</code> is sent as:</p>
+
+<ul>
+  <li>sort[0][field]: age</li>
+  <li>sort[0][dir]: desc</li>
+</ul>
+
+<p>Use the <a href="#configuration-transport.parameterMap">parameterMap</a> option to send the paging options in a different format.</p>
+
+<h4 id="example---enable-server-sorting">Example - enable server sorting</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    /* transport configuration */
+  },
+  serverSorting: true,
+  sort: { field: "age", dir: "desc" }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="sort-arrayobject">sort <code class="language-plaintext highlighter-rouge">Array|Object</code></h3>
+
+<p>The sort order which will be applied over the data items. By default the data items are not sorted.</p>
+
+<blockquote>
+  <p>The data source sorts the data items client-side unless the <a href="#configuration-serverSorting">serverSorting</a> option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+</blockquote>
+
+<h4 id="example---sort-the-data-items">Example - sort the data items</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ],
+  sort: { field: "age", dir: "desc" }
+});
+dataSource.fetch(function(){
+  var data = dataSource.view();
+  console.log(data[0].age); // displays "33"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---sort-the-data-items-by-multiple-fields">Example - sort the data items by multiple fields</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  sort: [
+    // sort by "category" in descending order and then by "name" in ascending order
+    { field: "category", dir: "desc" },
+    { field: "name", dir: "asc" }
+  ]
+});
+dataSource.fetch(function(){
+  var data = dataSource.view();
+  console.log(data[1].name); // displays "Coffee"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="sortdir-string">sort.dir <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The sort order (direction). The supported values are "asc" (ascending order) and "desc" (descending order).</p>
+
+<h4 id="example---specify-the-sort-order-direction">Example - specify the sort order (direction)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ],
+  // order by "age" in descending order
+  sort: { field: "age", dir: "desc" }
+});
+dataSource.fetch(function(){
+  var data = dataSource.view();
+  console.log(data[0].age); // displays "33"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="sortfield-string">sort.field <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The field by which the data items are sorted.</p>
+
+<h4 id="example---specify-the-sort-field">Example - specify the sort field</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ],
+  // order by "age" in descending order
+  sort: { field: "age", dir: "desc" }
+});
+dataSource.fetch(function(){
+  var data = dataSource.view();
+  console.log(data[0].age); // displays "33"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transport-object">transport <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The configuration used to load and save the data items. A data source is remote or local based on the way of it retrieves data items.</p>
+
+<p>Remote data sources load and save data items from and to a remote end-point (a.k.a. remote service or server). The <code class="language-plaintext highlighter-rouge">transport</code> option describes the remote service configuration - URL, HTTP verb, HTTP headers etc.
+The <code class="language-plaintext highlighter-rouge">transport</code> option can also be used to implement custom data loading and saving.</p>
+
+<p>Local data sources are bound to a JavaScript array via the <a href="#configuration-data">data</a> option.</p>
+
+<h4 id="example---specify-the-remote-service-configuration">Example - specify the remote service configuration</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  }
+});
+dataSource.fetch(function() {
+  var products = dataSource.data();
+  console.log(products[0].ProductName); // displays "Chai"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportcreate-objectstringfunction">transport.create <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h3>
+
+<p>The configuration used when the data source saves newly created data items. Those are items added to the data source via the <a href="#methods-add">add</a> or <a href="#methods-insert">insert</a> methods.</p>
+
+<blockquote>
+  <p>The data source uses <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> to make a HTTP request to the remote service. The value configured via <code class="language-plaintext highlighter-rouge">transport.create</code> is passed to <code class="language-plaintext highlighter-rouge">jQuery.ajax</code>. This means that you can set
+all options supported by <code class="language-plaintext highlighter-rouge">jQuery.ajax</code> via <code class="language-plaintext highlighter-rouge">transport.create</code> except the <code class="language-plaintext highlighter-rouge">success</code> and <code class="language-plaintext highlighter-rouge">error</code> callback functions which are used by the transport.</p>
+</blockquote>
+
+<p>If the value of <code class="language-plaintext highlighter-rouge">transport.create</code> is a function, the data source invokes that function instead of <code class="language-plaintext highlighter-rouge">jQuery.ajax</code>.</p>
+
+<p>If the value of <code class="language-plaintext highlighter-rouge">transport.create</code> is a string the data source uses this string as the URL of the remote service.</p>
+
+<blockquote>
+  <p><em>Important:</em> The remote service must return the inserted data items and the data item field configured as the <code class="language-plaintext highlighter-rouge">id</code> must be set. For example
+if the <code class="language-plaintext highlighter-rouge">id</code> of the data item is <code class="language-plaintext highlighter-rouge">ProductID</code> the "create" server response must be <code class="language-plaintext highlighter-rouge">[{ "ProductID": 79 }]</code>.</p>
+</blockquote>
+
+<h4 id="example---set-the-create-remote-service">Example - set the create remote service</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    // make JSONP request to http://demos.telerik.com/kendo-ui/service/products/create
+    create: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/create",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    parameterMap: function(data, type) {
+      if (type == "create") {
+        // send the created data items as the "models" service parameter encoded in JSON
+        return { models: kendo.stringify(data.models) };
+      }
+    }
+  },
+  batch: true,
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+// create a new data item
+dataSource.add( { ProductName: "New Product" });
+// save the created data item
+dataSource.sync(); // server response is [{"ProductID":78,"ProductName":"New Product","UnitPrice":0,"UnitsInStock":0,"Discontinued":false}]
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-create-as-a-function">Example - set create as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: function(options) {
+      /* implementation omitted for brevity */
+    },
+    create: function(options) {
+      // make JSONP request to http://demos.telerik.com/kendo-ui/service/products/create
+      $.ajax({
+        url: "http://demos.telerik.com/kendo-ui/service/products/create",
+        dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+        // send the created data items as the "models" service parameter encoded in JSON
+        data: {
+          models: kendo.stringify(options.data.models)
+        },
+        success: function(result) {
+          // notify the data source that the request succeeded
+          options.success(result);
+        },
+        error: function(result) {
+          // notify the data source that the request failed
+          options.error(result);
+        }
+      });
+    }
+  },
+  batch: true,
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.add( { ProductName: "New Product" });
+dataSource.sync();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportcreatecache-boolean">transport.create.cache <code class="language-plaintext highlighter-rouge">Boolean</code></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the request result will not be cached by the browser. Setting cache to <code class="language-plaintext highlighter-rouge">false</code> will only work correctly with HEAD and GET requests. It works by appending <em>"_={timestamp}"</em> to the GET parameters.
+By default "jsonp" requests are not cached.</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---enable-request-caching">Example - enable request caching</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    create: {
+      /* omitted for brevity */
+      cache: true
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportcreatecontenttype-string">transport.create.contentType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The content-type HTTP header sent to the server. Default is <code class="language-plaintext highlighter-rouge">"application/x-www-form-urlencoded"</code>. Use <code class="language-plaintext highlighter-rouge">"application/json"</code> if the content is JSON.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---set-content-type">Example - set content type</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    create: {
+      /* omitted for brevity */
+      contentType: "application/json"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportcreatedata-objectfunction">transport.create.data <code class="language-plaintext highlighter-rouge">Object|Function</code></h3>
+
+<p>Additional parameters which are sent to the remote service.</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---send-additional-parameters-as-an-object">Example - send additional parameters as an object</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    create: {
+      /* omitted for brevity */
+      data: {
+        name: "Jane Doe",
+        age: 30
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---send-additional-parameters-by-returning-them-from-a-function">Example - send additional parameters by returning them from a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    create: {
+      /* omitted for brevity */
+      data: function() {
+        return {
+          name: "Jane Doe",
+          age: 30
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportcreatedatatype-string">transport.create.dataType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of result expected from the server. Commonly used values are "json" and "jsonp".</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---set-the-data-type-to-json">Example - set the data type to JSON</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    create: {
+      /* omitted for brevity */
+      dataType: "json"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportcreatetype-string-default-get">transport.create.type <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "GET")</em></h3>
+
+<p>The type of request to make ("POST", "GET", "PUT" or <code class="language-plaintext highlighter-rouge">"DELETE"</code>), default is "GET".</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">type</code> option is ignored if <code class="language-plaintext highlighter-rouge">dataType</code> is set to "jsonp". JSONP always uses GET requests.</p>
+</blockquote>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---set-the-http-verb-of-the-request">Example - set the HTTP verb of the request</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    create: {
+      /* omitted for brevity */
+      type: "POST"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportcreateurl-stringfunction">transport.create.url <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The URL to which the request is sent.</p>
+
+<p>If set to function the data source will invoke it and use the result as the URL.</p>
+
+<h4 id="example---specify-url-as-a-string">Example - specify URL as a string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    create: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/create",
+      cache: true,
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    parameterMap: function(data, type) {
+      if (type == "create") {
+        return { models: kendo.stringify(data.models) }
+      }
+    }
+  },
+  batch: true,
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.add( { ProductName: "New Product" });
+dataSource.sync();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-url-as-a-function">Example - specify URL as a function</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    create: {
+      url: function(options) {
+        return "http://demos.telerik.com/kendo-ui/service/products/create"
+      },
+      cache: true,
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    parameterMap: function(data, type) {
+      if (type == "create") {
+        return { models: kendo.stringify(data.models) }
+      }
+    }
+  },
+  batch: true,
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.add( { ProductName: "New Product" });
+dataSource.sync();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportdestroy-objectstringfunction">transport.destroy <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h3>
+
+<p>The configuration used when the data source destroys data items. Those are items removed from the data source via the <a href="#methods-remove">remove</a> method.</p>
+
+<blockquote>
+  <p>The data source uses <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> to make a HTTP request to the remote service. The value configured via <code class="language-plaintext highlighter-rouge">transport.destroy</code> is passed to <code class="language-plaintext highlighter-rouge">jQuery.ajax</code>. This means that you can set
+all options supported by <code class="language-plaintext highlighter-rouge">jQuery.ajax</code> via <code class="language-plaintext highlighter-rouge">transport.destroy</code> except the <code class="language-plaintext highlighter-rouge">success</code> and <code class="language-plaintext highlighter-rouge">error</code> callback functions which are used by the transport.</p>
+</blockquote>
+
+<p>If the value of <code class="language-plaintext highlighter-rouge">transport.destroy</code> is a function, the data source invokes that function instead of <code class="language-plaintext highlighter-rouge">jQuery.ajax</code>.</p>
+
+<p>If the value of <code class="language-plaintext highlighter-rouge">transport.destroy</code> is a string the data source uses this string as the URL of the remote service.</p>
+
+<h4 id="example---set-the-destroy-remote-service">Example - set the destroy remote service</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp"
+    },
+    // make JSONP request to http://demos.telerik.com/kendo-ui/service/products/destroy
+    destroy: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/destroy",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    parameterMap: function(data, type) {
+      if (type == "destroy") {
+        // send the destroyed data items as the "models" service parameter encoded in JSON
+        return { models: kendo.stringify(data.models) }
+      }
+    }
+  },
+  batch: true,
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.fetch(function() {
+  var products = dataSource.data();
+  // remove the first data item
+  dataSource.remove(products[0]);
+  // send the destroyed data item to the remote service
+  dataSource.sync();
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-destroy-as-a-function">Example - set destroy as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: function(options) {
+      $.ajax({
+        url: "http://demos.telerik.com/kendo-ui/service/products",
+        dataType: "jsonp",
+        success: function(result) {
+          options.success(result);
+        }
+      });
+    },
+    destroy: function (options) {
+      // make JSONP request to http://demos.telerik.com/kendo-ui/service/products/destroy
+      $.ajax({
+        url: "http://demos.telerik.com/kendo-ui/service/products/destroy",
+        dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+        // send the destroyed data items as the "models" service parameter encoded in JSON
+        data: {
+          models: kendo.stringify(options.data.models)
+        },
+        success: function(result) {
+          // notify the data source that the request succeeded
+          options.success(result);
+        },
+        error: function(result) {
+          // notify the data source that the request failed
+          options.error(result);
+        }
+      });
+    }
+  },
+  batch: true,
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.fetch(function() {
+  var products = dataSource.data();
+  dataSource.remove(products[0]);
+  dataSource.sync();
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportdestroycache-boolean">transport.destroy.cache <code class="language-plaintext highlighter-rouge">Boolean</code></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the request result will not be cached by the browser. Setting cache to <code class="language-plaintext highlighter-rouge">false</code> will only work correctly with HEAD and GET requests. It works by appending <em>"_={timestamp}"</em> to the GET parameters.
+By default "jsonp" requests are not cached.</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---enable-request-caching-1">Example - enable request caching</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    destroy: {
+      /* omitted for brevity */
+      cache: true
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportdestroycontenttype-string">transport.destroy.contentType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The content-type HTTP header sent to the server. Default is <code class="language-plaintext highlighter-rouge">"application/x-www-form-urlencoded"</code>. Use <code class="language-plaintext highlighter-rouge">"application/json"</code> if the content is JSON.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---set-content-type-1">Example - set content type</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    destroy: {
+      /* omitted for brevity */
+      contentType: "application/json"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportdestroydata-objectfunction">transport.destroy.data <code class="language-plaintext highlighter-rouge">Object|Function</code></h3>
+
+<p>Additional parameters which are sent to the remote service.</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---send-additional-parameters-as-an-object-1">Example - send additional parameters as an object</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    destroy: {
+      /* omitted for brevity */
+      data: {
+        name: "Jane Doe",
+        age: 30
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---send-additional-parameters-by-returning-them-from-a-function-1">Example - send additional parameters by returning them from a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    destroy: {
+      /* omitted for brevity */
+      data: function() {
+        return {
+          name: "Jane Doe",
+          age: 30
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportdestroydatatype-string">transport.destroy.dataType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of result expected from the server. Commonly used values are "json" and "jsonp".</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---set-the-data-type-to-json-1">Example - set the data type to JSON</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    destroy: {
+      /* omitted for brevity */
+      dataType: "json"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportdestroytype-string">transport.destroy.type <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of request to make ("POST", "GET", "PUT" or <code class="language-plaintext highlighter-rouge">"DELETE"</code>), default is "GET".</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">type</code> option is ignored if <code class="language-plaintext highlighter-rouge">dataType</code> is set to "jsonp". JSONP always uses GET requests.</p>
+</blockquote>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    destroy: {
+      /* omitted for brevity */
+      type: "POST"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportdestroyurl-stringfunction">transport.destroy.url <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The URL to which the request is sent.</p>
+
+<p>If set to function the data source will invoke it and use the result as the URL.</p>
+
+<h4 id="example---specify-url-as-a-string-1">Example - specify URL as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp"
+    },
+    destroy: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/destroy",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    parameterMap: function(data, type) {
+      if (type == "destroy") {
+        return { models: kendo.stringify(data.models) }
+      }
+    }
+  },
+  batch: true,
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.fetch(function() {
+  var products = dataSource.data();
+  dataSource.remove(products[0]);
+  dataSource.sync();
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-url-as-a-function-1">Example - specify URL as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp"
+    },
+    destroy: {
+      url: function (options) {
+        return "http://demos.telerik.com/kendo-ui/service/products/destroy",
+      },
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    parameterMap: function(data, type) {
+      if (type == "destroy") {
+        return { models: kendo.stringify(data.models) }
+      }
+    }
+  },
+  batch: true,
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.fetch(function() {
+  var products = dataSource.data();
+  dataSource.remove(products[0]);
+  dataSource.sync();
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportparametermap-function">transport.parameterMap <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>The function which converts the request parameters to a format suitable for the remote service. By default
+the data source sends the parameters using jQuery"s <a href="http://api.jquery.com/jQuery.param/">conventions</a>.</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">parameterMap</code> method is often used to encode the parameters in JSON format.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Important:</strong> The <code class="language-plaintext highlighter-rouge">parameterMap</code> function will not be called when using custom functions for the read, update, create and destroy operations.</p>
+</blockquote>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="data-object">data <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The parameters which will be sent to the remote service. The value specified in the <code class="language-plaintext highlighter-rouge">data</code> field of the transport settings (create, read, update or destroy) is included as well.
+If <a href="#batch-boolean-default">batch</a> is set to <code class="language-plaintext highlighter-rouge">false</code> the fields of the changed data items are also included.</p>
+
+<h5 id="dataaggregate-array">data.aggregate <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>The current aggregate configuration as set via the <a href="#configuration-aggregate">aggregate</a> option.
+Available  if the <a href="#configuration-serverAggregates">serverAggregates</a> option is set to <code class="language-plaintext highlighter-rouge">true</code> and the data source makes a "read" request.</p>
+
+<h5 id="datagroup-array">data.group <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>The current grouping configuration as set via the <a href="#configuration-group">group</a> option.
+Available  if the <a href="#configuration-serverGrouping">serverGrouping</a> option is set to <code class="language-plaintext highlighter-rouge">true</code> and the data source makes a "read" request.</p>
+
+<h5 id="datafilter-object">data.filter <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The current filter configuration as set via the <a href="#configuration-filter">filter</a> option.
+Available  if the <a href="#configuration-serverFiltering">serverFiltering</a> option is set to <code class="language-plaintext highlighter-rouge">true</code> and the data source makes a "read" request.</p>
+
+<h5 id="datamodels-array">data.models <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>All changed data items. Available  if there are any data item changes and the <a href="#configuration-batch">batch</a> option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<h5 id="datapage-number">data.page <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The current page. Available if the <a href="#configuration-serverPaging">serverPaging</a> option is set to <code class="language-plaintext highlighter-rouge">true</code> and the data source makes a "read" request.</p>
+
+<h5 id="datapagesize-number">data.pageSize <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The current page size as set via the <a href="#configuration-pageSize">pageSize</a> option. Available if the <a href="#configuration-serverPaging">serverPaging</a> option is set to <code class="language-plaintext highlighter-rouge">true</code> and the data source makes a "read" request.</p>
+
+<h5 id="dataskip-number">data.skip <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The number of data items to skip. Available if the <a href="#configuration-serverPaging">serverPaging</a> option is set to <code class="language-plaintext highlighter-rouge">true</code> and the data source makes a "read" request.</p>
+
+<h5 id="datasort-array">data.sort <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>The current sort configuration as set via the <a href="#configuration-sort">sort</a> option. Available if the <a href="#configuration-serverSorting">serverSorting</a> option is set to <code class="language-plaintext highlighter-rouge">true</code> and the data source makes a "read" request.</p>
+
+<h5 id="datatake-number">data.take <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The number of data items to return (the same as <code class="language-plaintext highlighter-rouge">data.pageSize</code>). Available if the <a href="#configuration-serverPaging">serverPaging</a> option is set to <code class="language-plaintext highlighter-rouge">true</code> and the data source makes a "read" request.</p>
+
+<h5 id="type-string">type <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The type of the request which the data source makes. The supported values are "create", "read", "update" and "destroy".</p>
+
+<h4 id="returns-2">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> the request parameters converted to a format required by the remote service.</p>
+
+<h4 id="example---convert-data-source-request-parameters">Example - convert data source request parameters</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders?$format=json",
+      dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+      jsonp: "$callback",
+      cache: true
+    },
+    parameterMap: function(data, type) {
+      if (type == "read") {
+        // send take as "$top" and skip as "$skip"
+        return {
+          $top: data.take,
+          $skip: data.skip
+        }
+      }
+    }
+  },
+  schema: {
+    data: "d"
+  },
+  pageSize: 20,
+  serverPaging: true // enable serverPaging so take and skip are sent as request parameters
+});
+dataSource.fetch(function() {
+  console.log(dataSource.view().length); // displays "20"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---send-request-parameters-as-json">Example - send request parameters as JSON</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    create: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/create",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    parameterMap: function(data, type) {
+      return kendo.stringify(data);
+    }
+  },
+  batch: true,
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.add( { ProductName: "New Product" });
+dataSource.sync();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportpush-function">transport.push <code class="language-plaintext highlighter-rouge">Function</code></h3>
+
+<p>The function invoked during transport initialization which sets up push notifications. The data source will call this function only once and provide
+callbacks which will handle push notifications (data pushed from the server).</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="callbacks-object">callbacks <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>An object containing callbacks for notifying the data source of push notifications.</p>
+
+<h5 id="callbackspushcreate-function">callbacks.pushCreate <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>Function that should be invoked to notify the data source about newly created data items that are pushed from the server. Accepts a single argument - the object pushed from the server
+which should follow the <code class="language-plaintext highlighter-rouge">schema.data</code> configuration.</p>
+
+<h5 id="callbackspushdestroy-function">callbacks.pushDestroy <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>Function that should be invoked to notify the data source about destroyed data items that are pushed from the server. Accepts a single argument - the object pushed from the server
+which should follow the <code class="language-plaintext highlighter-rouge">schema.data</code> configuration.</p>
+
+<h5 id="callbackspushupdate-function">callbacks.pushUpdate <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>Function that should be invoked to notify the data source about updated data items that are pushed from the server. Accepts a single argument - the object pushed from the server
+which should follow the <code class="language-plaintext highlighter-rouge">schema.data</code> configuration.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var hubUrl = "http://demos.telerik.com/kendo-ui/service/signalr/hubs";
+var connection = $.hubConnection(hubUrl, { useDefaultPath: false});
+var hub = connection.createHubProxy("productHub");
+var hubStart = connection.start({ jsonp: true });
+var dataSource = new kendo.data.DataSource({
+transport: {
+  push: function(callbacks) {
+    hub.on("create", function(result) {
+      console.log("push create");
+      callbacks.pushCreate(result);
+    });
+    hub.on("update", function(result) {
+      console.log("push update");
+      callbacks.pushUpdate(result);
+    });
+    hub.on("destroy", function(result) {
+      console.log("push destroy");
+      callbacks.pushDestroy(result);
+    });
+  }
+},
+schema: {
+  model: {
+    id: "ID",
+    fields: {
+      "ID": { editable: false },
+      "CreatedAt": { type: "date" },
+      "UnitPrice": { type: "number" }
+    }
+  }
+}
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportread-objectstringfunction">transport.read <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h3>
+
+<p>The configuration used when the data source loads data items from a remote service.</p>
+
+<blockquote>
+  <p>The data source uses <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> to make a HTTP request to the remote service. The value configured via <code class="language-plaintext highlighter-rouge">transport.read</code> is passed to <code class="language-plaintext highlighter-rouge">jQuery.ajax</code>. This means that you can set
+all options supported by <code class="language-plaintext highlighter-rouge">jQuery.ajax</code> via <code class="language-plaintext highlighter-rouge">transport.read</code> except the <code class="language-plaintext highlighter-rouge">success</code> and <code class="language-plaintext highlighter-rouge">error</code> callback functions which are used by the transport.</p>
+</blockquote>
+
+<p>If the value of <code class="language-plaintext highlighter-rouge">transport.read</code> is a function, the data source invokes that function instead of <code class="language-plaintext highlighter-rouge">jQuery.ajax</code>.</p>
+
+<p>If the value of <code class="language-plaintext highlighter-rouge">transport.read</code> is a string the data source uses this string as the URL of the remote service.</p>
+
+<h4 id="example---set-the-read-remote-service">Example - set the read remote service</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    // make JSONP request to http://demos.telerik.com/kendo-ui/service/products
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  }
+});
+dataSource.fetch(function() {
+  console.log(dataSource.view().length); // displays "77"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---send-additional-parameters-to-the-remote-service">Example - send additional parameters to the remote service</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;input value="html5" id="search" /&gt;
+&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/twitter/search",
+      dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+      data: {
+        q: $("#search").val() // send the value of the #search input to the remote service
+      }
+    }
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-read-as-a-function">Example - set read as a function</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: function(options) {
+      // make JSONP request to http://demos.telerik.com/kendo-ui/service/products
+      $.ajax({
+        url: "http://demos.telerik.com/kendo-ui/service/products",
+        dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+        success: function(result) {
+          // notify the data source that the request succeeded
+          options.success(result);
+        },
+        error: function(result) {
+          // notify the data source that the request failed
+          options.error(result);
+        }
+      });
+    }
+  }
+});
+dataSource.fetch(function() {
+  console.log(dataSource.view().length); // displays "77"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportreadcache-boolean">transport.read.cache <code class="language-plaintext highlighter-rouge">Boolean</code></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the request result will not be cached by the browser. Setting cache to <code class="language-plaintext highlighter-rouge">false</code> will only work correctly with HEAD and GET requests. It works by appending <em>"_={timestamp}"</em> to the GET parameters.
+By default "jsonp" requests are not cached.</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---enable-request-caching-2">Example - enable request caching</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      /* omitted for brevity */
+      cache: true
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportreadcontenttype-string">transport.read.contentType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The content-type HTTP header sent to the server. Default is <code class="language-plaintext highlighter-rouge">"application/x-www-form-urlencoded"</code>. Use <code class="language-plaintext highlighter-rouge">"application/json"</code> if the content is JSON.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---set-content-type-2">Example - set content type</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    create: {
+      /* omitted for brevity */
+      contentType: "application/json"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportreaddata-objectfunction">transport.read.data <code class="language-plaintext highlighter-rouge">Object|Function</code></h3>
+
+<p>Additional parameters which are sent to the remote service.</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---send-additional-parameters-as-an-object-2">Example - send additional parameters as an object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/twitter/search",
+      dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+      data: {
+        q: "html5" // send "html5" as the "q" parameter
+      }
+    }
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---send-additional-parameters-by-returning-them-from-a-function-2">Example - send additional parameters by returning them from a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/twitter/search",
+      dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+      data: function() {
+        return {
+          q: "html5" // send "html5" as the "q" parameter
+        };
+      }
+    }
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportreaddatatype-string">transport.read.dataType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of result expected from the server. Commonly used values are "json" and "jsonp".</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---set-the-data-type-to-json-2">Example - set the data type to JSON</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      /* omitted for brevity */
+      dataType: "json"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportreadtype-string">transport.read.type <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of request to make ("POST", "GET", "PUT" or <code class="language-plaintext highlighter-rouge">"DELETE"</code>), default is "GET".</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">type</code> option is ignored if <code class="language-plaintext highlighter-rouge">dataType</code> is set to "jsonp". JSONP always uses GET requests.</p>
+</blockquote>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---set-the-http-verb-of-the-request-1">Example - set the HTTP verb of the request</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      /* omitted for brevity */
+      type: "POST"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportreadurl-stringfunction">transport.read.url <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The URL to which the request is sent.</p>
+
+<p>If set to function the data source will invoke it and use the result as the URL.</p>
+
+<h4 id="example---specify-url-as-a-string-2">Example - specify URL as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  }
+});
+dataSource.fetch(function() {
+  console.log(dataSource.view().length); // displays "77"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-url-as-a-function-2">Example - specify URL as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: function(options) {
+        return "http://demos.telerik.com/kendo-ui/service/products",
+      }
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  }
+});
+dataSource.fetch(function() {
+  console.log(dataSource.view().length); // displays "77"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportsignalr-object">transport.signalr <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The configuration used when <a href="#configuration-type">type</a> is set to "signalr". Configures the SignalR settings - hub, connection promise, server and client hub methods.</p>
+
+<p>Live demo available at <a href="http://demos.telerik.com/kendo-ui/web/grid/signalr.html">demos.telerik.com/kendo-ui</a>.</p>
+
+<p>It is recommended to familiarize with the SignalR <a href="http://www.asp.net/signalr/overview/signalr-20/hubs-api/hubs-api-guide-javascript-client">JavaScript API</a>.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var hubUrl = "http://demos.telerik.com/kendo-ui/service/signalr/hubs";
+var connection = $.hubConnection(hubUrl, { useDefaultPath: false});
+var hub = connection.createHubProxy("productHub");
+var hubStart = connection.start({ jsonp: true });
+
+var dataSource = new kendo.data.DataSource({
+    type: "signalr",
+    schema: {
+        model: {
+            id: "ID",
+            fields: {
+                "ID": { editable: false, nullable: true },
+                "CreatedAt": { type: "date" },
+                "UnitPrice": { type: "number" }
+            }
+        }
+    },
+    transport: {
+        signalr: {
+            promise: hubStart,
+            hub: hub,
+            server: {
+                read: "read",
+                update: "update",
+                destroy: "destroy",
+                create: "create"
+            },
+            client: {
+                read: "read",
+                update: "update",
+                destroy: "destroy",
+                create: "create"
+            }
+        }
+    }
+});
+</code></pre></div></div>
+
+<h3 id="transportsignalrclient-object">transport.signalr.client <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Specifies the client-side CRUD methods of the SignalR hub.</p>
+
+<h3 id="transportsignalrclientcreate-string">transport.signalr.client.create <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the name of the client-side method of the SignalR hub responsible for creating data items.</p>
+
+<h3 id="transportsignalrclientdestroy-string">transport.signalr.client.destroy <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the name of the client-side method of the SignalR hub responsible for destroying data items.</p>
+
+<h3 id="transportsignalrclientread-string">transport.signalr.client.read <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the name of the client-side method of the SignalR hub responsible for reading data items.</p>
+
+<h3 id="transportsignalrclientupdate-string">transport.signalr.client.update <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the name of the client-side method of the SignalR hub responsible for updating data items.</p>
+
+<h3 id="transportsignalrhub-object">transport.signalr.hub <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The SignalR hub object returned by the <code class="language-plaintext highlighter-rouge">createHubProxy</code> method. The <code class="language-plaintext highlighter-rouge">hub</code> option is mandatory.</p>
+
+<h3 id="transportsignalrpromise-object">transport.signalr.promise <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The promise returned by the <code class="language-plaintext highlighter-rouge">start</code> method of the SignalR connection. The <code class="language-plaintext highlighter-rouge">promise</code> option is mandatory.</p>
+
+<h3 id="transportsignalrserver-object">transport.signalr.server <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>Specifies the server-side CRUD methods of the SignalR hub.</p>
+
+<h3 id="transportsignalrservercreate-string">transport.signalr.server.create <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the name of the server-side method of the SignalR hub responsible for creating data items.</p>
+
+<h3 id="transportsignalrserverdestroy-string">transport.signalr.server.destroy <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the name of the server-side method of the SignalR hub responsible for destroying data items.</p>
+
+<h3 id="transportsignalrserverread-string">transport.signalr.server.read <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the name of the server-side method of the SignalR hub responsible for reading data items.</p>
+
+<h3 id="transportsignalrserverupdate-string">transport.signalr.server.update <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Specifies the name of the server-side method of the SignalR hub responsible for updating data items.</p>
+
+<h3 id="transportupdate-objectstringfunction">transport.update <code class="language-plaintext highlighter-rouge">Object|String|Function</code></h3>
+
+<p>The configuration used when the data source saves updated data items. Those are data items whose fields have been updated.</p>
+
+<blockquote>
+  <p>The data source uses <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> to make a HTTP request to the remote service. The value configured via <code class="language-plaintext highlighter-rouge">transport.update</code> is passed to <code class="language-plaintext highlighter-rouge">jQuery.ajax</code>. This means that you can set
+all options supported by <code class="language-plaintext highlighter-rouge">jQuery.ajax</code> via <code class="language-plaintext highlighter-rouge">transport.update</code> except the <code class="language-plaintext highlighter-rouge">success</code> and <code class="language-plaintext highlighter-rouge">error</code> callback functions which are used by the transport.</p>
+</blockquote>
+
+<p>If the value of <code class="language-plaintext highlighter-rouge">transport.update</code> is a function, the data source invokes that function instead of <code class="language-plaintext highlighter-rouge">jQuery.ajax</code>.</p>
+
+<p>If the value of <code class="language-plaintext highlighter-rouge">transport.update</code> is a string the data source uses this string as the URL of the remote service.</p>
+
+<h4 id="example---specify-update-as-a-string">Example - specify update as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read:  {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    update: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/update",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  },
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.fetch(function() {
+  var product = dataSource.at(0);
+  product.set("UnitPrice", 20);
+  dataSource.sync(); makes request to http://demos.telerik.com/kendo-ui/service/products/update
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-update-as-a-function">Example - specify update as a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: function(options) {
+      /* implementation omitted for brevity */
+    },
+    update: function(options) {
+      // make JSONP request to http://demos.telerik.com/kendo-ui/service/products/update
+      $.ajax({
+        url: "http://demos.telerik.com/kendo-ui/service/products/update",
+        dataType: "jsonp", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+        // send the updated data items as the "models" service parameter encoded in JSON
+        data: {
+          models: kendo.stringify(options.data.models)
+        },
+        success: function(result) {
+          // notify the data source that the request succeeded
+          options.success(result);
+        },
+        error: function(result) {
+          // notify the data source that the request failed
+          options.error(result);
+        }
+      });
+    }
+  },
+  batch: true,
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.fetch(function() {
+  var product = dataSource.at(0);
+  product.set("UnitPrice", 20);
+  dataSource.sync(); makes request to http://demos.telerik.com/kendo-ui/service/products/update
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportupdatecache-boolean">transport.update.cache <code class="language-plaintext highlighter-rouge">Boolean</code></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the request result will not be cached by the browser. Setting cache to <code class="language-plaintext highlighter-rouge">false</code> will only work correctly with HEAD and GET requests. It works by appending <em>"_={timestamp}"</em> to the GET parameters.
+By default "jsonp" requests are not cached.</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---enable-request-caching-3">Example - enable request caching</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    update: {
+      /* omitted for brevity */
+      cache: true
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportupdatecontenttype-string">transport.update.contentType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The content-type HTTP header sent to the server. Default is <code class="language-plaintext highlighter-rouge">"application/x-www-form-urlencoded"</code>. Use <code class="language-plaintext highlighter-rouge">"application/json"</code> if the content is JSON.
+Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---set-content-type-3">Example - set content type</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    update: {
+      /* omitted for brevity */
+      contentType: "application/json"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportupdatedata-objectfunction">transport.update.data <code class="language-plaintext highlighter-rouge">Object|Function</code></h3>
+
+<p>Additional parameters which are sent to the remote service.</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---send-additional-parameters-as-an-object-3">Example - send additional parameters as an object</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    update: {
+      /* omitted for brevity */
+      data: {
+        name: "Jane Doe",
+        age: 30
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---send-additional-parameters-by-returning-them-from-a-function-3">Example - send additional parameters by returning them from a function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    update: {
+      /* omitted for brevity */
+      data: function() {
+        return {
+          name: "Jane Doe",
+          age: 30
+        }
+      }
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportupdatedatatype-string">transport.update.dataType <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of result expected from the server. Commonly used values are "json" and "jsonp".</p>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---set-the-data-type-to-json-3">Example - set the data type to JSON</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    update: {
+      /* omitted for brevity */
+      dataType: "json"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportupdatetype-string">transport.update.type <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>The type of request to make ("POST", "GET", "PUT" or <code class="language-plaintext highlighter-rouge">"DELETE"</code>), default is "GET".</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">type</code> option is ignored if <code class="language-plaintext highlighter-rouge">dataType</code> is set to "jsonp". JSONP always uses GET requests.</p>
+</blockquote>
+
+<p>Refer to the <a href="http://api.jquery.com/jQuery.ajax">jQuery.ajax</a> documentation for further info.</p>
+
+<h4 id="example---set-the-http-verb-of-the-request-2">Example - set the HTTP verb of the request</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    update: {
+      /* omitted for brevity */
+      type: "POST"
+    }
+  }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="transportupdateurl-stringfunction">transport.update.url <code class="language-plaintext highlighter-rouge">String|Function</code></h3>
+
+<p>The URL to which the request is sent.</p>
+
+<p>If set to function the data source will invoke it and use the result as the URL.</p>
+
+<h4 id="example---specify-url-as-a-string-3">Example - specify URL as a string</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read:  {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    update: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/update",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  },
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.fetch(function() {
+  var product = dataSource.at(0);
+  product.set("UnitPrice", 20);
+  dataSource.sync();
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---specify-url-as-a-function-3">Example - specify URL as a function</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read:  {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    update: {
+      url: function(options) {
+        return "http://demos.telerik.com/kendo-ui/service/products/update",
+      },
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  },
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.fetch(function() {
+  var product = dataSource.at(0);
+  product.set("UnitPrice", 20);
+  dataSource.sync();
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="type-string-1">type <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>If set the data source will use a predefined <a href="#configuration-transport">transport</a> and/or <a href="#configuration-schema">schema</a>.
+The supported values are "odata" which supports the <a href="http://www.odata.org">OData</a> v.2 protocol and "signalr".</p>
+
+<h4 id="example---enable-odata-support">Example - enable OData support</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource= new kendo.data.DataSource({
+  type: "odata",
+  transport: {
+    read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+  },
+  pageSize: 20,
+  serverPaging: true
+});
+dataSource.fetch(function() {
+  console.log(dataSource.view().length); // displays "20"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="add">add</h3>
+
+<p>Appends a data item to the data source.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="model-objectkendodatamodel">model <code class="language-plaintext highlighter-rouge">Object|kendo.data.Model</code></h5>
+
+<p>Either a <a href="/api/framework/model">kendo.data.Model</a> instance or JavaScript object containing the data item field values.</p>
+
+<h4 id="returns-3">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.Model</code> the data item which is inserted.</p>
+
+<h4 id="example---add-a-data-item-to-a-local-data-source">Example - add a data item to a local data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource= new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 }
+  ]
+});
+dataSource.add({ name: "John Doe", age: 33 });
+var data = dataSource.data();
+var lastItem = data[data.length - 1];
+console.log(lastItem.name); // displays "John Doe"
+console.log(lastItem.age); // displays "33"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---add-a-data-item-to-a-remote-data-source">Example - add a data item to a remote data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    // make JSONP request to http://demos.telerik.com/kendo-ui/service/products/create
+    create: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/create",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    parameterMap: function(data, type) {
+      if (type == "create") {
+        // send the created data items as the "models" service parameter encoded in JSON
+        return { models: kendo.stringify(data.models) };
+      }
+    }
+  },
+  batch: true,
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+// add a new data item
+dataSource.add( { ProductName: "New Product" });
+// save the created data item
+dataSource.sync();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="aggregate">aggregate</h3>
+
+<p>Gets or sets the aggregate configuration.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-objectarray">value <code class="language-plaintext highlighter-rouge">Object|Array</code></h5>
+
+<p>The aggregate configuration. Accepts the same values as the <a href="#configuration-aggregate">aggregate</a> option.</p>
+
+<h4 id="returns-4">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> the current aggregate configuration.</p>
+
+<h4 id="example---set-the-data-source-aggregates">Example - set the data source aggregates</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource= new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ]
+});
+// calculate the minimum and maximum age
+dataSource.aggregate([
+  { field: "age", aggregate: "min" },
+  { field: "age", aggregate: "max" }
+]);
+var ageAggregates = dataSource.aggregates().age;
+console.log(ageAggregates.min); // displays "30"
+console.log(ageAggregates.max); // displays "33"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-data-source-aggregates">Example - get the data source aggregates</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource= new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ],
+  aggregate: [
+    { field: "age", aggregate: "min" },
+    { field: "age", aggregate: "max" }
+  ]
+});
+var aggregates = dataSource.aggregate();
+console.log(kendo.stringify(aggregates[0])); // displays {"aggregate": "min", "field": "age"}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="aggregates">aggregates</h3>
+
+<p>Returns the aggregate results.</p>
+
+<h4 id="returns-5">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> the aggregate results. There is a key for every aggregated field.</p>
+
+<h4 id="example---get-aggregate-results">Example - get aggregate results</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource= new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ],
+  aggregate: [
+    { field: "age", aggregate: "min" },
+    { field: "name", aggregate: "max" }
+  ]
+});
+var ageAggregates = dataSource.aggregates().age;
+console.log(ageAggregates.min); // displays "30"
+console.log(ageAggregates.max); // displays "33"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="at">at</h3>
+
+<p>Returns the data item at the specified index. The index is zero-based.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="index-number">index <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The zero-based index of the data item.</p>
+
+<h4 id="returns-6">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.ObservableObject</code> the data item at the specified index. Returns <code class="language-plaintext highlighter-rouge">undefined</code> if a data item is not found at the specified index.
+Returns a <code class="language-plaintext highlighter-rouge">kendo.data.Model</code> instance if the <a href="#configuration-schema.model">schema.model</a> option is set.</p>
+
+<h4 id="example---get-a-data-item">Example - get a data item</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" },
+    { name: "John Doe" }
+  ]
+});
+dataSource.fetch(function(){
+  var dataItem = dataSource.at(0);
+  console.log(dataItem.name); // displays "Jane Doe"
+  var dataItemWhichDoesNotExist = dataSource.at(3);
+  console.log(dataItemWhichDoesNotExist); // displays "undefined"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="cancelchanges">cancelChanges</h3>
+
+<p>Cancels any pending changes in the data source. Deleted data items are restored, new data items are removed and updated data items are restored to their initial state.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="model-kendodatamodel">model <code class="language-plaintext highlighter-rouge">kendo.data.Model</code></h5>
+
+<p>The optional data item (model). If specified only the changes of this data item will be discarded. If omitted all changes will be discarded.</p>
+
+<h4 id="example---cancel-all-changes">Example - cancel all changes</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { id: 1, name: "Jane Doe" }
+  ],
+  schema: {
+    model: { id: "id" }
+  }
+});
+dataSource.fetch(function(){
+  // add a new data item
+  dataSource.add({ name: "John Doe" });
+  // update existing data item
+  var dataItem = dataSource.at(0);
+  dataItem.set("name", "Jane Doe 2");
+  // cancel all changes
+  dataSource.cancelChanges();
+  dataItem = dataSource.at(0);
+  console.log(dataItem.name); // displays "Jane Doe"
+  console.log(dataSource.data().length); // displays "1"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---cancel-changes-of-only-one-data-item">Example - cancel changes of only one data item</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { id: 1, name: "Jane Doe" }
+  ],
+  schema: {
+    model: { id: "id" }
+  }
+});
+dataSource.fetch(function(){
+  // add a new data item
+  dataSource.add({ name: "John Doe" });
+  // update existing data item
+  var dataItem = dataSource.at(0);
+  dataItem.set("name", "Jane Doe 2");
+  // cancel the changes of the dataItem
+  dataSource.cancelChanges(dataItem);
+  console.log(dataItem.name); // displays "Jane Doe"
+  console.log(dataSource.data().length); // displays "2"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="data">data</h3>
+
+<p>Gets or sets the data items of the data source.</p>
+
+<p>If the data source is bound to a remote service (via the <a href="#configuration-transport">transport</a> option) the <code class="language-plaintext highlighter-rouge">data</code> method will return the service response.
+Every item from the response is wrapped in a <a href="/api/framework/observableobject">kendo.data.ObservableObject</a> or <a href="/api/framework/model">kendo.data.Model</a> (if the <a href="#configuration-schema.model">schema.model</a> option is set).</p>
+
+<p>If the data source is bound to a JavaScript array (via the <a href="#configuration-data">data</a> option) the <code class="language-plaintext highlighter-rouge">data</code> method will return the items of that array.
+Every item from the array is wrapped in a <a href="/api/framework/observableobject">kendo.data.ObservableObject</a> or <a href="/api/framework/model">kendo.data.Model</a> (if the <a href="#configuration-schema.model">schema.model</a> option is set).</p>
+
+<p>If the data source is grouped (via the <a href="#configuration-group">group</a> option or the <a href="#methods-group">group</a> method) and the <a href="#configuration-serverGrouping">serverGrouping</a> is set to <code class="language-plaintext highlighter-rouge">true</code>
+the <code class="language-plaintext highlighter-rouge">data</code> method will return the group items.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-arraykendodataobservablearray">value <code class="language-plaintext highlighter-rouge">Array|kendo.data.ObservableArray</code></h5>
+
+<p>The data items which will replace the current ones in the data source. If omitted the current data items will be returned.</p>
+
+<h4 id="returns-7">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.ObservableArray</code> the data items of the data source. Returns empty array if the data source hasn"t been populated with data items via the <a href="#methods-read">read</a>, <a href="#methods-fetch">fetch</a> or <a href="#methods-query">query</a> methods.</p>
+
+<h4 id="example---get-the-data-items-when-bound-to-array">Example - get the data items when bound to array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" },
+    { name: "John Doe" }
+  ]
+});
+dataSource.fetch(function(){
+  var data = dataSource.data();
+  console.log(data.length);  // displays "2"
+  console.log(data[0].name); // displays "Jane Doe"
+  console.log(data[1].name); // displays "John Doe"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-data-items-when-bound-to-a-remote-service">Example - get the data items when bound to a remote service</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read:  {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  }
+});
+dataSource.fetch(function(){
+  var data = dataSource.data();
+  console.log(data.length);  // displays "77"
+  console.log(data[0].ProductName); // displays "Chai"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-the-data-items">Example - set the data items</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" }
+  ]
+});
+dataSource.fetch(function(){
+  dataSource.data([ { name: "John Doe" } ]);
+  var data = dataSource.data();
+  console.log(data[0].name); // displays "John Doe"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="fetch">fetch</h3>
+
+<p>Reads the data items from a remote service (if the <a href="#configuration-transport">transport</a> option is set) or from a JavaScript array (if the <a href="#configuration-data">data</a> option is set).</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">fetch</code> method makes a request to the remote service only the first time it is called.</p>
+</blockquote>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="callback-function-optional">callback <code class="language-plaintext highlighter-rouge">Function</code> <em>(optional)</em></h5>
+
+<p>The optional function which is executed when the remote request is finished.  The function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the data source instance.</p>
+
+<h4 id="example---read-data-from-a-remote-data-source">Example - read data from a remote data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read:  {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  }
+});
+// read the data items from http://demos.telerik.com/kendo-ui/service/products
+dataSource.fetch(function(){
+  var data = this.data();
+  console.log(data.length);  // displays "77"
+  console.log(data[0].ProductName); // displays "Chai"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filter">filter</h3>
+
+<p>Gets or sets the filter configuration.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-object-optional">value <code class="language-plaintext highlighter-rouge">Object</code> <em>(optional)</em></h5>
+
+<p>The filter configuration. Accepts the same values as the <a href="#configuration-filter">filter</a> option (<strong>check there fo more examples</strong>).</p>
+
+<h4 id="returns-8">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Object</code> the current filter configuration.</p>
+
+<h4 id="example---set-the-data-source-filter">Example - set the data source filter</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" },
+    { name: "John Doe" }
+  ]
+});
+dataSource.filter( { field: "name", operator: "startswith", value: "Jane" });
+var view = dataSource.view();
+console.log(view.length);
+console.log(view[0].name); // displays "Jane Doe"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-data-source-filter">Example - get the data source filter</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" },
+    { name: "John Doe" }
+  ],
+  filter: { field: "name", operator: "startswith", value: "Jane" }
+});
+var filter = dataSource.filter();
+console.log(filter.logic);  // displays "and"
+console.log(filter.filters[0]); displays '{field: "name", operator: "startswith", value: "Jane"}'
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="get">get</h3>
+
+<p>Gets the data item (model) with the specified <a href="/api/framework/model#fields-id">id</a>.</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">get</code> method requires the <a href="#configuration-schema.model">schema.model</a> option to be set and the <code class="language-plaintext highlighter-rouge">id</code> of the model to be specified.</p>
+</blockquote>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="id-numberstring">id <code class="language-plaintext highlighter-rouge">Number|String</code></h5>
+
+<p>The id of the model to look for.</p>
+
+<h4 id="returns-9">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.Model</code> the model instance. Returns <code class="language-plaintext highlighter-rouge">undefined</code> if a model with the specified id is not found.</p>
+
+<h4 id="example---find-a-model-by-id">Example - find a model by id</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    {id: 1, name: "Jane Doe" },
+    {id: 2, name: "John Doe" }
+  ],
+  schema: {
+    model: { id: "id" }
+  }
+});
+dataSource.fetch(function() {
+  var dataItem = dataSource.get(1);
+  console.log(dataItem.name); // displays "Jane Doe"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="getbyuid">getByUid</h3>
+
+<p>Gets the data item (model) with the specified <a href="/api/framework/model#fields-uid">uid</a>.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="uid-string">uid <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The uid of the model to look for.</p>
+
+<h4 id="returns-10">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.ObservableObject</code> the model instance. Returns <code class="language-plaintext highlighter-rouge">undefined</code> if a model with the specified uid is not found.</p>
+
+<h3 id="group">group</h3>
+
+<p>Gets or sets the grouping configuration.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-objectarray-1">value <code class="language-plaintext highlighter-rouge">Object|Array</code></h5>
+
+<p>The grouping configuration. Accepts the same values as the <a href="#configuration-group">group</a> option.</p>
+
+<h4 id="returns-11">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> the current grouping configuration.</p>
+
+<h4 id="example---group-the-data-items">Example - group the data items</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ]
+});
+dataSource.group({ field: "category" });
+var view = dataSource.view();
+console.log(view.length); // displays "2"
+var beverages = view[0];
+console.log(beverages.value); // displays "Beverages"
+console.log(beverages.items[0].name); // displays "Tea"
+console.log(beverages.items[1].name); // displays "Coffee"
+var food = view[1];
+console.log(food.value); // displays "Food"
+console.log(food.items[0].name); // displays "Ham"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-data-source-grouping-configuration">Example - get the data source grouping configuration</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  group: { field: "category" }
+});
+var groups = dataSource.group();
+console.log(groups.length); // displays "1"
+console.log(groups[0].field); // displays "category"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="haschanges-boolean">hasChanges <code class="language-plaintext highlighter-rouge">Boolean</code></h3>
+
+<p>Cheks if the data itams have changed.</p>
+
+<h4 id="returns-12">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Boolean</code> returns <code class="language-plaintext highlighter-rouge">true</code> if the data items have changed. Otherwise, <code class="language-plaintext highlighter-rouge">false</code>.</p>
+
+<h4 id="example---check-if-the-data-source-has-changes">Example - check if the data source has changes</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { id: 1, name: "Jane Doe" }
+  ],
+  schema: {
+    model: { id: "id" }
+  }
+});
+dataSource.fetch(function() {
+  console.log(dataSource.hasChanges()); // displays "false"
+  dataSource.add({ name: "John Doe" });
+  console.log(dataSource.hasChanges()); // displays "true"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="indexof">indexOf</h3>
+
+<p>Gets the index of the specified data item.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="dataitem-kendodataobservableobject">dataItem <code class="language-plaintext highlighter-rouge">kendo.data.ObservableObject</code></h5>
+
+<p>The target data item.</p>
+
+<h4 id="returns-13">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> the index of the specified data item. Returns <code class="language-plaintext highlighter-rouge">-1</code> if the data item is not found.</p>
+
+<h4 id="example---get-the-index-of-a-data-item">Example - get the index of a data item</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource= new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ]
+});
+dataSource.fetch(function() {
+  var dataItem = dataSource.at(0);
+  var index = dataSource.indexOf(dataItem);
+  console.log(index); // displays "0"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="insert">insert</h3>
+
+<p>Inserts a data item in the data source at the specified index.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="index-number-1">index <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The zero-based index at which the data item will be inserted.</p>
+
+<h5 id="model-objectkendodataobservableobjectkendodatamodel">model <code class="language-plaintext highlighter-rouge">Object|kendo.data.ObservableObject|kendo.data.Model</code></h5>
+
+<p>Either a <a href="/api/framework/model">kendo.data.Model</a> instance or JavaScript object containing the field values.</p>
+
+<h4 id="returns-14">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.Model</code> the data item which is inserted.</p>
+
+<h4 id="example---insert-a-data-item">Example - insert a data item</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { id: 1, name: "Jane Doe" }
+  ],
+  schema: {
+    model: { id: "id" }
+  }
+});
+dataSource.fetch(function() {
+  var dataItem = dataSource.insert(0, { name: "John Doe" });
+  var index = dataSource.indexOf(dataItem);
+  console.log(index); // displays "0"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="page">page</h3>
+
+<p>Gets or sets the current page.</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="page-number-1">page <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The new page.</p>
+
+<h4 id="returns-15">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> the current page.</p>
+
+<h4 id="example---set-the-current-page-1">Example - set the current page</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" },
+    { name: "John Doe" }
+  ],
+  pageSize: 1
+});
+dataSource.fetch(function() {
+  dataSource.page(2);
+  var view = dataSource.view();
+  console.log(view[0].name); // displays "John Doe"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-current-page">Example - get the current page</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" },
+    { name: "John Doe" }
+  ],
+  pageSize: 1,
+  page: 2
+});
+console.log(dataSource.page()); // displays "2"
+</code></pre></div></div>
+
+<h3 id="pagesize">pageSize</h3>
+
+<p>Gets or sets the current page size.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="size-number">size <code class="language-plaintext highlighter-rouge">Number</code></h5>
+
+<p>The new page size.</p>
+
+<h4 id="returns-16">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> the current page size.</p>
+
+<h4 id="example---set-the-page-size-1">Example - set the page size</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" },
+    { name: "John Doe" }
+  ]
+});
+dataSource.pageSize(1);
+dataSource.fetch(function() {
+  dataSource.page(2);
+  var view = dataSource.view();
+  console.log(view[0].name); // displays "John Doe"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-page-size">Example - get the page size</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe" },
+    { name: "John Doe" }
+  ],
+  pageSize: 1
+});
+console.log(dataSource.pageSize()); // displays "1"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pushcreate">pushCreate</h3>
+
+<p>Appends the specified data item(s) to the data source without marking them as "new". The data source will not sync data items appended via <code class="language-plaintext highlighter-rouge">pushCreate</code>.</p>
+
+<blockquote>
+  <p>The difference between <code class="language-plaintext highlighter-rouge">pushCreate</code> and <code class="language-plaintext highlighter-rouge">add</code> is that items appended via <code class="language-plaintext highlighter-rouge">add</code> are synced with the remote service.</p>
+</blockquote>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="items-objectarray">items <code class="language-plaintext highlighter-rouge">Object|Array</code></h5>
+
+<p>The data item or data items to append to the data source.</p>
+
+<h4 id="example---pushcreate-with-a-single-item">Example - pushCreate with a single item</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  schema: {
+    model: {
+      id: "id"
+    }
+  }
+});
+dataSource.pushCreate({ id: 1, name: "John Doe" });
+console.log(dataSource.at(0).name); // displays "John Doe"
+console.log(dataSource.at(0).isNew()); // displays "false"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---pushcreate-with-multiple-items">Example - pushCreate with multiple items</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  schema: {
+    model: {
+      id: "id"
+    }
+  }
+});
+dataSource.pushCreate([
+    { id: 1, name: "John Doe" },
+    { id: 2, name: "Jane Doe" }
+]);
+console.log(dataSource.at(1).name); // displays "Jane Doe"
+console.log(dataSource.at(1).isNew()); // displays "false"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pushdestroy">pushDestroy</h3>
+
+<p>Removes the specified data item(s) from the data source without marking them as "removed". The data source will not sync data items appended via <code class="language-plaintext highlighter-rouge">pushDestroy</code>.</p>
+
+<blockquote>
+  <p>The difference between <code class="language-plaintext highlighter-rouge">pushDestroy</code> and <code class="language-plaintext highlighter-rouge">remove</code> is that items removed via <code class="language-plaintext highlighter-rouge">remove</code> are synced with the remote service.</p>
+</blockquote>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="items-objectarray-1">items <code class="language-plaintext highlighter-rouge">Object|Array</code></h5>
+
+<p>The data item or data items to remove from the data source.</p>
+
+<h4 id="example---pushdestroy-with-a-single-item">Example - pushDestroy with a single item</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  schema: {
+    model: {
+      id: "id"
+    }
+  },
+  data: [
+     { id: 1, name: "John Doe" }
+  ]
+});
+dataSource.read();
+dataSource.pushDestroy({ id: 1, name: "John Doe" });
+console.log(dataSource.total()); // displays "0"
+console.log(dataSource.hasChanges()); // displays "false"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---pushdestroy-with-multiple-items">Example - pushDestroy with multiple items</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  schema: {
+    model: {
+      id: "id"
+    }
+  },
+  data: [
+     { id: 1, name: "John Doe" },
+     { id: 2, name: "Jane Doe" }
+  ]
+});
+dataSource.read();
+dataSource.pushDestroy([
+    { id: 1, name: "John Doe" },
+    { id: 2, name: "Jane Doe" }
+]);
+console.log(dataSource.total()); // displays "0"
+console.log(dataSource.hasChanges()); // displays "false"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="pushupdate">pushUpdate</h3>
+
+<p>Updates the specified data item(s) without marking them as "dirty". The data source will not sync data items appended via <code class="language-plaintext highlighter-rouge">pushUpdate</code>.
+If the data items are not found (using <code class="language-plaintext highlighter-rouge">schema.model.id</code>) they will be appended.</p>
+
+<blockquote>
+  <p>The difference between <code class="language-plaintext highlighter-rouge">pushUpdate</code> and updating items via their <code class="language-plaintext highlighter-rouge">set</code> method is that items updated via <code class="language-plaintext highlighter-rouge">set</code> are synced with the remote service.</p>
+</blockquote>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="items-objectarray-2">items <code class="language-plaintext highlighter-rouge">Object|Array</code></h5>
+
+<p>The data item or data items to update.</p>
+
+<h4 id="example---pushupdate-with-a-single-item">Example - pushUpdate with a single item</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  schema: {
+    model: {
+      id: "id"
+    }
+  },
+  data: [
+     { id: 1, name: "John Doe" }
+  ]
+});
+dataSource.read();
+dataSource.pushUpdate({ id: 1, name: "Jane Doe" });
+console.log(dataSource.at(0).name); // displays "Jane Doe"
+console.log(dataSource.at(0).dirty); // displays "false"
+console.log(dataSource.hasChanges()); // displays "false"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---pushupdate-with-multiple-items">Example - pushUpdate with multiple items</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  schema: {
+    model: {
+      id: "id"
+    }
+  },
+  data: [
+     { id: 1, name: "John Doe" },
+     { id: 2, name: "Jane Doe" }
+  ]
+});
+dataSource.read();
+dataSource.pushUpdate([
+    { id: 1, name: "John" },
+    { id: 2, name: "Jane" }
+]);
+console.log(dataSource.at(0).name); // displays "John"
+console.log(dataSource.at(0).dirty); // displays "false"
+console.log(dataSource.hasChanges()); // displays "false"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="query">query</h3>
+
+<p>Executes the specified query over the data items. Makes a HTTP request if bound to a remote service.</p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="options-object-optional">options <code class="language-plaintext highlighter-rouge">Object</code> <em>(optional)</em></h5>
+
+<p>The query options which should be applied.</p>
+
+<h5 id="optionsaggregate-array-optional">options.aggregate <code class="language-plaintext highlighter-rouge">Array</code> <em>(optional)</em></h5>
+
+<p>The aggregate configuration. Accepts the same values as the <a href="#configuration-aggregate">aggregate</a> option.
+The <code class="language-plaintext highlighter-rouge">query</code> method will request the remote service if the <a href="#configuration-serverAggregates">serverAggregates</a>
+option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<h5 id="optionsfilter-objectarray-optional">options.filter <code class="language-plaintext highlighter-rouge">Object|Array</code> <em>(optional)</em></h5>
+
+<p>The filter configuration. Accepts the same values as the <a href="#configuration-filter">filter</a> option.
+The <code class="language-plaintext highlighter-rouge">query</code> method will request the remote service if the <a href="#configuration-serverFiltering">serverFiltering</a>
+option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<h5 id="optionsgroup-objectarray-optional">options.group <code class="language-plaintext highlighter-rouge">Object|Array</code> <em>(optional)</em></h5>
+
+<p>The grouping configuration. Accepts the same values as the <a href="#configuration-filter">filter</a> option.
+The <code class="language-plaintext highlighter-rouge">query</code> method will request the remote service if the <a href="#configuration-serverGrouping">serverGrouping</a>
+option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<h5 id="optionspage-number-optional">options.page <code class="language-plaintext highlighter-rouge">Number</code> <em>(optional)</em></h5>
+
+<p>The page of data to return.
+The <code class="language-plaintext highlighter-rouge">query</code> method will request the remote service if the <a href="#configuration-serverPaging">serverPaging</a>
+option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<h5 id="optionspagesize-number-optional">options.pageSize <code class="language-plaintext highlighter-rouge">Number</code> <em>(optional)</em></h5>
+
+<p>The number of data items to return.
+The <code class="language-plaintext highlighter-rouge">query</code> method will request the remote service if the <a href="#configuration-serverPaging">serverPaging</a>
+option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<h5 id="optionssort-objectarray-optional">options.sort <code class="language-plaintext highlighter-rouge">Object|Array</code> <em>(optional)</em></h5>
+
+<p>The sort configuration. Accepts the same values as the <a href="#configuration-sort">sort</a> option.
+The <code class="language-plaintext highlighter-rouge">query</code> method will request the remote service if the <a href="#configuration-serverSorting">serverSorting</a>
+option is set to <code class="language-plaintext highlighter-rouge">true</code>.</p>
+
+<h4 id="example---query-the-data-source">Example - query the data source</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  },
+  change: function(e) {
+    var view = this.view();
+    console.log(view[0].ProductName); // displays "Manjimup Dried Apples"
+  }
+});
+// sort by "ProductName" and get the third page with page size set to 20
+dataSource.query({
+  sort: { field: "ProductName", dir: "desc" },
+  page: 3,
+  pageSize: 20
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="read">read</h3>
+
+<p>Reads data items from a remote service (if the <a href="#configuration-transport">transport</a> option is set) or from a JavaScript array (if the <a href="#configuration-data">data</a> option is set).</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">read</code> method always makes a request to the remote service.</p>
+</blockquote>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="data-object-optional">data <code class="language-plaintext highlighter-rouge">Object</code> <em>(optional)</em></h5>
+
+<p>Optional data to pass to the remote service.</p>
+
+<h4 id="example---read-data-from-a-remote-service">Example - read data from a remote service</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp"
+    }
+  },
+  change: function(e) {
+    var view = this.view();
+    console.log(view[0].ProductName); // displays "Chai"
+  }
+});
+dataSource.read();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="remove">remove</h3>
+
+<p>Removes the specified data item from the data source.</p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="model-kendodatamodel-1">model <code class="language-plaintext highlighter-rouge">kendo.data.Model</code></h5>
+
+<p>The data item which should be removed.</p>
+
+<h4 id="example---remove-a-data-item">Example - remove a data item</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { id: 1, name: "Jane Doe" },
+    { id: 2, name: "John Doe" }
+  ],
+  schema: {
+    model: { id: "id" }
+  }
+});
+dataSource.fetch(function() {
+  var dataItem = dataSource.at(0);
+  dataSource.remove(dataItem);
+  var data = dataSource.data();
+  console.log(data.length);  // displays "1"
+  console.log(data[0].name); // displays "John Doe"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="sort">sort</h3>
+
+<p>Gets or sets the sort order which will be applied over the data items.</p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="value-objectarray-2">value <code class="language-plaintext highlighter-rouge">Object|Array</code></h5>
+
+<p>The sort configuration. Accepts the same values as the <a href="#configuration-sort">sort</a> option.</p>
+
+<h4 id="returns-17">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Array</code> the current sort configuration.</p>
+
+<h4 id="example---sort-the-data-items-1">Example - sort the data items</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ]
+});
+dataSource.sort({ field: "age", dir: "desc" });
+var view = dataSource.view();
+console.log(view[0].name); // displays "John Doe"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-sort-configuration">Example - get the sort configuration</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ],
+  sort: { field: "age", dir: "desc" }
+});
+var sort = dataSource.sort();
+console.log(sort.length);   // displays "1"
+console.log(sort[0].field); // displays "age"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="sync">sync</h3>
+
+<p>Saves any data item changes.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">sync</code> method will request the remote service if:</p>
+
+<ul>
+  <li>the <a href="#configuration-transport.create">transport.create</a> option is set and the data source contains new data items</li>
+  <li>the <a href="#configuration-transport.destroy">transport.destroy</a> option is set and data items have been removed from the data source</li>
+  <li>the <a href="#configuration-transport.update">transport.update</a> option is set and the data source contains updated data items</li>
+</ul>
+
+<h4 id="example---save-the-changes">Example - save the changes</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  batch: true,
+  transport: {
+    read:  {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    update: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/update",
+      dataType: "jsonp" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    destroy: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/destroy",
+      dataType: "jsonp" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  },
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.fetch(function() {
+  var product = dataSource.at(0);
+  product.set("UnitPrice", 20);
+  var anotherProduct = dataSource.at(1);
+  anotherProduct.set("UnitPrice", 20);
+  var yetAnotherProduct = dataSource.at(2);
+  dataSource.remove(yetAnotherProduct);
+  dataSource.sync(); // makes a request to http://demos.telerik.com/kendo-ui/service/products/update" and http://demos.telerik.com/kendo-ui/service/products/destroy
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="total">total</h3>
+
+<p>Gets the total number of data items. Uses <a href="#configuration-schema.total">schema.total</a> if the <a href="#configuration-transport.read">transport.read</a> option is set.</p>
+
+<h4 id="returns-18">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> the total number of data items. Returns the <code class="language-plaintext highlighter-rouge">length</code> of the array returned by the <a href="#methods-data">data</a> method if <code class="language-plaintext highlighter-rouge">schema.total</code> or <code class="language-plaintext highlighter-rouge">transport.read</code> are not set.
+Returns <code class="language-plaintext highlighter-rouge">0</code> if the data source hasn"t been populated with data items via the <a href="#methods-read">read</a>, <a href="#methods-read">fetch</a> or <a href="#methods-query">query</a> methods.</p>
+
+<h4 id="example---get-the-total-number-of-data-items">Example - get the total number of data items</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ]
+});
+dataSource.fetch(function() {
+  console.log(dataSource.total()); // displays "2"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="totalpages">totalPages</h3>
+
+<p>Gets the number of available pages.</p>
+
+<h4 id="returns-19">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> the available pages.</p>
+
+<h4 id="example---get-the-total-number-of-pages">Example - get the total number of pages</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Jane Doe", age: 30 },
+    { name: "John Doe", age: 33 }
+  ],
+  pageSize: 1
+});
+console.log(dataSource.totalPages());   // displays "2"
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="view">view</h3>
+
+<p>Returns the data items which correspond to the current page, filter, sort and group configuration.</p>
+
+<p>To ensure that data is available this method should be used within the <a href="#events-change">change</a> event handler or the <a href="#methods-fetch">fetch</a> method.</p>
+
+<h4 id="returns-20">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.ObservableArray</code> the data items. Returns groups if the data items are grouped (via the <a href="#configuration-group">group</a> option or the <a href="#methods-group">group</a> method).</p>
+
+<h4 id="example---get-the-paged-and-sorted-data-items">Example - get the paged and sorted data items</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  pageSize: 1,
+  page: 2,
+  sort: { field: "category", dir: "desc" }
+});
+dataSource.fetch(function() {
+  var view = dataSource.view();
+  console.log(view.length); // displays "1"
+  console.log(view[0].name); // displays "Tea"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---get-the-paged-sorted-and-grouped-data-items">Example - get the paged, sorted and grouped data items</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  data: [
+    { name: "Tea", category: "Beverages" },
+    { name: "Coffee", category: "Beverages" },
+    { name: "Ham", category: "Food" }
+  ],
+  group: { field: "category" },
+  sort: { field: "name", dir: "asc" },
+  pageSize: 2,
+  page: 1
+});
+dataSource.fetch(function() {
+  var view = dataSource.view();
+  console.log(view.length); // displays "1"
+  var beverages = view[0];
+  console.log(beverages.value); // displays "Beverages"
+  console.log(beverages.items.length); // displays "2"
+  console.log(beverages.items[0].name); // displays "Coffee"
+  console.log(beverages.items[1].name); // displays "Tea"
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="change">change</h3>
+
+<p>Fired when the data source is populated from a JavaScript array or a remote service, a data item is inserted, updated or removed, the data items are paged, sorted, filtered or grouped.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the data source instance.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="esender-kendodatadatasource">e.sender <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code></h5>
+
+<p>The data source instance which fired the event.</p>
+
+<h5 id="eaction-string-optional">e.action <code class="language-plaintext highlighter-rouge">string</code> <em>(optional)</em></h5>
+
+<p>String describing the action type (available for all actions other than "read"). Possible values are "itemchange", "add", "remove" and "sync".</p>
+
+<h5 id="eitems-array">e.items <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>The array of data items that were affected (or read).</p>
+
+<h4 id="example---subscribe-to-the-change-event-during-initialization">Example - subscribe to the "change" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  },
+  change: function(e) {
+    var data = this.data();
+    console.log(data.length); // displays "77"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-change-event-after-initialization">Example - subscribe to the "change" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+function dataSource_change(e) {
+  var data = this.data();
+  console.log(data.length); // displays "77"
+}
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    }
+  }
+});
+dataSource.bind("change", dataSource_change);
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="error">error</h3>
+
+<p>Fired when a request to the remote service fails.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the data source instance.</p>
+
+<blockquote>
+  <p>If the <a href="#configuration-schema.errors">schema.errors</a> option is set and the server response contains that field then the <code class="language-plaintext highlighter-rouge">error</code> event will be fired. The
+<code class="language-plaintext highlighter-rouge">errors</code> field of the event argument will contain the errors returned by the server.</p>
+</blockquote>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="eerrorthrown-object-optional">e.errorThrown <code class="language-plaintext highlighter-rouge">Object</code> <em>(optional)</em></h5>
+
+<p>Optional exception.</p>
+
+<h5 id="esender-kendodatadatasource-1">e.sender <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code></h5>
+
+<p>The data source instance which fired the event.</p>
+
+<h5 id="estatus-string">e.status <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>String describing the type of the error</p>
+
+<h5 id="exhr-object">e.xhr <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The current <a href="http://api.jquery.com/Types/#jqXHR">jqXHR</a>.</p>
+
+<h4 id="example---subscribe-to-the-error-event-after-initialization">Example - subscribe to the "error" event after initialization</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+function dataSource_error(e) {
+  console.log(e.status); // displays "error"
+}
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/"
+    }
+  }
+});
+dataSource.bind("error", dataSource_error);
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="push">push</h3>
+
+<p>Fired when the data source receives a push notification or the <code class="language-plaintext highlighter-rouge">pushCreate</code>, <code class="language-plaintext highlighter-rouge">pushUpdate</code> or <code class="language-plaintext highlighter-rouge">pushDestroy</code> methods are called.</p>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="eitems-array-1">e.items <code class="language-plaintext highlighter-rouge">Array</code></h5>
+
+<p>The array of data items that were affected by the push notification.</p>
+
+<h5 id="etype-string">e.type <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The type of the push notification. One of the following values: "create", "update", "destroy";</p>
+
+<h5 id="esender-kendodatadatasource-2">e.sender <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code></h5>
+
+<p>The data source instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-push-event-during-initialization">Example - subscribe to the "push" event during initialization</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+function dataSource_push(e) {
+  console.log(e.type); // displays "update"
+  console.log(e.items[0].name); // displays "Jane Doe"
+}
+var dataSource = new kendo.data.DataSource({
+  push: dataSource_push,
+  schema: {
+    model: {
+      id: "id"
+    }
+  },
+  data: [
+    { id: 1, name: "John Doe" }
+  ]
+});
+dataSource.fetch();
+dataSource.pushUpdate({ id: 1, name: "Jane Doe" });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="requestend">requestEnd</h3>
+
+<p>Fired when a remote service request is finished.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the data source instance.</p>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="eresponse-object">e.response <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The raw remote service response.</p>
+
+<h5 id="esender-kendodatadatasource-3">e.sender <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code></h5>
+
+<p>The data source instance which fired the event.</p>
+
+<h5 id="etype-string-1">e.type <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The type of the request. Set to "create", "read", "update" or "destroy".</p>
+
+<h4 id="example---subscribe-to-the-requestend-event-during-initialization">Example - subscribe to the "requestEnd" event during initialization</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp"
+    }
+  },
+  requestEnd: function(e) {
+    var response = e.response;
+    var type = e.type;
+    console.log(type); // displays "read"
+    console.log(response.length); // displays "77"
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-requestend-event-after-initialization">Example - subscribe to the "requestEnd" event after initialization</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+function dataSource_requestEnd(e) {
+  var response = e.response;
+  var type = e.type;
+  console.log(type); // displays "read"
+  console.log(response.length); // displays "77"
+}
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp"
+    }
+  }
+});
+dataSource.bind("requestEnd", dataSource_requestEnd);
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="requeststart">requestStart</h3>
+
+<p>Fired when the data source makes a remote service request.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the data source instance.</p>
+
+<h4 id="event-data-4">Event Data</h4>
+
+<h5 id="esender-kendodatadatasource-4">e.sender <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code></h5>
+
+<p>The data source instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-requeststart-event-during-initialization">Example - subscribe to the "requestStart" event during initialization</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp"
+    }
+  },
+  requestStart: function(e) {
+    console.log("request started");
+  }
+});
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-requeststart-event-after-initialization">Example - subscribe to the "requestStart" event after initialization</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+function dataSource_requestStart(e) {
+  console.log("request started");
+}
+var dataSource = new kendo.data.DataSource({
+  transport: {
+    read: {
+      url: "http://demos.telerik.com/kendo-ui/service/products",
+      dataType: "jsonp"
+    }
+  }
+});
+dataSource.bind("requestEnd", dataSource_requestStart);
+dataSource.fetch();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="sync-1">sync</h3>
+
+<p>Fired after the data source saves data item changes. The data source saves the data item changes when the <a href="#methods-sync">sync</a> method is called.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the data source instance.</p>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">sync</code> event is fired after all remote requests finish.</p>
+</blockquote>
+
+<h4 id="event-data-5">Event Data</h4>
+
+<h5 id="esender-kendodatadatasource-5">e.sender <code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code></h5>
+
+<p>The data source instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-sync-event-during-initialization">Example - subscribe to the "sync" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = new kendo.data.DataSource({
+  batch: true,
+  transport: {
+    create: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/create",
+      dataType: "jsonp" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    parameterMap: function(data) {
+      return { models: kendo.stringify(data.models) };
+    }
+  },
+  sync: function(e) {
+    console.log("sync complete");
+  },
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.add( { ProductName: "Ham" } );
+dataSource.sync();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-sync-event-after-initialization">Example - subscribe to the "sync" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+function dataSource_sync(e) {
+  console.log("sync complete");
+}
+var dataSource = new kendo.data.DataSource({
+  batch: true,
+  transport: {
+    create: {
+      url: "http://demos.telerik.com/kendo-ui/service/products/create",
+      dataType: "jsonp" //"jsonp" is required for cross-domain requests; use "json" for same-domain requests
+    },
+    parameterMap: function(data) {
+      return { models: kendo.stringify(data.models) };
+    }
+  },
+  schema: {
+    model: { id: "ProductID" }
+  }
+});
+dataSource.bind("sync", dataSource_sync);
+dataSource.add( { ProductName: "Ham" } );
+dataSource.sync();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="class-methods">Class methods</h2>
+
+<h3 id="create">create</h3>
+
+<p>Creates a data source instance using the specified configuration. If the configuration is a data source instance the same instance will be returned.</p>
+
+<h4 id="returns-21">Returns</h4>
+
+<p><code class="language-plaintext highlighter-rouge">kendo.data.DataSource</code> the new data source instance.</p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="options-object">options <code class="language-plaintext highlighter-rouge">Object</code></h5>
+
+<p>The data source <a href="#configuration">configuration</a>.</p>
+
+<h4 id="example---parsing-the-datasource-configuration-option-in-a-custom-widget">Example - parsing the dataSource configuration option in a custom widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+var dataSource = kendo.data.DataSource.create({
+  data: [
+    { name: "Jane Doe" }
+  ]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

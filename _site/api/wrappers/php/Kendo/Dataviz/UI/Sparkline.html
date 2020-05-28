@@ -1,0 +1,992 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/php/Kendo/Dataviz/UI/Sparkline.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendodatavizuisparkline">\Kendo\Dataviz\UI\Sparkline</h1>
+
+<p>A PHP wrapper for Kendo UI <a href="/api/dataviz/sparkline">Sparkline</a>.</p>
+
+<p>Inherits from <a href="/api/wrappers/php/Kendo/UI/Widget">\Kendo\UI\Widget</a>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use Sparkline in a PHP page instantiate a new instance, configure it via the available
+configuration <a href="#methods">methods</a> and output it by <code class="language-plaintext highlighter-rouge">echo</code>-ing the result of the <a href="/api/wrappers/php/Kendo/UI/Widget#render">render</a> method.</p>
+
+<h3 id="using-kendo-sparkline">Using Kendo Sparkline</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+// Create a new instance of Sparkline and specify its id
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+
+// Configure it
+$sparkline-&gt;autoBind(true)
+
+// Output it
+
+echo $sparkline-&gt;render();
+?&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="autobind">autoBind</h3>
+<p>Indicates whether the chart will call read on the data source initially.</p>
+
+<h4 id="returns">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="value-boolean">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;autoBind(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="axisdefaults">axisDefaults</h3>
+<p>Default options for all chart axes.</p>
+
+<h4 id="returns-1">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="value-">$value ``</h5>
+
+<h3 id="axislabelclick">axisLabelClick</h3>
+<p>Fires when an axis label is clicked.
+For additional information check the <a href="/api/dataviz/sparkline#events-axisLabelClick">axisLabelClick</a> event documentation.</p>
+
+<h4 id="returns-2">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;axisLabelClick('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onAxisLabelClick(e) {
+        // handle the axisLabelClick event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;axisLabelClick('onAxisLabelClick');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;axisLabelClick(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addcategoryaxisitem">addCategoryAxisItem</h3>
+
+<p>Adds one or more SparklineCategoryAxisItem to the Sparkline.</p>
+
+<h4 id="returns-3">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuisparklinecategoryaxisitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\SparklineCategoryAxisItem|array</code></h5>
+
+<h4 id="example---using-kendodatavizuisparklinecategoryaxisitem">Example - using \Kendo\Dataviz\UI\SparklineCategoryAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$categoryAxisItem = new \Kendo\Dataviz\UI\SparklineCategoryAxisItem();
+$baseUnit = 'value';
+$categoryAxisItem-&gt;baseUnit($baseUnit);
+$sparkline-&gt;addCategoryAxisItem($categoryAxisItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$baseUnit = 'value';
+$sparkline-&gt;addCategoryAxisItem(array('baseUnit' =&gt; $baseUnit));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-sparklinecategoryaxisitem">Example - adding more than one SparklineCategoryAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$first  = new \Kendo\Dataviz\UI\SparklineCategoryAxisItem();
+$second = new \Kendo\Dataviz\UI\SparklineCategoryAxisItem();
+$sparkline-&gt;addCategoryAxisItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="chartarea">chartArea</h3>
+
+<p>The chart area configuration options.
+This is the entire visible area of the chart.</p>
+
+<h4 id="returns-4">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="value-kendodatavizuisparklinechartareaarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\SparklineChartArea|array</code></h5>
+
+<h4 id="example---using-kendodatavizuisparklinechartarea">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/SparklineChartArea">\Kendo\Dataviz\UI\SparklineChartArea</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$chartArea = new \Kendo\Dataviz\UI\SparklineChartArea();
+$background = 'value';
+$chartArea-&gt;background($background);
+$sparkline-&gt;chartArea($chartArea);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-1">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$background = 'value';
+$sparkline-&gt;chartArea(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="data">data</h3>
+<p>The data for the default sparkline series.Will be discareded if series are supplied.</p>
+
+<h4 id="returns-5">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="value-array">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;data(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="databound">dataBound</h3>
+<p>Fires when the sparkline has received data from the data source
+and is about to render it.
+For additional information check the <a href="/api/dataviz/sparkline#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="returns-6">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-1">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-1">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;dataBound('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-1">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDataBound(e) {
+        // handle the dataBound event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;dataBound('onDataBound');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-1">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;dataBound(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="datasource">dataSource</h3>
+
+<p>Sets the data source of the dataSource.</p>
+
+<h4 id="returns-7">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="value-kendodatadatasourcearray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Data\DataSource|array</code></h5>
+
+<h4 id="example---using-kendodatadatasource">Example - using <a href="/api/wrappers/php/kendo/data/datasource">\Kendo\Data\DataSource</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$dataSource = new \Kendo\Data\DataSource();
+$sparkline-&gt;dataSource($dataSource);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-2">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$schema = new \Kendo\Data\DataSourceSchema();
+$sparkline-&gt;dataSource(array('schema' =&gt; $schema));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="drag">drag</h3>
+<p>Fires as long as the user is dragging the sparkline using the mouse or swipe gestures.
+For additional information check the <a href="/api/dataviz/sparkline#events-drag">drag</a> event documentation.</p>
+
+<h4 id="returns-8">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-2">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-2">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;drag('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-2">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDrag(e) {
+        // handle the drag event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;drag('onDrag');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-2">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;drag(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dragend">dragEnd</h3>
+<p>Fires when the user stops dragging the sparkline.
+For additional information check the <a href="/api/dataviz/sparkline#events-dragEnd">dragEnd</a> event documentation.</p>
+
+<h4 id="returns-9">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-3">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-3">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;dragEnd('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-3">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDragEnd(e) {
+        // handle the dragEnd event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;dragEnd('onDragEnd');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-3">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;dragEnd(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="dragstart">dragStart</h3>
+<p>Fires when the user has used the mouse or a swipe gesture to drag the sparkline.The drag operation can be aborted by calling e.preventDefault().
+For additional information check the <a href="/api/dataviz/sparkline#events-dragStart">dragStart</a> event documentation.</p>
+
+<h4 id="returns-10">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-4">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-4">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;dragStart('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-4">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onDragStart(e) {
+        // handle the dragStart event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;dragStart('onDragStart');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-4">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;dragStart(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="plotarea">plotArea</h3>
+
+<p>The plot area configuration options. This is the area containing the plotted series.</p>
+
+<h4 id="returns-11">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="value-kendodatavizuisparklineplotareaarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\SparklinePlotArea|array</code></h5>
+
+<h4 id="example---using-kendodatavizuisparklineplotarea">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/SparklinePlotArea">\Kendo\Dataviz\UI\SparklinePlotArea</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$plotArea = new \Kendo\Dataviz\UI\SparklinePlotArea();
+$background = 'value';
+$plotArea-&gt;background($background);
+$sparkline-&gt;plotArea($plotArea);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-3">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$background = 'value';
+$sparkline-&gt;plotArea(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="plotareaclick">plotAreaClick</h3>
+<p>Fires when plot area is clicked.
+For additional information check the <a href="/api/dataviz/sparkline#events-plotAreaClick">plotAreaClick</a> event documentation.</p>
+
+<h4 id="returns-12">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-5">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-5">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;plotAreaClick('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-5">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onPlotAreaClick(e) {
+        // handle the plotAreaClick event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;plotAreaClick('onPlotAreaClick');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-5">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;plotAreaClick(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="pointwidth">pointWidth</h3>
+<p>The width to allocate for each data point.</p>
+
+<h4 id="returns-13">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="value-float">$value <code class="language-plaintext highlighter-rouge">float</code></h5>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;pointWidth(1);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="renderas">renderAs</h3>
+<p>Sets the preferred rendering engine.
+If it is not supported by the browser, the Sparkline will switch to the first available mode.The supported values are:</p>
+
+<h4 id="returns-14">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="value-string">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;renderAs('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addseriesitem">addSeriesItem</h3>
+
+<p>Adds one or more SparklineSeriesItem to the Sparkline.</p>
+
+<h4 id="returns-15">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuisparklineseriesitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\SparklineSeriesItem|array</code></h5>
+
+<h4 id="example---using-kendodatavizuisparklineseriesitem">Example - using \Kendo\Dataviz\UI\SparklineSeriesItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$seriesItem = new \Kendo\Dataviz\UI\SparklineSeriesItem();
+$aggregate = 'value';
+$seriesItem-&gt;aggregate($aggregate);
+$sparkline-&gt;addSeriesItem($seriesItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-4">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$aggregate = 'value';
+$sparkline-&gt;addSeriesItem(array('aggregate' =&gt; $aggregate));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-sparklineseriesitem">Example - adding more than one SparklineSeriesItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$first  = new \Kendo\Dataviz\UI\SparklineSeriesItem();
+$second = new \Kendo\Dataviz\UI\SparklineSeriesItem();
+$sparkline-&gt;addSeriesItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="seriesclick">seriesClick</h3>
+<p>Fires when chart series are clicked.
+For additional information check the <a href="/api/dataviz/sparkline#events-seriesClick">seriesClick</a> event documentation.</p>
+
+<h4 id="returns-16">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-6">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-6">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;seriesClick('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-6">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSeriesClick(e) {
+        // handle the seriesClick event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;seriesClick('onSeriesClick');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-6">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;seriesClick(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="seriescolors">seriesColors</h3>
+<p>The default colors for the chart"s series. When all colors are used, new colors are pulled from the start again.</p>
+
+<h4 id="returns-17">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="value-array-1">$value <code class="language-plaintext highlighter-rouge">array</code></h5>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;seriesColors(new array());
+?&gt;
+</code></pre></div></div>
+
+<h3 id="seriesdefaults">seriesDefaults</h3>
+
+<p>Default values for each series.</p>
+
+<h4 id="returns-18">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="value-kendodatavizuisparklineseriesdefaultsarray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\SparklineSeriesDefaults|array</code></h5>
+
+<h4 id="example---using-kendodatavizuisparklineseriesdefaults">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/SparklineSeriesDefaults">\Kendo\Dataviz\UI\SparklineSeriesDefaults</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$seriesDefaults = new \Kendo\Dataviz\UI\SparklineSeriesDefaults();
+$gap = 1;
+$seriesDefaults-&gt;gap($gap);
+$sparkline-&gt;seriesDefaults($seriesDefaults);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-5">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$gap = 1;
+$sparkline-&gt;seriesDefaults(array('gap' =&gt; $gap));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="serieshover">seriesHover</h3>
+<p>Fires when chart series are hovered.
+For additional information check the <a href="/api/dataviz/sparkline#events-seriesHover">seriesHover</a> event documentation.</p>
+
+<h4 id="returns-19">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-7">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-7">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;seriesHover('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-7">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onSeriesHover(e) {
+        // handle the seriesHover event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;seriesHover('onSeriesHover');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-7">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;seriesHover(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="theme">theme</h3>
+<p>Sets Chart theme. Available themes: default, blueOpal, black.</p>
+
+<h4 id="returns-20">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="value-string-1">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;theme('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="tooltip">tooltip</h3>
+
+<p>The data point tooltip configuration options.</p>
+
+<h4 id="returns-21">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="value-kendodatavizuisparklinetooltiparray">$value <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\SparklineTooltip|array</code></h5>
+
+<h4 id="example---using-kendodatavizuisparklinetooltip">Example - using <a href="/api/wrappers/php/Kendo/Dataviz/UI/SparklineTooltip">\Kendo\Dataviz\UI\SparklineTooltip</a></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$tooltip = new \Kendo\Dataviz\UI\SparklineTooltip();
+$background = 'value';
+$tooltip-&gt;background($background);
+$sparkline-&gt;tooltip($tooltip);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-6">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$background = 'value';
+$sparkline-&gt;tooltip(array('background' =&gt; $background));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="transitions">transitions</h3>
+<p>A value indicating if transition animations should be played.</p>
+
+<h4 id="returns-22">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="value-boolean-1">$value <code class="language-plaintext highlighter-rouge">boolean</code></h5>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;transitions(true);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="type">type</h3>
+<p>The default series type.</p>
+
+<h4 id="returns-23">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="value-string-2">$value <code class="language-plaintext highlighter-rouge">string</code></h5>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;type('value');
+?&gt;
+</code></pre></div></div>
+
+<h3 id="addvalueaxisitem">addValueAxisItem</h3>
+
+<p>Adds one or more SparklineValueAxisItem to the Sparkline.</p>
+
+<h4 id="returns-24">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-24">Parameters</h4>
+
+<h5 id="value-value2--kendodatavizuisparklinevalueaxisitemarray">$value[, $value2, …] <code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\SparklineValueAxisItem|array</code></h5>
+
+<h4 id="example---using-kendodatavizuisparklinevalueaxisitem">Example - using \Kendo\Dataviz\UI\SparklineValueAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$valueAxisItem = new \Kendo\Dataviz\UI\SparklineValueAxisItem();
+$color = 'value';
+$valueAxisItem-&gt;color($color);
+$sparkline-&gt;addValueAxisItem($valueAxisItem);
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-array-7">Example - using array</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$color = 'value';
+$sparkline-&gt;addValueAxisItem(array('color' =&gt; $color));
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---adding-more-than-one-sparklinevalueaxisitem">Example - adding more than one SparklineValueAxisItem</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$first  = new \Kendo\Dataviz\UI\SparklineValueAxisItem();
+$second = new \Kendo\Dataviz\UI\SparklineValueAxisItem();
+$sparkline-&gt;addValueAxisItem($first, $second);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="zoom">zoom</h3>
+<p>Fires as long as the user is zooming the chart using the mousewheel.
+For additional information check the <a href="/api/dataviz/sparkline#events-zoom">zoom</a> event documentation.</p>
+
+<h4 id="returns-25">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-25">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-8">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-8">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;zoom('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-8">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onZoom(e) {
+        // handle the zoom event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;zoom('onZoom');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-8">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;zoom(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="zoomend">zoomEnd</h3>
+<p>Fires when the user stops zooming the chart.
+For additional information check the <a href="/api/dataviz/sparkline#events-zoomEnd">zoomEnd</a> event documentation.</p>
+
+<h4 id="returns-26">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-26">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-9">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-9">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;zoomEnd('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-9">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onZoomEnd(e) {
+        // handle the zoomEnd event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;zoomEnd('onZoomEnd');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-9">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;zoomEnd(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+<h3 id="zoomstart">zoomStart</h3>
+<p>Fires when the user has used the mousewheel to zoom the chart.The zoom operation can be aborted by calling e.preventDefault().
+For additional information check the <a href="/api/dataviz/sparkline#events-zoomStart">zoomStart</a> event documentation.</p>
+
+<h4 id="returns-27">Returns</h4>
+<p><code class="language-plaintext highlighter-rouge">\Kendo\Dataviz\UI\Sparkline</code></p>
+
+<h4 id="parameters-27">Parameters</h4>
+
+<h5 id="value-stringkendojavascriptfunction-10">$value <code class="language-plaintext highlighter-rouge">string|\Kendo\JavaScriptFunction</code></h5>
+
+<h4 id="example---using-string-which-defines-a-javascript-function-10">Example - using string which defines a JavaScript function</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;zoomStart('function(e) { }');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-string-which-defines-a-javascript-name-10">Example - using string which defines a JavaScript name</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+    function onZoomStart(e) {
+        // handle the zoomStart event.
+    }
+&lt;/script&gt;
+&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;zoomStart('onZoomStart');
+?&gt;
+</code></pre></div></div>
+
+<h4 id="example---using-kendojavascriptfunction-10">Example - using <a href="/api/wrappers/php/kendo/javascriptfunction">\Kendo\JavaScriptFunction</a></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$sparkline = new \Kendo\Dataviz\UI\Sparkline('Sparkline');
+$sparkline-&gt;zoomStart(new \Kendo\JavaScriptFunction('function(e) { }'));
+?&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

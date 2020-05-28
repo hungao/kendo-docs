@@ -1,0 +1,1800 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration, methods and events of Kendo UI PivotGrid</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Code examples for PivotGrid UI widget configuration, learn how to use methods and which events to set once the grid UI widget detail is initialized and expanded.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+        <script src="/kendo-ui/assets/js/dojo.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/web/pivotgrid.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendouipivotgrid">kendo.ui.PivotGrid</h1>
+
+<p>Represents the Kendo UI PivotGrid widget. Inherits from <a href="/api/framework/widget">Widget</a>.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="datasource-objectkendodatapivotdatasource">dataSource <code class="language-plaintext highlighter-rouge">Object|kendo.data.PivotDataSource</code></h3>
+
+<p>The data source of the widget which is used to display values. Can be a JavaScript object which represents a valid data source configuration or an existing <a href="/api/framework/pivotdatasource">kendo.data.PivotDataSource</a>
+instance.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dataSource</code> option is set to a JavaScript object the widget will initialize a new <a href="/api/framework/pivotdatasource">kendo.data.PivotDataSource</a> instance using that value as data source configuration.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">dataSource</code> option is an existing <a href="/api/framework/pivotdatasource">kendo.data.PivotDataSource</a> instance the widget will use that instance and will <strong>not</strong> initialize a new one.</p>
+
+<h4 id="example---set-datasource-as-a-javascript-object">Example - set dataSource as a JavaScript object</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-datasource-as-an-existing-kendodatapivotdatasource-instance">Example - set dataSource as an existing kendo.data.PivotDataSource instance</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+var dataSource = new kendo.data.PivotDataSource({
+    type: "xmla",
+    columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+    rows: [{ name: "[Product].[Product]" }],
+    measures: ["[Measures].[Internet Sales Amount]"],
+    transport: {
+        connection: {
+            catalog: "Adventure Works DW 2008R2",
+            cube: "Adventure Works"
+        },
+        read: {
+            url: "http://demos.telerik.com/olap/msmdpump.dll",
+            dataType: "text",
+            contentType: "text/xml",
+            type: "POST"
+        }
+    },
+    schema: {
+        type: "xmla"
+    }
+});
+
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataSource: dataSource
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="autobind-boolean-default-true">autoBind <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the widget will not bind to the data source during initialization. In this case data binding will occur when the <a href="/api/framework/datasource#events-change">change</a> event of the
+data source is fired. By default the widget will bind to the data source specified in the configuration.</p>
+
+<blockquote>
+  <p>Setting <code class="language-plaintext highlighter-rouge">autoBind</code> to <code class="language-plaintext highlighter-rouge">false</code> is useful when multiple widgets are bound to the same data source. Disabling automatic binding ensures that the shared data source doesn"t make more than one request to the remote service.</p>
+</blockquote>
+
+<h4 id="example---disable-automatic-binding">Example - disable automatic binding</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    autoBind: false,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+var dataSource = $("#pivotgrid").data("kendoPivotGrid").dataSource;
+dataSource.read(); // "read()" will fire the "change" event of the dataSource and the widget will be bound
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="reorderable-boolean-default-true">reorderable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: true)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">false</code> the user will not be able to add/close/reorder current fields for columns/rows/measures.</p>
+
+<h4 id="example---disable-fields-reordering">Example - disable fields reordering</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    reorderable: false,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="filterable-boolean-default-false">filterable <code class="language-plaintext highlighter-rouge">Boolean</code> <em>(default: false)</em></h3>
+
+<p>If set to <code class="language-plaintext highlighter-rouge">true</code> the user will be able to filter by using the field menu.</p>
+
+<h4 id="example---enable-filtering">Example - enable filtering</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    filterable: true,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="columnwidth-number">columnWidth <code class="language-plaintext highlighter-rouge">Number</code></h3>
+
+<p>The width of the table columns. Value is treated as pixels.</p>
+
+<h4 id="example---set-the-column-width-as-a-number">Example - set the column width as a number</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    columnWidth: 200,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="height-numberstring">height <code class="language-plaintext highlighter-rouge">Number|String</code></h3>
+
+<p>The height of the pivotgrid. Numeric values are treated as pixels.</p>
+
+<h4 id="example---set-the-height-as-a-number">Example - set the height as a number</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---set-the-height-as-a-string">Example - set the height as a string</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: "550px",
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messages-object">messages <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The text messages displayed in the fields sections.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    messages: {
+        measureFields: "Drop Measure Here",
+        columnFields: "Drop Column Here",
+        rowFields: "Drop Rows Here"
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesmeasurefields-string-default-drop-measure-here">messages.measureFields <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Drop Measure Here")</em></h3>
+
+<p>The text messages displayed in the measure fields sections.</p>
+
+<h4 id="example---setting-measure-fields-section-default-text">Example - setting measure fields section default text</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    messages: {
+        measureFields: "Drop Measure Here"
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagescolumnfields-string-default-drop-column-here">messages.columnFields <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Drop Column Here")</em></h3>
+
+<p>The text messages displayed in the column fields sections.</p>
+
+<h4 id="example---setting-column-fields-section-default-text">Example - setting column fields section default text</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    messages: {
+        columnFields: "Drop Column Here"
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesrowfields-string-default-drop-rows-here">messages.rowFields <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Drop Rows Here")</em></h3>
+
+<p>The text messages displayed in the row fields sections.</p>
+
+<h4 id="example---setting-row-fields-section-default-text">Example - setting row fields section default text</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    messages: {
+        rowFields: "Drop Rows Here"
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenu-object">messages.fieldMenu <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The text messages displayed in the field menu.</p>
+
+<h4 id="example-1">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            info: "Show items with value that:",
+            filterFields: "Fields Filter",
+            filter: "Filter",
+            include: "Include Fields...",
+            title: "Fields to include",
+            clear: "Clear",
+            ok: "Ok",
+            cancel: "Cancel"
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenuinfo-string-default-show-items-with-value-that">messages.fieldMenu.info <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Show items with value that:")</em></h3>
+
+<p>The text messages displayed in fields filter.</p>
+
+<h4 id="example-2">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            info: "Filter items by field name:"
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenufilterfields-string-default-fields-filter">messages.fieldMenu.filterFields <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Fields Filter")</em></h3>
+
+<p>The text messages of the fields filter menu item.</p>
+
+<h4 id="example-3">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            filterFields: "Filter current field"
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenufilter-string-default-filter">messages.fieldMenu.filter <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Filter")</em></h3>
+
+<p>The text messages of the filter button.</p>
+
+<h4 id="example-4">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            filter: "Done"
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenuinclude-string-default-include-fields">messages.fieldMenu.include <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Include Fields…")</em></h3>
+
+<p>The text messages of the include menu item.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            include: "Choose fields to include"
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenutitle-string-default-fields-to-include">messages.fieldMenu.title <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Fields to include")</em></h3>
+
+<p>The title of the include fields dialog.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            title: "Choose fields to include"
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenuclear-string-default-clear">messages.fieldMenu.clear <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Clear")</em></h3>
+
+<p>The text of the clear filter expressions button.</p>
+
+<h4 id="example-7">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            clear: "Clear filter expressions"
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenuok-string-default-ok">messages.fieldMenu.ok <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Ok")</em></h3>
+
+<p>The text of the ok button in the include fields dialog.</p>
+
+<h4 id="example-8">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            ok: "Done"
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenucancel-string-default-cancel">messages.fieldMenu.cancel <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Cancel")</em></h3>
+
+<p>The text of the cancel button in the include fields dialog.</p>
+
+<h4 id="example-9">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            cancel: "Close"
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenuoperators-object">messages.fieldMenu.operators <code class="language-plaintext highlighter-rouge">Object</code></h3>
+
+<p>The text of the filter operators displayed in the filter menu.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            operators: {
+                contains: "Contains",
+                doesnotcontain: "Does not contain",
+                startswith: "Starts with",
+                endswith: "Ends with",
+                eq: "Is equal to",
+                neq: "Is not equal to"
+            }
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenuoperatorscontains-string-default-contains">messages.fieldMenu.operators.contains <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Contains")</em></h3>
+
+<p>The text of the "contains" filter operator.</p>
+
+<h4 id="example-11">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            operators: {
+                contains: "Contains"
+            }
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenuoperatorsdoesnotcontain-string-default-does-not-contain">messages.fieldMenu.operators.doesnotcontain <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Does not contain")</em></h3>
+
+<p>The text of the "Does not contain" filter operator.</p>
+
+<h4 id="example-12">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            operators: {
+                doesnotcontain: "Doesn't contain"
+            }
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenuoperatorsstartswith-string-default-starts-with">messages.fieldMenu.operators.startswith <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Starts with")</em></h3>
+
+<p>The text of the "Starts with" filter operator.</p>
+
+<h4 id="example-13">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            operators: {
+                startswith: "Starts"
+            }
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenuoperatorsendswith-string-default-ends-with">messages.fieldMenu.operators.endswith <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Ends with")</em></h3>
+
+<p>The text of the "Ends with" filter operator.</p>
+
+<h4 id="example-14">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            operators: {
+                endswith: "Ends"
+            }
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenuoperatorseq-string-default-is-equal-to">messages.fieldMenu.operators.eq <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Is equal to")</em></h3>
+
+<p>The text of the "equal" filter operator.</p>
+
+<h4 id="example-15">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            operators: {
+                eq: "Equal to"
+            }
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="messagesfieldmenuoperatorsneq-string-default-is-not-equal-to">messages.fieldMenu.operators.neq <code class="language-plaintext highlighter-rouge">String</code> <em>(default: "Is not equal to")</em></h3>
+
+<p>The text of the "not equal" filter operator.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    filterable: true,
+    height: 550,
+    messages: {
+        fieldMenu: {
+            operators: {
+                neq: "Not equal to"
+            }
+        }
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="fields">Fields</h2>
+
+<h3 id="datasource-kendodatapivotdatasource">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.PivotDataSource</code></h3>
+
+<p>The <a href="/api/framework/pivotdatasource">data source</a> of the widget. Configured via the <a href="#configuration-dataSource">dataSource</a> option.</p>
+
+<blockquote>
+  <p>Changes of the data source will be reflected in the widget.</p>
+</blockquote>
+
+<blockquote>
+  <p>Assigning a new data source would have no effect. Use the <a href="#methods-setDataSource">setDataSource</a> method instead.</p>
+</blockquote>
+
+<h4 id="example---get-reference-to-the-widget-data-source">Example - get reference to the widget data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+
+//get reference to the widget data source
+var dataSource = $("#pivotgrid").data("kendoPivotGrid").dataSource;
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="destroy">destroy</h3>
+
+<p>Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.</p>
+
+<blockquote>
+  <p>This method does not remove the widget element from DOM.</p>
+</blockquote>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+var pivotgrid = $("#pivotgrid").data("kendoPivotGrid");
+pivotgrid.destroy();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="refresh">refresh</h3>
+
+<p>Renders all content using the current data items.</p>
+
+<h4 id="example---refresh-the-widget">Example - refresh the widget</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+var pivotgrid = $("#pivotgrid").data("kendoPivotGrid");
+pivotgrid.refresh();
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="setdatasource">setDataSource</h3>
+
+<p>Sets the data source of the widget.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="datasource-kendodatapivotdatasource-1">dataSource <code class="language-plaintext highlighter-rouge">kendo.data.PivotDataSource</code></h5>
+
+<p>The data source to which the widget should be bound.</p>
+
+<h4 id="example---set-the-data-source">Example - set the data source</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+var dataSource = kendo.data.PivotDataSource({
+    type: "xmla",
+    columns: [{ name: "[Date].[Calendar]", expand: true }],
+    rows: [{ name: "[Product].[Product]" }],
+    measures: ["[Measures].[Internet Sales Amount]"],
+    transport: {
+        connection: {
+            catalog: "Adventure Works DW 2008R2",
+            cube: "Adventure Works"
+        },
+        read: {
+            url: "http://demos.telerik.com/olap/msmdpump.dll",
+            dataType: "text",
+            contentType: "text/xml",
+            type: "POST"
+        }
+    },
+    schema: {
+        type: "xmla"
+    }
+});
+var pivotgrid = $("#pivotgrid").data("kendoPivotGrid");
+pivotgrid.setDataSource(dataSource);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="events">Events</h2>
+
+<h3 id="databinding">dataBinding</h3>
+
+<p>Fired before the widget binds to its data source.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data">Event Data</h4>
+
+<h5 id="epreventdefault-function">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the data bind action. The pivotgrid will remain unchanged and <code class="language-plaintext highlighter-rouge">dataBound</code> event will not fire.</p>
+
+<h5 id="esender-kendouipivotgrid">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.PivotGrid</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-databinding-event-during-initialization">Example - subscribe to the "dataBinding" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataBinding: function(e) {
+        e.preventDefault(); //this will prevent the data bind action
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-databinding-event-after-initialization">Example - subscribe to the "dataBinding" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+function dataBinding(e) {
+    e.preventDefault();
+}
+
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+var pivotgrid = $("#pivotgrid").data("kendoPivotGrid");
+pivotgrid.bind("dataBinding", dataBinding);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="databound">dataBound</h3>
+
+<p>Fired after the widget is bound to the data from its data source.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-1">Event Data</h4>
+
+<h5 id="esender-kendouipivotgrid-1">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.PivotGrid</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h4 id="example---subscribe-to-the-databound-event-during-initialization">Example - subscribe to the "dataBound" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataBound: function(e) {
+        console.log("data bound");
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-databound-event-after-initialization">Example - subscribe to the "dataBound" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+function dataBound(e) {
+    console.log("data bound");
+}
+
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+var pivotgrid = $("#pivotgrid").data("kendoPivotGrid");
+pivotgrid.bind("dataBound", dataBound);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="expandmember">expandMember</h3>
+
+<p>Fired before column or row field is expaneded.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-2">Event Data</h4>
+
+<h5 id="epreventdefault-function-1">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the expand and the widget will remain in its current state.</p>
+
+<h5 id="esender-kendouipivotgrid-2">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.PivotGrid</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h5 id="eaxis-string">e.axis <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The axis that will be expanded. Possible values <code class="language-plaintext highlighter-rouge">columns</code> or <code class="language-plaintext highlighter-rouge">rows</code>.</p>
+
+<h5 id="epath-string">e.path <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The path to the field that will be expanded.</p>
+
+<h4 id="example---subscribe-to-the-expandmember-event-during-initialization">Example - subscribe to the "expandMember" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    expandMember: function(e) {
+        console.log("expand member");
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-expandmember-event-after-initialization">Example - subscribe to the "expandMember" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+function expandMember(e) {
+    console.log("expand member");
+}
+
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+var pivotgrid = $("#pivotgrid").data("kendoPivotGrid");
+pivotgrid.bind("expandMember", expandMember);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="collapsemember">collapseMember</h3>
+
+<p>Fired before column or row field is collapsed.</p>
+
+<p>The event handler function context (available via the <code class="language-plaintext highlighter-rouge">this</code> keyword) will be set to the widget instance.</p>
+
+<h4 id="event-data-3">Event Data</h4>
+
+<h5 id="epreventdefault-function-2">e.preventDefault <code class="language-plaintext highlighter-rouge">Function</code></h5>
+
+<p>If invoked prevents the collapse and the widget will remain in its current state.</p>
+
+<h5 id="esender-kendouipivotgrid-3">e.sender <code class="language-plaintext highlighter-rouge">kendo.ui.PivotGrid</code></h5>
+
+<p>The widget instance which fired the event.</p>
+
+<h5 id="eaxis-string-1">e.axis <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The axis that will be collapsed. Possible values <code class="language-plaintext highlighter-rouge">columns</code> or <code class="language-plaintext highlighter-rouge">rows</code>.</p>
+
+<h5 id="epath-string-1">e.path <code class="language-plaintext highlighter-rouge">String</code></h5>
+
+<p>The path to the field that will be collapseed.</p>
+
+<h4 id="example---subscribe-to-the-collapsemember-event-during-initialization">Example - subscribe to the "collapseMember" event during initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    collapseMember: function(e) {
+        console.log("collapse member");
+    },
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example---subscribe-to-the-collapsemember-event-after-initialization">Example - subscribe to the "collapseMember" event after initialization</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="pivotgrid"&gt;&lt;/div&gt;
+&lt;script&gt;
+function collapseMember(e) {
+    console.log("collapse member");
+}
+
+$("#pivotgrid").kendoPivotGrid({
+    height: 550,
+    dataSource: {
+        type: "xmla",
+        columns: [{ name: "[Date].[Calendar]", expand: true }, { name: "[Geography].[City]" } ],
+        rows: [{ name: "[Product].[Product]" }],
+        measures: ["[Measures].[Internet Sales Amount]"],
+        transport: {
+            connection: {
+                catalog: "Adventure Works DW 2008R2",
+                cube: "Adventure Works"
+            },
+            read: {
+                url: "http://demos.telerik.com/olap/msmdpump.dll",
+                dataType: "text",
+                contentType: "text/xml",
+                type: "POST"
+            }
+        },
+        schema: {
+            type: "xmla"
+        }
+    }
+});
+var pivotgrid = $("#pivotgrid").data("kendoPivotGrid");
+pivotgrid.bind("collapseMember", collapseMember);
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

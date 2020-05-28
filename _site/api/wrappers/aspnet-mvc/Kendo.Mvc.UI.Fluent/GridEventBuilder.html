@@ -1,0 +1,879 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/aspnet-mvc/Kendo.Mvc.UI.Fluent/GridEventBuilder.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendomvcuifluentgrideventbuilder">Kendo.Mvc.UI.Fluent.GridEventBuilder</h1>
+<p>Defines the fluent API for configuring the Kendo Grid for ASP.NET MVC events.</p>
+
+<h2 id="methods">Methods</h2>
+
+<h3 id="changesystemfuncsystemobjectsystemobject">Change(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the Change client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-change">change</a> event documentation.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.Change(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="changesystemstring">Change(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the Change client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-change">change</a> event documentation.</p>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<h5 id="handler-systemstring">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-1">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.Change("gridChange"))
+)
+</code></pre></div></div>
+
+<h3 id="cancelsystemfuncsystemobjectsystemobject">Cancel(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the Cancel client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-1">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-2">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.Cancel(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="cancelsystemstring">Cancel(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the Cancel client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<h5 id="handler-systemstring-1">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-3">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.Cancel("gridCancel"))
+)
+</code></pre></div></div>
+
+<h3 id="editsystemfuncsystemobjectsystemobject">Edit(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the Edit client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-edit">edit</a> event documentation.</p>
+
+<h4 id="parameters-4">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-2">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-4">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.Edit(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="editsystemstring">Edit(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the Edit client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-edit">edit</a> event documentation.</p>
+
+<h4 id="parameters-5">Parameters</h4>
+
+<h5 id="handler-systemstring-2">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-5">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.Edit("gridEdit"))
+)
+</code></pre></div></div>
+
+<h3 id="savesystemfuncsystemobjectsystemobject">Save(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the Save client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-save">save</a> event documentation.</p>
+
+<h4 id="parameters-6">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-3">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-6">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.Save(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="savesystemstring">Save(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the Save client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-save">save</a> event documentation.</p>
+
+<h4 id="parameters-7">Parameters</h4>
+
+<h5 id="handler-systemstring-3">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-7">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.Save("gridSave"))
+)
+</code></pre></div></div>
+
+<h3 id="savechangessystemfuncsystemobjectsystemobject">SaveChanges(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the SaveChanges client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-saveChanges">saveChanges</a> event documentation.</p>
+
+<h4 id="parameters-8">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-4">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-8">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.SaveChanges(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="savechangessystemstring">SaveChanges(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the SaveChanges client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-saveChanges">saveChanges</a> event documentation.</p>
+
+<h4 id="parameters-9">Parameters</h4>
+
+<h5 id="handler-systemstring-4">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-9">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.SaveChanges("gridSaveChanges"))
+)
+</code></pre></div></div>
+
+<h3 id="detailexpandsystemfuncsystemobjectsystemobject">DetailExpand(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the DetailExpand client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-detailExpand">detailExpand</a> event documentation.</p>
+
+<h4 id="parameters-10">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-5">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-10">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.DetailExpand(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="detailexpandsystemstring">DetailExpand(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the DetailExpand client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-detailExpand">detailExpand</a> event documentation.</p>
+
+<h4 id="parameters-11">Parameters</h4>
+
+<h5 id="handler-systemstring-5">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-11">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.DetailExpand("gridDetailExpand"))
+)
+</code></pre></div></div>
+
+<h3 id="detailinitsystemfuncsystemobjectsystemobject">DetailInit(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the DetailInit client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-detailInit">detailInit</a> event documentation.</p>
+
+<h4 id="parameters-12">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-6">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-12">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.DetailInit(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="detailinitsystemstring">DetailInit(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the DetailInit client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-detailInit">detailInit</a> event documentation.</p>
+
+<h4 id="parameters-13">Parameters</h4>
+
+<h5 id="handler-systemstring-6">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-13">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.DetailInit("gridDetailInit"))
+)
+</code></pre></div></div>
+
+<h3 id="detailcollapsesystemfuncsystemobjectsystemobject">DetailCollapse(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the DetailCollapse client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-detailCollapse">detailCollapse</a> event documentation.</p>
+
+<h4 id="parameters-14">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-7">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-14">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.DetailCollapse(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="detailcollapsesystemstring">DetailCollapse(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the DetailCollapse client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-detailCollapse">detailCollapse</a> event documentation.</p>
+
+<h4 id="parameters-15">Parameters</h4>
+
+<h5 id="handler-systemstring-7">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-15">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.DetailCollapse("gridDetailCollapse"))
+)
+</code></pre></div></div>
+
+<h3 id="removesystemfuncsystemobjectsystemobject">Remove(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the Remove client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-remove">remove</a> event documentation.</p>
+
+<h4 id="parameters-16">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-8">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-16">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.Remove(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="removesystemstring">Remove(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the Remove client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-remove">remove</a> event documentation.</p>
+
+<h4 id="parameters-17">Parameters</h4>
+
+<h5 id="handler-systemstring-8">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-17">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.Remove("gridRemove"))
+)
+</code></pre></div></div>
+
+<h3 id="databoundsystemfuncsystemobjectsystemobject">DataBound(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the DataBound client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="parameters-18">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-9">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-18">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.DataBound(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="databoundsystemstring">DataBound(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the DataBound client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-dataBound">dataBound</a> event documentation.</p>
+
+<h4 id="parameters-19">Parameters</h4>
+
+<h5 id="handler-systemstring-9">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-19">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.DataBound("gridDataBound"))
+)
+</code></pre></div></div>
+
+<h3 id="databindingsystemfuncsystemobjectsystemobject">DataBinding(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the DataBinding client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-dataBinding">dataBinding</a> event documentation.</p>
+
+<h4 id="parameters-20">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-10">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-20">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.DataBinding(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="databindingsystemstring">DataBinding(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the DataBinding client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-dataBinding">dataBinding</a> event documentation.</p>
+
+<h4 id="parameters-21">Parameters</h4>
+
+<h5 id="handler-systemstring-10">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-21">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.DataBinding("gridDataBinding"))
+)
+</code></pre></div></div>
+
+<h3 id="columnresizesystemfuncsystemobjectsystemobject">ColumnResize(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnResize client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnResize">columnResize</a> event documentation.</p>
+
+<h4 id="parameters-22">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-11">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-22">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnResize(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="columnresizesystemstring">ColumnResize(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnResize client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnResize">columnResize</a> event documentation.</p>
+
+<h4 id="parameters-23">Parameters</h4>
+
+<h5 id="handler-systemstring-11">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-23">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnResize("gridColumnResize"))
+)
+</code></pre></div></div>
+
+<h3 id="columnreordersystemfuncsystemobjectsystemobject">ColumnReorder(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnReorder client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnReorder">columnReorder</a> event documentation.</p>
+
+<h4 id="parameters-24">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-12">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-24">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnReorder(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="columnreordersystemstring">ColumnReorder(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnReorder client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnReorder">columnReorder</a> event documentation.</p>
+
+<h4 id="parameters-25">Parameters</h4>
+
+<h5 id="handler-systemstring-12">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-25">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnReorder("gridColumnReorder"))
+)
+</code></pre></div></div>
+
+<h3 id="columnhidesystemfuncsystemobjectsystemobject">ColumnHide(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnHide client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnHide">columnHide</a> event documentation.</p>
+
+<h4 id="parameters-26">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-13">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-26">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnHide(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="columnhidesystemstring">ColumnHide(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnHide client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnHide">columnHide</a> event documentation.</p>
+
+<h4 id="parameters-27">Parameters</h4>
+
+<h5 id="handler-systemstring-13">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-27">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnHide("gridColumnHide"))
+)
+</code></pre></div></div>
+
+<h3 id="columnshowsystemfuncsystemobjectsystemobject">ColumnShow(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnShow client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnShow">columnShow</a> event documentation.</p>
+
+<h4 id="parameters-28">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-14">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-28">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnShow(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="columnshowsystemstring">ColumnShow(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnShow client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnShow">columnShow</a> event documentation.</p>
+
+<h4 id="parameters-29">Parameters</h4>
+
+<h5 id="handler-systemstring-14">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-29">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnShow("gridColumnShow"))
+)
+</code></pre></div></div>
+
+<h3 id="columnmenuinitsystemfuncsystemobjectsystemobject">ColumnMenuInit(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the ColumnMenuInit client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnMenuInit">columnMenuInit</a> event documentation.</p>
+
+<h4 id="parameters-30">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-15">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-30">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnMenuInit(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="columnmenuinitsystemstring">ColumnMenuInit(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the ColumnMenuInit client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnMenuInit">columnMenuInit</a> event documentation.</p>
+
+<h4 id="parameters-31">Parameters</h4>
+
+<h5 id="handler-systemstring-15">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-31">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnMenuInit("gridColumnMenuInit"))
+)
+</code></pre></div></div>
+
+<h3 id="filtermenuinitsystemfuncsystemobjectsystemobject">FilterMenuInit(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the FilterMenuInit client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-filterMenuInit">filterMenuInit</a> event documentation.</p>
+
+<h4 id="parameters-32">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-16">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-32">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.FilterMenuInit(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="filtermenuinitsystemstring">FilterMenuInit(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the FilterMenuInit client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-filterMenuInit">filterMenuInit</a> event documentation.</p>
+
+<h4 id="parameters-33">Parameters</h4>
+
+<h5 id="handler-systemstring-16">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-33">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.FilterMenuInit("gridFilterMenuInit"))
+)
+</code></pre></div></div>
+
+<h3 id="columnlocksystemfuncsystemobjectsystemobject">ColumnLock(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnLock client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnLock">columnLock</a> event documentation.</p>
+
+<h4 id="parameters-34">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-17">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-34">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnLock(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="columnlocksystemstring">ColumnLock(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnLock client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnLock">columnLock</a> event documentation.</p>
+
+<h4 id="parameters-35">Parameters</h4>
+
+<h5 id="handler-systemstring-17">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-35">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnLock("gridColumnLock"))
+)
+</code></pre></div></div>
+
+<h3 id="columnunlocksystemfuncsystemobjectsystemobject">ColumnUnlock(System.Func&lt;System.Object,System.Object&gt;)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnUnlock client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnUnlock">columnUnlock</a> event documentation.</p>
+
+<h4 id="parameters-36">Parameters</h4>
+
+<h5 id="handler-systemfuncsystemobjectsystemobject-18">handler <code class="language-plaintext highlighter-rouge">System.Func&lt;System.Object,System.Object&gt;</code></h5>
+<p>The handler code wrapped in a text tag (Razor syntax).</p>
+
+<h4 id="example-aspx-36">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnUnlock(
+            @&lt;text&gt;
+                function(e) {
+                //event handling code
+                }
+                &lt;/text&gt;
+                ))
+            )
+</code></pre></div></div>
+
+<h3 id="columnunlocksystemstring">ColumnUnlock(System.String)</h3>
+<p>Defines the name of the JavaScript function that will handle the the ColumnUnlock client-side event.</p>
+
+<p>For additional information check the <a href="/api/web/grid#events-columnUnlock">columnUnlock</a> event documentation.</p>
+
+<h4 id="parameters-37">Parameters</h4>
+
+<h5 id="handler-systemstring-18">handler <code class="language-plaintext highlighter-rouge">System.String</code></h5>
+<p>The name of the JavaScript function that will handle the event.</p>
+
+<h4 id="example-aspx-37">Example (ASPX)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@(Html.Kendo().Grid()
+    .Name("Grid")
+    .Events(events =&gt; events.ColumnUnlock("gridColumnUnlock"))
+)
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

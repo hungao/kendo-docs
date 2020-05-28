@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Using Kendo UI ListView widget in your app | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to display a custom layout of data-bound items through templates and easily implement Kendo UI Listview widget in your application.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li class="active">How Do I?</li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/howto.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("howto/howto-use-the-listview-of-kendo-ui-web.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="how-to-use-the-listview-of-kendo-ui-web">How-To: Use the ListView of Kendo UI Web</h1>
+
+<p>In this how-to, we"ll examine how to use the <a href="/api/web/listview">ListView</a> of Kendo UI Web.</p>
+
+<p>The ListView is a widget that was recently introduced in the March 2012 release of Kendo UI Web. Its purpose is to display a custom layout of data-bound items through templates. The ListView is ideally suited for scenarios where you wish to display a list of items in a consistent manner. Examples of its use can be seen in commonplace design structures applied on the Internet today; search engine results, tweets from Twitter, Facebook updates, inbox items in Gmail, card lists in Trello, and so on.</p>
+
+<p>The ListView is designed to put you back in control when it comes to displaying data. In fact, it does not provide a default rendering of data-bound items. Instead, it relies entirely on templates to define how a list of items - including alternating items and items being edited - is displayed.</p>
+
+<p>Let"s see how the ListView works by building a simple example.</p>
+
+<p>First, we"ll define a target HTML element such as a list or div:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="listView"&gt;&lt;/div&gt;
+
+&lt;script type="text/x-kendo-tmpl" id="template"&gt;
+    &lt;div class="product"&gt;
+        &lt;img src="http://demos.telerik.com/kendo-ui/content/web/foods/#= ProductID #.jpg" alt="#: ProductName # image" /&gt;
+        &lt;h3&gt;#:ProductName#&lt;/h3&gt;
+        &lt;p&gt;#:kendo.toString(UnitPrice, "c")#&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Next, we"ll initialize the ListView by referring the template and a result set from the service to be displayed:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var dataSource = new kendo.data.DataSource({
+    transport: {
+        read: {
+            url: "http://demos.telerik.com/kendo-ui/service/Products",
+            dataType: "jsonp"
+        }
+    }
+});
+
+$("#listView").kendoListView({
+    dataSource: dataSource,
+    template: kendo.template($("#template").html())
+});
+</code></pre></div></div>
+
+<p>Here"s the live example of the representation (above):</p>
+
+<iframe style="width: 700px; height: 450px" src="http://jsfiddle.net/3w7ru/90/embedded/result" frameborder="0"></iframe>
+
+<p>In scenarios where the number of items bound to a ListView is larger than expected, a Pager will control the items being displayed. Using a Pager is relatively simple. First, you create a target element for its rendering. Typically, it should be placed in the vicinity of the ListView:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="listView"&gt;&lt;/div&gt;
+&lt;div class="k-page-wrap"&gt;
+    &lt;div id="pager"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-tmpl" id="template"&gt;
+    &lt;div class="product"&gt;
+        &lt;img src="http://demos.telerik.com/kendo-ui/content/web/foods/#= ProductID #.jpg" alt="#: ProductName # image" /&gt;
+        &lt;h3&gt;#:ProductName#&lt;/h3&gt;
+        &lt;p&gt;#:kendo.toString(UnitPrice, "c")#&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The next step is to update the ListView configuration to state that it support paging through its pageable property and to initialize the Pager:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var dataSource = new kendo.data.DataSource({
+    transport: {
+        read: {
+            url: "http://demos.telerik.com/kendo-ui/service/Products",
+            dataType: "jsonp"
+        }
+    },
+    pageSize: 4
+});
+
+$("pager").kendoPager({
+    dataSource: dataSource
+});
+
+$("#listView").kendoListView({
+    dataSource: dataSource,
+    pageable: true,
+    template: kendo.template($("#template").html())
+});
+</code></pre></div></div>
+
+<p>Here"s the same live example with a Pager applied to the ListView:</p>
+
+<iframe style="width: 700px; height: 450px" src="http://jsfiddle.net/3w7ru/92/embedded/result" frameborder="0"></iframe>
+
+<p>From a design perspective, it may be useful to visually differiante each alternating item in a ListView. For example, in the previous example, I may wish to have every second item have a slightly darker background (i.e. banded rows). Defining the altTemplate property accomplishes this through the use of a template that you define. Let"s go ahead and update our working example to include a template for alternating items.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="listView"&gt;&lt;/div&gt;
+&lt;div class="k-page-wrap"&gt;
+    &lt;div id="pager"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script type="text/x-kendo-tmpl" id="template"&gt;
+    &lt;div class="product"&gt;
+        &lt;img src="http://demos.telerik.com/kendo-ui/content/web/foods/#= ProductID #.jpg" alt="#: ProductName # image" /&gt;
+        &lt;h3&gt;#:ProductName#&lt;/h3&gt;
+        &lt;p&gt;#:kendo.toString(UnitPrice, "c")#&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/script&gt;
+
+&lt;script type="text/x-kendo-tmpl" id="altTemplate"&gt;
+    &lt;div class="product alt"&gt;
+        &lt;img src="http://demos.telerik.com/kendo-ui/content/web/foods/#= ProductID #.jpg" alt="#: ProductName # image" /&gt;
+        &lt;h3&gt;#:ProductName#&lt;/h3&gt;
+        &lt;p&gt;#:kendo.toString(UnitPrice, "c")#&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Here"s how the live example how looks with a template for alternating items:</p>
+
+<iframe style="width: 750px; height: 450px" src="http://jsfiddle.net/3w7ru/94/embedded/result" frameborder="0"></iframe>
+
+<p>In addition to paging, the ListView supports item selection, navigation, and inline editing. Supporting these operations is achieved through the initialization of its Boolean configuration options. In the case of inline editing, the ListView provides the editTemplate property, which defines a template for this mode. Once define, the ListView can render out this editing template via the edit method. When invoked, the editTemplate for the ListView is applied against the target item. In most scenarios, you should implement this through an event model that is triggered when the user selected an item to modify.</p>
+
+<p>The ListView encapsulates operations for adding and removing items, item selection and editing. These methods enable you to modify the underpinning list of items through a series of user-initiated actions/events. In the case of inline editing, the first step is to define a template that is to be used when editing items.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script type="text/x-kendo-tmpl" id="editTemplate"&gt;
+    &lt;div class="product-view k-widget"&gt;
+        &lt;div class="edit-buttons"&gt;
+            &lt;a class="k-button k-button-icontext k-update-button" href="\\#"&gt;&lt;span class="k-icon k-update"&gt;&lt;/span&gt;&lt;/a&gt;
+            &lt;a class="k-button k-button-icontext k-cancel-button" href="\\#"&gt;&lt;span class="k-icon k-cancel"&gt;&lt;/span&gt;&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;dl&gt;
+            &lt;dt&gt;Product Name&lt;/dt&gt;
+            &lt;dd&gt;
+                &lt;input type="text" class="k-textbox" data-bind="value:ProductName" name="ProductName" required="required" validationMessage="required" /&gt;
+                &lt;span data-for="ProductName" class="k-invalid-msg"&gt;&lt;/span&gt;
+            &lt;/dd&gt;
+            &lt;dt&gt;Unit Price&lt;/dt&gt;
+            &lt;dd&gt;
+                &lt;input type="text" data-bind="value:UnitPrice" data-role="numerictextbox" data-type="number" name="UnitPrice" required="required" min="1" validationMessage="required" /&gt;
+                &lt;span data-for="UnitPrice" class="k-invalid-msg"&gt;&lt;/span&gt;
+            &lt;/dd&gt;
+            &lt;dt&gt;Units In Stock&lt;/dt&gt;
+            &lt;dd&gt;
+                &lt;input type="text" data-bind="value:UnitsInStock" data-role="numerictextbox" name="UnitsInStock" required="required" data-type="number" min="0" validationMessage="required" /&gt;
+                &lt;span data-for="UnitsInStock" class="k-invalid-msg"&gt;&lt;/span&gt;
+            &lt;/dd&gt;
+            &lt;dt&gt;Discontinued&lt;/dt&gt;
+            &lt;dd&gt;&lt;input type="checkbox" name="Discontinued" data-bind="checked:Discontinued"&gt;&lt;/dd&gt;
+        &lt;/dl&gt;
+    &lt;/div&gt;
+&lt;/script&gt;
+
+$(document).ready(function(){
+    $("#listView").kendoListView({
+        selectable: true,
+        navigatable: true,
+        template: kendo.template($("#template").html()),
+        editTemplate: kendo.template($("#editTemplate").html())
+    });
+});
+</code></pre></div></div>
+
+<p>The template you define for the inline editing of items may include other Kendo UI widgets. Looking at <a href="http://demos.telerik.com/kendo-ui/web/listview/editing.html">the example for editing items on KendoUI.com</a>, you can see that the edit template defines a series of widgets for editing an item:</p>
+
+<p><img src="/howto/images/listview-item-editing.png" alt="ListView Item Editing" /></p>
+
+<p>The add new record functionality of ListView items is triggered by a click event initiated by a user and is wired up via .click() in jQuery.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(".k-add-button").click(function(e) {
+    listView.add();
+    e.preventDefault();
+});
+</code></pre></div></div>
+
+<p>Item selection is another scenario supported by the ListView. By setting the selectable property to either "single" or "multiple", you can provide the ability to have users select items.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#listView").kendoListView({
+    dataSource: dataSource,
+    selectable: "multiple",
+    template: kendo.template($("#template").html())
+});
+</code></pre></div></div>
+
+<p>You can capture when items are selected through the change event that is triggered when a user selected one or more items (via shift-select).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#listView").kendoListView({
+    change: function(e) {
+        var data = dataSource.view();
+        var selected = $.map(this.select(), function(item) {
+            return data[$(item).index()].ProductName;
+        });
+
+        // index selected or read item information through data
+    }
+});
+</code></pre></div></div>
+
+<p>Updating the example that I created before, here"s the live representation of that with item selection enabled:</p>
+
+<iframe style="width: 700px; height: 450px" src="http://jsfiddle.net/3w7ru/95/embedded/result" frameborder="0"></iframe>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

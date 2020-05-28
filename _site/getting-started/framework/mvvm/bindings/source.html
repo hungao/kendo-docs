@@ -1,0 +1,358 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Source Binding in Model View ViewModel | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to use source binding in Kendo UI MVVM to set the HTML5 content of the target element by rendering a Kendo template with a View-Model value.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/mvvm/bindings/source.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="source-binding">Source binding</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">source</code> binding sets the HTML content of the target element by rendering a Kendo template with a View-Model value. If the View-Model value changes
+the HTML content of the target element will be updated.</p>
+
+<p>The template is specified by the <code class="language-plaintext highlighter-rouge">data-template</code> attribute of the element. The value of that attribute should be the value of the <code class="language-plaintext highlighter-rouge">id</code> of
+an existing <code class="language-plaintext highlighter-rouge">script</code> element which defines the Kendo template. If a template is not specified a default template will be
+used depending on element tag name.</p>
+
+<h2 id="source-binding-to-array">Source binding to array</h2>
+
+<p>When the View-Model value is an array the <code class="language-plaintext highlighter-rouge">source</code> binding will iterate all array items and render the template. The accumulated output of the template
+will be set as the HTML content of the target element. The context inside the template will be the current array item.</p>
+
+<p>Adding or removing items from the array will update the HTML contents of the target element.</p>
+
+<blockquote>
+  <p><em>Important:</em> A single root element should be used in the template when binding to an array. Having two first level DOM elements will result in an erratic behavior.</p>
+</blockquote>
+
+<h3 id="correct-template-with-a-single-root-element">Correct: template with a single root element</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul data-template="ul-template" data-bind="source: products"&gt;
+&lt;/ul&gt;
+&lt;script id="ul-template" type="text/x-kendo-template"&gt;
+    &lt;li&gt;
+        id: &lt;span data-bind="text: id"&gt;&lt;/span&gt;
+    &lt;/li&gt;
+&lt;/script&gt;
+&lt;script&gt;
+    var viewModel = kendo.observable({ products: [ { id: 1 }, { id: 2 }, { id: 3 } ] });
+    kendo.bind($("ul"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="unsupported-template-with-multiple-first-level-dom-elements">Unsupported: template with multiple first level DOM elements.</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul data-template="ul-template" data-bind="source: products"&gt;
+&lt;/ul&gt;
+&lt;!-- Bindings will not work as expected --&gt;
+&lt;script id="ul-template" type="text/x-kendo-template"&gt;
+    &lt;li&gt; id: &lt;span data-bind="text: id"&gt;&lt;/span&gt; &lt;/li&gt;
+    &lt;li&gt; details: &lt;span data-bind="text: id"&gt;&lt;/span&gt; &lt;/li&gt;
+&lt;/script&gt;
+
+&lt;script&gt;
+    var viewModel = kendo.observable({ products: [ { id: 1 }, { id: 2 }, { id: 3 } ] });
+    kendo.bind($("ul"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="source-binding-to-array-of-objects">Source binding to array of objects</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul data-template="ul-template" data-bind="source: products"&gt;
+&lt;/ul&gt;
+&lt;script id="ul-template" type="text/x-kendo-template"&gt;
+    &lt;li&gt;
+        id: &lt;span data-bind="text: id"&gt;&lt;/span&gt;
+        name: &lt;span data-bind="text: name"&gt;&lt;/span&gt;
+    &lt;/li&gt;
+&lt;/script&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    products: [
+        { id: 1, name: "Coffee" },
+        { id: 2, name: "Tea" },
+        { id: 3, name: "Juice" }
+    ]
+});
+
+kendo.bind($("ul"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>This example will output three <code class="language-plaintext highlighter-rouge">li</code> elements - one for every item in the <code class="language-plaintext highlighter-rouge">products</code> array.
+Below is the final output (all <code class="language-plaintext highlighter-rouge">data</code> attributes are removed for clarity):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul&gt;
+    &lt;li&gt;
+        id: &lt;span&gt;1&lt;/span&gt;
+        name: &lt;span&gt;Coffee&lt;/span&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        id: &lt;span&gt;2&lt;/span&gt;
+        name: &lt;span&gt;Tea&lt;/span&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        id: &lt;span&gt;3&lt;/span&gt;
+        name: &lt;span&gt;Juice&lt;/span&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<p>If the array contains primitive objects (Number, String, Date) the <code class="language-plaintext highlighter-rouge">this</code> reserved word should be used inside the template declaration to refer to the current item:</p>
+
+<h3 id="source-binding-to-array-of-primitive-objects">Source binding to array of primitive objects</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul data-template="ul-template" data-bind="source: products"&gt;
+&lt;/ul&gt;
+&lt;script id="ul-template" type="text/x-kendo-template"&gt;
+    &lt;li data-bind="text: this"&gt;&lt;/li&gt;
+&lt;/script&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    products: [ "Coffee", "Tea", "Juice" ]
+});
+
+kendo.bind($("ul"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Below is the final output (all <code class="language-plaintext highlighter-rouge">data</code> attributes are removed for clarity):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul&gt;
+    &lt;li&gt;Coffee&lt;/li&gt;
+    &lt;li&gt;Tea&lt;/li&gt;
+    &lt;li&gt;Juice&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+
+<h2 id="source-binding-to-non-array-value">Source binding to non-array value</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">source</code> binding also supports non-array values. In this case the specified template will be applied using the value of the View-Model field and the output will be set
+as the HTML contents of the target element. The context inside the template will be the value of the View-Model field.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-template="div-template" data-bind="source: person"&gt;
+    &lt;script id="div-template" type="text/x-kendo-template"&gt;
+    Name: &lt;span data-bind="text: name"&gt;&lt;/span&gt;
+    &lt;/script&gt;
+&lt;/div&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    person: {
+        name: "John Doe"
+    }
+});
+
+kendo.bind($("div"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>This example will output the following (all <code class="language-plaintext highlighter-rouge">data</code> attributes are removed for clarity):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div&gt;
+    Name: &lt;span&gt;John Doe&lt;/span&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="source-binding-to-the-view-model">Source binding to the View-Model</h3>
+
+<p>If you want to use the View-Model itself use the <code class="language-plaintext highlighter-rouge">this</code> reserved word:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-template="div-template" data-bind="source: this"&gt;
+    &lt;script id="div-template" type="text/x-kendo-template"&gt;
+    Name: &lt;span data-bind="text: name"&gt;&lt;/span&gt;
+    &lt;/script&gt;
+&lt;/div&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    name: "John Doe"
+});
+
+kendo.bind($("div"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The output will be exactly the same as in the previous example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div&gt;
+Name: &lt;span&gt;John Doe&lt;/span&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="important-the-this-keyword-conveys-different-meaning-in-different-scenarios">Important: the "this" keyword conveys different meaning in different scenarios</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">this</code> reserved word should be specified in the <code class="language-plaintext highlighter-rouge">source</code> binding if and only if the entire View-Model object is used as a value.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">this</code> reserved word should be used inside a template only when the <code class="language-plaintext highlighter-rouge">source</code> binding is using an array of primitive objects.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">this</code> reserved word should always be used on its own. The following are <strong>not</strong> supported:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div data-bind="text: this.bogus"&gt;&lt;/div&gt;
+
+&lt;script id="bogus-template" type="text/x-kendo-template"&gt;
+    &lt;span data-bind="text: this.bogus"&gt;&lt;/span&gt;
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="source-binding-of-select-elements">Source binding of select elements</h2>
+
+<p>When applied to a <code class="language-plaintext highlighter-rouge">select</code> element the <code class="language-plaintext highlighter-rouge">source</code> binding would create <code class="language-plaintext highlighter-rouge">option</code> elements.</p>
+
+<h3 id="source-binding-to-array-of-primitive-objects-1">Source binding to array of primitive objects</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select data-bind="source: colors"&gt;&lt;/select&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    colors: [ "Red", "Green", "Blue" ]
+});
+
+kendo.bind($("select"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">source</code> binding would create an <code class="language-plaintext highlighter-rouge">option</code> element for every item in the <code class="language-plaintext highlighter-rouge">colors</code> array and set its HTML contents to the value of that item.
+The output will look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select&gt;
+    &lt;option&gt;Red&lt;/option&gt;
+    &lt;option&gt;Green&lt;/option&gt;
+    &lt;option&gt;Blue&lt;/option&gt;
+&lt;/select&gt;
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">source</code> binding could also populate a <code class="language-plaintext highlighter-rouge">select</code> from an array of non-primitive objects. The
+<code class="language-plaintext highlighter-rouge">data-text-field</code> and <code class="language-plaintext highlighter-rouge">data-value-field</code> attributes are used to specify how the value and content of the <code class="language-plaintext highlighter-rouge">option</code>
+elements would be bound.</p>
+
+<h3 id="source-binding-to-array-of-non-primitive-objects">Source binding to array of non-primitive objects</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select data-text-field="name" data-value-field="id"
+       data-bind="source: products"&gt;&lt;/select&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    products: [
+        { id: 1, name: "Coffee" },
+        { id: 2, name: "Tea" },
+        { id: 3, name: "Juice" }
+    ]
+});
+
+kendo.bind($("select"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The output will look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select&gt;
+    &lt;option value="1"&gt;Coffee&lt;/option&gt;
+    &lt;option value="2"&gt;Tea&lt;/option&gt;
+    &lt;option value="3"&gt;Juice&lt;/option&gt;
+&lt;/select&gt;
+</code></pre></div></div>
+
+<p>If <code class="language-plaintext highlighter-rouge">data-text-field</code> and <code class="language-plaintext highlighter-rouge">data-value-field</code> are not set and the <code class="language-plaintext highlighter-rouge">select</code> is bound to array of non-primitive objects the <code class="language-plaintext highlighter-rouge">option</code>
+elements" content will be set to <code class="language-plaintext highlighter-rouge">[object Object]</code>.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

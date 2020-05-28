@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/tooltip/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="tooltip-overview">Tooltip Overview</h1>
+
+<p>A <strong>Tooltip</strong> displays popup hint for a given html element. Its content can be defined either as
+static text or loaded dynamically via AJAX.</p>
+
+<p>A <strong>Tooltp</strong> can be initialized either for a single element or for a container which child elements will represent tooltip targets.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Create a tooltip for a single target:</p>
+
+<h3 id="create-a-simple-html-element">Create a simple HTML element</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;
+    Some Content
+&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-the-tooltip">Initialize the Tooltip</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function() {
+    $("#target").kendoTooltip({ content: "Tooltip content" });
+});
+</code></pre></div></div>
+
+<p>Create a tooltip for multiple target within a container:</p>
+
+<h3 id="create-a-simple-html-element-which-will-act-as-a-container">Create a simple HTML element which will act as a container</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="container"&gt;
+    Some &lt;a href="#" title="Some text"&gt;Content&lt;/a&gt;&lt;br /&gt;
+    Some &lt;a href="#" title="Some other text"&gt;More&lt;/a&gt; Content &lt;br /&gt;
+&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-the-tooltip-using-a-selector-and-specify-the-filter-to-match-the-target-elements">Initialize the Tooltip using a selector and specify the filter to match the target elements</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function() {
+    $("#container").kendoTooltip({ filter: "a[title]" });
+});
+</code></pre></div></div>
+
+<p>By default the Tooltip content will be extracted from the title attribute of the target element</p>
+
+<h2 id="configuring-tooltip-behaviors">Configuring Tooltip Behaviors</h2>
+
+<p>A <strong>Tooltip</strong> provides many configuration options that can be easily set during initialization.
+Among the properties that can be controlled:</p>
+
+<ul>
+  <li>Content</li>
+  <li>Position relative to the target (top, botton, center, left, right)</li>
+  <li>Event on which the tooltip will be shown</li>
+  <li>Auto hide behavior</li>
+  <li>Height/Width</li>
+</ul>
+
+<h3 id="create-a-tooltip">Create a Tooltip</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#container").kendoTooltip({
+    position: "right",
+    height: "300px",
+    showOn: "click",
+    autoHide: true,
+    content: function() {
+        return "custom text";
+    },
+    width: "500px"
+});
+</code></pre></div></div>
+
+<h2 id="loading-tooltip-content-via-ajax">Loading Tooltip content via AJAX</h2>
+
+<p>A <strong>Tooltip</strong> provides built-in support for asynchronously loading content from a URL. This URL
+should return a HTML fragment that can be loaded in a Tooltip content area.</p>
+
+<h3 id="load-tooltip-content-asynchronously">Load Tooltip content asynchronously</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="target"&gt;Content Text&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-tooltip-and-configure-content-loading">Initialize tooltip and configure content loading</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#target").kendoTooltip({
+        content: { url: "html-content-snippet.html" }
+    });
+});
+</code></pre></div></div>
+
+<h2 id="accessing-an-existing-tooltip">Accessing an Existing Tooltip</h2>
+
+<p>You can reference an existing <strong>Tooltip</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>. Once a reference has been established, you can
+use the API to control its behavior.</p>
+
+<h3 id="accessing-an-existing-tooltip-instance">Accessing an existing Tooltip instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var tooltip = $("#target").data("kendoTooltip");
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

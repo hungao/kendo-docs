@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HTML binding in Kendo UI MVVM | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="HTML binding in Kendo UI MVVM, update and set the HTML of the target DOM element by changing the View-Model value.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/mvvm/bindings/html.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="html-binding">Html binding</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">html</code> binding sets the html content (<code class="language-plaintext highlighter-rouge">innerHTML</code>) of the target DOM
+element to a View-Model value. Changing the View-Model value via code will update the html of the target element.
+If the View-Model value is not of primitive type (Text, Number or Date) the result returned by the toString JavaScript method will be used as the value.</p>
+
+<p>To set the value displayed by an input, textarea or select use the <a href="value">value</a> binding instead.</p>
+
+<h2 id="using-the-html-binding">Using the html binding</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span data-bind="html: name"&gt;&lt;/span&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    name: "John Doe"
+});
+
+kendo.bind($("span"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>The output will be this (the data-bind attribute is removed for clarity):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span&gt;John Doe&lt;/span&gt;
+</code></pre></div></div>
+
+<p>If the View-Model value contains HTML tags those will be embedded in the final output. For example this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span data-bind="html: name"&gt;&lt;/span&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    name: "&lt;strong&gt;John Doe&lt;/strong&gt;"
+});
+
+kendo.bind($("span"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>will output this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span&gt;&lt;strong&gt;John Doe&lt;/strong&gt;&lt;/span&gt;
+</code></pre></div></div>
+
+<p>To display any HTML tags contained in the View-Model value use the <a href="text">text</a> binding.</p>
+
+<h3 id="note-the-html-binding-may-not-work-for-some-elements-in-older-versions-of-internet-explorer">Note: the html binding may not work for some elements in older versions of Internet Explorer</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">html</code> binding relies on the <code class="language-plaintext highlighter-rouge">innerHTML</code> DOM element property. The latter is not fully supported in older versions of Internet Explorer for all
+DOM elements. For example setting the <code class="language-plaintext highlighter-rouge">innerHTML</code> of a <code class="language-plaintext highlighter-rouge">table</code> is not supported.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

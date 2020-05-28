@@ -1,0 +1,272 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ObservableObject in Kendo UI MVVM framework | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Initialize ObservableObject in Kendo UI MVVM framework, get a field value, set a field value to change tracking and notify any subscribers when a change occurs.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/mvvm/observableobject.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="observableobject">ObservableObject</h1>
+
+<h2 id="overview">Overview</h2>
+
+<p>The <a href="/api/framework/observableobject">kendo.data.ObservableObject</a> is an important part of the Kendo MVVM framework - the View-Model.
+It supports change tracking and notifies any subscribers when a change occurs.
+All View-Model objects inherit from <code class="language-plaintext highlighter-rouge">kendo.data.ObservableObject</code>. From now on ObservableObject and View-Model would be used interchangeably.</p>
+
+<p>To initialize an <code class="language-plaintext highlighter-rouge">ObservableObject</code> create a new instance of the <code class="language-plaintext highlighter-rouge">kendo.data.ObservableObject</code> type or use the <code class="language-plaintext highlighter-rouge">kendo.observable</code> method.
+The end result is the same.</p>
+
+<h2 id="initializing-an-observableobject">Initializing an ObservableObject</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var viewModel1 = new kendo.data.ObservableObject( {
+  field1: "value1",
+  field2: "value2"
+});
+
+var viewModel2 = kendo.observable( {
+  field1: "value1",
+  field2: "value2"
+});
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">kendo.bind</code> method converts internally the provided View-Model object to an <code class="language-plaintext highlighter-rouge">ObservableObject</code> unless that object is already an <code class="language-plaintext highlighter-rouge">ObservableObject</code>.</p>
+
+<h3 id="important-when-to-use-each-method-of-initializing-a-view-model">Important: when to use each method of initializing a View-Model</h3>
+
+<p>If the View-Model object is going to be used after initialization (before or after calling <code class="language-plaintext highlighter-rouge">kendo.bind</code>) the <code class="language-plaintext highlighter-rouge">kendo.observable</code> method or <code class="language-plaintext highlighter-rouge">new kendo.data.ObservableObject</code> must be used. Here is an example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var viewModel = kendo.observable({
+name: "John Doe"
+});
+
+viewModel.set("name", "Jane Doe"); // use the View-Model object after initialization
+</code></pre></div></div>
+
+<p>If the View-Model object is not going to be used after declaration you can define it as a regular JavaScript object. The
+<code class="language-plaintext highlighter-rouge">kendo.bind</code> method will <strong>not</strong> convert the original View-Model object to <code class="language-plaintext highlighter-rouge">kendo.data.ObservableObject</code>. This is why the following will <strong>not</strong> work:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var viewModel = {
+   name: "John Doe"
+};
+
+kendo.bind(document.body, viewModel);
+
+/*
+The following statement  will fail because the View-Model
+is not an instance of kendo.data.ObservableObject.
+*/
+viewModel.set("name", "Jane Doe");
+</code></pre></div></div>
+
+<p>This is why it is strongly recommended to <strong>always</strong> use <code class="language-plaintext highlighter-rouge">kendo.observable</code> to initialize the View-Model object.</p>
+
+<h2 id="getting-field-values-of-an-observableobject">Getting field values of an ObservableObject</h2>
+
+<p>Use the <code class="language-plaintext highlighter-rouge">get</code> method to get the value of an <code class="language-plaintext highlighter-rouge">ObservableObject</code> field:</p>
+
+<h3 id="getting-a-field-value">Getting a field value</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var viewModel = kendo.observable({
+ name: "John Doe"
+});
+
+var name = viewModel.get("name");
+alert(name); // shows "John Doe"
+</code></pre></div></div>
+
+<p>Getting nested fields is supported as well:</p>
+
+<h3 id="getting-a-nested-field-value">Getting a nested field value</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var viewModel = kendo.observable({
+ person: {
+     name: "John Doe"
+ }
+});
+var personName = viewModel.get("person.name");
+alert(personName); // shows "John Doe"
+</code></pre></div></div>
+
+<h2 id="setting-field-values-of-an-observableobject">Setting field values of an ObservableObject</h2>
+
+<p>Use the <code class="language-plaintext highlighter-rouge">set</code> method to set the value of an <code class="language-plaintext highlighter-rouge">ObservableObject</code> field.</p>
+
+<h3 id="setting-a-field-value">Setting a field value</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var viewModel = kendo.observable({
+    name: "John Doe"
+});
+
+viewModel.set("name", "Jane Doe"); //set the "name" field to "Jane Doe"
+
+var name = viewModel.get("name");
+alert(name); // shows "Jane Doe"
+</code></pre></div></div>
+
+<p>Setting nested fields is supported as well:</p>
+
+<h3 id="setting-a-nested-field-value">Setting a nested field value</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var viewModel = kendo.observable({
+ person: {
+     name: "John Doe"
+ }
+});
+
+viewModel.set("person.name", "Jane Doe");
+
+var personName = viewModel.get("person.name");
+alert(personName); // shows "Jane Doe"
+</code></pre></div></div>
+
+<h2 id="creating-dependent-methods-also-known-as-calculated-fields">Creating dependent methods (also known as calculated fields)</h2>
+
+<p>There is often need to convert a View-Model field value to a format more suitable for display in the View. In such cases extending the View-Model with a dependent method is essential. Here is an example:</p>
+
+<h3 id="creating-a-dependent-method">Creating a dependent method</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;span data-bind="text: fullName"&gt;&lt;/span&gt;
+&lt;script&gt;
+var viewModel = kendo.observable({
+    firstName: "John",
+    lastName: "Doe",
+    fullName: function() {
+        return this.get("firstName") + " " + this.get("lastName");
+    }
+});
+
+kendo.bind($("span"), viewModel);
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>In that example <code class="language-plaintext highlighter-rouge">fullName</code> is a dependent method because it depends on <code class="language-plaintext highlighter-rouge">firstName</code> and <code class="language-plaintext highlighter-rouge">lastName</code>.
+Changing the value of either <code class="language-plaintext highlighter-rouge">firstName</code> or <code class="language-plaintext highlighter-rouge">lastName</code> via the <code class="language-plaintext highlighter-rouge">set</code> method would also change
+<code class="language-plaintext highlighter-rouge">fullName</code>. As a result all bindings referring to <code class="language-plaintext highlighter-rouge">fullName</code> will be updated.</p>
+
+<h3 id="important-dependent-methods-must-use-the-get-method-to-get-field-values">Important: dependent methods must use the <code class="language-plaintext highlighter-rouge">get</code> method to get field values</h3>
+
+<p>If the <code class="language-plaintext highlighter-rouge">get</code> method is not used Kendo MVVM would fail to detect any dependencies of the dependent method.
+As a result changing any of the dependencies would not be reflected properly. Here is an example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var viewModel = kendo.observable({
+    firstName: "John",
+    lastName: "Doe",
+    fullName: function() {
+        return this.firstName + " " + this.lastName;
+    }
+});
+</code></pre></div></div>
+
+<p>In this implementation of <code class="language-plaintext highlighter-rouge">fullName</code> direct field access is used instead of the <code class="language-plaintext highlighter-rouge">get</code> method. As a result
+the depencencies of <code class="language-plaintext highlighter-rouge">fullName</code> are not tracked. Changing the value of either <code class="language-plaintext highlighter-rouge">firstName</code>
+or <code class="language-plaintext highlighter-rouge">lastName</code> via the <code class="language-plaintext highlighter-rouge">set</code> method would <strong>not</strong> cause the change of <code class="language-plaintext highlighter-rouge">fullName</code>.
+This means that  <strong>no</strong> binding referring to <code class="language-plaintext highlighter-rouge">fullName</code> is going to be updated.</p>
+
+<p>Avoid using direct field access when implementing dependent methods. Always use the <code class="language-plaintext highlighter-rouge">get</code> method to obtain the field values.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

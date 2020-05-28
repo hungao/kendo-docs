@@ -1,0 +1,350 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Configuration guide for the chart ErrorBars</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to configure the error bars of a chart, bind them to the series data and set the value.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/dataviz/chart/error-bars.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <p>#Error bars
+Error bars can be used to show variability of data. This help topic describes how to use them in a Kendo UI Chart.</p>
+
+<p>##Configuring the chart error bars
+The Error bars are specified as part of the series definition and are supported for the following series types:</p>
+
+<ul>
+  <li>Area</li>
+  <li>Vertical Area</li>
+  <li>Column</li>
+  <li>Bar</li>
+  <li>Line</li>
+  <li>Vertical Line</li>
+  <li>Scatter</li>
+  <li>ScatterLine</li>
+</ul>
+
+<p>The low and high value for the error bars can either be bound to the data or be calculated from the point or series values.</p>
+
+<p>##Data binding</p>
+
+<p>###Binding to categorical series
+To bind the error bars low and high value when using categorical series, you should set the <a href="/api/dataviz/chart#configuration-series.errorLowField">errorLowField</a> and <a href="/api/dataviz/chart#configuration-series.errorHighField">errorHighField</a> options to the fields in the data that hold the low and high value.</p>
+
+<h4 id="example">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+  series: [{
+    type: "column",
+    errorLowField: "low",
+    errorHighField: "high",
+    data: [{value: 4.743, low: 4.5, high: 5}, {value: 7.295, low: 7, high: 8}, 
+      {value: 6.376, low: 5, high: 6.5}]
+  }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>###Binding to scatter series
+Error bars can be displayed for the series x value, y value or both. To set the low and high fields for the series x value, you should set the <a href="/api/dataviz/chart#configuration-series.xErrorLowField">xErrorLowField</a> and <a href="/api/dataviz/chart#configuration-series.xErrorHighField">xErrorHighField</a> series options. The low and high fields for the series y value, can be specified with the <a href="/api/dataviz/chart#configuration-series.yErrorLowField">yErrorLowField</a> and <a href="/api/dataviz/chart#configuration-series.yErrorHighField">yErrorHighField</a> options.</p>
+
+<h4 id="example-binding-the-error-bars-for-the-series-x-value">Example: binding the error bars for the series x value</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+  series: [{
+    type: "scatter",
+    xErrorLowField: "low",
+    xErrorHighField: "high",
+    data: [{x: 6.4, y: 13.4, low: 5, high: 7}, {x: 1.7, y: 11, low: 1, high: 3}, 
+      {x: 5.4, y: 8, low: 3, high: 6}]
+  }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h4 id="example-binding-the-error-bars-for-the-series-y-value">Example: binding the error bars for the series y value</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+  series: [{
+    type: "scatter",
+    yErrorLowField: "low",
+    yErrorHighField: "high",
+    data: [{x: 6.4, y: 13.4, low: 12, high: 14}, {x: 1.7, y: 11, low: 11, high: 14}, 
+      {x: 5.4, y: 8, low: 5, high: 8}]
+  }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>##Setting the error bars value
+The error bars low and high value can be calculated based on the series point values. To set the error bars value for categorical series, you should specify the <a href="/api/dataviz/chart#configuration-series.errorBars.value">series.errorBars.value</a> option. For scatter series, you should set the <a href="/api/dataviz/chart#configuration-series.errorBars.xValue">series.errorBars.xValue</a> or <a href="/api/dataviz/chart#configuration-series.errorBars.yValue">series.errorBars.yValue</a> options or both.</p>
+
+<p>###Setting a numeric value</p>
+
+<p>If the error bars value is set to a number(must not be negative), then the low and high value will be calculated by subtracting/adding the value to the series value.</p>
+
+<p>####Example: setting a numeric value for categorical series</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+  series: [{
+    type: "column",
+    errorBars: {
+      value: 1
+    },
+    data: [{value: 4.743}, {value: 7.295}, {value: 6.376}]
+  }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>####Example: setting a numeric value for scatter series</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+  series: [{
+    type: "scatter",
+    errorBars: {
+      yValue: 2
+    },
+    data: [{x: 6.4, y: 13.4}, {x: 1.7, y: 11}, {x: 5.4, y: 8}]
+  }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>###Setting an array value</p>
+
+<p>The difference can also be set separately for the low and high value by setting an array with two numeric values. In this case, the low value will be calculated by subtracting the array first value from the point value and the high value will be calculated by adding the second value to the point value.</p>
+
+<p>####Example: setting an array value for categorical series</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+  series: [{
+    type: "column",
+    errorBars: {
+      value: [0.7, 1]
+    },
+    data: [{value: 4.743}, {value: 7.295}, {value: 6.376}]
+  }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>####Example: setting an array value for scatter series</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+  series: [{
+    type: "scatter",
+    errorBars: {
+      yValue: [1, 2]
+    },
+    data: [{x: 6.4, y: 13.4}, {x: 1.7, y: 11}, {x: 5.4, y: 8}]
+  }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>###Setting a percentage value</p>
+
+<p>It is also possible to set the difference as percentage of the point value. To achieve this, you should set a string value in the format "percenatage(n)" where <code class="language-plaintext highlighter-rouge">n</code> indicates the percent value.</p>
+
+<p>####Example: setting a percentage value</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+  series: [{        
+    errorBars: {
+      value: "percentage(20)"
+    },
+    data: [{value: 4.743}, {value: 7.295}, {value: 6.376}]
+  }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>###Setting a statistical value</p>
+
+<p>The error bars support statistical calculations based on the series data. The supported types are <a href="http://en.wikipedia.org/wiki/Standard_error">standard error</a> and <a href="http://en.wikipedia.org/wiki/Standard_deviation">population standard deviation</a>. To specify that standard error should be used, you should set <code class="language-plaintext highlighter-rouge">"stderr"</code> as value. To use standard deviation, you should set <code class="language-plaintext highlighter-rouge">"stddev"</code> with an optional number between parentheses appended at the end. The number will be multiplied by the calculated standard deviation value.</p>
+
+<p>####Example: using standard error</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+  series: [{
+    errorBars: {
+      value: "stderr"
+    },
+    data: [{value: 4.743}, {value: 7.295}, {value: 6.376}]
+  }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>####Example: using standard deviation</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+  series: [{    
+    errorBars: {
+      value: "stddev(0.5)"
+    },
+    data: [{value: 4.743}, {value: 7.295}, {value: 6.376}]
+  }]
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>###Calculating the low and high value with a custom function.</p>
+
+<p>If a custom algorithm is needed to calculate the low and high value, then you can specify a function. The function accepts an object with the following fields as parameter:</p>
+
+<ul>
+  <li>dataItem – the point data item</li>
+  <li>value - the point value</li>
+  <li>index – the point index in the series data</li>
+  <li>category – the point category value if a categorical chart is used</li>
+  <li>series – the series configuration</li>
+</ul>
+
+<p>and should return a valid error bar value.</p>
+
+<p>####Example: using different percentages for the low and high value</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="chart"&gt;&lt;/div&gt;
+&lt;script&gt;
+$("#chart").kendoChart({
+  series: [{
+    errorBars: {
+      value: function(data) {          
+          var value = data.value,
+            lowPercentage = value * 0.05,
+            highPercentage = value * 0.1;                                    
+          return [lowPercentage, highPercentage];
+      }
+    },
+    data: [{value: 4.743}, {value: 7.295}, {value: 6.376}]
+  }]
+});
+&lt;/script&gt; 
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

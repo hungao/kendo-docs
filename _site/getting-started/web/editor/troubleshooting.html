@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Troubleshooting of Kendo UI Editor widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to deal with the troubleshooting of Editor UI widget.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/editor/troubleshooting.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="editor-troubleshooting">Editor troubleshooting</h1>
+
+<h2 id="pasting-content-in-the-editor-when-using-ie-does-not-display-anything">Pasting content in the editor when using IE does not display anything</h2>
+
+<p>Pasting in the editor requires permission to access clipboard data. This may require users with strict security settings to add the site in the trusted sites zone, or to adjust their Internet options so that the "Allow Programmatic clipboard access" setting is set to either "Allowed" or "Prompt".</p>
+
+<h2 id="editor-inside-a-popup-is-readonly-in-firefox">Editor inside a popup is readonly in Firefox</h2>
+
+<p>Firefox cannot handle iframes properly when they are moved in the DOM. When an Editor will be used inside a popup, which moves elements in the DOM, the popup (e.g. Kendo UI Window, jQuery dialog, etc) should be initialized first.</p>
+
+<h2 id="editor-inside-ipad-expands-instead-of-being-scrollable">Editor inside iPad expands instead of being scrollable</h2>
+
+<p>Iframes cannot be scrollable in iOS and always expand to display all their content. A possible solution is to use the Editor"s inline editing mode, which does not include an iframe.
+In this mode the Editor"s value should be posted manually (see below).</p>
+
+<h2 id="inline-editor-value-is-not-posted-to-the-server">Inline editor value is not posted to the server</h2>
+
+<p>Since the inline editor is initialized from a non-form element, it is not posted to the server by design. If you need to submit the editor value along with the form, use the following approach:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form&gt;
+  &lt;div id="comment" contentEditable&gt;&lt;/div&gt;
+
+  &lt;button class="k-button"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+  $("form").on("submit", function() {
+    var form = $(this);
+
+    // for each editor in the form
+    form.find("[data-role=editor]").each(function() {
+      var editor = $(this).data("kendoEditor");
+
+      // ... append a hidden input that holds the editor value
+      $("&lt;input type='hidden' /&gt;")
+        .attr("name", editor.element.attr("id"))
+        .val(editor.value())
+        .appendTo(form);
+    });
+  });
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="images-inside-the-editor-are-not-resizable-in-some-scenarios">Images inside the Editor are not resizable in some scenarios</h2>
+
+<p>To begin with, image resizing inside contenteditable elements depends on the browser, and this is not an Editor feature. In addition, there is a browser issue, which is exhibited in the following way -
+if a "classic" Editor (which uses an <code class="language-plaintext highlighter-rouge">iframe</code>) is created while hidden, or is hidden after initialization and then displayed back, then images become non-resizable. This problem is not related to Kendo UI.
+It can be resolved by calling the Editor"s <a href="/api/web/editor#methods-refresh"><code class="language-plaintext highlighter-rouge">refresh</code></a> method after the Editor becomes visible. Refreshing the widget will recreate the iframe.
+Another possible approach is to use the Editor"s "inline" mode, i.e. create the Editor from a <code class="language-plaintext highlighter-rouge">div</code>.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

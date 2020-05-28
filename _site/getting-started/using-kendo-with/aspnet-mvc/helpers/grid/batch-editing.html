@@ -1,0 +1,365 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Cell editing mode and Batch Updates for Kendo UI Grid for ASP.NET MVC</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Step by step guide how to enable cell editing mode and batch updates in Kendo UI Grid for ASP.NET MVC.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/aspnet-mvc/helpers/grid/batch-editing.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="cell-editing-and-batch-updates">Cell Editing and Batch Updates</h1>
+
+<h2 id="getting-started">Getting started</h2>
+
+<ol>
+  <li>Create a new ASP.NET MVC 4 application (or Telerik UI for ASP.NET MVC application if you have installed the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction#kendo-ui-for-asp.net-mvc-visual-studio-extensions">Telerik UI for ASP.NET MVC Visual Studio Extensions</a>).
+Name the application "KendoGridBatchEditing". If you decided not to use the Telerik UI for ASP.NET MVC Visual Studio Extensions followe the steps from the <a href="/getting-started/using-kendo-with/aspnet-mvc/introduction">introduction</a> help topic in order
+to add Telerik UI for ASP.NET MVC to the application.</li>
+  <li>Add a new "Entity Framework Data Model". Right click the <code class="language-plaintext highlighter-rouge">~/Models</code> folder in the solution explorer and pick "Add -&gt;  New Item". Choose "Data -&gt; ADO.NET Entity Data Model" in the "Add New Item" dialog.
+Name the model "Northwind.edmx" and click "Next". This will start the "Entity Data Model Wizard".
+<img src="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/images/grid-entity-data-model.png" alt="New entity data model" /></li>
+  <li>Pick the "Generate from database" option and click "Next". Configure a connection to the Northwind database. Click "Next".
+<img src="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/images/grid-entity-data-model.png" alt="Choose the connection" /></li>
+  <li>Choose the "Products" table from the "Which database objects do you want to include in your model?". Leave all other options as they are set by default. Click "Finish".
+<img src="/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/images/grid-database-objects.png" alt="Choose the Products table" /></li>
+  <li>
+    <p>Add a new class to the <code class="language-plaintext highlighter-rouge">~/Models</code> folder. Name it <code class="language-plaintext highlighter-rouge">ProductViewModel</code>.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> public class ProductViewModel
+ {
+     public int ProductID { get; set; }
+     // The ProductName property is required
+     [Required]
+     public string ProductName { get; set; }
+     // Use the Integer editor template for the UnitsInStock property
+     [UIHint("Integer")]
+     public short? UnitsInStock { get; set; }
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Open HomeController.cs and add a new action method which will return the Products as JSON. The grid will make ajax requests to this action.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Products_Read([DataSourceRequest]DataSourceRequest request)
+{
+    using (var northwind = new NorthwindEntities())
+    {
+        IQueryable&lt;Product&gt; products = northwind.Products;
+        DataSourceResult result = products.ToDataSourceResult(request);
+        return Json(result);
+    }
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add new action method to HomeController.cs. It will be responsible for saving new data items. Name the method "Products_Create".</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Products_Create([DataSourceRequest]DataSourceRequest request, [Bind(Prefix="models")]IEnumerable&lt;ProductViewModel&gt; products)
+{
+    // Will keep the inserted entitites here. Used to return the result later.
+    var entities = new List&lt;Product&gt;();
+    if (ModelState.IsValid)
+    {
+        using (var northwind = new NorthwindEntities())
+        {
+            foreach (var product in products)
+            {
+                // Create a new Product entity and set its properties from the posted ProductViewModel
+                var entity = new Product
+                {
+                    ProductName = product.ProductName,
+                    UnitsInStock = product.UnitsInStock
+                };
+                // Add the entity
+                northwind.Products.Add(entity);
+                // Store the entity for later use
+                entities.Add(entity);
+            }
+            // Insert the entities in the database
+            northwind.SaveChanges();
+        }
+    }
+    // Return the inserted entities. The grid needs the generated ProductID. Also return any validation errors.
+    return Json(entities.ToDataSourceResult(request, ModelState, product =&gt; new ProductViewModel
+    {
+        ProductID = product.ProductID,
+        ProductName = product.ProductName,
+        UnitsInStock = product.UnitsInStock
+    }));
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add new action method to HomeController.cs. It will be responsible for saving updated data items. Name the method "Products_Update".</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Products_Update([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable&lt;ProductViewModel&gt; products)
+{
+    // Will keep the updated entitites here. Used to return the result later.
+    var entities = new List&lt;Product&gt;();
+    if (ModelState.IsValid)
+    {
+        using (var northwind = new NorthwindEntities())
+        {
+            foreach (var product in products)
+            {
+                // Create a new Product entity and set its properties from the posted ProductViewModel
+                var entity = new Product
+                {
+                    ProductID = product.ProductID,
+                    ProductName = product.ProductName,
+                    UnitsInStock = product.UnitsInStock
+                };
+                // Store the entity for later use
+                entities.Add(entity);
+                // Attach the entity
+                northwind.Products.Attach(entity);
+                // Change its state to Modified so Entity Framework can update the existing product instead of creating a new one
+                northwind.Entry(entity).State = EntityState.Modified;
+                // Or use ObjectStateManager if using a previous version of Entity Framework
+                // northwind.ObjectStateManager.ChangeObjectState(entity, EntityState.Modified);
+            }
+            // Update the entities in the database
+            northwind.SaveChanges();
+        }
+    }
+    // Return the updated entities. Also return any validation errors.
+    return Json(entities.ToDataSourceResult(request, ModelState, product =&gt; new ProductViewModel
+    {
+        ProductID = product.ProductID,
+        ProductName = product.ProductName,
+        UnitsInStock = product.UnitsInStock
+    }));
+}
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add new action method to HomeController.cs. It will be responsible for saving deleted data items. Name the method "Products_Destroy".</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public ActionResult Products_Destroy([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable&lt;ProductViewModel&gt; products)
+{
+    // Will keep the destroyed entitites here. Used to return the result later.
+    var entities = new List&lt;Product&gt;();
+    if (ModelState.IsValid)
+    {
+        using (var northwind = new NorthwindEntities())
+        {
+            foreach (var product in products)
+            {
+                // Create a new Product entity and set its properties from the posted ProductViewModel
+                var entity = new Product
+                {
+                    ProductID = product.ProductID,
+                    ProductName = product.ProductName,
+                    UnitsInStock = product.UnitsInStock
+                };
+                // Store the entity for later use
+                entities.Add(entity);
+                // Attach the entity
+                northwind.Products.Attach(entity);
+                // Delete the entity
+                northwind.Products.Remove(entity);
+                // Or use DeleteObject if using a previous versoin of Entity Framework
+                // northwind.Products.DeleteObject(entity);
+            }
+            // Delete the entity in the database
+            northwind.SaveChanges();
+        }
+    }
+    // Return the destroyed entities. Also return any validation errors.
+    return Json(entities.ToDataSourceResult(request, ModelState, product =&gt; new ProductViewModel
+    {
+        ProductID = product.ProductID,
+        ProductName = product.ProductName,
+        UnitsInStock = product.UnitsInStock
+    }));
+}
+</code></pre></div>    </div>
+  </li>
+  <li>In the view configure the grid to use the action methods created in the previous steps.
+    <ul>
+      <li>
+        <p>Index.aspx (ASPX)</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;%: Html.Kendo().Grid&lt;KendoGridBatchEditing.Models.ProductViewModel&gt;()
+        .Name("grid")
+        .Columns(columns =&gt;
+        {
+            columns.Bound(product =&gt; product.ProductID).Width(100);
+            columns.Bound(product =&gt; product.ProductName);
+            columns.Bound(product =&gt; product.UnitsInStock).Width(250);
+            columns.Command(commands =&gt;
+            {
+                commands.Destroy(); // The "destroy" command removes data items
+            }).Title("Commands").Width(200);
+        })
+        .ToolBar(toolbar =&gt;
+        {
+            toolbar.Create(); // The "create" command adds new data items
+            toolbar.Save(); // The "save" command saves the changed data items
+        })
+        .Editable(editable =&gt; editable.Mode(GridEditMode.InCell)) // Use in-cell editing mode
+        .DataSource(dataSource =&gt;
+            dataSource.Ajax()
+              .Batch(true) // Enable batch updates
+              .Model(model =&gt;
+              {
+                  model.Id(product =&gt; product.ProductID); // Specify the property which is the unique identifier of the model
+                  model.Field(product =&gt; product.ProductID).Editable(false); // Make the ProductID property not editable
+              })
+              .Create(create =&gt; create.Action("Products_Create", "Home")) // Action method invoked when the user saves a new data item
+              .Read(read =&gt; read.Action("Products_Read", "Home"))  // Action method invoked when the grid needs data
+              .Update(update =&gt; update.Action("Products_Update", "Home"))  // Action method invoked when the user saves an updated data item
+              .Destroy(destroy =&gt; destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
+        )
+        .Pageable()
+  %&gt;
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Index.cshtml (Razor)</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  @(Html.Kendo().Grid&lt;KendoGridBatchEditing.Models.ProductViewModel&gt;()
+        .Name("grid")
+        .Columns(columns =&gt;
+        {
+            columns.Bound(product =&gt; product.ProductID).Width(100);
+            columns.Bound(product =&gt; product.ProductName);
+            columns.Bound(product =&gt; product.UnitsInStock).Width(250);
+            columns.Command(commands =&gt;
+            {
+                commands.Destroy(); // The "destroy" command removes data items
+            }).Title("Commands").Width(200);
+        })
+        .ToolBar(toolbar =&gt;
+        {
+            toolbar.Create(); // The "create" command adds new data items
+            toolbar.Save(); // The "save" command saves the changed data items
+        })
+        .Editable(editable =&gt; editable.Mode(GridEditMode.InCell)) // Use in-cell editing mode
+        .DataSource(dataSource =&gt;
+            dataSource.Ajax()
+              .Batch(true) // Enable batch updates
+              .Model(model =&gt;
+              {
+                  model.Id(product =&gt; product.ProductID); // Specify the property which is the unique identifier of the model
+                  model.Field(product =&gt; product.ProductID).Editable(false); // Make the ProductID property not editable
+              })
+              .Create(create =&gt; create.Action("Products_Create", "Home")) // Action method invoked when the user saves a new data item
+              .Read(read =&gt; read.Action("Products_Read", "Home"))  // Action method invoked when the grid needs data
+              .Update(update =&gt; update.Action("Products_Update", "Home"))  // Action method invoked when the user saves an updated data item
+              .Destroy(destroy =&gt; destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
+        )
+        .Pageable()
+  )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Build and run the application</li>
+</ol>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

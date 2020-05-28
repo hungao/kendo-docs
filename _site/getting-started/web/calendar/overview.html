@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Calendar UI widget for web app development | Kendo UI Documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Initialize Calendar UI widget, configure the behaviour of the control and use a custom template.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/web/calendar/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="calendar-overview">Calendar Overview</h1>
+
+<p>The <strong>Calendar</strong> renders a graphical calendar that supports
+navigation and selection. It supports custom templates for its
+"month" view, configurable options for a minimum and maximum date,
+start view and the depth of the navigation.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="create-a-div-element">Create a div element</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="calendar"&gt;&lt;/div&gt;
+</code></pre></div></div>
+
+<h3 id="initialize-the-calendar-via-a-jquery-id-selector">Initialize the Calendar via a jQuery ID selector</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(document).ready(function(){
+    $("#calendar").kendoCalendar();
+});
+</code></pre></div></div>
+
+<p>When a <strong>Calendar</strong> is initialized, it will automatically be
+displayed near the location of the used HTML element.</p>
+
+<h2 id="configuring-calendar-behaviors">Configuring Calendar Behaviors</h2>
+
+<p>The <strong>Calendar</strong> provides many configuration options that can be
+easily set during initialization. Among the properties that can be
+controlled:</p>
+
+<ul>
+  <li>Selected date</li>
+  <li>Minimum and/or maximum date</li>
+  <li>Start view</li>
+  <li>Define the navigation depth (last view to which end user can
+navigate)</li>
+  <li>Day template</li>
+  <li>Footer template</li>
+</ul>
+
+<h3 id="create-calendar-with-selected-date-and-a-defined-minimum">Create Calendar with selected date and a defined minimum</h3>
+<p>and maximum date</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#calendar").kendoCalendar({
+    value: new Date(),
+    min: new Date(1950, 0, 1),
+    max: new Date(2049, 11, 31)
+});
+</code></pre></div></div>
+
+<p>The <strong>Calendar</strong> will not navigate before than the minimum
+date specified. It will also not navigate ahead the maximum date
+specified.</p>
+
+<h2 id="define-start-view-and-navigation-depth">Define start view and navigation depth</h2>
+
+<p>The first rendered view can be defined with "start" option.
+Navigation depth can be controlled with "depth" option. Predefined
+views are:</p>
+
+<ul>
+  <li>"month" - shows the days from the month</li>
+  <li>"year" - shows the months of the year</li>
+  <li>"decade" - shows the years from the decade</li>
+  <li>"century" - shows the decades from the century</li>
+</ul>
+
+<h3 id="create-a-calendar-which-allows-a-user-to-select-a-month">Create a Calendar, which allows a user to select a month</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#calendar").kendoCalendar({
+    start: "year",
+    depth: "year"
+});
+</code></pre></div></div>
+
+<h2 id="customize-day-template">Customize day template</h2>
+
+<p>The <strong>Calendar</strong> allows to customize content of the rendered day
+in the "month" view.</p>
+
+<h3 id="create-a-calendar-with-custom-template">Create a Calendar with custom template</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$("#calendar").kendoCalendar({
+    month: {
+        content: '&lt;div class="custom"&gt;&lt;#=data.value#&gt;&lt;/div&gt;'
+    }
+});
+</code></pre></div></div>
+
+<p>This templates wraps the "value" in a div HTML element. Here is an
+example of the object passed to the template function:</p>
+
+<h3 id="structure-of-the-data-object-passed-to-the-template">Structure of the data object passed to the template</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data = {
+    date: date, // Date object corresponding to the current cell
+    title: kendo.toString(date, "D"),
+    value: date.getDate(),
+    dateString: "2011/0/1" // formatted date using yyyy/MM/dd format and month is zero-based
+};
+</code></pre></div></div>
+
+<h2 id="accessing-an-existing-calendar">Accessing an Existing Calendar</h2>
+
+<p>You can reference an existing <strong>Calendar</strong> instance via
+<a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the API to control
+its behavior.</p>
+
+<h3 id="accessing-an-existing-calendar-instance">Accessing an existing Calendar instance</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var calendar = $("#calendar").data("kendoCalendar");
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

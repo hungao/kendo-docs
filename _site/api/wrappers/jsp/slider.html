@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/slider.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendoslider">&lt;kendo:slider&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/slider">Slider</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="decreasebuttontitle-javalangstring">decreaseButtonTitle <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The title of the decrease button of the Slider.</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider decreaseButtonTitle="decreaseButtonTitle"&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h3 id="increasebuttontitle-javalangstring">increaseButtonTitle <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The title of the increase button of the Slider.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider increaseButtonTitle="increaseButtonTitle"&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h3 id="largestep-float">largeStep <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The delta with which the value will change when the user presses the Page Up or Page Down key (the drag
+handle must be focused). Note: The allied largeStep will also set large tick for every large step.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider largeStep="largeStep"&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h3 id="max-float">max <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The maximum value of the Slider.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider max="max"&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h3 id="min-float">min <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The minimum value of the Slider.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider min="min"&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h3 id="orientation-javalangstring">orientation <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The orientation of a Slider: "horizontal" or "vertical".</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider orientation="orientation"&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h3 id="showbuttons-boolean">showButtons <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Can be used to show (true) or hide (false) the
+increase and decrease buttons of a Slider.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider showButtons="showButtons"&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h3 id="smallstep-float">smallStep <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The small step value of the Slider. The underlying value will be changed when the end user
+(1) clicks on the increase or decrease buttons of the Slider, (2) presses the arrow keys
+(the drag handle must be focused), or (3) drags the drag handle.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider smallStep="smallStep"&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h3 id="tickplacement-javalangstring">tickPlacement <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>Denotes the location of the tick marks in the Slider. The available options are:</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider tickPlacement="tickPlacement"&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h3 id="value-float">value <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The underlying value of the Slider.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider value="value"&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendoslider-tooltip">kendo:slider-tooltip</h3>
+
+<p>Configuration of the Slider tooltip.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/slider/tooltip">kendo:slider-tooltip</a>.</p>
+
+<h4 id="example-10">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider&gt;
+    &lt;kendo:slider-tooltip&gt;&lt;/kendo:slider-tooltip&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="change-string">change <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the slider value changes as a result of selecting a new value with the drag handle, buttons or keyboard.</p>
+
+<p>For additional information check the <a href="/api/web/slider#events-change">change</a> event documentation.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider change="handle_change"&gt;
+&lt;/kendo:slider&gt;
+&lt;script&gt;
+    function handle_change(e) {
+        // Code to handle the change event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="slide-string">slide <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the user drags the drag handle to a new position.</p>
+
+<p>For additional information check the <a href="/api/web/slider#events-slide">slide</a> event documentation.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider slide="handle_slide"&gt;
+&lt;/kendo:slider&gt;
+&lt;script&gt;
+    function handle_slide(e) {
+        // Code to handle the slide event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendoslider-change">kendo:slider-change</h3>
+
+<p>Fires when the slider value changes as a result of selecting a new value with the drag handle, buttons or keyboard.</p>
+
+<p>For additional information check the <a href="/api/web/slider#events-change">change</a> event documentation.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider&gt;
+    &lt;kendo:slider-change&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the change event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:slider-change&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+<h3 id="kendoslider-slide">kendo:slider-slide</h3>
+
+<p>Fires when the user drags the drag handle to a new position.</p>
+
+<p>For additional information check the <a href="/api/web/slider#events-slide">slide</a> event documentation.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:slider&gt;
+    &lt;kendo:slider-slide&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the slide event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:slider-slide&gt;
+&lt;/kendo:slider&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Define Culture Information | Kendo UI Framework Globalization documentation</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="How to define culture information in culture files and extend it, default culture information settings.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/framework/globalization/definecultureinfo.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="define-culture-information">Define culture information</h1>
+
+<p>Each culture info is placed in a separate JS file with the naming convention <em><code class="language-plaintext highlighter-rouge">kendo.culture.&lt;language code&gt;[-&lt;country/region code&gt;].js</code></em>. You can include as many culture files as you want. Every included file will extend the kendo.cultures mapping. Please note that the included culture file will not automatically become current culture used by Kendo.</p>
+
+<h2 id="default-culture-information">Default culture information</h2>
+
+<p>The English culture is defined directly in kendo.core.js and it is considered as "default". The name is "en-US".</p>
+
+<p>The default culture info is listed here:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kendo.cultures["en-US"] = {
+    //&lt;language code&gt;-&lt;country/region code&gt;
+    name: "en-US",
+	// "numberFormat" defines general number formatting rules
+    numberFormat: {
+        //numberFormat has only negative pattern unline the percent and currency
+        //negative pattern: one of (n)|-n|- n|n-|n -
+        pattern: ["-n"],
+        //number of decimal places
+        decimals: 2,
+        //string that separates the number groups (1,000,000)
+        ",": ",",
+		//string that separates a number from the fractional point
+        ".": ".",
+        //the length of each number group
+        groupSize: [3],
+        //formatting rules for percent number
+        percent: {
+            //[negative pattern, positive pattern]
+			//negativePattern: one of -n %|-n%|-%n|%-n|%n-|n-%|n%-|-% n|n %-|% n-|% -n|n- %
+            //positivePattern: one of n %|n%|%n|% n
+            pattern: ["-n %", "n %"],
+			//number of decimal places
+            decimals: 2,
+			//string that separates the number groups (1,000,000 %)
+            ",": ",",
+			//string that separates a number from the fractional point
+            ".": ".",
+			//the length of each number group
+            groupSize: [3],
+            //percent symbol
+            symbol: "%"
+        },
+        currency: {
+			//[negative pattern, positive pattern]
+			//negativePattern: one of "($n)|-$n|$-n|$n-|(n$)|-n$|n-$|n$-|-n $|-$ n|n $-|$ n-|$ -n|n- $|($ n)|(n $)"
+        	//positivePattern: one of "$n|n$|$ n|n $"
+            pattern: ["($n)", "$n"],
+			//number of decimal places
+            decimals: 2,
+			//string that separates the number groups (1,000,000 $)
+            ",": ",",
+			//string that separates a number from the fractional point
+            ".": ".",
+			//the length of each number group
+            groupSize: [3],
+			//currency symbol
+            symbol: "$"
+        }
+    },
+    calendars: {
+        standard: {
+            days: {
+				// full day names
+                names: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+				// abbreviated day names
+                namesAbbr: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+				// shortest day names
+                namesShort: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ]
+            },
+            months: {
+ 					// full month names
+                names: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+				// abbreviated month names
+                namesAbbr: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            },
+			// AM and PM designators
+			// [standard,lowercase,uppercase]
+            AM: [ "AM", "am", "AM" ],
+            PM: [ "PM", "pm", "PM" ],
+			// set of predefined date and time patterns used by the culture.
+            patterns: {
+                d: "M/d/yyyy",
+                D: "dddd, MMMM dd, yyyy",
+                F: "dddd, MMMM dd, yyyy h:mm:ss tt",
+                g: "M/d/yyyy h:mm tt",
+                G: "M/d/yyyy h:mm:ss tt",
+                m: "MMMM dd",
+                M: "MMMM dd",
+                s: "yyyy'-'MM'-'ddTHH':'mm':'ss",
+                t: "h:mm tt",
+                T: "h:mm:ss tt",
+                u: "yyyy'-'MM'-'dd HH':'mm':'ss'Z'",
+                y: "MMMM, yyyy",
+                Y: "MMMM, yyyy"
+            },-
+			// the first day of the week (0 = Sunday, 1 = Monday, etc)
+            firstDay: 0
+        }
+    }
+}};
+</code></pre></div></div>
+
+<h2 id="extending-culture-information">Extending culture information</h2>
+
+<p>If you examine the source code of the script for each culture, you will notice that each script just adds the culture info object to the the kendo.cultures mappings. You can easily define your own culture file and extend current kendo.cultures mapping. The only requirement is to follow the structure of the default culture information listed above.</p>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,495 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/upload.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendoupload">&lt;kendo:upload&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/upload">Upload</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="enabled-boolean">enabled <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Enables (true) or disables (false) an Upload. A disabled
+Upload may be re-enabled via enable().</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload enabled="enabled"&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="files-javalangobject">files <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>List of files to be initially rendered in the Upload widget files list.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload files="files"&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="multiple-boolean">multiple <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Enables (true) or disables (false) the ability to select multiple files.
+If false, users will be able to select only one file at a time. Note: This option does not
+limit the total number of uploaded files in an asynchronous configuration.</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload multiple="multiple"&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="showfilelist-boolean">showFileList <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Enables (true) or disables (false) the ability to display a file listing
+for uploading a file(s). Disabling a file listing may be useful you wish to customize the UI; use the
+client-side events to build your own UI.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload showFileList="showFileList"&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="template-javalangstring">template <code class="language-plaintext highlighter-rouge">java.lang.String</code></h3>
+
+<p>The template used to render the files in the list</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload template="template"&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendoupload-async">kendo:upload-async</h3>
+
+<p>Configures the ability to upload a file(s) in an asynchronous manner. Please refer to the
+async mode help topic
+for more details.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/upload/async">kendo:upload-async</a>.</p>
+
+<h4 id="example-5">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload&gt;
+    &lt;kendo:upload-async&gt;&lt;/kendo:upload-async&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="kendoupload-localization">kendo:upload-localization</h3>
+
+<p>Sets the strings rendered by the Upload.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/upload/localization">kendo:upload-localization</a>.</p>
+
+<h4 id="example-6">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload&gt;
+    &lt;kendo:upload-localization&gt;&lt;/kendo:upload-localization&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="cancel-string">cancel <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when the upload has been cancelled while in progress.Note: The cancel event fires only when the upload is in
+async mode.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload cancel="handle_cancel"&gt;
+&lt;/kendo:upload&gt;
+&lt;script&gt;
+    function handle_cancel(e) {
+        // Code to handle the cancel event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="complete-string">complete <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when all active uploads have completed either successfully or with errors.Note: The complete event fires only when the upload is in
+async mode.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-complete">complete</a> event documentation.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload complete="handle_complete"&gt;
+&lt;/kendo:upload&gt;
+&lt;script&gt;
+    function handle_complete(e) {
+        // Code to handle the complete event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="error-string">error <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when an upload / remove operation has failed.Note: The error event fires only when the upload is in
+async mode.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-error">error</a> event documentation.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload error="handle_error"&gt;
+&lt;/kendo:upload&gt;
+&lt;script&gt;
+    function handle_error(e) {
+        // Code to handle the error event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="progress-string">progress <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when upload progress data is available.Note: The progress event fires only when the upload is in
+async mode.Note: The progress event is not fired in IE.
+See Supported Browsers</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-progress">progress</a> event documentation.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload progress="handle_progress"&gt;
+&lt;/kendo:upload&gt;
+&lt;script&gt;
+    function handle_progress(e) {
+        // Code to handle the progress event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="remove-string">remove <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when an uploaded file is about to be removed.
+Cancelling the event will prevent the remove.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-remove">remove</a> event documentation.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload remove="handle_remove"&gt;
+&lt;/kendo:upload&gt;
+&lt;script&gt;
+    function handle_remove(e) {
+        // Code to handle the remove event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="select-string">select <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a file(s) is selected. Note: Cancelling this event will prevent the selection from
+occurring.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-select">select</a> event documentation.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload select="handle_select"&gt;
+&lt;/kendo:upload&gt;
+&lt;script&gt;
+    function handle_select(e) {
+        // Code to handle the select event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="success-string">success <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when an upload / remove operation has been completed successfully.Note: The success event fires only when the upload is in
+async mode.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-success">success</a> event documentation.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload success="handle_success"&gt;
+&lt;/kendo:upload&gt;
+&lt;script&gt;
+    function handle_success(e) {
+        // Code to handle the success event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="upload-string">upload <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Fires when one or more files are about to be uploaded.
+Cancelling the event will prevent the upload.Note: The upload event fires only when the upload is in
+async mode.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-upload">upload</a> event documentation.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload upload="handle_upload"&gt;
+&lt;/kendo:upload&gt;
+&lt;script&gt;
+    function handle_upload(e) {
+        // Code to handle the upload event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendoupload-cancel">kendo:upload-cancel</h3>
+
+<p>Fires when the upload has been cancelled while in progress.Note: The cancel event fires only when the upload is in
+async mode.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-cancel">cancel</a> event documentation.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload&gt;
+    &lt;kendo:upload-cancel&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the cancel event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:upload-cancel&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="kendoupload-complete">kendo:upload-complete</h3>
+
+<p>Fires when all active uploads have completed either successfully or with errors.Note: The complete event fires only when the upload is in
+async mode.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-complete">complete</a> event documentation.</p>
+
+<h4 id="example-16">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload&gt;
+    &lt;kendo:upload-complete&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the complete event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:upload-complete&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="kendoupload-error">kendo:upload-error</h3>
+
+<p>Fires when an upload / remove operation has failed.Note: The error event fires only when the upload is in
+async mode.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-error">error</a> event documentation.</p>
+
+<h4 id="example-17">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload&gt;
+    &lt;kendo:upload-error&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the error event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:upload-error&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="kendoupload-progress">kendo:upload-progress</h3>
+
+<p>Fires when upload progress data is available.Note: The progress event fires only when the upload is in
+async mode.Note: The progress event is not fired in IE.
+See Supported Browsers</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-progress">progress</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload&gt;
+    &lt;kendo:upload-progress&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the progress event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:upload-progress&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="kendoupload-remove">kendo:upload-remove</h3>
+
+<p>Fires when an uploaded file is about to be removed.
+Cancelling the event will prevent the remove.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-remove">remove</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload&gt;
+    &lt;kendo:upload-remove&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the remove event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:upload-remove&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="kendoupload-select">kendo:upload-select</h3>
+
+<p>Triggered when a file(s) is selected. Note: Cancelling this event will prevent the selection from
+occurring.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-select">select</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload&gt;
+    &lt;kendo:upload-select&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the select event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:upload-select&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="kendoupload-success">kendo:upload-success</h3>
+
+<p>Fires when an upload / remove operation has been completed successfully.Note: The success event fires only when the upload is in
+async mode.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-success">success</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload&gt;
+    &lt;kendo:upload-success&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the success event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:upload-success&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+<h3 id="kendoupload-upload">kendo:upload-upload</h3>
+
+<p>Fires when one or more files are about to be uploaded.
+Cancelling the event will prevent the upload.Note: The upload event fires only when the upload is in
+async mode.</p>
+
+<p>For additional information check the <a href="/api/web/upload#events-upload">upload</a> event documentation.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:upload&gt;
+    &lt;kendo:upload-upload&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the upload event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:upload-upload&gt;
+&lt;/kendo:upload&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>How to use the PivotGrid PHP class, server-side wrapper for Kendo UI PivotGrid widget</title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        <meta name="description" content="Learn how to bind Kendo UI PivotGrid for PHP, handle Kendo UI PivotGrid Events, access an existing pivotgrid.">
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li><a href="/kendo-ui/api/introduction">API Reference</a></li>
+        
+        
+        <li class="active">Getting Started</li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/getting-started.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("getting-started/using-kendo-with/php/widgets/pivotgrid/overview.html")
+        });
+        </script>
+    </div>
+
+    
+
+    <div id="page-article">
+        <article>
+            <h1 id="pivotgrid">PivotGrid</h1>
+
+<p>The Kendo PivotGrid for PHP is a server-side wrapper for the <a href="/api/web/pivotgrid">Kendo UI PivotGrid</a> widget.</p>
+
+<p>More information about OLAP concepts supported by Kendo PivotGrid for PHP can be found here:</p>
+
+<ul>
+  <li><a href="/getting-started/web/pivotgrid/fundamentals">PivotGrid Fundamentals</a></li>
+  <li><a href="/getting-started/web/pivotgrid/olap-cube-setup">Setup an OLAP cube</a> or use our OLAP service (<a href="http://demos.telerik.com/olap/msmdpump.dll">http://demos.telerik.com/olap/msmdpump.dll</a>)</li>
+</ul>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>The following tutorial shows how to configure Kendo UI PivotGrid for PHP to do ajax binding to an <strong>Adventure Works</strong> cube hosted on <a href="http://demos.telerik.com/olap/msmdpump.dll">http://demos.telerik.com/olap/msmdpump.dll</a></p>
+
+<ol>
+  <li>
+    <p>Follow the steps from the <a href="/getting-started/using-kendo-with/php/introduction">introduction</a> - include the autoloader, JavaScript and CSS files.</p>
+  </li>
+  <li>
+    <p>Create a PivotDataSourceTransport and define the service URL:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $transport = new \Kendo\Data\PivotDataSourceTransport();
+    
+ $read = new \Kendo\Data\PivotDataSourceTransportRead();
+    
+ $read-&gt;url('http://demos.telerik.com/olap/msmdpump.dll')
+      -&gt;contentType('text/xml')
+      -&gt;dataType('text')
+      -&gt;type('POST');
+    
+ $connection = new \Kendo\Data\PivotDataSourceTransportConnection();
+    
+ $connection-&gt;catalog('Adventure Works DW 2008R2')
+             -&gt;cube('Adventure Works');
+    
+ $discover = new \Kendo\Data\PivotDataSourceTransportDiscover();
+    
+ $discover-&gt;url('http://demos.telerik.com/olap/msmdpump.dll')
+      -&gt;contentType('text/xml')
+      -&gt;dataType('text')
+      -&gt;type('POST');
+    
+ $transport -&gt;read($read)
+             -&gt;connection($connection)
+             -&gt;discover($discover);
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a PivotDataSourceSchema and set its type:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $schema = new \Kendo\Data\PivotDataSourceSchema();
+ $schema-&gt;type('xmla');
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Define column and row dimensions of pivotgrid:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $dateColumn = new \Kendo\Data\PivotDataSourceColumn();
+ $dateColumn-&gt;name('[Date].[Calendar]')
+             -&gt;expand(true);
+    
+ $cityColumn = new \Kendo\Data\PivotDataSourceColumn();
+ $cityColumn-&gt;name('[Geography].[City]');
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a PivotDataSource instance:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $dataSource = new \Kendo\Data\PivotDataSource();
+
+ $dataSource-&gt;transport($transport)
+     -&gt;type("xmla")
+     -&gt;addColumn($dateColumn, $cityColumn)
+     -&gt;addRow('[Product].[Product]')
+     -&gt;addMeasure(array('[Measures].[Internet Sales Amount]'))
+     -&gt;schema($schema);
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a <a href="/api/wrappers/php/Kendo/UI/PivotGrid">pivotgrid</a> and set its data source:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $pivotgrid = new \Kendo\UI\PivotGrid('pivotgrid');
+ $pivotgrid-&gt;dataSource($dataSource);
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Render the pivotgrid:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?php
+ echo $pivotgrid-&gt;render();
+ ?&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="getting-client-side-reference">Getting Client-side Reference</h2>
+
+<p>You can reference the clien-side Kendo Grid instance via <a href="http://api.jquery.com/jQuery.data/">jQuery.data()</a>.
+Once a reference has been established, you can use the <a href="/api/web/pivotgrid#methods">API</a> to control its behavior.</p>
+
+<h3 id="example">Example</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
+$(function() {
+    // The constructor parameter is used as the 'id' HTML attribute of the pivotgrid
+    var pivotgrid = $("#pivotgrid").data("kendoPivotGrid");
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="handling-events">Handling Events</h2>
+
+<p>You can subscribe to all grid <a href="/api/web/pivotgrid#events">events</a>.</p>
+
+<h3 id="example---subscribing-by-specifying-javascript-function-name">Example - subscribing by specifying JavaScript function name</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$pivotgrid = new \Kendo\UI\PivotGrid('pivotgrid');
+$pivotgrid-&gt;dataSource($dataSource);
+
+// The 'pivotgrid_dataBound' JavaScript function will handle the 'dataBound' event of the pivotgrid
+$grid-&gt;dataBound('pivotgrid_dataBound');
+
+echo $pivotgrid-&gt;render();
+?&gt;
+&lt;script&gt;
+function pivotgrid_dataBound() {
+    // Handle the dataBound event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="example---providing-inline-javascript-code">Example - providing inline JavaScript code</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$pivotgrid = new \Kendo\UI\PivotGrid('pivotgrid');
+$pivotgrid-&gt;dataSource($dataSource);
+
+// Provide inline JavaScript code that will handle the 'dataBound' event of the grid
+$pivotgrid-&gt;dataBound('function() { /* Handle the dataBound event */ }');
+
+echo $pivotgrid-&gt;render();
+?&gt;
+&lt;script&gt;
+function pivotgrid_dataBound() {
+    // Handle the dataBound event
+}
+&lt;/script&gt;
+</code></pre></div></div>
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+

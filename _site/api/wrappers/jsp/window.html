@@ -1,0 +1,608 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="shortcut icon" href="/kendo-ui/favicon.ico"/>
+        
+        <link href="http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/styles.css" rel="stylesheet" />
+        <link href="/kendo-ui/assets/css/theme.css" rel="stylesheet" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://cdn.kendostatic.com/2014.1.528/js/kendo.web.min.js"></script>
+        <script src="/kendo-ui/assets/js/prettify.js"></script>
+        <script src="/kendo-ui/assets/js/app.js"></script>
+        
+    </head>
+    <body>
+        <!-- Google Tag Manager -->
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+        </noscript>
+        <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+        <!-- End Google Tag Manager -->
+        <header id="page-header">
+            <div id="logo-bar">
+    <a href="/kendo-ui/">
+        <img alt="Kendo UI logo" class="logo" src="/kendo-ui/assets/images/logo.png">
+    </a>
+</div>
+<div class="nav-buttons">
+    <a href="http://demos.telerik.com/kendo-ui/" class="btn">Demos</a>
+    <a href="http://www.telerik.com/kendo-ui/" class="btn">About</a>
+    <a href="http://www.telerik.com/purchase/kendo-ui" class="btn">Pricing</a>
+    <a href="http://www.telerik.com/download/kendo-ui" class="btn btn-primary">Try now</a>
+</div>
+
+        </header>
+
+        <div id="page-top">
+    <ul id="page-tabs">
+        <li><a href="/kendo-ui/">Home</a></li>
+        
+        <li class="active">API Reference</li>
+        
+        
+        <li><a href="/kendo-ui/getting-started/introduction">Getting Started</a></li>
+        
+        
+        <li><a href="/kendo-ui/howto/add-charts-and-graphs-to-an-application">How Do I?</a></li>
+        
+        
+        <li><a href="/kendo-ui/tutorials/inheritance-with-kendoui">Tutorials</a></li>
+        
+    </ul>
+    <div id="page-search">
+        <script>
+  (function() {
+    var cx = '001595215763381649090:eblhnfskwrk';
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    </div>
+</div>
+<div id="page-inner-content">
+    <div id="page-nav">
+        <div id="page-tree"></div>
+        <script>
+        $("#page-tree").kendoTreeView({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/kendo-ui/api.json",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "path",
+                        children: "items",
+                        hasChildren: "items"
+                    }
+                }
+            },
+            select: preventParentSelection,
+            template: navigationTemplate("/kendo-ui/"),
+            dataBound: expandNavigation("api/wrappers/jsp/window.html")
+        });
+        </script>
+    </div>
+
+    <div id="markdown-toc"></div>
+
+    <div id="page-article">
+        <article>
+            <h1 id="kendowindow">&lt;kendo:window&gt;</h1>
+<p>A JSP wrapper for Kendo UI <a href="/api/web/window">Window</a>.</p>
+
+<h2 id="configuration-attributes">Configuration Attributes</h2>
+
+<h3 id="actions-javalangobject">actions <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The buttons for interacting with the window. Predefined array values are "Close", "Refresh", "Minimize",
+and "Maximize".</p>
+
+<h4 id="example">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window actions="actions"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="appendto-javalangobject">appendTo <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The element that the Window will be appended to. Beneficial if the Window is used together with a form.
+Note that this does not constrain the window dragging within the given element.</p>
+
+<h4 id="example-1">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window appendTo="appendTo"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="content-javalangobject">content <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The content of the window</p>
+
+<h4 id="example-2">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window content="content"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="draggable-boolean">draggable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Enables (true) or disables (false) the ability for users to move/drag the widget.</p>
+
+<h4 id="example-3">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window draggable="draggable"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="height-javalangobject">height <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Specifies height of the window.</p>
+
+<h4 id="example-4">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window height="height"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="iframe-boolean">iframe <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Explicitly states whether content iframe should be created.</p>
+
+<h4 id="example-5">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window iframe="iframe"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="maxheight-float">maxHeight <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The maximum height (in pixels) that may be achieved by resizing the window.</p>
+
+<h4 id="example-6">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window maxHeight="maxHeight"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="maxwidth-float">maxWidth <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The maximum width (in pixels) that may be achieved by resizing the window.</p>
+
+<h4 id="example-7">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window maxWidth="maxWidth"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="minheight-float">minHeight <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The minimum height (in pixels) that may be achieved by resizing the window.</p>
+
+<h4 id="example-8">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window minHeight="minHeight"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="minwidth-float">minWidth <code class="language-plaintext highlighter-rouge">float</code></h3>
+
+<p>The minimum width (in pixels) that may be achieved by resizing the window.</p>
+
+<h4 id="example-9">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window minWidth="minWidth"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="modal-boolean">modal <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Specifies whether the window should show a modal overlay over the page.</p>
+
+<h4 id="example-10">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window modal="modal"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="pinned-boolean">pinned <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Specifies whether the window should be pinned, i.e. it will not move together with the page content during scrolling.</p>
+
+<h4 id="example-11">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window pinned="pinned"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="resizable-boolean">resizable <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Enables (true) or disables (false) the ability for users to resize a Window.</p>
+
+<h4 id="example-12">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window resizable="resizable"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="title-javalangobject">title <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>The text in the window title bar. If false, the window will be displayed without a title bar. Note that this will prevent the window from being dragged, and the window titlebar buttons will not be shown.</p>
+
+<h4 id="example-13">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window title="title"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="visible-boolean">visible <code class="language-plaintext highlighter-rouge">boolean</code></h3>
+
+<p>Specifies whether the window will be initially visible.</p>
+
+<h4 id="example-14">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window visible="visible"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="width-javalangobject">width <code class="language-plaintext highlighter-rouge">java.lang.Object</code></h3>
+
+<p>Specifies width of the window.</p>
+
+<h4 id="example-15">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window width="width"&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h2 id="configuration-jsp-tags">Configuration JSP Tags</h2>
+
+<h3 id="kendowindow-animation">kendo:window-animation</h3>
+
+<p>A collection of {Animation} objects, used to change default animations. A value of false
+will disable all animations in the widget.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/window/animation">kendo:window-animation</a>.</p>
+
+<h4 id="example-16">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window&gt;
+    &lt;kendo:window-animation&gt;&lt;/kendo:window-animation&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="kendowindow-position">kendo:window-position</h3>
+
+<p>A collection of one or two members, which define the initial Window"s top and/or left position on the page.</p>
+
+<p>More documentation is available at <a href="/api/wrappers/jsp/window/position">kendo:window-position</a>.</p>
+
+<h4 id="example-17">Example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window&gt;
+    &lt;kendo:window-position&gt;&lt;/kendo:window-position&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h2 id="event-attributes">Event Attributes</h2>
+
+<h3 id="activate-string">activate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a Window has finished its opening animation.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-activate">activate</a> event documentation.</p>
+
+<h4 id="example-18">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window activate="handle_activate"&gt;
+&lt;/kendo:window&gt;
+&lt;script&gt;
+    function handle_activate(e) {
+        // Code to handle the activate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="close-string">close <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a Window is closed (by a user or through the close() method).</p>
+
+<p>For additional information check the <a href="/api/web/window#events-close">close</a> event documentation.</p>
+
+<h4 id="example-19">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window close="handle_close"&gt;
+&lt;/kendo:window&gt;
+&lt;script&gt;
+    function handle_close(e) {
+        // Code to handle the close event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="deactivate-string">deactivate <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a Window has finished its closing animation.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-deactivate">deactivate</a> event documentation.</p>
+
+<h4 id="example-20">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window deactivate="handle_deactivate"&gt;
+&lt;/kendo:window&gt;
+&lt;script&gt;
+    function handle_deactivate(e) {
+        // Code to handle the deactivate event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragend-string">dragend <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a Window has been moved by a user.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-dragend">dragend</a> event documentation.</p>
+
+<h4 id="example-21">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window dragend="handle_dragend"&gt;
+&lt;/kendo:window&gt;
+&lt;script&gt;
+    function handle_dragend(e) {
+        // Code to handle the dragend event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="dragstart-string">dragstart <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when the user starts to move the window.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-dragstart">dragstart</a> event documentation.</p>
+
+<h4 id="example-22">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window dragstart="handle_dragstart"&gt;
+&lt;/kendo:window&gt;
+&lt;script&gt;
+    function handle_dragstart(e) {
+        // Code to handle the dragstart event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="error-string">error <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when an AJAX request for content fails.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-error">error</a> event documentation.</p>
+
+<h4 id="example-23">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window error="handle_error"&gt;
+&lt;/kendo:window&gt;
+&lt;script&gt;
+    function handle_error(e) {
+        // Code to handle the error event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="open-string">open <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a Window is opened (i.e. the open() method is called).</p>
+
+<p>For additional information check the <a href="/api/web/window#events-open">open</a> event documentation.</p>
+
+<h4 id="example-24">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window open="handle_open"&gt;
+&lt;/kendo:window&gt;
+&lt;script&gt;
+    function handle_open(e) {
+        // Code to handle the open event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="refresh-string">refresh <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when the content of a Window has finished loading via AJAX,
+when the window iframe has finished loading, or when the refresh button
+has been clicked on a window with static content.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-refresh">refresh</a> event documentation.</p>
+
+<h4 id="example-25">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window refresh="handle_refresh"&gt;
+&lt;/kendo:window&gt;
+&lt;script&gt;
+    function handle_refresh(e) {
+        // Code to handle the refresh event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="resize-string">resize <code class="language-plaintext highlighter-rouge">String</code></h3>
+
+<p>Triggered when a window has been resized by a user.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-resize">resize</a> event documentation.</p>
+
+<h4 id="example-26">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window resize="handle_resize"&gt;
+&lt;/kendo:window&gt;
+&lt;script&gt;
+    function handle_resize(e) {
+        // Code to handle the resize event.
+    }
+&lt;/script&gt;
+</code></pre></div></div>
+
+<h2 id="event-tags">Event Tags</h2>
+
+<h3 id="kendowindow-activate">kendo:window-activate</h3>
+
+<p>Triggered when a Window has finished its opening animation.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-activate">activate</a> event documentation.</p>
+
+<h4 id="example-27">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window&gt;
+    &lt;kendo:window-activate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the activate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:window-activate&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="kendowindow-close">kendo:window-close</h3>
+
+<p>Triggered when a Window is closed (by a user or through the close() method).</p>
+
+<p>For additional information check the <a href="/api/web/window#events-close">close</a> event documentation.</p>
+
+<h4 id="example-28">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window&gt;
+    &lt;kendo:window-close&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the close event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:window-close&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="kendowindow-deactivate">kendo:window-deactivate</h3>
+
+<p>Triggered when a Window has finished its closing animation.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-deactivate">deactivate</a> event documentation.</p>
+
+<h4 id="example-29">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window&gt;
+    &lt;kendo:window-deactivate&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the deactivate event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:window-deactivate&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="kendowindow-dragend">kendo:window-dragend</h3>
+
+<p>Triggered when a Window has been moved by a user.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-dragend">dragend</a> event documentation.</p>
+
+<h4 id="example-30">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window&gt;
+    &lt;kendo:window-dragend&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dragend event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:window-dragend&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="kendowindow-dragstart">kendo:window-dragstart</h3>
+
+<p>Triggered when the user starts to move the window.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-dragstart">dragstart</a> event documentation.</p>
+
+<h4 id="example-31">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window&gt;
+    &lt;kendo:window-dragstart&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the dragstart event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:window-dragstart&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="kendowindow-error">kendo:window-error</h3>
+
+<p>Triggered when an AJAX request for content fails.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-error">error</a> event documentation.</p>
+
+<h4 id="example-32">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window&gt;
+    &lt;kendo:window-error&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the error event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:window-error&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="kendowindow-open">kendo:window-open</h3>
+
+<p>Triggered when a Window is opened (i.e. the open() method is called).</p>
+
+<p>For additional information check the <a href="/api/web/window#events-open">open</a> event documentation.</p>
+
+<h4 id="example-33">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window&gt;
+    &lt;kendo:window-open&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the open event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:window-open&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="kendowindow-refresh">kendo:window-refresh</h3>
+
+<p>Triggered when the content of a Window has finished loading via AJAX,
+when the window iframe has finished loading, or when the refresh button
+has been clicked on a window with static content.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-refresh">refresh</a> event documentation.</p>
+
+<h4 id="example-34">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window&gt;
+    &lt;kendo:window-refresh&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the refresh event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:window-refresh&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+<h3 id="kendowindow-resize">kendo:window-resize</h3>
+
+<p>Triggered when a window has been resized by a user.</p>
+
+<p>For additional information check the <a href="/api/web/window#events-resize">resize</a> event documentation.</p>
+
+<h4 id="example-35">Example</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;kendo:window&gt;
+    &lt;kendo:window-resize&gt;
+        &lt;script&gt;
+            function(e) {
+                // Code to handle the resize event.
+            }
+        &lt;/script&gt;
+    &lt;/kendo:window-resize&gt;
+&lt;/kendo:window&gt;
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+</div>
+
+<footer>
+    <p>Copyright &copy; 2002-2014 Telerik Inc</p>
+</footer>
+
+
+    </body>
+</html>
+
